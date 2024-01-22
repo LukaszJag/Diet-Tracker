@@ -1,0 +1,8 @@
+Name: Jogurt - jagodowy
+Brand: Fruvita
+Package has: 400
+Macro for: 100g
+KCal: 85
+Protein: 2.7
+Fat: 2.5
+Carbs: 12.6
