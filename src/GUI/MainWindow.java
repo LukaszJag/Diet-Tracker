@@ -32,6 +32,7 @@ public class MainWindow extends JFrame {
 
         setPanels();
         addButtons();
+        addLabels();
         addComponentsToStartFrame();
 
         startWindow.setLocationRelativeTo(null);
@@ -67,6 +68,15 @@ public class MainWindow extends JFrame {
         Button addProductButton = new Button("Add new product");
         addProductButton.addActionListener(new AddProductButton());
         panelLeft.add(addProductButton);
+
+        Button mealManagerButton = new Button("Meal manager");
+        mealManagerButton.addActionListener(new GUI.MainWindow.MealMangerButton());
+        panelLeft.add(mealManagerButton);
+    }
+
+    private void addLabels(){
+        Label dateAndTime = new Label("There will be date and time");
+        panelUpper.add(dateAndTime);
     }
 
     private class AddProductButton implements ActionListener {
@@ -76,6 +86,13 @@ public class MainWindow extends JFrame {
 
             new AddProductWindow();
 
+        }
+    }
+
+    private class MealMangerButton implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            new MealManagerWindow();
         }
     }
 }

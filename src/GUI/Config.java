@@ -14,6 +14,8 @@ public class Config {
     public static final int ADD_PRODUCT_PANELS_WEST_EAST_SIZE = 80;
     public static final int ADD_PRODUCT_PANELS_SOUTH_SIZE = 100;
     public static final int howManyParametersToAddProduct = 7;
+
+    public static final String[] destinationForTextFile = {"src/TextFiles/products/"};
     /*
 
     public static final String[] options = {"Create new account", "Withdraw money","Pay in" ,"Close account"};

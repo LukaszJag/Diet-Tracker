@@ -1,5 +1,7 @@
 package GUI;
 
+import products_tools.Macro;
+import products_tools.Product;
 import text_files_tools.MakeTextFile;
 
 import javax.swing.*;
@@ -191,28 +193,13 @@ public class AddProductWindow {
                         + "\nPackage has: " + packageHas + "\nMacro for: " + macroFor
                         + "\nKCal: " + kCal + "\nProtein: " + protein +
                         "\nFat: " + fat + "\nCarbs: " + carbs);
+
+                Macro newProductMacro = new Macro(Float.parseFloat(kCal), Float.parseFloat(protein),
+                        Float.parseFloat(fat), Float.parseFloat(carbs));
+                Product newProduct = new Product(name, brand, newProductMacro, Float.parseFloat(packageHas));
+                newProduct.makeTextFileForProduct(newProduct, Float.parseFloat(packageHas));
                 JOptionPane.showMessageDialog(null, "Product add to library");
 
-                MakeTextFile.makeEmptyFile(name);
-
-
-                try {
-                    MakeTextFile.writeToFile("Name: "+name, name);
-                    MakeTextFile.writeToFile("Brand: " + brand, name);
-                    MakeTextFile.writeToFile("Package has: "+packageHas, name);
-
-                    MakeTextFile.writeToFile("Macro for: " + macroFor, name);
-
-                    MakeTextFile.writeToFile("KCal: " + kCal, name);
-                    MakeTextFile.writeToFile("Protein: " + protein, name);
-                    MakeTextFile.writeToFile("Fat: " + fat, name);
-
-                    MakeTextFile.writeToFile("Carbs: " + carbs, name);
-
-
-                } catch (IOException ex) {
-                    throw new RuntimeException(ex);
-                }
 
             }
         }

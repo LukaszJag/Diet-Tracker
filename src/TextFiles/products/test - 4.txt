@@ -1,0 +1,8 @@
+Name: test - 4
+Brand: chleb
+Package has: 200.0
+Macro for: 200.0
+KCal: 200.0
+Protein: 80.0
+Fat: 20.0
+Carbs: 90.0
