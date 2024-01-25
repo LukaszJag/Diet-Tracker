@@ -1,0 +1,17 @@
+
+
+
+
+Diet Product add new Product table query
+
+create table DietProducts(
+Product_Name VARCHAR(25),
+Product_Brand VARCHAR(25),
+Package_Has FLOAT NOT NULL,
+Macro_For FLOAT NOT NULL,
+Kcal FLOAT NOT NULL,
+Protein FLOAT NOT NULL,
+Fat FLOAT NOT NULL,
+Carbs FLOAT NOT NULL);
+
+INSERT INTO DietProducts VALUES ('Jogurt - jagodowy', 'Fruvita', 400.0, 100.0, 85.0, 2.7, 2.5, 12.6);

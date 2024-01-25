@@ -1,14 +1,13 @@
 package GUI;
 
+import Ganeral.Config;
 import products_tools.Macro;
 import products_tools.Product;
-import text_files_tools.MakeTextFile;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
 
 public class AddProductWindow {
 

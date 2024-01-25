@@ -10,7 +10,7 @@ public class Meal {
     }
 
     private void addNewSingleProductDish(DishSingleProduct newSingleProductDish){
-        for (int i = 0; i < dishSingleProductsInMeal.length; i++) {
+        for(int i = 0; i < dishSingleProductsInMeal.length; i++) {
             if(dishSingleProductsInMeal[i] != null){
                 System.out.println("Position occupied by: " + dishSingleProductsInMeal[i].getProduct().getName());
             }

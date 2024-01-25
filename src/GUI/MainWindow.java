@@ -1,5 +1,7 @@
 package GUI;
 
+import Ganeral.Config;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -70,7 +72,7 @@ public class MainWindow extends JFrame {
         panelLeft.add(addProductButton);
 
         Button mealManagerButton = new Button("Meal manager");
-        mealManagerButton.addActionListener(new GUI.MainWindow.MealMangerButton());
+        mealManagerButton.addActionListener(new MealMangerButton());
         panelLeft.add(mealManagerButton);
     }
 

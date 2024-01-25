@@ -1,7 +1,7 @@
 package products_tools;
 
-import GUI.Config;
-import text_files_tools.MakeTextFile;
+import Ganeral.Config;
+import text_files_tools.MakeFoldersAndTextFile;
 
 import java.io.IOException;
 
@@ -15,21 +15,21 @@ public class Product {
     }
 
     public void makeTextFileForProduct(Product product, float macroFor){
-        MakeTextFile.makeEmptyFile(fileName, Config.destinationForTextFile[0]);
+        MakeFoldersAndTextFile.makeEmptyFile(fileName, Config.DESTINATION_FOR_TEXT_FILE_PRODUCTS);
 
 
         try {
-            MakeTextFile.writeProductToFile("Name: "+ product.getName(), fileName);
-            MakeTextFile.writeProductToFile("Brand: " + product.getBrand(), fileName);
-            MakeTextFile.writeProductToFile("Package has: "+ product.getWeight_of_pack(), fileName);
+            MakeFoldersAndTextFile.writeProductToFile("Name: "+ product.getName(), fileName);
+            MakeFoldersAndTextFile.writeProductToFile("Brand: " + product.getBrand(), fileName);
+            MakeFoldersAndTextFile.writeProductToFile("Package has: "+ product.getWeight_of_pack(), fileName);
 
-            MakeTextFile.writeProductToFile("Macro for: " + macroFor, fileName);
+            MakeFoldersAndTextFile.writeProductToFile("Macro for: " + macroFor, fileName);
 
-            MakeTextFile.writeProductToFile("KCal: " + product.getProduct_macro().getKcal(), fileName);
-            MakeTextFile.writeProductToFile("Protein: " + product.getProduct_macro().getProtein(), fileName);
-            MakeTextFile.writeProductToFile("Fat: " + product.getProduct_macro().getFat(), fileName);
+            MakeFoldersAndTextFile.writeProductToFile("KCal: " + product.getProduct_macro().getKcal(), fileName);
+            MakeFoldersAndTextFile.writeProductToFile("Protein: " + product.getProduct_macro().getProtein(), fileName);
+            MakeFoldersAndTextFile.writeProductToFile("Fat: " + product.getProduct_macro().getFat(), fileName);
 
-            MakeTextFile.writeProductToFile("Carbs: " + product.product_macro.getCarbs(), fileName);
+            MakeFoldersAndTextFile.writeProductToFile("Carbs: " + product.product_macro.getCarbs(), fileName);
 
 
         } catch (IOException ex) {

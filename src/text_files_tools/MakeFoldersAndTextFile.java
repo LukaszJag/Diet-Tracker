@@ -1,13 +1,13 @@
 package text_files_tools;
 
-import GUI.Config;
+import Ganeral.Config;
 
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
-public class MakeTextFile {
+public class MakeFoldersAndTextFile {
     public static void makeEmptyFile(String newFileName, String destination){
         try{
             File newFile = new File( destination + newFileName + ".txt");
@@ -22,8 +22,14 @@ public class MakeTextFile {
         }
     }
 
+    private void makeDirectory(String newDirectoryName, String path){
+        if(path.equals("")){
+            path = Config.DESTINATION_FOR_TEXT_FILE_DAYS;
+        }
+    }
+
     public static void writeProductToFile(String lineToWriteToFile, String fileName) throws IOException {
-        BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(Config.destinationForTextFile[0] + fileName + ".txt", true));
+        BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(Config.DESTINATION_FOR_TEXT_FILE_PRODUCTS + fileName + ".txt", true));
         bufferedWriter.append(lineToWriteToFile.toString());
         bufferedWriter.append("\n");
         bufferedWriter.close();
