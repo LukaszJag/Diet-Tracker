@@ -15,17 +15,18 @@ public class Window {
     //Declare Text Fields
     public Window(String windowName){
         this.windowName = windowName;
-        startNewWindow();
     }
 
-    public Window(String windowName, int width, int height){
+    protected void setWindowSize(int width, int height){
         this.windowWidth = width;
         this.windowHeight = height;
-        this.windowName = windowName;
-        startNewWindow();
     }
-    private void startNewWindow() {
+    protected void startDisplayNewWindow() {
         windowFrame = new JFrame(windowName);
-
+        windowFrame.setSize(this.windowWidth, this.windowHeight);
+        windowFrame.setResizable(false);
+        windowFrame.setLocale(null);
+        windowFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        windowFrame.setVisible(true);
     }
 }

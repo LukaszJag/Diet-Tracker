@@ -15,3 +15,38 @@ Fat FLOAT NOT NULL,
 Carbs FLOAT NOT NULL);
 
 INSERT INTO DietProducts VALUES ('Jogurt - jagodowy', 'Fruvita', 400.0, 100.0, 85.0, 2.7, 2.5, 12.6);
+
+
+
+
+ #CREATE DATABASE javabase DEFAULT CHARACTER SET utf8mb3 COLLATE utf8_unicode_ci;
+ #show databases;
+CREATE USER 'java'@'localhost' IDENTIFIED BY 'password';
+GRANT ALL ON javabase.* TO 'java'@'localhost' IDENTIFIED BY 'password';
+
+
+
+ SHOW VARIABLES WHERE Variable_name = 'hostname'
+
+
+
+ #CREATE USER 'lukasz'@'localhost' IDENTIFIED BY 'password';
+# GRANT ALL ON javabase.* TO 'lukasz'@'localhost' IDENTIFIED BY 'password';
+
+
+GRANT ALL PRIVILEGES ON javabase.* TO 'l'@'localhost';
+
+
+
+jdbc:mysql://localhost:3306/javabase
+
+
+
+
+
+
+
+
+
+
+
