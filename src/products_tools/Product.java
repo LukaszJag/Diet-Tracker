@@ -36,6 +36,7 @@ public class Product {
             throw new RuntimeException(ex);
         }
     }
+
     private String fileName;
 
     private String brand;
