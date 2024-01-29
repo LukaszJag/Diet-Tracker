@@ -1,0 +1,56 @@
+Name: Grahamka
+Brand: Grahamka
+Package has: 80.0
+Macro for: 80.0
+KCal: 120.0
+Protein: 20.0
+Fat: 10.0
+Carbs: 90.0
+Name: Grahamka
+Brand: Grahamka
+Package has: 80.0
+Macro for: 80.0
+KCal: 120.0
+Protein: 20.0
+Fat: 10.0
+Carbs: 90.0
+Name: Grahamka
+Brand: Bulka
+Package has: 80.0
+Macro for: 80.0
+KCal: 120.0
+Protein: 20.0
+Fat: 10.0
+Carbs: 90.0
+Name: grahamka
+Brand: grahamka
+Package has: 80.0
+Macro for: 80.0
+KCal: 120.0
+Protein: 20.0
+Fat: 10.0
+Carbs: 90.0
+Name: grahamka
+Brand: grahamka
+Package has: 80.0
+Macro for: 80.0
+KCal: 120.0
+Protein: 20.0
+Fat: 10.0
+Carbs: 90.0
+Name: GRAHAMKA
+Brand: GRAHAMKA
+Package has: 1.0
+Macro for: 1.0
+KCal: 1.0
+Protein: 1.0
+Fat: 1.0
+Carbs: 1.0
+Name: grahamka
+Brand: grahamka2
+Package has: 1.0
+Macro for: 1.0
+KCal: 2.0
+Protein: 3.0
+Fat: 4.0
+Carbs: 5.0

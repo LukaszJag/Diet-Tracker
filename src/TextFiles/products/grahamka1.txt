@@ -1,0 +1,16 @@
+Name: grahamka1
+Brand: grahamka2
+Package has: 1.0
+Macro for: 1.0
+KCal: 1.0
+Protein: 1.0
+Fat: 1.0
+Carbs: 1.0
+Name: grahamka1
+Brand: grahamka2
+Package has: 1.0
+Macro for: 1.0
+KCal: 1.0
+Protein: 1.0
+Fat: 1.0
+Carbs: 1.0

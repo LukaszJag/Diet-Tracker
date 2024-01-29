@@ -1,13 +1,16 @@
 package GUI;
 
 import Ganeral.Config;
+import SQL_Tools.InsertProductToSQL_Table;
 import products_tools.Macro;
 import products_tools.Product;
+import text_files_tools.MakeFoldersAndTextFile;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 
 public class AddProductWindow {
 
@@ -195,8 +198,14 @@ public class AddProductWindow {
 
                 Macro newProductMacro = new Macro(Float.parseFloat(kCal), Float.parseFloat(protein),
                         Float.parseFloat(fat), Float.parseFloat(carbs));
-                Product newProduct = new Product(name, brand, newProductMacro, Float.parseFloat(packageHas));
-                newProduct.makeTextFileForProduct(newProduct, Float.parseFloat(packageHas));
+                Product newProduct = new Product(name, brand, Float.parseFloat(macroFor.substring(0,2)), newProductMacro, Float.parseFloat(packageHas));
+                MakeFoldersAndTextFile.makeTextFileForProduct(newProduct, Float.parseFloat(packageHas));
+
+                try {
+                    InsertProductToSQL_Table.insertProduct(newProduct);
+                } catch (SQLException ex) {
+                    throw new RuntimeException(ex);
+                }
                 JOptionPane.showMessageDialog(null, "Product add to library");
 
 

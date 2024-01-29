@@ -1,3 +1,5 @@
+package SQL_Tools;
+
 import java.sql.*;
 
 public class TestMyJDBC {

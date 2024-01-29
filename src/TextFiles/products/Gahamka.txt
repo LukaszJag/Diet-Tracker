@@ -1,0 +1,8 @@
+Name: Gahamka
+Brand: Grahamka
+Package has: 80.0
+Macro for: 80.0
+KCal: 120.0
+Protein: 20.0
+Fat: 10.0
+Carbs: 90.0

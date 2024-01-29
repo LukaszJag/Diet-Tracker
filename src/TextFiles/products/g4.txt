@@ -1,0 +1,8 @@
+Name: g4
+Brand: g3
+Package has: 1.0
+Macro for: 1.0
+KCal: 2.0
+Protein: 3.0
+Fat: 4.0
+Carbs: 5.0
