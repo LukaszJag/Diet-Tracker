@@ -1,6 +1,6 @@
-package GUI;
+package gui;
 
-import Ganeral.Config;
+import configuration.Config;
 
 import javax.swing.*;
 import java.awt.*;

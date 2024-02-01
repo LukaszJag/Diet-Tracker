@@ -1,4 +1,4 @@
-package SQL_Tools;
+package sql_tools;
 
 import java.sql.*;
 

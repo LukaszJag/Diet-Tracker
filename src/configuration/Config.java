@@ -1,4 +1,4 @@
-package Ganeral;
+package configuration;
 public class Config {
 
     public static final int START_WINDOWS_WIDTH = 700;

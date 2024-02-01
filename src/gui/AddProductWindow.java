@@ -1,7 +1,7 @@
-package GUI;
+package gui;
 
-import Ganeral.Config;
-import SQL_Tools.InsertProductToSQL_Table;
+import configuration.Config;
+import sql_tools.InsertProductToSQL_Table;
 import products_tools.Macro;
 import products_tools.Product;
 import text_files_tools.MakeFoldersAndTextFile;
@@ -14,7 +14,6 @@ import java.sql.SQLException;
 
 public class AddProductWindow {
 
-    Test test = new Test();
     JPanel addProductMainPanel = new JPanel();
     JPanel addProductPanelNorth = new JPanel();
     JPanel addProductPanelWest = new JPanel();

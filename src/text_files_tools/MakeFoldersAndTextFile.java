@@ -1,6 +1,6 @@
 package text_files_tools;
 
-import Ganeral.Config;
+import configuration.Config;
 import products_tools.Product;
 
 import java.io.BufferedWriter;
@@ -24,22 +24,22 @@ public class MakeFoldersAndTextFile {
     }
 
     public static void makeTextFileForProduct(Product product, float macroFor) {
-        String fileName = product.getName();;
+        String fileName = product.getProductName();;
         MakeFoldersAndTextFile.makeEmptyFile(fileName, Config.DESTINATION_FOR_TEXT_FILE_PRODUCTS);
 
 
         try {
-            MakeFoldersAndTextFile.writeProductToFile("Name: " + product.getName(), fileName);
-            MakeFoldersAndTextFile.writeProductToFile("Brand: " + product.getBrand(), fileName);
-            MakeFoldersAndTextFile.writeProductToFile("Package has: " + product.getWeight_of_pack(), fileName);
+            MakeFoldersAndTextFile.writeProductToFile("Name: " + product.getProductName(), fileName);
+            MakeFoldersAndTextFile.writeProductToFile("Brand: " + product.getProductBrand(), fileName);
+            MakeFoldersAndTextFile.writeProductToFile("Package has: " + product.getProductPackWeight(), fileName);
 
             MakeFoldersAndTextFile.writeProductToFile("Macro for: " + macroFor, fileName);
 
-            MakeFoldersAndTextFile.writeProductToFile("KCal: " + product.getProduct_macro().getKcal(), fileName);
-            MakeFoldersAndTextFile.writeProductToFile("Protein: " + product.getProduct_macro().getProtein(), fileName);
-            MakeFoldersAndTextFile.writeProductToFile("Fat: " + product.getProduct_macro().getFat(), fileName);
+            MakeFoldersAndTextFile.writeProductToFile("KCal: " + product.getProductMacroForItsMeasure().getKcal(), fileName);
+            MakeFoldersAndTextFile.writeProductToFile("Protein: " + product.getProductMacroForItsMeasure().getProtein(), fileName);
+            MakeFoldersAndTextFile.writeProductToFile("Fat: " + product.getProductMacroForItsMeasure().getFat(), fileName);
 
-            MakeFoldersAndTextFile.writeProductToFile("Carbs: " + product.getProduct_macro().getCarbs(), fileName);
+            MakeFoldersAndTextFile.writeProductToFile("Carbs: " + product.getProductMacroForItsMeasure().getCarbs(), fileName);
 
 
         } catch (IOException ex) {

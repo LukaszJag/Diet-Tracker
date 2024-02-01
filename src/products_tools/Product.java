@@ -1,70 +1,61 @@
 package products_tools;
 
-import Ganeral.Config;
-import text_files_tools.MakeFoldersAndTextFile;
-
-import java.io.IOException;
-
 public class Product {
 
     // Values
 
-    private float macroFor;
-    private Macro product_macro;
-
-    private float weight_of_pack;
+    private String productName;
+    private float productMacroForThisMeasure;
+    private Macro productMacroForItsMeasure;
+    private String productBrand;
+    private float productPackWeight;
 
     // Constructors
     public Product(String name, String brand, float macroFor, Macro product_macro, float weight_of_pack){
-        this.fileName = name;
-        this.brand = brand;
-        this.product_macro = product_macro;
-        this.weight_of_pack = weight_of_pack;
+        this.productName = name;
+        this.productBrand = brand;
+        this.productMacroForItsMeasure = product_macro;
+        this.productPackWeight = weight_of_pack;
     }
 
-    private String fileName;
-
-    private String brand;
-
-    public float getMacroFor() {
-        return macroFor;
+    // Getters and Setters
+    public String getProductName() {
+        return productName;
     }
 
-    public void setMacroFor(float macroFor) {
-        this.macroFor = macroFor;
+    public void setProductName(String productName) {
+        this.productName = productName;
     }
 
-
-    public String getName() {
-        return fileName;
+    public float getProductMacroForThisMeasure() {
+        return productMacroForThisMeasure;
     }
 
-    public void setName(String name) {
-        this.fileName = name;
+    public void setProductMacroForThisMeasure(float productMacroForThisMeasure) {
+        this.productMacroForThisMeasure = productMacroForThisMeasure;
     }
 
-    public String getBrand() {
-        return brand;
+    public Macro getProductMacroForItsMeasure() {
+        return productMacroForItsMeasure;
     }
 
-    public void setBrand(String brand) {
-        this.brand = brand;
+    public void setProductMacroForItsMeasure(Macro productMacroForItsMeasure) {
+        this.productMacroForItsMeasure = productMacroForItsMeasure;
     }
 
-    public Macro getProduct_macro() {
-        return product_macro;
+    public String getProductBrand() {
+        return productBrand;
     }
 
-    public void setProduct_macro(Macro product_macro) {
-        this.product_macro = product_macro;
+    public void setProductBrand(String productBrand) {
+        this.productBrand = productBrand;
     }
 
-    public float getWeight_of_pack() {
-        return weight_of_pack;
+    public float getProductPackWeight() {
+        return productPackWeight;
     }
 
-    public void setWeight_of_pack(float weight_of_pack) {
-        this.weight_of_pack = weight_of_pack;
+    public void setProductPackWeight(float productPackWeight) {
+        this.productPackWeight = productPackWeight;
     }
-
 }

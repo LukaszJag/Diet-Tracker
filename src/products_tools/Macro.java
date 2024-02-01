@@ -4,7 +4,6 @@ public class Macro {
     // Values
     private float kcal;
     private float protein;
-
     private float fat;
     private float carbs;
 
