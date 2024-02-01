@@ -7,6 +7,14 @@ import java.io.IOException;
 
 public class Product {
 
+    // Values
+
+    private float macroFor;
+    private Macro product_macro;
+
+    private float weight_of_pack;
+
+    // Constructors
     public Product(String name, String brand, float macroFor, Macro product_macro, float weight_of_pack){
         this.fileName = name;
         this.brand = brand;
@@ -26,10 +34,7 @@ public class Product {
         this.macroFor = macroFor;
     }
 
-    private float macroFor;
-    private Macro product_macro;
 
-    private float weight_of_pack;
     public String getName() {
         return fileName;
     }

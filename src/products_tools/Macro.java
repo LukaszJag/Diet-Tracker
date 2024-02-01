@@ -1,9 +1,22 @@
 package products_tools;
 
 public class Macro {
+    // Values
     private float kcal;
     private float protein;
 
+    private float fat;
+    private float carbs;
+
+    // Constructors
+    public Macro(float kcal, float protein, float fat, float carbs){
+        this.kcal = kcal;
+        this.protein = protein;
+        this.fat = fat;
+        this.carbs = carbs;
+    }
+
+    // Getters and Setters
     public float getKcal() {
         return kcal;
     }
@@ -35,16 +48,4 @@ public class Macro {
     public void setCarbs(float carbs) {
         this.carbs = carbs;
     }
-
-    private float fat;
-    private float carbs;
-
-    public Macro(float kcal, float protein, float fat, float carbs){
-        this.kcal = kcal;
-        this.protein = protein;
-        this.fat = fat;
-        this.carbs = carbs;
-    }
-
-
 }

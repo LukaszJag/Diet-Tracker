@@ -1,5 +1,3 @@
-import products_tools.DishSingleProduct;
-
 public class Test1 {
     public static void main(String[] args) {
         DishSingleProduct[] dishSingleProduct = new DishSingleProduct[10];
