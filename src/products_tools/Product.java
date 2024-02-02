@@ -1,12 +1,14 @@
 package products_tools;
 
+import configuration.Config;
+
 public class Product {
 
     // Values
 
     private String productName;
-    private float productMacroForThisMeasure;
-    private Macro productMacroForItsMeasure;
+    private float productMeasureOfProductWeightToCalculateMacro;
+    private Macro productMacroForItsSetMeasure;
     private String productBrand;
     private float productPackWeight;
 
@@ -14,8 +16,23 @@ public class Product {
     public Product(String name, String brand, float macroFor, Macro product_macro, float weight_of_pack){
         this.productName = name;
         this.productBrand = brand;
-        this.productMacroForItsMeasure = product_macro;
+        this.productMacroForItsSetMeasure = product_macro;
         this.productPackWeight = weight_of_pack;
+    }
+
+    public String[] productDataInStringArray(Product productWithData){
+        String[] productDataStringArray = new String[Config.ALL_PRODUCT_VALUES_FIELD_COUNT];
+
+        // Set values to array
+        productDataStringArray[0] = productWithData.getProductName();
+        productDataStringArray[1] = productWithData.getProductBrand();
+        productDataStringArray[2] = String.valueOf(productWithData.getProductPackWeight() + "f");
+
+        /*
+            UNDONE CODE NEED TO SET OTHER VALUES AND RETURN IT
+         */
+
+        return null;
     }
 
     // Getters and Setters
@@ -27,20 +44,20 @@ public class Product {
         this.productName = productName;
     }
 
-    public float getProductMacroForThisMeasure() {
-        return productMacroForThisMeasure;
+    public float getProductMeasureOfProductWeightToCalculateMacro() {
+        return productMeasureOfProductWeightToCalculateMacro;
     }
 
-    public void setProductMacroForThisMeasure(float productMacroForThisMeasure) {
-        this.productMacroForThisMeasure = productMacroForThisMeasure;
+    public void setProductMeasureOfProductWeightToCalculateMacro(float productMeasureOfProductWeightToCalculateMacro) {
+        this.productMeasureOfProductWeightToCalculateMacro = productMeasureOfProductWeightToCalculateMacro;
     }
 
-    public Macro getProductMacroForItsMeasure() {
-        return productMacroForItsMeasure;
+    public Macro getProductMacroForItsSetMeasure() {
+        return productMacroForItsSetMeasure;
     }
 
-    public void setProductMacroForItsMeasure(Macro productMacroForItsMeasure) {
-        this.productMacroForItsMeasure = productMacroForItsMeasure;
+    public void setProductMacroForItsSetMeasure(Macro productMacroForItsSetMeasure) {
+        this.productMacroForItsSetMeasure = productMacroForItsSetMeasure;
     }
 
     public String getProductBrand() {

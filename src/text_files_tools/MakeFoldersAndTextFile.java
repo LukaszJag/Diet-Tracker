@@ -35,11 +35,11 @@ public class MakeFoldersAndTextFile {
 
             MakeFoldersAndTextFile.writeProductToFile("Macro for: " + macroFor, fileName);
 
-            MakeFoldersAndTextFile.writeProductToFile("KCal: " + product.getProductMacroForItsMeasure().getKcal(), fileName);
-            MakeFoldersAndTextFile.writeProductToFile("Protein: " + product.getProductMacroForItsMeasure().getProtein(), fileName);
-            MakeFoldersAndTextFile.writeProductToFile("Fat: " + product.getProductMacroForItsMeasure().getFat(), fileName);
+            MakeFoldersAndTextFile.writeProductToFile("KCal: " + product.getProductMacroForItsSetMeasure().getKcal(), fileName);
+            MakeFoldersAndTextFile.writeProductToFile("Protein: " + product.getProductMacroForItsSetMeasure().getProtein(), fileName);
+            MakeFoldersAndTextFile.writeProductToFile("Fat: " + product.getProductMacroForItsSetMeasure().getFat(), fileName);
 
-            MakeFoldersAndTextFile.writeProductToFile("Carbs: " + product.getProductMacroForItsMeasure().getCarbs(), fileName);
+            MakeFoldersAndTextFile.writeProductToFile("Carbs: " + product.getProductMacroForItsSetMeasure().getCarbs(), fileName);
 
 
         } catch (IOException ex) {
