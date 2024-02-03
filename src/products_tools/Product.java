@@ -13,7 +13,7 @@ public class Product {
     private float productPackWeight;
 
     // Constructors
-    public Product(String name, String brand, float macroFor, Macro product_macro, float weight_of_pack){
+    public Product(String name, String brand, float productMeasureOfProductWeightToCalculateMacro, Macro product_macro, float weight_of_pack){
         this.productName = name;
         this.productBrand = brand;
         this.productMacroForItsSetMeasure = product_macro;
@@ -23,16 +23,19 @@ public class Product {
     public String[] productDataInStringArray(Product productWithData){
         String[] productDataStringArray = new String[Config.ALL_PRODUCT_VALUES_FIELD_COUNT];
 
-        // Set values to array
+        // Set values to array - no numeric
         productDataStringArray[0] = productWithData.getProductName();
         productDataStringArray[1] = productWithData.getProductBrand();
-        productDataStringArray[2] = String.valueOf(productWithData.getProductPackWeight() + "f");
 
-        /*
-            UNDONE CODE NEED TO SET OTHER VALUES AND RETURN IT
-         */
+        // Set values to array - numeric
+        productDataStringArray[2] = String.valueOf(productWithData.getProductPackWeight());
+        productDataStringArray[3] = String.valueOf(productWithData.getProductMeasureOfProductWeightToCalculateMacro());
+        productDataStringArray[4] = String.valueOf(productWithData.getProductMacroForItsSetMeasure().getKcal());
+        productDataStringArray[5] = String.valueOf(productWithData.getProductMacroForItsSetMeasure().getProtein());
+        productDataStringArray[6] = String.valueOf(productWithData.getProductMacroForItsSetMeasure().getFat());
+        productDataStringArray[7] = String.valueOf(productWithData.getProductMacroForItsSetMeasure().getCarbs());
 
-        return null;
+        return productDataStringArray;
     }
 
     // Getters and Setters

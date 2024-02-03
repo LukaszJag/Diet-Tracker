@@ -11,10 +11,10 @@ public class Config {
     public static final int ADD_PRODUCT_PANELS_CENTER = 20;
     public static final int ADD_PRODUCT_PANELS_WEST_EAST_SIZE = 80;
     public static final int ADD_PRODUCT_PANELS_SOUTH_SIZE = 100;
-    public static final int howManyParametersToAddProduct = 7;
+    public static final int howManyParametersToAddProduct = 8;
 
     // File R/W Configuration
-    public static final String DESTINATION_FOR_TEXT_FILE_PRODUCTS = "src/TextFiles/products/";
+    public static final String DESTINATION_FOR_TEXT_FILE_PRODUCTS = "src/text_files/products/";
     public static final String DESTINATION_FOR_TEXT_FILE_DAYS = "src/TextFiles/days";
 
     // SQL Configuration

@@ -10,7 +10,7 @@ import java.sql.SQLException;
 public class InsertProductToSQL_Table {
     public static void insertProduct(Product product) throws SQLException {
         Connection connection = GetConnection.getConnectionWithLocalHost();
-        String sql = makeInsertSQLQueryForProduct(product);
+        String sql = createInsertSQLQueryForProductTable(product);
         PreparedStatement preparedStatement = connection.prepareStatement(sql);
         preparedStatement.execute(sql);
     }
@@ -23,26 +23,36 @@ public class InsertProductToSQL_Table {
 
         // Set columns name in query
         for (int i = 0; i < Config.SQL_COLUMNS_FOR_INSERT_INTO_PRODUCT_TABLE.length; i++) {
-            sqlStatement += Config.SQL_COLUMNS_FOR_INSERT_INTO_PRODUCT_TABLE[i] + ",\n";
+
+            sqlStatement += Config.SQL_COLUMNS_FOR_INSERT_INTO_PRODUCT_TABLE[i];
+
+            if (i == Config.SQL_COLUMNS_FOR_INSERT_INTO_PRODUCT_TABLE.length - 1){
+                sqlStatement += ")";
+            }else {
+                sqlStatement += ",\n";
+            }
         }
 
         // Set Values verse
-        sqlStatement += "Values\n(";
+        sqlStatement += "\nValues\n(";
 
-        for (int i = 0; i < ; i++) {
-            
+        String[] productDataInArray = productToInsert.productDataInStringArray(productToInsert);
+        // Useless loop
+        for (int i = 0; i < Config.howManyParametersToAddProduct; i++) {
+
+            // Take care to float value ends with .f
+            if(i == 0 || i == 1) {
+                sqlStatement += "'" + productDataInArray[i] + "'";
+            }else{
+                sqlStatement += productDataInArray[i];
+            }
+
+            if (i != Config.SQL_COLUMNS_FOR_INSERT_INTO_PRODUCT_TABLE.length - 1){
+                sqlStatement += ",\n";
+            }
         }
-                
+
+        sqlStatement += ");";
         return  sqlStatement;
     }
-
-    public static String makeInsertSQLQueryForProduct(Product product){
-        String insertSQLQuerry =" INSERT INTO `products`.`dietproducts`" +
-                "(`Product_Name`,`Product_Brand`,`Package_Has`,`Macro_For`,`Kcal`,`Protein`,`Fat`,`Carbs`)"
-        + "VALUES" +"('" + product.getProductName() + "',\"'" + product.getProductBrand() + "`,\"" + product.getProductPackWeight() + "f,\"" + "100.0f,\""
-        + product.getProductMacroForItsSetMeasure().getKcal() +",\"" + product.getProductMacroForItsSetMeasure().getProtein()+ ",\""
-                + product.getProductMacroForItsSetMeasure().getFat()+ ",\"" + product.getProductMacroForItsSetMeasure().getCarbs() + ");";
-        return insertSQLQuerry;
-    }
-
 }
