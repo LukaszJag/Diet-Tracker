@@ -1,0 +1,8 @@
+Name: Test 3
+Brand: 4.2.24
+Package has: 200.0
+Macro for: 200.0
+KCal: 200.0
+Protein: 200.0
+Fat: 200.0
+Carbs: 200.0

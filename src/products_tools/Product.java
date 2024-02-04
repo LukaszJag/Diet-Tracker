@@ -16,6 +16,7 @@ public class Product {
     public Product(String name, String brand, float productMeasureOfProductWeightToCalculateMacro, Macro product_macro, float weight_of_pack){
         this.productName = name;
         this.productBrand = brand;
+        this.productMeasureOfProductWeightToCalculateMacro = productMeasureOfProductWeightToCalculateMacro;
         this.productMacroForItsSetMeasure = product_macro;
         this.productPackWeight = weight_of_pack;
     }

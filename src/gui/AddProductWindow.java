@@ -67,7 +67,7 @@ public class AddProductWindow {
         JLabel productNameLabel = new JLabel("Name:");
         JLabel productBrandLabel = new JLabel("Brand:");
         JLabel productPackageHasLabel = new JLabel("Product has[g]:");
-        JLabel productMacroForLabel = new JLabel("Product for[g]/pack");
+        JLabel productMacroForLabel = new JLabel("Product Macro for[g]/pack");
         JLabel productKCalLabel = new JLabel("KCal[g]:");
         JLabel productProteinLabel = new JLabel("Protein[g]:");
         JLabel productFatLabel = new JLabel("Fat[g]:");
@@ -140,6 +140,11 @@ public class AddProductWindow {
                 fat = productFatTextField.getText();
                 carbs = productCarbsTextField.getText();
 
+                if(macroFor.equals("package")){
+                    macroFor = packageHas;
+                }else {
+                    macroFor = "100";
+                }
 
                 try {
                     addNewProductData[0] = name;
@@ -197,7 +202,7 @@ public class AddProductWindow {
 
                 Macro newProductMacro = new Macro(Float.parseFloat(kCal), Float.parseFloat(protein),
                         Float.parseFloat(fat), Float.parseFloat(carbs));
-                Product newProduct = new Product(name, brand, Float.parseFloat(macroFor.substring(0,2)), newProductMacro, Float.parseFloat(packageHas));
+                Product newProduct = new Product(name, brand, Float.parseFloat(macroFor), newProductMacro, Float.parseFloat(packageHas));
                 MakeFoldersAndTextFile.makeTextFileForProduct(newProduct, Float.parseFloat(packageHas));
 
                 try {
