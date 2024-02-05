@@ -1,0 +1,19 @@
+Core:
+
+    - fridge:
+
+        - ...
+
+    - days:
+
+        - made of products eaten that day
+
+        - have own macro
+
+        - have meals
+
+
+
+1 - make parent class window for other class to extend
+
+2 - consider how to define dish, singleDish, and parent in clean form

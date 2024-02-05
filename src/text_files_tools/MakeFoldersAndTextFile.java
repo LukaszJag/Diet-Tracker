@@ -8,6 +8,8 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
+import static java.nio.file.Files.exists;
+
 public class MakeFoldersAndTextFile {
     public static void makeEmptyFile(String newFileName, String destination) {
         try {
@@ -52,6 +54,22 @@ public class MakeFoldersAndTextFile {
             path = Config.DESTINATION_FOR_TEXT_FILE_DAYS;
         }
     }
+
+    public static void writeSQLStatementToTXTFile(String lineToWriteToFile) throws IOException {
+        int counter = 1;
+        File file = new File(Config.DESTINATION_FOR_SQL_QUERIES_TO_TEXT_FILE + "_" + String.valueOf(counter) + ".txt");
+
+        while(file.exists()){
+            counter++;
+            file = new File(Config.DESTINATION_FOR_SQL_QUERIES_TO_TEXT_FILE + "_" + String.valueOf(counter) + ".txt");
+        }
+
+        BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file, true));
+        bufferedWriter.append(lineToWriteToFile);
+        bufferedWriter.append("\n");
+        bufferedWriter.close();
+    }
+
 
     public static void writeProductToFile(String lineToWriteToFile, String fileName) throws IOException {
         BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(Config.DESTINATION_FOR_TEXT_FILE_PRODUCTS + fileName + ".txt", true));

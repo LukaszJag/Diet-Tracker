@@ -15,7 +15,8 @@ public class Config {
 
     // File R/W Configuration
     public static final String DESTINATION_FOR_TEXT_FILE_PRODUCTS = "src/text_files/products/";
-    public static final String DESTINATION_FOR_TEXT_FILE_DAYS = "src/TextFiles/days";
+    public static final String DESTINATION_FOR_TEXT_FILE_DAYS = "src/text_files/days/";
+    public static final String DESTINATION_FOR_SQL_QUERIES_TO_TEXT_FILE = "src/text_files/sql_queries/";
 
     // SQL Configuration
     public static final String[] SQL_COLUMNS_FOR_INSERT_INTO_PRODUCT_TABLE = {"`product_name`", "`product_brand`", "`product_package_has`",
