@@ -1,8 +1,0 @@
-Name: Test - 2
-Brand: 3.2.24
-Package has: 100.0
-Macro for: 100.0
-KCal: 100.0
-Protein: 100.0
-Fat: 100.0
-Carbs: 100.0
