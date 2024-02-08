@@ -1,0 +1,8 @@
+Name: Jogurt brzoskwinia
+Brand: Fruvita
+Package has: 400.0
+Macro for: 400.0
+KCal: 100.0
+Protein: 3.5
+Fat: 2.6
+Carbs: 14.8

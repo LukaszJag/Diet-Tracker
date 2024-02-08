@@ -1,0 +1,8 @@
+Name: Sos 1000 wysp
+Brand: Madero
+Package has: 410.0
+Macro for: 410.0
+KCal: 271.0
+Protein: 0.7
+Fat: 25.0
+Carbs: 11.0

@@ -1,0 +1,8 @@
+Name: Jogurt owoce leśne
+Brand: Fruvita
+Package has: 400.0
+Macro for: 400.0
+KCal: 87.0
+Protein: 2.7
+Fat: 2.5
+Carbs: 13.4

@@ -1,0 +1,8 @@
+Name: Pasztet z pomidorami
+Brand: Podlaski
+Package has: 100.0
+Macro for: 100.0
+KCal: 170.0
+Protein: 7.4
+Fat: 13.0
+Carbs: 5.4

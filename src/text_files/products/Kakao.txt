@@ -1,0 +1,8 @@
+Name: Kakao
+Brand: Deco Morreno
+Package has: 150.0
+Macro for: 150.0
+KCal: 309.0
+Protein: 24.0
+Fat: 11.0
+Carbs: 13.0

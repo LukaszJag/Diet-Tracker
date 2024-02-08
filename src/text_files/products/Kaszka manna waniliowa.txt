@@ -1,0 +1,8 @@
+Name: Kaszka manna waniliowa
+Brand: Dr. Oetker
+Package has: 47.5
+Macro for: 47.5
+KCal: 89.0
+Protein: 2.6
+Fat: 0.3
+Carbs: 18.0
