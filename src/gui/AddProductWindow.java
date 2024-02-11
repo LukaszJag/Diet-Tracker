@@ -59,7 +59,7 @@ public class AddProductWindow {
 
         addProductPanelWest.setPreferredSize(new Dimension(Config.ADD_PRODUCT_PANELS_WEST_EAST_SIZE, Config.ADD_PRODUCT_PANELS_WEST_EAST_SIZE));
         addProductPanelSouth.setPreferredSize(new Dimension(Config.ADD_PRODUCT_PANELS_SOUTH_SIZE, Config.ADD_PRODUCT_PANELS_SOUTH_SIZE));
-        
+
         String macroOption[] = {"100g", "package"};
         productMacroForComboBox = new JComboBox<>(macroOption);
 

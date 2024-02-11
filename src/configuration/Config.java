@@ -1,4 +1,8 @@
 package configuration;
+
+import java.awt.*;
+import java.util.Date;
+
 public class Config {
 
     // GUI Configuration
@@ -15,14 +19,23 @@ public class Config {
     public static final int ADD_PRODUCT_PANELS_SOUTH_SIZE = 100;
     public static final int howManyParametersToAddProduct = 8;
 
-    // Add Product To Day Windows Configuration
+    // Add Product To Day Windows Configuration - Window, Panels - size
     public static final int ADD_PRODUCT_TO_DAY_WINDOWS_WIDTH = 600;
     public static final int ADD_PRODUCT_TO_DAY_WINDOWS_HEIGHT = 400;
-    public static final int ADD_PRODUCT_TO_DAY_TEXT_FIELD_SIZE = 10;
     public static final int ADD_PRODUCT_TO_DAY_PANELS_NORTH_SIZE = 50;
     public static final int ADD_PRODUCT_TO_DAY_PANELS_CENTER = 20;
     public static final int ADD_PRODUCT_TO_DAY_PANELS_WEST_EAST_SIZE = 80;
     public static final int ADD_PRODUCT_TO_DAY_PANELS_SOUTH_SIZE = 100;
+
+    // Add Product To Day Windows Configuration - Panel, Label - Colors
+    public static final Color dateTimeLabels = Color.WHITE;
+    // Add Product To Day Windows Configuration - Get Date
+    public static final Date date = new Date();
+    public static final int ADD_PRODUCT_TO_DAY_TEXT_FIELD_SIZE = 10;
+
+
+
+
 
     // File R/W Configuration
     public static final String DESTINATION_FOR_TEXT_FILE_PRODUCTS = "src/text_files/products/";
