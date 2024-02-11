@@ -74,6 +74,10 @@ public class MainWindow extends JFrame {
         Button mealManagerButton = new Button("Meal manager");
         mealManagerButton.addActionListener(new MealMangerButton());
         panelLeft.add(mealManagerButton);
+
+        Button addProductToDay =new Button("Add product to day");
+        addProductToDay.addActionListener(new AddProducttoDayButton());
+        panelLeft.add(addProductToDay);
     }
 
     private void addLabels(){
@@ -95,6 +99,13 @@ public class MainWindow extends JFrame {
         @Override
         public void actionPerformed(ActionEvent e) {
             new MealManagerWindow();
+        }
+    }
+
+    private class AddProducttoDayButton implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            JOptionPane.showMessageDialog(null,"Welcome in Add Product to Day");
         }
     }
 }

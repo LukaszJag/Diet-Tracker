@@ -46,19 +46,6 @@ public class AddProductWindow {
         addProductPanelSouth.add(acceptButton);
         acceptButton.addActionListener(new AddNewProductButtonActionListener());
 
-        addProductWindowFrame.add(addProductPanelNorth, BorderLayout.NORTH);
-        addProductWindowFrame.add(addProductPanelWest, BorderLayout.WEST);
-        addProductWindowFrame.add(addProductMainPanel, BorderLayout.CENTER);
-        addProductWindowFrame.add(addProductPanelEast, BorderLayout.EAST);
-        addProductWindowFrame.add(addProductPanelSouth, BorderLayout.SOUTH);
-
-        addProductPanelNorth.setPreferredSize(new Dimension(Config.ADD_PRODUCT_PANELS_NORTH_SIZE, Config.ADD_PRODUCT_PANELS_NORTH_SIZE));
-        addProductPanelEast.setPreferredSize(new Dimension(Config.ADD_PRODUCT_PANELS_WEST_EAST_SIZE, Config.ADD_PRODUCT_PANELS_WEST_EAST_SIZE));
-
-        addProductMainPanel.setPreferredSize(new Dimension(Config.ADD_PRODUCT_PANELS_CENTER, Config.ADD_PRODUCT_PANELS_CENTER));
-
-        addProductPanelWest.setPreferredSize(new Dimension(Config.ADD_PRODUCT_PANELS_WEST_EAST_SIZE, Config.ADD_PRODUCT_PANELS_WEST_EAST_SIZE));
-        addProductPanelSouth.setPreferredSize(new Dimension(Config.ADD_PRODUCT_PANELS_SOUTH_SIZE, Config.ADD_PRODUCT_PANELS_SOUTH_SIZE));
 
         String macroOption[] = {"100g", "package"};
         productMacroForComboBox = new JComboBox<>(macroOption);
@@ -115,7 +102,9 @@ public class AddProductWindow {
         addProductWindowFrame.setVisible(true);
     }
 
+    private void setPanels(){
 
+    }
     public class AddNewProductButtonActionListener implements ActionListener {
 
         @Override
