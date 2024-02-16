@@ -7,7 +7,7 @@ import java.io.IOException;
 
 public class Test_SQL_Statement_To_Txt {
     public static void main(String[] args) throws IOException {
-        System.out.println(InsertProductToSQL_Table.createInsertSQLQueryForProductTable(TestProductFactory.productBarExample()));
-        MakeFoldersAndTextFile.writeSQLStatementToTXTFile(InsertProductToSQL_Table.createInsertSQLQueryForProductTable(TestProductFactory.productBarExample()));
+        System.out.println(InsertProductToSQL_Table.createInsertSQLQueryForProductTable(ProductFactoryToMakeTests.productBarExample()));
+        MakeFoldersAndTextFile.writeSQLStatementToTXTFile(InsertProductToSQL_Table.createInsertSQLQueryForProductTable(ProductFactoryToMakeTests.productBarExample()));
     }
 }

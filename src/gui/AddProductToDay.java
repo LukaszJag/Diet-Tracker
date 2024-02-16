@@ -6,6 +6,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
 
 public class AddProductToDay {
     JPanel addProductToDayMainPanel = new JPanel();
@@ -60,9 +61,15 @@ public class AddProductToDay {
         addProductToDayFrame.add(addProductToDayPanelEast, BorderLayout.EAST);
         addProductToDayFrame.add(addProductToDayPanelSouth, BorderLayout.SOUTH);
 
+        // Add Labels
+        addProductToDayCurrentDateTextLabel.setForeground(Config.dateTimeLabels);
+        addProductToDayCurrentDateLabel.setForeground(Config.dateTimeLabels);
 
-        addProductToDayPanelWest.add(addProductToDayCurrentDateTextLabel);
-        addProductToDayPanelWest.add(addProductToDayCurrentDateLabel);
+        addProductToDayCurrentDateLabel.setText(new SimpleDateFormat("dd-MM-yyyy").format(Config.date));
+
+
+        addProductToDayPanelNorth.add(addProductToDayCurrentDateTextLabel);
+        addProductToDayPanelNorth.add(addProductToDayCurrentDateLabel);
 
         addProductToDayFrame.setResizable(false);
         addProductToDayFrame.setLocale(null);

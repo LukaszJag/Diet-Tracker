@@ -1,0 +1,70 @@
+---- USEFUL QUERIES ----
+
+
+--------------------------------------------------------------------
+1. Use Database:
+
+use diet_tracker_schema;
+
+--------------------------------------------------------------------
+2. SELECT:
+
+SELECT * FROM product_table;
+
+SELECT * FROM calendar_test;
+
+--------------------------------------------------------------------
+3. CREATE TABLE:
+
+CREATE TABLE `calendar_test` (
+  `date` date NOT NULL,
+  `day_name` varchar(45) NOT NULL,
+  `other_info` varchar(45) NOT NULL,
+  PRIMARY KEY (`date`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+CREATE TABLE `product_table` (
+  `product_name` varchar(80) NOT NULL,
+  `product_brand` varchar(80) NOT NULL,
+  `product_package_has` float NOT NULL,
+  `product_macro_for` float NOT NULL,
+  `product_kcal` float NOT NULL,
+  `product_protein` float NOT NULL,
+  `product_fat` float NOT NULL,
+  `product_carbs` float NOT NULL,
+  PRIMARY KEY (`product_name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--------------------------------------------------------------------
+4. INSERT TO TABLE:
+
+INSERT INTO `diet_tracker_schema`.`calendar_test`
+(`date`,
+`day_name`,
+`other_info`)
+VALUES
+(<{date: }>,
+<{day_name: }>,
+<{other_info: }>);
+
+
+INSERT INTO `diet_tracker_schema`.`product_table`
+(`product_name`,
+`product_brand`,
+`product_package_has`,
+`product_macro_for`,
+`product_kcal`,
+`product_protein`,
+`product_fat`,
+`product_carbs`)
+VALUES
+(<{product_name: }>,
+<{product_brand: }>,
+<{product_package_has: }>,
+<{product_macro_for: }>,
+<{product_kcal: }>,
+<{product_protein: }>,
+<{product_fat: }>,
+<{product_carbs: }>);
+--------------------------------------------------------------------
