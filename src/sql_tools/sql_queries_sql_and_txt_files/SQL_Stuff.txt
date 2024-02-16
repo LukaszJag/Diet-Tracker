@@ -43,9 +43,19 @@ jdbc:mysql://localhost:3306/javabase
 
 
 
+CREATE NEW CALENDAR DAY TEST TABLE
 
 
-
+CREATE TABLE `diet_tracker_schema`.`calendar_test` (
+  `id_day` DATE NOT NULL,
+  `product` VARCHAR(45) NOT NULL,
+  `amount_of_product` FLOAT NOT NULL,
+  `kcal` FLOAT NOT NULL,
+  `protein` FLOAT NOT NULL,
+  `fat` FLOAT NOT NULL,
+  `carbs` FLOAT NOT NULL,
+  `time_optional` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`id_day`));
 
 
 

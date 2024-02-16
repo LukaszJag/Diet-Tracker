@@ -29,9 +29,14 @@ public class Config {
     public static final String DESTINATION_FOR_TEXT_FILE_DAYS = "src/text_files/days/";
     public static final String DESTINATION_FOR_SQL_QUERIES_TO_TEXT_FILE = "src/text_files/sql_queries/";
 
-    // SQL Configuration
+    // SQL Configuration - To insert product to table
     public static final String[] SQL_COLUMNS_FOR_INSERT_INTO_PRODUCT_TABLE = {"`product_name`", "`product_brand`", "`product_package_has`",
             "`product_macro_for`", "`product_kcal`", "`product_protein`", "`product_fat`", "`product_carbs`"};
+
+    // SQL Configuration - To insert day to table
+
+    public static final String[] SQK_COLUMNS_FOR_INSERT_INTO_CALENDAR_DAY_TABLE = {"id_day", "product",
+    "amount_of_product", "kcal", "protein", "fat", "carbs", "time_optional"};
 
     // Product configuration
     public static final int ALL_PRODUCT_VALUES_FIELD_COUNT = 8;
