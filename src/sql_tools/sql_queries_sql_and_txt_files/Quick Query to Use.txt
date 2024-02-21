@@ -68,3 +68,17 @@ VALUES
 <{product_fat: }>,
 <{product_carbs: }>);
 --------------------------------------------------------------------
+
+5. Change data in TABLE:
+
+ALTER TABLE calendar_test
+ADD time_optional DATETIME;
+
+ALTER TABLE calendar_test
+DROP COLUMN other_info;
+
+ALTER TABLE calendar_test
+RENAME COLUMN date TO day_date;
+
+
+

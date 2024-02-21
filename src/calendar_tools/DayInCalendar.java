@@ -1,0 +1,116 @@
+package calendar_tools;
+
+import configuration.Config;
+import products_tools.Macro;
+import products_tools.Product;
+
+import java.util.Date;
+
+public class DayInCalendar {
+    private Date dayDate;
+    private String dayDateInString;
+    private String dayDateDayName;
+    private float dayAmountOfProduct;
+    private Product dayProductProduct;
+    private Macro dayProductMacro;
+
+    public DayInCalendar(Date dayDate, String dayDateInString,String dayDateDayName, float dayAmountOfProduct, Product dayProductProduct,
+                         Macro dayProductMacro, String dayProductOptionalTime, String dayProductOptionalComment) {
+        this.dayDate = dayDate;
+        this.dayDateInString = dayDateInString;
+        this.dayDateDayName = dayDateDayName;
+        this.dayAmountOfProduct = dayAmountOfProduct;
+        this.dayProductProduct = dayProductProduct;
+        this.dayProductMacro = dayProductMacro;
+        this.dayProductOptionalTime = dayProductOptionalTime;
+        this.dayProductOptionalComment = dayProductOptionalComment;
+    }
+
+
+    public String[]  dayDataInStringArray(DayInCalendar dayInCalendar){
+        String[] dayDataInStringArray = new String[Config.DAY_IN_CALENDAR_STRING_ARRAY_LENGTH];
+
+        dayDataInStringArray[0] = dayInCalendar.getDayDateInString();
+        dayDataInStringArray[1] = dayInCalendar.getDayDateDayName();
+        dayDataInStringArray[2] = String.valueOf(dayInCalendar.getDayAmountOfProduct());
+        dayDataInStringArray[3] = dayInCalendar.getDayProductProduct().getProductName();
+        dayDataInStringArray[4] = String.valueOf(dayInCalendar.getDayProductProduct().getProductMacroForItsSetMeasure().getKcal());
+        dayDataInStringArray[5] = String.valueOf(dayInCalendar.getDayProductProduct().getProductMacroForItsSetMeasure().getProtein());
+        dayDataInStringArray[6] = String.valueOf(dayInCalendar.getDayProductProduct().getProductMacroForItsSetMeasure().getFat());
+        dayDataInStringArray[7] = String.valueOf(dayInCalendar.getDayProductProduct().getProductMacroForItsSetMeasure().getCarbs());
+        dayDataInStringArray[8] = dayInCalendar.getDayProductOptionalTime();
+        dayDataInStringArray[9] = dayInCalendar.getDayProductOptionalComment();
+
+        return dayDataInStringArray;
+    }
+
+
+    public Date getDayDate() {
+        return dayDate;
+    }
+
+    public void setDayDate(Date dayDate) {
+        this.dayDate = dayDate;
+    }
+
+    public String getDayDateInString() {
+        return dayDateInString;
+    }
+
+    public void setDayDateInString(String dayDateInString) {
+        this.dayDateInString = dayDateInString;
+    }
+
+    public String getDayDateDayName() {
+        return dayDateDayName;
+    }
+
+    public void setDayDateDayName(String dayDateDayName) {
+        this.dayDateDayName = dayDateDayName;
+    }
+
+    public float getDayAmountOfProduct() {
+        return dayAmountOfProduct;
+    }
+
+    public void setDayAmountOfProduct(float dayAmountOfProduct) {
+        this.dayAmountOfProduct = dayAmountOfProduct;
+    }
+
+    public Product getDayProductProduct() {
+        return dayProductProduct;
+    }
+
+    public void setDayProductProduct(Product dayProductProduct) {
+        this.dayProductProduct = dayProductProduct;
+    }
+
+    public Macro getDayProductMacro() {
+        return dayProductMacro;
+    }
+
+    public void setDayProductMacro(Macro dayProductMacro) {
+        this.dayProductMacro = dayProductMacro;
+    }
+
+    public String getDayProductOptionalTime() {
+        return dayProductOptionalTime;
+    }
+
+    public void setDayProductOptionalTime(String dayProductOptionalTime) {
+        this.dayProductOptionalTime = dayProductOptionalTime;
+    }
+
+    public String getDayProductOptionalComment() {
+        return dayProductOptionalComment;
+    }
+
+    public void setDayProductOptionalComment(String dayProductOptionalComment) {
+        this.dayProductOptionalComment = dayProductOptionalComment;
+    }
+
+    private String dayProductOptionalTime;
+    private String dayProductOptionalComment;
+
+
+}
