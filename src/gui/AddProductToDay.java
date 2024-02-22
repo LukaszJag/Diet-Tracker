@@ -23,6 +23,7 @@ public class AddProductToDay {
     JButton inputCurrentDay = new JButton("Input  current day");
     JButton checkIfProductExist = new JButton("Check Product existing");
     JButton displayProductMacro = new JButton("Display Product Macro");
+    JButton importProductMacroFromLibraryButton = new JButton("Import product macro");
     JLabel dayDate = new JLabel("Day Date");
     JComboBox dayNameComboBox = new JComboBox<>(new String[]{"Monday","Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"});
 
@@ -35,8 +36,10 @@ public class AddProductToDay {
         // Set window size
         addProductToDayFrame.setSize(Config.ADD_PRODUCT_TO_DAY_WINDOWS_WIDTH, Config.ADD_PRODUCT_TO_DAY_WINDOWS_HEIGHT);
 
+        addProductToDayMainPanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+        GridLayout gridLayoutMainPanel = new GridLayout(12, 2, 10, 10);
         //Set Layout
-        addProductToDayMainPanel.setLayout(new GridLayout(10,4,10, 10));
+        addProductToDayMainPanel.setLayout(gridLayoutMainPanel);
         addProductToDayFrame.setLayout(new BorderLayout());
 
         // Set colors
@@ -61,13 +64,36 @@ public class AddProductToDay {
         addProductToDayPanelWest.add(inputCurrentDay);
         addProductToDayPanelEast.add(checkIfProductExist);
         addProductToDayPanelEast.add(displayProductMacro);
+        addProductToDayPanelEast.add(importProductMacroFromLibraryButton);
         addProductToDayPanelSouth.add(addProductToDayAcceptButton);
 
         // Add Components to Center Panel
+        addProductToDayMainPanel.add(new JLabel("Date:"));
+        addProductToDayMainPanel.add(new JButton("Other then current"));
+        addProductToDayMainPanel.add(new JLabel("Day name:"));
         addProductToDayMainPanel.add(dayNameComboBox);
-        addProductToDayMainPanel.add(new JLabel("TEST"));
-        addProductToDayMainPanel.add(new JLabel("TEST2"));
-        addProductToDayMainPanel.add(new JLabel("TEST3"));
+        addProductToDayMainPanel.add(new JLabel("Amount of product:"));
+        addProductToDayMainPanel.add(new JTextField());
+
+        addProductToDayMainPanel.add(new JLabel("Amount of product:"));
+        addProductToDayMainPanel.add(new JTextField());
+        addProductToDayMainPanel.add(new JLabel("Product name:"));
+        addProductToDayMainPanel.add(new JTextField());
+        addProductToDayMainPanel.add(new JLabel("Kcal:"));
+        addProductToDayMainPanel.add(new JTextField());
+        addProductToDayMainPanel.add(new JLabel("Protein:"));
+        addProductToDayMainPanel.add(new JTextField());
+        addProductToDayMainPanel.add(new JLabel("Fat:"));
+        addProductToDayMainPanel.add(new JTextField());
+
+        addProductToDayMainPanel.add(new JLabel("Carbs:"));
+        addProductToDayMainPanel.add(new JTextField());
+        addProductToDayMainPanel.add(new JLabel("Time(optional):"));
+        addProductToDayMainPanel.add(new JTextField());
+        addProductToDayMainPanel.add(new JLabel("Comment(optional):"));
+        addProductToDayMainPanel.add(new JTextField());
+
+
 
 
         // Add Panels to Frame
