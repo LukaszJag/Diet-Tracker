@@ -110,7 +110,7 @@ public class AddProductWindow {
 
 
         addProductWindowFrame.setResizable(false);
-        addProductWindowFrame.setLocale(null);
+        addProductWindowFrame.setLocationRelativeTo(null);
         addProductWindowFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         addProductWindowFrame.setVisible(true);
     }

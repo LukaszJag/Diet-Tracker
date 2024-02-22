@@ -5,7 +5,7 @@ import products_tools.Product;
 
 public class Calendar {
 
-    public static void addNewProductToCalendar(String dayDate, String dayName, float amountOfProduct, Product product){
+    public static void addNewRowToCalendar(String dayDate, String dayName, float amountOfProduct, Product product){
         int argumentsPassed = 0;
         int calendarSQLFieldsAmount = Config.SQL_COLUMNS_CALENDAR.length;
 

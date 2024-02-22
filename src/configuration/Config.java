@@ -25,11 +25,11 @@ public class Config {
     public static final int howManyParametersToAddProduct = 8;
 
     // Add Product To Day Windows Configuration - Window, Panels - size
-    public static final int ADD_PRODUCT_TO_DAY_WINDOWS_WIDTH = 600;
-    public static final int ADD_PRODUCT_TO_DAY_WINDOWS_HEIGHT = 400;
+    public static final int ADD_PRODUCT_TO_DAY_WINDOWS_WIDTH = 900;
+    public static final int ADD_PRODUCT_TO_DAY_WINDOWS_HEIGHT = 600;
     public static final int ADD_PRODUCT_TO_DAY_PANELS_NORTH_SIZE = 50;
     public static final int ADD_PRODUCT_TO_DAY_PANELS_CENTER = 20;
-    public static final int ADD_PRODUCT_TO_DAY_PANELS_WEST_EAST_SIZE = 80;
+    public static final int ADD_PRODUCT_TO_DAY_PANELS_WEST_EAST_SIZE = 200;
     public static final int ADD_PRODUCT_TO_DAY_PANELS_SOUTH_SIZE = 100;
 
     // Add Product To Day Windows Configuration - Panel, Label - Colors

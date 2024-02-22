@@ -14,27 +14,30 @@ public class AddProductToDay {
     JPanel addProductToDayPanelWest = new JPanel();
     JPanel addProductToDayPanelEast = new JPanel();
     JPanel addProductToDayPanelSouth = new JPanel();
-    JFrame addProductToDayFrame = new JFrame("Add Product To Day");
+    JFrame addProductToDayFrame;
     JButton addProductToDayAcceptButton = new JButton("Accept");
     JLabel addProductToDayCurrentDateTextLabel = new JLabel("CURRENT DATE:");
 
     JLabel addProductToDayCurrentDateLabel = new JLabel("dd.mm.yyyy");
+    //Add buttons
+    JButton inputCurrentDay = new JButton("Input  current day");
+    JButton checkIfProductExist = new JButton("Check Product existing");
+    JButton displayProductMacro = new JButton("Display Product Macro");
+    JLabel dayDate = new JLabel("Day Date");
+    JComboBox dayNameComboBox = new JComboBox<>(new String[]{"Monday","Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"});
 
     public AddProductToDay(){
         startAddProductToDayWindow();
     }
 
     private void startAddProductToDayWindow() {
+        addProductToDayFrame = new JFrame("Add Product To Day");
         // Set window size
         addProductToDayFrame.setSize(Config.ADD_PRODUCT_TO_DAY_WINDOWS_WIDTH, Config.ADD_PRODUCT_TO_DAY_WINDOWS_HEIGHT);
 
         //Set Layout
-        addProductToDayMainPanel.setLayout(new GridLayout(8, 2));
+        addProductToDayMainPanel.setLayout(new GridLayout(10,4,10, 10));
         addProductToDayFrame.setLayout(new BorderLayout());
-
-        // Add accept button
-        //addProductToDayPanelSouth.add(addProductToDayAcceptButton);
-        //addProductToDayAcceptButton.addActionListener(new AddProductToDayAcceptButton());
 
         // Set colors
         addProductToDayPanelNorth.setBackground(Color.BLACK);
@@ -54,6 +57,19 @@ public class AddProductToDay {
         addProductToDayPanelWest.setPreferredSize(new Dimension(Config.ADD_PRODUCT_TO_DAY_PANELS_WEST_EAST_SIZE, Config.ADD_PRODUCT_TO_DAY_PANELS_WEST_EAST_SIZE));
         addProductToDayPanelSouth.setPreferredSize(new Dimension(Config.ADD_PRODUCT_TO_DAY_PANELS_SOUTH_SIZE, Config.ADD_PRODUCT_TO_DAY_PANELS_SOUTH_SIZE));
 
+        // Add Buttons
+        addProductToDayPanelWest.add(inputCurrentDay);
+        addProductToDayPanelEast.add(checkIfProductExist);
+        addProductToDayPanelEast.add(displayProductMacro);
+        addProductToDayPanelSouth.add(addProductToDayAcceptButton);
+
+        // Add Components to Center Panel
+        addProductToDayMainPanel.add(dayNameComboBox);
+        addProductToDayMainPanel.add(new JLabel("TEST"));
+        addProductToDayMainPanel.add(new JLabel("TEST2"));
+        addProductToDayMainPanel.add(new JLabel("TEST3"));
+
+
         // Add Panels to Frame
         addProductToDayFrame.add(addProductToDayPanelNorth, BorderLayout.NORTH);
         addProductToDayFrame.add(addProductToDayPanelWest, BorderLayout.WEST);
@@ -71,8 +87,9 @@ public class AddProductToDay {
         addProductToDayPanelNorth.add(addProductToDayCurrentDateTextLabel);
         addProductToDayPanelNorth.add(addProductToDayCurrentDateLabel);
 
+        System.out.println(addProductToDayMainPanel.getLayout());
         addProductToDayFrame.setResizable(false);
-        addProductToDayFrame.setLocale(null);
+        addProductToDayFrame.setLocationRelativeTo(null);
         addProductToDayFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         addProductToDayFrame.setVisible(true);
     }

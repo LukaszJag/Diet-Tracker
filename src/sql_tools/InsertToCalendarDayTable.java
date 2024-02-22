@@ -51,4 +51,5 @@ public class InsertToCalendarDayTable {
         sqlStatement += ");";
         return  sqlStatement;
     }
+
 }
