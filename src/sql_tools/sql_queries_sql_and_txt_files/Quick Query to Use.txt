@@ -17,11 +17,18 @@ SELECT * FROM calendar_test;
 3. CREATE TABLE:
 
 CREATE TABLE `calendar_test` (
-  `date` date NOT NULL,
+  `day_date` date NOT NULL,
   `day_name` varchar(45) NOT NULL,
-  `other_info` varchar(45) NOT NULL,
-  PRIMARY KEY (`date`)
+  `product_name` varchar(80) DEFAULT NULL,
+  `amount_of_product` float DEFAULT NULL,
+  `kcal` float DEFAULT NULL,
+  `protein` float DEFAULT NULL,
+  `fat` float DEFAULT NULL,
+  `carbs` float DEFAULT NULL,
+  `time_optional` datetime DEFAULT NULL,
+  `comment_optional` varchar(80) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
 
 
 CREATE TABLE `product_table` (
@@ -79,6 +86,4 @@ DROP COLUMN other_info;
 
 ALTER TABLE calendar_test
 RENAME COLUMN date TO day_date;
-
-
 
