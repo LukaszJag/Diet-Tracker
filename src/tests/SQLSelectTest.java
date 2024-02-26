@@ -1,0 +1,30 @@
+package tests;
+
+import configuration.Config;
+import sql_tools.GetConnection;
+
+import java.sql.*;
+
+public class SQLSelectTest {
+    public static void main(String[] args) throws SQLException {
+        ResultSet resultSet;
+        Statement statement;
+        //String sql = "SELECT * FROM diet_tracker_schema.product_table Where product_name=\"Burak\";";
+        String sql = "SELECT * FROM diet_tracker_schema.product_table WHERE product_name=\"Burak\";";
+        String result = "";
+
+
+        Connection connection = GetConnection.getConnectionWithLocalHost();
+        statement = connection.createStatement();
+        resultSet = statement.executeQuery(sql);
+
+        while(resultSet.next()){
+            for (int i = 0; i < Config.SQL_COLUMNS_FOR_INSERT_INTO_PRODUCT_TABLE.length; i++) {
+                result += resultSet.getString(Config.SQL_COLUMNS_FOR_INSERT_INTO_PRODUCT_TABLE[i].replace("`","")) + " ";
+            }
+            System.out.println(result);
+            result = "";
+        }
+
+    }
+}
