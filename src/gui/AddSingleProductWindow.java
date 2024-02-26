@@ -12,7 +12,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
 
-public class AddProductWindow {
+public class AddSingleProductWindow {
 
     JPanel addProductMainPanel = new JPanel();
     JPanel addProductPanelNorth = new JPanel();
@@ -31,7 +31,7 @@ public class AddProductWindow {
     JTextField productFatTextField;
     JTextField productCarbsTextField;
 
-    public AddProductWindow() {
+    public AddSingleProductWindow() {
         startAddNewProductWindow();
     }
 

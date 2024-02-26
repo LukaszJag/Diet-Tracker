@@ -90,7 +90,7 @@ public class MainWindow extends JFrame {
         @Override
         public void actionPerformed(ActionEvent e) {
 
-            new AddProductWindow();
+            new AddSingleProductWindow();
 
         }
     }
