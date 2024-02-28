@@ -128,7 +128,7 @@ public class AddProductToCalendarDay {
         addProductToDayPanelMain.add(timeOptionalTextField);
 
         addProductToDayPanelMain.add(commentOptionalLabel);
-        addProductToDayPanelMain.add(commentOptionalLabel);
+        addProductToDayPanelMain.add(commentOptionalTextField);
 
 
 
@@ -168,16 +168,27 @@ public class AddProductToCalendarDay {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            String resultOfCheckIfProductExist = null;
+            String[] resultOfCheckIfProductExist;
+            boolean isExist = false;
             try {
-                resultOfCheckIfProductExist = SQLSelect.getRowFromProductTableByProductName(productNameTextField.getText());
+                resultOfCheckIfProductExist = SQLSelect.getRowFromProductTableByProductNameGetArray(productNameTextField.getText());
             } catch (SQLException ex) {
                 throw new RuntimeException(ex);
             }
-            if(resultOfCheckIfProductExist.equals("")){
-                JOptionPane.showMessageDialog(null,"Product doesn't exist");
+
+            for (String pos: resultOfCheckIfProductExist){
+                if (pos != null) {
+                    isExist = true;
+                    break;
+                }
+            }
+
+            if(isExist){
+                String productData =  "Product name:    " + resultOfCheckIfProductExist[0] + "\nKcal:    " + resultOfCheckIfProductExist[4]
+                        + "\nProtein:    " + resultOfCheckIfProductExist[5] + "\nFat:    " + resultOfCheckIfProductExist[6] + "\nCarbs:    " + resultOfCheckIfProductExist[7];
+                JOptionPane.showMessageDialog(null, "Product data:\n " + productData);
             }else {
-                JOptionPane.showMessageDialog(null, "Product data: " + resultOfCheckIfProductExist);
+                JOptionPane.showMessageDialog(null,"Product doesn't exist");
             }
         }
     }
