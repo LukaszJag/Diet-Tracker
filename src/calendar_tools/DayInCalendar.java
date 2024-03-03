@@ -13,6 +13,8 @@ public class DayInCalendar {
     private float dayAmountOfProduct;
     private Product dayProductProduct;
     private Macro dayProductMacro;
+    private String dayProductOptionalTime;
+    private String dayProductOptionalComment;
 
     public DayInCalendar(Date dayDate, String dayDateInString,String dayDateDayName, float dayAmountOfProduct, Product dayProductProduct,
                          Macro dayProductMacro, String dayProductOptionalTime, String dayProductOptionalComment) {
@@ -109,8 +111,6 @@ public class DayInCalendar {
         this.dayProductOptionalComment = dayProductOptionalComment;
     }
 
-    private String dayProductOptionalTime;
-    private String dayProductOptionalComment;
 
 
 }
