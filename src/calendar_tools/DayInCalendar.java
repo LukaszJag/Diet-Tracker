@@ -32,7 +32,7 @@ public class DayInCalendar {
     public String[]  dayDataInStringArray(DayInCalendar dayInCalendar){
         String[] dayDataInStringArray = new String[Config.DAY_IN_CALENDAR_STRING_ARRAY_LENGTH];
 
-        dayDataInStringArray[0] = dayInCalendar.getDayDateInString();
+        dayDataInStringArray[0] = dayDate.toString();
         dayDataInStringArray[1] = dayInCalendar.getDayDateDayName();
         dayDataInStringArray[2] = String.valueOf(dayInCalendar.getDayAmountOfProduct());
         dayDataInStringArray[3] = dayInCalendar.getDayProductProduct().getProductName();
@@ -40,14 +40,48 @@ public class DayInCalendar {
         dayDataInStringArray[5] = String.valueOf(dayInCalendar.getDayProductProduct().getProductMacroForItsSetMeasure().getProtein());
         dayDataInStringArray[6] = String.valueOf(dayInCalendar.getDayProductProduct().getProductMacroForItsSetMeasure().getFat());
         dayDataInStringArray[7] = String.valueOf(dayInCalendar.getDayProductProduct().getProductMacroForItsSetMeasure().getCarbs());
-        dayDataInStringArray[8] = dayInCalendar.getDayProductOptionalTime();
+
+        if(dayDataInStringArray[8] == null){
+            dayDataInStringArray[8] = "2010-10-10 11:11:11";
+        }else{
+            dayDataInStringArray[8] = dayInCalendar.getDayProductOptionalTime();
+        }
+
         dayDataInStringArray[9] = dayInCalendar.getDayProductOptionalComment();
 
+        System.out.println("DayInCalendar -> dayDataInStringArray");
+        for (int i = 0; i < dayDataInStringArray.length; i++) {
+            System.out.println("[i]: " + i + " - " + dayDataInStringArray[i]);
+        }
+        System.out.println();
         return dayDataInStringArray;
     }
 
+    public static void dayDataShowData(DayInCalendar dayInCalendar) {
+        String[] dayDataInStringArray = new String[Config.DAY_IN_CALENDAR_STRING_ARRAY_LENGTH];
 
-    public Date getDayDate() {
+        dayDataInStringArray[0] = dayInCalendar.getDayDate().toString();
+        dayDataInStringArray[1] = dayInCalendar.getDayDateDayName();
+        dayDataInStringArray[2] = String.valueOf(dayInCalendar.getDayAmountOfProduct());
+        dayDataInStringArray[3] = dayInCalendar.getDayProductProduct().getProductName();
+        dayDataInStringArray[4] = String.valueOf(dayInCalendar.getDayProductProduct().getProductMacroForItsSetMeasure().getKcal());
+        dayDataInStringArray[5] = String.valueOf(dayInCalendar.getDayProductProduct().getProductMacroForItsSetMeasure().getProtein());
+        dayDataInStringArray[6] = String.valueOf(dayInCalendar.getDayProductProduct().getProductMacroForItsSetMeasure().getFat());
+        dayDataInStringArray[7] = String.valueOf(dayInCalendar.getDayProductProduct().getProductMacroForItsSetMeasure().getCarbs());
+        if (dayDataInStringArray[8] == null) {
+            dayDataInStringArray[8] = "2010-10-10 11:11:11";
+        } else {
+            dayDataInStringArray[8] = dayInCalendar.getDayProductOptionalTime();
+        }
+
+        System.out.println("DayInCalendar -> dayDataShowData");
+        for (int i = 0; i < dayDataInStringArray.length; i++) {
+            System.out.println("[i]: " + i + " - " + dayDataInStringArray[i]);
+        }
+        System.out.println();
+    }
+
+        public Date getDayDate() {
         return dayDate;
     }
 

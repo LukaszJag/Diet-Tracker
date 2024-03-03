@@ -156,7 +156,6 @@ public class AddProductToCalendarDay {
         addProductToDayPanelNorth.add(addProductToDayCurrentDateTextLabel);
         addProductToDayPanelNorth.add(addProductToDayCurrentDateLabel);
 
-        System.out.println(addProductToDayPanelMain.getLayout());
         addProductToDayFrame.setResizable(false);
         addProductToDayFrame.setLocationRelativeTo(null);
         addProductToDayFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -185,6 +184,9 @@ public class AddProductToCalendarDay {
             String dayProductOptionalComment = commentOptionalTextField.getText();
             DayInCalendar dayInCalendar = new DayInCalendar(dayDate, dayDateInString, dayDateDayName, dayAmountOfProduct,
                     dayProductProduct, dayProductMacro ,dayProductOptionalTime, dayProductOptionalComment);
+
+            System.out.println("AddProductToCalendarDay -> AddProductToDayAcceptButtonListener:");
+            DayInCalendar.dayDataShowData(dayInCalendar);
 
             try {
                 InsertToCalendarDayTable.addRowToCalendarTable(dayInCalendar);
