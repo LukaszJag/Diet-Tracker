@@ -1,12 +1,17 @@
 package gui;
 
+import calendar_tools.DayInCalendar;
 import configuration.Config;
+import products_tools.Macro;
+import products_tools.Product;
+import sql_tools.InsertToCalendarDayTable;
 import sql_tools.SQLSelect;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Date;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 
@@ -98,6 +103,7 @@ public class AddProductToCalendarDay {
         addProductToDayPanelEast.add(displayProductMacroButton);
         addProductToDayPanelEast.add(importProductMacroFromLibraryButton);
         addProductToDayPanelSouth.add(addProductToDayAcceptButton);
+        addProductToDayAcceptButton.addActionListener(new AddProductToDayAcceptButtonListener());
 
         // Add Components to Center Panel
         addProductToDayPanelMain.add(dateLabel);
@@ -157,9 +163,34 @@ public class AddProductToCalendarDay {
         addProductToDayFrame.setVisible(true);
     }
 
-    private class AddProductToDayAcceptButton implements ActionListener {
+    private class AddProductToDayAcceptButtonListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
+            Macro productMacro = new Macro(
+                    Float.valueOf(kcalTextField.getText()),
+                    Float.valueOf(proteinLTextField.getText()),
+                    Float.valueOf(fatTextField.getText()),
+                    Float.valueOf(carbsTextField.getText()));
+
+            //Date dayDate = Date.valueOf(dateTextField.getText());
+            Date dayDate = Date.valueOf("2024-02-29");
+            String dayDateInString = dateTextField.getText();
+            String dayDateDayName = dayNameComboBox.getName();
+            float dayAmountOfProduct = Float.valueOf(amountOfProductTextField.getText());
+            Product dayProductProduct = new Product(productNameTextField.getName(), "None",
+                    100, productMacro,-1);
+
+            Macro dayProductMacro = productMacro;
+            String dayProductOptionalTime = timeOptionalTextField.getText();
+            String dayProductOptionalComment = commentOptionalTextField.getText();
+            DayInCalendar dayInCalendar = new DayInCalendar(dayDate, dayDateInString, dayDateDayName, dayAmountOfProduct,
+                    dayProductProduct, dayProductMacro ,dayProductOptionalTime, dayProductOptionalComment);
+
+            try {
+                InsertToCalendarDayTable.addRowToCalendarTable(dayInCalendar);
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            }
             JOptionPane.showMessageDialog(null, "Accept Button Has Been Pressed");
         }
     }
