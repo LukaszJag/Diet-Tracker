@@ -52,7 +52,6 @@ public class AddProductToCalendarDay {
 
     // TextFields
     JTextField dateTextField = new JTextField();
-    JTextField dayNameLTextField= new JTextField();
     JTextField productNameTextField = new JTextField();
     JTextField amountOfProductTextField = new JTextField();
     JTextField kcalTextField = new JTextField();
@@ -176,17 +175,19 @@ public class AddProductToCalendarDay {
             String dayDateInString = dateTextField.getText();
             String dayProductOptionalTime = timeOptionalTextField.getText();
             String dayProductOptionalComment = commentOptionalTextField.getText();
+            float dayAmountOfProduct = Float.valueOf(amountOfProductTextField.getText());
 
             // Getting from ComboBox
             String dayDateDayName = dayNameComboBox.getSelectedItem().toString();
 
+            // Set passing date to current
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
             System.out.println(LocalDateTime.now().format(formatter));
             Date dayDate = Date.valueOf(LocalDateTime.now().format(formatter));
 
-            float dayAmountOfProduct = Float.valueOf(amountOfProductTextField.getText());
+            System.out.println(productNameTextField.getText());
 
-            Product dayProductProduct = new Product(productNameTextField.getName(), "None",
+            Product dayProductProduct = new Product(productNameTextField.getText(), "None",
                     100, productMacro,-1);
 
             DayInCalendar dayInCalendar = new DayInCalendar(dayDate, dayDateInString, dayDateDayName, dayAmountOfProduct,
