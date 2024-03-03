@@ -1,1 +1,2 @@
-SELECT * FROM calendar_test;
+SELECT * 
+FROM calendar_test;

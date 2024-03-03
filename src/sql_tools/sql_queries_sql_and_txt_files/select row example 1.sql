@@ -1,0 +1,1 @@
+SELECT * FROM diet_tracker_schema.product_table Where product_name="Burak";

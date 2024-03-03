@@ -1,0 +1,1 @@
+delete from calendar_test where product_name IS NULL OR product_name = 'null';
