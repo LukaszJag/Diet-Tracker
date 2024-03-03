@@ -14,6 +14,8 @@ import java.awt.event.ActionListener;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class AddProductToCalendarDay {
 
@@ -165,25 +167,30 @@ public class AddProductToCalendarDay {
     private class AddProductToDayAcceptButtonListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
+            // Getting from direct from TextFields: Macro, day
             Macro productMacro = new Macro(
                     Float.valueOf(kcalTextField.getText()),
                     Float.valueOf(proteinLTextField.getText()),
                     Float.valueOf(fatTextField.getText()),
                     Float.valueOf(carbsTextField.getText()));
-
-            //Date dayDate = Date.valueOf(dateTextField.getText());
-            Date dayDate = Date.valueOf("2024-02-29");
             String dayDateInString = dateTextField.getText();
-            String dayDateDayName = dayNameComboBox.getName();
+            String dayProductOptionalTime = timeOptionalTextField.getText();
+            String dayProductOptionalComment = commentOptionalTextField.getText();
+
+            // Getting from ComboBox
+            String dayDateDayName = dayNameComboBox.getSelectedItem().toString();
+
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            System.out.println(LocalDateTime.now().format(formatter));
+            Date dayDate = Date.valueOf(LocalDateTime.now().format(formatter));
+
             float dayAmountOfProduct = Float.valueOf(amountOfProductTextField.getText());
+
             Product dayProductProduct = new Product(productNameTextField.getName(), "None",
                     100, productMacro,-1);
 
-            Macro dayProductMacro = productMacro;
-            String dayProductOptionalTime = timeOptionalTextField.getText();
-            String dayProductOptionalComment = commentOptionalTextField.getText();
             DayInCalendar dayInCalendar = new DayInCalendar(dayDate, dayDateInString, dayDateDayName, dayAmountOfProduct,
-                    dayProductProduct, dayProductMacro ,dayProductOptionalTime, dayProductOptionalComment);
+                    dayProductProduct, productMacro ,dayProductOptionalTime, dayProductOptionalComment);
 
             System.out.println("AddProductToCalendarDay -> AddProductToDayAcceptButtonListener:");
             DayInCalendar.dayDataShowData(dayInCalendar);
