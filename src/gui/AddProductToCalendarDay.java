@@ -13,6 +13,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Date;
 import java.sql.SQLException;
+import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -35,6 +36,7 @@ public class AddProductToCalendarDay {
     JButton checkIfProductExistButton = new JButton("Check Product existing");
     JButton displayProductMacroButton = new JButton("Display Product Macro");
     JButton importProductMacroFromLibraryButton = new JButton("Import product macro");
+    JButton fillTheExistingProductMacroButton = new JButton("Fill product");
 
     // Labels
     JLabel addProductToDayCurrentDateTextLabel = new JLabel("CURRENT DATE:");
@@ -98,19 +100,30 @@ public class AddProductToCalendarDay {
 
         // Add Buttons
         addProductToDayPanelWest.add(inputCurrentDayButton);
+
         addProductToDayPanelEast.add(checkIfProductExistButton);
         checkIfProductExistButton.addActionListener(new CheckIfProductExistButtonActionListener());
 
         addProductToDayPanelEast.add(displayProductMacroButton);
         addProductToDayPanelEast.add(importProductMacroFromLibraryButton);
+
         addProductToDayPanelSouth.add(addProductToDayAcceptButton);
         addProductToDayAcceptButton.addActionListener(new AddProductToDayAcceptButtonListener());
+
+        addProductToDayPanelEast.add(fillTheExistingProductMacroButton);
+        fillTheExistingProductMacroButton.addActionListener(new FillTheExistingProductMacroButtonListener());
 
         // Add Components to Center Panel
         addProductToDayPanelMain.add(dateLabel);
         addProductToDayPanelMain.add(new JButton("Other then current"));
 
         addProductToDayPanelMain.add(dayNameLabel);
+
+        Format f = new SimpleDateFormat("EEEE");
+        java.util.Date utilDate = new java.util.Date();
+        String str = f.format(utilDate);
+        dayNameComboBox.setSelectedItem(str);
+
         addProductToDayPanelMain.add(dayNameComboBox);
 
         addProductToDayPanelMain.add(productNameLabel);
@@ -190,18 +203,20 @@ public class AddProductToCalendarDay {
             Product dayProductProduct = new Product(productNameTextField.getText(), "None",
                     100, productMacro,-1);
 
+            float kcalConsumeCalculated = Float.valueOf(kcalTextField.getText()) * (Float.valueOf(amountOfProductTextField.getText()) / (100.0f));
+
             DayInCalendar dayInCalendar = new DayInCalendar(dayDate, dayDateInString, dayDateDayName, dayAmountOfProduct,
-                    dayProductProduct, productMacro ,dayProductOptionalTime, dayProductOptionalComment);
+                    dayProductProduct, productMacro ,dayProductOptionalTime, dayProductOptionalComment, kcalConsumeCalculated);
 
             System.out.println("AddProductToCalendarDay -> AddProductToDayAcceptButtonListener:");
             DayInCalendar.dayDataShowData(dayInCalendar);
 
             try {
-                InsertToCalendarDayTable.addRowToCalendarTable(dayInCalendar);
+                InsertToCalendarDayTable.addRowToCalendarTable(dayInCalendar, kcalConsumeCalculated);
             } catch (SQLException ex) {
                 throw new RuntimeException(ex);
             }
-            JOptionPane.showMessageDialog(null, "Accept Button Has Been Pressed");
+            JOptionPane.showMessageDialog(null, "Product has been added");
         }
     }
 
@@ -228,6 +243,41 @@ public class AddProductToCalendarDay {
                 String productData =  "Product name:    " + resultOfCheckIfProductExist[0] + "\nKcal:    " + resultOfCheckIfProductExist[4]
                         + "\nProtein:    " + resultOfCheckIfProductExist[5] + "\nFat:    " + resultOfCheckIfProductExist[6] + "\nCarbs:    " + resultOfCheckIfProductExist[7];
                 JOptionPane.showMessageDialog(null, "Product data:\n " + productData);
+            }else {
+                JOptionPane.showMessageDialog(null,"Product doesn't exist");
+            }
+        }
+    }
+
+    private class FillTheExistingProductMacroButtonListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            String[] resultOfCheckIfProductExist;
+            boolean isExist = false;
+            try {
+                resultOfCheckIfProductExist = SQLSelect.getRowFromProductTableByProductNameGetArray(productNameTextField.getText());
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            }
+
+            for (String pos: resultOfCheckIfProductExist){
+                if (pos != null) {
+                    isExist = true;
+                    break;
+                }
+            }
+
+            if(isExist){
+                // Filling text fields
+                kcalTextField.setText(resultOfCheckIfProductExist[4]);
+                proteinLTextField.setText(resultOfCheckIfProductExist[5]);
+                fatTextField.setText(resultOfCheckIfProductExist[6]);
+                carbsTextField.setText(resultOfCheckIfProductExist[7]);
+
+                String productData =  "Product name:    " + resultOfCheckIfProductExist[0] + "\nKcal:    " + resultOfCheckIfProductExist[4]
+                        + "\nProtein:    " + resultOfCheckIfProductExist[5] + "\nFat:    " + resultOfCheckIfProductExist[6]
+                        + "\nCarbs:    " + resultOfCheckIfProductExist[7];
+                JOptionPane.showMessageDialog(null, "Product data has been filled:\n " + productData);
             }else {
                 JOptionPane.showMessageDialog(null,"Product doesn't exist");
             }

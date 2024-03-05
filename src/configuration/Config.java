@@ -60,6 +60,9 @@ public class Config {
     public static final String[] SQL_COLUMNS_CALENDAR = {"day_date", "day_name", "amount_of_product", "product_name",
            "kcal", "protein", "fat", "carbs", "time_optional", "comment_optional"};
 
+    public static final String[] SQL_COLUMNS_CALENDAR_WITH_KCAL_CONSUME = {"day_date", "day_name", "amount_of_product", "product_name",
+            "kcal", "protein", "fat", "carbs", "time_optional", "comment_optional", "kcal_consume"};
+
     //SQL Configuration - To insert product to table
     public static final String[] SQL_COLUMNS_FOR_INSERT_INTO_PRODUCT_TABLE = {"`product_name`", "`product_brand`", "`product_package_has`",
             "`product_macro_for`", "`product_kcal`", "`product_protein`", "`product_fat`", "`product_carbs`"};
@@ -76,6 +79,7 @@ public class Config {
 
     // Day in calendar configuration
     public static final int DAY_IN_CALENDAR_STRING_ARRAY_LENGTH = Config.SQL_COLUMNS_CALENDAR.length;
+    public static final int DAY_IN_CALENDAR_STRING_ARRAY_LENGTH_WITH_KCAL_CONSUME_LENGTH = SQL_COLUMNS_CALENDAR_WITH_KCAL_CONSUME.length;
 
 
 

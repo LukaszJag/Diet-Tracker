@@ -23,6 +23,13 @@ public class InsertToCalendarDayTable {
         preparedStatement.execute(sqlStatement);
     }
 
+    public static void addRowToCalendarTable(DayInCalendar dayInCalendar, float kcalConsume) throws SQLException {
+        Connection connection = GetConnection.getConnectionWithLocalHost();
+        String sqlStatement = createInsertSQLQueryForCalendarDay(dayInCalendar, kcalConsume);
+        PreparedStatement preparedStatement = connection.prepareStatement(sqlStatement);
+        preparedStatement.execute(sqlStatement);
+    }
+
     public static String createInsertSQLQueryForCalendarDay(DayInCalendar dayToInsert){
         // Set head of query
         String sqlStatement = "INSERT INTO `diet_tracker_schema`.`calendar_test`\n";
@@ -69,4 +76,49 @@ public class InsertToCalendarDayTable {
         return  sqlStatement;
     }
 
+    public static String createInsertSQLQueryForCalendarDay(DayInCalendar dayToInsert, float kcalConsume){
+        // Set head of query
+        String sqlStatement = "INSERT INTO `diet_tracker_schema`.`calendar_test`\n";
+        sqlStatement += "(";
+
+        // Set columns name in query
+        for (int i = 0; i < Config.SQL_COLUMNS_CALENDAR_WITH_KCAL_CONSUME.length; i++) {
+
+            sqlStatement += "`" + Config.SQL_COLUMNS_CALENDAR_WITH_KCAL_CONSUME[i] + "`";
+
+            if (i == Config.SQL_COLUMNS_CALENDAR_WITH_KCAL_CONSUME.length - 1){
+                sqlStatement += ")";
+            }else {
+                sqlStatement += ",\n";
+            }
+        }
+
+        // Set Values verse
+        sqlStatement += "\nValues\n(";
+        String[] dayDataInArray = dayToInsert.dayDataInStringArray(dayToInsert, kcalConsume);
+
+        for (int i = 0; i < Config.SQL_COLUMNS_CALENDAR_WITH_KCAL_CONSUME.length; i++) {
+            System.out.println("[i]: " + i + " - " + dayDataInArray[i]);
+
+            // Take care to float value ends with .f
+            if(i == 0 || i == 1 || i == 3 || i == 8 || i == 9) {
+                sqlStatement += "'" + dayDataInArray[i] + "'";
+            }else{
+                sqlStatement += dayDataInArray[i];
+            }
+
+            if (i != Config.SQL_COLUMNS_CALENDAR_WITH_KCAL_CONSUME.length - 1){
+                sqlStatement +=  ",\n";
+            }else {
+                //sqlStatement += "\n";
+            }
+        }
+        sqlStatement += ");";
+
+        System.out.println();
+        System.out.println("InsertToCalendarDayTable -> createInsertSQLQueryForCalendarDay");
+        System.out.println("SQL Statement: " + sqlStatement);
+
+        return  sqlStatement;
+    }
 }
