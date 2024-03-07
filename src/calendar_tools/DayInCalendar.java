@@ -4,6 +4,7 @@ import configuration.Config;
 import products_tools.Macro;
 import products_tools.Product;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class DayInCalendar {
@@ -56,7 +57,11 @@ public class DayInCalendar {
         dayDataInStringArray[7] = String.valueOf(dayInCalendar.getDayProductProduct().getProductMacroForItsSetMeasure().getCarbs());
 
         if(dayDataInStringArray[8] == null){
-            dayDataInStringArray[8] = "2010-10-10 11:11:11";
+            String pattern = "yyyy-MM-dd hh:mm:ss";
+            SimpleDateFormat dateFormat = new SimpleDateFormat(pattern);
+            String today = dateFormat.format(new Date());
+            System.out.println(today);
+            dayDataInStringArray[8] = today;
         }else{
             dayDataInStringArray[8] = dayInCalendar.getDayProductOptionalTime();
         }
@@ -86,7 +91,11 @@ public class DayInCalendar {
         dayDataInStringArray[10] = String.valueOf(dayKcalConsume);
 
         if(dayDataInStringArray[8] == null){
-            dayDataInStringArray[8] = "2010-10-10 11:11:11";
+            String pattern = "yyyy-MM-dd hh:mm:ss";
+            SimpleDateFormat dateFormat = new SimpleDateFormat(pattern);
+            String today = dateFormat.format(new Date());
+            System.out.println(today);
+            dayDataInStringArray[8] = today;
         }else{
             dayDataInStringArray[8] = dayInCalendar.getDayProductOptionalTime();
         }
