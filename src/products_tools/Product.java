@@ -21,6 +21,7 @@ public class Product {
         this.productPackWeight = weight_of_pack;
     }
 
+
     public String[] productDataInStringArray(Product productWithData){
         String[] productDataStringArray = new String[Config.ALL_PRODUCT_VALUES_FIELD_COUNT];
 

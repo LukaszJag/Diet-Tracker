@@ -90,7 +90,7 @@ public class MainWindow extends JFrame {
         @Override
         public void actionPerformed(ActionEvent e) {
 
-            new AddProductWindow();
+            new AddSingleProductWindow();
 
         }
     }
@@ -105,6 +105,7 @@ public class MainWindow extends JFrame {
         @Override
         public void actionPerformed(ActionEvent e) {
             JOptionPane.showMessageDialog(null,"Welcome in Add Product to Day");
+            AddProductToCalendarDay addProductToCalendarDay = new AddProductToCalendarDay();
         }
     }
 }
