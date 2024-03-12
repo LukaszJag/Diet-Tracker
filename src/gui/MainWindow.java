@@ -98,7 +98,6 @@ public class MainWindow extends JFrame {
     private class MealMangerButton implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            new MealManagerWindow();
         }
     }
 

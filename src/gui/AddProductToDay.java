@@ -72,12 +72,10 @@ public class AddProductToDay {
         addProductToDayMainPanel.add(new JButton("Other then current"));
         addProductToDayMainPanel.add(new JLabel("Day name:"));
         addProductToDayMainPanel.add(dayNameComboBox);
-        addProductToDayMainPanel.add(new JLabel("Amount of product:"));
+        addProductToDayMainPanel.add(new JLabel("Product name:"));
         addProductToDayMainPanel.add(new JTextField());
 
         addProductToDayMainPanel.add(new JLabel("Amount of product:"));
-        addProductToDayMainPanel.add(new JTextField());
-        addProductToDayMainPanel.add(new JLabel("Product name:"));
         addProductToDayMainPanel.add(new JTextField());
         addProductToDayMainPanel.add(new JLabel("Kcal:"));
         addProductToDayMainPanel.add(new JTextField());
