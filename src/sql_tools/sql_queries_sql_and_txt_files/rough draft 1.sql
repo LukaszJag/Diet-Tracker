@@ -1,22 +1,11 @@
-INSERT INTO `diet_tracker_schema`.`calendar_test`
-(`day_date`,
-`day_name`,
-`product_name`,
-`amount_of_product`,
-`kcal`,
-`protein`,
-`fat`,
-`carbs`,
-`time_optional`,
-`comment_optional`)
-VALUES
-(<{day_date: }>,
-<{day_name: }>,
-<{product_name: }>,
-<{amount_of_product: }>,
-<{kcal: }>,
-<{protein: }>,
-<{fat: }>,
-<{carbs: }>,
-<{time_optional: }>,
-<{comment_optional: }>);
+CREATE TABLE `product_table_test` (
+  `product_name` varchar(80) NOT NULL,
+  `product_brand` varchar(80) NOT NULL,
+  `product_package_has` float NOT NULL,
+  `product_macro_for` float NOT NULL,
+  `product_kcal` float NOT NULL,
+  `product_protein` float NOT NULL,
+  `product_fat` float NOT NULL,
+  `product_carbs` float NOT NULL,
+  PRIMARY KEY (`product_name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
