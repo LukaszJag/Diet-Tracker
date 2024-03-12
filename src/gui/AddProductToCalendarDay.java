@@ -50,6 +50,7 @@ public class AddProductToCalendarDay {
     // Labels
     JLabel addProductToDayCurrentDateTextLabel = new JLabel("CURRENT DATE:");
     JLabel addProductToDayDisplaySelectedDay = new JLabel("Selected date: ");
+    JLabel addProductToDayDisplaySelectedFDateDay = new JLabel();
     JLabel addProductToDayCurrentDateLabel = new JLabel("dd.mm.yyyy");
     JLabel dateLabel = new JLabel("Date:");
     JLabel dayNameLabel = new JLabel("Day name:");
@@ -135,6 +136,9 @@ public class AddProductToCalendarDay {
         addProductToDayPanelWest.add(inputCurrentDayButton);
         addProductToDayDisplaySelectedDay.setForeground(Config.addProductToDayCurrentDateLabelColor);
         addProductToDayPanelWest.add(addProductToDayDisplaySelectedDay);
+        addProductToDayDisplaySelectedFDateDay.setForeground(Config.addProductToDayCurrentDateLabelColor);
+        addProductToDayDisplaySelectedFDateDay.setText(new SimpleDateFormat("dd-MM-yyyy").format(Config.date));
+        addProductToDayPanelWest.add(addProductToDayDisplaySelectedFDateDay);
         //</editor-fold>
 
         //<editor-fold desc="Add Components to Panel - East">
@@ -157,6 +161,8 @@ public class AddProductToCalendarDay {
         // Add Components to Center Panel
         addProductToDayPanelMain.add(dateLabel);
         addProductToDayPanelMain.add(otherThenCurrentDateButton);
+        otherThenCurrentDateButton.addActionListener(new OtherThenCurrentDateButtonListener());
+
         addProductToDayPanelMain.add(dayNameLabel);
 
         Format f = new SimpleDateFormat("EEEE");
@@ -324,6 +330,13 @@ public class AddProductToCalendarDay {
             }else {
                 JOptionPane.showMessageDialog(null,"Product doesn't exist");
             }
+        }
+    }
+
+    private class OtherThenCurrentDateButtonListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            
         }
     }
 }
