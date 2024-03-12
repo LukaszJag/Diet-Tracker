@@ -34,6 +34,8 @@ public class Config {
 
     // Add Product To Day Windows Configuration - Panel, Label - Colors
     public static final Color dateTimeLabels = Color.WHITE;
+    public static final Color addProductToDayCurrentDateLabelColor = Color.WHITE;
+
     // Add Product To Day Windows Configuration - Get Date
     public static final Date date = new Date();
     public static final int ADD_PRODUCT_TO_DAY_TEXT_FIELD_SIZE = 10;
