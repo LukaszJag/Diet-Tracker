@@ -14,6 +14,7 @@ import java.awt.event.ActionListener;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.text.Format;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -134,10 +135,13 @@ public class AddProductToCalendarDay {
         //<editor-fold desc="Add Components to Panel - West">
         // Add Buttons
         addProductToDayPanelWest.add(inputCurrentDayButton);
+
         addProductToDayDisplaySelectedDay.setForeground(Config.addProductToDayCurrentDateLabelColor);
         addProductToDayPanelWest.add(addProductToDayDisplaySelectedDay);
+
         addProductToDayDisplaySelectedFDateDay.setForeground(Config.addProductToDayCurrentDateLabelColor);
         addProductToDayDisplaySelectedFDateDay.setText(new SimpleDateFormat("dd-MM-yyyy").format(Config.date));
+
         addProductToDayPanelWest.add(addProductToDayDisplaySelectedFDateDay);
         //</editor-fold>
 
@@ -234,7 +238,7 @@ public class AddProductToCalendarDay {
                     Float.valueOf(proteinLTextField.getText()),
                     Float.valueOf(fatTextField.getText()),
                     Float.valueOf(carbsTextField.getText()));
-            String dayDateInString = dateTextField.getText();
+            //String dayDateInString = dateTextField.getText();
             String dayProductOptionalTime = timeOptionalTextField.getText();
             String dayProductOptionalComment = commentOptionalTextField.getText();
             float dayAmountOfProduct = Float.valueOf(amountOfProductTextField.getText());
@@ -242,10 +246,28 @@ public class AddProductToCalendarDay {
             // Getting from ComboBox
             String dayDateDayName = dayNameComboBox.getSelectedItem().toString();
 
-            // Set passing date to current
+            //<editor-fold desc="Setting correct full date from West Panel Label">
+            // Set passing date to correct format
+            String oldStringFullDate= addProductToDayCurrentDateTextLabel.getText();
+            String newStringFullDateFormat = "yyyy-MM-dd";
+            String newDateString;
+
+            SimpleDateFormat sdf = new SimpleDateFormat(oldStringFullDate);
+            java.util.Date d = null;
+
+            try {
+                d = sdf.parse(oldStringFullDate);
+            } catch (ParseException ex) {
+                throw new RuntimeException(ex);
+            }
+
+            sdf.applyPattern(newStringFullDateFormat);
+            newDateString = sdf.format(d);
+
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
             System.out.println(LocalDateTime.now().format(formatter));
             Date dayDate = Date.valueOf(LocalDateTime.now().format(formatter));
+            //</editor-fold>
 
             System.out.println(productNameTextField.getText());
 
@@ -254,7 +276,7 @@ public class AddProductToCalendarDay {
 
             float kcalConsumeCalculated = Float.valueOf(kcalTextField.getText()) * (Float.valueOf(amountOfProductTextField.getText()) / (100.0f));
 
-            DayInCalendar dayInCalendar = new DayInCalendar(dayDate, dayDateInString, dayDateDayName, dayAmountOfProduct,
+            DayInCalendar dayInCalendar = new DayInCalendar(dayDate, newDateString, dayDateDayName, dayAmountOfProduct,
                     dayProductProduct, productMacro ,dayProductOptionalTime, dayProductOptionalComment, kcalConsumeCalculated);
 
             System.out.println("AddProductToCalendarDay -> AddProductToDayAcceptButtonListener:");
@@ -336,7 +358,23 @@ public class AddProductToCalendarDay {
     private class OtherThenCurrentDateButtonListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            
+            JFrame otherThenCurrnetDateButtonWindowframe = new JFrame("frame");
+
+            JPanel p = new JPanel();
+            JButton b = new JButton("click");
+
+            // add actionlistener to button
+            b.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+
+                }
+            });
+
+            p.add(b);
+            otherThenCurrnetDateButtonWindowframe.add(p);
+            otherThenCurrnetDateButtonWindowframe.setSize(400, 400);
+            otherThenCurrnetDateButtonWindowframe.show();
         }
     }
 }
