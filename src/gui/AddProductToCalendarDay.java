@@ -358,23 +358,38 @@ public class AddProductToCalendarDay {
     private class OtherThenCurrentDateButtonListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            JFrame otherThenCurrnetDateButtonWindowframe = new JFrame("frame");
+            JFrame otherThenCurrentDateButtonWindowFrame = new JFrame("frame");
 
-            JPanel p = new JPanel();
-            JButton b = new JButton("click");
+            JPanel dialogWindowPanel = new JPanel();
+            JLabel otherDateExampleLabel = new JLabel("Input date in yyyy-MM-dd");
+            JTextField otherDataTextField = new JTextField();
+            JButton dialogWindowAcceptButton = new JButton("click");
 
+            dialogWindowPanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+            dialogWindowPanel.setLayout(new GridLayout(3,3));
             // add actionlistener to button
-            b.addActionListener(new ActionListener() {
+            dialogWindowAcceptButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-
+                    JOptionPane.showMessageDialog(null, "Date has been changed");
                 }
             });
 
-            p.add(b);
-            otherThenCurrnetDateButtonWindowframe.add(p);
-            otherThenCurrnetDateButtonWindowframe.setSize(400, 400);
-            otherThenCurrnetDateButtonWindowframe.show();
+            for (int i = 0; i < 3; i++) {
+                for (int j = 0; j < 3; j++) {
+                    dialogWindowPanel.add(new Button(String.valueOf(i+j)));
+                }
+            }
+            dialogWindowPanel.add(otherDateExampleLabel, 0,1);
+            //dialogWindowPanel.add(otherDateExampleLabel);
+            //dialogWindowPanel.add(otherDataTextField);
+            //dialogWindowPanel.add(dialogWindowAcceptButton);
+
+            otherThenCurrentDateButtonWindowFrame.add(dialogWindowPanel);
+            otherThenCurrentDateButtonWindowFrame.setSize(500, 200);
+            otherThenCurrentDateButtonWindowFrame.setResizable(false);
+            otherThenCurrentDateButtonWindowFrame.setLocationRelativeTo(null);
+            otherThenCurrentDateButtonWindowFrame.show();
         }
     }
 }
