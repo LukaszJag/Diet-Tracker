@@ -51,7 +51,8 @@ public class AddProductToCalendarDay {
     // Labels
     JLabel addProductToDayCurrentDateTextLabel = new JLabel("CURRENT DATE:");
     JLabel addProductToDayDisplaySelectedDay = new JLabel("Selected date: ");
-    JLabel addProductToDayDisplaySelectedFDateDay = new JLabel();
+    JLabel addProductToDayDisplaySelectedFDateDayLabel = new JLabel();
+    JLabel addProductToDayDisplaySelectedFDateNameDayLabel = new JLabel();
     JLabel addProductToDayCurrentDateLabel = new JLabel("dd.mm.yyyy");
     JLabel dateLabel = new JLabel("Date:");
     JLabel dayNameLabel = new JLabel("Day name:");
@@ -122,13 +123,18 @@ public class AddProductToCalendarDay {
 
     private void addComponentsToPanels(){
 
+        // Global variables for panels
+        Format format = new SimpleDateFormat("EEEE");
+        java.util.Date utilDateImport = new java.util.Date();
+        String dayNameCurrentDateOnStartWindow = format.format(utilDateImport);
+
         //<editor-fold desc="Add Components to Panel - North">
 
         addProductToDayCurrentDateTextLabel.setForeground(Config.dateTimeLabels);
         addProductToDayPanelNorth.add(addProductToDayCurrentDateTextLabel);
 
         addProductToDayCurrentDateLabel.setForeground(Config.addProductToDayCurrentDateLabelColor);
-        addProductToDayCurrentDateLabel.setText(new SimpleDateFormat("dd-MM-yyyy").format(Config.date));
+        addProductToDayCurrentDateLabel.setText(new SimpleDateFormat("dd-MM-yyyy").format(Config.date) +" " + dayNameCurrentDateOnStartWindow);
         addProductToDayPanelNorth.add(addProductToDayCurrentDateLabel);
         //</editor-fold>
 
@@ -139,10 +145,15 @@ public class AddProductToCalendarDay {
         addProductToDayDisplaySelectedDay.setForeground(Config.addProductToDayCurrentDateLabelColor);
         addProductToDayPanelWest.add(addProductToDayDisplaySelectedDay);
 
-        addProductToDayDisplaySelectedFDateDay.setForeground(Config.addProductToDayCurrentDateLabelColor);
-        addProductToDayDisplaySelectedFDateDay.setText(new SimpleDateFormat("dd-MM-yyyy").format(Config.date));
+        addProductToDayDisplaySelectedFDateDayLabel.setForeground(Config.addProductToDayCurrentDateLabelColor);
+        addProductToDayDisplaySelectedFDateDayLabel.setText(new SimpleDateFormat("dd-MM-yyyy").format(Config.date));
 
-        addProductToDayPanelWest.add(addProductToDayDisplaySelectedFDateDay);
+        addProductToDayDisplaySelectedFDateNameDayLabel.setForeground(Config.addProductToDayCurrentDateLabelColor);
+
+        addProductToDayDisplaySelectedFDateNameDayLabel.setText(dayNameCurrentDateOnStartWindow);
+
+        addProductToDayPanelWest.add(addProductToDayDisplaySelectedFDateNameDayLabel);
+        addProductToDayPanelWest.add(addProductToDayDisplaySelectedFDateDayLabel);
         //</editor-fold>
 
         //<editor-fold desc="Add Components to Panel - East">
@@ -169,10 +180,7 @@ public class AddProductToCalendarDay {
 
         addProductToDayPanelMain.add(dayNameLabel);
 
-        Format f = new SimpleDateFormat("EEEE");
-        java.util.Date utilDate = new java.util.Date();
-        String str = f.format(utilDate);
-        dayNameComboBox.setSelectedItem(str);
+        dayNameComboBox.setSelectedItem(dayNameCurrentDateOnStartWindow);
 
         addProductToDayPanelMain.add(dayNameComboBox);
 
@@ -362,26 +370,39 @@ public class AddProductToCalendarDay {
             JFrame otherThenCurrentDateButtonWindowFrame = new JFrame("frame");
 
             JPanel dialogWindowPanel = new JPanel();
-            JLabel otherDateExampleLabel = new JLabel("Input date in yyyy-MM-dd");
-            JTextField otherDataTextField = new JTextField();
+            JLabel otherDateExampleLabel = new JLabel("Input date in dd-MM-yyyy");
+            JTextField otherDataTextField = new JTextField(20);
             JButton dialogWindowAcceptButton = new JButton("click");
 
-            dialogWindowPanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
-            dialogWindowPanel.setLayout(new GridLayout(3,3));
+           // dialogWindowPanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+           // dialogWindowPanel.setLayout(new GridLayout(3,3));
             // add actionlistener to button
             dialogWindowAcceptButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
+                    addProductToDayDisplaySelectedFDateDayLabel.setText(otherDataTextField.getText());
+                    System.out.println(otherDataTextField.getText());
+                    SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+                    java.util.Date newDate;
+
+                    try {
+                        newDate = formatter.parse(otherDataTextField.getText());
+                    } catch (ParseException ex) {
+                        System.out.println("Wrong date format");
+                        JOptionPane.showMessageDialog(null, "Wrong date input");
+                        throw new RuntimeException(ex);
+                    }
+
+                    Format newDateformat = new SimpleDateFormat("EEEE");
+                    String dayNameCurrentDateOnStartWindow = newDateformat.format(newDate);
+                    addProductToDayDisplaySelectedFDateNameDayLabel.setText(dayNameCurrentDateOnStartWindow);
                     JOptionPane.showMessageDialog(null, "Date has been changed");
                 }
             });
 
-            for (int i = 0; i < 3; i++) {
-                for (int j = 0; j < 3; j++) {
-                    dialogWindowPanel.add(new Button(String.valueOf(i+j)));
-                }
-            }
-            dialogWindowPanel.add(otherDateExampleLabel, 0,1);
+            dialogWindowPanel.add(otherDateExampleLabel);
+            dialogWindowPanel.add(otherDataTextField);
+            dialogWindowPanel.add(dialogWindowAcceptButton);
             //dialogWindowPanel.add(otherDateExampleLabel);
             //dialogWindowPanel.add(otherDataTextField);
             //dialogWindowPanel.add(dialogWindowAcceptButton);
