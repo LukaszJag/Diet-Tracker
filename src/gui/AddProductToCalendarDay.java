@@ -248,7 +248,8 @@ public class AddProductToCalendarDay {
 
             //<editor-fold desc="Setting correct full date from West Panel Label">
             // Set passing date to correct format
-            String oldStringFullDate= addProductToDayCurrentDateTextLabel.getText();
+            String oldStringFullDate= addProductToDayCurrentDateLabel.getText();
+            System.out.println(addProductToDayCurrentDateLabel.getText());
             String newStringFullDateFormat = "yyyy-MM-dd";
             String newDateString;
 

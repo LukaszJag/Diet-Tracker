@@ -3,7 +3,9 @@ package sql_tools;
 import calendar_tools.DayInCalendar;
 import configuration.Config;
 import products_tools.Product;
+import text_files_tools.MakeFoldersAndTextFile;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -28,6 +30,15 @@ public class InsertToCalendarDayTable {
         String sqlStatement = createInsertSQLQueryForCalendarDay(dayInCalendar, kcalConsume);
         PreparedStatement preparedStatement = connection.prepareStatement(sqlStatement);
         preparedStatement.execute(sqlStatement);
+        String nameOfDayTextFile = dayInCalendar.getDayDate().toString() + "_" +
+                dayInCalendar.getDayDateDayName() + "_" +
+                dayInCalendar.getDayProductProduct().getProductName() + "_" +
+                String.valueOf(dayInCalendar.getDayAmountOfProduct());
+        try {
+            MakeFoldersAndTextFile.addDayStringToTextFile(nameOfDayTextFile, sqlStatement);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public static String createInsertSQLQueryForCalendarDay(DayInCalendar dayToInsert){

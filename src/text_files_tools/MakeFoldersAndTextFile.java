@@ -70,10 +70,16 @@ public class MakeFoldersAndTextFile {
         bufferedWriter.close();
     }
 
-
     public static void writeProductToFile(String lineToWriteToFile, String fileName) throws IOException {
         BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(Config.DESTINATION_FOR_TEXT_FILE_PRODUCTS + fileName + ".txt", true));
         bufferedWriter.append(lineToWriteToFile.toString());
+        bufferedWriter.append("\n");
+        bufferedWriter.close();
+    }
+
+    public static void addDayStringToTextFile(String fileName, String inputSting) throws IOException {
+        BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(Config.DESTINATION_FOR_TEXT_FILE_DAYS + fileName + ".txt", true));
+        bufferedWriter.append(inputSting);
         bufferedWriter.append("\n");
         bufferedWriter.close();
     }
