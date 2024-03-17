@@ -240,7 +240,8 @@ public class AddProductToCalendarDay {
     private class AddProductToDayAcceptButtonListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            // Getting from direct from TextFields: Macro, day
+
+            //<editor-fold desc="Getting direct from TextFields: Macro, day ">
             Macro productMacro = new Macro(
                     Float.valueOf(kcalTextField.getText()),
                     Float.valueOf(proteinLTextField.getText()),
@@ -250,6 +251,7 @@ public class AddProductToCalendarDay {
             String dayProductOptionalTime = timeOptionalTextField.getText();
             String dayProductOptionalComment = commentOptionalTextField.getText();
             float dayAmountOfProduct = Float.valueOf(amountOfProductTextField.getText());
+            //</editor-fold>
 
             // Getting from ComboBox
             String dayDateDayName = dayNameComboBox.getSelectedItem().toString();
@@ -257,39 +259,49 @@ public class AddProductToCalendarDay {
             //<editor-fold desc="Setting correct full date from West Panel Label">
             // Set passing date to correct format
             String oldStringFullDate= addProductToDayCurrentDateLabel.getText();
-            System.out.println(addProductToDayCurrentDateLabel.getText());
+            String oldStringNumericDate = oldStringFullDate.substring(0,10);
+
             String newStringFullDateFormat = "yyyy-MM-dd";
             String newDateString;
 
-            SimpleDateFormat sdf = new SimpleDateFormat(oldStringFullDate);
+            SimpleDateFormat sdf = new SimpleDateFormat(newStringFullDateFormat);
             java.util.Date d = null;
 
             try {
-                d = sdf.parse(oldStringFullDate);
+                d = sdf.parse(oldStringNumericDate);
             } catch (ParseException ex) {
                 throw new RuntimeException(ex);
             }
 
             sdf.applyPattern(newStringFullDateFormat);
             newDateString = sdf.format(d);
-
+            java.util.Date dateNumeric;
+            try {
+                dateNumeric =sdf.parse(oldStringNumericDate);
+            } catch (ParseException ex) {
+                throw new RuntimeException(ex);
+            }
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-            System.out.println(LocalDateTime.now().format(formatter));
             Date dayDate = Date.valueOf(LocalDateTime.now().format(formatter));
             //</editor-fold>
 
-            System.out.println(productNameTextField.getText());
+            System.out.println("\nInside AddProductToDayAcceptButtonListener: ");
+            System.out.println("1 - oldStringNumericDate: " + oldStringNumericDate);
+            System.out.println("2 - addProductToDayCurrentDateLabel.getText(): " + addProductToDayCurrentDateLabel.getText());
+            System.out.println("3 - dateNumeric: " + dateNumeric);
+            System.out.println("productNameTextField.getText()" + productNameTextField.getText());
 
             Product dayProductProduct = new Product(productNameTextField.getText(), "None",
                     100, productMacro,-1);
 
             float kcalConsumeCalculated = Float.valueOf(kcalTextField.getText()) * (Float.valueOf(amountOfProductTextField.getText()) / (100.0f));
 
-            DayInCalendar dayInCalendar = new DayInCalendar(dayDate, newDateString, dayDateDayName, dayAmountOfProduct,
+            DayInCalendar dayInCalendar = new DayInCalendar(dateNumeric, newDateString, dayDateDayName, dayAmountOfProduct,
                     dayProductProduct, productMacro ,dayProductOptionalTime, dayProductOptionalComment, kcalConsumeCalculated);
 
-            System.out.println("AddProductToCalendarDay -> AddProductToDayAcceptButtonListener:");
-            DayInCalendar.dayDataShowData(dayInCalendar);
+            System.out.println("\nAddProductToCalendarDay -> AddProductToDayAcceptButtonListener -- show DayInCalendarData:");
+            DayInCalendar.dayDataShowDataWithSQLColumns(dayInCalendar);
+            System.out.println();
 
             try {
                 InsertToCalendarDayTable.addRowToCalendarTable(dayInCalendar, kcalConsumeCalculated);
@@ -372,7 +384,7 @@ public class AddProductToCalendarDay {
             JPanel dialogWindowPanel = new JPanel();
             JLabel otherDateExampleLabel = new JLabel("Input date in dd-MM-yyyy");
             JTextField otherDataTextField = new JTextField(20);
-            JButton dialogWindowAcceptButton = new JButton("click");
+            JButton dialogWindowAcceptButton = new JButton("Accept new date");
 
            // dialogWindowPanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
            // dialogWindowPanel.setLayout(new GridLayout(3,3));
@@ -381,7 +393,9 @@ public class AddProductToCalendarDay {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     addProductToDayDisplaySelectedFDateDayLabel.setText(otherDataTextField.getText());
-                    System.out.println(otherDataTextField.getText());
+
+                    System.out.println("\n Date has been change to: ");
+                    System.out.println(otherDataTextField.getText() + "\n");
                     SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
                     java.util.Date newDate;
 

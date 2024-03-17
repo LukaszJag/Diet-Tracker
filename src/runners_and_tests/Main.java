@@ -4,7 +4,7 @@ import gui.MainWindow;
 
 public class Main {
     public static void main(String[] args) {
-        System.out.println("Run Diet Tracker...");
+        System.out.println("\nRun Diet Tracker...");
         MainWindow mainWindow = new MainWindow();
     }
 }

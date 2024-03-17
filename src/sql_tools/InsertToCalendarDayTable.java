@@ -88,6 +88,7 @@ public class InsertToCalendarDayTable {
     }
 
     public static String createInsertSQLQueryForCalendarDay(DayInCalendar dayToInsert, float kcalConsume){
+        System.out.println("\nInsertToCalendarDayTable -> createInsertSQLQueryForCalendarDay:");
         // Set head of query
         String sqlStatement = "INSERT INTO `diet_tracker_schema`.`calendar_test`\n";
         sqlStatement += "(";
@@ -108,9 +109,9 @@ public class InsertToCalendarDayTable {
         sqlStatement += "\nValues\n(";
         String[] dayDataInArray = dayToInsert.dayDataInStringArray(dayToInsert, kcalConsume);
 
+        System.out.println("All columns data: ");
         for (int i = 0; i < Config.SQL_COLUMNS_CALENDAR_WITH_KCAL_CONSUME.length; i++) {
             System.out.println("[i]: " + i + " - " + dayDataInArray[i]);
-
             // Take care to float value ends with .f
             if(i == 0 || i == 1 || i == 3 || i == 8 || i == 9) {
                 sqlStatement += "'" + dayDataInArray[i] + "'";
@@ -126,9 +127,8 @@ public class InsertToCalendarDayTable {
         }
         sqlStatement += ");";
 
+        System.out.println("SQL Statement:\n" + sqlStatement);
         System.out.println();
-        System.out.println("InsertToCalendarDayTable -> createInsertSQLQueryForCalendarDay");
-        System.out.println("SQL Statement: " + sqlStatement);
 
         return  sqlStatement;
     }
