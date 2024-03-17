@@ -11,13 +11,11 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.Date;
 import java.sql.SQLException;
 import java.text.Format;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import java.util.Date;
 
 public class AddProductToCalendarDay {
 
@@ -55,7 +53,7 @@ public class AddProductToCalendarDay {
     JLabel addProductToDayDisplaySelectedFDateNameDayLabel = new JLabel();
     JLabel addProductToDayCurrentDateLabel = new JLabel("dd.mm.yyyy");
     JLabel dateLabel = new JLabel("Date:");
-    JLabel dayNameLabel = new JLabel("Day name:");
+    JLabel dayMealNameLabel = new JLabel("Meal name(IN PROGRESS):");
     JLabel productNameLabel = new JLabel("Product name:");
     JLabel amountOfProductLabel = new JLabel("Amount of product:");
     JLabel kcalLabel = new JLabel("Kcal:");
@@ -72,7 +70,7 @@ public class AddProductToCalendarDay {
     JTextField productNameTextField = new JTextField();
     JTextField amountOfProductTextField = new JTextField();
     JTextField kcalTextField = new JTextField();
-    JTextField proteinLTextField= new JTextField();
+    JTextField proteinLTextField = new JTextField();
     JTextField fatTextField = new JTextField();
     JTextField carbsTextField = new JTextField();
     JTextField timeOptionalTextField = new JTextField();
@@ -81,7 +79,8 @@ public class AddProductToCalendarDay {
 
     //<editor-fold desc="ComboBox">
     // ComboBox
-    JComboBox<String> dayNameComboBox = new JComboBox<>(new String[]{"Monday","Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"});
+    JComboBox<String> dayMealNameComboBox = new JComboBox<>(new String[]{"Breakfast", "Second Breakfast", "Snack 1", "Dinner", "Snack 2"
+            , "Supper", "After workout"});
     //</editor-fold>
 
     //<editor-fold desc="Grid Layout">
@@ -90,18 +89,18 @@ public class AddProductToCalendarDay {
 
     //<editor-fold desc="Starting Constructor">
     // Starting Constructor
-    public AddProductToCalendarDay(){
+    public AddProductToCalendarDay() {
         startAddProductToDayWindow();
     }
     //</editor-fold>
 
-    private void setFrame(){
+    private void setFrame() {
         // Set window size
         addProductToDayFrame.setSize(Config.ADD_PRODUCT_TO_DAY_WINDOWS_WIDTH, Config.ADD_PRODUCT_TO_DAY_WINDOWS_HEIGHT);
         addProductToDayFrame.setLayout(new BorderLayout());
     }
 
-    private void setPanels(){
+    private void setPanels() {
         //Set Layout
         addProductToDayPanelMain.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
         addProductToDayPanelMain.setLayout(gridLayoutMainPanel);
@@ -121,7 +120,7 @@ public class AddProductToCalendarDay {
         addProductToDayPanelSouth.setPreferredSize(new Dimension(Config.ADD_PRODUCT_TO_DAY_PANELS_SOUTH_SIZE, Config.ADD_PRODUCT_TO_DAY_PANELS_SOUTH_SIZE));
     }
 
-    private void addComponentsToPanels(){
+    private void addComponentsToPanels() {
 
         // Global variables for panels
         Format format = new SimpleDateFormat("EEEE");
@@ -134,7 +133,7 @@ public class AddProductToCalendarDay {
         addProductToDayPanelNorth.add(addProductToDayCurrentDateTextLabel);
 
         addProductToDayCurrentDateLabel.setForeground(Config.addProductToDayCurrentDateLabelColor);
-        addProductToDayCurrentDateLabel.setText(new SimpleDateFormat("dd-MM-yyyy").format(Config.date) +" " + dayNameCurrentDateOnStartWindow);
+        addProductToDayCurrentDateLabel.setText(new SimpleDateFormat("dd-MM-yyyy").format(Config.date) + " " + dayNameCurrentDateOnStartWindow);
         addProductToDayPanelNorth.add(addProductToDayCurrentDateLabel);
         //</editor-fold>
 
@@ -146,7 +145,7 @@ public class AddProductToCalendarDay {
         addProductToDayPanelWest.add(addProductToDayDisplaySelectedDay);
 
         addProductToDayDisplaySelectedFDateDayLabel.setForeground(Config.addProductToDayCurrentDateLabelColor);
-        addProductToDayDisplaySelectedFDateDayLabel.setText(new SimpleDateFormat("dd-MM-yyyy").format(Config.date));
+        addProductToDayDisplaySelectedFDateDayLabel.setText(new SimpleDateFormat("yyyy-MM-dd").format(Config.date));
 
         addProductToDayDisplaySelectedFDateNameDayLabel.setForeground(Config.addProductToDayCurrentDateLabelColor);
 
@@ -178,11 +177,11 @@ public class AddProductToCalendarDay {
         addProductToDayPanelMain.add(otherThenCurrentDateButton);
         otherThenCurrentDateButton.addActionListener(new OtherThenCurrentDateButtonListener());
 
-        addProductToDayPanelMain.add(dayNameLabel);
+        addProductToDayPanelMain.add(dayMealNameLabel);
 
-        dayNameComboBox.setSelectedItem(dayNameCurrentDateOnStartWindow);
+        dayMealNameComboBox.setSelectedItem(dayNameCurrentDateOnStartWindow);
 
-        addProductToDayPanelMain.add(dayNameComboBox);
+        addProductToDayPanelMain.add(dayMealNameComboBox);
 
         addProductToDayPanelMain.add(productNameLabel);
         addProductToDayPanelMain.add(productNameTextField);
@@ -210,7 +209,7 @@ public class AddProductToCalendarDay {
         //</editor-fold>
     }
 
-    private void addPanelsToFrame(){
+    private void addPanelsToFrame() {
         // Add Panels to Frame
         addProductToDayFrame.add(addProductToDayPanelNorth, BorderLayout.NORTH);
         addProductToDayFrame.add(addProductToDayPanelWest, BorderLayout.WEST);
@@ -220,7 +219,7 @@ public class AddProductToCalendarDay {
 
     }
 
-    private void finishSetUpFrame(){
+    private void finishSetUpFrame() {
         addProductToDayFrame.setResizable(false);
         addProductToDayFrame.setLocationRelativeTo(null);
         addProductToDayFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -242,62 +241,36 @@ public class AddProductToCalendarDay {
         public void actionPerformed(ActionEvent e) {
 
             //<editor-fold desc="Getting direct from TextFields: Macro, day ">
+
             Macro productMacro = new Macro(
                     Float.valueOf(kcalTextField.getText()),
                     Float.valueOf(proteinLTextField.getText()),
                     Float.valueOf(fatTextField.getText()),
                     Float.valueOf(carbsTextField.getText()));
-            //String dayDateInString = dateTextField.getText();
+
             String dayProductOptionalTime = timeOptionalTextField.getText();
             String dayProductOptionalComment = commentOptionalTextField.getText();
             float dayAmountOfProduct = Float.valueOf(amountOfProductTextField.getText());
             //</editor-fold>
 
-            // Getting from ComboBox
-            String dayDateDayName = dayNameComboBox.getSelectedItem().toString();
-
             //<editor-fold desc="Setting correct full date from West Panel Label">
-            // Set passing date to correct format
-            String oldStringFullDate= addProductToDayCurrentDateLabel.getText();
-            String oldStringNumericDate = oldStringFullDate.substring(0,10);
-
-            String newStringFullDateFormat = "yyyy-MM-dd";
-            String newDateString;
-
-            SimpleDateFormat sdf = new SimpleDateFormat(newStringFullDateFormat);
-            java.util.Date d = null;
-
+            // Set passing date to correct format\
+            java.util.Date datePassedToSQL;
             try {
-                d = sdf.parse(oldStringNumericDate);
+                datePassedToSQL = new SimpleDateFormat("yyyy-MM-dd").parse(addProductToDayDisplaySelectedFDateDayLabel.getText());
             } catch (ParseException ex) {
                 throw new RuntimeException(ex);
             }
-
-            sdf.applyPattern(newStringFullDateFormat);
-            newDateString = sdf.format(d);
-            java.util.Date dateNumeric;
-            try {
-                dateNumeric =sdf.parse(oldStringNumericDate);
-            } catch (ParseException ex) {
-                throw new RuntimeException(ex);
-            }
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-            Date dayDate = Date.valueOf(LocalDateTime.now().format(formatter));
+            String dayDateDayName = addProductToDayDisplaySelectedFDateNameDayLabel.getText();
             //</editor-fold>
 
-            System.out.println("\nInside AddProductToDayAcceptButtonListener: ");
-            System.out.println("1 - oldStringNumericDate: " + oldStringNumericDate);
-            System.out.println("2 - addProductToDayCurrentDateLabel.getText(): " + addProductToDayCurrentDateLabel.getText());
-            System.out.println("3 - dateNumeric: " + dateNumeric);
-            System.out.println("productNameTextField.getText()" + productNameTextField.getText());
-
             Product dayProductProduct = new Product(productNameTextField.getText(), "None",
-                    100, productMacro,-1);
+                    100, productMacro, -1);
 
             float kcalConsumeCalculated = Float.valueOf(kcalTextField.getText()) * (Float.valueOf(amountOfProductTextField.getText()) / (100.0f));
 
-            DayInCalendar dayInCalendar = new DayInCalendar(dateNumeric, newDateString, dayDateDayName, dayAmountOfProduct,
-                    dayProductProduct, productMacro ,dayProductOptionalTime, dayProductOptionalComment, kcalConsumeCalculated);
+            DayInCalendar dayInCalendar = new DayInCalendar(datePassedToSQL, dayDateDayName, dayDateDayName, dayAmountOfProduct,
+                    dayProductProduct, productMacro, dayProductOptionalTime, dayProductOptionalComment, kcalConsumeCalculated);
 
             System.out.println("\nAddProductToCalendarDay -> AddProductToDayAcceptButtonListener -- show DayInCalendarData:");
             DayInCalendar.dayDataShowDataWithSQLColumns(dayInCalendar);
@@ -324,19 +297,19 @@ public class AddProductToCalendarDay {
                 throw new RuntimeException(ex);
             }
 
-            for (String pos: resultOfCheckIfProductExist){
+            for (String pos : resultOfCheckIfProductExist) {
                 if (pos != null) {
                     isExist = true;
                     break;
                 }
             }
 
-            if(isExist){
-                String productData =  "Product name:    " + resultOfCheckIfProductExist[0] + "\nKcal:    " + resultOfCheckIfProductExist[4]
+            if (isExist) {
+                String productData = "Product name:    " + resultOfCheckIfProductExist[0] + "\nKcal:    " + resultOfCheckIfProductExist[4]
                         + "\nProtein:    " + resultOfCheckIfProductExist[5] + "\nFat:    " + resultOfCheckIfProductExist[6] + "\nCarbs:    " + resultOfCheckIfProductExist[7];
                 JOptionPane.showMessageDialog(null, "Product data:\n " + productData);
-            }else {
-                JOptionPane.showMessageDialog(null,"Product doesn't exist");
+            } else {
+                JOptionPane.showMessageDialog(null, "Product doesn't exist");
             }
         }
     }
@@ -352,26 +325,26 @@ public class AddProductToCalendarDay {
                 throw new RuntimeException(ex);
             }
 
-            for (String pos: resultOfCheckIfProductExist){
+            for (String pos : resultOfCheckIfProductExist) {
                 if (pos != null) {
                     isExist = true;
                     break;
                 }
             }
 
-            if(isExist){
+            if (isExist) {
                 // Filling text fields
                 kcalTextField.setText(resultOfCheckIfProductExist[4]);
                 proteinLTextField.setText(resultOfCheckIfProductExist[5]);
                 fatTextField.setText(resultOfCheckIfProductExist[6]);
                 carbsTextField.setText(resultOfCheckIfProductExist[7]);
 
-                String productData =  "Product name:    " + resultOfCheckIfProductExist[0] + "\nKcal:    " + resultOfCheckIfProductExist[4]
+                String productData = "Product name:    " + resultOfCheckIfProductExist[0] + "\nKcal:    " + resultOfCheckIfProductExist[4]
                         + "\nProtein:    " + resultOfCheckIfProductExist[5] + "\nFat:    " + resultOfCheckIfProductExist[6]
                         + "\nCarbs:    " + resultOfCheckIfProductExist[7];
                 JOptionPane.showMessageDialog(null, "Product data has been filled:\n " + productData);
-            }else {
-                JOptionPane.showMessageDialog(null,"Product doesn't exist");
+            } else {
+                JOptionPane.showMessageDialog(null, "Product doesn't exist");
             }
         }
     }
@@ -382,21 +355,22 @@ public class AddProductToCalendarDay {
             JFrame otherThenCurrentDateButtonWindowFrame = new JFrame("frame");
 
             JPanel dialogWindowPanel = new JPanel();
-            JLabel otherDateExampleLabel = new JLabel("Input date in dd-MM-yyyy");
+            JLabel otherDateExampleLabel = new JLabel("Input date in yyyy-MM-dd");
             JTextField otherDataTextField = new JTextField(20);
             JButton dialogWindowAcceptButton = new JButton("Accept new date");
 
-           // dialogWindowPanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
-           // dialogWindowPanel.setLayout(new GridLayout(3,3));
+            // dialogWindowPanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+            // dialogWindowPanel.setLayout(new GridLayout(3,3));
             // add actionlistener to button
             dialogWindowAcceptButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
+
                     addProductToDayDisplaySelectedFDateDayLabel.setText(otherDataTextField.getText());
 
                     System.out.println("\n Date has been change to: ");
                     System.out.println(otherDataTextField.getText() + "\n");
-                    SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+                    SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
                     java.util.Date newDate;
 
                     try {
@@ -411,6 +385,7 @@ public class AddProductToCalendarDay {
                     String dayNameCurrentDateOnStartWindow = newDateformat.format(newDate);
                     addProductToDayDisplaySelectedFDateNameDayLabel.setText(dayNameCurrentDateOnStartWindow);
                     JOptionPane.showMessageDialog(null, "Date has been changed");
+
                 }
             });
 

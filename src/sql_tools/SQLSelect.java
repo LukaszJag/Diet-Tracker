@@ -25,7 +25,6 @@ public class SQLSelect {
                 result += resultSet.getString(Config.SQL_COLUMNS_FOR_INSERT_INTO_PRODUCT_TABLE[i].replace("`","")) + " ";
             }
         }
-        System.out.println("Query result: \n" + result);
 
         return result;
     }
@@ -46,10 +45,6 @@ public class SQLSelect {
             for (int i = 0; i < Config.SQL_COLUMNS_FOR_INSERT_INTO_PRODUCT_TABLE.length; i++) {
                 result[i] = resultSet.getString(Config.SQL_COLUMNS_FOR_INSERT_INTO_PRODUCT_TABLE[i].replace("`",""));
             }
-        }
-        System.out.println("Query result: \n");
-        for (int i = 0; i < result.length; i++) {
-            System.out.println("[" + i + "]: " + result[i]);
         }
 
         return result;

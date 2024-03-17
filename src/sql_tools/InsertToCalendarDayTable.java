@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 
 public class InsertToCalendarDayTable {
     public static void insertLineToCalendarDayTable(Product product) throws SQLException {
@@ -30,7 +31,7 @@ public class InsertToCalendarDayTable {
         String sqlStatement = createInsertSQLQueryForCalendarDay(dayInCalendar, kcalConsume);
         PreparedStatement preparedStatement = connection.prepareStatement(sqlStatement);
         preparedStatement.execute(sqlStatement);
-        String nameOfDayTextFile = dayInCalendar.getDayDate().toString() + "_" +
+        String nameOfDayTextFile = new SimpleDateFormat("yyyy-MM-dd").format(dayInCalendar.getDayDate()) + "_" +
                 dayInCalendar.getDayDateDayName() + "_" +
                 dayInCalendar.getDayProductProduct().getProductName() + "_" +
                 String.valueOf(dayInCalendar.getDayAmountOfProduct());
@@ -63,7 +64,7 @@ public class InsertToCalendarDayTable {
         String[] dayDataInArray = dayToInsert.dayDataInStringArray(dayToInsert);
 
         for (int i = 0; i < Config.SQL_COLUMNS_CALENDAR.length; i++) {
-            System.out.println("[i]: " + i + " - " + dayDataInArray[i]);
+            //System.out.println("[i]: " + i + " - " + dayDataInArray[i]);
 
             // Take care to float value ends with .f
             if(i == 0 || i == 1 || i == 3 || i == 8 || i == 9) {

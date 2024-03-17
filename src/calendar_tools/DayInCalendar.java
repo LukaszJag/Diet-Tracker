@@ -79,7 +79,7 @@ public class DayInCalendar {
     public String[]  dayDataInStringArray(DayInCalendar dayInCalendar, float dayKcalConsume){
         String[] dayDataInStringArray = new String[Config.DAY_IN_CALENDAR_STRING_ARRAY_LENGTH_WITH_KCAL_CONSUME_LENGTH];
 
-        dayDataInStringArray[0] = dayDate.toString();
+        dayDataInStringArray[0] = new SimpleDateFormat("yyyy-MM-dd").format(dayInCalendar.getDayDate());
         dayDataInStringArray[1] = dayInCalendar.getDayDateDayName();
         dayDataInStringArray[2] = String.valueOf(dayInCalendar.getDayAmountOfProduct());
         dayDataInStringArray[3] = dayInCalendar.getDayProductProduct().getProductName();
@@ -134,8 +134,7 @@ public class DayInCalendar {
     }
     public static void dayDataShowDataWithSQLColumns(DayInCalendar dayInCalendar) {
         String[] dayDataInStringArray = new String[Config.DAY_IN_CALENDAR_STRING_ARRAY_LENGTH];
-
-        dayDataInStringArray[0] = dayInCalendar.getDayDate().toString();
+        dayDataInStringArray[0] = new SimpleDateFormat("yyyy-MM-dd").format(dayInCalendar.getDayDate());
         dayDataInStringArray[1] = dayInCalendar.getDayDateDayName();
         dayDataInStringArray[2] = String.valueOf(dayInCalendar.getDayAmountOfProduct());
         dayDataInStringArray[3] = dayInCalendar.getDayProductProduct().getProductName();
@@ -149,13 +148,14 @@ public class DayInCalendar {
             dayDataInStringArray[8] = dayInCalendar.getDayProductOptionalTime();
         }
 
-        System.out.println("\n DayInCalendar -> dayDataShowData:");
+        System.out.println("\nDayInCalendar -> dayDataShowData:");
         for (int i = 0; i < dayDataInStringArray.length; i++) {
-            System.out.println("[i]: " + i + Config.SQL_COLUMNS_CALENDAR[i]  + " - " + dayDataInStringArray[i]);
+            System.out.println("[i]: " + i + " -> " + Config.SQL_COLUMNS_CALENDAR[i]  + " - " + dayDataInStringArray[i]);
         }
         System.out.println();
     }
 
+    //<editor-fold desc="Getters and Setters">
     public Date getDayDate() {
         return dayDate;
     }
@@ -227,4 +227,5 @@ public class DayInCalendar {
     public void setDayKcalConsume(float dayKcalConsume) {
         this.dayKcalConsume = dayKcalConsume;
     }
+    //</editor-fold>
 }
