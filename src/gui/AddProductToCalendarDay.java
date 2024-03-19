@@ -15,7 +15,6 @@ import java.sql.SQLException;
 import java.text.Format;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 
 public class AddProductToCalendarDay {
 
@@ -79,7 +78,7 @@ public class AddProductToCalendarDay {
 
     //<editor-fold desc="ComboBox">
     // ComboBox
-    JComboBox<String> dayMealNameComboBox = new JComboBox<>(new String[]{"Breakfast", "Second Breakfast", "Snack 1", "Dinner", "Snack 2"
+    JComboBox<String> dayMealNameComboBox = new JComboBox<>(new String[]{"None" , "Breakfast", "Second Breakfast", "Snack 1", "Dinner", "Snack 2"
             , "Supper", "After workout"});
     //</editor-fold>
 
