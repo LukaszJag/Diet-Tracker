@@ -15,6 +15,7 @@ public class AddAllProductInTXTFromDirectory {
         for (int i = 0; i < allProductFromDirectory.length; i++) {
             fileInArray = ConvertTXTFileToOutput.convertToStringArray(allProductFromDirectory[i]);
             readyToInsertQuery = ImportDateFromTXTFilesToSQLDB.convertTextFileToSQLQuery(fileInArray);
+            System.out.println("\n ITERATION NUMER: " + i + "\nFile: " + fileInArray[0] + "\n");
 
             try {
                 RunQuery.runQueryOnCalendarTable(readyToInsertQuery);

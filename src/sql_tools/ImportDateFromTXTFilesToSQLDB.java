@@ -5,7 +5,7 @@ public class ImportDateFromTXTFilesToSQLDB {
         String[] pureDataFromTXTFile = getPureDateFromFileInArray(fileInStringArray);
         String preparedStringQuery = prepareQueryAndFields(pureDataFromTXTFile);
 
-        System.out.println(preparedStringQuery);
+        //System.out.println(preparedStringQuery);
 
         return preparedStringQuery;
     }
@@ -54,9 +54,14 @@ public class ImportDateFromTXTFilesToSQLDB {
 
          */
 
+        System.out.println();
+        for (int i = 0; i < 10; i++) {
+            System.out.print(fieldDate[i] + " ");
+        }
+        System.out.println();
 
         String query = "INSERT INTO\n" +
-        "`diet_tracker_schema`.`product_table`\n" +
+        "`diet_tracker_schema`.`product_table_text_test`\n" +
         "(`product_name`,\n" +
         "`product_brand`,\n" +
         "`product_package_has`,\n" +
