@@ -1,0 +1,8 @@
+Name: Nutella
+Brand: Ferrero
+Package has: 600.0
+Macro for: 600.0
+KCal: 539.0
+Protein: 6.3
+Fat: 30.9
+Carbs: 57.5

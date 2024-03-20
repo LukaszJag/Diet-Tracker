@@ -250,6 +250,7 @@ public class AddProductToCalendarDay {
             String dayProductOptionalTime = timeOptionalTextField.getText();
             String dayProductOptionalComment = commentOptionalTextField.getText();
             float dayAmountOfProduct = Float.valueOf(amountOfProductTextField.getText());
+            String commentOptional = commentOptionalTextField.getText();
             //</editor-fold>
 
             //<editor-fold desc="Setting correct full date from West Panel Label">
@@ -264,7 +265,7 @@ public class AddProductToCalendarDay {
             //</editor-fold>
 
             Product dayProductProduct = new Product(productNameTextField.getText(), "None",
-                    100, productMacro, -1);
+                    100, productMacro, -1,"");
 
             float kcalConsumeCalculated = Float.valueOf(kcalTextField.getText()) * (Float.valueOf(amountOfProductTextField.getText()) / (100.0f));
 

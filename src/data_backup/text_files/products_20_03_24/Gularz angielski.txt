@@ -1,0 +1,8 @@
+Name: Gularz angielski
+Brand: Nasze smaki
+Package has: 300.0
+Macro for: 300.0
+KCal: 186.0
+Protein: 17.0
+Fat: 13.0
+Carbs: 0.2

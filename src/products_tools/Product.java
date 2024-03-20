@@ -11,14 +11,16 @@ public class Product {
     private Macro productMacroForItsSetMeasure;
     private String productBrand;
     private float productPackWeight;
+    private String commentOptional;
 
     // Constructors
-    public Product(String name, String brand, float productMeasureOfProductWeightToCalculateMacro, Macro product_macro, float weight_of_pack){
+    public Product(String name, String brand, float productMeasureOfProductWeightToCalculateMacro, Macro product_macro, float weight_of_pack, String commentOptional){
         this.productName = name;
         this.productBrand = brand;
         this.productMeasureOfProductWeightToCalculateMacro = productMeasureOfProductWeightToCalculateMacro;
         this.productMacroForItsSetMeasure = product_macro;
         this.productPackWeight = weight_of_pack;
+        this.commentOptional = commentOptional;
     }
 
 
@@ -36,7 +38,7 @@ public class Product {
         productDataStringArray[5] = String.valueOf(productWithData.getProductMacroForItsSetMeasure().getProtein());
         productDataStringArray[6] = String.valueOf(productWithData.getProductMacroForItsSetMeasure().getFat());
         productDataStringArray[7] = String.valueOf(productWithData.getProductMacroForItsSetMeasure().getCarbs());
-
+        productDataStringArray[8] =  productWithData.getCommentOptional();
         return productDataStringArray;
     }
 
@@ -79,5 +81,13 @@ public class Product {
 
     public void setProductPackWeight(float productPackWeight) {
         this.productPackWeight = productPackWeight;
+    }
+
+    public String getCommentOptional() {
+        return commentOptional;
+    }
+
+    public void setCommentOptional(String commentOptional) {
+        this.commentOptional = commentOptional;
     }
 }

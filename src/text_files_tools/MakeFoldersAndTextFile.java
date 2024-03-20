@@ -42,6 +42,7 @@ public class MakeFoldersAndTextFile {
             MakeFoldersAndTextFile.writeProductToFile("Fat: " + product.getProductMacroForItsSetMeasure().getFat(), fileName);
 
             MakeFoldersAndTextFile.writeProductToFile("Carbs: " + product.getProductMacroForItsSetMeasure().getCarbs(), fileName);
+            MakeFoldersAndTextFile.writeProductToFile("Comment optional: " + product.getCommentOptional(), fileName);
 
 
         } catch (IOException ex) {
@@ -71,7 +72,7 @@ public class MakeFoldersAndTextFile {
     }
 
     public static void writeProductToFile(String lineToWriteToFile, String fileName) throws IOException {
-        BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(Config.DESTINATION_FOR_TEXT_FILE_PRODUCTS + fileName + ".txt", true));
+        BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(Config.DESTINATION_FOR_TEXT_FILE_PRODUCTS + fileName, true));
         bufferedWriter.append(lineToWriteToFile.toString());
         bufferedWriter.append("\n");
         bufferedWriter.close();

@@ -1,0 +1,8 @@
+Name: Rozpuszczalna kawa zbożowa
+Brand: Inka
+Package has: 200.0
+Macro for: 200.0
+KCal: 360.0
+Protein: 4.8
+Fat: 0.2
+Carbs: 79.0

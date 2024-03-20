@@ -5,6 +5,6 @@ import products_tools.Product;
 
 public class ProductFactoryToMakeTests {
     public static Product productBarExample(){
-        return  new Product("Bar", "Mars", 100f, new Macro(200f, 20, 10, 80), 80);
+        return  new Product("Bar", "Mars", 100f, new Macro(200f, 20, 10, 80), 80, "Baton Mars");
     }
 }

@@ -17,7 +17,7 @@ public class DisplayTextFilesDateAndInformation {
 
     public static String[] getStringArrayForAllFilesInDirectory(String directory) {
         // Danger and possible problem cause because max amount of files is dynamic
-        int maxAmountOfFiles = 100;
+        int maxAmountOfFiles = 300;
         String[] fileNameAndDirectory = new String[maxAmountOfFiles];
         int counter = 0;
 

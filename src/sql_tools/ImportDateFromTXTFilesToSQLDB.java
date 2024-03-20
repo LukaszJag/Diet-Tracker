@@ -61,7 +61,7 @@ public class ImportDateFromTXTFilesToSQLDB {
         System.out.println();
 
         String query = "INSERT INTO\n" +
-        "`diet_tracker_schema`.`product_table_text_test`\n" +
+        "`diet_tracker_schema`.`product_table_test`\n" +
         "(`product_name`,\n" +
         "`product_brand`,\n" +
         "`product_package_has`,\n" +

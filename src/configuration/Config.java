@@ -22,7 +22,6 @@ public class Config {
     public static final int ADD_PRODUCT_PANELS_CENTER = 20;
     public static final int ADD_PRODUCT_PANELS_WEST_EAST_SIZE = 80;
     public static final int ADD_PRODUCT_PANELS_SOUTH_SIZE = 100;
-    public static final int howManyParametersToAddProduct = 8;
 
     // Add Product To Day Windows Configuration - Window, Panels - size
     public static final int ADD_PRODUCT_TO_DAY_WINDOWS_WIDTH = 900;
@@ -67,7 +66,7 @@ public class Config {
 
     //SQL Configuration - To insert product to table
     public static final String[] SQL_COLUMNS_FOR_INSERT_INTO_PRODUCT_TABLE = {"`product_name`", "`product_brand`", "`product_package_has`",
-            "`product_macro_for`", "`product_kcal`", "`product_protein`", "`product_fat`", "`product_carbs`"};
+            "`product_macro_for`", "`product_kcal`", "`product_protein`", "`product_fat`", "`product_carbs`", "comment_optional"};
 
 
     /*
@@ -77,12 +76,10 @@ public class Config {
 
 
     // Product configuration
-    public static final int ALL_PRODUCT_VALUES_FIELD_COUNT = 8;
+    public static final int ALL_PRODUCT_VALUES_FIELD_COUNT = Config.SQL_COLUMNS_FOR_INSERT_INTO_PRODUCT_TABLE.length;
 
     // Day in calendar configuration
     public static final int DAY_IN_CALENDAR_STRING_ARRAY_LENGTH = Config.SQL_COLUMNS_CALENDAR.length;
     public static final int DAY_IN_CALENDAR_STRING_ARRAY_LENGTH_WITH_KCAL_CONSUME_LENGTH = SQL_COLUMNS_CALENDAR_WITH_KCAL_CONSUME.length;
-
-
-
+    public static final int howManyParametersToAddProduct = Config.SQL_COLUMNS_FOR_INSERT_INTO_PRODUCT_TABLE.length;
 }

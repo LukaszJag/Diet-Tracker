@@ -41,7 +41,7 @@ public class InsertProductToSQL_Table {
         for (int i = 0; i < Config.howManyParametersToAddProduct; i++) {
 
             // Take care to float value ends with .f
-            if(i == 0 || i == 1) {
+            if(i == 0 || i == 1 || i == 8) {
                 sqlStatement += "'" + productDataInArray[i] + "'";
             }else{
                 sqlStatement += productDataInArray[i];

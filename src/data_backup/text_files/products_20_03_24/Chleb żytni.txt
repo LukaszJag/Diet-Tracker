@@ -1,0 +1,8 @@
+Name: Chleb żytni
+Brand: 7 ziaren
+Package has: 390.0
+Macro for: 390.0
+KCal: 262.0
+Protein: 8.8
+Fat: 9.1
+Carbs: 33.0

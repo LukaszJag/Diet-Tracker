@@ -1,0 +1,8 @@
+Name: Masło orzechowe
+Brand: Vitanella
+Package has: 450.0
+Macro for: 450.0
+KCal: 611.0
+Protein: 22.0
+Fat: 49.0
+Carbs: 17.0

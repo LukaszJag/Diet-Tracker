@@ -1,4 +1,4 @@
-product_table_testCREATE TABLE `calendar_test` (
+CREATE TABLE `calendar_test`(
   `day_date` date NOT NULL,
   `day_name` varchar(45) NOT NULL,
   `product_name` varchar(80) DEFAULT NULL,

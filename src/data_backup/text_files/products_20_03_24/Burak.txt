@@ -1,0 +1,8 @@
+Name: Burak
+Brand: None
+Package has: 0.0
+Macro for: 0.0
+KCal: 42.0
+Protein: 1.8
+Fat: 0.1
+Carbs: 9.5

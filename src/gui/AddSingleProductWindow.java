@@ -14,22 +14,27 @@ import java.sql.SQLException;
 
 public class AddSingleProductWindow {
 
+    //<editor-fold desc="Panels">
     JPanel addProductMainPanel = new JPanel();
     JPanel addProductPanelNorth = new JPanel();
     JPanel addProductPanelWest = new JPanel();
     JPanel addProductPanelEast = new JPanel();
     JPanel addProductPanelSouth = new JPanel();
+    //</editor-fold>
     JButton acceptButton;
     JFrame addProductWindowFrame = new JFrame();
-    //Declare Text Fields
+
+    //<editor-fold desc="Text Fields">
     JTextField productNameTextField;
     JTextField productBrandTextField;
     JTextField productPackageHasTextField;
-    JComboBox productMacroForComboBox;
     JTextField productKCalTextField;
     JTextField productProteinTextField;
     JTextField productFatTextField;
     JTextField productCarbsTextField;
+    JTextField productCommentOptionalCarbsTextField;
+    //</editor-fold>
+    JComboBox productMacroForComboBox;
 
     public AddSingleProductWindow() {
         startAddNewProductWindow();
@@ -39,7 +44,7 @@ public class AddSingleProductWindow {
         addProductWindowFrame = new JFrame("Diet Tracker");
         addProductWindowFrame.setSize(Config.ADD_PRODUCT_WINDOWS_WIDTH, Config.ADD_PRODUCT_WINDOWS_HEIGHT);
         //Set Layout
-        addProductMainPanel.setLayout(new GridLayout(8, 2));
+        addProductMainPanel.setLayout(new GridLayout(9, 2));
         addProductWindowFrame.setLayout(new BorderLayout());
 
         acceptButton = new JButton("Accept");
@@ -72,6 +77,7 @@ public class AddSingleProductWindow {
         JLabel productProteinLabel = new JLabel("Protein[g]:");
         JLabel productFatLabel = new JLabel("Fat[g]:");
         JLabel productCarbsLabel = new JLabel("Carbs[g]:");
+        JLabel productCommentOptionalCarbsLabel = new JLabel("Comment(optional):");
 
         //Set Text Field
         productNameTextField = new JTextField(Config.ADD_PRODUCT_TEXT_FIELD_SIZE);
@@ -81,6 +87,7 @@ public class AddSingleProductWindow {
         productProteinTextField = new JTextField(Config.ADD_PRODUCT_TEXT_FIELD_SIZE);
         productFatTextField = new JTextField(Config.ADD_PRODUCT_TEXT_FIELD_SIZE);
         productCarbsTextField = new JTextField(Config.ADD_PRODUCT_TEXT_FIELD_SIZE);
+        productCommentOptionalCarbsTextField = new JTextField(160);
 
         //Add components to panel
         addProductMainPanel.add(productNameLabel);
@@ -107,6 +114,9 @@ public class AddSingleProductWindow {
         addProductMainPanel.add(productCarbsLabel);
         addProductMainPanel.add(productCarbsTextField);
 
+        addProductMainPanel.add(productCommentOptionalCarbsLabel);
+        addProductMainPanel.add(productCommentOptionalCarbsTextField);
+
 
 
         addProductWindowFrame.setResizable(false);
@@ -132,6 +142,7 @@ public class AddSingleProductWindow {
                 String protein = "";
                 String fat = "";
                 String carbs = "";
+                String commentOptional = productCommentOptionalCarbsTextField.getText();
 
                 name = productNameTextField.getText();
                 brand = productBrandTextField.getText();
@@ -200,11 +211,11 @@ public class AddSingleProductWindow {
                 JOptionPane.showMessageDialog(null, "Product data:\n\n" + "Name: " + name +"\nBrand: " + brand
                         + "\nPackage has: " + packageHas + "\nMacro for: " + macroFor
                         + "\nKCal: " + kCal + "\nProtein: " + protein +
-                        "\nFat: " + fat + "\nCarbs: " + carbs);
+                        "\nFat: " + fat + "\nCarbs: " + carbs + "\nComment" + commentOptional);
 
                 Macro newProductMacro = new Macro(Float.parseFloat(kCal), Float.parseFloat(protein),
                         Float.parseFloat(fat), Float.parseFloat(carbs));
-                Product newProduct = new Product(name, brand, Float.parseFloat(macroFor), newProductMacro, Float.parseFloat(packageHas));
+                Product newProduct = new Product(name, brand, Float.parseFloat(macroFor), newProductMacro, Float.parseFloat(packageHas), commentOptional);
                 MakeFoldersAndTextFile.makeTextFileForProduct(newProduct, Float.parseFloat(packageHas));
 
                 try {
