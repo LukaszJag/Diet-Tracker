@@ -274,8 +274,9 @@ public class AddProductToCalendarDay {
 
             System.out.println("\nAddProductToCalendarDay -> AddProductToDayAcceptButtonListener -- show DayInCalendarData:");
             DayInCalendar.dayDataShowDataWithSQLColumns(dayInCalendar);
-            System.out.println();
+            System.out.println("Product name:" + productNameTextField.getText() + ";");
 
+            System.out.println();
             try {
                 InsertToCalendarDayTable.addRowToCalendarTable(dayInCalendar, kcalConsumeCalculated);
             } catch (SQLException ex) {

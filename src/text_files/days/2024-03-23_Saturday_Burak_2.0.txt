@@ -1,0 +1,24 @@
+INSERT INTO `diet_tracker_schema`.`calendar_test`
+(`day_date`,
+`day_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`)
+Values
+('2024-03-23',
+'Saturday',
+2.0,
+'Burak',
+2.0,
+2.0,
+2.0,
+2.0,
+'2024-03-23 09:51:17',
+'',
+0.04);

@@ -21,7 +21,7 @@ public class ImportDateFromTXTFilesToSQLDB {
             if (fileInStringArray[i] != "0"){
                 tmpDataFromLine = fileInStringArray[i];
                 positionOfColon = tmpDataFromLine.indexOf(":");
-                pureDataFromLine = tmpDataFromLine.substring(positionOfColon + 1, fileInStringArray[i].length());
+                pureDataFromLine = tmpDataFromLine.substring(positionOfColon + 2, fileInStringArray[i].length());
                 result[i] = pureDataFromLine;
             }
         }

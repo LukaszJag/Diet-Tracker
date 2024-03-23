@@ -1,2 +1,2 @@
-ALTER TABLE table_name
-ADD column_name datatype;
+ALTER TABLE product_table
+ADD comment_optional VARCHAR(160);
