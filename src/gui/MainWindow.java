@@ -20,7 +20,6 @@ public class MainWindow extends JFrame {
     private JPanel panelUpper = new JPanel();
     private JPanel panelDown = new JPanel();
     public void makeRunWindow(){
-        JOptionPane.showMessageDialog(this,"Welcome in Diet Tracker Application");
         setUpAndStartMenuWindow();
     }
 
@@ -35,7 +34,7 @@ public class MainWindow extends JFrame {
         setPanels();
         addButtons();
         addLabels();
-        addComponentsToStartFrame();
+        addPanelsToStartFrame();
 
         startWindow.setLocationRelativeTo(null);
         startWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -43,7 +42,7 @@ public class MainWindow extends JFrame {
         startWindow.setVisible(true);
     }
 
-    private void addComponentsToStartFrame(){
+    private void addPanelsToStartFrame(){
 
         startWindow.add(panelLeft, BorderLayout.WEST);
         startWindow.add(panelRight, BorderLayout.EAST);
@@ -78,6 +77,10 @@ public class MainWindow extends JFrame {
         Button addProductToDay =new Button("Add product to day");
         addProductToDay.addActionListener(new AddProducttoDayButton());
         panelLeft.add(addProductToDay);
+
+        Button closeAplicationButton =new Button("Exit");
+        closeAplicationButton.addActionListener(new CloseAplicationButtonActionListener());
+        panelRight.add(closeAplicationButton);
     }
 
     private void addLabels(){
@@ -104,8 +107,14 @@ public class MainWindow extends JFrame {
     private class AddProducttoDayButton implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            JOptionPane.showMessageDialog(null,"Welcome in Add Product to Day");
             AddProductToCalendarDay addProductToCalendarDay = new AddProductToCalendarDay();
+        }
+    }
+
+    private class CloseAplicationButtonActionListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            startWindow.dispose();
         }
     }
 }

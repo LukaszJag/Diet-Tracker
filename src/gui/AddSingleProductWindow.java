@@ -22,7 +22,10 @@ public class AddSingleProductWindow {
     JPanel addProductPanelSouth = new JPanel();
     //</editor-fold>
     JButton acceptButton;
+    JButton backToMainWindowButton;
     JFrame addProductWindowFrame = new JFrame();
+    JButton exitProgramProductWindowButton = new JButton();
+
 
     //<editor-fold desc="Text Fields">
     JTextField productNameTextField;
@@ -50,6 +53,14 @@ public class AddSingleProductWindow {
         acceptButton = new JButton("Accept");
         addProductPanelSouth.add(acceptButton);
         acceptButton.addActionListener(new AddNewProductButtonActionListener());
+
+        backToMainWindowButton = new JButton("Go to Start");
+        addProductPanelSouth.add(backToMainWindowButton);
+        backToMainWindowButton.addActionListener(new BackToMainWindowButtonActionListener());
+
+        exitProgramProductWindowButton = new JButton("Exit application");
+        addProductPanelSouth.add(exitProgramProductWindowButton);
+        exitProgramProductWindowButton.addActionListener(new ExitApplicationButtonActionListener());
 
         addProductWindowFrame.add(addProductPanelNorth, BorderLayout.NORTH);
         addProductWindowFrame.add(addProductPanelWest, BorderLayout.WEST);
@@ -227,6 +238,21 @@ public class AddSingleProductWindow {
 
 
             }
+        }
+    }
+
+    private class BackToMainWindowButtonActionListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            //addProductWindowFrame.dispose();
+            System.exit(0);
+        }
+    }
+
+    private class ExitApplicationButtonActionListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            System.exit(0);
         }
     }
 }

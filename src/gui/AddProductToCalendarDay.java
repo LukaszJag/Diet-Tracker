@@ -42,6 +42,8 @@ public class AddProductToCalendarDay {
     JButton importProductMacroFromLibraryButton = new JButton("Import product macro");
     JButton fillTheExistingProductMacroButton = new JButton("Fill product");
     JButton otherThenCurrentDateButton = new JButton("Other then current");
+    JButton backToMainWindowButton = new JButton("Go to Start");
+    JButton exitProgramProductWindowButton = new JButton("Exit application");
     //</editor-fold>
 
     //<editor-fold desc="Labels">
@@ -168,6 +170,13 @@ public class AddProductToCalendarDay {
         //<editor-fold desc="Add Components to Panel - South">
         addProductToDayPanelSouth.add(addProductToDayAcceptButton);
         addProductToDayAcceptButton.addActionListener(new AddProductToDayAcceptButtonListener());
+
+        addProductToDayPanelSouth.add(backToMainWindowButton);
+        backToMainWindowButton.addActionListener(new BackToMainWindowButtonActionListener());
+
+        exitProgramProductWindowButton = new JButton("Exit application");
+        addProductToDayPanelSouth.add(exitProgramProductWindowButton);
+        exitProgramProductWindowButton.addActionListener(new ExitApplicationButtonActionListener());
         //</editor-fold>
 
         //<editor-fold desc="Add Components to Center Panel">
@@ -402,6 +411,20 @@ public class AddProductToCalendarDay {
             otherThenCurrentDateButtonWindowFrame.setResizable(false);
             otherThenCurrentDateButtonWindowFrame.setLocationRelativeTo(null);
             otherThenCurrentDateButtonWindowFrame.show();
+        }
+    }
+
+    private class BackToMainWindowButtonActionListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            addProductToDayFrame.dispose();
+        }
+    }
+
+    private class ExitApplicationButtonActionListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            System.exit(0);
         }
     }
 }
