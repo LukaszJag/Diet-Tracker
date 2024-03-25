@@ -1,0 +1,9 @@
+Name: Mleko 3.2 %
+Brand:
+Package has: 0.0
+Macro for: 0.0
+KCal: 60.0
+Protein: 3.0
+Fat: 3.2
+Carbs: 4.7
+Comment optional: Ogólny produkt bez marki i opakowania

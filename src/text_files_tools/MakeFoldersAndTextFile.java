@@ -26,7 +26,7 @@ public class MakeFoldersAndTextFile {
     }
 
     public static void makeTextFileForProduct(Product product, float macroFor) {
-        String fileName = product.getProductName();;
+        String fileName = product.getProductName();
         MakeFoldersAndTextFile.makeEmptyFile(fileName, Config.DESTINATION_FOR_TEXT_FILE_PRODUCTS);
 
 
@@ -72,7 +72,7 @@ public class MakeFoldersAndTextFile {
     }
 
     public static void writeProductToFile(String lineToWriteToFile, String fileName) throws IOException {
-        BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(Config.DESTINATION_FOR_TEXT_FILE_PRODUCTS + fileName, true));
+        BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(Config.DESTINATION_FOR_TEXT_FILE_PRODUCTS + fileName + ".txt", true));
         bufferedWriter.append(lineToWriteToFile.toString());
         bufferedWriter.append("\n");
         bufferedWriter.close();

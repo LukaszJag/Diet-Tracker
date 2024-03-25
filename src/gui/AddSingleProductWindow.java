@@ -157,7 +157,13 @@ public class AddSingleProductWindow {
 
                 name = productNameTextField.getText();
                 brand = productBrandTextField.getText();
-                packageHas = productPackageHasTextField.getText();
+                if (productPackageHasTextField.getText().equals("")){
+                    System.out.println("Product filed is empty");
+                    packageHas = "0";
+                }else {
+                    System.out.println("Product filed is not empty");
+                    packageHas = productPackageHasTextField.getText();
+                }
                 macroFor = productMacroForComboBox.getSelectedItem().toString();
                 kCal = productKCalTextField.getText();
                 protein = productProteinTextField.getText();
@@ -178,6 +184,7 @@ public class AddSingleProductWindow {
                     addNewProductData[4] = kCal;
                     addNewProductData[5] = protein;
                     addNewProductData[6] = fat;
+                    addNewProductData[7] = carbs;
 
                 }catch (IllegalArgumentException exception){
                     System.out.println("Wrong Type exeption.");
@@ -186,6 +193,7 @@ public class AddSingleProductWindow {
                 boolean passTest = true;
 
                 try {
+                    packageHas = packageHas.replace(',', '.');
                     Float.parseFloat(packageHas);
                 }catch(Exception ParseToDoubleException){
                     JOptionPane.showMessageDialog(null, "Wrong input in package has text field.");
@@ -193,6 +201,7 @@ public class AddSingleProductWindow {
                 }
 
                 try {
+                    kCal = kCal.replace(',', '.');
                     Float.parseFloat(kCal);
                 }catch(Exception ParseToDoubleException){
                     JOptionPane.showMessageDialog(null, "Wrong input in KCal text field.");
@@ -200,6 +209,7 @@ public class AddSingleProductWindow {
                 }
 
                 try {
+                    protein = protein.replace(',', '.');
                     Float.parseFloat(protein);
                 }catch(Exception ParseToDoubleException){
                     JOptionPane.showMessageDialog(null, "Wrong input in protein text field.");
@@ -207,6 +217,7 @@ public class AddSingleProductWindow {
                 }
 
                 try {
+                    fat = fat.replace(',', '.');
                     Float.parseFloat(fat);
                 }catch(Exception ParseToDoubleException){
                     JOptionPane.showMessageDialog(null, "Wrong input in fat text field.");
@@ -214,6 +225,7 @@ public class AddSingleProductWindow {
                 }
 
                 try {
+                    carbs = carbs.replace(',', '.');
                     Float.parseFloat(carbs);
                 }catch(Exception ParseToDoubleException){
                     JOptionPane.showMessageDialog(null, "Wrong input in carbs text field.");
@@ -244,8 +256,7 @@ public class AddSingleProductWindow {
     private class BackToMainWindowButtonActionListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            //addProductWindowFrame.dispose();
-            System.exit(0);
+            addProductWindowFrame.dispose();
         }
     }
 

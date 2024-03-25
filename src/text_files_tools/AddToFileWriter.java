@@ -20,7 +20,7 @@ public class AddToFileWriter {
             for (File child : directoryListing) {
                 System.out.println(child.toString());
                 try {
-                    MakeFoldersAndTextFile.writeProductToFile(lineToAdd, child.getName());
+                    MakeFoldersAndTextFile.writeProductToFile(lineToAdd, child.getName() + ".txt");
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
