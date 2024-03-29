@@ -6,11 +6,13 @@ import products_tools.Macro;
 import products_tools.Product;
 import sql_tools.InsertToCalendarDayTable;
 import sql_tools.SQLSelect;
+import text_files_tools.FilesTools;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.text.Format;
 import java.text.ParseException;
@@ -44,6 +46,8 @@ public class AddProductToCalendarDay {
     JButton otherThenCurrentDateButton = new JButton("Other then current");
     JButton backToMainWindowButton = new JButton("Go to Start");
     JButton exitProgramProductWindowButton = new JButton("Exit application");
+    JButton addToCalendarTableButton = new JButton("Add - Calendar Table");
+    JButton addToTestCalendarTableButton = new JButton("Add - Calendar TEST Table");
     //</editor-fold>
 
     //<editor-fold desc="Labels">
@@ -63,6 +67,7 @@ public class AddProductToCalendarDay {
     JLabel carbsLabel = new JLabel("Carbs:");
     JLabel timeOptionalLabel = new JLabel("Time(optional):");
     JLabel commentOptionalLabel = new JLabel("Comment(optional):");
+    JLabel chosenCalendarTableLabel = new JLabel();
     //</editor-fold>
 
     //<editor-fold desc="TextFields">
@@ -154,9 +159,15 @@ public class AddProductToCalendarDay {
 
         addProductToDayPanelWest.add(addProductToDayDisplaySelectedFDateNameDayLabel);
         addProductToDayPanelWest.add(addProductToDayDisplaySelectedFDateDayLabel);
+
+        chosenCalendarTableLabel = new JLabel("Current Table is: ");
+        chosenCalendarTableLabel.setForeground(Config.CHOSE_TABLE_TO_INSERT_DATA);
+
+        addProductToDayPanelWest.add(chosenCalendarTableLabel);
         //</editor-fold>
 
         //<editor-fold desc="Add Components to Panel - East">
+
         addProductToDayPanelEast.add(checkIfProductExistButton);
         checkIfProductExistButton.addActionListener(new CheckIfProductExistButtonActionListener());
 
@@ -165,6 +176,11 @@ public class AddProductToCalendarDay {
 
         addProductToDayPanelEast.add(fillTheExistingProductMacroButton);
         fillTheExistingProductMacroButton.addActionListener(new FillTheExistingProductMacroButtonListener());
+
+        addProductToDayPanelEast.add(addToCalendarTableButton);
+
+        addProductToDayPanelEast.add(addToTestCalendarTableButton);
+
         //</editor-fold>
 
         //<editor-fold desc="Add Components to Panel - South">
@@ -284,6 +300,13 @@ public class AddProductToCalendarDay {
             System.out.println("\nAddProductToCalendarDay -> AddProductToDayAcceptButtonListener -- show DayInCalendarData:");
             DayInCalendar.dayDataShowDataWithSQLColumns(dayInCalendar);
             System.out.println("Product name:" + productNameTextField.getText() + ";");
+
+            try {
+                FilesTools.writeSQLStatementForDayInCalendarToTXTFile(InsertToCalendarDayTable.createInsertSQLQueryForCalendarDay(dayInCalendar, kcalConsumeCalculated), datePassedToSQL.toString() + "_" +
+                        dayInCalendar.getDayProductProduct().getProductName() + String.valueOf(dayAmountOfProduct));
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
 
             System.out.println();
             try {
@@ -421,7 +444,7 @@ public class AddProductToCalendarDay {
         }
     }
 
-    private class ExitApplicationButtonActionListener implements ActionListener {
+    private static class ExitApplicationButtonActionListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
             System.exit(0);
