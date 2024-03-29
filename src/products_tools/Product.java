@@ -23,6 +23,17 @@ public class Product {
         this.commentOptional = commentOptional;
     }
 
+    public static boolean isProductEqual(Product productOne, Product productTwo){
+        String[] productOneInArray = productOne.productDataInStringArray(productOne);
+        String[] productTwoInArray = productOne.productDataInStringArray(productTwo);
+
+        for (int i = 0; i < productOneInArray.length; i++) {
+            if(!productOneInArray[i].equals(productTwoInArray[i])){
+                return false;
+            }
+        }
+        return true;
+    }
 
     public String[] productDataInStringArray(Product productWithData){
         String[] productDataStringArray = new String[Config.ALL_PRODUCT_VALUES_FIELD_COUNT];

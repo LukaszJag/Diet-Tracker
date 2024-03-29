@@ -4,7 +4,7 @@ import configuration.Config;
 import sql_tools.InsertProductToSQL_Table;
 import products_tools.Macro;
 import products_tools.Product;
-import text_files_tools.MakeFoldersAndTextFile;
+import text_files_tools.FilesTools;
 
 import javax.swing.*;
 import java.awt.*;
@@ -239,7 +239,7 @@ public class AddSingleProductWindow {
                 Macro newProductMacro = new Macro(Float.parseFloat(kCal), Float.parseFloat(protein),
                         Float.parseFloat(fat), Float.parseFloat(carbs));
                 Product newProduct = new Product(name, brand, Float.parseFloat(macroFor), newProductMacro, Float.parseFloat(packageHas), commentOptional);
-                MakeFoldersAndTextFile.makeTextFileForProduct(newProduct, Float.parseFloat(packageHas));
+                FilesTools.makeTextFileForProduct(newProduct, Float.parseFloat(packageHas));
 
                 try {
                     InsertProductToSQL_Table.insertProduct(newProduct);
