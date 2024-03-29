@@ -3,7 +3,7 @@ package sql_tools;
 import calendar_tools.DayInCalendar;
 import configuration.Config;
 import products_tools.Product;
-import text_files_tools.MakeFoldersAndTextFile;
+import text_files_tools.FilesTools;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -36,7 +36,7 @@ public class InsertToCalendarDayTable {
                 dayInCalendar.getDayProductProduct().getProductName() + "_" +
                 String.valueOf(dayInCalendar.getDayAmountOfProduct());
         try {
-            MakeFoldersAndTextFile.addDayStringToTextFile(nameOfDayTextFile, sqlStatement);
+            FilesTools.addDayStringToTextFile(nameOfDayTextFile, sqlStatement);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
