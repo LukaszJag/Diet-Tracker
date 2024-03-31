@@ -18,7 +18,7 @@ public class InsertProductToSQL_Table {
 
     public static String createInsertSQLQueryForProductTable(Product productToInsert){
         // Set head of query
-        String sqlStatement = "INSERT INTO `diet_tracker_schema`.`product_table`\n";
+        String sqlStatement = "INSERT INTO `diet_tracker_schema`." + Config.CURRENT_DATABASE_TABLE_CALENDAR + "\n";
         sqlStatement += "(";
 
         // Set columns name in query

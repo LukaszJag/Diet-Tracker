@@ -26,6 +26,8 @@ public class Config {
     public static final int ADD_PRODUCT_TO_DAY_PANELS_CENTER = 20;
     public static final int ADD_PRODUCT_TO_DAY_PANELS_WEST_EAST_SIZE = 200;
     public static final int ADD_PRODUCT_TO_DAY_PANELS_SOUTH_SIZE = 100;
+    public static final Color mainWindowDataBaseProductTableLabelColor = Color.MAGENTA;
+    public static final Color mainWindowDataBaseCalendarTableLabelColor = Color.RED;
     //</editor-fold>
 
     //<editor-fold desc="Add Product To Day Windows Configuration - Panel, Label - Colors">
@@ -66,7 +68,10 @@ public class Config {
     public static final String DESTINATION_FOR_SQL_QUERIES_TO_TEXT_FILE = "src/text_files/sql_queries/";
     //</editor-fold>
 
+    // On run configuration
 
+    public static String CURRENT_DATABASE_TABLE_PRODUCT =  "calendar_test";
+    public static String CURRENT_DATABASE_TABLE_CALENDAR = "product_table_test";
 
 
 

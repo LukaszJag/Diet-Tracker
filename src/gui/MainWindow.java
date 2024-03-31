@@ -86,6 +86,14 @@ public class MainWindow extends JFrame {
     private void addLabels(){
         Label dateAndTime = new Label("There will be date and time");
         panelUpper.add(dateAndTime);
+        JLabel currentProductTableLabel = new JLabel("Current Calendar Table is: " + Config.CURRENT_DATABASE_TABLE_PRODUCT);
+        JLabel currentCalendarTableLabel = new JLabel("Current Product Table is: " + Config.CURRENT_DATABASE_TABLE_CALENDAR);
+
+        currentProductTableLabel.setForeground(Config.mainWindowDataBaseProductTableLabelColor);
+        currentCalendarTableLabel.setForeground(Config.mainWindowDataBaseCalendarTableLabelColor);
+
+        panelDown.add(currentCalendarTableLabel);
+        panelDown.add(currentProductTableLabel);
     }
 
     private class AddProductButton implements ActionListener {

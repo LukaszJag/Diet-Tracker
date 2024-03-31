@@ -46,8 +46,8 @@ public class AddProductToCalendarDay {
     JButton otherThenCurrentDateButton = new JButton("Other then current");
     JButton backToMainWindowButton = new JButton("Go to Start");
     JButton exitProgramProductWindowButton = new JButton("Exit application");
-    JButton addToCalendarTableButton = new JButton("Add - Calendar Table");
-    JButton addToTestCalendarTableButton = new JButton("Add - Calendar TEST Table");
+    JButton changeToCalendarMainTableButton = new JButton("Chose - Calendar Table");
+    JButton changeToCalendarTestTableButton = new JButton("Chose - Calendar TEST Table");
     //</editor-fold>
 
     //<editor-fold desc="Labels">
@@ -160,7 +160,7 @@ public class AddProductToCalendarDay {
         addProductToDayPanelWest.add(addProductToDayDisplaySelectedFDateNameDayLabel);
         addProductToDayPanelWest.add(addProductToDayDisplaySelectedFDateDayLabel);
 
-        chosenCalendarTableLabel = new JLabel("Current Table is: ");
+        chosenCalendarTableLabel = new JLabel("Current Table is: " + Config.CURRENT_DATABASE_TABLE_PRODUCT);
         chosenCalendarTableLabel.setForeground(Config.CHOSE_TABLE_TO_INSERT_DATA);
 
         addProductToDayPanelWest.add(chosenCalendarTableLabel);
@@ -177,9 +177,11 @@ public class AddProductToCalendarDay {
         addProductToDayPanelEast.add(fillTheExistingProductMacroButton);
         fillTheExistingProductMacroButton.addActionListener(new FillTheExistingProductMacroButtonListener());
 
-        addProductToDayPanelEast.add(addToCalendarTableButton);
+        addProductToDayPanelEast.add(changeToCalendarMainTableButton);
+        changeToCalendarMainTableButton.addActionListener(new ChangeCalendarTableButtonListener());
 
-        addProductToDayPanelEast.add(addToTestCalendarTableButton);
+        addProductToDayPanelEast.add(changeToCalendarTestTableButton);
+        changeToCalendarTestTableButton.addActionListener(new ChangeCalendarTableToCalendarTestButtonListener());
 
         //</editor-fold>
 
@@ -297,10 +299,6 @@ public class AddProductToCalendarDay {
             DayInCalendar dayInCalendar = new DayInCalendar(datePassedToSQL, dayDateDayName, dayDateDayName, dayAmountOfProduct,
                     dayProductProduct, productMacro, dayProductOptionalTime, dayProductOptionalComment, kcalConsumeCalculated);
 
-            System.out.println("\nAddProductToCalendarDay -> AddProductToDayAcceptButtonListener -- show DayInCalendarData:");
-            DayInCalendar.dayDataShowDataWithSQLColumns(dayInCalendar);
-            System.out.println("Product name:" + productNameTextField.getText() + ";");
-
             try {
                 FilesTools.writeSQLStatementForDayInCalendarToTXTFile(InsertToCalendarDayTable.createInsertSQLQueryForCalendarDay(dayInCalendar, kcalConsumeCalculated), datePassedToSQL.toString() + "_" +
                         dayInCalendar.getDayProductProduct().getProductName() + String.valueOf(dayAmountOfProduct));
@@ -308,7 +306,6 @@ public class AddProductToCalendarDay {
                 throw new RuntimeException(ex);
             }
 
-            System.out.println();
             try {
                 InsertToCalendarDayTable.addRowToCalendarTable(dayInCalendar, kcalConsumeCalculated);
             } catch (SQLException ex) {
@@ -448,6 +445,24 @@ public class AddProductToCalendarDay {
         @Override
         public void actionPerformed(ActionEvent e) {
             System.exit(0);
+        }
+    }
+
+    private class ChangeCalendarTableButtonListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            Config.CURRENT_DATABASE_TABLE_CALENDAR = "calendar";
+            chosenCalendarTableLabel.setText("Current Table is: " + Config.CURRENT_DATABASE_TABLE_CALENDAR);
+        }
+    }
+
+
+    private class ChangeCalendarTableToCalendarTestButtonListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            Config.CURRENT_DATABASE_TABLE_CALENDAR = "calendar_test";
+            chosenCalendarTableLabel.setText("Current Table is: " + Config.CURRENT_DATABASE_TABLE_CALENDAR);
+            System.out.println();
         }
     }
 }

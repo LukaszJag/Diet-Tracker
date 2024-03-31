@@ -44,7 +44,7 @@ public class InsertToCalendarDayTable {
 
     public static String createInsertSQLQueryForCalendarDay(DayInCalendar dayToInsert){
         // Set head of query
-        String sqlStatement = "INSERT INTO `diet_tracker_schema`.`calendar_test`\n";
+        String sqlStatement = "INSERT INTO `diet_tracker_schema`." + Config.CURRENT_DATABASE_TABLE_CALENDAR + "\n";
         sqlStatement += "(";
 
         // Set columns name in query
@@ -91,7 +91,7 @@ public class InsertToCalendarDayTable {
     public static String createInsertSQLQueryForCalendarDay(DayInCalendar dayToInsert, float kcalConsume){
         System.out.println("\nInsertToCalendarDayTable -> createInsertSQLQueryForCalendarDay:");
         // Set head of query
-        String sqlStatement = "INSERT INTO `diet_tracker_schema`.`calendar_test`\n";
+        String sqlStatement = "INSERT INTO `diet_tracker_schema`." + Config.CURRENT_DATABASE_TABLE_CALENDAR + "\n";
         sqlStatement += "(";
 
         // Set columns name in query
