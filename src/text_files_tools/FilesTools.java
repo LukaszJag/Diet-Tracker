@@ -112,9 +112,9 @@ public class FilesTools {
     }
 
     public static void writeSQLStatementForDayInCalendarToTXTFile(String SQLquery, String fileName) throws IOException {
-        int counter = 1;
         String fullPath = Config.DESTINATION_FOR_TEXT_FILE_DAYS + fileName + ".txt";
-        if (!DirectoryTools.doesDirectoryExist(fullPath)){
+
+        if(!DirectoryTools.doesDirectoryExist(fullPath)) {
 
             File file = new File(fullPath);
 
@@ -125,7 +125,7 @@ public class FilesTools {
         } else {
             System.out.println("File already exist");
 
-            if (convertFileToStringArray(fullPath).toString().equals(SQLquery)){
+            if (convertFileToStringArray(fullPath).toString().equals(SQLquery)) {
                 System.out.println("Files is equal:\nFirst file:");
                 System.out.println(convertFileToStringArray(fullPath).toString());
                 System.out.println();

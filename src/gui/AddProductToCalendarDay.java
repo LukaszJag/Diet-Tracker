@@ -160,7 +160,7 @@ public class AddProductToCalendarDay {
         addProductToDayPanelWest.add(addProductToDayDisplaySelectedFDateNameDayLabel);
         addProductToDayPanelWest.add(addProductToDayDisplaySelectedFDateDayLabel);
 
-        chosenCalendarTableLabel = new JLabel("Current Table is: " + Config.CURRENT_DATABASE_TABLE_PRODUCT);
+        chosenCalendarTableLabel = new JLabel("Current Table is: " + Config.CURRENT_DATABASE_TABLE_CALENDAR);
         chosenCalendarTableLabel.setForeground(Config.CHOSE_TABLE_TO_INSERT_DATA);
 
         addProductToDayPanelWest.add(chosenCalendarTableLabel);
@@ -288,6 +288,7 @@ public class AddProductToCalendarDay {
             } catch (ParseException ex) {
                 throw new RuntimeException(ex);
             }
+
             String dayDateDayName = addProductToDayDisplaySelectedFDateNameDayLabel.getText();
             //</editor-fold>
 
@@ -300,8 +301,10 @@ public class AddProductToCalendarDay {
                     dayProductProduct, productMacro, dayProductOptionalTime, dayProductOptionalComment, kcalConsumeCalculated);
 
             try {
-                FilesTools.writeSQLStatementForDayInCalendarToTXTFile(InsertToCalendarDayTable.createInsertSQLQueryForCalendarDay(dayInCalendar, kcalConsumeCalculated), datePassedToSQL.toString() + "_" +
-                        dayInCalendar.getDayProductProduct().getProductName() + String.valueOf(dayAmountOfProduct));
+                String nameAndPathOfFile = dayDateDayName + "_" + dayInCalendar.getDayProductProduct().getProductName() + "_" + String.valueOf(dayAmountOfProduct);
+                nameAndPathOfFile = nameAndPathOfFile.replace(" ", "_");
+                FilesTools.writeSQLStatementForDayInCalendarToTXTFile(InsertToCalendarDayTable.createInsertSQLQueryForCalendarDay(dayInCalendar, kcalConsumeCalculated),
+                        nameAndPathOfFile);
             } catch (IOException ex) {
                 throw new RuntimeException(ex);
             }
