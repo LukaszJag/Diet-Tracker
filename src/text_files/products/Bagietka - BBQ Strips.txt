@@ -1,0 +1,9 @@
+Name: Bagietka - BBQ Strips
+Brand: Tomcio Paluch
+Package has: 255.0
+Macro for: 255.0
+KCal: 263.0
+Protein: 9.7
+Fat: 12.0
+Carbs: 28.0
+Comment optional: 
