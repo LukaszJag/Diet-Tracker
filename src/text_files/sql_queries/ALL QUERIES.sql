@@ -1,23 +1,30 @@
 #ALL QUERIES
 
+#---- USEFUL QUERIES ----
 
+# 1. Database Query:
 
-
-
-
-
-
-ALTER TABLE product_table
-ADD comment_optional VARCHAR(160);
-
----- USEFUL QUERIES ----
-
-
+/*
 --------------------------------------------------------------------
-1. Use Database:
+1. Database Query:
 
 use diet_tracker_schema;
 
+CREATE USER 'java'@'localhost' IDENTIFIED BY 'password';
+GRANT ALL ON javabase.* TO 'java'@'localhost' IDENTIFIED BY 'password';
+SHOW VARIABLES WHERE Variable_name = 'hostname'
+ #CREATE USER 'lukasz'@'localhost' IDENTIFIED BY 'password';
+# GRANT ALL ON javabase.* TO 'lukasz'@'localhost' IDENTIFIED BY 'password';
+
+GRANT ALL PRIVILEGES ON javabase.* TO 'l'@'localhost';
+
+jdbc:mysql://localhost:3306/javabase
+
+CREATE NEW CALENDAR DAY TEST TABLE
+*/
+
+#2. SELECT:
+/*
 --------------------------------------------------------------------
 2. SELECT:
 
@@ -25,6 +32,11 @@ SELECT * FROM product_table;
 
 SELECT * FROM calendar_test;
 
+#3. CREATE TABLE:
+*/
+
+#3. CREATE TABLE:
+/*
 --------------------------------------------------------------------
 3. CREATE TABLE:
 
@@ -55,6 +67,31 @@ CREATE TABLE `product_table` (
   PRIMARY KEY (`product_name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+create table DietProducts(
+Product_Name VARCHAR(25),
+Product_Brand VARCHAR(25),
+Package_Has FLOAT NOT NULL,
+Macro_For FLOAT NOT NULL,
+Kcal FLOAT NOT NULL,
+Protein FLOAT NOT NULL,
+Fat FLOAT NOT NULL,
+Carbs FLOAT NOT NULL);
+
+CREATE TABLE `diet_tracker_schema`.`calendar_test` (
+  `id_day` DATE NOT NULL,
+  `product` VARCHAR(45) NOT NULL,
+  `amount_of_product` FLOAT NOT NULL,
+  `kcal` FLOAT NOT NULL,
+  `protein` FLOAT NOT NULL,
+  `fat` FLOAT NOT NULL,
+  `carbs` FLOAT NOT NULL,
+  `time_optional` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`id_day`));
+
+*/
+
+#4. INSERT TO TABLE:
+/*
 --------------------------------------------------------------------
 4. INSERT TO TABLE:
 
@@ -86,6 +123,12 @@ VALUES
 <{product_protein: }>,
 <{product_fat: }>,
 <{product_carbs: }>);
+
+INSERT INTO DietProducts VALUES ('Jogurt - jagodowy', 'Fruvita', 400.0, 100.0, 85.0, 2.7, 2.5, 12.6);
+*/
+
+#5. Change data in TABLE:
+/*
 --------------------------------------------------------------------
 
 5. Change data in TABLE:
@@ -99,66 +142,7 @@ DROP COLUMN other_info;
 ALTER TABLE calendar_test
 RENAME COLUMN date TO day_date;
 
-
-
-
-
-
-Diet Product add new Product table query
-
-create table DietProducts(
-Product_Name VARCHAR(25),
-Product_Brand VARCHAR(25),
-Package_Has FLOAT NOT NULL,
-Macro_For FLOAT NOT NULL,
-Kcal FLOAT NOT NULL,
-Protein FLOAT NOT NULL,
-Fat FLOAT NOT NULL,
-Carbs FLOAT NOT NULL);
-
-INSERT INTO DietProducts VALUES ('Jogurt - jagodowy', 'Fruvita', 400.0, 100.0, 85.0, 2.7, 2.5, 12.6);
-
-
-
-
- #CREATE DATABASE javabase DEFAULT CHARACTER SET utf8mb3 COLLATE utf8_unicode_ci;
- #show databases;
-CREATE USER 'java'@'localhost' IDENTIFIED BY 'password';
-GRANT ALL ON javabase.* TO 'java'@'localhost' IDENTIFIED BY 'password';
-
-
-
- SHOW VARIABLES WHERE Variable_name = 'hostname'
-
-
-
- #CREATE USER 'lukasz'@'localhost' IDENTIFIED BY 'password';
-# GRANT ALL ON javabase.* TO 'lukasz'@'localhost' IDENTIFIED BY 'password';
-
-
-GRANT ALL PRIVILEGES ON javabase.* TO 'l'@'localhost';
-
-
-
-jdbc:mysql://localhost:3306/javabase
-
-
-
-
-CREATE NEW CALENDAR DAY TEST TABLE
-
-
-CREATE TABLE `diet_tracker_schema`.`calendar_test` (
-  `id_day` DATE NOT NULL,
-  `product` VARCHAR(45) NOT NULL,
-  `amount_of_product` FLOAT NOT NULL,
-  `kcal` FLOAT NOT NULL,
-  `protein` FLOAT NOT NULL,
-  `fat` FLOAT NOT NULL,
-  `carbs` FLOAT NOT NULL,
-  `time_optional` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`id_day`));
-
-
-
+ALTER TABLE product_table
+ADD comment_optional VARCHAR(160);
+*/
 

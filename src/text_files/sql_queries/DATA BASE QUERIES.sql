@@ -1,6 +1,6 @@
 #DATA BASE QUERIES
 
-use diet_tracker_schema;
+USE diet_tracker_schema;
 
 SET SQL_SAFE_UPDATES = 0;
 

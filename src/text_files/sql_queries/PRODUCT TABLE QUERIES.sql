@@ -1,5 +1,13 @@
 #PRODUCT TABLE QUERIES
 
+SELECT * FROM product_table;
+
+#SELECT * FROM product_table_test;
+
+#SELECT * FROM product_text_test;
+
+
+/*
 Select * 
 from diet_tracker_schema.product_table WHERE product_name='Kisiel owoce leśne';
 
@@ -43,3 +51,4 @@ VALUES
 <{product_carbs: }>);
 
 delete from product_table where product_name='Huhu';
+*/
