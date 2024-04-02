@@ -50,7 +50,8 @@ public class Config {
 
     //SQL Configuration - To insert product to table
     public static final String[] SQL_COLUMNS_FOR_INSERT_INTO_PRODUCT_TABLE = {"`product_name`", "`product_brand`", "`product_package_has`",
-            "`product_macro_for`", "`product_kcal`", "`product_protein`", "`product_fat`", "`product_carbs`", "comment_optional"};
+            "`product_macro_for`", "`product_kcal`", "`product_protein`", "`product_fat`", "`product_carbs`", "comment_optional","`carbs_consume`",
+            "`fat_consume`", "`protein_consume`"};
     //</editor-fold>
 
     //<editor-fold desc="DAY IN CALENDAR - Configuration">

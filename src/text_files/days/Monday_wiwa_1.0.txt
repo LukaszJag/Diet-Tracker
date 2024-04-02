@@ -1,0 +1,24 @@
+INSERT INTO `diet_tracker_schema`.calendar_test
+(`day_date`,
+`day_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`)
+Values
+('Mon Apr 01 00:00:00 CEST 2024',
+'Monday',
+1.0,
+'wiwa',
+1.0,
+1.0,
+1.0,
+1.0,
+'2024-04-01 02:26:13',
+'',
+0.01);
