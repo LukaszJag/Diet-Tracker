@@ -277,11 +277,13 @@ public class AddProductToCalendarDay {
             String dayProductOptionalTime = timeOptionalTextField.getText();
             String dayProductOptionalComment = commentOptionalTextField.getText();
             float dayAmountOfProduct = Float.valueOf(amountOfProductTextField.getText());
+            String dayDateDayName = addProductToDayDisplaySelectedFDateNameDayLabel.getText();
             String commentOptional = commentOptionalTextField.getText();
             //</editor-fold>
 
             //<editor-fold desc="Setting correct full date from West Panel Label">
-            // Set passing date to correct format\
+            // Set passing date to correct format
+
             java.util.Date datePassedToSQL;
             try {
                 datePassedToSQL = new SimpleDateFormat("yyyy-MM-dd").parse(addProductToDayDisplaySelectedFDateDayLabel.getText());
@@ -289,8 +291,8 @@ public class AddProductToCalendarDay {
                 throw new RuntimeException(ex);
             }
 
-            String dayDateDayName = addProductToDayDisplaySelectedFDateNameDayLabel.getText();
             //</editor-fold>
+
 
             Product dayProductProduct = new Product(productNameTextField.getText(), "None",
                     100, productMacro, -1,"");
@@ -315,6 +317,10 @@ public class AddProductToCalendarDay {
                 throw new RuntimeException(ex);
             }
             JOptionPane.showMessageDialog(null, "Product has been added");
+        }
+
+        public void prepareDataToSendToImportSQL(){
+            //TO DO
         }
     }
 
