@@ -128,10 +128,12 @@ public class AddProductToCalendarDay {
 
     private void addComponentsToPanels() {
 
+        //<editor-fold desc="Global variables for panels">
         // Global variables for panels
         Format format = new SimpleDateFormat("EEEE");
         java.util.Date utilDateImport = new java.util.Date();
         String dayNameCurrentDateOnStartWindow = format.format(utilDateImport);
+        //</editor-fold>
 
         //<editor-fold desc="Add Components to Panel - North">
 
@@ -319,8 +321,10 @@ public class AddProductToCalendarDay {
             JOptionPane.showMessageDialog(null, "Product has been added");
         }
 
-        public void prepareDataToSendToImportSQL(){
+        public DayInCalendar prepareDataToSendToImportSQL(){
             //TO DO
+
+            return null;
         }
     }
 
