@@ -1,21 +1,32 @@
 package tests;
 
+import calendar_tools.DayInCalendar;
 import products_tools.Product;
 import runners_and_tests.ProductFactoryToMakeTests;
 import sql_tools.ImportDateFromTXTFilesToSQLDB;
+import sql_tools.InsertToCalendarDayTable;
 import sql_tools.RunQuery;
+import sql_tools.SQLSelect;
 import text_files_tools.DirectoryTools;
 import text_files_tools.FilesTools;
 
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
-public class QuickTest2 {
+public class QuickTests {
     public static void main(String[] args) {
         //test1();
         // test2();
         //test3();
         //test4();
-        test5();
+        //test5();
+        //test6();
+        //test7();
+        //test8();
+        //test9();
+        test10();
     }
     private static void test1() {
         String[] testArray = ImportDateFromTXTFilesToSQLDB.getPureDateFromFileInArray(FilesTools.convertFileToStringArray("src/text_files/products/Burak.txt"));
@@ -49,5 +60,39 @@ public class QuickTest2 {
     private static void test5() {
         System.out.println(Product.isProductEqual(ProductFactoryToMakeTests.productBarExample(), ProductFactoryToMakeTests.productBarExample()));
         System.out.println(Product.isProductEqual(ProductFactoryToMakeTests.productBarExample(), ProductFactoryToMakeTests.productBarOtherExample()));
+    }
+
+    //testDateDisplay
+    public static void test6() throws ParseException {
+        String pattern = "yyyy-MM-dd hh:mm:ss";
+        SimpleDateFormat dateFormat = new SimpleDateFormat(pattern);
+        String today = dateFormat.format(new Date());
+        System.out.println(today);
+    }
+
+    //getRowFromProductTableByProductNameGetArrayTest
+    public static void test7() throws SQLException {
+        SQLSelect.getRowFromProductTableByProductNameGetArray("Burak");
+        SQLSelect.getRowFromProductTableByProductNameGetArray("Jogurt kiwi");
+        SQLSelect.getRowFromProductTableByProductNameGetArray("Rower");
+    }
+
+    // print all data from DayInCalendarObject
+    public static void test8(){
+        DayInCalendar dayInCalendar = DayInCalendarFactoryToMakeTest.getExampleDayInCalendar();
+        String[] dayInCalendarDataInArray = dayInCalendar.dayDataInStringArray(dayInCalendar);
+
+        for (int i = 0; i < dayInCalendarDataInArray.length; i++) {
+            System.out.println("i: [" + i + "]: " + dayInCalendarDataInArray[i]);
+        }
+    }
+    public static void test9(){
+        DayInCalendar dayInCalendar = DayInCalendarFactoryToMakeTest.getExampleDayInCalendar();
+        DayInCalendar.dayDataShowAllData(dayInCalendar);
+
+    }
+
+    public static void test10(){
+        InsertToCalendarDayTable.createInsertSQLQueryForCalendarDay(DayInCalendarFactoryToMakeTest.getExampleDayInCalendar());
     }
 }

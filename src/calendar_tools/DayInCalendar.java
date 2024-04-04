@@ -4,25 +4,25 @@ import configuration.Config;
 import products_tools.Macro;
 import products_tools.Product;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class DayInCalendar {
     private Date dayDate;
-    private String dayDateInString;
+    private String dayDateFormatFriendlyForSQL;
     private String dayDateDayName;
     private float dayAmountOfProduct;
     private Product dayProductProduct;
     private Macro dayProductMacro;
     private String dayProductOptionalTime;
     private String dayProductOptionalComment;
-    private float dayKcalConsume;
+    private Macro consumedMacro;
 
 
-    public DayInCalendar(Date dayDate, String dayDateInString,String dayDateDayName, float dayAmountOfProduct, Product dayProductProduct,
+    public DayInCalendar(Date dayDate,String dayDateDayName, float dayAmountOfProduct, Product dayProductProduct,
                          Macro dayProductMacro, String dayProductOptionalTime, String dayProductOptionalComment) {
         this.dayDate = dayDate;
-        this.dayDateInString = dayDateInString;
         this.dayDateDayName = dayDateDayName;
         this.dayAmountOfProduct = dayAmountOfProduct;
         this.dayProductProduct = dayProductProduct;
@@ -31,23 +31,34 @@ public class DayInCalendar {
         this.dayProductOptionalComment = dayProductOptionalComment;
     }
 
-    public DayInCalendar(Date dayDate, String dayDateInString,String dayDateDayName, float dayAmountOfProduct, Product dayProductProduct,
-                         Macro dayProductMacro, String dayProductOptionalTime, String dayProductOptionalComment, float dayKcalConsume) {
+    public DayInCalendar(String dayDateFormatFriendlyForSQL,String dayDateDayName, float dayAmountOfProduct, Product dayProductProduct,
+                         Macro dayProductMacro, String dayProductOptionalTime, String dayProductOptionalComment, Macro consumedMacro) {
+        this.dayDateFormatFriendlyForSQL = dayDateFormatFriendlyForSQL;
+        this.dayDateDayName = dayDateDayName;
+        this.dayAmountOfProduct = dayAmountOfProduct;
+        this.dayProductProduct = dayProductProduct;
+        this.dayProductMacro = dayProductMacro;
+        this.dayProductOptionalTime = dayProductOptionalTime;
+        this.dayProductOptionalComment = dayProductOptionalComment;
+        this.consumedMacro = consumedMacro;
+    }
+
+
+    public DayInCalendar(Date dayDate, String dayDateDayName, float dayAmountOfProduct, Product dayProductProduct,
+                         Macro dayProductMacro, String dayProductOptionalTime, String dayProductOptionalComment, Macro consumedMacro) {
         this.dayDate = dayDate;
-        this.dayDateInString = dayDateInString;
         this.dayDateDayName = dayDateDayName;
         this.dayAmountOfProduct = dayAmountOfProduct;
         this.dayProductProduct = dayProductProduct;
         this.dayProductMacro = dayProductMacro;
         this.dayProductOptionalTime = dayProductOptionalTime;
         this.dayProductOptionalComment = dayProductOptionalComment;
-        this.dayKcalConsume = dayKcalConsume;
+        this.consumedMacro = consumedMacro;
     }
-
     public String[]  dayDataInStringArray(DayInCalendar dayInCalendar){
         String[] dayDataInStringArray = new String[Config.DAY_IN_CALENDAR_STRING_ARRAY_LENGTH];
 
-        dayDataInStringArray[0] = dayDate.toString();
+        dayDataInStringArray[0] = dayInCalendar.getDayDateFormatFriendlyForSQL();
         dayDataInStringArray[1] = dayInCalendar.getDayDateDayName();
         dayDataInStringArray[2] = String.valueOf(dayInCalendar.getDayAmountOfProduct());
         dayDataInStringArray[3] = dayInCalendar.getDayProductProduct().getProductName();
@@ -60,59 +71,24 @@ public class DayInCalendar {
             String pattern = "yyyy-MM-dd hh:mm:ss";
             SimpleDateFormat dateFormat = new SimpleDateFormat(pattern);
             String today = dateFormat.format(new Date());
-            System.out.println(today);
             dayDataInStringArray[8] = today;
         }else{
             dayDataInStringArray[8] = dayInCalendar.getDayProductOptionalTime();
         }
 
         dayDataInStringArray[9] = dayInCalendar.getDayProductOptionalComment();
-
-        System.out.println("\nDayInCalendar -> dayDataInStringArray:");
-        for (int i = 0; i < dayDataInStringArray.length; i++) {
-            System.out.println("[i]: " + i + " - " + dayDataInStringArray[i]);
-        }
-        System.out.println();
         return dayDataInStringArray;
     }
-
-    public String[]  dayDataInStringArray(DayInCalendar dayInCalendar, float dayKcalConsume){
-        String[] dayDataInStringArray = new String[Config.DAY_IN_CALENDAR_STRING_ARRAY_LENGTH_WITH_KCAL_CONSUME_LENGTH];
-
-        dayDataInStringArray[0] = new SimpleDateFormat("yyyy-MM-dd").format(dayInCalendar.getDayDate());
-        dayDataInStringArray[1] = dayInCalendar.getDayDateDayName();
-        dayDataInStringArray[2] = String.valueOf(dayInCalendar.getDayAmountOfProduct());
-        dayDataInStringArray[3] = dayInCalendar.getDayProductProduct().getProductName();
-        dayDataInStringArray[4] = String.valueOf(dayInCalendar.getDayProductProduct().getProductMacroForItsSetMeasure().getKcal());
-        dayDataInStringArray[5] = String.valueOf(dayInCalendar.getDayProductProduct().getProductMacroForItsSetMeasure().getProtein());
-        dayDataInStringArray[6] = String.valueOf(dayInCalendar.getDayProductProduct().getProductMacroForItsSetMeasure().getFat());
-        dayDataInStringArray[7] = String.valueOf(dayInCalendar.getDayProductProduct().getProductMacroForItsSetMeasure().getCarbs());
-
-        dayDataInStringArray[10] = String.valueOf(dayKcalConsume);
-
-        if(dayDataInStringArray[8] == null){
-            String pattern = "yyyy-MM-dd hh:mm:ss";
-            SimpleDateFormat dateFormat = new SimpleDateFormat(pattern);
-            String today = dateFormat.format(new Date());
-            System.out.println(today);
-            dayDataInStringArray[8] = today;
-        }else{
-            dayDataInStringArray[8] = dayInCalendar.getDayProductOptionalTime();
-        }
-
-        dayDataInStringArray[9] = dayInCalendar.getDayProductOptionalComment();
-
-        System.out.println("\nDayInCalendar -> dayDataInStringArray:");
-        for (int i = 0; i < dayDataInStringArray.length; i++) {
-            System.out.println("[i]: " + i + " - " + dayDataInStringArray[i]);
-        }
-        System.out.println();
-        return dayDataInStringArray;
-    }
-    public static void dayDataShowData(DayInCalendar dayInCalendar) {
+    public static void dayDataShowAllData(DayInCalendar dayInCalendar) {
         String[] dayDataInStringArray = new String[Config.DAY_IN_CALENDAR_STRING_ARRAY_LENGTH];
 
-        dayDataInStringArray[0] = dayInCalendar.getDayDate().toString();
+
+        try {
+            dayDataInStringArray[0] = new SimpleDateFormat("yyyy-MM-dd").parse(dayInCalendar.getDayDate().toString()).toString();
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
+
         dayDataInStringArray[1] = dayInCalendar.getDayDateDayName();
         dayDataInStringArray[2] = String.valueOf(dayInCalendar.getDayAmountOfProduct());
         dayDataInStringArray[3] = dayInCalendar.getDayProductProduct().getProductName();
@@ -130,6 +106,8 @@ public class DayInCalendar {
         for (int i = 0; i < dayDataInStringArray.length; i++) {
             System.out.println("[i]: " + i + " - " + dayDataInStringArray[i]);
         }
+
+        Macro.showAllMacroData(dayInCalendar.getConsumedMacro());
         System.out.println();
     }
     public static void dayDataShowDataWithSQLColumns(DayInCalendar dayInCalendar) {
@@ -162,14 +140,6 @@ public class DayInCalendar {
 
     public void setDayDate(Date dayDate) {
         this.dayDate = dayDate;
-    }
-
-    public String getDayDateInString() {
-        return dayDateInString;
-    }
-
-    public void setDayDateInString(String dayDateInString) {
-        this.dayDateInString = dayDateInString;
     }
 
     public String getDayDateDayName() {
@@ -220,12 +190,22 @@ public class DayInCalendar {
         this.dayProductOptionalComment = dayProductOptionalComment;
     }
 
-    public float getDayKcalConsume() {
-        return dayKcalConsume;
+    public Macro getConsumedMacro() {
+        return consumedMacro;
     }
 
-    public void setDayKcalConsume(float dayKcalConsume) {
-        this.dayKcalConsume = dayKcalConsume;
+    public void setConsumedMacro(Macro consumedMacro) {
+        this.consumedMacro = consumedMacro;
     }
+
+    public String getDayDateFormatFriendlyForSQL() {
+        return dayDateFormatFriendlyForSQL;
+    }
+
+    public void setDayDateFormatFriendlyForSQL(String dayDateFormatFriendlyForSQL) {
+        this.dayDateFormatFriendlyForSQL = dayDateFormatFriendlyForSQL;
+    }
+
     //</editor-fold>
+
 }

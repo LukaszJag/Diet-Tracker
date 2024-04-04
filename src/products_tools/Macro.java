@@ -1,5 +1,7 @@
 package products_tools;
 
+import javax.crypto.Mac;
+
 public class Macro {
     // Values
     private float kcal;
@@ -15,6 +17,13 @@ public class Macro {
         this.carbs = carbs;
     }
 
+    public static void showAllMacroData(Macro macro){
+        System.out.println("kcal: " + macro.getKcal());
+        System.out.println("protein: " + macro.getProtein());
+        System.out.println("fat: " + macro.getFat());
+        System.out.println("carbs: " + macro.getCarbs());
+
+    }
     // Getters and Setters
     public float getKcal() {
         return kcal;

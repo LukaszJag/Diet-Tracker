@@ -267,14 +267,45 @@ public class AddProductToCalendarDay {
     private class AddProductToDayAcceptButtonListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
+            float amountOfProductInGrams = -1;
+            try {
+                amountOfProductInGrams = Float.valueOf(amountOfProductTextField.getText());
+            }catch (Exception ex){
+                System.out.println("Error: Cannot parse data from amountOfProductTextField[String]->[Float]");
+            }
 
-            //<editor-fold desc="Getting direct from TextFields: Macro, day ">
+            Product dayInCalendarProduct = getDayProductFromGUI();
+            Macro consumedMacro = calculateConsumedMacro(dayInCalendarProduct, amountOfProductInGrams);
+            DayInCalendar dayInCalendar = getDayInCalendarFromDataInGUI(dayInCalendarProduct, consumedMacro);
 
+            sendSQLQueryToTxtFile(dayInCalendar);
+
+            try {
+                InsertToCalendarDayTable.addRowToCalendarTable(dayInCalendar);
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            }
+
+            JOptionPane.showMessageDialog(null, "Product has been added");
+        }
+
+        public Product getDayProductFromGUI(){
             Macro productMacro = new Macro(
                     Float.valueOf(kcalTextField.getText()),
                     Float.valueOf(proteinLTextField.getText()),
                     Float.valueOf(fatTextField.getText()),
                     Float.valueOf(carbsTextField.getText()));
+            Product dayInCalendarProduct = new Product(productNameTextField.getText(), "None",
+                    100, productMacro, -1,"");
+
+            return dayInCalendarProduct;
+        }
+
+        public DayInCalendar getDayInCalendarFromDataInGUI(Product productFromGUI, Macro consumedMacro){
+            //TO DO
+            //<editor-fold desc="Getting direct from TextFields: Macro, day ">
+
+
 
             String dayProductOptionalTime = timeOptionalTextField.getText();
             String dayProductOptionalComment = commentOptionalTextField.getText();
@@ -296,35 +327,34 @@ public class AddProductToCalendarDay {
             //</editor-fold>
 
 
-            Product dayProductProduct = new Product(productNameTextField.getText(), "None",
-                    100, productMacro, -1,"");
+
 
             float kcalConsumeCalculated = Float.valueOf(kcalTextField.getText()) * (Float.valueOf(amountOfProductTextField.getText()) / (100.0f));
 
-            DayInCalendar dayInCalendar = new DayInCalendar(datePassedToSQL, dayDateDayName, dayDateDayName, dayAmountOfProduct,
-                    dayProductProduct, productMacro, dayProductOptionalTime, dayProductOptionalComment, kcalConsumeCalculated);
+            DayInCalendar dayInCalendar = new DayInCalendar(addProductToDayDisplaySelectedFDateDayLabel.getText(), dayDateDayName, dayAmountOfProduct,
+                    productFromGUI, productFromGUI.getProductMacroForItsSetMeasure(), dayProductOptionalTime, dayProductOptionalComment, consumedMacro);
+
+            return dayInCalendar;
+        }
+
+        public void sendSQLQueryToTxtFile(DayInCalendar dayInCalendar){
 
             try {
-                String nameAndPathOfFile = dayDateDayName + "_" + dayInCalendar.getDayProductProduct().getProductName() + "_" + String.valueOf(dayAmountOfProduct);
-                nameAndPathOfFile = nameAndPathOfFile.replace(" ", "_");
-                FilesTools.writeSQLStatementForDayInCalendarToTXTFile(InsertToCalendarDayTable.createInsertSQLQueryForCalendarDay(dayInCalendar, kcalConsumeCalculated),
-                        nameAndPathOfFile);
+                String nameAndPathOfFile = addProductToDayDisplaySelectedFDateDayLabel.getText() + "_" + dayInCalendar.getDayProductProduct().getProductName() + "_" + String.valueOf(amountOfProductTextField.getText());nameAndPathOfFile = nameAndPathOfFile.replace(" ", "_");
+                FilesTools.writeSQLStatementForDayInCalendarToTXTFile(nameAndPathOfFile,dayInCalendar);
             } catch (IOException ex) {
                 throw new RuntimeException(ex);
             }
 
-            try {
-                InsertToCalendarDayTable.addRowToCalendarTable(dayInCalendar, kcalConsumeCalculated);
-            } catch (SQLException ex) {
-                throw new RuntimeException(ex);
-            }
-            JOptionPane.showMessageDialog(null, "Product has been added");
         }
 
-        public DayInCalendar prepareDataToSendToImportSQL(){
-            //TO DO
+        public Macro calculateConsumedMacro(Product productToCalculateConsumedMacro, float amountOfProductInGram){
+            float amountOfProductToCalculate = amountOfProductInGram/100;
+            Macro productMacro = productToCalculateConsumedMacro.getProductMacroForItsSetMeasure();
 
-            return null;
+            Macro cosumedMacro = new Macro(productMacro.getKcal() * amountOfProductToCalculate, productMacro.getProtein() * amountOfProductToCalculate,
+                    productMacro.getFat() * amountOfProductToCalculate, productMacro.getCarbs() * amountOfProductToCalculate);
+            return cosumedMacro;
         }
     }
 

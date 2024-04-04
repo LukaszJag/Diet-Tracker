@@ -3,6 +3,7 @@ package runners_and_tests;
 import calendar_tools.DayInCalendar;
 import sql_tools.InsertToCalendarDayTable;
 import sql_tools.SearchForKey;
+import tests.DayInCalendarFactoryToMakeTest;
 
 import java.sql.Date;
 import java.sql.SQLException;
@@ -17,17 +18,17 @@ public class TestDayInCalendar {
     }
 
     private void test1(){
-        DayInCalendar dayInCalendar = new DayInCalendar(Date.valueOf("2024-02-29"),"2024-02-21", "wensday", 80, ProductFactoryToMakeTests.productBarExample(),
+        DayInCalendar dayInCalendar = new DayInCalendar(Date.valueOf("2024-02-29"), "wensday", 80, ProductFactoryToMakeTests.productBarExample(),
                 ProductFactoryToMakeTests.productBarExample().getProductMacroForItsSetMeasure(),"", "");
         System.out.println(InsertToCalendarDayTable.createInsertSQLQueryForCalendarDay(dayInCalendar));
     }
 
     private static void test2(){
-        System.out.println(InsertToCalendarDayTable.createInsertSQLQueryForCalendarDay(DayFactoryToMakeTest.getExampleDayInCalendar()));
+        System.out.println(InsertToCalendarDayTable.createInsertSQLQueryForCalendarDay(DayInCalendarFactoryToMakeTest.getExampleDayInCalendar()));
     }
 
     private static void test3(){
-        String[] dayDataInStringArray = DayFactoryToMakeTest.getExampleDayInCalendar().dayDataInStringArray(DayFactoryToMakeTest.getExampleDayInCalendar());
+        String[] dayDataInStringArray = DayInCalendarFactoryToMakeTest.getExampleDayInCalendar().dayDataInStringArray(DayInCalendarFactoryToMakeTest.getExampleDayInCalendar());
         for (int i = 0; i < dayDataInStringArray.length; i++) {
             System.out.println("[" + i + "]: " + dayDataInStringArray[i]);
         }
@@ -35,7 +36,7 @@ public class TestDayInCalendar {
     }
 
     private static void test4() throws SQLException {
-        InsertToCalendarDayTable.addRowToCalendarTable(DayFactoryToMakeTest.getExampleDayInCalendar());
+        InsertToCalendarDayTable.addRowToCalendarTable(DayInCalendarFactoryToMakeTest.getExampleDayInCalendar());
     }
 
     private static void test5() throws SQLException {

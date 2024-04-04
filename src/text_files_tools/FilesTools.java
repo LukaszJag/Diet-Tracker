@@ -1,7 +1,9 @@
 package text_files_tools;
 
+import calendar_tools.DayInCalendar;
 import configuration.Config;
 import products_tools.Product;
+import sql_tools.InsertToCalendarDayTable;
 
 import java.io.*;
 import java.util.Scanner;
@@ -111,9 +113,10 @@ public class FilesTools {
         bufferedWriter.close();
     }
 
-    public static void writeSQLStatementForDayInCalendarToTXTFile(String SQLquery, String fileName) throws IOException {
+    public static void writeSQLStatementForDayInCalendarToTXTFile(String fileName, DayInCalendar dayInCalendar) throws IOException {
         String fullPath = Config.DESTINATION_FOR_TEXT_FILE_DAYS + fileName + ".txt";
 
+        String SQLquery = InsertToCalendarDayTable.createInsertSQLQueryForCalendarDay(dayInCalendar);
         if(!DirectoryTools.doesDirectoryExist(fullPath)) {
 
             File file = new File(fullPath);

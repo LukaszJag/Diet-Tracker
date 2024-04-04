@@ -16,7 +16,7 @@ CREATE TABLE `calendar_test` (
   `carbs` float DEFAULT NULL,
   `time_optional` datetime DEFAULT NULL,
   `comment_optional` varchar(80) DEFAULT NULL,
-  `kcal_consume` varchar(80) DEFAULT NULL,
+  `kcal_consume` float DEFAULT NULL,
   `carbs_consume` float DEFAULT NULL,
   `fat_consume` float DEFAULT NULL,
   `protein_consume` float DEFAULT NULL
