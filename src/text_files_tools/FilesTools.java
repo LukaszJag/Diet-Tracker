@@ -15,7 +15,7 @@ public class FilesTools {
 
     public static String[] convertFileToStringArray(String fileNameWithExtension) {
         // This int value may cause problem because max amount of lines in file is dynamic
-        int maxLinesInFile = 20;
+        int maxLinesInFile = 40;
         String[] fileByLinesInArray = new String[maxLinesInFile];
         int counter = 0;
         try {
@@ -114,7 +114,16 @@ public class FilesTools {
     }
 
     public static void writeSQLStatementForDayInCalendarToTXTFile(String fileName, DayInCalendar dayInCalendar) throws IOException {
-        String fullPath = Config.DESTINATION_FOR_TEXT_FILE_DAYS + fileName + ".txt";
+
+        String directoryPath = "src/text_files/days/" + dayInCalendar.getDayDateFormatFriendlyForSQL().toString();
+        File theDir = new File(directoryPath);
+        if (!theDir.exists()){
+            theDir.mkdirs();
+        }else {
+            System.out.println("Directory already exist");
+        }
+
+        String fullPath = directoryPath + "/" + fileName + ".txt";
 
         String SQLquery = InsertToCalendarDayTable.createInsertSQLQueryForCalendarDay(dayInCalendar);
         if(!DirectoryTools.doesDirectoryExist(fullPath)) {

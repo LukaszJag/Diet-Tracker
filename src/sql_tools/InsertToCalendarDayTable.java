@@ -76,10 +76,6 @@ public class InsertToCalendarDayTable {
         }
         sqlStatement += ");";
 
-        System.out.println();
-        System.out.println("InsertToCalendarDayTable -> createInsertSQLQueryForCalendarDay");
-        System.out.println("SQL Statement: " + sqlStatement);
-
         return sqlStatement;
     }
 }
