@@ -207,8 +207,8 @@ public class AddProductToCalendarDay {
 
         addProductToDayPanelMain.add(dayMealNameLabel);
 
-        dayMealNameComboBox.setSelectedItem(dayNameCurrentDateOnStartWindow);
 
+        dayMealNameComboBox.setSelectedItem("None");
         addProductToDayPanelMain.add(dayMealNameComboBox);
 
         addProductToDayPanelMain.add(productNameLabel);
@@ -267,6 +267,7 @@ public class AddProductToCalendarDay {
     private class AddProductToDayAcceptButtonListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
+            System.out.println("\n" + dayMealNameComboBox.getSelectedItem().toString() + "\n");
             float amountOfProductInGrams = -1;
             try {
                 amountOfProductInGrams = Float.valueOf(amountOfProductTextField.getText());
@@ -331,8 +332,8 @@ public class AddProductToCalendarDay {
 
             float kcalConsumeCalculated = Float.valueOf(kcalTextField.getText()) * (Float.valueOf(amountOfProductTextField.getText()) / (100.0f));
 
-            DayInCalendar dayInCalendar = new DayInCalendar(addProductToDayDisplaySelectedFDateDayLabel.getText(), dayDateDayName, dayAmountOfProduct,
-                    productFromGUI, productFromGUI.getProductMacroForItsSetMeasure(), dayProductOptionalTime, dayProductOptionalComment, consumedMacro);
+            DayInCalendar dayInCalendar = new DayInCalendar(addProductToDayDisplaySelectedFDateDayLabel.getText(), dayDateDayName, dayMealNameComboBox.getSelectedItem().toString(),
+                    dayAmountOfProduct,  productFromGUI, productFromGUI.getProductMacroForItsSetMeasure(), dayProductOptionalTime, dayProductOptionalComment, consumedMacro);
 
             return dayInCalendar;
         }

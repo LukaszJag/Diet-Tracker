@@ -42,7 +42,7 @@ public class Config {
     //<editor-fold desc="SQL CONFIGURATION AND OTHER DATA">
 
     // SQL Configuration - Calendar fields
-    public static final String[] SQL_COLUMNS_CALENDAR = {"day_date", "day_name", "amount_of_product", "product_name",
+    public static final String[] SQL_COLUMNS_CALENDAR = {"day_date", "day_name", "meal_name","amount_of_product", "product_name",
             "kcal", "protein", "fat", "carbs", "time_optional", "comment_optional", "kcal_consume", "carbs_consume", "fat_consume", "protein_consume"};
 
     public static final String[] SQL_COLUMNS_CALENDAR_WITH_KCAL_CONSUME = {"day_date", "day_name", "amount_of_product", "product_name",
