@@ -75,7 +75,6 @@ public class InsertToCalendarDayTable {
                 }
                 if (i == 14) {
                     sqlStatement += String.valueOf(dayToInsert.getConsumedMacro().getProtein());
-                    break;
                 }
             }
 
