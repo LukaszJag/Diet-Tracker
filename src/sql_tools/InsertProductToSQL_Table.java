@@ -22,11 +22,11 @@ public class InsertProductToSQL_Table {
         sqlStatement += "(";
 
         // Set columns name in query
-        for (int i = 0; i < Config.SQL_COLUMNS_FOR_INSERT_INTO_PRODUCT_TABLE.length; i++) {
+        for (int i = 0; i < Config.SQL_COLUMNS_PRODUCT.length; i++) {
 
-            sqlStatement += Config.SQL_COLUMNS_FOR_INSERT_INTO_PRODUCT_TABLE[i];
+            sqlStatement += Config.SQL_COLUMNS_PRODUCT[i];
 
-            if (i == Config.SQL_COLUMNS_FOR_INSERT_INTO_PRODUCT_TABLE.length - 1){
+            if (i == Config.SQL_COLUMNS_PRODUCT.length - 1){
                 sqlStatement += ")";
             }else {
                 sqlStatement += ",\n";
@@ -47,7 +47,7 @@ public class InsertProductToSQL_Table {
                 sqlStatement += productDataInArray[i];
             }
 
-            if (i != Config.SQL_COLUMNS_FOR_INSERT_INTO_PRODUCT_TABLE.length - 1){
+            if (i != Config.SQL_COLUMNS_PRODUCT.length - 1){
                 sqlStatement += ",\n";
             }
         }

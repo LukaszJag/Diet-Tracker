@@ -49,18 +49,18 @@ public class Config {
             "kcal", "protein", "fat", "carbs", "time_optional", "comment_optional", "kcal_consume"};
 
     //SQL Configuration - To insert product to table
-    public static final String[] SQL_COLUMNS_FOR_INSERT_INTO_PRODUCT_TABLE = {"`product_name`", "`product_brand`", "`product_package_has`",
-            "`product_macro_for`", "`product_kcal`", "`product_protein`", "`product_fat`", "`product_carbs`", "comment_optional","`carbs_consume`",
-            "`fat_consume`", "`protein_consume`"};
+    public static final String[] SQL_COLUMNS_PRODUCT = {"product_name", "product_brand", "product_package_has", "product_macro_for", "product_kcal",
+            "product_protein", "product_fat","product_carbs", "comment_optional"};
+
     //</editor-fold>
 
     //<editor-fold desc="DAY IN CALENDAR - Configuration">
-    public static final int ALL_PRODUCT_VALUES_FIELD_COUNT = Config.SQL_COLUMNS_FOR_INSERT_INTO_PRODUCT_TABLE.length;
+    public static final int ALL_PRODUCT_VALUES_FIELD_COUNT = Config.SQL_COLUMNS_PRODUCT.length;
 
     // Day in calendar configuration - arrays length ect.
     public static final int DAY_IN_CALENDAR_STRING_ARRAY_LENGTH = 11;
     public static final int DAY_IN_CALENDAR_STRING_ARRAY_LENGTH_WITH_KCAL_CONSUME_LENGTH = SQL_COLUMNS_CALENDAR_WITH_KCAL_CONSUME.length;
-    public static final int howManyParametersToAddProduct = Config.SQL_COLUMNS_FOR_INSERT_INTO_PRODUCT_TABLE.length;
+    public static final int howManyParametersToAddProduct = Config.SQL_COLUMNS_PRODUCT.length;
     //</editor-fold>
 
     //<editor-fold desc="File R/W Configuration">

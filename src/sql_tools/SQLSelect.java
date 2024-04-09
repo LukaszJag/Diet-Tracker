@@ -21,8 +21,8 @@ public class SQLSelect {
         resultSet = statement.executeQuery(sql);
 
         while(resultSet.next()){
-            for (int i = 0; i < Config.SQL_COLUMNS_FOR_INSERT_INTO_PRODUCT_TABLE.length; i++) {
-                result += resultSet.getString(Config.SQL_COLUMNS_FOR_INSERT_INTO_PRODUCT_TABLE[i].replace("`","")) + " ";
+            for (int i = 0; i < Config.SQL_COLUMNS_PRODUCT.length; i++) {
+                result += resultSet.getString(Config.SQL_COLUMNS_PRODUCT[i].replace("`","")) + " ";
             }
         }
 
@@ -34,7 +34,7 @@ public class SQLSelect {
         Statement statement;
 
         String sql = "SELECT * FROM diet_tracker_schema.product_table WHERE product_name=\"" + productName + "\";";
-        String[] result = new String[Config.SQL_COLUMNS_CALENDAR.length];
+        String[] result = new String[Config.SQL_COLUMNS_PRODUCT.length];
 
 
         Connection connection = GetConnection.getConnectionWithLocalHost();
@@ -42,8 +42,8 @@ public class SQLSelect {
         resultSet = statement.executeQuery(sql);
 
         while(resultSet.next()){
-            for (int i = 0; i < Config.SQL_COLUMNS_FOR_INSERT_INTO_PRODUCT_TABLE.length; i++) {
-                result[i] = resultSet.getString(Config.SQL_COLUMNS_FOR_INSERT_INTO_PRODUCT_TABLE[i].replace("`",""));
+            for (int i = 0; i < Config.SQL_COLUMNS_PRODUCT.length; i++) {
+                result[i] = resultSet.getString(Config.SQL_COLUMNS_PRODUCT[i].replace("`",""));
             }
         }
 

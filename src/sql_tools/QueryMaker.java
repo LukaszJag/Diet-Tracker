@@ -39,7 +39,7 @@ public class QueryMaker {
                 sqlStatement += values[i];
             }
 
-            if (i != Config.SQL_COLUMNS_FOR_INSERT_INTO_PRODUCT_TABLE.length - 1){
+            if (i != Config.SQL_COLUMNS_PRODUCT.length - 1){
                 sqlStatement += ",\n";
             }
         }
