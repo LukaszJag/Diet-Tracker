@@ -49,8 +49,8 @@ public class Config {
             "kcal", "protein", "fat", "carbs", "time_optional", "comment_optional", "kcal_consume"};
 
     //SQL Configuration - To insert product to table
-    public static final String[] SQL_COLUMNS_PRODUCT = {"product_name", "product_brand", "product_package_has", "product_macro_for", "product_kcal",
-            "product_protein", "product_fat","product_carbs", "comment_optional"};
+    public static final String[] SQL_COLUMNS_PRODUCT = {"`product_name`", "`product_brand`", "`product_package_has`",
+            "`product_macro_for`", "`product_kcal`", "`product_protein`", "`product_fat`", "`product_carbs`", "`comment_optional`"};
 
     //</editor-fold>
 
@@ -65,6 +65,7 @@ public class Config {
 
     //<editor-fold desc="File R/W Configuration">
     public static final String DESTINATION_FOR_TEXT_FILE_PRODUCTS = "src/text_files/products/";
+    public static final String DESTINATION_FOR_SQL_TEXT_FILE_PRODUCTS = "src/text_files/products_sql_query/";
     public static final String DESTINATION_FOR_TEXT_FILE_DAYS = "src/text_files/days/";
     public static final String DESTINATION_FOR_SQL_QUERIES_TO_TEXT_FILE = "src/text_files/sql_queries/";
     //</editor-fold>
