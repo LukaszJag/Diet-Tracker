@@ -231,24 +231,25 @@ public class AddSingleProductWindow {
                     JOptionPane.showMessageDialog(null, "Wrong input in carbs text field.");
                     passTest = false;
                 }
-                JOptionPane.showMessageDialog(null, "Product data:\n\n" + "Name: " + name +"\nBrand: " + brand
-                        + "\nPackage has: " + packageHas + "\nMacro for: " + macroFor
-                        + "\nKCal: " + kCal + "\nProtein: " + protein +
-                        "\nFat: " + fat + "\nCarbs: " + carbs + "\nComment" + commentOptional);
 
                 Macro newProductMacro = new Macro(Float.parseFloat(kCal), Float.parseFloat(protein),
                         Float.parseFloat(fat), Float.parseFloat(carbs));
                 Product newProduct = new Product(name, brand, Float.parseFloat(macroFor), newProductMacro, Float.parseFloat(packageHas), commentOptional);
-                FilesTools.makeTextFileForProduct(newProduct, Float.parseFloat(packageHas));
 
+                FilesTools.makeTextFileForProduct(newProduct, Float.parseFloat(packageHas));
+                FilesTools.makeSQLTextFileForProduct(newProduct.getProductName(), InsertProductToSQL_Table.createInsertSQLQueryForProductTable(newProduct));
                 try {
                     InsertProductToSQL_Table.insertProduct(newProduct);
                 } catch (SQLException ex) {
                     throw new RuntimeException(ex);
                 }
+
+                JOptionPane.showMessageDialog(null, "Product data:\n\n" + "Name: " + name +"\nBrand: " + brand
+                        + "\nPackage has: " + packageHas + "\nMacro for: " + macroFor
+                        + "\nKCal: " + kCal + "\nProtein: " + protein +
+                        "\nFat: " + fat + "\nCarbs: " + carbs + "\nComment" + commentOptional);
+
                 JOptionPane.showMessageDialog(null, "Product add to library");
-
-
             }
         }
     }

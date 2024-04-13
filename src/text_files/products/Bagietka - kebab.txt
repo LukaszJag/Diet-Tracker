@@ -1,0 +1,9 @@
+Name: Bagietka - kebab
+Brand: Tomcio Paluch
+Package has: 215.0
+Macro for: 215.0
+KCal: 273.0
+Protein: 8.2
+Fat: 13.0
+Carbs: 29.0
+Comment optional: Produkt z Żabki

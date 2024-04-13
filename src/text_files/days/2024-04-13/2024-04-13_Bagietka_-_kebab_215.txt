@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar_test`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2024-04-13',
+'Saturday',
+'Second Breakfast',
+215.0,
+'Bagietka - kebab',
+273.0,
+8.2,
+13.0,
+29.0,
+'2024-04-13 12:10:25',
+'none',
+586.95,
+62.350002,
+27.95,
+17.630001
+);

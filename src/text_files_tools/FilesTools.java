@@ -61,7 +61,7 @@ public class FilesTools {
 
     public static void makeEmptyFile(String newFileName, String destination) {
         try {
-            File newFile = new File(destination + newFileName + ".txt");
+            File newFile = new File(destination +"/" +newFileName + ".txt");
             if (newFile.createNewFile()) {
                 System.out.println("File created: " + newFile.getName());
             } else {
@@ -98,6 +98,23 @@ public class FilesTools {
         }
     }
 
+    public static void makeSQLTextFileForProduct(String fileName, String sqlStatement) {
+        makeEmptyFile(fileName, Config.DESTINATION_FOR_SQL_TEXT_FILE_PRODUCTS);
+
+        try {
+            writeProductSQLToFile(sqlStatement,fileName);
+        } catch (IOException ex) {
+            throw new RuntimeException(ex);
+        }
+    }
+
+    public static void writeProductSQLToFile(String lineToWriteToFile, String fileName) throws IOException {
+        String fullPath = Config.DESTINATION_FOR_SQL_TEXT_FILE_PRODUCTS + fileName + ".txt";
+        BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(fullPath, true));
+        bufferedWriter.append(lineToWriteToFile.toString());
+        bufferedWriter.append("\n");
+        bufferedWriter.close();
+    }
     public static void writeProductToFile(String lineToWriteToFile, String fileName) throws IOException {
         String fullPath = Config.DESTINATION_FOR_TEXT_FILE_PRODUCTS + fileName + ".txt";
         BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(fullPath, true));
