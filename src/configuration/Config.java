@@ -72,8 +72,8 @@ public class Config {
 
     // On run configuration
 
-    public static String CURRENT_DATABASE_TABLE_PRODUCT =  "product_table_test";
-    public static String CURRENT_DATABASE_TABLE_CALENDAR = "calendar_test";
+    public static String CURRENT_DATABASE_TABLE_PRODUCT =  "product_table";
+    public static String CURRENT_DATABASE_TABLE_CALENDAR = "calendar";
 
 
 

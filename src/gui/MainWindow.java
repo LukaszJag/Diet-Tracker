@@ -19,6 +19,9 @@ public class MainWindow extends JFrame {
     private JPanel panelCenter = new JPanel();
     private JPanel panelUpper = new JPanel();
     private JPanel panelDown = new JPanel();
+    JLabel currentCalendarTableLabel = new JLabel();
+    JLabel currentProductTableLabel = new JLabel();
+
     public void makeRunWindow(){
         setUpAndStartMenuWindow();
     }
@@ -59,7 +62,7 @@ public class MainWindow extends JFrame {
         panelDown.setBackground(Color.WHITE);
 
         panelLeft.setPreferredSize(new Dimension(150,40));
-        panelRight.setPreferredSize(new Dimension(100,100));
+        panelRight.setPreferredSize(new Dimension(150,100));
         panelCenter.setPreferredSize(new Dimension(100,100));
         panelUpper.setPreferredSize(new Dimension(100,50));
         panelDown.setPreferredSize(new Dimension(100,25));
@@ -67,6 +70,8 @@ public class MainWindow extends JFrame {
 
     private void addButtons(){
         Button addProductButton = new Button("Add new product");
+        addProductButton.setBackground(Color.GREEN);
+
         addProductButton.addActionListener(new AddProductButton());
         panelLeft.add(addProductButton);
 
@@ -76,7 +81,14 @@ public class MainWindow extends JFrame {
 
         Button addProductToDay =new Button("Add product to day");
         addProductToDay.addActionListener(new AddProducttoDayButton());
+        addProductToDay.setBackground(Color.ORANGE);
         panelLeft.add(addProductToDay);
+
+        JButton changeProductDataBase = new JButton("Change product table");
+        changeProductDataBase.addActionListener(new ChangeProductTableActioListener());
+        panelRight.add(changeProductDataBase);
+        changeProductDataBase.setBackground(Color.PINK);
+
 
         Button closeAplicationButton =new Button("Exit");
         closeAplicationButton.addActionListener(new CloseAplicationButtonActionListener());
@@ -86,8 +98,8 @@ public class MainWindow extends JFrame {
     private void addLabels(){
         Label dateAndTime = new Label("There will be date and time");
         panelUpper.add(dateAndTime);
-        JLabel currentProductTableLabel = new JLabel("Current Calendar Table is: " + Config.CURRENT_DATABASE_TABLE_PRODUCT);
-        JLabel currentCalendarTableLabel = new JLabel("Current Product Table is: " + Config.CURRENT_DATABASE_TABLE_PRODUCT);
+        currentProductTableLabel = new JLabel("Current Calendar Table is: " + Config.CURRENT_DATABASE_TABLE_PRODUCT);
+        currentCalendarTableLabel = new JLabel("Current Product Table is: " + Config.CURRENT_DATABASE_TABLE_CALENDAR);
 
         currentProductTableLabel.setForeground(Config.mainWindowDataBaseProductTableLabelColor);
         currentCalendarTableLabel.setForeground(Config.mainWindowDataBaseCalendarTableLabelColor);
@@ -123,6 +135,21 @@ public class MainWindow extends JFrame {
         @Override
         public void actionPerformed(ActionEvent e) {
             startWindow.dispose();
+        }
+    }
+
+    private class ChangeProductTableActioListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            if (Config.CURRENT_DATABASE_TABLE_PRODUCT.equals("product_table")){
+                Config.CURRENT_DATABASE_TABLE_PRODUCT = "product_table_test";
+            }else {
+                Config.CURRENT_DATABASE_TABLE_PRODUCT = "product_table";
+            }
+
+            currentProductTableLabel.setText("Current Calendar Table is: " + Config.CURRENT_DATABASE_TABLE_PRODUCT);
+
+            JOptionPane.showMessageDialog(null,"Product table: " + Config.CURRENT_DATABASE_TABLE_PRODUCT);
         }
     }
 }

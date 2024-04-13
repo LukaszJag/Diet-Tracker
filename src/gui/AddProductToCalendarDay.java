@@ -46,8 +46,10 @@ public class AddProductToCalendarDay {
     JButton otherThenCurrentDateButton = new JButton("Other then current");
     JButton backToMainWindowButton = new JButton("Go to Start");
     JButton exitProgramProductWindowButton = new JButton("Exit application");
-    JButton changeToCalendarMainTableButton = new JButton("Chose - Calendar Table");
-    JButton changeToCalendarTestTableButton = new JButton("Chose - Calendar TEST Table");
+    JButton changeToCalendarMainTableButton = new JButton("Calendar Table");
+    JButton changeToCalendarTestTableButton = new JButton("Calendar TEST Table");
+
+    JButton clearTextFieldsButton = new JButton("Clear");
     //</editor-fold>
 
     //<editor-fold desc="Labels">
@@ -72,7 +74,6 @@ public class AddProductToCalendarDay {
 
     //<editor-fold desc="TextFields">
     // TextFields
-    JTextField dateTextField = new JTextField();
     JTextField productNameTextField = new JTextField();
     JTextField amountOfProductTextField = new JTextField();
     JTextField kcalTextField = new JTextField();
@@ -86,7 +87,7 @@ public class AddProductToCalendarDay {
     //<editor-fold desc="ComboBox">
     // ComboBox
     JComboBox<String> dayMealNameComboBox = new JComboBox<>(new String[]{"None" , "Breakfast", "Second Breakfast", "Snack 1", "Dinner", "Snack 2"
-            , "Supper", "After workout"});
+            , "Supper", "After workout", "Night snack"});
     //</editor-fold>
 
     //<editor-fold desc="Grid Layout">
@@ -181,9 +182,17 @@ public class AddProductToCalendarDay {
 
         addProductToDayPanelEast.add(changeToCalendarMainTableButton);
         changeToCalendarMainTableButton.addActionListener(new ChangeCalendarTableButtonListener());
+        changeToCalendarMainTableButton.setBackground(Color.GREEN);
 
         addProductToDayPanelEast.add(changeToCalendarTestTableButton);
         changeToCalendarTestTableButton.addActionListener(new ChangeCalendarTableToCalendarTestButtonListener());
+        changeToCalendarTestTableButton.setBackground(Color.ORANGE);
+
+        addProductToDayPanelEast.add(clearTextFieldsButton);
+        clearTextFieldsButton.addActionListener(new clearTextFieldsButtonActionListener());
+        clearTextFieldsButton.setBackground(Color.pink);
+
+
 
         //</editor-fold>
 
@@ -507,6 +516,24 @@ public class AddProductToCalendarDay {
             Config.CURRENT_DATABASE_TABLE_CALENDAR = "calendar_test";
             chosenCalendarTableLabel.setText("Current Table is: " + Config.CURRENT_DATABASE_TABLE_CALENDAR);
             System.out.println();
+        }
+    }
+
+    private class clearTextFieldsButtonActionListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            clearTextFields();
+        }
+
+        public void clearTextFields(){
+            productNameTextField.setText("");
+            amountOfProductTextField.setText("");
+            kcalTextField.setText("");
+            proteinLTextField.setText("");
+            fatTextField.setText("");
+            carbsTextField.setText("");
+            timeOptionalTextField.setText("");
+            commentOptionalTextField.setText("");
         }
     }
 }
