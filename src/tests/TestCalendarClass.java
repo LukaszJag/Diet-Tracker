@@ -1,4 +1,4 @@
-package runners_and_tests;
+package tests;
 
 import calendar_tools.Calendar;
 

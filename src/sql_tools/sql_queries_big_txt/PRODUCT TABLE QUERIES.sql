@@ -7,6 +7,12 @@ SELECT * FROM product_table;
 #SELECT * FROM product_text_test;
 
 /*
+SELECT COUNT(product_name)
+FROM product_table;
+#WHERE condition;
+*/
+ 
+/*
 Select * 
 from diet_tracker_schema.product_table WHERE product_name='Kisiel owoce leśne';
 

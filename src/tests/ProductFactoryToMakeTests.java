@@ -1,4 +1,4 @@
-package runners_and_tests;
+package tests;
 
 import products_tools.Macro;
 import products_tools.Product;

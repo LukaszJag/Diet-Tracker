@@ -1,9 +1,8 @@
-package runners_and_tests;
+package tests;
 
 import calendar_tools.DayInCalendar;
 import sql_tools.InsertToCalendarDayTable;
 import sql_tools.SearchForKey;
-import tests.DayInCalendarFactoryToMakeTest;
 
 import java.sql.Date;
 import java.sql.SQLException;

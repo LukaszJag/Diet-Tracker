@@ -2,7 +2,6 @@ package tests;
 
 import calendar_tools.DayInCalendar;
 import products_tools.Product;
-import runners_and_tests.ProductFactoryToMakeTests;
 import sql_tools.ImportDateFromTXTFilesToSQLDB;
 import sql_tools.InsertToCalendarDayTable;
 import sql_tools.RunQuery;
