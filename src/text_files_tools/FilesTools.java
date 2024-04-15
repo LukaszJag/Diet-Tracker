@@ -208,4 +208,30 @@ public class FilesTools {
         }
         return fileNameAndDirectory;
     }
+
+    public static String readTXTFile(String path){
+        String fileContent = "";
+        File file = new File(path);
+        FileReader fileReader;
+
+        try {
+                fileReader = new FileReader(file);
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+
+        BufferedReader bufferedReader = new BufferedReader(fileReader);
+
+        String line;
+        while (true){
+            try {
+                if (!((line = bufferedReader.readLine()) != null)) break;
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            fileContent += line + "\n";
+        }
+
+        return fileContent;
+    }
 }

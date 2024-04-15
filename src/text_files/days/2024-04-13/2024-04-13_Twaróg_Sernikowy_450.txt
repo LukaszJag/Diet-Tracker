@@ -1,4 +1,4 @@
-INSERT INTO `diet_tracker_schema`.`calendar_test`
+INSERT INTO `diet_tracker_schema`.`calendar`
 (`day_date`,
 `day_name`,
 `meal_name`,

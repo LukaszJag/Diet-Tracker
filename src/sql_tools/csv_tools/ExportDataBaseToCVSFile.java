@@ -70,4 +70,6 @@ public class ExportDataBaseToCVSFile {
 
     }
 
+    public static void exportDataFromTxtToSQLCalendarTable() {
+    }
 }
