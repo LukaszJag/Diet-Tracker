@@ -12,6 +12,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.text.Format;
@@ -62,6 +64,7 @@ public class AddProductToCalendarDay {
     JLabel dateLabel = new JLabel("Date:");
     JLabel dayMealNameLabel = new JLabel("Meal name(IN PROGRESS):");
     JLabel productNameLabel = new JLabel("Product name:");
+    JLabel productNameSuggestionLabel = new JLabel("Product name suggestion:");
     JLabel amountOfProductLabel = new JLabel("Amount of product:");
     JLabel kcalLabel = new JLabel("Kcal:");
     JLabel proteinLabel = new JLabel("Protein:");
@@ -86,8 +89,10 @@ public class AddProductToCalendarDay {
 
     //<editor-fold desc="ComboBox">
     // ComboBox
-    JComboBox<String> dayMealNameComboBox = new JComboBox<>(new String[]{"None" , "Breakfast", "Second Breakfast", "Snack 1", "Dinner", "Snack 2"
+    JComboBox<String> dayMealNameComboBox = new JComboBox<>(new String[]{"None", "Breakfast", "Second Breakfast", "Snack 1", "Dinner", "Snack 2"
             , "Supper", "After workout", "Night snack"});
+
+    JComboBox<String> productSuggestionNameComboBox = new JComboBox<>(new String[]{""});
     //</editor-fold>
 
     //<editor-fold desc="Grid Layout">
@@ -193,7 +198,6 @@ public class AddProductToCalendarDay {
         clearTextFieldsButton.setBackground(Color.pink);
 
 
-
         //</editor-fold>
 
         //<editor-fold desc="Add Components to Panel - South">
@@ -222,6 +226,10 @@ public class AddProductToCalendarDay {
 
         addProductToDayPanelMain.add(productNameLabel);
         addProductToDayPanelMain.add(productNameTextField);
+        productNameTextField.addKeyListener(new ProductNameTextFieldKeyListener());
+
+        addProductToDayPanelMain.add(productNameSuggestionLabel);
+        addProductToDayPanelMain.add(productSuggestionNameComboBox);
 
         addProductToDayPanelMain.add(amountOfProductLabel);
         addProductToDayPanelMain.add(amountOfProductTextField);
@@ -280,7 +288,7 @@ public class AddProductToCalendarDay {
             float amountOfProductInGrams = -1;
             try {
                 amountOfProductInGrams = Float.valueOf(amountOfProductTextField.getText());
-            }catch (Exception ex){
+            } catch (Exception ex) {
                 System.out.println("Error: Cannot parse data from amountOfProductTextField[String]->[Float]");
             }
 
@@ -299,22 +307,21 @@ public class AddProductToCalendarDay {
             JOptionPane.showMessageDialog(null, "Product has been added");
         }
 
-        public Product getDayProductFromGUI(){
+        public Product getDayProductFromGUI() {
             Macro productMacro = new Macro(
                     Float.valueOf(kcalTextField.getText()),
                     Float.valueOf(proteinLTextField.getText()),
                     Float.valueOf(fatTextField.getText()),
                     Float.valueOf(carbsTextField.getText()));
             Product dayInCalendarProduct = new Product(productNameTextField.getText(), "None",
-                    100, productMacro, -1,"");
+                    100, productMacro, -1, "");
 
             return dayInCalendarProduct;
         }
 
-        public DayInCalendar getDayInCalendarFromDataInGUI(Product productFromGUI, Macro consumedMacro){
+        public DayInCalendar getDayInCalendarFromDataInGUI(Product productFromGUI, Macro consumedMacro) {
             //TO DO
             //<editor-fold desc="Getting direct from TextFields: Macro, day ">
-
 
 
             String dayProductOptionalTime = timeOptionalTextField.getText();
@@ -337,29 +344,28 @@ public class AddProductToCalendarDay {
             //</editor-fold>
 
 
-
-
             float kcalConsumeCalculated = Float.valueOf(kcalTextField.getText()) * (Float.valueOf(amountOfProductTextField.getText()) / (100.0f));
 
             DayInCalendar dayInCalendar = new DayInCalendar(addProductToDayDisplaySelectedFDateDayLabel.getText(), dayDateDayName, dayMealNameComboBox.getSelectedItem().toString(),
-                    dayAmountOfProduct,  productFromGUI, productFromGUI.getProductMacroForItsSetMeasure(), dayProductOptionalTime, dayProductOptionalComment, consumedMacro);
+                    dayAmountOfProduct, productFromGUI, productFromGUI.getProductMacroForItsSetMeasure(), dayProductOptionalTime, dayProductOptionalComment, consumedMacro);
 
             return dayInCalendar;
         }
 
-        public void sendSQLQueryToTxtFile(DayInCalendar dayInCalendar){
+        public void sendSQLQueryToTxtFile(DayInCalendar dayInCalendar) {
 
             try {
-                String nameAndPathOfFile = addProductToDayDisplaySelectedFDateDayLabel.getText() + "_" + dayInCalendar.getDayProductProduct().getProductName() + "_" + String.valueOf(amountOfProductTextField.getText());nameAndPathOfFile = nameAndPathOfFile.replace(" ", "_");
-                FilesTools.writeSQLStatementForDayInCalendarToTXTFile(nameAndPathOfFile,dayInCalendar);
+                String nameAndPathOfFile = addProductToDayDisplaySelectedFDateDayLabel.getText() + "_" + dayInCalendar.getDayProductProduct().getProductName() + "_" + String.valueOf(amountOfProductTextField.getText());
+                nameAndPathOfFile = nameAndPathOfFile.replace(" ", "_");
+                FilesTools.writeSQLStatementForDayInCalendarToTXTFile(nameAndPathOfFile, dayInCalendar);
             } catch (IOException ex) {
                 throw new RuntimeException(ex);
             }
 
         }
 
-        public Macro calculateConsumedMacro(Product productToCalculateConsumedMacro, float amountOfProductInGram){
-            float amountOfProductToCalculate = amountOfProductInGram/100;
+        public Macro calculateConsumedMacro(Product productToCalculateConsumedMacro, float amountOfProductInGram) {
+            float amountOfProductToCalculate = amountOfProductInGram / 100;
             Macro productMacro = productToCalculateConsumedMacro.getProductMacroForItsSetMeasure();
 
             Macro cosumedMacro = new Macro(productMacro.getKcal() * amountOfProductToCalculate, productMacro.getProtein() * amountOfProductToCalculate,
@@ -525,7 +531,7 @@ public class AddProductToCalendarDay {
             clearTextFields();
         }
 
-        public void clearTextFields(){
+        public void clearTextFields() {
             productNameTextField.setText("");
             amountOfProductTextField.setText("");
             kcalTextField.setText("");
@@ -534,6 +540,63 @@ public class AddProductToCalendarDay {
             carbsTextField.setText("");
             timeOptionalTextField.setText("");
             commentOptionalTextField.setText("");
+        }
+    }
+
+    private class ProductNameTextFieldKeyListener implements KeyListener {
+        @Override
+        public void keyTyped(KeyEvent e) {
+
+        }
+
+        @Override
+        public void keyPressed(KeyEvent e) {
+
+        }
+
+        @Override
+        public void keyReleased(KeyEvent e) {
+            if (e.getKeyCode() == KeyEvent.VK_CONTROL) {
+                productSuggestionNameComboBox.removeAllItems();
+                String[] allRightNamesProductsArray = searchAllProductWith(productNameTextField.getText());
+                String allRightNamesProductsString = "";
+                JOptionPane.showMessageDialog(null, searchAllProductWith(productNameTextField.getText()));
+
+                for (int i = 0; i < allRightNamesProductsArray.length; i++) {
+                    if (allRightNamesProductsArray[i] != null){
+                        productSuggestionNameComboBox.addItem(allRightNamesProductsArray[i]);
+                    }
+                }
+                //productSuggestionNameComboBox.addItem(searchAllProductWith(productNameTextField.getText()));
+            }
+
+            if(e.getKeyCode() == KeyEvent.VK_ALT){
+                String suggestionFromComboBoxString = productSuggestionNameComboBox.getSelectedItem().toString();
+                productNameTextField.setText(suggestionFromComboBoxString);
+            }
+
+        }
+
+        public String[] searchAllProductWith(String wordToSearch) {
+            String[] allProductArray;
+            String[] resultArray = new String[100];
+
+            try {
+                allProductArray = SQLSelect.getAllProductNamesFromProductTable();
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            }
+
+            int counter = 0;
+            for (int i = 0; i < allProductArray.length; i++) {
+                if (allProductArray[i] != null) {
+                    if (allProductArray[i].contains(wordToSearch)) {
+                        resultArray[counter] = allProductArray[i];
+                        counter++;
+                    }
+                }
+            }
+            return resultArray;
         }
     }
 }

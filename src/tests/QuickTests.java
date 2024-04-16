@@ -17,7 +17,7 @@ import java.util.Date;
 public class QuickTests {
     public static void main(String[] args) {
         //test1();
-        // test2();
+        //test2();
         //test3();
         //test4();
         //test5();
@@ -25,8 +25,11 @@ public class QuickTests {
         //test7();
         //test8();
         //test9();
-        test10();
+        //test10();
+        test11();
     }
+
+
     private static void test1() {
         String[] testArray = ImportDateFromTXTFilesToSQLDB.getPureDateFromFileInArray(FilesTools.convertFileToStringArray("src/text_files/products/Burak.txt"));
         for (int i = 0; i < testArray.length; i++) {
@@ -93,5 +96,12 @@ public class QuickTests {
 
     public static void test10(){
         InsertToCalendarDayTable.createInsertSQLQueryForCalendarDay(DayInCalendarFactoryToMakeTest.getExampleDayInCalendar());
+    }
+    private static void test11() {
+        try {
+            SQLSelect.getAllProductNamesFromProductTable();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
