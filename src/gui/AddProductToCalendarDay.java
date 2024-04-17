@@ -596,6 +596,7 @@ public class AddProductToCalendarDay {
                     }
                 }
             }
+
             return resultArray;
         }
     }
