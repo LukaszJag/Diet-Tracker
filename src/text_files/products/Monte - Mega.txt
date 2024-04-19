@@ -1,0 +1,9 @@
+Name: Monte - Mega
+Brand: Zott
+Package has: 400.0
+Macro for: 400.0
+KCal: 181.0
+Protein: 2.6
+Fat: 11.8
+Carbs: 15.7
+Comment optional: 

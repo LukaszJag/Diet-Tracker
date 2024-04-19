@@ -1,0 +1,9 @@
+Name: Surimi - paluszki
+Brand: Vici
+Package has: 250.0
+Macro for: 250.0
+KCal: 112.0
+Protein: 8.2
+Fat: 3.2
+Carbs: 13.2
+Comment optional: 
