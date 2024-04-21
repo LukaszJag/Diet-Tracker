@@ -13,14 +13,33 @@ public class MainWindow extends JFrame {
     }
     private JFrame startWindow;
     private BorderLayout startWindowBorderLayout;
+
+    //<editor-fold desc="Panels">
     private JPanel startWindowPanel = new JPanel();
     private JPanel panelLeft = new JPanel();
     private JPanel panelRight = new JPanel();
     private JPanel panelCenter = new JPanel();
     private JPanel panelUpper = new JPanel();
     private JPanel panelDown = new JPanel();
+    //</editor-fold>
+
+
+    //<editor-fold desc="Labels">
     JLabel currentCalendarTableLabel = new JLabel();
     JLabel currentProductTableLabel = new JLabel();
+    //</editor-fold>
+
+
+    //<editor-fold desc="Buttons">
+    JButton addProductButton = new JButton("Add new product");
+    JButton mealManagerButton = new JButton("Meal manager");
+
+    JButton addProductToDay =new JButton("Add product to day");
+    JButton changeProductDataBase = new JButton("Change product table");
+    JButton refreshDataBaseButton = new JButton("Refresh Data base");
+    JButton closeApplicationButton =new JButton("Exit");
+    //</editor-fold>
+
 
     public void makeRunWindow(){
         setUpAndStartMenuWindow();
@@ -69,30 +88,30 @@ public class MainWindow extends JFrame {
     }
 
     private void addButtons(){
-        Button addProductButton = new Button("Add new product");
+
         addProductButton.setBackground(Color.GREEN);
 
         addProductButton.addActionListener(new AddProductButton());
         panelLeft.add(addProductButton);
 
-        Button mealManagerButton = new Button("Meal manager");
         mealManagerButton.addActionListener(new MealMangerButton());
         panelLeft.add(mealManagerButton);
 
-        Button addProductToDay =new Button("Add product to day");
+
         addProductToDay.addActionListener(new AddProducttoDayButton());
         addProductToDay.setBackground(Color.ORANGE);
         panelLeft.add(addProductToDay);
 
-        JButton changeProductDataBase = new JButton("Change product table");
+
         changeProductDataBase.addActionListener(new ChangeProductTableActioListener());
         panelRight.add(changeProductDataBase);
         changeProductDataBase.setBackground(Color.PINK);
 
+        refreshDataBaseButton.addActionListener(new RefreshDataBaseButtonActionListener());
+        panelRight.add(refreshDataBaseButton);
 
-        Button closeAplicationButton =new Button("Exit");
-        closeAplicationButton.addActionListener(new CloseAplicationButtonActionListener());
-        panelRight.add(closeAplicationButton);
+        closeApplicationButton.addActionListener(new CloseAplicationButtonActionListener());
+        panelRight.add(closeApplicationButton);
     }
 
     private void addLabels(){
@@ -150,6 +169,13 @@ public class MainWindow extends JFrame {
             currentProductTableLabel.setText("Current Calendar Table is: " + Config.CURRENT_DATABASE_TABLE_PRODUCT);
 
             JOptionPane.showMessageDialog(null,"Product table: " + Config.CURRENT_DATABASE_TABLE_PRODUCT);
+        }
+    }
+
+    private class RefreshDataBaseButtonActionListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            JOptionPane.showMessageDialog(null, "NOTHING HAPPEN");
         }
     }
 }
