@@ -1,14 +1,22 @@
 #PRODUCT TABLE QUERIES
 
-SELECT * FROM calendar;
+#SELECT * FROM calendar;
 
 #SELECT * FROM calendar_test;
 
-/*
-SELECT SUM(kcal_consume), SUM(protein_consume), SUM(fat_consume), SUM(carbs_consume)
-FROM calendar
-WHERE day_date = '2024-04-13';
-*/
+SELECT 
+    day_date,
+    TRUNCATE(SUM(kcal_consume), 2) AS 'day\'s kcal',
+    TRUNCATE(SUM(protein_consume), 2) AS 'proteins',
+    TRUSUM(fat_consume) AS 'fats',
+    SUM(carbs_consume) AS 'carbs'
+FROM
+    calendar
+WHERE
+    day_date = '2024-04-13';
+
+
+
 
 /*
 CREATE TABLE `calendar` (

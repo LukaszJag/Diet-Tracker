@@ -1,5 +1,8 @@
 #PRODUCT TABLE QUERIES
 
+#SELECT DISTINCT product_name FROM product_table;
+
+
 SELECT * FROM product_table;
 
 #SELECT * FROM product_table_test;
@@ -22,8 +25,10 @@ from diet_tracker_schema.product_table WHERE product_name='Kisiel owoce leśne';
 
 Select * from diet_tracker_schema.product_table;
 
+*/
 
-CREATE TABLE `product_table_test` (
+/*
+CREATE TABLE `product_table` (
   `product_name` varchar(80) NOT NULL,
   `product_brand` varchar(80) NOT NULL,
   `product_package_has` float NOT NULL,
@@ -34,8 +39,9 @@ CREATE TABLE `product_table_test` (
   `product_carbs` float NOT NULL,
   PRIMARY KEY (`product_name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+*/
 
-
+/*
 INSERT INTO `diet_tracker_schema`.`product_table`
 (`product_name`,
 `product_brand`,

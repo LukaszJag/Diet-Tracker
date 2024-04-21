@@ -1,0 +1,1 @@
+SELECT * FROM product_table WHERE product_name = "";
