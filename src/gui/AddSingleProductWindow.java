@@ -1,6 +1,7 @@
 package gui;
 
 import configuration.Config;
+import logs.Log;
 import sql_tools.InsertProductToSQL_Table;
 import products_tools.Macro;
 import products_tools.Product;
@@ -10,6 +11,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.sql.SQLException;
 
 public class AddSingleProductWindow {
@@ -29,8 +31,6 @@ public class AddSingleProductWindow {
     JButton clearTextFieldsButton;
     //</editor-fold>
 
-
-
     //<editor-fold desc="Labels">
     JLabel productNameLabel;
     JLabel productBrandLabel ;
@@ -42,8 +42,6 @@ public class AddSingleProductWindow {
     JLabel productCarbsLabel;
     JLabel productCommentOptionalCarbsLabel;
     //</editor-fold>
-
-
 
     //<editor-fold desc="Text Fields">
     JTextField productNameTextField;
@@ -295,6 +293,12 @@ public class AddSingleProductWindow {
                         + "\nKCal: " + kCal + "\nProtein: " + protein +
                         "\nFat: " + fat + "\nCarbs: " + carbs + "\nComment" + commentOptional);
 
+
+                try {
+                    Log.makeLogForAddNewProductToSQLTable("|-" + name+ "-|-" + brand + "-|");
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
                 JOptionPane.showMessageDialog(null, "Product add to library");
             }
         }

@@ -1,1 +1,1 @@
-SELECT * FROM product_table WHERE product_name LIKE "%tmp%";
+SELECT * FROM product_table WHERE product_name LIKE "%tmp%"; 
