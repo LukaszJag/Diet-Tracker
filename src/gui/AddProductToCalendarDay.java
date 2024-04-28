@@ -154,6 +154,7 @@ public class AddProductToCalendarDay {
         //<editor-fold desc="Add Components to Panel - West">
         // Add Buttons
         addProductToDayPanelWest.add(inputCurrentDayButton);
+        inputCurrentDayButton.addActionListener(new inputCurrentDayButtonActionListener());
 
         addProductToDayDisplaySelectedDay.setForeground(Config.addProductToDayCurrentDateLabelColor);
         addProductToDayPanelWest.add(addProductToDayDisplaySelectedDay);
@@ -304,7 +305,10 @@ public class AddProductToCalendarDay {
                 throw new RuntimeException(ex);
             }
 
-            JOptionPane.showMessageDialog(null, "Product has been added");
+            JOptionPane.showMessageDialog(null, "Product has been added. Date: " +
+                    addProductToDayDisplaySelectedFDateNameDayLabel.getText()
+                    + " \nDay name: " + addProductToDayDisplaySelectedFDateDayLabel.getText()+
+                     chosenCalendarTableLabel.getText());
         }
 
         public Product getDayProductFromGUI() {
@@ -598,6 +602,13 @@ public class AddProductToCalendarDay {
             }
 
             return resultArray;
+        }
+    }
+
+    private class inputCurrentDayButtonActionListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            JOptionPane.showMessageDialog(null, "NOTHING HAPPENED");
         }
     }
 }
