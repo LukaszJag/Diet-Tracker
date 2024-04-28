@@ -1,0 +1,9 @@
+Name: Płatki - kangus
+Brand: Nestle
+Package has: 250.0
+Macro for: 250.0
+KCal: 371.0
+Protein: 9.1
+Fat: 1.9
+Carbs: 73.8
+Comment optional: 

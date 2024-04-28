@@ -1,0 +1,9 @@
+Name: Zott Monte Mega Deser z Czekolada i Orzechami Laskowymi
+Brand: Zott Monte
+Package has: 400.0
+Macro for: 400.0
+KCal: 183.0
+Protein: 2.6
+Fat: 12.2
+Carbs: 15.5
+Comment optional: W tym cukry: 13.60

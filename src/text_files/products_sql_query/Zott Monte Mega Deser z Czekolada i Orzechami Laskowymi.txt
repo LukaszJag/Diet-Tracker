@@ -1,0 +1,20 @@
+INSERT INTO `diet_tracker_schema`.product_table
+(`product_name`,
+`product_brand`,
+`product_package_has`,
+`product_macro_for`,
+`product_kcal`,
+`product_protein`,
+`product_fat`,
+`product_carbs`,
+`comment_optional`)
+Values
+('Zott Monte Mega Deser z Czekolada i Orzechami Laskowymi',
+'Zott Monte',
+400.0,
+100.0,
+183.0,
+2.6,
+12.2,
+15.5,
+'W tym cukry: 13.60');

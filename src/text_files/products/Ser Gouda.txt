@@ -1,0 +1,9 @@
+Name: Ser Gouda
+Brand: Światowid
+Package has: 400.0
+Macro for: 400.0
+KCal: 334.0
+Protein: 25.0
+Fat: 26.0
+Carbs: 0.0
+Comment optional: 
