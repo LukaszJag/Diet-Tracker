@@ -2,10 +2,7 @@ package tests;
 
 import calendar_tools.DayInCalendar;
 import products_tools.Product;
-import sql_tools.ImportDateFromTXTFilesToSQLDB;
-import sql_tools.InsertToCalendarDayTable;
-import sql_tools.RunQuery;
-import sql_tools.SQLSelect;
+import sql_tools.*;
 import text_files_tools.DirectoryTools;
 import text_files_tools.FilesTools;
 
@@ -15,7 +12,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class QuickTests {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SQLException {
         //test1();
         //test2();
         //test3();
@@ -26,9 +23,10 @@ public class QuickTests {
         //test8();
         //test9();
         //test10();
-        test11();
+        //test11();
+        test12();
+        //test13();
     }
-
 
     private static void test1() {
         String[] testArray = ImportDateFromTXTFilesToSQLDB.getPureDateFromFileInArray(FilesTools.convertFileToStringArray("src/text_files/products/Burak.txt"));
@@ -103,5 +101,17 @@ public class QuickTests {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private static void test12() throws SQLException {
+        System.out.println(CheckIfRowExist.isProductNameExistInProductTable("Burak"));
+        System.out.println(CheckIfRowExist.isProductNameExistInProductTable("Bulbulator"));
+    }
+
+    private static void test13() {
+        String sqlStatement = "SELECT COUNT(product_name)\n" +
+                "FROM product_table\n" +
+                "WHERE product_name = \"" + "Burak" + "\";";
+        System.out.println(sqlStatement);
     }
 }
