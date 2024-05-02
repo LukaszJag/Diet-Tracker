@@ -64,10 +64,11 @@ public class Config {
     //</editor-fold>
 
     //<editor-fold desc="File R/W Configuration">
-    public static final String DESTINATION_FOR_TEXT_FILE_PRODUCTS = "src/text_files/products/";
-    public static final String DESTINATION_FOR_SQL_TEXT_FILE_PRODUCTS = "src/text_files/products_sql_query/";
-    public static final String DESTINATION_FOR_TEXT_FILE_DAYS = "src/text_files/days/";
-    public static final String DESTINATION_FOR_SQL_QUERIES_TO_TEXT_FILE = "src/text_files/sql_queries/";
+
+    public static final String DESTINATION_FOR_TEXT_FILE_PRODUCTS = "src/data_store_and_backup/text_files/products/";
+    public static final String DESTINATION_FOR_SQL_TEXT_FILE_PRODUCTS = "src/data_store_and_backup/text_files/products_sql_query/";
+    public static final String DESTINATION_FOR_TEXT_FILE_DAYS = "src/data_store_and_backup/text_files/days/";
+    public static final String DESTINATION_FOR_SQL_QUERIES_TO_TEXT_FILE = "src/data_store_and_backup/text_files/sql_queries/";
     //</editor-fold>
 
     // On run configuration

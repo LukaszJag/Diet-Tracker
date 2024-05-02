@@ -29,14 +29,14 @@ public class QuickTests {
     }
 
     private static void test1() {
-        String[] testArray = ImportDateFromTXTFilesToSQLDB.getPureDateFromFileInArray(FilesTools.convertFileToStringArray("src/text_files/products/Burak.txt"));
+        String[] testArray = ImportDateFromTXTFilesToSQLDB.getPureDateFromFileInArray(FilesTools.convertFileToStringArray("src/data_store_and_backup/text_files/products/Burak.txt"));
         for (int i = 0; i < testArray.length; i++) {
             System.out.println(testArray[i]);
         }
     }
 
     private static void test2(){
-        String[] fileInArray = FilesTools.convertFileToStringArray("src/text_files/products/Burak.txt");
+        String[] fileInArray = FilesTools.convertFileToStringArray("src/data_store_and_backup/text_files/products/Burak.txt");
         String readyToInsertQuery = ImportDateFromTXTFilesToSQLDB.convertTextFileToSQLQuery(fileInArray);
         try {
             RunQuery.runQueryOnCalendarTable(readyToInsertQuery);
@@ -46,11 +46,11 @@ public class QuickTests {
     }
 
     private static void test3() {
-        DirectoryTools.makeDirectory("src/text_files/days/","test1");
+        DirectoryTools.makeDirectory("src/data_store_and_backup/text_files/days/","test1");
     }
 
     private static void test4() {
-        if (DirectoryTools.doesDirectoryExist("src/text_files/days/test2")) {
+        if (DirectoryTools.doesDirectoryExist("src/data_store_and_backup/text_files/days/test2")) {
             System.out.println("Directory exist");
         }else{
             System.out.println("Directory doesn't exist");
@@ -105,7 +105,7 @@ public class QuickTests {
 
     private static void test12() throws SQLException {
         System.out.println(CheckIfRowExist.isProductNameExistInProductTable("Burak"));
-        System.out.println(CheckIfRowExist.isProductNameExistInProductTable("Bulbulator"));
+        System.out.println(CheckIfRowExist.isProductNameExistInProductTable("Bagietka - BBQ Strips"));
     }
 
     private static void test13() {

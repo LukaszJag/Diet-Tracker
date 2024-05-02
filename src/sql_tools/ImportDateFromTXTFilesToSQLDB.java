@@ -5,8 +5,6 @@ public class ImportDateFromTXTFilesToSQLDB {
         String[] pureDataFromTXTFile = getPureDateFromFileInArray(fileInStringArray);
         String preparedStringQuery = prepareQueryAndFields(pureDataFromTXTFile);
 
-        //System.out.println(preparedStringQuery);
-
         return preparedStringQuery;
     }
 
@@ -21,7 +19,7 @@ public class ImportDateFromTXTFilesToSQLDB {
             if (fileInStringArray[i] != "0"){
                 tmpDataFromLine = fileInStringArray[i];
                 positionOfColon = tmpDataFromLine.indexOf(":");
-                pureDataFromLine = tmpDataFromLine.substring(positionOfColon + 2, fileInStringArray[i].length());
+                pureDataFromLine = tmpDataFromLine.substring(positionOfColon + 1, fileInStringArray[i].length());
                 result[i] = pureDataFromLine;
             }
         }
@@ -53,12 +51,6 @@ public class ImportDateFromTXTFilesToSQLDB {
 
 
          */
-
-        System.out.println();
-        for (int i = 0; i < 10; i++) {
-            System.out.print(fieldDate[i] + " ");
-        }
-        System.out.println();
 
         String query = "INSERT INTO\n" +
         "`diet_tracker_schema`.`product_table`\n" +

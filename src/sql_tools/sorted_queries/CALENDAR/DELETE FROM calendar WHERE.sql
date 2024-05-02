@@ -1,0 +1,1 @@
+DELETE FROM calendar WHERE product_name='EXAMPLE' AND  day_date="";

@@ -6,7 +6,7 @@ import java.io.File;
 import java.sql.SQLException;
 
 public class ExportAllDaysDataToSQLCalendar {
-    static String pathToDaysTXTFilesDirectory = "src/text_files/days";
+    static String pathToDaysTXTFilesDirectory = "src/data_store_and_backup/text_files/days";
 
     public static void exportDataFromTxtToSQLCalendarTable() {
         getAllTXTFiles(pathToDaysTXTFilesDirectory);

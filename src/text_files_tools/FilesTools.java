@@ -18,10 +18,19 @@ public class FilesTools {
         int maxLinesInFile = 40;
         String[] fileByLinesInArray = new String[maxLinesInFile];
         int counter = 0;
+        int indexOfColon;
+        String line;
         try {
             Scanner fileScanner = new Scanner(new File(fileNameWithExtension));
             while (fileScanner.hasNext()) {
-                fileByLinesInArray[counter] = fileScanner.nextLine();
+                line = fileScanner.nextLine();
+                indexOfColon = line.lastIndexOf(":");
+                if (indexOfColon + 2 > line.length()){
+                    fileByLinesInArray[counter] =line.substring(indexOfColon);
+                }else{
+                    fileByLinesInArray[counter] = line.substring((indexOfColon + 2));
+                }
+
                 counter++;
             }
         } catch (FileNotFoundException e) {
@@ -132,7 +141,7 @@ public class FilesTools {
 
     public static void writeSQLStatementForDayInCalendarToTXTFile(String fileName, DayInCalendar dayInCalendar) throws IOException {
 
-        String directoryPath = "src/text_files/days/" + dayInCalendar.getDayDateFormatFriendlyForSQL().toString();
+        String directoryPath = "src/data_store_and_backup/text_files/days/" + dayInCalendar.getDayDateFormatFriendlyForSQL().toString();
         File theDir = new File(directoryPath);
         if (!theDir.exists()){
             theDir.mkdirs();
@@ -206,7 +215,13 @@ public class FilesTools {
         } else {
             System.out.println("Wrong directory");
         }
-        return fileNameAndDirectory;
+
+        String[] returnedArray = new String[counter];
+
+        for (int i = 0; i < counter; i++) {
+            returnedArray[i] = fileNameAndDirectory[i];
+        }
+        return returnedArray;
     }
 
     public static String readTXTFile(String path){
