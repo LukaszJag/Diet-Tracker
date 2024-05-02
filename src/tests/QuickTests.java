@@ -24,8 +24,9 @@ public class QuickTests {
         //test9();
         //test10();
         //test11();
-        test12();
+        //test12();
         //test13();
+        test14();
     }
 
     private static void test1() {
@@ -113,5 +114,13 @@ public class QuickTests {
                 "FROM product_table\n" +
                 "WHERE product_name = \"" + "Burak" + "\";";
         System.out.println(sqlStatement);
+    }
+
+
+    private static void test14() {
+        String[] allUnique = SelectDistinctValues.selectAllUniqueCalendarByDayDate();
+        for (int i = 0; i < allUnique.length; i++) {
+            System.out.println(allUnique[i]);
+        }
     }
 }
