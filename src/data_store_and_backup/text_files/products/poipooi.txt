@@ -1,9 +1,0 @@
-Name: poipooi
-Brand: poiputyre
-Package has: 1.0
-Macro for: 1.0
-KCal: 1.0
-Protein: 1.0
-Fat: 1.0
-Carbs: 1.0
-Comment optional: 

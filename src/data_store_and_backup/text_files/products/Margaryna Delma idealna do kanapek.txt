@@ -1,0 +1,9 @@
+Name: Margaryna Delma idealna do kanapek
+Brand: Delma
+Package has: 450.0
+Macro for: 450.0
+KCal: 351.0
+Protein: 0.0
+Fat: 39.0
+Carbs: 0.0
+Comment optional: Cukry: 0
