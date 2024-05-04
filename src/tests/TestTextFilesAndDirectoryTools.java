@@ -3,8 +3,6 @@ package tests;
 import text_files_tools.DirectoryTools;
 import text_files_tools.FilesTools;
 
-import java.io.IOException;
-
 public class TestTextFilesAndDirectoryTools {
     public static void main(String[] args) {
         //test1();
@@ -37,11 +35,7 @@ public class TestTextFilesAndDirectoryTools {
 
     public static void test4() {
         String directory = "src/data_store_and_backup/text_files/days";
-        try {
-            DirectoryTools.printAllFilesInAllDirectory(directory);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        DirectoryTools.printAllFilesInAllDirectory(directory);
     }
 
     private static void test5() {

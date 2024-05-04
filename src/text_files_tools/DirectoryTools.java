@@ -1,7 +1,6 @@
 package text_files_tools;
 
 import java.io.File;
-import java.io.IOException;
 
 public class DirectoryTools {
     public static void makeDirectory(String path, String directoryName){
@@ -25,7 +24,7 @@ public class DirectoryTools {
         }
     }
 
-    public static void printAllFilesInAllDirectory(String startDirectory) throws IOException {
+    public static void printAllFilesInAllDirectory(String startDirectory) {
         File dir = new File(startDirectory);
         File[] directoryListing = dir.listFiles();
 

@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar_test`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2024-04-13',
+'Saturday',
+'None',
+444.0,
+'Cukier',
+399.0,
+0.0,
+0.0,
+99.8,
+'2024-05-04 11:16:27',
+'product to test java code',
+1771.56,
+443.11203,
+0.0,
+0.0
+);
