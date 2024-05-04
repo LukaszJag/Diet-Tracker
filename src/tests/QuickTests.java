@@ -26,7 +26,8 @@ public class QuickTests {
         //test11();
         //test12();
         //test13();
-        test14();
+        //test14();
+        test15();
     }
 
     private static void test1() {
@@ -35,7 +36,6 @@ public class QuickTests {
             System.out.println(testArray[i]);
         }
     }
-
     private static void test2(){
         String[] fileInArray = FilesTools.convertFileToStringArray("src/data_store_and_backup/text_files/products/Burak.txt");
         String readyToInsertQuery = ImportDateFromTXTFilesToSQLDB.convertTextFileToSQLQuery(fileInArray);
@@ -45,11 +45,9 @@ public class QuickTests {
             throw new RuntimeException(e);
         }
     }
-
     private static void test3() {
         DirectoryTools.makeDirectory("src/data_store_and_backup/text_files/days/","test1");
     }
-
     private static void test4() {
         if (DirectoryTools.doesDirectoryExist("src/data_store_and_backup/text_files/days/test2")) {
             System.out.println("Directory exist");
@@ -57,12 +55,10 @@ public class QuickTests {
             System.out.println("Directory doesn't exist");
         }
     }
-
     private static void test5() {
         System.out.println(Product.isProductEqual(ProductFactoryToMakeTests.productBarExample(), ProductFactoryToMakeTests.productBarExample()));
         System.out.println(Product.isProductEqual(ProductFactoryToMakeTests.productBarExample(), ProductFactoryToMakeTests.productBarOtherExample()));
     }
-
     //testDateDisplay
     public static void test6() throws ParseException {
         String pattern = "yyyy-MM-dd hh:mm:ss";
@@ -70,14 +66,12 @@ public class QuickTests {
         String today = dateFormat.format(new Date());
         System.out.println(today);
     }
-
     //getRowFromProductTableByProductNameGetArrayTest
     public static void test7() throws SQLException {
         SQLSelect.getRowFromProductTableByProductNameGetArray("Burak");
         SQLSelect.getRowFromProductTableByProductNameGetArray("Jogurt kiwi");
         SQLSelect.getRowFromProductTableByProductNameGetArray("Rower");
     }
-
     // print all data from DayInCalendarObject
     public static void test8(){
         DayInCalendar dayInCalendar = DayInCalendarFactoryToMakeTest.getExampleDayInCalendar();
@@ -92,7 +86,6 @@ public class QuickTests {
         DayInCalendar.dayDataShowAllData(dayInCalendar);
 
     }
-
     public static void test10(){
         InsertToCalendarDayTable.createInsertSQLQueryForCalendarDay(DayInCalendarFactoryToMakeTest.getExampleDayInCalendar());
     }
@@ -103,24 +96,25 @@ public class QuickTests {
             throw new RuntimeException(e);
         }
     }
-
     private static void test12() throws SQLException {
         System.out.println(CheckIfRowExist.isProductNameExistInProductTable("Burak"));
         System.out.println(CheckIfRowExist.isProductNameExistInProductTable("Bagietka - BBQ Strips"));
     }
-
     private static void test13() {
         String sqlStatement = "SELECT COUNT(product_name)\n" +
                 "FROM product_table\n" +
                 "WHERE product_name = \"" + "Burak" + "\";";
         System.out.println(sqlStatement);
     }
-
-
     private static void test14() {
         String[] allUnique = SelectDistinctValues.selectAllUniqueCalendarByDayDate();
         for (int i = 0; i < allUnique.length; i++) {
             System.out.println(allUnique[i]);
         }
+    }
+
+
+    private static void test15() {
+        DirectoryTools.printAllFilesInAllDirectory("src/data_store_and_backup/text_files/days");
     }
 }
