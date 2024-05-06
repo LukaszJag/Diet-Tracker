@@ -19,84 +19,6 @@ import java.text.SimpleDateFormat;
 
 public class AddProductToCalendarDay {
 
-    //<editor-fold desc="OtherThenCurrentDateButtonListener - variables">
-    JLabel otherDateExampleLabel = new JLabel("Input date in yyyy-MM-dd");
-    static JFrame otherThenCurrentDateButtonWindowFrame = new JFrame("frame");
-    static JTextField otherDataTextField = new JTextField(20);
-    static JButton[] daysInMonthButtons = new JButton[31];
-    static JButton[] monthsInYearButtons = new JButton[12];
-    static JPanel dialogWindowPanel = new JPanel();
-    static JButton clickedButton = new JButton();
-    static boolean isMonthHasBeenAdded;
-    static String reulstString = "";
-    static int mouseClicked;
-    JButton dialogWindowAcceptButton = new JButton("Accept new date");
-    private void showDialogWindow(){
-        cleanDateTextField();
-        otherThenCurrentDateButtonWindowFrame.show();
-    }
-    private void setDialogWindow() {
-
-        otherDataTextField.setText("2024-");
-
-        prepareButtonsForDialogWindow();
-
-        dialogWindowAcceptButton.addMouseListener(new OtherThenCurrentDateButtonListener.dialogWindowPanelMouseListener());
-
-        dialogWindowPanel.add(otherDateExampleLabel);
-        dialogWindowPanel.add(otherDataTextField);
-        dialogWindowPanel.add(dialogWindowAcceptButton);
-
-        otherThenCurrentDateButtonWindowFrame.addMouseListener(new OtherThenCurrentDateButtonListener.dialogWindowPanelMouseListener());
-
-        dialogWindowAcceptButton.addMouseListener(new OtherThenCurrentDateButtonListener.dialogWindowPanelMouseListener());
-
-        for (int i = 0; i < monthsInYearButtons.length; i++) {
-            dialogWindowPanel.add(monthsInYearButtons[i]);
-        }
-
-        for (int i = 0; i < daysInMonthButtons.length; i++) {
-            dialogWindowPanel.add(daysInMonthButtons[i]);
-        }
-
-        for (int i = 0; i < daysInMonthButtons.length; i++) {
-            daysInMonthButtons[i].setVisible(false);
-        }
-
-        for (int i = 0; i < monthsInYearButtons.length; i++) {
-            monthsInYearButtons[i].addMouseListener(new OtherThenCurrentDateButtonListener.dialogWindowPanelMouseListener());
-        }
-
-        otherThenCurrentDateButtonWindowFrame.add(dialogWindowPanel);
-        otherThenCurrentDateButtonWindowFrame.setSize(500, 200);
-        otherThenCurrentDateButtonWindowFrame.setResizable(false);
-        otherThenCurrentDateButtonWindowFrame.setLocationRelativeTo(null);
-    }
-
-    private static void cleanDateTextField(){
-        otherDataTextField.setText("2024-");
-    }
-    public static void cleanVariables(){
-        isMonthHasBeenAdded = false;
-        mouseClicked = 0;
-    }
-    public void prepareButtonsForDialogWindow(){
-        for (int i = 0; i < monthsInYearButtons.length; i++) {
-            monthsInYearButtons[i] = new JButton(String.valueOf(i));
-        }
-
-        for (int i = 0; i < daysInMonthButtons.length; i++) {
-            daysInMonthButtons[i] = new JButton(String.valueOf(i));
-        }
-    }
-
-    public static void addDaysInMonthButtonsToDialogWindow(){
-        for (int i = 0; i < daysInMonthButtons.length; i++) {
-            daysInMonthButtons[i].setVisible(true);
-        }
-    }
-
-    //</editor-fold>
 
     //<editor-fold desc="Main - AddProductToCalendarDay - components and variables">
 
@@ -179,7 +101,7 @@ public class AddProductToCalendarDay {
 
     //</editor-fold>
 
-    //<editor-fold desc="Starting Constructor">
+    //<editor-fold desc="Starting Constructors">
     // Starting Constructor
     public AddProductToCalendarDay() {
         startAddProductToDayWindow();
@@ -355,8 +277,6 @@ public class AddProductToCalendarDay {
 
 
     private void startAddProductToDayWindow() {
-        setDialogWindow();
-
         setFrame();
         setPanels();
         addComponentsToPanels();
@@ -391,8 +311,8 @@ public class AddProductToCalendarDay {
 
             JOptionPane.showMessageDialog(null, "Product has been added. Date: " +
                     addProductToDayDisplaySelectedFDateNameDayLabel.getText()
-                    + " \nDay name: " + addProductToDayDisplaySelectedFDateDayLabel.getText()+
-                     chosenCalendarTableLabel.getText());
+                    + " \nDay name: " + addProductToDayDisplaySelectedFDateDayLabel.getText() +
+                    chosenCalendarTableLabel.getText());
         }
 
         public Product getDayProductFromGUI() {
@@ -527,9 +447,82 @@ public class AddProductToCalendarDay {
     }
 
     private class OtherThenCurrentDateButtonListener implements ActionListener {
+
+        public OtherThenCurrentDateButtonListener() {
+            setDialogWindow();
+        }
+        //<editor-fold desc="Variables - OtherThenCurrentDateButtonListener">
+        JLabel otherDateExampleLabel = new JLabel("Input date in yyyy-MM-dd");
+        static JFrame otherThenCurrentDateButtonWindowFrame = new JFrame("frame");
+        static JTextField otherDataTextField = new JTextField(20);
+        static JButton[] daysInMonthButtons = new JButton[31];
+        static JButton[] monthsInYearButtons = new JButton[12];
+        static JPanel dialogWindowPanel = new JPanel();
+        static JButton clickedButton = new JButton();
+        static String reulstString = "";
+        JButton dialogWindowAcceptButton = new JButton("Accept new date");
+        //</editor-fold>
+
+        private void showDialogWindow() {
+            cleanDateTextField();
+            otherThenCurrentDateButtonWindowFrame.show();
+        }
+        private void setDialogWindow() {
+
+            otherDataTextField.setText("2024-");
+
+            prepareButtonsForDialogWindow();
+
+            dialogWindowAcceptButton.addMouseListener(new OtherThenCurrentDateButtonListener.dialogWindowPanelMouseListener());
+
+            dialogWindowPanel.add(otherDateExampleLabel);
+            dialogWindowPanel.add(otherDataTextField);
+            dialogWindowPanel.add(dialogWindowAcceptButton);
+
+            otherThenCurrentDateButtonWindowFrame.addMouseListener(new OtherThenCurrentDateButtonListener.dialogWindowPanelMouseListener());
+            dialogWindowAcceptButton.addMouseListener(new OtherThenCurrentDateButtonListener.dialogWindowPanelMouseListener());
+
+            for (int i = 0; i < monthsInYearButtons.length; i++) {
+                dialogWindowPanel.add(monthsInYearButtons[i]);
+            }
+
+            for (int i = 0; i < monthsInYearButtons.length; i++) {
+                monthsInYearButtons[i].addMouseListener(new OtherThenCurrentDateButtonListener.dialogWindowPanelMouseListener());
+            }
+
+            for (int i = 0; i < daysInMonthButtons.length; i++) {
+                dialogWindowPanel.add(daysInMonthButtons[i]);
+            }
+
+            for (int i = 0; i < daysInMonthButtons.length; i++) {
+                daysInMonthButtons[i].addMouseListener(new OtherThenCurrentDateButtonListener.dialogWindowPanelMouseListener());
+            }
+
+            otherThenCurrentDateButtonWindowFrame.add(dialogWindowPanel);
+            otherThenCurrentDateButtonWindowFrame.setSize(600, 400);
+            otherThenCurrentDateButtonWindowFrame.setResizable(false);
+            otherThenCurrentDateButtonWindowFrame.setLocationRelativeTo(null);
+        }
+
+        private static void cleanDateTextField() {
+            otherDataTextField.setText("2024");
+        }
+
+        public void prepareButtonsForDialogWindow() {
+            for (int i = 0; i < monthsInYearButtons.length; i++) {
+                monthsInYearButtons[i] = new JButton(String.valueOf(i + 1));
+                monthsInYearButtons[i].setBackground(Color.BLUE);
+                monthsInYearButtons[i].setForeground(Color.RED);
+            }
+
+            for (int i = 0; i < daysInMonthButtons.length; i++) {
+                daysInMonthButtons[i] = new JButton(String.valueOf(i + 1));
+                daysInMonthButtons[i].setBackground(Color.ORANGE);
+            }
+        }
+
         @Override
         public void actionPerformed(ActionEvent e) {
-            cleanVariables();
             showDialogWindow();
         }
 
@@ -537,70 +530,34 @@ public class AddProductToCalendarDay {
 
             @Override
             public void mouseClicked(MouseEvent e) {
-                if (e.getSource().getClass() == clickedButton.getClass()) {
-
-                }
             }
 
             @Override
             public void mousePressed(MouseEvent e) {
                 if (e.getSource().getClass() == clickedButton.getClass()) {
                     clickedButton = (JButton) e.getSource();
+
                     if (!clickedButton.getText().equals("Accept new date")) {
-
                         if (clickedButton.getText().length() == 1) {
-                            otherDataTextField.setText(otherDataTextField.getText() + "0");
+                            reulstString = otherDataTextField.getText() + "-" + "0" + clickedButton.getText();
+                        }else {
+                            reulstString = otherDataTextField.getText() + "-" + clickedButton.getText();
                         }
-
-                        if (!isMonthHasBeenAdded) {
-                            reulstString = otherDataTextField.getText() + clickedButton.getText() + "-";
-                        } else {
-                            reulstString = otherDataTextField.getText() + clickedButton.getText();
-                        }
-
                         otherDataTextField.setText(reulstString);
 
-                        isMonthHasBeenAdded = true;
-
-                        mouseClicked++;
-                        if (mouseClicked == 2) {
-                            for (int i = 0; i < daysInMonthButtons.length; i++) {
-                                daysInMonthButtons[i].setVisible(false);
-                            }
-                        }
-
-
-                        if (isMonthHasBeenAdded) {
-                            for (int i = 0; i < monthsInYearButtons.length; i++) {
-                                monthsInYearButtons[i].setVisible(false);
-                            }
-
-                            addDaysInMonthButtonsToDialogWindow();
-
-                            for (int i = 0; i < daysInMonthButtons.length; i++) {
-                                daysInMonthButtons[i].addMouseListener(new dialogWindowPanelMouseListener());
-                            }
-                        }
                     } else {
-
-
-                        System.out.println("\n Date has been change to: ");
-                        System.out.println(otherDataTextField.getText() + "\n");
-
                         boolean ifDateIsIncorrect = checkIfDateIsCorrect();
 
-                        if (!ifDateIsIncorrect){
+                        if (!ifDateIsIncorrect) {
                             addProductToDayDisplaySelectedFDateDayLabel.setText("Wrong date input");
-                        }else {
+                            dialogWindowPanel.disable();
+                            otherThenCurrentDateButtonWindowFrame.dispose();
+                        } else {
                             System.out.println("Change RIGHT DATE");
                             addProductToDayDisplaySelectedFDateDayLabel.setText(otherDataTextField.getText());
+                            dialogWindowPanel.disable();
+                            otherThenCurrentDateButtonWindowFrame.dispose();
                         }
-
-                        cleanVariables();
-                        dialogWindowPanel.disable();
-                        otherThenCurrentDateButtonWindowFrame.dispose();
-                        //rightDataProvidedMessage();
-
                     }
                 }
             }
@@ -608,13 +565,13 @@ public class AddProductToCalendarDay {
             private boolean checkIfDateIsCorrect() {
                 String dateToCheck = otherDataTextField.getText();
                 System.out.println(dateToCheck);
-                if (dateToCheck.length() != 10){
+                if (dateToCheck.length() != 10) {
                     System.out.println("Too long: " + dateToCheck.length());
                     return false;
-                }else if(!((dateToCheck.charAt(4) == '-') && (dateToCheck.charAt(7) == '-'))){
+                } else if (!((dateToCheck.charAt(4) == '-') && (dateToCheck.charAt(7) == '-'))) {
                     System.out.println("Problems with: -");
                     return false;
-                }else {
+                } else {
                     System.out.println("Good date");
                     return true;
                 }
@@ -636,6 +593,7 @@ public class AddProductToCalendarDay {
         }
 
     }
+
     private class BackToMainWindowButtonActionListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -714,14 +672,14 @@ public class AddProductToCalendarDay {
                 JOptionPane.showMessageDialog(null, searchAllProductWith(productNameTextField.getText()));
 
                 for (int i = 0; i < allRightNamesProductsArray.length; i++) {
-                    if (allRightNamesProductsArray[i] != null){
+                    if (allRightNamesProductsArray[i] != null) {
                         productSuggestionNameComboBox.addItem(allRightNamesProductsArray[i]);
                     }
                 }
                 //productSuggestionNameComboBox.addItem(searchAllProductWith(productNameTextField.getText()));
             }
 
-            if(e.getKeyCode() == KeyEvent.VK_ALT){
+            if (e.getKeyCode() == KeyEvent.VK_ALT) {
                 String suggestionFromComboBoxString = productSuggestionNameComboBox.getSelectedItem().toString();
                 productNameTextField.setText(suggestionFromComboBoxString);
             }
