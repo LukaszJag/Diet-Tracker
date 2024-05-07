@@ -1,0 +1,1 @@
+SELECT * FROM calendar_test WHERE day_date="2024-04-13" AND product_name = "Cukier";
