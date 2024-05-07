@@ -1,0 +1,73 @@
+package runners_and_tests;
+
+import sql_tools.CheckIfRowExist;
+import text_files_tools.DirectoryTools;
+import text_files_tools.FilesTools;
+
+import java.io.File;
+import java.sql.SQLException;
+
+public class AddAllCalendarDaysInTXTFromDirectory {
+    public static void main(String[] args) {
+        String[] allFilesPath = getPathsOfFiles();
+        int amountOfExistRows = 0;
+        int amountOfNotExistRows = 0;
+
+
+        for (int i = 0; i < allFilesPath.length; i++){
+            if (checkIfProductExist(allFilesPath[i])){
+                amountOfExistRows++;
+            }else{
+                amountOfNotExistRows++;
+            }
+        }
+        System.out.println("All rows amount: " + allFilesPath.length);
+        System.out.println("Row that EXIST: " + amountOfExistRows);
+        System.out.println("Row that NOT EXIST: " + amountOfNotExistRows);
+    }
+
+    public static String[] getPathsOfFiles() {
+        int amountOfFiles = 0;
+        String pathToDirectory = "src/data_store_and_backup/text_files/days";
+        String[] allFilesPath = FilesTools.getFullAPathToAllTextFilesInDirectory(pathToDirectory);
+        for (int i = 0; i < allFilesPath.length; i++) {
+            if (allFilesPath[i] != null) {
+                amountOfFiles++;
+            }
+        }
+
+        String[] result = new String[amountOfFiles];
+        for (int i = 0; i < amountOfFiles; i++) {
+            result[i] = allFilesPath[i];
+        }
+        return result;
+    }
+
+    public static boolean checkIfProductExist(String fullSQLQueryTXTFile) {
+        boolean result;
+
+        String dayDate = FilesTools.readAndGetLineTXTFile(fullSQLQueryTXTFile, 18);
+        String productName = FilesTools.readAndGetLineTXTFile(fullSQLQueryTXTFile, 22);
+        String amountOfProduct = FilesTools.readAndGetLineTXTFile(fullSQLQueryTXTFile, 21);
+        String optionalTime = FilesTools.readAndGetLineTXTFile(fullSQLQueryTXTFile, 27);
+
+        dayDate = dayDate.replace("(","");
+        dayDate = dayDate.replace("'","");
+        dayDate = dayDate.replace(",","");
+
+        productName = productName.replace("'","");
+        productName = productName.substring(0,productName.length() - 1);
+
+        amountOfProduct = amountOfProduct.replace(",","");
+
+        optionalTime = optionalTime.replace(",","");
+        optionalTime = optionalTime.replace("'", "");
+
+        try {
+            result = CheckIfRowExist.isCalendarRowExistInProductTable(dayDate, productName, amountOfProduct, optionalTime);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return result;
+    }
+}

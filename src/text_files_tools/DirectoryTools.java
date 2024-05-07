@@ -25,7 +25,7 @@ public class DirectoryTools {
         }
     }
 
-    public static void printAllFilesInAllDirectory(String startDirectory) throws IOException {
+    public static void printAllFilesInAllDirectory(String startDirectory){
         File dir = new File(startDirectory);
         File[] directoryListing = dir.listFiles();
 

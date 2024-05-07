@@ -25,9 +25,9 @@ public class FilesTools {
             while (fileScanner.hasNext()) {
                 line = fileScanner.nextLine();
                 indexOfColon = line.lastIndexOf(":");
-                if (indexOfColon + 2 > line.length()){
-                    fileByLinesInArray[counter] =line.substring(indexOfColon);
-                }else{
+                if (indexOfColon + 2 > line.length()) {
+                    fileByLinesInArray[counter] = line.substring(indexOfColon);
+                } else {
                     fileByLinesInArray[counter] = line.substring((indexOfColon + 2));
                 }
 
@@ -70,7 +70,7 @@ public class FilesTools {
 
     public static void makeEmptyFile(String newFileName, String destination) {
         try {
-            File newFile = new File(destination +"/" +newFileName + ".txt");
+            File newFile = new File(destination + "/" + newFileName + ".txt");
             if (newFile.createNewFile()) {
                 System.out.println("File created: " + newFile.getName());
             } else {
@@ -111,7 +111,7 @@ public class FilesTools {
         makeEmptyFile(fileName, Config.DESTINATION_FOR_SQL_TEXT_FILE_PRODUCTS);
 
         try {
-            writeProductSQLToFile(sqlStatement,fileName);
+            writeProductSQLToFile(sqlStatement, fileName);
         } catch (IOException ex) {
             throw new RuntimeException(ex);
         }
@@ -124,6 +124,7 @@ public class FilesTools {
         bufferedWriter.append("\n");
         bufferedWriter.close();
     }
+
     public static void writeProductToFile(String lineToWriteToFile, String fileName) throws IOException {
         String fullPath = Config.DESTINATION_FOR_TEXT_FILE_PRODUCTS + fileName + ".txt";
         BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(fullPath, true));
@@ -143,16 +144,16 @@ public class FilesTools {
 
         String directoryPath = "src/data_store_and_backup/text_files/days/" + dayInCalendar.getDayDateFormatFriendlyForSQL().toString();
         File theDir = new File(directoryPath);
-        if (!theDir.exists()){
+        if (!theDir.exists()) {
             theDir.mkdirs();
-        }else {
+        } else {
             System.out.println("Directory already exist");
         }
 
         String fullPath = directoryPath + "/" + fileName + ".txt";
 
         String SQLquery = InsertToCalendarDayTable.createInsertSQLQueryForCalendarDay(dayInCalendar);
-        if(!DirectoryTools.doesDirectoryExist(fullPath)) {
+        if (!DirectoryTools.doesDirectoryExist(fullPath)) {
 
             File file = new File(fullPath);
 
@@ -224,13 +225,13 @@ public class FilesTools {
         return returnedArray;
     }
 
-    public static String readTXTFile(String path){
+    public static String readTXTFile(String path) {
         String fileContent = "";
         File file = new File(path);
         FileReader fileReader;
 
         try {
-                fileReader = new FileReader(file);
+            fileReader = new FileReader(file);
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
@@ -238,7 +239,7 @@ public class FilesTools {
         BufferedReader bufferedReader = new BufferedReader(fileReader);
 
         String line;
-        while (true){
+        while (true) {
             try {
                 if (!((line = bufferedReader.readLine()) != null)) break;
             } catch (IOException e) {
@@ -248,5 +249,61 @@ public class FilesTools {
         }
 
         return fileContent;
+    }
+
+    public static String readAndGetLineTXTFile(String path, int lineNumber) {
+        String fileContent = "";
+        File file = new File(path);
+        FileReader fileReader;
+        int counter = 0;
+
+        try {
+            fileReader = new FileReader(file);
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+
+        BufferedReader bufferedReader = new BufferedReader(fileReader);
+
+        String line;
+        while (true) {
+            counter++;
+            try {
+                if (!((line = bufferedReader.readLine()) != null)) break;
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+
+            if (counter == lineNumber) {
+                fileContent += line;
+            }
+        }
+
+        return fileContent;
+    }
+
+    public static String[] getFullAPathToAllTextFilesInDirectory(String pathToDirectory) {
+        // It may cause error: hard code length to 100
+
+        String[] fullPathToFiles = new String[100];
+        File dir = new File(pathToDirectory);
+        File[] directoryListing = dir.listFiles();
+        int counter = 0;
+        if (directoryListing != null) {
+            for (File child : directoryListing) {
+                if (child.isDirectory()) {
+                    File directoryFiles = new File(child.getPath());
+                    File[] directoryFilesArray = directoryFiles.listFiles();
+
+                    for (File fileInDir : directoryFilesArray) {
+                        fullPathToFiles[counter] = fileInDir.getPath();
+                        counter++;
+                    }
+                }
+            }
+        } else {
+            System.out.println("Wrong directory");
+        }
+        return fullPathToFiles;
     }
 }
