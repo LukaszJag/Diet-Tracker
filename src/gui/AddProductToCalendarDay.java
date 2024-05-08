@@ -289,7 +289,6 @@ public class AddProductToCalendarDay {
     private class AddProductToDayAcceptButtonListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            System.out.println("\n" + dayMealNameComboBox.getSelectedItem().toString() + "\n");
             float amountOfProductInGrams = -1;
             try {
                 amountOfProductInGrams = Float.valueOf(amountOfProductTextField.getText());
@@ -301,7 +300,7 @@ public class AddProductToCalendarDay {
             Macro consumedMacro = calculateConsumedMacro(dayInCalendarProduct, amountOfProductInGrams);
             DayInCalendar dayInCalendar = getDayInCalendarFromDataInGUI(dayInCalendarProduct, consumedMacro);
 
-            sendSQLQueryToTxtFile(dayInCalendar);
+            FilesTools.sendSQLQueryToTxtFile(dayInCalendar, addProductToDayDisplaySelectedFDateDayLabel.getText(), amountOfProductTextField.getText());
 
             try {
                 InsertToCalendarDayTable.addRowToCalendarTable(dayInCalendar);
@@ -360,17 +359,7 @@ public class AddProductToCalendarDay {
             return dayInCalendar;
         }
 
-        public void sendSQLQueryToTxtFile(DayInCalendar dayInCalendar) {
 
-            try {
-                String nameAndPathOfFile = addProductToDayDisplaySelectedFDateDayLabel.getText() + "_" + dayInCalendar.getDayProductProduct().getProductName() + "_" + String.valueOf(amountOfProductTextField.getText());
-                nameAndPathOfFile = nameAndPathOfFile.replace(" ", "_");
-                FilesTools.writeSQLStatementForDayInCalendarToTXTFile(nameAndPathOfFile, dayInCalendar);
-            } catch (IOException ex) {
-                throw new RuntimeException(ex);
-            }
-
-        }
 
         public Macro calculateConsumedMacro(Product productToCalculateConsumedMacro, float amountOfProductInGram) {
             float amountOfProductToCalculate = amountOfProductInGram / 100;

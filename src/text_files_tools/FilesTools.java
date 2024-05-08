@@ -15,7 +15,7 @@ public class FilesTools {
 
     public static String[] convertFileToStringArray(String fileNameWithExtension) {
         // This int value may cause problem because max amount of lines in file is dynamic
-        int maxLinesInFile = 40;
+        int maxLinesInFile = 120;
         String[] fileByLinesInArray = new String[maxLinesInFile];
         int counter = 0;
         int indexOfColon;
@@ -151,6 +151,7 @@ public class FilesTools {
         }
 
         String fullPath = directoryPath + "/" + fileName + ".txt";
+        int counter = 0;
 
         String SQLquery = InsertToCalendarDayTable.createInsertSQLQueryForCalendarDay(dayInCalendar);
         if (!DirectoryTools.doesDirectoryExist(fullPath)) {
@@ -163,7 +164,18 @@ public class FilesTools {
             bufferedWriter.close();
         } else {
             System.out.println("File already exist");
+            String alternativePathForDuplicate = directoryPath + "/" + fileName + "_duplicate" + String.valueOf(counter) + ".txt";
+            while(DirectoryTools.doesDirectoryExist(alternativePathForDuplicate)){
+                counter++;
+                alternativePathForDuplicate = directoryPath + "/" + fileName + "_duplicate_" + String.valueOf(counter) + ".txt";
+            }
 
+            File file = new File(alternativePathForDuplicate);
+
+            BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file, true));
+            bufferedWriter.append(SQLquery);
+            bufferedWriter.append("\n");
+            bufferedWriter.close();
             if (convertFileToStringArray(fullPath).toString().equals(SQLquery)) {
                 System.out.println("Files is equal:\nFirst file:");
                 System.out.println(convertFileToStringArray(fullPath).toString());
@@ -305,5 +317,17 @@ public class FilesTools {
             System.out.println("Wrong directory");
         }
         return fullPathToFiles;
+    }
+
+    public static void sendSQLQueryToTxtFile(DayInCalendar dayInCalendar, String addProductToDayDisplaySelectedFDateDayLabel, String amountOfProductTextField) {
+
+        try {
+            String nameAndPathOfFile = addProductToDayDisplaySelectedFDateDayLabel + "_" + dayInCalendar.getDayProductProduct().getProductName() + "_" + amountOfProductTextField;
+            nameAndPathOfFile = nameAndPathOfFile.replace(" ", "_");
+            FilesTools.writeSQLStatementForDayInCalendarToTXTFile(nameAndPathOfFile, dayInCalendar);
+        } catch (IOException ex) {
+            throw new RuntimeException(ex);
+        }
+
     }
 }

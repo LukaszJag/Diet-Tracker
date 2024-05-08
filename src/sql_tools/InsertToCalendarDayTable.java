@@ -13,15 +13,6 @@ public class InsertToCalendarDayTable {
         Connection connection = GetConnection.getConnectionWithLocalHost();
         String sqlStatement = createInsertSQLQueryForCalendarDay(dayInCalendar);
 
-        System.out.println(sqlStatement);
-
-        String[] dayDataInArray = dayInCalendar.dayDataInStringArray(dayInCalendar);
-
-        for (int i = 0; i < dayDataInArray.length; i++) {
-            System.out.println("i:[" + i + "]: " + dayDataInArray[i]);
-        }
-        System.out.println();
-
         PreparedStatement preparedStatement = connection.prepareStatement(sqlStatement);
         preparedStatement.execute(sqlStatement);
     }
@@ -46,11 +37,6 @@ public class InsertToCalendarDayTable {
         // Set Values verse
         sqlStatement += "\nValues\n(";
         String[] dayDataInArray = dayToInsert.dayDataInStringArray(dayToInsert);
-
-        for (int i = 0; i < dayDataInArray.length; i++) {
-            System.out.println("i:[" + i + "]: " + dayDataInArray[i]);
-        }
-        System.out.println();
 
         for (int i = 0; i < Config.SQL_COLUMNS_CALENDAR.length; i++) {
 

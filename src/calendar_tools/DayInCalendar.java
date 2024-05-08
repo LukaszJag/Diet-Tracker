@@ -110,14 +110,6 @@ public class DayInCalendar {
         } else {
             dayDataInStringArray[8] = dayInCalendar.getDayProductOptionalTime();
         }
-
-        System.out.println("\n DayInCalendar -> dayDataShowData:");
-        for (int i = 0; i < dayDataInStringArray.length; i++) {
-            System.out.println("[i]: " + i + " - " + dayDataInStringArray[i]);
-        }
-
-        Macro.showAllMacroData(dayInCalendar.getConsumedMacro());
-        System.out.println();
     }
 
     public static void dayDataShowDataWithSQLColumns(DayInCalendar dayInCalendar) {

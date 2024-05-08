@@ -33,8 +33,6 @@ public class DirectoryTools {
             for (File child : directoryListing) {
 
                 if(child.isDirectory()){
-                    System.out.println();
-                    System.out.println(child.getName());
                     printAllFilesInDirectory(child.getPath());
                 }
             }
