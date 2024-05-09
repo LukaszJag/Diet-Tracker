@@ -11,7 +11,6 @@ import text_files_tools.FilesTools;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.io.IOException;
 import java.sql.SQLException;
 import java.text.Format;
 import java.text.ParseException;
@@ -73,6 +72,11 @@ public class AddProductToCalendarDay {
     JLabel timeOptionalLabel = new JLabel("Time(optional):");
     JLabel commentOptionalLabel = new JLabel("Comment(optional):");
     JLabel chosenCalendarTableLabel = new JLabel();
+    JLabel shortcutWordLabel = new JLabel("SHORTCUTS:");
+    JLabel shortcutsCRTTipsLabel = new JLabel("CTR - Search product by name");
+    JLabel shortcutsDOWNArrowTipsLabel = new JLabel("Down arrow - Fill selected name");
+    JLabel shortcutsUPArrowTipsLabel = new JLabel("Up arrow - Fill macro for product");
+
     //</editor-fold>
 
     //<editor-fold desc="TextFields">
@@ -183,8 +187,6 @@ public class AddProductToCalendarDay {
         addProductToDayPanelEast.add(checkIfProductExistButton);
         checkIfProductExistButton.addActionListener(new CheckIfProductExistButtonActionListener());
 
-        addProductToDayPanelEast.add(displayProductMacroButton);
-        addProductToDayPanelEast.add(importProductMacroFromLibraryButton);
 
         addProductToDayPanelEast.add(fillTheExistingProductMacroButton);
         fillTheExistingProductMacroButton.addActionListener(new FillTheExistingProductMacroButtonListener());
@@ -199,7 +201,18 @@ public class AddProductToCalendarDay {
 
         addProductToDayPanelEast.add(clearTextFieldsButton);
         clearTextFieldsButton.addActionListener(new clearTextFieldsButtonActionListener());
-        clearTextFieldsButton.setBackground(Color.pink);
+        clearTextFieldsButton.setBackground(Color.WHITE);
+
+        Color labelsColor = Color.yellow;
+        shortcutWordLabel.setForeground(Color.RED);
+        shortcutsCRTTipsLabel.setForeground(labelsColor);
+        shortcutsDOWNArrowTipsLabel.setForeground(labelsColor);
+        shortcutsUPArrowTipsLabel.setForeground(labelsColor);
+
+        addProductToDayPanelEast.add(shortcutWordLabel);
+        addProductToDayPanelEast.add(shortcutsCRTTipsLabel);
+        addProductToDayPanelEast.add(shortcutsDOWNArrowTipsLabel);
+        addProductToDayPanelEast.add(shortcutsUPArrowTipsLabel);
 
 
         //</editor-fold>
@@ -283,6 +296,41 @@ public class AddProductToCalendarDay {
         addPanelsToFrame();
         finishSetUpFrame();
     }
+
+    public boolean isProductExist(){
+
+        String[] resultOfCheckIfProductExist;
+        boolean isExist = false;
+        try {
+            resultOfCheckIfProductExist = SQLSelect.getRowFromProductTableByProductNameGetArray(productNameTextField.getText());
+        } catch (SQLException ex) {
+            throw new RuntimeException(ex);
+        }
+
+        for (String pos : resultOfCheckIfProductExist) {
+            if (pos != null) {
+                isExist = true;
+                break;
+            }
+        }
+
+        if (isExist) {
+            // Filling text fields
+            kcalTextField.setText(resultOfCheckIfProductExist[4]);
+            proteinLTextField.setText(resultOfCheckIfProductExist[5]);
+            fatTextField.setText(resultOfCheckIfProductExist[6]);
+            carbsTextField.setText(resultOfCheckIfProductExist[7]);
+
+            String productData = "Product name:    " + resultOfCheckIfProductExist[0] + "\nKcal:    " + resultOfCheckIfProductExist[4]
+                    + "\nProtein:    " + resultOfCheckIfProductExist[5] + "\nFat:    " + resultOfCheckIfProductExist[6]
+                    + "\nCarbs:    " + resultOfCheckIfProductExist[7];
+            return true;
+        } else {
+            return false;
+
+        }
+    }
+
     //</editor-fold>
 
     //<editor-fold desc="Action Listeners Classes">
@@ -403,35 +451,12 @@ public class AddProductToCalendarDay {
     private class FillTheExistingProductMacroButtonListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            String[] resultOfCheckIfProductExist;
-            boolean isExist = false;
-            try {
-                resultOfCheckIfProductExist = SQLSelect.getRowFromProductTableByProductNameGetArray(productNameTextField.getText());
-            } catch (SQLException ex) {
-                throw new RuntimeException(ex);
-            }
-
-            for (String pos : resultOfCheckIfProductExist) {
-                if (pos != null) {
-                    isExist = true;
-                    break;
-                }
-            }
-
-            if (isExist) {
-                // Filling text fields
-                kcalTextField.setText(resultOfCheckIfProductExist[4]);
-                proteinLTextField.setText(resultOfCheckIfProductExist[5]);
-                fatTextField.setText(resultOfCheckIfProductExist[6]);
-                carbsTextField.setText(resultOfCheckIfProductExist[7]);
-
-                String productData = "Product name:    " + resultOfCheckIfProductExist[0] + "\nKcal:    " + resultOfCheckIfProductExist[4]
-                        + "\nProtein:    " + resultOfCheckIfProductExist[5] + "\nFat:    " + resultOfCheckIfProductExist[6]
-                        + "\nCarbs:    " + resultOfCheckIfProductExist[7];
-                JOptionPane.showMessageDialog(null, "Product data has been filled:\n " + productData);
-            } else {
+            if (isProductExist() == true){
+                JOptionPane.showMessageDialog(null, "Product data has been filled");
+            }else {
                 JOptionPane.showMessageDialog(null, "Product doesn't exist");
             }
+
         }
     }
 
@@ -668,11 +693,14 @@ public class AddProductToCalendarDay {
                 //productSuggestionNameComboBox.addItem(searchAllProductWith(productNameTextField.getText()));
             }
 
-            if (e.getKeyCode() == KeyEvent.VK_ALT) {
+            if (e.getKeyCode() == KeyEvent.VK_UP) {
                 String suggestionFromComboBoxString = productSuggestionNameComboBox.getSelectedItem().toString();
                 productNameTextField.setText(suggestionFromComboBoxString);
             }
 
+            if (e.getKeyCode() == KeyEvent.VK_DOWN){
+                isProductExist();
+            }
         }
 
         public String[] searchAllProductWith(String wordToSearch) {

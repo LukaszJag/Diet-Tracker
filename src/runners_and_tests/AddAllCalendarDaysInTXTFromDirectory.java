@@ -1,10 +1,8 @@
 package runners_and_tests;
 
 import sql_tools.CheckIfRowExist;
-import text_files_tools.DirectoryTools;
 import text_files_tools.FilesTools;
 
-import java.io.File;
 import java.sql.SQLException;
 
 public class AddAllCalendarDaysInTXTFromDirectory {
@@ -16,8 +14,14 @@ public class AddAllCalendarDaysInTXTFromDirectory {
 
         for (int i = 0; i < allFilesPath.length; i++){
             if (checkIfProductExist(allFilesPath[i])){
+                System.out.println("Row that EXIST:");
+                System.out.println(allFilesPath[i]);
+                System.out.println();
                 amountOfExistRows++;
             }else{
+                System.out.println("Row that NOT EXIST: ");
+                System.out.println(allFilesPath[i]);
+                System.out.println();
                 amountOfNotExistRows++;
             }
         }
