@@ -239,7 +239,17 @@ public class FilesTools {
 
     public static String readTXTFile(String path) {
         String fileContent = "";
+        if (path == null){
+            System.out.println("Path is null");
+            return null;
+        }
+
         File file = new File(path);
+
+        if (!file.exists()){
+            System.out.println("File doesn't exist");
+            return null;
+        }
         FileReader fileReader;
 
         try {

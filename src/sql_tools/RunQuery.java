@@ -6,10 +6,13 @@ import java.sql.SQLException;
 
 public class RunQuery {
     public static void runQueryOnCalendarTable(String SQLStatement) throws SQLException {
+        if (SQLStatement == null){
+            System.out.println("SQLStatement is null");
+            return;
+        }
+
         Connection connection = GetConnection.getConnectionWithLocalHost();
         PreparedStatement preparedStatement = connection.prepareStatement(SQLStatement);
-
-        System.out.println("SQLStatement after execute: \n\n" + SQLStatement);
         preparedStatement.execute(SQLStatement);
     }
 }

@@ -1,30 +1,58 @@
 package runners_and_tests;
 
 import sql_tools.CheckIfRowExist;
+import sql_tools.RunQuery;
 import text_files_tools.FilesTools;
 
 import java.sql.SQLException;
 
 public class AddAllCalendarDaysInTXTFromDirectory {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SQLException {
         String[] allFilesPath = getPathsOfFiles();
+        // May cause Error : hard code length
+        int arraysLength = 100;
+        String[] productThatExist = new String[arraysLength];
+        int counterExistArray = 0;
+        int counterNotExistArray = 0;
+        String[] productThatNotExist = new String[arraysLength];
         int amountOfExistRows = 0;
         int amountOfNotExistRows = 0;
 
 
         for (int i = 0; i < allFilesPath.length; i++){
             if (checkIfProductExist(allFilesPath[i])){
-                System.out.println("Row that EXIST:");
-                System.out.println(allFilesPath[i]);
-                System.out.println();
+                productThatExist[counterExistArray] = allFilesPath[i];
+                counterExistArray++;
                 amountOfExistRows++;
             }else{
-                System.out.println("Row that NOT EXIST: ");
-                System.out.println(allFilesPath[i]);
-                System.out.println();
+                productThatNotExist[counterNotExistArray] = allFilesPath[i];
+                counterNotExistArray++;
                 amountOfNotExistRows++;
             }
         }
+
+        //<editor-fold desc="Print - result">
+        System.out.println("PRODUCT THAT EXIST IN TABLE:");
+        for (int i = 0; i < counterExistArray; i++) {
+            System.out.println(productThatExist[i]);
+        }
+        System.out.println();
+        System.out.println();
+
+        System.out.println("PRODUCT THAT NOT EXIST IN TABLE:");
+        for (int i = 0; i < counterNotExistArray; i++) {
+            System.out.println(productThatNotExist[i]);
+        }
+        System.out.println();
+        System.out.println();
+        //</editor-fold>
+
+        String query;
+        for (int i = 0; i <counterNotExistArray; i++) {
+            query = FilesTools.readTXTFile(productThatNotExist[i]);
+            RunQuery.runQueryOnCalendarTable(query);
+        }
+
         System.out.println("All rows amount: " + allFilesPath.length);
         System.out.println("Row that EXIST: " + amountOfExistRows);
         System.out.println("Row that NOT EXIST: " + amountOfNotExistRows);
@@ -53,7 +81,7 @@ public class AddAllCalendarDaysInTXTFromDirectory {
         String dayDate = FilesTools.readAndGetLineTXTFile(fullSQLQueryTXTFile, 18);
         String productName = FilesTools.readAndGetLineTXTFile(fullSQLQueryTXTFile, 22);
         String amountOfProduct = FilesTools.readAndGetLineTXTFile(fullSQLQueryTXTFile, 21);
-        String optionalTime = FilesTools.readAndGetLineTXTFile(fullSQLQueryTXTFile, 27);
+        //String optionalTime = FilesTools.readAndGetLineTXTFile(fullSQLQueryTXTFile, 27);
 
         dayDate = dayDate.replace("(","");
         dayDate = dayDate.replace("'","");
@@ -64,11 +92,12 @@ public class AddAllCalendarDaysInTXTFromDirectory {
 
         amountOfProduct = amountOfProduct.replace(",","");
 
-        optionalTime = optionalTime.replace(",","");
-        optionalTime = optionalTime.replace("'", "");
+        //optionalTime = optionalTime.replace(",","");
+        //optionalTime = optionalTime.replace("'", "");
 
         try {
-            result = CheckIfRowExist.isCalendarRowExistInProductTable(dayDate, productName, amountOfProduct, optionalTime);
+            result = CheckIfRowExist.isCalendarRowExistInProductTable(dayDate, productName, amountOfProduct);
+                    //, optionalTime);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

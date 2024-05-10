@@ -26,7 +26,7 @@ public class CheckIfRowExist {
         }
     }
 
-    public static boolean isCalendarRowExistInProductTable(String dayDate, String productName, String productAmount, String timeOptional) throws SQLException {
+    public static boolean isCalendarRowExistInProductTable(String dayDate, String productName, String productAmount) throws SQLException {
         Connection connection = GetConnection.getConnectionWithLocalHost();
         ResultSet resultSet;
         Statement statement;
@@ -36,8 +36,7 @@ public class CheckIfRowExist {
         "FROM calendar\n" +
         "WHERE day_date =\'" + dayDate + "\'  && " +
         "product_name = \'" + productName + "\' && " +
-        "amount_of_product = \'" + productAmount + "\' && " +
-        "time_optional = \'" + timeOptional + "\';";
+        "amount_of_product = \'" + productAmount + "\'" + ";";
 
         statement = connection.createStatement();
         resultSet = statement.executeQuery(sqlStatement);
@@ -45,7 +44,7 @@ public class CheckIfRowExist {
 
         int result = resultSet.getInt("bool");
 
-        if (result == 1) {
+        if (result >= 1) {
             return true;
         }else{
             return false;
