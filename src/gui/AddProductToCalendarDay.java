@@ -611,7 +611,9 @@ public class AddProductToCalendarDay {
     private class BackToMainWindowButtonActionListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            addProductToDayFrame.dispose();
+            MainWindow mainWindow = new MainWindow();
+            mainWindow.makeRunWindow();
+            addProductToDayFrame.setState(Frame.ICONIFIED);
         }
     }
 

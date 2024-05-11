@@ -307,7 +307,9 @@ public class AddSingleProductWindow {
     private class BackToMainWindowButtonActionListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            addProductWindowFrame.dispose();
+            MainWindow mainWindow = new MainWindow();
+            mainWindow.makeRunWindow();
+            addProductWindowFrame.setExtendedState(Frame.ICONIFIED);
         }
     }
 
