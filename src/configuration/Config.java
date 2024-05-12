@@ -1,5 +1,7 @@
 package configuration;
 
+import gui.GUIManager;
+
 import java.awt.*;
 import java.util.Date;
 
@@ -80,4 +82,7 @@ public class Config {
 
     // Product configuration
 
+
+    //TEST
+    GUIManager guiManager = new GUIManager();
 }

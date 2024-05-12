@@ -23,12 +23,10 @@ public class MainWindow extends JFrame {
     private JPanel panelDown = new JPanel();
     //</editor-fold>
 
-
     //<editor-fold desc="Labels">
     JLabel currentCalendarTableLabel = new JLabel();
     JLabel currentProductTableLabel = new JLabel();
     //</editor-fold>
-
 
     //<editor-fold desc="Buttons">
     JButton addProductButton = new JButton("Add new product");
@@ -47,7 +45,7 @@ public class MainWindow extends JFrame {
 
     private void setUpAndStartMenuWindow(){
 
-        startWindow = new JFrame("Diet Tracker");
+        startWindow = new JFrame("Diet Tracker - main window");
         startWindow.setSize(Config.START_WINDOWS_WIDTH, Config.START_WINDOWS_HEIGHT);
         startWindowBorderLayout = new BorderLayout();
         startWindow.setLayout(startWindowBorderLayout);
