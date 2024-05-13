@@ -51,6 +51,7 @@ public class AddProductToCalendarDay {
     JButton changeToCalendarTestTableButton = new JButton("Calendar TEST Table");
 
     JButton clearTextFieldsButton = new JButton("Clear");
+    JButton getProductFullInfo = new JButton("Get product full info");
     //</editor-fold>
 
     //<editor-fold desc="Labels">
@@ -200,8 +201,11 @@ public class AddProductToCalendarDay {
         changeToCalendarTestTableButton.setBackground(Color.ORANGE);
 
         addProductToDayPanelEast.add(clearTextFieldsButton);
-        clearTextFieldsButton.addActionListener(new clearTextFieldsButtonActionListener());
+        clearTextFieldsButton.addActionListener(new ClearTextFieldsButtonActionListener());
         clearTextFieldsButton.setBackground(Color.WHITE);
+
+        addProductToDayPanelEast.add(getProductFullInfo);
+        getProductFullInfo.addActionListener(new GetProductFullInfoActionListener());
 
         Color labelsColor = Color.yellow;
         shortcutWordLabel.setForeground(Color.RED);
@@ -641,13 +645,14 @@ public class AddProductToCalendarDay {
         }
     }
 
-    private class clearTextFieldsButtonActionListener implements ActionListener {
+    private class ClearTextFieldsButtonActionListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
             clearTextFields();
         }
 
         public void clearTextFields() {
+            dayMealNameComboBox.setSelectedItem("None");
             productNameTextField.setText("");
             amountOfProductTextField.setText("");
             kcalTextField.setText("");
@@ -663,6 +668,25 @@ public class AddProductToCalendarDay {
         @Override
         public void actionPerformed(ActionEvent e) {
             JOptionPane.showMessageDialog(null, "NOTHING HAPPENED");
+        }
+    }
+    private class GetProductFullInfoActionListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            String[] productInfoArray;
+            try {
+                productInfoArray = SQLSelect.getRowFromProductTableByProductNameGetArray(productNameTextField.getText());
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            }
+            String productInfoInString = "";
+            for (int i = 0; i < productInfoArray.length; i++) {
+                productInfoInString += "[" + i + "]: " + Config.SQL_COLUMNS_PRODUCT[i].replace("product_", "").replace("`","")
+                        + ":  " + productInfoArray[i] + "\n";
+            }
+            System.out.println(productInfoInString);
+
+            JOptionPane.showMessageDialog(null, "Full product info: " + productInfoInString);
         }
     }
     //</editor-fold>
@@ -727,4 +751,6 @@ public class AddProductToCalendarDay {
             return resultArray;
         }
     }
+
+
 }
