@@ -1,0 +1,9 @@
+Name: Jajko szadzone
+Brand: 
+Package has: 0.0
+Macro for: 0.0
+KCal: 245.0
+Protein: 14.4
+Fat: 20.8
+Carbs: 0.8
+Comment optional: 

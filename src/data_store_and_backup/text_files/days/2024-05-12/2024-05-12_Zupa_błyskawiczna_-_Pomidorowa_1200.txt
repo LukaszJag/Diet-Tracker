@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2024-05-12',
+'Sunday',
+'Supper',
+1200.0,
+'Zupa błyskawiczna - Pomidorowa',
+73.0,
+1.4,
+3.2,
+9.2,
+'2024-05-12 09:50:40',
+'3 opakowania',
+876.0,
+110.399994,
+38.4,
+16.8
+);

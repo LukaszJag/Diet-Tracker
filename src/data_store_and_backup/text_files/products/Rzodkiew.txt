@@ -1,0 +1,9 @@
+Name: Rzodkiew
+Brand: 
+Package has: 0.0
+Macro for: 0.0
+KCal: 16.0
+Protein: 1.0
+Fat: 0.0
+Carbs: 3.0
+Comment optional: 
