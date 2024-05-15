@@ -53,7 +53,8 @@ public class Config {
     //SQL Configuration - To insert product to table
     public static final String[] SQL_COLUMNS_PRODUCT = {"`product_name`", "`product_brand`", "`product_package_has`",
             "`product_macro_for`", "`product_kcal`", "`product_protein`", "`product_fat`", "`product_carbs`", "`comment_optional`"};
-
+    public static final String[] SQL_COLUMNS_DAYS_STATISTICS_TEST = {"`day_date`", "`amount_of_points_from_notpade`",
+            "`amount_of_filled_points_from_notepad`", "`kcal_consume`", "`protein_consume`", "`fat_consume`", "`carbs_consume`", "`day_name`"};
     //</editor-fold>
 
     //<editor-fold desc="DAY IN CALENDAR - Configuration">

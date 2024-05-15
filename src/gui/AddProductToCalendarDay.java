@@ -63,6 +63,7 @@ public class AddProductToCalendarDay {
     JLabel addProductToDayCurrentDateLabel = new JLabel("dd.mm.yyyy");
     JLabel dateLabel = new JLabel("Date:");
     JLabel dayMealNameLabel = new JLabel("Meal name(IN PROGRESS):");
+
     JLabel productNameLabel = new JLabel("Product name:");
     JLabel productNameSuggestionLabel = new JLabel("Product name suggestion:");
     JLabel amountOfProductLabel = new JLabel("Amount of product:");
@@ -150,7 +151,6 @@ public class AddProductToCalendarDay {
         //</editor-fold>
 
         //<editor-fold desc="Add Components to Panel - North">
-
         addProductToDayCurrentDateTextLabel.setForeground(Config.dateTimeLabels);
         addProductToDayPanelNorth.add(addProductToDayCurrentDateTextLabel);
 
@@ -292,7 +292,6 @@ public class AddProductToCalendarDay {
         addProductToDayFrame.setVisible(true);
     }
 
-
     private void startAddProductToDayWindow() {
         setFrame();
         setPanels();
@@ -410,8 +409,6 @@ public class AddProductToCalendarDay {
 
             return dayInCalendar;
         }
-
-
 
         public Macro calculateConsumedMacro(Product productToCalculateConsumedMacro, float amountOfProductInGram) {
             float amountOfProductToCalculate = amountOfProductInGram / 100;
