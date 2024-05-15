@@ -29,6 +29,8 @@ public class QuickTests {
         //test14();
         //test15();
         //test16();
+        //test17();
+        test18();
     }
 
 
@@ -207,5 +209,13 @@ public class QuickTests {
 
     }
 
+    private static void test17() {
+        String SQLquery  = "";
+        SQLquery = GenerateSLQTableForDaysStatistics.createInsertSQLQueryForDaysStatistics("2024-05-20");
+        System.out.println(SQLquery);
+    }
 
+    private static void test18() {
+        GenerateSLQTableForDaysStatistics.generateWholeMonth();
+    }
 }

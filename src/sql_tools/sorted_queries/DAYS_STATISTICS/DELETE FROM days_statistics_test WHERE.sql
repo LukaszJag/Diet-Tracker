@@ -1,0 +1,1 @@
+DELETE FROM days_statistics_test WHERE day_date='2001-01-20';
