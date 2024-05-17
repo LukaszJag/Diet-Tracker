@@ -1,6 +1,7 @@
 package sql_tools;
 
 import configuration.Config;
+import text_files_tools.FilesTools;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -84,6 +85,27 @@ public class GenerateSLQTableForDaysStatistics {
         for (int i = 0; i < readyDateDays.length; i++) {
             try {
                 generateDaysStatisticsInTable(createInsertSQLQueryForDaysStatistics(readyDateDays[i]));
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+    
+    public static void generateWholeMonthAndFillAmountOfPointsFromNotepadMAY(){
+        String queryForExecute = "";
+        String dateDay = "";
+        for (int i = 1; i <= 31; i++) {
+            dateDay = String.valueOf(i);
+            if (dateDay.length() == 1){
+                dateDay = "0" + dateDay;
+            }
+            queryForExecute = "UPDATE `diet_tracker_schema`.`days_statistics_test`" +
+            "SET "
+            + "`amount_of_points_from_notepad`= " + FilesTools.readAndGetLineTXTFile("src/data_store_and_backup/text_files/days_statistics_test/quick_fill_amount_of_point_in_notepad/may_2024", i)
+            + " WHERE day_date = '2024-05-" +dateDay +  "';";
+            System.out.println(queryForExecute);
+            try {
+                generateDaysStatisticsInTable(queryForExecute);
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }

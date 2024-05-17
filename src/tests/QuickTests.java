@@ -30,9 +30,9 @@ public class QuickTests {
         //test15();
         //test16();
         //test17();
-        test18();
+        //test18();
+        test19();
     }
-
 
     //<editor-fold desc="TESTS 1 -> 10">
     private static void test1() {
@@ -217,5 +217,11 @@ public class QuickTests {
 
     private static void test18() {
         GenerateSLQTableForDaysStatistics.generateWholeMonth();
+    }
+
+    private static void test19() {
+        for (int i = 0; i < 31; i++) {
+            System.out.println(FilesTools.readAndGetLineTXTFile("src/data_store_and_backup/text_files/days_statistics_test/quick_fill_amount_of_point_in_notepad/may_2024",i));
+        }
     }
 }

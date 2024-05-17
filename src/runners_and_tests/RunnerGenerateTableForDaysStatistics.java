@@ -4,6 +4,7 @@ import sql_tools.GenerateSLQTableForDaysStatistics;
 
 public class RunnerGenerateTableForDaysStatistics {
     public static void main(String[] args) {
-        GenerateSLQTableForDaysStatistics.generateWholeMonth();
+        //GenerateSLQTableForDaysStatistics.generateWholeMonth();
+        GenerateSLQTableForDaysStatistics.generateWholeMonthAndFillAmountOfPointsFromNotepadMAY();
     }
 }
