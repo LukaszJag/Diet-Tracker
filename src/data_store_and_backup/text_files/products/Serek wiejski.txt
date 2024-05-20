@@ -6,4 +6,4 @@ KCal: 97.0
 Protein: 11.0
 Fat: 6.0
 Carbs: 2.7
-Comment optional: 
+Comment optional: Opakowanie ma - 200g

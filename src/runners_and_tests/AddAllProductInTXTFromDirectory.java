@@ -32,6 +32,7 @@ public class AddAllProductInTXTFromDirectory {
             }else {
                 try {
                     System.out.println("[" + i + "] -> Product DON'T EXIST: (" + fileInArray[0] + ")");
+                    System.out.println(readyToInsertQuery);
                     RunQuery.runQueryOnCalendarTable(readyToInsertQuery);
                 } catch (SQLException e) {
                     throw new RuntimeException(e);

@@ -1,0 +1,9 @@
+Name: Cheerios Miodowy Płatki
+Brand: Nestle
+Package has: 250.0
+Macro for: 250.0
+KCal: 373.0
+Protein: 8.7
+Fat: 3.5
+Carbs: 71.9
+Comment optional: 

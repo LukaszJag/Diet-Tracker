@@ -1,4 +1,4 @@
-Name: Jajko szadzone
+Name: Jajko sadzone
 Brand: 
 Package has: 0.0
 Macro for: 0.0

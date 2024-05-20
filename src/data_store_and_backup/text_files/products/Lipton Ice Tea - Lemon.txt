@@ -1,0 +1,9 @@
+Name: Lipton Ice Tea - Lemon
+Brand: Lipton
+Package has: 0.0
+Macro for: 0.0
+KCal: 30.0
+Protein: 0.5
+Fat: 0.5
+Carbs: 7.0
+Comment optional: 

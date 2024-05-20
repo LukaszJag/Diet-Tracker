@@ -1,6 +1,6 @@
 Name: Jogurt kiwi
 Brand: Fruvita
-Package has: 400.0
+Package has: 350.0
 Macro for: 400.0
 KCal: 88.0
 Protein: 3.3

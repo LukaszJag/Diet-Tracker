@@ -51,6 +51,12 @@ public class ImportDateFromTXTFilesToSQLDB {
 
 
          */
+        String comment = fieldDate[8];
+        if (comment.equals("")){
+            comment = "''";
+        }else {
+            comment = "'" +comment + "'";
+        }
 
         String query = "INSERT INTO\n" +
         "`diet_tracker_schema`.`product_table`\n" +
@@ -61,7 +67,8 @@ public class ImportDateFromTXTFilesToSQLDB {
         "`product_kcal`,\n" +
         "`product_protein`,\n" +
         "`product_fat`,\n" +
-        "`product_carbs`)\n" +
+        "`product_carbs`,\n" +
+        "`comment_optional`)\n"+
         "VALUES (\n" +
         "'" + fieldDate[0] +"',\n" +
         "'" + fieldDate[1] +"',\n" +
@@ -70,7 +77,8 @@ public class ImportDateFromTXTFilesToSQLDB {
         fieldDate[4] +",\n" +
         fieldDate[5] +",\n" +
         fieldDate[6] +",\n" +
-        fieldDate[7] +");";
+        fieldDate[7] +",\n"+
+        comment +");";
 
         return query;
     }

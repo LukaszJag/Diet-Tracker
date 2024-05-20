@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2024-05-18',
+'Monday',
+'Dinner',
+544.0,
+'Pizza Tradycyjna Capricciosa - duża',
+291.0,
+12.7,
+14.3,
+27.7,
+'2024-05-20 12:53:54',
+'none',
+1583.04,
+150.688,
+77.792,
+69.088
+);

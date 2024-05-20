@@ -6,4 +6,4 @@ KCal: 75.0
 Protein: 17.0
 Fat: 0.5
 Carbs: 0.5
-Comment optional: 
+Comment optional: Opakowanie ma - 130
