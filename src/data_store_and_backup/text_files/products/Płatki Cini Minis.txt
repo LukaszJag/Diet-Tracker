@@ -1,0 +1,9 @@
+Name: Płatki Cini Minis
+Brand: Nestle
+Package has: 0.0
+Macro for: 0.0
+KCal: 412.0
+Protein: 4.9
+Fat: 9.9
+Carbs: 75.9
+Comment optional: 

@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2024-05-17',
+'Tuesday',
+'Supper',
+225.0,
+'Ciasto czekoladowe z polewą',
+395.56,
+7.14,
+24.65,
+35.53,
+'2024-05-21 11:39:02',
+'none',
+890.01,
+79.9425,
+55.462498,
+16.065
+);

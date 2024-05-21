@@ -15,19 +15,19 @@ INSERT INTO `diet_tracker_schema`.`calendar`
 `fat_consume`,
 `protein_consume`)
 Values
-('2024-05-19',
+('2024-05-17',
 'Tuesday',
 'Breakfast',
-77.0,
-'Ser Podlaski w plastrach',
-347.0,
-26.0,
-27.0,
-0.0,
-'2024-05-21 07:52:35',
+207.0,
+'Mleko 1,5%',
+44.0,
+3.0,
+1.5,
+4.7,
+'2024-05-21 11:20:43',
 'none',
-267.19,
-0.0,
-20.789999,
-20.02
+91.079994,
+9.728999,
+3.105,
+6.21
 );

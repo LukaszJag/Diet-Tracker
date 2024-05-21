@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2024-05-17',
+'Tuesday',
+'Supper',
+87.0,
+'Płatki - pszenica durum w polewie z miodem',
+386.0,
+9.6,
+1.8,
+80.0,
+'2024-05-21 11:34:11',
+'none',
+335.82,
+69.6,
+1.566,
+8.352
+);
