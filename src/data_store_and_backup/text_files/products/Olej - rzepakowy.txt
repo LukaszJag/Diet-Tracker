@@ -1,0 +1,9 @@
+Name: Olej - rzepakowy
+Brand: Kujawski
+Package has: 1000.0
+Macro for: 1000.0
+KCal: 900.0
+Protein: 0.0
+Fat: 100.0
+Carbs: 0.0
+Comment optional: 

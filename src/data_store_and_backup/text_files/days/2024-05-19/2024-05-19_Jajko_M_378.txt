@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2024-05-19',
+'Tuesday',
+'Breakfast',
+378.0,
+'Jajko M',
+136.0,
+12.07,
+9.48,
+0.86,
+'2024-05-21 07:45:20',
+'none',
+514.08,
+3.2508001,
+35.834396,
+45.6246
+);

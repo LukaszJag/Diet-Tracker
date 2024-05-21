@@ -27,7 +27,6 @@ public class UpdateDaysStatisticsFilledColumn {
                 + "'" + day_date + "')\n"
                 + "WHERE day_date ="
                 + "'" + day_date + "'";
-        System.out.println(updateQuery);
         return updateQuery;
     }
 }

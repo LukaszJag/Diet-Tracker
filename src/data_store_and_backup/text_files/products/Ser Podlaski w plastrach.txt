@@ -1,0 +1,9 @@
+Name: Ser Podlaski w plastrach
+Brand: Światowid
+Package has: 300.0
+Macro for: 300.0
+KCal: 347.0
+Protein: 26.0
+Fat: 27.0
+Carbs: 0.0
+Comment optional: 

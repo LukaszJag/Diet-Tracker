@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2024-05-19',
+'Tuesday',
+'Breakfast',
+10.0,
+'Czekolada gorzka - Magnetic',
+515.0,
+8.3,
+32.2,
+41.1,
+'2024-05-21 07:59:21',
+'none',
+51.5,
+4.11,
+3.22,
+0.83000004
+);

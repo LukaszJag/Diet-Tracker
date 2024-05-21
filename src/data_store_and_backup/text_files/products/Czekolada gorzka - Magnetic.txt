@@ -1,0 +1,9 @@
+Name: Czekolada gorzka - Magnetic
+Brand: Magnetic
+Package has: 90.0
+Macro for: 90.0
+KCal: 515.0
+Protein: 8.3
+Fat: 32.2
+Carbs: 41.1
+Comment optional: 
