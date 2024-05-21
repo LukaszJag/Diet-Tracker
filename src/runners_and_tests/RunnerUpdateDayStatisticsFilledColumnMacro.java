@@ -4,8 +4,8 @@ import sql_tools.UpdateDaysStatisticsFilledColumns;
 
 import java.sql.SQLException;
 
-public class RunnerUpdateDayStatisticsFilledColumn {
+public class RunnerUpdateDayStatisticsFilledColumnMacro {
     public static void main(String[] args) throws SQLException {
-        UpdateDaysStatisticsFilledColumns.updateWholeMonthMay();
+        UpdateDaysStatisticsFilledColumns.updateWholeMonthMacroSumMay();
     }
 }
