@@ -1,8 +1,0 @@
-Name: Chleb biały
-Brand: None
-Package has: 0.0
-Macro for: 0.0
-KCal: 268.0
-Protein: 7.7
-Fat: 2.7
-Carbs: 52.0

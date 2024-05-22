@@ -1,8 +1,0 @@
-Name: Tost maślany
-Brand: Pano
-Package has: 500.0
-Macro for: 500.0
-KCal: 267.0
-Protein: 8.6
-Fat: 3.2
-Carbs: 50.0

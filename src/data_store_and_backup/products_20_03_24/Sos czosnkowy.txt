@@ -1,8 +1,0 @@
-Name: Sos czosnkowy
-Brand: Madero
-Package has: 410.0
-Macro for: 410.0
-KCal: 334.0
-Protein: 1.0
-Fat: 32.0
-Carbs: 8.6

@@ -1,8 +1,0 @@
-Name: Kaszka manna czekoladowa
-Brand: Dr. Oetker
-Package has: 50.0
-Macro for: 50.0
-KCal: 93.0
-Protein: 2.8
-Fat: 0.7
-Carbs: 18.0

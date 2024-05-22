@@ -1,8 +1,0 @@
-Name: Tuńczyk kawałki w sosie własnym
-Brand: Marinero
-Package has: 130.0
-Macro for: 130.0
-KCal: 75.0
-Protein: 17.0
-Fat: 0.5
-Carbs: 0.5

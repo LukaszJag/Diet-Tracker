@@ -1,8 +1,0 @@
-Name: Chałka maślana
-Brand: None
-Package has: 0.0
-Macro for: 0.0
-KCal: 337.0
-Protein: 7.95
-Fat: 7.07
-Carbs: 59.02
