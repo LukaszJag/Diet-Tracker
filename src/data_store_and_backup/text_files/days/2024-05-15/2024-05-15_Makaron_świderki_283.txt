@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2024-05-15',
+'Wednesday',
+'Supper',
+283.0,
+'Makaron świderki',
+360.0,
+11.0,
+1.3,
+75.0,
+'2024-05-22 12:25:38',
+'none',
+1018.8,
+212.25,
+3.6789997,
+31.13
+);

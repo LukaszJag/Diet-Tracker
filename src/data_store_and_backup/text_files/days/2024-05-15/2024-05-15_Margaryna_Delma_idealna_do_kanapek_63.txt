@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2024-05-15',
+'Wednesday',
+'Breakfast',
+63.0,
+'Margaryna Delma idealna do kanapek',
+351.0,
+0.0,
+39.0,
+0.0,
+'2024-05-22 12:20:55',
+'none',
+221.13,
+0.0,
+24.57,
+0.0
+);

@@ -1,0 +1,20 @@
+INSERT INTO `diet_tracker_schema`.product_table
+(`product_name`,
+`product_brand`,
+`product_package_has`,
+`product_macro_for`,
+`product_kcal`,
+`product_protein`,
+`product_fat`,
+`product_carbs`,
+`comment_optional`)
+Values
+('Udka z kurczaka',
+'Domowe',
+0.0,
+100.0,
+250.0,
+22.5,
+7.5,
+0.0,
+'Dane z: https://dietly.pl/blog/udko-z-kurczaka-kcal-jaka-jest-kalorycznosc-miesa-z-kurczaka');

@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2024-05-15',
+'Wednesday',
+'Breakfast',
+130.0,
+'Pasztet z pieczarkami',
+144.0,
+6.2,
+10.0,
+6.9,
+'2024-05-22 12:21:22',
+'none',
+187.2,
+8.97,
+13.0,
+8.059999
+);
