@@ -75,9 +75,10 @@ public class AddProductToCalendarDay {
     JLabel commentOptionalLabel = new JLabel("Comment(optional):");
     JLabel chosenCalendarTableLabel = new JLabel();
     JLabel shortcutWordLabel = new JLabel("SHORTCUTS:");
-    JLabel shortcutsCRTTipsLabel = new JLabel("CTR - Search product by name");
+    JLabel shortcutsCRTTipsLabel = new JLabel("CTRL - Search product by name");
     JLabel shortcutsDOWNArrowTipsLabel = new JLabel("Down arrow - Fill selected name");
     JLabel shortcutsUPArrowTipsLabel = new JLabel("Up arrow - Fill macro for product");
+    JLabel shortcutsCRTLAmountOfProductTipsLabel = new JLabel("CTRL (Amount...) - Accept Data");
 
     //</editor-fold>
 
@@ -217,6 +218,7 @@ public class AddProductToCalendarDay {
         addProductToDayPanelEast.add(shortcutsCRTTipsLabel);
         addProductToDayPanelEast.add(shortcutsDOWNArrowTipsLabel);
         addProductToDayPanelEast.add(shortcutsUPArrowTipsLabel);
+        addProductToDayPanelEast.add(shortcutsCRTLAmountOfProductTipsLabel);
 
 
         //</editor-fold>
@@ -254,6 +256,7 @@ public class AddProductToCalendarDay {
 
         addProductToDayPanelMain.add(amountOfProductLabel);
         addProductToDayPanelMain.add(amountOfProductTextField);
+        amountOfProductTextField.addKeyListener(new AmountOfProductTextFieldKeyListener());
 
         addProductToDayPanelMain.add(kcalLabel);
         addProductToDayPanelMain.add(kcalTextField);
@@ -300,7 +303,7 @@ public class AddProductToCalendarDay {
         finishSetUpFrame();
     }
 
-    public boolean isProductExist(){
+    public boolean isProductExist() {
 
         String[] resultOfCheckIfProductExist;
         boolean isExist = false;
@@ -452,9 +455,9 @@ public class AddProductToCalendarDay {
     private class FillTheExistingProductMacroButtonListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            if (isProductExist() == true){
+            if (isProductExist() == true) {
                 JOptionPane.showMessageDialog(null, "Product data has been filled");
-            }else {
+            } else {
                 JOptionPane.showMessageDialog(null, "Product doesn't exist");
             }
 
@@ -466,6 +469,7 @@ public class AddProductToCalendarDay {
         public OtherThenCurrentDateButtonListener() {
             setDialogWindow();
         }
+
         //<editor-fold desc="Variables - OtherThenCurrentDateButtonListener">
         JLabel otherDateExampleLabel = new JLabel("Input date in yyyy-MM-dd");
         static JFrame otherThenCurrentDateButtonWindowFrame = new JFrame("frame");
@@ -482,6 +486,7 @@ public class AddProductToCalendarDay {
             cleanDateTextField();
             otherThenCurrentDateButtonWindowFrame.show();
         }
+
         private void setDialogWindow() {
 
             otherDataTextField.setText("2024-");
@@ -555,7 +560,7 @@ public class AddProductToCalendarDay {
                     if (!clickedButton.getText().equals("Accept new date")) {
                         if (clickedButton.getText().length() == 1) {
                             reulstString = otherDataTextField.getText() + "-" + "0" + clickedButton.getText();
-                        }else {
+                        } else {
                             reulstString = otherDataTextField.getText() + "-" + clickedButton.getText();
                         }
                         otherDataTextField.setText(reulstString);
@@ -667,6 +672,7 @@ public class AddProductToCalendarDay {
             JOptionPane.showMessageDialog(null, "NOTHING HAPPENED");
         }
     }
+
     private class GetProductFullInfoActionListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -678,7 +684,7 @@ public class AddProductToCalendarDay {
             }
             String productInfoInString = "";
             for (int i = 0; i < productInfoArray.length; i++) {
-                productInfoInString += "[" + i + "]: " + Config.SQL_COLUMNS_PRODUCT[i].replace("product_", "").replace("`","")
+                productInfoInString += "[" + i + "]: " + Config.SQL_COLUMNS_PRODUCT[i].replace("product_", "").replace("`", "")
                         + ":  " + productInfoArray[i] + "\n";
             }
             System.out.println(productInfoInString);
@@ -720,7 +726,7 @@ public class AddProductToCalendarDay {
                 productNameTextField.setText(suggestionFromComboBoxString);
             }
 
-            if (e.getKeyCode() == KeyEvent.VK_DOWN){
+            if (e.getKeyCode() == KeyEvent.VK_DOWN) {
                 isProductExist();
             }
         }
@@ -749,5 +755,103 @@ public class AddProductToCalendarDay {
         }
     }
 
+    private class AmountOfProductTextFieldKeyListener implements KeyListener {
+        @Override
+        public void keyTyped(KeyEvent e) {
 
+        }
+
+        @Override
+        public void keyPressed(KeyEvent e) {
+
+        }
+
+        @Override
+        public void keyReleased(KeyEvent e) {
+            if (e.getKeyCode() == KeyEvent.VK_CONTROL) {
+                acceptProduct();
+            }
+        }
+
+        private void acceptProduct() {
+            float amountOfProductInGrams = -1;
+            try {
+                amountOfProductInGrams = Float.valueOf(amountOfProductTextField.getText());
+            } catch (Exception ex) {
+                System.out.println("Error: Cannot parse data from amountOfProductTextField[String]->[Float]");
+            }
+
+            Product dayInCalendarProduct = getDayProductFromGUI();
+            Macro consumedMacro = calculateConsumedMacro(dayInCalendarProduct, amountOfProductInGrams);
+            DayInCalendar dayInCalendar = getDayInCalendarFromDataInGUI(dayInCalendarProduct, consumedMacro);
+
+            FilesTools.sendSQLQueryToTxtFile(dayInCalendar, addProductToDayDisplaySelectedFDateDayLabel.getText(), amountOfProductTextField.getText());
+
+            try {
+                InsertToCalendarDayTable.addRowToCalendarTable(dayInCalendar);
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            }
+
+            JOptionPane.showMessageDialog(null, "Product has been added. Date: " +
+                    addProductToDayDisplaySelectedFDateNameDayLabel.getText()
+                    + " \nDay name: " + addProductToDayDisplaySelectedFDateDayLabel.getText() +
+                    chosenCalendarTableLabel.getText());
+        }
+
+        public Product getDayProductFromGUI() {
+            Macro productMacro = new Macro(
+                    Float.valueOf(kcalTextField.getText()),
+                    Float.valueOf(proteinLTextField.getText()),
+                    Float.valueOf(fatTextField.getText()),
+                    Float.valueOf(carbsTextField.getText()));
+            Product dayInCalendarProduct = new Product(productNameTextField.getText(), "None",
+                    100, productMacro, -1, "");
+
+            return dayInCalendarProduct;
+        }
+
+        public DayInCalendar getDayInCalendarFromDataInGUI(Product productFromGUI, Macro consumedMacro) {
+            //TO DO
+            //<editor-fold desc="Getting direct from TextFields: Macro, day ">
+
+
+            String dayProductOptionalTime = timeOptionalTextField.getText();
+            String dayProductOptionalComment = commentOptionalTextField.getText();
+            float dayAmountOfProduct = Float.valueOf(amountOfProductTextField.getText());
+            String dayDateDayName = addProductToDayDisplaySelectedFDateNameDayLabel.getText();
+            String commentOptional = commentOptionalTextField.getText();
+            //</editor-fold>
+
+            //<editor-fold desc="Setting correct full date from West Panel Label">
+            // Set passing date to correct format
+
+            java.util.Date datePassedToSQL;
+            try {
+                datePassedToSQL = new SimpleDateFormat("yyyy-MM-dd").parse(addProductToDayDisplaySelectedFDateDayLabel.getText());
+            } catch (ParseException ex) {
+                throw new RuntimeException(ex);
+            }
+
+            //</editor-fold>
+
+
+            float kcalConsumeCalculated = Float.valueOf(kcalTextField.getText()) * (Float.valueOf(amountOfProductTextField.getText()) / (100.0f));
+
+            DayInCalendar dayInCalendar = new DayInCalendar(addProductToDayDisplaySelectedFDateDayLabel.getText(), dayDateDayName, dayMealNameComboBox.getSelectedItem().toString(),
+                    dayAmountOfProduct, productFromGUI, productFromGUI.getProductMacroForItsSetMeasure(), dayProductOptionalTime, dayProductOptionalComment, consumedMacro);
+
+            return dayInCalendar;
+        }
+
+        public Macro calculateConsumedMacro(Product productToCalculateConsumedMacro, float amountOfProductInGram) {
+            float amountOfProductToCalculate = amountOfProductInGram / 100;
+            Macro productMacro = productToCalculateConsumedMacro.getProductMacroForItsSetMeasure();
+
+            Macro cosumedMacro = new Macro(productMacro.getKcal() * amountOfProductToCalculate, productMacro.getProtein() * amountOfProductToCalculate,
+                    productMacro.getFat() * amountOfProductToCalculate, productMacro.getCarbs() * amountOfProductToCalculate);
+            return cosumedMacro;
+        }
+
+    }
 }
