@@ -6,13 +6,31 @@ import java.sql.SQLException;
 
 public class RunQuery {
     public static void runQuery(String SQLStatement) throws SQLException {
-        if (SQLStatement == null){
+        if (SQLStatement == null) {
             System.out.println("SQLStatement is null");
             return;
         }
 
-        Connection connection = GetConnection.getConnectionWithLocalHost();
-        PreparedStatement preparedStatement = connection.prepareStatement(SQLStatement);
-        preparedStatement.execute(SQLStatement);
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+
+        try {
+            connection = GetConnection.getConnectionWithLocalHost();
+            preparedStatement = connection.prepareStatement(SQLStatement);
+            preparedStatement.execute(SQLStatement);
+        } catch (SQLException e) {
+            System.out.println("SQL Exception in: RunQuery.runQuery()");
+        } finally {
+            if (preparedStatement != null) {
+                try {
+                    preparedStatement.close();
+                } catch (SQLException e) { /* Ignored */}
+            }
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException e) { /* Ignored */}
+            }
+        }
     }
 }
