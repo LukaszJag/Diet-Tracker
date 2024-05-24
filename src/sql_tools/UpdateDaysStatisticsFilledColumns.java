@@ -14,7 +14,7 @@ public class UpdateDaysStatisticsFilledColumns {
                 dayDate = dayDate + String.valueOf(i);
             }
 
-            RunQuery.runQueryOnCalendarTable(prepareQueryForUpdateAmountOfFilledPointsFromNotepad(dayDate));
+            RunQuery.runQuery(prepareQueryForUpdateAmountOfFilledPointsFromNotepad(dayDate));
             dayDate = "2024-05-";
         }
     }
@@ -39,7 +39,7 @@ public class UpdateDaysStatisticsFilledColumns {
                 dayDate = dayDate + String.valueOf(i);
             }
 
-            RunQuery.runQueryOnCalendarTable(prepareQueryForFillConsumedMacro(dayDate));
+            RunQuery.runQuery(prepareQueryForFillConsumedMacro(dayDate));
             dayDate = "2024-05-";
         }
     }
@@ -52,7 +52,6 @@ public class UpdateDaysStatisticsFilledColumns {
         + "fat_consume = (SELECT SUM(fat_consume) FROM calendar WHERE day_date = '" + day_date + "'),\n"
         + "carbs_consume = (SELECT SUM(carbs_consume) FROM calendar WHERE day_date = '" + day_date + "')\n"
         + "WHERE day_date = '" + day_date + "';";
-        System.out.println(query);
         return query;
     }
 }
