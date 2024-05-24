@@ -15,6 +15,8 @@ import java.sql.SQLException;
 import java.text.Format;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 public class AddProductToCalendarDay {
 
@@ -574,6 +576,10 @@ public class AddProductToCalendarDay {
                             otherThenCurrentDateButtonWindowFrame.dispose();
                         } else {
                             System.out.println("Change RIGHT DATE");
+                            Format format = new SimpleDateFormat("EEEE");
+                            java.util.Date utilDateImport = new GregorianCalendar(2024, Calendar, 11).getTime();;
+                            String dayNameCurrentDateOnStartWindow = format.format(utilDateImport);
+                            JOptionPane.showMessageDialog(null, utilDateImport.toString());
                             addProductToDayDisplaySelectedFDateDayLabel.setText(otherDataTextField.getText());
                             dialogWindowPanel.disable();
                             otherThenCurrentDateButtonWindowFrame.dispose();
