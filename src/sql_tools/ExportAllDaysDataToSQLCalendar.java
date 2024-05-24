@@ -29,7 +29,7 @@ public class ExportAllDaysDataToSQLCalendar {
                     if (fileName.substring(dotIndex).equals(".txt")) {
 
                         try {
-                            RunQuery.runQueryOnCalendarTable(FilesTools.readTXTFile(child.getPath()));
+                            RunQuery.runQuery(FilesTools.readTXTFile(child.getPath()));
                         } catch (SQLException e) {
                             throw new RuntimeException(e);
                         }

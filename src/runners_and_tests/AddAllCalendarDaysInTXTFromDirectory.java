@@ -50,7 +50,7 @@ public class AddAllCalendarDaysInTXTFromDirectory {
         String query;
         for (int i = 0; i <counterNotExistArray; i++) {
             query = FilesTools.readTXTFile(productThatNotExist[i]);
-            RunQuery.runQueryOnCalendarTable(query);
+            RunQuery.runQuery(query);
         }
 
         System.out.println("All rows amount: " + allFilesPath.length);

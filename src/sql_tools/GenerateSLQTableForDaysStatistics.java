@@ -94,16 +94,21 @@ public class GenerateSLQTableForDaysStatistics {
     public static void generateWholeMonthAndFillAmountOfPointsFromNotepadMAY(){
         String queryForExecute = "";
         String dateDay = "";
+        String pointInOneDay = "";
         for (int i = 1; i <= 31; i++) {
             dateDay = String.valueOf(i);
             if (dateDay.length() == 1){
                 dateDay = "0" + dateDay;
             }
+            pointInOneDay =  FilesTools.readAndGetLineTXTFile("src/data_store_and_backup/text_files/days_statistics_test/quick_fill_amount_of_point_in_notepad/may_2024", i);
             queryForExecute = "UPDATE `diet_tracker_schema`.`days_statistics_test`" +
             "SET "
-            + "`amount_of_points_from_notepad`= " + FilesTools.readAndGetLineTXTFile("src/data_store_and_backup/text_files/days_statistics_test/quick_fill_amount_of_point_in_notepad/may_2024", i)
+            + "`amount_of_points_from_notepad`= " + pointInOneDay
             + " WHERE day_date = '2024-05-" +dateDay +  "';";
-            System.out.println(queryForExecute);
+            if (pointInOneDay.equals("")){
+                return;
+            }
+
             try {
                 generateDaysStatisticsInTable(queryForExecute);
             } catch (SQLException e) {

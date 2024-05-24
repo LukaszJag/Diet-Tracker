@@ -7,6 +7,6 @@ public class SearchForKey {
         String tableName = "calendar_test";
         String productKey = "product_name";
         String sqlStatement = QueryMaker.makeSearchByOneKeySQLStatement(tableName, productKey, productValue, "String");
-        RunQuery.runQueryOnCalendarTable(sqlStatement);
+        RunQuery.runQuery(sqlStatement);
     }
 }

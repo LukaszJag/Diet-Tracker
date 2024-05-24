@@ -46,7 +46,7 @@ public class QuickTests {
         String[] fileInArray = FilesTools.convertFileToStringArray("src/data_store_and_backup/text_files/products/Burak.txt");
         String readyToInsertQuery = ImportDateFromTXTFilesToSQLDB.convertTextFileToSQLQuery(fileInArray);
         try {
-            RunQuery.runQueryOnCalendarTable(readyToInsertQuery);
+            RunQuery.runQuery(readyToInsertQuery);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

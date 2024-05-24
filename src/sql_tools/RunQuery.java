@@ -5,7 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class RunQuery {
-    public static void runQueryOnCalendarTable(String SQLStatement) throws SQLException {
+    public static void runQuery(String SQLStatement) throws SQLException {
         if (SQLStatement == null){
             System.out.println("SQLStatement is null");
             return;
