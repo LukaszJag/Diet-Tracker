@@ -1,0 +1,9 @@
+Name: Płatki - lion
+Brand: Nestle
+Package has: 0.0
+Macro for: 0.0
+KCal: 400.0
+Protein: 8.7
+Fat: 5.5
+Carbs: 76.1
+Comment optional: 

@@ -1,0 +1,9 @@
+Name: Sezamki classic
+Brand: Bonitki
+Package has: 81.0
+Macro for: 81.0
+KCal: 527.0
+Protein: 11.0
+Fat: 29.0
+Carbs: 53.0
+Comment optional: Jedno opakowanie 81g - ma 3 mniejsze opakowania po - 27g

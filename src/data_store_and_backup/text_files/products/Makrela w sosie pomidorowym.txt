@@ -1,0 +1,9 @@
+Name: Makrela w sosie pomidorowym
+Brand: Graal
+Package has: 300.0
+Macro for: 300.0
+KCal: 90.0
+Protein: 11.9
+Fat: 2.3
+Carbs: 5.5
+Comment optional: 

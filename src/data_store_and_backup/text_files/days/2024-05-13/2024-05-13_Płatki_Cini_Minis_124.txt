@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2024-05-13',
+'Friday',
+'Breakfast',
+124.0,
+'Płatki Cini Minis',
+412.0,
+4.9,
+9.9,
+75.9,
+'2024-05-24 11:52:23',
+'none',
+510.88,
+94.116005,
+12.276,
+6.076
+);
