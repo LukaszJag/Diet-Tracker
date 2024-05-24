@@ -7,7 +7,7 @@ import text_files_tools.FilesTools;
 import java.sql.SQLException;
 
 public class AddAllCalendarDaysInTXTFromDirectory {
-    public static void main(String[] args) throws SQLException {
+    public static void main() throws SQLException {
         String[] allFilesPath = getPathsOfFiles();
         // May cause Error : hard code length
         int arraysLength = 100;
@@ -57,6 +57,8 @@ public class AddAllCalendarDaysInTXTFromDirectory {
         System.out.println("Row that EXIST: " + amountOfExistRows);
         System.out.println("Row that NOT EXIST: " + amountOfNotExistRows);
     }
+
+
 
     public static String[] getPathsOfFiles() {
         int amountOfFiles = 0;

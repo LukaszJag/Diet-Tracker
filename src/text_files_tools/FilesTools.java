@@ -15,7 +15,7 @@ public class FilesTools {
 
     public static String[] convertFileToStringArray(String fileNameWithExtension) {
         // This int value may cause problem because max amount of lines in file is dynamic
-        int maxLinesInFile = 120;
+        int maxLinesInFile = 160;
         String[] fileByLinesInArray = new String[maxLinesInFile];
         int counter = 0;
         int indexOfColon;
@@ -307,7 +307,7 @@ public class FilesTools {
     public static String[] getFullAPathToAllTextFilesInDirectory(String pathToDirectory) {
         // It may cause error: hard code length to 100
 
-        String[] fullPathToFiles = new String[100];
+        String[] fullPathToFiles = new String[400];
         File dir = new File(pathToDirectory);
         File[] directoryListing = dir.listFiles();
         int counter = 0;
