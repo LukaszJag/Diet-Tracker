@@ -1,0 +1,1 @@
+SELECT DISTINCT day_date, day_name FROM calendar;
