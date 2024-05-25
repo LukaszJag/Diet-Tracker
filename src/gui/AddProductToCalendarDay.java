@@ -15,7 +15,6 @@ import java.sql.SQLException;
 import java.text.Format;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 public class AddProductToCalendarDay {
@@ -575,12 +574,7 @@ public class AddProductToCalendarDay {
                             dialogWindowPanel.disable();
                             otherThenCurrentDateButtonWindowFrame.dispose();
                         } else {
-                            System.out.println("Change RIGHT DATE");
-                            Format format = new SimpleDateFormat("EEEE");
-                            java.util.Date utilDateImport = new GregorianCalendar(2024, Calendar, 11).getTime();;
-                            String dayNameCurrentDateOnStartWindow = format.format(utilDateImport);
-                            JOptionPane.showMessageDialog(null, utilDateImport.toString());
-                            addProductToDayDisplaySelectedFDateDayLabel.setText(otherDataTextField.getText());
+                            changeDateOnCalendarWindowGUI();
                             dialogWindowPanel.disable();
                             otherThenCurrentDateButtonWindowFrame.dispose();
                         }
@@ -588,6 +582,28 @@ public class AddProductToCalendarDay {
                 }
             }
 
+            private void changeDateOnCalendarWindowGUI(){
+                Format format = new SimpleDateFormat("EEEE");
+
+                String otherThanCurrentDateString = otherDataTextField.getText();
+                String dayNameOtherDate = String.valueOf(otherThanCurrentDateString.charAt(8)) + String.valueOf(otherThanCurrentDateString.charAt(9));
+                otherThanCurrentDateString = String.valueOf(otherThanCurrentDateString.charAt(5)) + String.valueOf(otherThanCurrentDateString.charAt(6));
+
+                if (String.valueOf(dayNameOtherDate.charAt(0)).equals("0")){
+                    dayNameOtherDate = String.valueOf(dayNameOtherDate.charAt(1));
+                }
+                int dayNameOtherDateInt = Integer.valueOf(dayNameOtherDate);
+
+                if (String.valueOf(otherThanCurrentDateString.charAt(0)).equals("0")){
+                    otherThanCurrentDateString = String.valueOf(otherThanCurrentDateString.charAt(1));
+                }
+                int month = Integer.valueOf(otherThanCurrentDateString);
+
+                java.util.Date utilDateImport = new GregorianCalendar(2024, month-1, dayNameOtherDateInt).getTime();;
+                String dayNameCurrentDateOnStartWindow = format.format(utilDateImport);
+                addProductToDayDisplaySelectedFDateNameDayLabel.setText(dayNameCurrentDateOnStartWindow);
+                addProductToDayDisplaySelectedFDateDayLabel.setText(otherDataTextField.getText());
+            }
             private boolean checkIfDateIsCorrect() {
                 String dateToCheck = otherDataTextField.getText();
                 System.out.println(dateToCheck);
