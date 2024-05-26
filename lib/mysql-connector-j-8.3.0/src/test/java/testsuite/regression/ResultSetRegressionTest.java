@@ -797,7 +797,7 @@ public class ResultSetRegressionTest extends BaseTestCase {
 
     /**
      * Tests fix for BUG#5069 -- ResultSet.getMetaData() should not return incorrectly-initialized metadata if the result set has been closed, but should
-     * instead throw a SQLException. Also tests fix for getRow() and getWarnings() and traversal methods.
+     * instead throw a SQLException. Also runners_and_tests.tests fix for getRow() and getWarnings() and traversal methods.
      *
      * @throws Exception
      */
@@ -6050,8 +6050,8 @@ public class ResultSetRegressionTest extends BaseTestCase {
      * needed because the synchronization in UpdatableResultSet was dated.
      * This test makes sure there is no regression.
      *
-     * WARNING! If this test fails there is no guarantee that the JVM will remain stable and won't affect any other tests. It is imperative that this test
-     * passes to ensure other tests results.
+     * WARNING! If this test fails there is no guarantee that the JVM will remain stable and won't affect any other runners_and_tests.tests. It is imperative that this test
+     * passes to ensure other runners_and_tests.tests results.
      *
      * @throws Exception
      */

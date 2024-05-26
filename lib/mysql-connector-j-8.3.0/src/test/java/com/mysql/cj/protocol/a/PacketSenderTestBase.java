@@ -34,7 +34,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import com.mysql.cj.protocol.MessageSender;
 
 /**
- * Common functionality for packet sender tests.
+ * Common functionality for packet sender runners_and_tests.tests.
  */
 public class PacketSenderTestBase {
 

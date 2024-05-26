@@ -69,7 +69,7 @@ import com.mysql.cj.util.StringUtils;
 import testsuite.BaseTestCase;
 
 /**
- * Regression tests for syntax
+ * Regression runners_and_tests.tests for syntax
  */
 public class SyntaxRegressionTest extends BaseTestCase {
 

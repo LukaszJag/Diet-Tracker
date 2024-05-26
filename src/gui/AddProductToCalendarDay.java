@@ -1,12 +1,12 @@
 package gui;
 
-import calendar_tools.DayInCalendar;
+import tools.calendar_tools.DayInCalendar;
 import configuration.Config;
-import products_tools.Macro;
-import products_tools.Product;
-import sql_tools.InsertToCalendarDayTable;
-import sql_tools.SQLSelect;
-import text_files_tools.FilesTools;
+import tools.products_tools.Macro;
+import tools.products_tools.Product;
+import tools.sql_tools.calendar.InsertToCalendarDayTable;
+import tools.sql_tools.SQLSelect;
+import tools.text_files_tools.FilesTools;
 
 import javax.swing.*;
 import java.awt.*;

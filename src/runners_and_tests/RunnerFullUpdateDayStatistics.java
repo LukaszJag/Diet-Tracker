@@ -1,7 +1,7 @@
 package runners_and_tests;
 
-import sql_tools.GenerateSLQTableForDaysStatistics;
-import sql_tools.UpdateDaysStatisticsFilledColumns;
+import tools.sql_tools.days_statistics.GenerateSLQTableForDaysStatistics;
+import tools.sql_tools.days_statistics.UpdateDaysStatisticsFilledColumns;
 
 import java.sql.SQLException;
 

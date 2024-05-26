@@ -60,13 +60,13 @@ import com.mysql.cj.xdevapi.SqlResult;
 import testsuite.TestUtils;
 
 /**
- * Base class for tests of X DevAPI and X Protocol client internal components.
+ * Base class for runners_and_tests.tests of X DevAPI and X Protocol client internal components.
  */
 public class InternalXBaseTestCase {
 
     /**
      * The default character set used to interpret metadata. Use <i>latin1</i> - MySQL's default. This value is provided by higher layers above the protocol so
-     * we avoid issues by using only ASCII characters for metadata in these tests.
+     * we avoid issues by using only ASCII characters for metadata in these runners_and_tests.tests.
      */
     protected static final String DEFAULT_METADATA_CHARSET = "latin1";
 

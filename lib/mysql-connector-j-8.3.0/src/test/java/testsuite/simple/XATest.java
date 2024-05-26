@@ -57,7 +57,7 @@ import com.mysql.cj.jdbc.MysqlXid;
 import testsuite.BaseTestCase;
 
 /**
- * Unit tests for our XA implementation.
+ * Unit runners_and_tests.tests for our XA implementation.
  */
 public class XATest extends BaseTestCase {
 

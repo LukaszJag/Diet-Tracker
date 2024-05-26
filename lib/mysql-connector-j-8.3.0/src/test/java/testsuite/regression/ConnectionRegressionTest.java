@@ -219,7 +219,7 @@ import testsuite.BufferingLogger;
 import testsuite.UnreliableSocketFactory;
 
 /**
- * Regression tests for Connections
+ * Regression runners_and_tests.tests for Connections
  */
 public class ConnectionRegressionTest extends BaseTestCase {
 
@@ -5502,7 +5502,7 @@ public class ConnectionRegressionTest extends BaseTestCase {
     }
 
     /**
-     * Internal method for tests to get a replication connection with a
+     * Internal method for runners_and_tests.tests to get a replication connection with a
      * single source host to the test URL.
      *
      * @param sourceHost
@@ -7273,8 +7273,8 @@ public class ConnectionRegressionTest extends BaseTestCase {
      * {@code singleSynchWorkerMonitor} in the {@link TestBug21934573ExceptionInterceptor} the same way as in {@code ErrorReportingExceptionInterceptor}. The
      * way to reproduce it and observe the deadlock happening is by setting the connection property {@code __useReplConnGroupLocks__} to {@code False}.
      *
-     * WARNING! If this test fails there is no guarantee that the JVM will remain stable and won't affect any other tests. It is imperative that this test
-     * passes to ensure other tests results.
+     * WARNING! If this test fails there is no guarantee that the JVM will remain stable and won't affect any other runners_and_tests.tests. It is imperative that this test
+     * passes to ensure other runners_and_tests.tests results.
      *
      * @throws Exception
      */
@@ -11341,7 +11341,7 @@ public class ConnectionRegressionTest extends BaseTestCase {
     @Test
     public void testBug102188() throws Exception {
         /*
-         * Remove the provider 'MySQLScramShaSasl' that may have been loaded by other tests.
+         * Remove the provider 'MySQLScramShaSasl' that may have been loaded by other runners_and_tests.tests.
          */
         Security.removeProvider("MySQLScramShaSasl");
 

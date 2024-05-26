@@ -188,7 +188,7 @@ public class XProtocolTest extends InternalXBaseTestCase {
     }
 
     /**
-     * This tests that all types are decoded correctly. We retrieve them all as strings which happens after the decoding step. This is an exhaustive types of
+     * This runners_and_tests.tests that all types are decoded correctly. We retrieve them all as strings which happens after the decoding step. This is an exhaustive types of
      * type decoding and metadata from the server.
      */
     @Test
@@ -286,7 +286,7 @@ public class XProtocolTest extends InternalXBaseTestCase {
                 assertEquals("9223372036854775808", row.getValue(0, new StringValueFactory(this.protocol.getPropertySet())));
             });
 
-            // runner for above tests
+            // runner for above runners_and_tests.tests
             for (Map.Entry<String, BiConsumer<ColumnDefinition, Row>> t : tests.entrySet()) {
                 this.protocol.send(this.messageBuilder.buildSqlStatement("select " + t.getKey()), 0);
                 assertTrue(this.protocol.hasResults());

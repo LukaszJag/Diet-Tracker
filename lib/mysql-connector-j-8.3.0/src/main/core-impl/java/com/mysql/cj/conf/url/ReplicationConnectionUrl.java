@@ -94,7 +94,7 @@ public class ReplicationConnectionUrl extends ConnectionUrl {
         }
 
         // TODO: Validate the hosts list: there can't be any two hosts with same host:port.
-        // Although this should be required, it also is incompatible with our current tests which are creating replication connections
+        // Although this should be required, it also is incompatible with our current runners_and_tests.tests which are creating replication connections
         // using the same host configurations.
         //        Set<String> visitedHosts = new HashSet<>();
         //        for (List<HostInfo> hostsLists : Arrays.asList(this.sourceHosts, this.replicaHosts)) {

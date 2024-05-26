@@ -114,6 +114,6 @@ public class BindTest extends BaseCollectionTestCase {
         assertEquals(1, this.collection.find("x = :x and y = :y").bind("y", 2).bind("x", 1).execute().count());
     }
 
-    // TODO: more tests with unnamed (x = ?) and different bind value types
-    // TODO: more tests find & modify
+    // TODO: more runners_and_tests.tests with unnamed (x = ?) and different bind value types
+    // TODO: more runners_and_tests.tests find & modify
 }

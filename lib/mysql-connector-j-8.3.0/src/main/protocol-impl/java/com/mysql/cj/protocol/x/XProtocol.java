@@ -619,7 +619,7 @@ public class XProtocol extends AbstractProtocol<XMessage> implements Protocol<XM
     }
 
     /**
-     * Used only in tests
+     * Used only in runners_and_tests.tests
      *
      * @return true if there are result rows
      */
@@ -632,7 +632,7 @@ public class XProtocol extends AbstractProtocol<XMessage> implements Protocol<XM
     }
 
     /**
-     * Used only in tests
+     * Used only in runners_and_tests.tests
      */
     public void drainRows() {
         try {

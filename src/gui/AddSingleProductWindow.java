@@ -2,10 +2,10 @@ package gui;
 
 import configuration.Config;
 import logs.Log;
-import sql_tools.InsertProductToSQL_Table;
-import products_tools.Macro;
-import products_tools.Product;
-import text_files_tools.FilesTools;
+import tools.sql_tools.products.InsertProductToSQL_Table;
+import tools.products_tools.Macro;
+import tools.products_tools.Product;
+import tools.text_files_tools.FilesTools;
 
 import javax.swing.*;
 import java.awt.*;

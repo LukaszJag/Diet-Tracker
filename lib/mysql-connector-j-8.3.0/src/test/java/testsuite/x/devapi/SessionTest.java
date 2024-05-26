@@ -338,7 +338,7 @@ public class SessionTest extends DevApiBaseTestCase {
      */
     @Test
     public void errorOnPacketTooBig() {
-        System.gc(); // to free the memory from previous tests artifacts
+        System.gc(); // to free the memory from previous runners_and_tests.tests artifacts
         SqlStatement stmt = this.session.sql("select @@mysqlx_max_allowed_packet");
         SqlResult res = stmt.execute();
         Row r = res.next();

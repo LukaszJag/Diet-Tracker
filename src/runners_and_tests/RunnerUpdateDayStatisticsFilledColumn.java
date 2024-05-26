@@ -1,6 +1,6 @@
 package runners_and_tests;
 
-import sql_tools.UpdateDaysStatisticsFilledColumns;
+import tools.sql_tools.days_statistics.UpdateDaysStatisticsFilledColumns;
 
 import java.sql.SQLException;
 

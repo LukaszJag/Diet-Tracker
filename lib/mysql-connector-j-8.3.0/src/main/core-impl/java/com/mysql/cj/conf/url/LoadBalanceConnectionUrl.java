@@ -57,7 +57,7 @@ public class LoadBalanceConnectionUrl extends ConnectionUrl {
         this.type = Type.LOADBALANCE_CONNECTION;
 
         // TODO: Validate the hosts list: there can't be any two hosts with same host:port.
-        // Although this should be required, it also is incompatible with our current tests which are creating load-balanced connections
+        // Although this should be required, it also is incompatible with our current runners_and_tests.tests which are creating load-balanced connections
         // using the same host configurations.
         //        Set<String> visitedHosts = new HashSet<>();
         //        for (HostInfo hi : this.hosts) {

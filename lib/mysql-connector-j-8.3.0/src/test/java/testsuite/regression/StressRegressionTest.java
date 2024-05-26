@@ -313,8 +313,8 @@ public class StressRegressionTest extends BaseTestCase {
      * This test exploits a non-deterministic situation that can end in a deadlock. It executes two concurrent jobs for 10 seconds while stressing the referred
      * methods. The deadlock was observed before 3 seconds have elapsed, all times, in development environment.
      *
-     * WARNING! If this test fails there is no guarantee that the JVM will remain stable and won't affect any other tests. It is imperative that this test
-     * passes to ensure other tests results.
+     * WARNING! If this test fails there is no guarantee that the JVM will remain stable and won't affect any other runners_and_tests.tests. It is imperative that this test
+     * passes to ensure other runners_and_tests.tests results.
      *
      * @throws Exception
      */

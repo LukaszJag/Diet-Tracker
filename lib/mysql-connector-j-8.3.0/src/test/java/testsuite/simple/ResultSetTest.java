@@ -272,7 +272,7 @@ public class ResultSetTest extends BaseTestCase {
     }
 
     /**
-     * Date and time retrieval tests with and without ssps.
+     * Date and time retrieval runners_and_tests.tests with and without ssps.
      *
      * @throws Exception
      */

@@ -295,7 +295,7 @@ Version 8.0.26
 
   - WL#14559, Deprecate TLS 1.0 and 1.1.
 
-  - WL#14391, Migrate QA tests to main repo.
+  - WL#14391, Migrate QA runners_and_tests.tests to main repo.
 
 Version 8.0.25
 
@@ -435,7 +435,7 @@ Version 8.0.19
 
   - WL#12736, DevAPI: Specify TLS ciphers to be used by a client or session.
 
-  - Fix for regression tests broken by Bug#97079 fix.
+  - Fix for regression runners_and_tests.tests broken by Bug#97079 fix.
 
   - Fix for Bug#96383 (30119545) RS.GETTIMESTAMP() HAS DIFFERENT RESULTS FOR TIME FIELDS WITH USECURSORFETCH=TRUE.
 
@@ -515,7 +515,7 @@ Version 8.0.16
 
   - WL#12246, DevAPI: Prepared statement support.
 
-  - WL#10839, Adjust c/J tests to the new "ON" default for explicit_defaults_for_timestamp.
+  - WL#10839, Adjust c/J runners_and_tests.tests to the new "ON" default for explicit_defaults_for_timestamp.
 
   - Fix for Bug#29329326, PLEASE AVOID SHOW PROCESSLIST IF POSSIBLE.
 
@@ -1093,7 +1093,7 @@ Version 6.0.6
 
   - Update DatabaseMetaData SQL keywords.
 
-  - Added tests for Optimizer hints syntax introduced in MySQL 5.7.7.
+  - Added runners_and_tests.tests for Optimizer hints syntax introduced in MySQL 5.7.7.
 
   - Fix for Bug#21860833, JSON DATA TYPE DOESN'T WORK WITH SSPS.
     Added support for JSON data type.
@@ -1230,7 +1230,7 @@ Version 6.0.6
     TimeZone mappings were revised in order to use latest data from IANA Time Zone Database and Unicode CLDR.
 
   - Fix for Bug73163 (19171665), IndexOutOfBoundsException thrown preparing statement.
-    Regression test added. Fix was included in patch from 5.1.32: "Fix for failing tests when running test suite with Java 6+".
+    Regression test added. Fix was included in patch from 5.1.32: "Fix for failing runners_and_tests.tests when running test suite with Java 6+".
 
   - Added support for gb18030 character set
 
@@ -1272,7 +1272,7 @@ Version 6.0.6
 
   - Fix for Bug#18852682, TEST TESTSHA256PASSWORDPLUGIN FAILS WHEN EXECUTE AGAINST COMMERCIAL SERVER
 
-  - Fix for failing tests when running test suite with Java 6+.
+  - Fix for failing runners_and_tests.tests when running test suite with Java 6+.
     Includes fix for Bug#35829 (11748301), build.xml check for java6 should use or instead of and.
 
   - Charset mappings refactored.
@@ -1292,7 +1292,7 @@ Version 6.0.6
 
   - Fix for Bug#71753 (18260918), Bad SSL socket transform.
 
-  - Added tests for changes in GET DIAGNOSTIC syntax introduced in MySQL 5.7.0.
+  - Added runners_and_tests.tests for changes in GET DIAGNOSTIC syntax introduced in MySQL 5.7.0.
 
   - Fix for Bug#67803 (16708231), XA commands sent twice to MySQL server.
     Thanks to Andrej Golovnin for his contribution.
@@ -1358,7 +1358,7 @@ Version 6.0.6
     Please be aware that these changed the previous default behavior and if you use custom charsets or collations
     you need to set detectCustomCollations=true.
 
-  - Added tests for new index renaming syntax introduced in 5.7.1.
+  - Added runners_and_tests.tests for new index renaming syntax introduced in 5.7.1.
 
 12-23-13 - Version 5.1.28
 
@@ -1395,11 +1395,11 @@ Version 6.0.6
 
   - Fix for Bug#69452 (17015673), memory size connection property doesn't support large values well.
 
-  - Added tests for InnoDB full-text search support introduced in 5.6GA.
+  - Added runners_and_tests.tests for InnoDB full-text search support introduced in 5.6GA.
 
   - Extended slow query warning with query execution plan for INSERT, REPLACE, UPDATE and DELETE.
 
-  - Added tests for IPv6 functions introduced in 5.6GA.
+  - Added runners_and_tests.tests for IPv6 functions introduced in 5.6GA.
 
   - Added support of authentication data up to 2^64-1 bytes.
 
@@ -1429,7 +1429,7 @@ Version 6.0.6
 
   - Removed ant-contrib.jar from C/J distribution.
 
-  - Added tests for GIS precise spatial operations introduced in 5.6GA.
+  - Added runners_and_tests.tests for GIS precise spatial operations introduced in 5.6GA.
 
   - Fixed META-INF information
 
@@ -1542,20 +1542,20 @@ Version 6.0.6
           <listener-class>user.package.YourThreadsListener</listener-class>
        </listener>
 
-  - Added tests for explicit partition selection syntax introduced in 5.6GA.
+  - Added runners_and_tests.tests for explicit partition selection syntax introduced in 5.6GA.
 
   - Added support of password expiration protocol. This introduces new boolean connection property disconnectOnExpiredPasswords.
     If disconnectOnExpiredPasswords = true and password expired then connection will be rejected by server with ErrorCode == 1820 (ER_MUST_CHANGE_PASSWORD).
     If disconnectOnExpiredPasswords = false then connection will enter to "sandbox" mode,
     all commands except SET PASSWORD = ... and SET PASSWORD FOR CURRRENT_USER() = ... will cause an error to be thrown.
 
-  - Added tests for EXCHANGE PARTITION syntax introduced in 5.6GA.
+  - Added runners_and_tests.tests for EXCHANGE PARTITION syntax introduced in 5.6GA.
 
-  - Added tests for transportable tablespaces syntax introduced in 5.6GA.
+  - Added runners_and_tests.tests for transportable tablespaces syntax introduced in 5.6GA.
 
-  - Added tests for CREATE TABLE syntax changed in 5.6GA: CREATE TABLE ... DATA DIRECTORY = 'absolute/path/to/directory/'
+  - Added runners_and_tests.tests for CREATE TABLE syntax changed in 5.6GA: CREATE TABLE ... DATA DIRECTORY = 'absolute/path/to/directory/'
 
-  - Added tests for ALTER TABLE syntax changed in 5.6GA: ALGORITHM and LOCK keywords.
+  - Added runners_and_tests.tests for ALTER TABLE syntax changed in 5.6GA: ALGORITHM and LOCK keywords.
 
   - Fix for Bug#67954, stack trace used for point-of-origin in log and exception messages
     causes permgen leak with webapp classloader on application redeploy. We no longer store the entire
@@ -1656,7 +1656,7 @@ Version 6.0.6
 
   - Fix for Bug#13960556, java.lang.StringIndexOutOfBoundsException in com.mysql.jdbc.PreparedStatement.formatNanos(int nanos).
 
-  - Fix for pluggable authentication tests to run on Windows.
+  - Fix for pluggable authentication runners_and_tests.tests to run on Windows.
 
   - Fix for Bug#13897714, NPE in testsuite.regression.StatementRegressionTest.testBug1933() with 5.6.5_m8 server.
 
@@ -1733,7 +1733,7 @@ Version 6.0.6
   - Added function MYSQL_INDEX_TO_MYSQL_CHARSET to retrieve server charset name
     using index instead of parsing variables to CharsetMapping.java.
 
-  - Completed fix for Bug#61201/12649557, fixed tests failures.
+  - Completed fix for Bug#61201/12649557, fixed runners_and_tests.tests failures.
 
   - Fix for Bug#61201/12649557, Can't establish connection when url has
     sessionVariables and characterEncoding. Fix covers only MySQL server 4.1+
@@ -1826,7 +1826,7 @@ Version 6.0.6
 12-06-10 - Version 5.1.14
 
    - Fix for Bug#58728, NPE in com.mysql.jdbc.jdbc2.optional.StatementWrappe.getResultSet()
-     if rs is null. Regression test case added to Statement regression tests.
+     if rs is null. Regression test case added to Statement regression runners_and_tests.tests.
 
    - Fix for Bug#58751, DatabaseMetadata.getIndexInfo() CARDINALITY now clamped
      to Integer.MAX_VALUE.
@@ -1851,13 +1851,13 @@ Version 6.0.6
 
    - Fix for Bug#58232 - CallableStatement fails to fetch OUT parameter against 5.5 server
 
-   - Testsuite.regression.Connection, tests for BUG#45419 refined by Todd so not to cause failures.
+   - Testsuite.regression.Connection, runners_and_tests.tests for BUG#45419 refined by Todd so not to cause failures.
 
-   - Testsuite.regression.CallableStatement, tests for BUG#26959 failing against 5.5+ server.
+   - Testsuite.regression.CallableStatement, runners_and_tests.tests for BUG#26959 failing against 5.5+ server.
 
    - Bringing testsuite.regression.CachedRowsetTest up to date.
 
-   - Bringing BLOBregression tests up to date.
+   - Bringing BLOBregression runners_and_tests.tests up to date.
 
    - Fix for Bug#58042 - Statements test failure not handled.
 
@@ -2176,7 +2176,7 @@ Version 6.0.6
       it has found. If a list of hosts is passed to the driver, "HOST" and "PORT" will be set to the
       values given by "HOST.1" and "PORT.1" respectively. This change has centralized and cleaned up a large
       swath of code used to generate lists of hosts, both for load-balanced and fault tolerant connections and
-      their tests.
+      their runners_and_tests.tests.
 
     - Fixed the ResultSet side of BUG#23584 - Calendar discared when retrieving dates from server-side prepared
       statements. The other cases of this bug were fixed when "useLegacyDatetimeCode=false" became the default.
@@ -3487,7 +3487,7 @@ nn-nn-07 - Version 5.0.9
       parameter metadata to avoid class not found issues on JDK-1.3 for
       ParameterMetadata interface (which doesn't exist prior to JDBC-3.0).
 
-    - Added unit tests for XADatasource, as well as friendlier exceptions
+    - Added unit runners_and_tests.tests for XADatasource, as well as friendlier exceptions
       for XA failures compared to the "stock" XAException (which has no
       messages).
 
@@ -4282,7 +4282,7 @@ nn-nn-07 - Version 3.1.15
 	- Added a Manifest.MF file with implementation information to the .jar
 	  file.
 
-	- More tests in Field.isOpaqueBinary() to distinguish opaque binary (i.e.
+	- More runners_and_tests.tests in Field.isOpaqueBinary() to distinguish opaque binary (i.e.
 	  fields with type CHAR(n) and CHARACTER SET BINARY) from output of
 	  various scalar and aggregate functions that return strings.
 
@@ -4758,7 +4758,7 @@ nn-nn-07 - Version 3.1.15
       ServerPreparedStatement.setTimestamp(), setDate().
 
     - Added ability to have multiple database/JVM targets for compliance
-      and regression/unit tests in build.xml.
+      and regression/unit runners_and_tests.tests in build.xml.
 
     - Fixed NPE and year/month bad conversions when accessing some
       datetime functionality in ServerPreparedStatements and their
@@ -5076,7 +5076,7 @@ nn-nn-07 - Version 3.1.15
     - Added encoding names that are recognized on some JVMs to fix case
       where they were reverse-mapped to MySQL encoding names incorrectly.
 
-    - Use junit.textui.TestRunner for all unit tests (to allow them to be
+    - Use junit.textui.TestRunner for all unit runners_and_tests.tests (to allow them to be
       run from the command line outside of Ant or Eclipse).
 
     - Fixed BUG#3557 - UpdatableResultSet not picking up default values
@@ -5416,7 +5416,7 @@ nn-nn-07 - Version 3.1.15
     - Fixed Statement.setMaxRows() to stop sending 'LIMIT' type queries
       when not needed (performance)
 
-    - Clean up Statement query/method mismatch tests (i.e. INSERT not
+    - Clean up Statement query/method mismatch runners_and_tests.tests (i.e. INSERT not
       allowed with .executeQuery()).
 
     - More checks added in ResultSet traversal method to catch
@@ -5683,7 +5683,7 @@ nn-nn-07 - Version 3.1.15
     - Support for large packets (new addition to MySQL-4.0 protocol),
       see README for more information.
 
-    - JDBC Compliance -- Passes all tests besides stored procedure tests
+    - JDBC Compliance -- Passes all runners_and_tests.tests besides stored procedure runners_and_tests.tests
 
 
     - Fix and sort primary key names in DBMetaData (SF bugs 582086 and 582086)

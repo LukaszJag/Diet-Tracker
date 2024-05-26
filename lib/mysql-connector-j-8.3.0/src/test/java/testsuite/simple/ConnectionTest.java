@@ -912,7 +912,7 @@ public class ConnectionTest extends BaseTestCase {
 
         BufferedOutputStream bOut = new BufferedOutputStream(new FileOutputStream(testBlobFile));
 
-        // generate a random sequence of letters. this ensures that no escaped characters cause packet sizes that interfere with bounds tests
+        // generate a random sequence of letters. this ensures that no escaped characters cause packet sizes that interfere with bounds runners_and_tests.tests
         Random random = new Random();
         for (int i = 0; i < requiredSize; i++) {
             bOut.write((byte) (65 + random.nextInt(26)));
@@ -988,7 +988,7 @@ public class ConnectionTest extends BaseTestCase {
             t.start();
         }
 
-        // Wait for tests to complete....
+        // Wait for runners_and_tests.tests to complete....
         synchronized (counter) {
 
             while (counter.workerCount > 0 /* safety valve */) {
@@ -1057,7 +1057,7 @@ public class ConnectionTest extends BaseTestCase {
 
                     break;
                 } catch (SQLException sqlEx) {
-                    // ignore, we're only seeing if one of these tests succeeds
+                    // ignore, we're only seeing if one of these runners_and_tests.tests succeeds
                 }
             }
 

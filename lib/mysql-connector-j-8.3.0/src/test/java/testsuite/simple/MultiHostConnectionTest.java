@@ -434,7 +434,7 @@ public class MultiHostConnectionTest extends BaseTestCase {
     }
 
     /**
-     * Repeatedly tests a failover connection using three hosts and the following sequence of events, combining distinct failover event triggering:
+     * Repeatedly runners_and_tests.tests a failover connection using three hosts and the following sequence of events, combining distinct failover event triggering:
      * - [/HOST_1 : /HOST_2 : /HOST_3] --> HOST_1
      * - [\HOST_1 : /HOST_2 : /HOST_3] --> HOST_2
      * - [\HOST_1 : \HOST_2 : /HOST_3] --> HOST_3

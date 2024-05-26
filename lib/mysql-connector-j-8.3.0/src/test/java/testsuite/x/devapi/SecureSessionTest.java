@@ -1011,7 +1011,7 @@ public class SecureSessionTest extends DevApiBaseTestCase {
         assertTlsVersion(testSession, "TLSv1.2");
         testSession.close();
 
-        // TS.FR.1_5. Repeat the tests TS.FR.1_1 and TS.FR.1_2 using a ClientFactory instead of a SessionFactory.
+        // TS.FR.1_5. Repeat the runners_and_tests.tests TS.FR.1_1 and TS.FR.1_2 using a ClientFactory instead of a SessionFactory.
         //
         // UPD: Behaviour was changed by WL#14805.
         assertThrows(SSLParamsException.class, "TLS protocols TLSv1 and TLSv1.1 are not supported. Accepted values are TLSv1.2 and TLSv1.3.", () -> {
@@ -1155,7 +1155,7 @@ public class SecureSessionTest extends DevApiBaseTestCase {
                     return null;
                 });
 
-        // TS.FR.4_9. Repeat the tests TS.FR.4_1 to TS.FR.4_4 using a ClientFactory instead of a SessionFactory.
+        // TS.FR.4_9. Repeat the runners_and_tests.tests TS.FR.4_1 to TS.FR.4_4 using a ClientFactory instead of a SessionFactory.
         cli = cf.getClient(this.sslFreeBaseUrl + makeParam(PropertyKey.xdevapiTlsCiphersuites, testCipher), "{\"pooling\": {\"enabled\": true}}");
         testSession = cli.getSession();
         assertSessionStatusEquals(testSession, "mysqlx_ssl_cipher", expectedCipher);
@@ -1240,7 +1240,7 @@ public class SecureSessionTest extends DevApiBaseTestCase {
         assertSessionStatusEquals(testSession, "mysqlx_ssl_cipher", expectedCipher);
         testSession.close();
 
-        // TS.FR.5_7. Repeat the tests TS.FR.5_1 to TS.FR.5_3 using a ClientFactory instead of a SessionFactory.
+        // TS.FR.5_7. Repeat the runners_and_tests.tests TS.FR.5_1 to TS.FR.5_3 using a ClientFactory instead of a SessionFactory.
         cli = cf.getClient(this.sslFreeBaseUrl, "{\"pooling\": {\"enabled\": true}}");
         testSession = cli.getSession();
         assertSecureSession(testSession);
@@ -1322,7 +1322,7 @@ public class SecureSessionTest extends DevApiBaseTestCase {
         assertNonSecureSession(testSession);
         testSession.close();
 
-        // TS.FR.6_7. Repeat the tests TS.FR.6_1 to TS.FR.6_3 using a ClientFactory instead of a SessionFactory.
+        // TS.FR.6_7. Repeat the runners_and_tests.tests TS.FR.6_1 to TS.FR.6_3 using a ClientFactory instead of a SessionFactory.
         //
         // UPD: Behaviour was changed by WL#14835.
         cli = cf.getClient(this.sslFreeBaseUrl + xdevapiSSLMode + makeParam(PropertyKey.xdevapiTlsVersions, testTlsVersion),
@@ -1974,7 +1974,7 @@ public class SecureSessionTest extends DevApiBaseTestCase {
                 + makeParam(PropertyKey.xdevapiFallbackToSystemKeyStore, "false"));
         assertNonSecureSession(testSess);
         testSess.close();
-        // FR.1c.1 Repeat the FR.1b.* tests using the corresponding JDBC/global options in fallback mode. Assess the same results.
+        // FR.1c.1 Repeat the FR.1b.* runners_and_tests.tests using the corresponding JDBC/global options in fallback mode. Assess the same results.
         testSess = this.fact
                 .getSession(this.sslFreeBaseUrl + makeParam(PropertyKey.sslMode, SslMode.DISABLED) + makeParam(PropertyKey.fallbackToSystemKeyStore, "false"));
         assertNonSecureSession(testSess);
@@ -1986,7 +1986,7 @@ public class SecureSessionTest extends DevApiBaseTestCase {
                 + makeParam(PropertyKey.xdevapiFallbackToSystemTrustStore, "false"));
         assertNonSecureSession(testSess);
         testSess.close();
-        // FR.1c.1 Repeat the FR.1b.* tests using the corresponding JDBC/global options in fallback mode. Assess the same results.
+        // FR.1c.1 Repeat the FR.1b.* runners_and_tests.tests using the corresponding JDBC/global options in fallback mode. Assess the same results.
         testSess = this.fact.getSession(
                 this.sslFreeBaseUrl + makeParam(PropertyKey.sslMode, SslMode.DISABLED) + makeParam(PropertyKey.fallbackToSystemTrustStore, "false"));
         assertNonSecureSession(testSess);
@@ -1998,7 +1998,7 @@ public class SecureSessionTest extends DevApiBaseTestCase {
                 this.sslFreeBaseUrl + makeParam(PropertyKey.xdevapiSslMode, SslMode.DISABLED) + makeParam(PropertyKey.xdevapiSslKeyStoreUrl, "foo"));
         assertNonSecureSession(testSess);
         testSess.close();
-        // FR.1c.1 Repeat the FR.1b.* tests using the corresponding JDBC/global options in fallback mode. Assess the same results.
+        // FR.1c.1 Repeat the FR.1b.* runners_and_tests.tests using the corresponding JDBC/global options in fallback mode. Assess the same results.
         testSess = this.fact.getSession(
                 this.sslFreeBaseUrl + makeParam(PropertyKey.sslMode, SslMode.DISABLED) + makeParam(PropertyKey.clientCertificateKeyStoreUrl, "foo"));
         assertNonSecureSession(testSess);
@@ -2010,7 +2010,7 @@ public class SecureSessionTest extends DevApiBaseTestCase {
                 this.sslFreeBaseUrl + makeParam(PropertyKey.xdevapiSslMode, SslMode.DISABLED) + makeParam(PropertyKey.xdevapiSslKeyStorePassword, "foo"));
         assertNonSecureSession(testSess);
         testSess.close();
-        // FR.1c.1 Repeat the FR.1b.* tests using the corresponding JDBC/global options in fallback mode. Assess the same results.
+        // FR.1c.1 Repeat the FR.1b.* runners_and_tests.tests using the corresponding JDBC/global options in fallback mode. Assess the same results.
         testSess = this.fact.getSession(
                 this.sslFreeBaseUrl + makeParam(PropertyKey.sslMode, SslMode.DISABLED) + makeParam(PropertyKey.clientCertificateKeyStorePassword, "foo"));
         assertNonSecureSession(testSess);
@@ -2022,7 +2022,7 @@ public class SecureSessionTest extends DevApiBaseTestCase {
                 this.sslFreeBaseUrl + makeParam(PropertyKey.xdevapiSslMode, SslMode.DISABLED) + makeParam(PropertyKey.xdevapiSslKeyStoreType, "foo"));
         assertNonSecureSession(testSess);
         testSess.close();
-        // FR.1c.1 Repeat the FR.1b.* tests using the corresponding JDBC/global options in fallback mode. Assess the same results.
+        // FR.1c.1 Repeat the FR.1b.* runners_and_tests.tests using the corresponding JDBC/global options in fallback mode. Assess the same results.
         testSess = this.fact.getSession(
                 this.sslFreeBaseUrl + makeParam(PropertyKey.sslMode, SslMode.DISABLED) + makeParam(PropertyKey.clientCertificateKeyStoreType, "foo"));
         assertNonSecureSession(testSess);
@@ -2034,7 +2034,7 @@ public class SecureSessionTest extends DevApiBaseTestCase {
                 this.sslFreeBaseUrl + makeParam(PropertyKey.xdevapiSslMode, SslMode.DISABLED) + makeParam(PropertyKey.xdevapiSslTrustStoreUrl, "foo"));
         assertNonSecureSession(testSess);
         testSess.close();
-        // FR.1c.1 Repeat the FR.1b.* tests using the corresponding JDBC/global options in fallback mode. Assess the same results.
+        // FR.1c.1 Repeat the FR.1b.* runners_and_tests.tests using the corresponding JDBC/global options in fallback mode. Assess the same results.
         testSess = this.fact
                 .getSession(this.sslFreeBaseUrl + makeParam(PropertyKey.sslMode, SslMode.DISABLED) + makeParam(PropertyKey.trustCertificateKeyStoreUrl, "foo"));
         assertNonSecureSession(testSess);
@@ -2046,7 +2046,7 @@ public class SecureSessionTest extends DevApiBaseTestCase {
                 this.sslFreeBaseUrl + makeParam(PropertyKey.xdevapiSslMode, SslMode.DISABLED) + makeParam(PropertyKey.xdevapiSslTrustStorePassword, "foo"));
         assertNonSecureSession(testSess);
         testSess.close();
-        // FR.1c.1 Repeat the FR.1b.* tests using the corresponding JDBC/global options in fallback mode. Assess the same results.
+        // FR.1c.1 Repeat the FR.1b.* runners_and_tests.tests using the corresponding JDBC/global options in fallback mode. Assess the same results.
         testSess = this.fact.getSession(
                 this.sslFreeBaseUrl + makeParam(PropertyKey.sslMode, SslMode.DISABLED) + makeParam(PropertyKey.trustCertificateKeyStorePassword, "foo"));
         assertNonSecureSession(testSess);
@@ -2058,7 +2058,7 @@ public class SecureSessionTest extends DevApiBaseTestCase {
                 this.sslFreeBaseUrl + makeParam(PropertyKey.xdevapiSslMode, SslMode.DISABLED) + makeParam(PropertyKey.xdevapiSslTrustStoreType, "foo"));
         assertNonSecureSession(testSess);
         testSess.close();
-        // FR.1c.1 Repeat the FR.1b.* tests using the corresponding JDBC/global options in fallback mode. Assess the same results.
+        // FR.1c.1 Repeat the FR.1b.* runners_and_tests.tests using the corresponding JDBC/global options in fallback mode. Assess the same results.
         testSess = this.fact.getSession(
                 this.sslFreeBaseUrl + makeParam(PropertyKey.sslMode, SslMode.DISABLED) + makeParam(PropertyKey.trustCertificateKeyStoreType, "foo"));
         assertNonSecureSession(testSess);
@@ -2070,7 +2070,7 @@ public class SecureSessionTest extends DevApiBaseTestCase {
                 this.sslFreeBaseUrl + makeParam(PropertyKey.xdevapiSslMode, SslMode.DISABLED) + makeParam(PropertyKey.xdevapiTlsCiphersuites, "foo"));
         assertNonSecureSession(testSess);
         testSess.close();
-        // FR.1c.1 Repeat the FR.1b.* tests using the corresponding JDBC/global options in fallback mode. Assess the same results.
+        // FR.1c.1 Repeat the FR.1b.* runners_and_tests.tests using the corresponding JDBC/global options in fallback mode. Assess the same results.
         testSess = this.fact.getSession(this.sslFreeBaseUrl + makeParam(PropertyKey.sslMode, SslMode.DISABLED) + makeParam(PropertyKey.tlsCiphersuites, "foo"));
         assertNonSecureSession(testSess);
         testSess.close();
@@ -2081,7 +2081,7 @@ public class SecureSessionTest extends DevApiBaseTestCase {
                 .getSession(this.sslFreeBaseUrl + makeParam(PropertyKey.xdevapiSslMode, SslMode.DISABLED) + makeParam(PropertyKey.xdevapiTlsVersions, "foo"));
         assertNonSecureSession(testSess);
         testSess.close();
-        // FR.1c.1 Repeat the FR.1b.* tests using the corresponding JDBC/global options in fallback mode. Assess the same results.
+        // FR.1c.1 Repeat the FR.1b.* runners_and_tests.tests using the corresponding JDBC/global options in fallback mode. Assess the same results.
         testSess = this.fact.getSession(this.sslFreeBaseUrl + makeParam(PropertyKey.sslMode, SslMode.DISABLED) + makeParam(PropertyKey.tlsVersions, "foo"));
         assertNonSecureSession(testSess);
         testSess.close();

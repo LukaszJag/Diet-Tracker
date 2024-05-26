@@ -30,7 +30,7 @@
 package com.mysql.cj;
 
 /**
- * Exposes protected {@link CharsetMapping} methods for use in tests.
+ * Exposes protected {@link CharsetMapping} methods for use in runners_and_tests.tests.
  */
 public class CharsetMappingWrapper {
 

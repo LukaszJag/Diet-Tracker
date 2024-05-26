@@ -520,7 +520,7 @@ public class ConnectionUrlParser implements DatabaseUrlContainer {
 
     /**
      * Takes a two-matching-groups (respectively named "key" and "value") pattern which is successively tested against the given string and produces a key/value
-     * map with the matched values. The given pattern must ensure that there are no leftovers between successive tests, i.e., the end of the previous match must
+     * map with the matched values. The given pattern must ensure that there are no leftovers between successive runners_and_tests.tests, i.e., the end of the previous match must
      * coincide with the beginning of the next.
      *
      * @param pattern

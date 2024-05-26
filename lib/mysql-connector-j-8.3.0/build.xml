@@ -45,7 +45,7 @@ Testing MySQL Connector/J
 
 MySQL Connector/J 8.3 ships with an extensive test suite that can be run by providing a MySQL JDBC URL in the variable 'com.mysql.cj.testsuite.url' and by
 running the target "test". If nothing else is set, the test suite runs with the JVM referred in the variable 'com.mysql.cj.build.jdk'.
-Alternatively, all tests can be run with a distinct JVM, provided that it is pointed out in the variable 'com.mysql.cj.testsuite.jvm'.
+Alternatively, all runners_and_tests.tests can be run with a distinct JVM, provided that it is pointed out in the variable 'com.mysql.cj.testsuite.jvm'.
 Running only one test set is possible by setting the variable 'com.mysql.cj.testsuite.test.class' with the class' fully qualified name. If also a comma
 separated list of test names is provided in the variable 'com.mysql.cj.testsuite.test.methods', then only those will be executed.
 
@@ -58,7 +58,7 @@ Coverage and instrumentation
 This file ships with target "test-coverage" for collecting coverage results and "report-coverage" for creating the HTML coverage report.
 The JaCoCo library needed to run these targets can be found at https://github.com/jacoco/jacoco, its JARs should be placed into
 ${com.mysql.cj.extra.libs}/jacoco directory.
-The "test-coverage" target enables tests execution-time JaCoCo instrumentation, runs tests collecting coverage info into a result file
+The "test-coverage" target enables runners_and_tests.tests execution-time JaCoCo instrumentation, runs runners_and_tests.tests collecting coverage info into a result file
 which path is set as ${com.mysql.cj.coverage.result.dir}/${com.mysql.cj.coverage.result.name}.
 The "report-coverage" target first merges coverage result files which are placed in 'com.mysql.cj.coverage.result.dir' directory and
 their comma-delimited names are passed via 'com.mysql.cj.coverage.merge.files' property. Merge result file path is passed
@@ -99,9 +99,9 @@ com.mysql.cj.extra.libs=&lt;full_path_to_connector-j-jardeps&gt;
 # - Mandatory.
 com.mysql.cj.build.jdk=&lt;full_path_to_jdk1.8&gt;
 
-# Single JVM/MySQL tests:
+# Single JVM/MySQL runners_and_tests.tests:
 # - Must point to JDK or JRE home directory.
-# - If not provided, JDBC tests are run with 'com.mysql.cj.build.jdk'.
+# - If not provided, JDBC runners_and_tests.tests are run with 'com.mysql.cj.build.jdk'.
 # - Optional.
 com.mysql.cj.testsuite.jvm=&lt;full_path_to_a_jdk_or_jre&gt;
 # - URL to the test database.
@@ -179,7 +179,7 @@ com.mysql.cj.testsuite.url - connection string to the test server: [${com.mysql.
 com.mysql.cj.testsuite.mysqlx.url - connection string to the test server with X Plugin: [${com.mysql.cj.testsuite.mysqlx.url}]
 com.mysql.cj.testsuite.test.class - test class name to run: [${com.mysql.cj.testsuite.test.class}]
 com.mysql.cj.testsuite.test.methods - a comma separated list of test names existing in the class specified in 'com.mysql.cj.testsuite.test.class': [${com.mysql.cj.testsuite.test.methods}]
-com.mysql.cj.testsuite.unavailable.host - a host:port pair used for tests checking socket connection timeout: [${com.mysql.cj.testsuite.unavailable.host}]
+com.mysql.cj.testsuite.unavailable.host - a host:port pair used for runners_and_tests.tests checking socket connection timeout: [${com.mysql.cj.testsuite.unavailable.host}]
 com.mysql.cj.testsuite.build.dir - root directory for building the test suite: [${com.mysql.cj.testsuite.build.dir}]
 com.mysql.cj.testsuite.junit.results - where to put JUnit reports: [${com.mysql.cj.testsuite.junit.results}]
 
@@ -380,7 +380,7 @@ See also com.mysql.cj.conf.PropertyDefinitions.SYSP_* variables for other test o
     </target>
 
 
-    <!-- Check specified JVM for running tests. -->
+    <!-- Check specified JVM for running runners_and_tests.tests. -->
     <target name="-testsuite-jvm-check">
         <property name="com.mysql.cj.testsuite.jvm.java" value="${com.mysql.cj.testsuite.jvm}/bin/java" />
 
@@ -1265,9 +1265,9 @@ See also com.mysql.cj.conf.PropertyDefinitions.SYSP_* variables for other test o
     </target>
 
 
-    <!-- Run the full test suite, single test set or named tests against one JVM and one server config. -->
+    <!-- Run the full test suite, single test set or named runners_and_tests.tests against one JVM and one server config. -->
     <target name="test"
-            description="Runs the full test suite, single test set (variable 'com.mysql.cj.testsuite.test.class') or named tests (variables 'com.mysql.cj.testsuite.test.class' and 'com.mysql.cj.testsuite.test.methods') against one JVM and one server config."
+            description="Runs the full test suite, single test set (variable 'com.mysql.cj.testsuite.test.class') or named runners_and_tests.tests (variables 'com.mysql.cj.testsuite.test.class' and 'com.mysql.cj.testsuite.test.methods') against one JVM and one server config."
             depends="build, -testsuite-jvm-check, -compile-testsuite, -init-custom-xslt">
 
         <mkdir dir="${com.mysql.cj.testsuite.junit.results}/report" />
@@ -1310,7 +1310,7 @@ See also com.mysql.cj.conf.PropertyDefinitions.SYSP_* variables for other test o
 
         <local name="com.mysql.cj.testsuite.run.message" />
         <condition property="com.mysql.cj.testsuite.run.message"
-                   value="Running JDBC unit tests against '${com.mysql.cj.testsuite.url}' with jvm '${com.mysql.cj.testsuite.jvm.java}'">
+                   value="Running JDBC unit runners_and_tests.tests against '${com.mysql.cj.testsuite.url}' with jvm '${com.mysql.cj.testsuite.jvm.java}'">
             <istrue value="${com.mysql.cj.testsuite.run.all}" />
         </condition>
         <condition property="com.mysql.cj.testsuite.run.message"

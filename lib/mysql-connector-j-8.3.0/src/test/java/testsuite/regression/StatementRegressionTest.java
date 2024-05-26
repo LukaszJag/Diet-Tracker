@@ -166,7 +166,7 @@ import testsuite.UnreliableSocketFactory;
 import testsuite.simple.StatementsTest;
 
 /**
- * Regression tests for the Statement class
+ * Regression runners_and_tests.tests for the Statement class
  */
 public class StatementRegressionTest extends BaseTestCase {
 
@@ -1982,7 +1982,7 @@ public class StatementRegressionTest extends BaseTestCase {
         try {
             createGGKTables();
 
-            // Do the tests
+            // Do the runners_and_tests.tests
             for (int i = 0; i < tests.length; i++) {
                 doGGKTestStatement(tests[i], true);
             }
@@ -1998,7 +1998,7 @@ public class StatementRegressionTest extends BaseTestCase {
         try {
             createGGKTables();
 
-            // Do the tests
+            // Do the runners_and_tests.tests
             for (int i = 0; i < tests.length; i++) {
                 doGGKTestStatement(tests[i], false);
             }
@@ -2014,7 +2014,7 @@ public class StatementRegressionTest extends BaseTestCase {
         try {
             createGGKTables();
 
-            // Do the tests
+            // Do the runners_and_tests.tests
             for (int i = 0; i < tests.length; i++) {
                 doGGKTestPreparedStatement(tests[i], true);
             }
@@ -2030,7 +2030,7 @@ public class StatementRegressionTest extends BaseTestCase {
         try {
             createGGKTables();
 
-            // Do the tests
+            // Do the runners_and_tests.tests
             for (int i = 0; i < tests.length; i++) {
                 doGGKTestPreparedStatement(tests[i], false);
             }
@@ -6780,7 +6780,7 @@ public class StatementRegressionTest extends BaseTestCase {
     }
 
     /**
-     * Executes a set of queries using a Statement (newly created) and tests if the results count is the expected.
+     * Executes a set of queries using a Statement (newly created) and runners_and_tests.tests if the results count is the expected.
      *
      * @param testConn
      * @param queries
@@ -6795,7 +6795,7 @@ public class StatementRegressionTest extends BaseTestCase {
     }
 
     /**
-     * Executes a set of queries using a Statement and tests if the results count is the expected.
+     * Executes a set of queries using a Statement and runners_and_tests.tests if the results count is the expected.
      *
      * @param testStmt
      * @param queries
@@ -6810,7 +6810,7 @@ public class StatementRegressionTest extends BaseTestCase {
     }
 
     /**
-     * Executes one query using a Statement and tests if the results count is the expected.
+     * Executes one query using a Statement and runners_and_tests.tests if the results count is the expected.
      *
      * @param testStmt
      * @param query
@@ -6866,7 +6866,7 @@ public class StatementRegressionTest extends BaseTestCase {
     }
 
     /**
-     * Executes a set of queries using newly created PreparedStatements and tests if the results count is the expected.
+     * Executes a set of queries using newly created PreparedStatements and runners_and_tests.tests if the results count is the expected.
      *
      * @param testConn
      * @param queries
@@ -6881,7 +6881,7 @@ public class StatementRegressionTest extends BaseTestCase {
     }
 
     /**
-     * Executes a set of queries using the given PreparedStatements and tests if the results count is the expected.
+     * Executes a set of queries using the given PreparedStatements and runners_and_tests.tests if the results count is the expected.
      *
      * @param testPStmt
      * @param queries
@@ -6896,7 +6896,7 @@ public class StatementRegressionTest extends BaseTestCase {
     }
 
     /**
-     * Executes one query using a newly created PreparedStatement, setting its maxRows limit, and tests if the results count is the expected.
+     * Executes one query using a newly created PreparedStatement, setting its maxRows limit, and runners_and_tests.tests if the results count is the expected.
      *
      * @param testConn
      * @param query
@@ -6916,7 +6916,7 @@ public class StatementRegressionTest extends BaseTestCase {
     }
 
     /**
-     * Executes one query using a PreparedStatement and tests if the results count is the expected.
+     * Executes one query using a PreparedStatement and runners_and_tests.tests if the results count is the expected.
      *
      * @param testPStmt
      * @param query
@@ -6940,7 +6940,7 @@ public class StatementRegressionTest extends BaseTestCase {
 
     /**
      * Executes a query containing the clause LIMIT with a Statement and a PreparedStatement, using a combination of Connection properties, maxRows value and
-     * limit clause value, and tests if the results count is the expected.
+     * limit clause value, and runners_and_tests.tests if the results count is the expected.
      *
      * @param connProps
      * @param maxRows
@@ -9387,7 +9387,7 @@ public class StatementRegressionTest extends BaseTestCase {
      * When using 'rewriteBatchedStatements=true' we rewrite several batched statements into one single query by extending its VALUES clause. Although INSERT
      * REPLACE have the same syntax, this wasn't happening for REPLACE statements.
      *
-     * This tests the number of queries actually sent to server when rewriteBatchedStatements is used and not by using a QueryInterceptor. The test is
+     * This runners_and_tests.tests the number of queries actually sent to server when rewriteBatchedStatements is used and not by using a QueryInterceptor. The test is
      * repeated for server side prepared statements. Without the fix, this test fails while checking the number of expected REPLACE queries.
      *
      * @throws Exception
@@ -13161,7 +13161,7 @@ public class StatementRegressionTest extends BaseTestCase {
     /**
      * Tests fix for Bug#77368 (Bug#21321849), "LOAD DATA LOCAL INFILE" doesn't work properly with relative paths.
      *
-     * Testing this would require changing the value of "user.dir" which could cause other tests to fail. As such, only basic testing to verify that the default
+     * Testing this would require changing the value of "user.dir" which could cause other runners_and_tests.tests to fail. As such, only basic testing to verify that the default
      * relative paths work fine is done here.
      *
      * @throws Exception
