@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2024-05-22',
+'Wednesday',
+'Supper',
+207.0,
+'Płatki Mlekołaki kółka miodowe',
+395.0,
+9.9,
+4.5,
+76.0,
+'2024-05-26 10:11:27',
+'none',
+817.64996,
+157.31999,
+9.315,
+20.492998
+);
