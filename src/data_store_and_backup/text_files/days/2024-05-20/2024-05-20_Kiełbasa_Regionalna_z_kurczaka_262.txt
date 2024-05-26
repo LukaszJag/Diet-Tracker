@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2024-05-20',
+'Monday',
+'None',
+262.0,
+'Kiełbasa Regionalna z kurczaka',
+239.0,
+10.3,
+20.1,
+1.24,
+'2024-05-26 01:53:45',
+'none',
+626.18,
+3.2487998,
+52.662,
+26.986
+);

@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2024-05-21',
+'Tuesday',
+'Supper',
+110.0,
+'7 Days Double czekolada i kokos',
+452.0,
+6.0,
+28.0,
+43.0,
+'2024-05-26 02:29:58',
+'none',
+497.2,
+47.3,
+30.800001,
+6.6000004
+);

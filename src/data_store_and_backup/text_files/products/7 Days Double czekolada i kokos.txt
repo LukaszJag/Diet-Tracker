@@ -1,0 +1,9 @@
+Name: 7 Days Double czekolada i kokos
+Brand: 7 Days
+Package has: 110.0
+Macro for: 110.0
+KCal: 452.0
+Protein: 6.0
+Fat: 28.0
+Carbs: 43.0
+Comment optional: 

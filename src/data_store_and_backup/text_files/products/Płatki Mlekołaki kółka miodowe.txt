@@ -1,0 +1,9 @@
+Name: Płatki Mlekołaki kółka miodowe
+Brand: Lubella
+Package has: 0.0
+Macro for: 0.0
+KCal: 395.0
+Protein: 9.9
+Fat: 4.5
+Carbs: 76.0
+Comment optional: 
