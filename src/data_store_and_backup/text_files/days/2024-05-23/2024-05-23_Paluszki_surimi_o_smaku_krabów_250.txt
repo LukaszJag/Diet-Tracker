@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2024-05-23',
+'Thursday',
+'Breakfast',
+250.0,
+'Paluszki surimi o smaku krabów',
+122.0,
+6.0,
+3.7,
+16.2,
+'2024-05-28 10:25:53',
+'1 opk.',
+305.0,
+40.5,
+9.25,
+15.0
+);

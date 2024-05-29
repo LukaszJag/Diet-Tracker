@@ -1,0 +1,9 @@
+Name: Serek Almette z chrzanem
+Brand: Hochland
+Package has: 150.0
+Macro for: 150.0
+KCal: 250.0
+Protein: 6.8
+Fat: 23.0
+Carbs: 4.0
+Comment optional: 

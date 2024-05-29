@@ -1,0 +1,9 @@
+Name: Sałata
+Brand: 
+Package has: 0.0
+Macro for: 0.0
+KCal: 13.0
+Protein: 1.4
+Fat: 0.2
+Carbs: 1.1
+Comment optional: 

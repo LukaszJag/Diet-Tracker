@@ -1,0 +1,9 @@
+Name: Choco Kulki
+Brand: Lubella
+Package has: 0.0
+Macro for: 0.0
+KCal: 377.0
+Protein: 9.0
+Fat: 4.5
+Carbs: 71.0
+Comment optional: 

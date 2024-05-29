@@ -1,0 +1,9 @@
+Name: Makaron z mięsem mielonym
+Brand: 
+Package has: 0.0
+Macro for: 0.0
+KCal: 134.61
+Protein: 11.13
+Fat: 3.81
+Carbs: 13.08
+Comment optional: Przepis od xetnom - potrawa traktowana jako wyrób domowy

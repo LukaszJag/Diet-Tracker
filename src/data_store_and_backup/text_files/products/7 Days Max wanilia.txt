@@ -1,0 +1,9 @@
+Name: 7 Days Max wanilia
+Brand: 7 Days
+Package has: 110.0
+Macro for: 110.0
+KCal: 447.0
+Protein: 6.0
+Fat: 28.0
+Carbs: 42.0
+Comment optional: 

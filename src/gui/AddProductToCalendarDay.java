@@ -755,7 +755,7 @@ public class AddProductToCalendarDay {
 
         public String[] searchAllProductWith(String wordToSearch) {
             String[] allProductArray;
-            String[] resultArray = new String[100];
+            String[] resultArray = new String[200];
 
             try {
                 allProductArray = SQLSelect.getAllProductNamesFromProductTable();

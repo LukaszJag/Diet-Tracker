@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2024-05-25',
+'Saturday',
+'Breakfast',
+400.0,
+'Zott Monte Mega Deser z Czekolada i Orzechami Laskowymi',
+183.0,
+2.6,
+12.2,
+15.5,
+'2024-05-29 11:42:15',
+'none',
+732.0,
+62.0,
+48.8,
+10.4
+);

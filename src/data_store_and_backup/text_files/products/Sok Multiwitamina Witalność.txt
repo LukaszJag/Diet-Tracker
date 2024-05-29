@@ -1,0 +1,9 @@
+Name: Sok Multiwitamina Witalność
+Brand: Dr. Witt
+Package has: 1000.0
+Macro for: 1000.0
+KCal: 20.0
+Protein: 0.0
+Fat: 0.0
+Carbs: 4.9
+Comment optional: 

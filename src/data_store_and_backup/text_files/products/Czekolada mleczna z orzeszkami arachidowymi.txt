@@ -1,0 +1,9 @@
+Name: Czekolada mleczna z orzeszkami arachidowymi
+Brand: Allegro
+Package has: 100.0
+Macro for: 100.0
+KCal: 527.0
+Protein: 9.1
+Fat: 33.0
+Carbs: 47.0
+Comment optional: 

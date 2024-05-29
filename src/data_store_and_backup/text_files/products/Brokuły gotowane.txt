@@ -1,0 +1,9 @@
+Name: Brokuły gotowane
+Brand: 
+Package has: 0.0
+Macro for: 0.0
+KCal: 24.0
+Protein: 2.7
+Fat: 0.4
+Carbs: 2.4
+Comment optional: 

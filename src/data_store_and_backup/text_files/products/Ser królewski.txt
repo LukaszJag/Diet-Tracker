@@ -1,0 +1,9 @@
+Name: Ser królewski
+Brand: Sierpc
+Package has: 0.0
+Macro for: 0.0
+KCal: 352.0
+Protein: 26.0
+Fat: 27.0
+Carbs: 1.2
+Comment optional: 

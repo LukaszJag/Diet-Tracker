@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2024-05-24',
+'Friday',
+'Breakfast',
+702.0,
+'Napój jabłko-mięta',
+41.0,
+0.1,
+0.1,
+9.8,
+'2024-05-28 10:45:11',
+'none',
+287.82,
+68.796,
+0.702,
+0.702
+);

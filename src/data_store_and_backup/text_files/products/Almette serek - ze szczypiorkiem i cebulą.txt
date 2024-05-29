@@ -1,0 +1,9 @@
+Name: Almette serek - ze szczypiorkiem i cebulą
+Brand: Hochalnd
+Package has: 150.0
+Macro for: 150.0
+KCal: 242.0
+Protein: 7.0
+Fat: 22.0
+Carbs: 4.0
+Comment optional: 

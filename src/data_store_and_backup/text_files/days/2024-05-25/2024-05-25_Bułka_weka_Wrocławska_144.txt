@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2024-05-25',
+'Saturday',
+'Breakfast',
+144.0,
+'Bułka weka Wrocławska',
+254.0,
+8.8,
+1.1,
+51.0,
+'2024-05-29 11:43:17',
+'none',
+365.76,
+73.44,
+1.5840001,
+12.672001
+);

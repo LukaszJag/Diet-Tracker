@@ -1,0 +1,9 @@
+Name: Mleko truskawkowe Mullermilch
+Brand: Muller
+Package has: 400.0
+Macro for: 400.0
+KCal: 73.0
+Protein: 3.5
+Fat: 0.9
+Carbs: 11.6
+Comment optional: 

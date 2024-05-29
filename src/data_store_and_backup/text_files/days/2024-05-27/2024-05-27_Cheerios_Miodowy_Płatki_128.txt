@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2024-05-27',
+'Monday',
+'Supper',
+128.0,
+'Cheerios Miodowy Płatki',
+373.0,
+8.7,
+3.5,
+71.9,
+'2024-05-29 05:54:32',
+'none',
+477.44,
+92.032,
+4.48,
+11.136
+);
