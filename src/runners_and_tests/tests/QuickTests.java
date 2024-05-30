@@ -35,7 +35,8 @@ public class QuickTests {
         //test16();
         //test17();
         //test18();
-        test19();
+        //test19();
+        test20();
     }
 
     //<editor-fold desc="TESTS 1 -> 10">
@@ -226,6 +227,14 @@ public class QuickTests {
     private static void test19() {
         for (int i = 0; i < 31; i++) {
             System.out.println(FilesTools.readAndGetLineTXTFile("src/data_store_and_backup/text_files/days_statistics_test/quick_fill_amount_of_point_in_notepad/may_2024",i));
+        }
+    }
+
+
+    private static void test20() throws SQLException {
+        String [] table = SQLSelectDay.getAllRowFromDay(20,05,2024);
+        for (int i = 0; i < table.length; i++) {
+            System.out.println(i + ": " + table[i]);
         }
     }
 }

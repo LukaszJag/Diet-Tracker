@@ -21,6 +21,10 @@ public class CheckIfRowExist {
 
         int result = resultSet.getInt("bool");
 
+        // Close unnecessary connections
+        connection.close();
+        resultSet.close();
+
         if (result == 1) {
             return true;
         }else{
@@ -45,6 +49,10 @@ public class CheckIfRowExist {
         resultSet.next();
 
         int result = resultSet.getInt("bool");
+
+        // Close unnecessary connections
+        connection.close();
+        resultSet.close();
 
         if (result >= 1) {
             return true;
