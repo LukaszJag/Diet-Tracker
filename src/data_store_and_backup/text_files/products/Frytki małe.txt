@@ -1,0 +1,9 @@
+Name: Frytki małe
+Brand: Burger King
+Package has: 74.0
+Macro for: 74.0
+KCal: 200.5
+Protein: 3.5
+Fat: 9.7
+Carbs: 25.0
+Comment optional: 

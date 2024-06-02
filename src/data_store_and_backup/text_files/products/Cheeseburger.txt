@@ -1,0 +1,9 @@
+Name: Cheeseburger
+Brand: Burger King
+Package has: 152.0
+Macro for: 152.0
+KCal: 407.0
+Protein: 24.0
+Fat: 21.0
+Carbs: 31.0
+Comment optional: 

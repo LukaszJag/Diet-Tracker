@@ -61,3 +61,9 @@
 1:-:null:-:|-Brokuły gotowane-|--|:-:Wed May 29 17:42:54 CEST 2024:-:
 1:-:null:-:|-Choco Kulki-|-Lubella-|:-:Wed May 29 17:56:02 CEST 2024:-:
 1:-:null:-:|-Serek Almette z chrzanem-|-Hochland-|:-:Wed May 29 17:56:51 CEST 2024:-:
+1:-:null:-:|-Almette z pomidorami -|-Hochland-|:-:Sat Jun 01 11:03:57 CEST 2024:-:
+1:-:null:-:|-Frytki małe-|-Burger King-|:-:Sat Jun 01 11:18:56 CEST 2024:-:
+1:-:null:-:|-Chicken Burger-|-Burger King-|:-:Sat Jun 01 11:20:09 CEST 2024:-:
+1:-:null:-:|-Cheeseburger-|-Burger King-|:-:Sat Jun 01 11:21:55 CEST 2024:-:
+1:-:null:-:|-Ser Salami-|-Światowd-|:-:Sun Jun 02 10:33:30 CEST 2024:-:
+1:-:null:-:|-Ryba po grecku-|-Seko-|:-:Sun Jun 02 10:37:24 CEST 2024:-:
