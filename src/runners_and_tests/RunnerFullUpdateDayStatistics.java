@@ -7,7 +7,25 @@ import java.sql.SQLException;
 
 public class RunnerFullUpdateDayStatistics {
     public static void main(String[] args) throws SQLException {
-        System.out.println("Start: full update - table days_statistics_test");
+        updateDaysStatisticsMay();
+        updateDaysStatisticsJune();
+    }
+
+    private static void updateDaysStatisticsJune() throws SQLException {
+        System.out.println("Start: full update - table days_statistics_test June");
+
+        GenerateSLQTableForDaysStatistics.generateWholeMonthAndFillAmountOfPointsFromNotepadJUNE();
+        System.out.println("generateWholeMonthAndFillAmountOfPointsFromNotepadJune : PASS");
+
+        UpdateDaysStatisticsFilledColumns.updateWholeMonthJune();
+        System.out.println("updateWholeMonthJune : PASS");
+
+        UpdateDaysStatisticsFilledColumns.updateWholeMonthMacroSumJune();
+        System.out.println("updateWholeMonthMacroSumJune : PASS");
+    }
+
+    private static void updateDaysStatisticsMay() throws SQLException {
+        System.out.println("Start: full update - table days_statistics_test - May");
 
         GenerateSLQTableForDaysStatistics.generateWholeMonthAndFillAmountOfPointsFromNotepadMAY();
         System.out.println("generateWholeMonthAndFillAmountOfPointsFromNotepadMAY : PASS");

@@ -1,1 +1,1 @@
-DELETE FROM days_statistics_test WHERE day_date='2001-01-20';
+DELETE FROM days_statistics_test WHERE day_date LIKE '2024-05-%' AND amount_of_points_from_notepad = 0;
