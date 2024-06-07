@@ -1,0 +1,9 @@
+Name: Skyr waniliowy
+Brand: Piątnica
+Package has: 450.0
+Macro for: 450.0
+KCal: 82.0
+Protein: 9.6
+Fat: 0.0
+Carbs: 11.0
+Comment optional: 

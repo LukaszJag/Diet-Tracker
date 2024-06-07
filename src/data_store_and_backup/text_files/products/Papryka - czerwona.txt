@@ -1,0 +1,9 @@
+Name: Papryka - czerwona
+Brand: 
+Package has: 0.0
+Macro for: 0.0
+KCal: 32.0
+Protein: 1.74
+Fat: 0.44
+Carbs: 4.06
+Comment optional: 

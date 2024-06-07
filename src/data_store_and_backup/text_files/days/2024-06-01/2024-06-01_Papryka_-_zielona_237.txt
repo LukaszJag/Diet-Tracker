@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2024-06-01',
+'Saturday',
+'Breakfast',
+237.0,
+'Papryka - zielona',
+18.0,
+1.1,
+0.3,
+4.6,
+'2024-06-06 11:18:59',
+'none',
+42.659996,
+10.901999,
+0.71099997,
+2.6069999
+);

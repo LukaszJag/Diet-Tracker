@@ -1,0 +1,9 @@
+Name: Sos boloński domowy
+Brand: 
+Package has: 0.0
+Macro for: 0.0
+KCal: 57.63
+Protein: 7.99
+Fat: 1.47
+Carbs: 3.1
+Comment optional: 

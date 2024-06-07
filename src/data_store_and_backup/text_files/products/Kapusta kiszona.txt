@@ -1,0 +1,9 @@
+Name: Kapusta kiszona
+Brand: 
+Package has: 0.0
+Macro for: 0.0
+KCal: 20.0
+Protein: 0.9
+Fat: 0.14
+Carbs: 1.4
+Comment optional: 

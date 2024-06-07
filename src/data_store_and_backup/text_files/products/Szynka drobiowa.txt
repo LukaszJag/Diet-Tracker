@@ -1,0 +1,9 @@
+Name: Szynka drobiowa
+Brand: 
+Package has: 0.0
+Macro for: 0.0
+KCal: 479.0
+Protein: 19.0
+Fat: 1.9
+Carbs: 4.9
+Comment optional: Ogólny produkt bazujący na firmie - Tarczyński

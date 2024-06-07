@@ -1,0 +1,9 @@
+Name: Kisiel truskawka kiwi
+Brand: Dr. Oetker
+Package has: 32.0
+Macro for: 32.0
+KCal: 60.0
+Protein: 0.1
+Fat: 0.0
+Carbs: 15.0
+Comment optional: Opakowanie pozwala na 1 porcje = 205g

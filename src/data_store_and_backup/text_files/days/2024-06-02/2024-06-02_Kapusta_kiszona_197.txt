@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2024-06-02',
+'Sunday',
+'Dinner',
+197.0,
+'Kapusta kiszona',
+20.0,
+0.9,
+0.14,
+1.4,
+'2024-06-06 11:55:58',
+'none',
+39.4,
+2.758,
+0.27580002,
+1.773
+);
