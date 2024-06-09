@@ -1,0 +1,9 @@
+Name: Zapiekanka z pieczarkami i serem mozzarella
+Brand: Carrefour Classic
+Package has: 236.0
+Macro for: 236.0
+KCal: 227.0
+Protein: 11.0
+Fat: 5.9
+Carbs: 31.0
+Comment optional: 

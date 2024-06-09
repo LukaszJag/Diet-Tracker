@@ -1,0 +1,9 @@
+Name: Zapiekanka z szynką
+Brand: Carrefour Classic
+Package has: 256.0
+Macro for: 256.0
+KCal: 215.0
+Protein: 11.0
+Fat: 5.9
+Carbs: 28.0
+Comment optional: 
