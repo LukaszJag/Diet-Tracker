@@ -13,7 +13,7 @@ public class CheckIfRowExist {
 
         String sqlStatement = "SELECT COUNT(product_name) AS bool\n" +
                 "FROM product_table\n" +
-                "WHERE product_name = '" + productName  + "';";
+                "WHERE product_name = '" + productName + "';";
 
         statement = connection.createStatement();
         resultSet = statement.executeQuery(sqlStatement);
@@ -27,7 +27,7 @@ public class CheckIfRowExist {
 
         if (result == 1) {
             return true;
-        }else{
+        } else {
             return false;
         }
     }
@@ -39,10 +39,10 @@ public class CheckIfRowExist {
         PreparedStatement preparedStatement;
 
         String sqlStatement = "SELECT COUNT(product_name) AS bool\n" +
-        "FROM calendar\n" +
-        "WHERE day_date =\'" + dayDate + "\'  && " +
-        "product_name = \'" + productName + "\' && " +
-        "amount_of_product = \'" + productAmount + "\'" + ";";
+                "FROM calendar\n" +
+                "WHERE day_date =\'" + dayDate + "\'  && " +
+                "product_name = \'" + productName + "\' && " +
+                "amount_of_product = \'" + productAmount + "\'" + ";";
 
         statement = connection.createStatement();
         resultSet = statement.executeQuery(sqlStatement);
@@ -56,7 +56,34 @@ public class CheckIfRowExist {
 
         if (result >= 1) {
             return true;
-        }else{
+        } else {
+            return false;
+        }
+    }
+
+    public static boolean isDaysStatisticRowExistInTableCheckByDate(String day_date) throws SQLException {
+        Connection connection = GetConnection.getConnectionWithLocalHost();
+        ResultSet resultSet;
+        Statement statement;
+        PreparedStatement preparedStatement;
+
+        String sqlStatement = "SELECT COUNT(day_date) AS bool\n" +
+                "FROM days_statistics_test\n" +
+                "WHERE day_date = '" + day_date + "';";
+
+        statement = connection.createStatement();
+        resultSet = statement.executeQuery(sqlStatement);
+        resultSet.next();
+
+        int result = resultSet.getInt("bool");
+
+        // Close unnecessary connections
+        connection.close();
+        resultSet.close();
+
+        if (result == 1) {
+            return true;
+        } else {
             return false;
         }
     }
