@@ -1,0 +1,20 @@
+INSERT INTO `diet_tracker_schema`.product_table
+(`product_name`,
+`product_brand`,
+`product_package_has`,
+`product_macro_for`,
+`product_kcal`,
+`product_protein`,
+`product_fat`,
+`product_carbs`,
+`comment_optional`)
+Values
+('Fix Spaghetti 4 sery z brokułami',
+'Knorr',
+43.0,
+100.0,
+206.4,
+5.16,
+12.04,
+18.92,
+'Link: https://www.tabele-kalorii.pl/kalorie,Fix-Spaghetti-4-sery-z-brokulami-Knorr.html');

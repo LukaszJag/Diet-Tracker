@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2024-06-05',
+'Wednesday',
+'Breakfast',
+88.0,
+'Olej - rzepakowy',
+900.0,
+0.0,
+100.0,
+0.0,
+'2024-06-11 12:31:36',
+'none',
+792.0,
+0.0,
+88.0,
+0.0
+);

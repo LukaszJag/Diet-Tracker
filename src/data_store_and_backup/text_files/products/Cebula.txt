@@ -1,0 +1,9 @@
+Name: Cebula
+Brand: 
+Package has: 0.0
+Macro for: 0.0
+KCal: 40.0
+Protein: 1.1
+Fat: 0.1
+Carbs: 7.64
+Comment optional: 

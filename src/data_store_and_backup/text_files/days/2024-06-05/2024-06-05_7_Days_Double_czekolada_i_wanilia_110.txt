@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2024-06-05',
+'Wednesday',
+'Supper',
+110.0,
+'7 Days Double czekolada i wanilia',
+447.0,
+6.0,
+28.0,
+42.0,
+'2024-06-11 12:42:30',
+'none',
+491.7,
+46.2,
+30.800001,
+6.6000004
+);

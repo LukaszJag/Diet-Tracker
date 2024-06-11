@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2024-06-04',
+'Tuesday',
+'Dinner',
+127.0,
+'Ziemniaki - gotowane',
+70.0,
+1.6,
+0.0,
+17.0,
+'2024-06-11 12:22:47',
+'none',
+88.9,
+21.59,
+0.0,
+2.032
+);

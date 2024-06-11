@@ -1,0 +1,9 @@
+Name: 7 Days Max czekoladowy
+Brand: 7 Days
+Package has: 85.0
+Macro for: 85.0
+KCal: 374.0
+Protein: 5.1
+Fat: 23.8
+Carbs: 34.85
+Comment optional: 

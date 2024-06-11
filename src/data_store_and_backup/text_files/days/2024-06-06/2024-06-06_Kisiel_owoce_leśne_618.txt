@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2024-06-06',
+'Thursday',
+'Supper',
+618.0,
+'Kisiel owoce leśne',
+59.0,
+0.1,
+0.0,
+14.0,
+'2024-06-11 12:49:31',
+'none',
+364.62,
+86.52,
+0.0,
+0.618
+);
