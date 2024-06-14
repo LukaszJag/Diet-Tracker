@@ -1,0 +1,95 @@
+#SELECT COUNT(*) FROM product_table WHERE product_macro_for != 0 AND product_macro_for != 100;
+SELECT * FROM product_table WHERE product_macro_for != 0 AND product_macro_for != 100;
+
+#SELECT COUNT(*) FROM product_table WHERE product_package_has != 0 AND product_macro_for = 100;
+SELECT * FROM product_table WHERE product_package_has != 0 AND product_macro_for = 100;
+
+#SELECT COUNT(*) FROM product_table WHERE product_package_has = 0 AND product_macro_for = 100;
+SELECT * FROM product_table WHERE product_package_has = 0 AND product_macro_for = 100;
+
+SELECT * From product_table WHERE NOT(
+(product_macro_for != 0 AND product_macro_for != 100) OR
+(product_package_has != 0 AND product_macro_for = 100) OR
+(product_package_has = 0 AND product_macro_for = 100));
+
+
+Java Diet-Tracker:
+
+
+	Naprawa błędu - 12.06.24:
+
+		Calendar-Table -> Nie wymaga poprawki
+
+		Product-Table -> Wymaga poprawek:
+
+			-> Łacznie wierszów:
+
+				134
+
+			-> Wiersze z - NIE WYMAGA POPRAWEK:
+
+				product_package_has: != 0
+
+				product_macro_for: 100
+
+					Ilość: 10
+
+
+			-> Wiersze z - NIE WYMAGA POPRAWEK:
+
+				product_package_has: 0
+
+				product_macro_for: 100
+
+					Ilość: 7
+
+
+
+
+
+			-> Wiersze z - WYMAGA POPRAWEK:
+
+				--> Trzeba zmienić - product_macro_for na 100 - Zarówno w tabelach SQL + Plikach tekstowych:
+
+					product_package_has: 0
+
+					product_macro_for: 0
+
+						Ilość: 39
+
+
+
+			-> Wiersze z - WYMAGA POPRAWEK:
+
+                --> Calendar-table has wrong data based on amount-of-product and product-macro-for where product-macro-for is calculate for 100g NOT package
+				--> Trzeba sprawdzić czy makro jest na 100g
+				--> Trzeba sprawdzić czy  product_package_has jest poprawne jeśli nie to zmienić na 0 - product_macro_for na 100 - Zarówno w tabelach SQL + Plikach tekstowych:
+				--> Trzeba zmienić - product_macro_for na 100 - Zarówno w tabelach SQL + Plikach tekstowych:
+
+					product_package_has: != 0 and != 100
+
+					product_macro_for: product_package_has
+
+						Ilość: 78
+
+
+
+    Plan naprawy:
+
+        1. Zrobić back up plików tekstowych - wszystkich
+        2. Poprawić pliki tekstowe w products Macro for: na właściwe
+        3. Na ich podstawie wygenerować nowe sql queries dla products
+        4. Odświeżyć dane w tabeli - product_table
+        5. Odświeżyć dane w tabelo calendar
+        6. Ustawić w GUI na sztyno macro for 100 bez wyboru na package-has czy cokolwiek innego
+
+
+
+
+
+
+
+
+
+
+

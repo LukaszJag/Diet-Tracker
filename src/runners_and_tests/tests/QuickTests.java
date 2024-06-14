@@ -5,6 +5,7 @@ import tools.products_tools.Product;
 import tools.sql_tools.*;
 import tools.sql_tools.calendar.InsertToCalendarDayTable;
 import tools.sql_tools.days_statistics.GenerateSLQTableForDaysStatistics;
+import tools.sql_tools.general.CheckDataCorrectness;
 import tools.sql_tools.general.RunQuery;
 import tools.sql_tools.products.ImportDateFromTXTFilesToSQLDB;
 import tools.text_files_tools.DirectoryTools;
@@ -34,10 +35,15 @@ public class QuickTests {
         //test15();
         //test16();
         //test17();
-        test18();
+        //test18();
         //test19();
         //test20();
+        //test21();
+        //test22();
+        test23();
     }
+
+
 
     //<editor-fold desc="TESTS 1 -> 10">
     private static void test1() {
@@ -231,11 +237,22 @@ public class QuickTests {
         }
     }
 
-
     private static void test20() throws SQLException {
         String [] table = SQLSelectDay.getAllRowFromDay(20,05,2024);
         for (int i = 0; i < table.length; i++) {
             System.out.println(i + ": " + table[i]);
         }
+    }
+
+    private static void test21() throws SQLException {
+        CheckDataCorrectness.getProductAllRowInCalendar();
+    }
+
+    private static void test22() throws SQLException {
+        CheckDataCorrectness.getAllWrongProductByName();
+    }
+
+    private static void test23() throws SQLException {
+        CheckDataCorrectness.getAllWrongProductMacroByName();
     }
 }

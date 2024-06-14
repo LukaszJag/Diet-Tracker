@@ -1,9 +1,0 @@
-Name: ZZZZZZ
-Brand: 
-Package has: 0.0
-Macro for: 0.0
-KCal: 200.0
-Protein: 20.0
-Fat: 20.0
-Carbs: 20.0
-Comment optional: 

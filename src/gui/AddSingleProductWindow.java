@@ -280,7 +280,7 @@ public class AddSingleProductWindow {
                         Float.parseFloat(fat), Float.parseFloat(carbs));
                 Product newProduct = new Product(name, brand, Float.parseFloat(macroFor), newProductMacro, Float.parseFloat(packageHas), commentOptional);
 
-                FilesTools.makeTextFileForProduct(newProduct, Float.parseFloat(packageHas));
+                FilesTools.makeTextFileForProduct(newProduct, Float.parseFloat(macroFor));
                 FilesTools.makeSQLTextFileForProduct(newProduct.getProductName(), InsertProductToSQL_Table.createInsertSQLQueryForProductTable(newProduct));
                 try {
                     InsertProductToSQL_Table.insertProduct(newProduct);
