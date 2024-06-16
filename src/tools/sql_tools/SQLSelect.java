@@ -165,5 +165,38 @@ public class SQLSelect {
         return allRowsArray;
     }
 
+    public static String[] getAllProductDataByNameFromCalendarTable(String productName) throws SQLException {
+        // Hard code array length
+        String[] allRowsArray = new String[100];
+        ResultSet resultSet;
+        Statement statement;
+        ResultSetMetaData resultSetMetaData;
 
+        String sql = "SELECT * FROM calendar WHERE product_name = " + "'" + productName + "'";
+
+        Connection connection = GetConnection.getConnectionWithLocalHost();
+        statement = connection.createStatement();
+        resultSet = statement.executeQuery(sql);
+        resultSetMetaData = resultSet.getMetaData();
+        int amountOfColumns = resultSetMetaData.getColumnCount();
+
+        String rowInString = "";
+        int counter = 0;
+        while(resultSet.next()){
+            for (int i = 1; i <= amountOfColumns; i++) {
+                // Temporary modification
+                rowInString += resultSetMetaData.getColumnName(i) + " : ";
+                rowInString += resultSet.getString(i) + "\n";
+            }
+            allRowsArray[counter] = rowInString;
+            rowInString = "";
+            counter++;
+        }
+
+        resultSet.close();
+        connection.close();
+        statement.close();
+
+        return allRowsArray;
+    }
 }

@@ -15,6 +15,41 @@ public class Macro {
         this.carbs = carbs;
     }
 
+    public static boolean isMacroEqual(Macro macro1, Macro macro2){
+        if (macro1.getKcal() == macro2.getKcal()){
+
+        }else{
+            return false;
+        }
+
+        if (macro1.getProtein() == macro2.getProtein()){
+
+        }else{
+            return false;
+        }
+
+        if (macro1.getFat() == macro2.getFat()){
+
+        }else{
+            return false;
+        }
+
+        if (macro1.getCarbs() == macro2.getCarbs()){
+
+        }else{
+            return false;
+        }
+
+        return true;
+    }
+
+    public static void printAllValues(Macro macro){
+        System.out.println("Kcal \t: " + macro.getKcal());
+        System.out.println("Protein : " + macro.getProtein());
+        System.out.println("Fat \t: " + macro.getFat());
+        System.out.println("Carbs \t: " + macro.getCarbs());
+    }
+
     public static void showAllMacroData(Macro macro){
         System.out.println("kcal: " + macro.getKcal());
         System.out.println("protein: " + macro.getProtein());

@@ -2,22 +2,26 @@ package runners_and_tests.tests;
 
 import tools.calendar_tools.DayInCalendar;
 import tools.products_tools.Product;
-import tools.sql_tools.*;
+import tools.sql_tools.CheckIfRowExist;
+import tools.sql_tools.SQLSelect;
+import tools.sql_tools.SQLSelectDay;
+import tools.sql_tools.SelectDistinctValues;
 import tools.sql_tools.calendar.InsertToCalendarDayTable;
 import tools.sql_tools.days_statistics.GenerateSLQTableForDaysStatistics;
-import tools.sql_tools.general.CheckDataCorrectness;
 import tools.sql_tools.general.RunQuery;
+import tools.sql_tools.products.ChangeProductTextFiles;
 import tools.sql_tools.products.ImportDateFromTXTFilesToSQLDB;
 import tools.text_files_tools.DirectoryTools;
 import tools.text_files_tools.FilesTools;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class QuickTests {
-    public static void main(String[] args) throws SQLException, ParseException {
+    public static void main(String[] args) throws SQLException, ParseException, IOException {
         //test1();
         //test2();
         //test3();
@@ -38,13 +42,22 @@ public class QuickTests {
         //test18();
         //test19();
         //test20();
-        //test21();
-        //test22();
-        test23();
+        test21();
     }
 
+    public static void printArrayWithoutNull(String[] arrayToPrint){
+        for (int i = 0; i < arrayToPrint.length; i++) {
+            if (arrayToPrint[i] != null) {
+                System.out.println(arrayToPrint[i] + "\n");
+            }
+        }
+    }
 
-
+    public static void printArray(String[] arrayToPrint){
+        for (int i = 0; i < arrayToPrint.length; i++) {
+            System.out.println(arrayToPrint[i] + "\n");
+        }
+    }
     //<editor-fold desc="TESTS 1 -> 10">
     private static void test1() {
         String[] testArray = ImportDateFromTXTFilesToSQLDB.getPureDateFromFileInArray(FilesTools.convertFileToStringArray("src/data_store_and_backup/text_files/products/Burak.txt"));
@@ -149,6 +162,7 @@ public class QuickTests {
     }
     //</editor-fold>
 
+    //<editor-fold desc="TEST 16 -> 20">
     private static void test16() throws ParseException {
 
             SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", java.util.Locale.ENGLISH);
@@ -243,16 +257,18 @@ public class QuickTests {
             System.out.println(i + ": " + table[i]);
         }
     }
+    //</editor-fold>
 
-    private static void test21() throws SQLException {
-        CheckDataCorrectness.getProductAllRowInCalendar();
-    }
+    private static void test21() throws IOException {
+        String[] allProductFiles = FilesTools.getStringArrayForAllFilesInDirectory("src/data_store_and_backup/text_files/products");
+        ChangeProductTextFiles.changeMacroForLineLineNumberInFile("src/data_store_and_backup/text_files/products/Chicken Burger.txt");
 
-    private static void test22() throws SQLException {
-        CheckDataCorrectness.getAllWrongProductByName();
-    }
+        /*
+        for (int i = 0; i < allProductFiles.length; i++) {
+            System.out.print("[" + i + "]:\t");
+            ChangeProductTextFiles.getLineNumberInFile(allProductFiles[i], "", 3);
+        }
 
-    private static void test23() throws SQLException {
-        CheckDataCorrectness.getAllWrongProductMacroByName();
+        */
     }
 }
