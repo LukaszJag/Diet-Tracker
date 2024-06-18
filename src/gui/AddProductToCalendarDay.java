@@ -362,7 +362,11 @@ public class AddProductToCalendarDay {
             } catch (SQLException ex) {
                 throw new RuntimeException(ex);
             }
-
+            
+            JOptionPane.showMessageDialog(null, "ERROR: Product from database doesn't match");
+                    
+            
+            
             JOptionPane.showMessageDialog(null, "Product has been added. Date: " +
                     addProductToDayDisplaySelectedFDateNameDayLabel.getText()
                     + " \nDay name: " + addProductToDayDisplaySelectedFDateDayLabel.getText() +
