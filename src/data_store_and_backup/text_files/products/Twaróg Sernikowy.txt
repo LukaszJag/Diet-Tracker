@@ -1,9 +1,10 @@
 Name: Twaróg Sernikowy
 Brand: PRESIDENT
 Package has: 1000.0
-Macro for: 1000.0
+Macro for: 100.0
 KCal: 92.0
 Protein: 9.7
 Fat: 4.0
 Carbs: 4.2
 Comment optional: 
+

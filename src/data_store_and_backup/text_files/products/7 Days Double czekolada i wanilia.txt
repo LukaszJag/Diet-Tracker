@@ -1,7 +1,7 @@
 Name: 7 Days Double czekolada i wanilia
 Brand: 7 Days
 Package has: 110.0
-Macro for: 110.0
+Macro for: 100.0
 KCal: 447.0
 Protein: 6.0
 Fat: 28.0

@@ -1,9 +1,10 @@
 Name: Makaron spaghetti cienkie
 Brand: Lubella
 Package has: 400.0
-Macro for: 400.0
+Macro for: 100.0
 KCal: 351.0
 Protein: 13.0
 Fat: 1.4
 Carbs: 70.0
 Comment optional: 
+

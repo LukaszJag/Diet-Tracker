@@ -1,9 +1,10 @@
 Name: Serek wiejski
 Brand: Koło
 Package has: 200.0
-Macro for: 200.0
+Macro for: 100.0
 KCal: 97.0
 Protein: 11.0
 Fat: 6.0
 Carbs: 2.7
 Comment optional: Opakowanie ma - 200g
+

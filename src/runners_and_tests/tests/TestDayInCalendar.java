@@ -1,5 +1,7 @@
 package runners_and_tests.tests;
 
+import runners_and_tests.tests.get_simple_data_to_test.DayInCalendarFactoryToMakeTest;
+import runners_and_tests.tests.get_simple_data_to_test.ProductFactoryToMakeTests;
 import tools.calendar_tools.DayInCalendar;
 import tools.sql_tools.calendar.InsertToCalendarDayTable;
 import tools.sql_tools.SearchForKey;
@@ -8,15 +10,15 @@ import java.sql.Date;
 import java.sql.SQLException;
 
 public class TestDayInCalendar {
-    public static void main(String[] args) {
-        try {
-            test5();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+    public static void main(String[] args) throws SQLException {
+        //test1();
+        //test2();
+        //test3();
+        //test4();
+        //test5();
     }
 
-    private void test1(){
+    private static void test1(){
         DayInCalendar dayInCalendar = new DayInCalendar(Date.valueOf("2024-02-29"), "wensday", 80, ProductFactoryToMakeTests.productBarExample(),
                 ProductFactoryToMakeTests.productBarExample().getProductMacroForItsSetMeasure(),"", "");
         System.out.println(InsertToCalendarDayTable.createInsertSQLQueryForCalendarDay(dayInCalendar));

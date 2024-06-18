@@ -1,1 +1,12 @@
+Name: Chicken Burger
+Brand: Burger King
+Package has: 131.0
+Macro for: 100.0
+KCal: 377.0
+Protein: 10.0
+Fat: 20.0
+Carbs: 40.0
+Comment optional:
+
+
 

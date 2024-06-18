@@ -1,9 +1,10 @@
 Name: Krajzerka z polędwicą drobiową
 Brand: Tomcio Paluch
 Package has: 128.0
-Macro for: 128.0
+Macro for: 100.0
 KCal: 290.0
 Protein: 11.0
 Fat: 16.0
 Carbs: 25.0
 Comment optional: 
+

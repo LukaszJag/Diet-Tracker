@@ -1,9 +1,10 @@
 Name: Masło Ekstra
 Brand: Mleczna Dolina
 Package has: 200.0
-Macro for: 200.0
+Macro for: 100.0
 KCal: 746.0
 Protein: 1.0
 Fat: 82.0
 Carbs: 1.0
 Comment optional: 
+

@@ -1,15 +1,17 @@
 package runners_and_tests.tests;
 
+import runners_and_tests.tests.get_simple_data_to_test.DayInCalendarFactoryToMakeTest;
+import runners_and_tests.tests.get_simple_data_to_test.ProductFactoryToMakeTests;
 import tools.calendar_tools.DayInCalendar;
 import tools.products_tools.Product;
 import tools.sql_tools.CheckIfRowExist;
 import tools.sql_tools.SQLSelect;
 import tools.sql_tools.SQLSelectDay;
 import tools.sql_tools.SelectDistinctValues;
+import tools.sql_tools.calendar.ExportAllDaysDataToSQLCalendar;
 import tools.sql_tools.calendar.InsertToCalendarDayTable;
 import tools.sql_tools.days_statistics.GenerateSLQTableForDaysStatistics;
 import tools.sql_tools.general.RunQuery;
-import tools.sql_tools.products.ChangeProductTextFiles;
 import tools.sql_tools.products.ImportDateFromTXTFilesToSQLDB;
 import tools.text_files_tools.DirectoryTools;
 import tools.text_files_tools.FilesTools;
@@ -42,7 +44,8 @@ public class QuickTests {
         //test18();
         //test19();
         //test20();
-        test21();
+        //test21();
+        //test22;
     }
 
     public static void printArrayWithoutNull(String[] arrayToPrint){
@@ -260,8 +263,6 @@ public class QuickTests {
     //</editor-fold>
 
     private static void test21() throws IOException {
-        String[] allProductFiles = FilesTools.getStringArrayForAllFilesInDirectory("src/data_store_and_backup/text_files/products");
-        ChangeProductTextFiles.changeMacroForLineLineNumberInFile("src/data_store_and_backup/text_files/products/Chicken Burger.txt");
 
         /*
         for (int i = 0; i < allProductFiles.length; i++) {
@@ -270,5 +271,9 @@ public class QuickTests {
         }
 
         */
+    }
+
+    private static void test22() {
+        ExportAllDaysDataToSQLCalendar.exportDataFromTxtToSQLCalendarTable();
     }
 }

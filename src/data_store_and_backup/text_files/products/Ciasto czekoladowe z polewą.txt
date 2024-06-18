@@ -1,9 +1,10 @@
 Name: Ciasto czekoladowe z polewą
 Brand: 
 Package has: 0.0
-Macro for: 0.0
+Macro for: 100.0
 KCal: 395.56
 Protein: 7.14
 Fat: 24.65
 Carbs: 35.53
 Comment optional: Ogólne ciasto np. domowe - bez marki
+

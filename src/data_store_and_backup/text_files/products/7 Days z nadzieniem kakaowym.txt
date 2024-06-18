@@ -1,9 +1,0 @@
-Name: 7 Days z nadzieniem kakaowym
-Brand: 7 Days
-Package has: 60.0
-Macro for: 60.0
-KCal: 452.0
-Protein: 7.0
-Fat: 28.0
-Carbs: 42.0
-Comment optional: 

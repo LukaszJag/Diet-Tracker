@@ -1,7 +1,7 @@
 Name: Płatki - kukurydziane
 Brand: Corn Flakes
 Package has: 500.0
-Macro for: 500.0
+Macro for: 100.0
 KCal: 382.0
 Protein: 7.4
 Fat: 1.4
@@ -16,3 +16,4 @@ Protein: 7.4
 Fat: 1.4
 Carbs: 82.9
 Comment optional: 
+

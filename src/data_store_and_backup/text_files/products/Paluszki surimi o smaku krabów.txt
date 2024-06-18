@@ -1,9 +1,10 @@
 Name: Paluszki surimi o smaku krabów
 Brand: Vici
 Package has: 250.0
-Macro for: 250.0
+Macro for: 100.0
 KCal: 122.0
 Protein: 6.0
 Fat: 3.7
 Carbs: 16.2
 Comment optional: 
+

@@ -1,9 +1,10 @@
 Name: Chleb - bułka weka wrocławska
 Brand: Julka
 Package has: 0.0
-Macro for: 0.0
+Macro for: 100.0
 KCal: 254.0
 Protein: 8.8
 Fat: 1.1
 Carbs: 5.1
 Comment optional: 
+

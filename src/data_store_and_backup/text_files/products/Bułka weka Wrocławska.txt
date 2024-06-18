@@ -1,9 +1,10 @@
 Name: Bułka weka Wrocławska
 Brand: Julka
 Package has: 400.0
-Macro for: 400.0
+Macro for: 100.0
 KCal: 254.0
 Protein: 8.8
 Fat: 1.1
 Carbs: 51.0
 Comment optional: 
+

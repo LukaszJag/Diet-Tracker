@@ -1,9 +1,10 @@
 Name: Ryba po hawajsku
 Brand: Seko
 Package has: 0.0
-Macro for: 0.0
+Macro for: 100.0
 KCal: 154.0
 Protein: 8.4
 Fat: 7.8
 Carbs: 12.0
 Comment optional: 
+

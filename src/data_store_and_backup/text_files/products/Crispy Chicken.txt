@@ -1,9 +1,10 @@
 Name: Crispy Chicken
 Brand: Burger King
 Package has: 183.0
-Macro for: 183.0
+Macro for: 100.0
 KCal: 489.0
 Protein: 18.0
 Fat: 29.0
 Carbs: 39.0
 Comment optional: 
+

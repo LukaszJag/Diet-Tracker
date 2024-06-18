@@ -1,4 +1,4 @@
-package runners_and_tests;
+package runners_and_tests.run_update;
 
 import tools.sql_tools.days_statistics.GenerateSLQTableForDaysStatistics;
 import tools.sql_tools.days_statistics.UpdateDaysStatisticsFilledColumns;

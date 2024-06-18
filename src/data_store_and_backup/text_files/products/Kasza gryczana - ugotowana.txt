@@ -1,9 +1,10 @@
 Name: Kasza gryczana - ugotowana
 Brand: 
 Package has: 0.0
-Macro for: 0.0
+Macro for: 100.0
 KCal: 121.0
 Protein: 4.7
 Fat: 1.1
 Carbs: 22.2
 Comment optional: Ogolny produkt bez marki i opakowania
+

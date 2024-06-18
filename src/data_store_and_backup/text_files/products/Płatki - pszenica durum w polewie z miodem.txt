@@ -1,9 +1,10 @@
 Name: Płatki - pszenica durum w polewie z miodem
 Brand: Puffinki
 Package has: 230.0
-Macro for: 230.0
+Macro for: 100.0
 KCal: 386.0
 Protein: 9.6
 Fat: 1.8
 Carbs: 80.0
 Comment optional: 
+

@@ -1,9 +1,10 @@
 Name: Pizza wrap - gyros
 Brand: Żabka
 Package has: 238.0
-Macro for: 238.0
+Macro for: 100.0
 KCal: 238.0
 Protein: 9.9
 Fat: 7.6
 Carbs: 30.0
 Comment optional: 
+

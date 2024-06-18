@@ -1,9 +1,10 @@
 Name: Almette z pomidorami 
 Brand: Hochland
 Package has: 150.0
-Macro for: 150.0
+Macro for: 100.0
 KCal: 238.0
 Protein: 7.2
 Fat: 21.0
 Carbs: 5.0
 Comment optional: 
+

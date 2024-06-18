@@ -1,9 +1,10 @@
 Name: Wątróbka drobiowa smażona
 Brand: 
 Package has: 0.0
-Macro for: 0.0
+Macro for: 100.0
 KCal: 259.0
 Protein: 17.6
 Fat: 19.5
 Carbs: 4.0
 Comment optional: 
+

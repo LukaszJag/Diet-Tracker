@@ -1,9 +1,10 @@
 Name: Fix Spaghetti 4 sery z brokułami
 Brand: Knorr
 Package has: 43.0
-Macro for: 43.0
+Macro for: 100.0
 KCal: 206.4
 Protein: 5.16
 Fat: 12.04
 Carbs: 18.92
 Comment optional: Link: https://www.tabele-kalorii.pl/kalorie,Fix-Spaghetti-4-sery-z-brokulami-Knorr.html
+

@@ -1,9 +1,10 @@
 Name: Ser Salami
 Brand: Światowd
 Package has: 0.0
-Macro for: 0.0
+Macro for: 100.0
 KCal: 298.0
 Protein: 25.0
 Fat: 22.0
 Carbs: 0.0
 Comment optional: 
+

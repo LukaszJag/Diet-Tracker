@@ -1,9 +1,10 @@
 Name: Pasztet z papryką
 Brand: Delikatesowy
 Package has: 131.0
-Macro for: 131.0
+Macro for: 100.0
 KCal: 189.0
 Protein: 8.6
 Fat: 15.0
 Carbs: 3.4
 Comment optional: 
+

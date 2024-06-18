@@ -1,9 +1,10 @@
 Name: Twaróg Klinek - chudy
 Brand: Delikate
 Package has: 250.0
-Macro for: 250.0
+Macro for: 100.0
 KCal: 85.0
 Protein: 16.0
 Fat: 0.3
 Carbs: 4.5
 Comment optional: 
+

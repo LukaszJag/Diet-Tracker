@@ -1,4 +1,4 @@
-package runners_and_tests;
+package runners_and_tests.run_export_inport_data;
 
 import tools.sql_tools.CheckIfRowExist;
 import tools.sql_tools.products.ImportDateFromTXTFilesToSQLDB;

@@ -5,8 +5,11 @@ import tools.sql_tools.general.GetConnection;
 
 import java.sql.*;
 
-public class SQLSelectTest {
+public class SQLTests {
     public static void main(String[] args) throws SQLException {
+        //test1();
+    }
+    public static void test1() throws SQLException {
         ResultSet resultSet;
         Statement statement;
         //String sql = "SELECT * FROM diet_tracker_schema.product_table Where product_name=\"Burak\";";

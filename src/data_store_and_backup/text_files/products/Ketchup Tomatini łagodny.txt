@@ -1,9 +1,10 @@
 Name: Ketchup Tomatini łagodny
 Brand: Dawtona
 Package has: 750.0
-Macro for: 750.0
+Macro for: 100.0
 KCal: 93.0
 Protein: 0.5
 Fat: 1.15
 Carbs: 22.0
 Comment optional: 
+

@@ -1,9 +1,10 @@
 Name: Bułka grahamka
 Brand: None
 Package has: 80.0
-Macro for: 80.0
+Macro for: 100.0
 KCal: 265.0
 Protein: 9.6
 Fat: 1.7
 Carbs: 56.1
 Comment optional: 
+

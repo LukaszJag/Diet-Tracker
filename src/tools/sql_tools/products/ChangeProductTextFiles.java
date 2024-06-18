@@ -61,22 +61,18 @@ public class ChangeProductTextFiles {
         for (int i = 0; i < counter; i++) {
             lineToWriteToFile += textLinesInFile[i] + "\n";
         }
-        System.out.println();
 
-        fullPath = fullPath.replace(Config.DESTINATION_FOR_TEXT_FILE_PRODUCTS,"");
+        fullPath = fullPath.replace("src\\data_store_and_backup\\text_files\\products\\","");
         fullPath = fullPath.replace(".txt","");
         String onlyFileNamePath = fullPath;
         scannerInput.close();
         if (oldFile.delete()) {
-            System.out.println("Deleted the file: " + oldFile.getName());
+            //System.out.println("Deleted the file: " + oldFile.getName());
         } else {
             System.out.println("Failed to delete the file.");
         }
-
+        System.out.println(onlyFileNamePath);
         FilesTools.writeProductToFile(lineToWriteToFile, onlyFileNamePath);
-        System.out.println("Request line: [3]");
-        System.out.println("[" + 3 + "]:" + textLinesInFile[3]);
-
     }
     public static void changeLineInTextFile() throws IOException {
         //Instantiating the File class

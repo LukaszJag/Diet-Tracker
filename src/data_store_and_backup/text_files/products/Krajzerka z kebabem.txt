@@ -1,9 +1,10 @@
 Name: Krajzerka z kebabem
 Brand: Tomcio Paluch
 Package has: 137.0
-Macro for: 137.0
+Macro for: 100.0
 KCal: 306.0
 Protein: 9.8
 Fat: 16.0
 Carbs: 29.0
 Comment optional: 
+

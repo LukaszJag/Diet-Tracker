@@ -1,9 +1,10 @@
 Name: Pizza Tradycyjna Capricciosa - duża
 Brand: Pizza Hut
 Package has: 1088.0
-Macro for: 1088.0
+Macro for: 100.0
 KCal: 291.0
 Protein: 12.7
 Fat: 14.3
 Carbs: 27.7
 Comment optional: 
+

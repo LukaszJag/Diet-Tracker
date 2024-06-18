@@ -1,9 +1,10 @@
 Name: Frytki duże
 Brand: Burger King
 Package has: 116.0
-Macro for: 116.0
+Macro for: 100.0
 KCal: 314.3
 Protein: 5.5
 Fat: 15.0
 Carbs: 39.0
 Comment optional: 
+

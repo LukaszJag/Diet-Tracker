@@ -1,9 +1,10 @@
 Name: Pasztet z pieczarkami
 Brand: Delikatesowy
 Package has: 130.0
-Macro for: 130.0
+Macro for: 100.0
 KCal: 144.0
 Protein: 6.2
 Fat: 10.0
 Carbs: 6.9
 Comment optional: 
+

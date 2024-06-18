@@ -1,9 +1,10 @@
 Name: Makaron ugotowany 
 Brand: 
 Package has: 0.0
-Macro for: 0.0
+Macro for: 100.0
 KCal: 114.0
 Protein: 4.2
 Fat: 0.8
 Carbs: 23.3
 Comment optional: Cukry: 0.1
+

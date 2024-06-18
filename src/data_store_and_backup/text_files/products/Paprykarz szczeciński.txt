@@ -1,9 +1,10 @@
 Name: Paprykarz szczeciński
 Brand: Dega
 Package has: 135.0
-Macro for: 135.0
+Macro for: 100.0
 KCal: 159.0
 Protein: 5.3
 Fat: 10.0
 Carbs: 10.0
 Comment optional: Opakowanie ma - 135g
+

@@ -1,9 +1,10 @@
 Name: Zupka błyskawiczna grzybowa
 Brand: Amino
 Package has: 57.0
-Macro for: 57.0
+Macro for: 100.0
 KCal: 70.0
 Protein: 1.2
 Fat: 3.2
 Carbs: 8.6
 Comment optional: Opakowanie pozwala na przygotowanie 1 porcji - 400ml
+

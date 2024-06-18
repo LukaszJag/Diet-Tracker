@@ -1,4 +1,4 @@
-package runners_and_tests;
+package runners_and_tests.run_GUI;
 
 import gui.GUIManager;
 import gui.MainWindow;

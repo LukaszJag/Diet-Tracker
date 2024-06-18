@@ -1,9 +1,10 @@
 Name: Lipton Ice Tea - Peach
 Brand: Lipton
 Package has: 1500.0
-Macro for: 1500.0
+Macro for: 100.0
 KCal: 20.0
 Protein: 0.5
 Fat: 0.5
 Carbs: 4.6
 Comment optional: 
+

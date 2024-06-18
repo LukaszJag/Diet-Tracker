@@ -1,9 +1,10 @@
 Name: Jajecznica - domowa
 Brand: 
 Package has: 0.0
-Macro for: 0.0
+Macro for: 100.0
 KCal: 212.0
 Protein: 13.0
 Fat: 17.0
 Carbs: 0.0
 Comment optional: 
+

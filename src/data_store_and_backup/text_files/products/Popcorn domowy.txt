@@ -1,9 +1,10 @@
 Name: Popcorn domowy
 Brand: 
 Package has: 0.0
-Macro for: 0.0
+Macro for: 100.0
 KCal: 425.54
 Protein: 11.09
 Fat: 14.26
 Carbs: 66.79
 Comment optional: 
+

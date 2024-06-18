@@ -1,9 +1,10 @@
 Name: Kisiel truskawkowy
 Brand: Dr. Oetker
 Package has: 31.5
-Macro for: 31.5
+Macro for: 100.0
 KCal: 59.0
 Protein: 0.1
 Fat: 0.0
 Carbs: 14.0
 Comment optional: Opakowanie pozwala na 1 porcję = 206g
+

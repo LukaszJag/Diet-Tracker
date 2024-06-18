@@ -1,9 +1,10 @@
 Name: Bułka krajzerka
 Brand: None
 Package has: 60.0
-Macro for: 60.0
+Macro for: 100.0
 KCal: 300.0
 Protein: 9.2
 Fat: 3.6
 Carbs: 58.6
 Comment optional: Jedna bułka waży - 80g
+

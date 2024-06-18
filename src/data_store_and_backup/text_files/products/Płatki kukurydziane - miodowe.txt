@@ -1,9 +1,10 @@
 Name: Płatki kukurydziane - miodowe
 Brand: Corn Flakes
 Package has: 450.0
-Macro for: 450.0
+Macro for: 100.0
 KCal: 401.0
 Protein: 7.1
 Fat: 4.8
 Carbs: 80.4
 Comment optional: Używane zazwyczaj jako składnik śniadania lub kolacji
+

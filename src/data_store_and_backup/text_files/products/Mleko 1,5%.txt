@@ -1,9 +1,10 @@
 Name: Mleko 1,5%
 Brand: 
 Package has: 0.0
-Macro for: 0.0
+Macro for: 100.0
 KCal: 44.0
 Protein: 3.0
 Fat: 1.5
 Carbs: 4.7
 Comment optional: Produkt ogólny bez marki i opakowania
+

@@ -1,9 +1,10 @@
 Name: Ryż ugotowany
 Brand: 
 Package has: 0.0
-Macro for: 0.0
+Macro for: 100.0
 KCal: 112.8
 Protein: 2.36
 Fat: 0.28
 Carbs: 25.06
 Comment optional: 
+

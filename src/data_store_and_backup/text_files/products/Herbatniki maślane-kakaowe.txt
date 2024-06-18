@@ -1,9 +1,10 @@
 Name: Herbatniki maślane-kakaowe
 Brand: Bonitki
 Package has: 250.0
-Macro for: 250.0
+Macro for: 100.0
 KCal: 463.0
 Protein: 7.5
 Fat: 15.0
 Carbs: 74.0
 Comment optional: 
+

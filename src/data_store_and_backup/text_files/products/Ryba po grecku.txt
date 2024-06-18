@@ -1,9 +1,10 @@
 Name: Ryba po grecku
 Brand: Seko
 Package has: 0.0
-Macro for: 0.0
+Macro for: 100.0
 KCal: 99.0
 Protein: 4.5
 Fat: 4.5
 Carbs: 9.6
 Comment optional: 
+

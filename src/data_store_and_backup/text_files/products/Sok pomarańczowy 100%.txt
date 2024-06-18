@@ -1,9 +1,10 @@
 Name: Sok pomarańczowy 100%
 Brand: Cappy
 Package has: 0.0
-Macro for: 0.0
+Macro for: 100.0
 KCal: 42.0
 Protein: 0.7
 Fat: 0.0
 Carbs: 8.7
 Comment optional: 
+

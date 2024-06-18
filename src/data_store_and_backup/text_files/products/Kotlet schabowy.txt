@@ -1,9 +1,10 @@
 Name: Kotlet schabowy
 Brand: None
 Package has: 0.0
-Macro for: 0.0
+Macro for: 100.0
 KCal: 151.0
 Protein: 16.8
 Fat: 4.7
 Carbs: 9.4
 Comment optional: 
+

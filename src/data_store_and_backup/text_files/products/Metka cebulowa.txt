@@ -1,9 +1,10 @@
 Name: Metka cebulowa
 Brand: Sokołów
 Package has: 170.0
-Macro for: 170.0
+Macro for: 100.0
 KCal: 245.0
 Protein: 13.0
 Fat: 21.0
 Carbs: 0.9
 Comment optional: 
+

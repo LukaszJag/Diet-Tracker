@@ -1,4 +1,4 @@
-package runners_and_tests.tests;
+package runners_and_tests.tests.get_simple_data_to_test;
 
 import tools.calendar_tools.DayInCalendar;
 import tools.products_tools.Macro;

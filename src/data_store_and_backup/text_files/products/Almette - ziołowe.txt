@@ -1,9 +1,10 @@
 Name: Almette - ziołowe
 Brand: Hochland
 Package has: 150.0
-Macro for: 150.0
+Macro for: 100.0
 KCal: 230.0
 Protein: 6.8
 Fat: 20.0
 Carbs: 5.6
 Comment optional: W tym cukry - 3.6
+
