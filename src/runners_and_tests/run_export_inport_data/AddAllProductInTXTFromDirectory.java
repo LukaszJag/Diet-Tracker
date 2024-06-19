@@ -8,7 +8,7 @@ import tools.text_files_tools.FilesTools;
 import java.sql.SQLException;
 
 public class AddAllProductInTXTFromDirectory {
-    public static void main() throws SQLException {
+    public static void main(String[] args){
         String[] allProductFromDirectory = FilesTools.getStringArrayForAllFilesInDirectory("src/data_store_and_backup/text_files/products");
         String[] fileInArray;
         String readyToInsertQuery;
@@ -25,15 +25,19 @@ public class AddAllProductInTXTFromDirectory {
 
             readyToInsertQuery = ImportDateFromTXTFilesToSQLDB.convertTextFileToSQLQuery(fileInArray);
 
-            if(CheckIfRowExist.isProductNameExistInProductTable(fileInArray[0])){
-                counterOfExist++;
-            }else {
-                try {
-                    RunQuery.runQuery(readyToInsertQuery);
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
+            try {
+                if(CheckIfRowExist.isProductNameExistInProductTable(fileInArray[0])){
+                    counterOfExist++;
+                }else {
+                    try {
+                        RunQuery.runQuery(readyToInsertQuery);
+                    } catch (SQLException e) {
+                        throw new RuntimeException(e);
+                    }
+                    counterOfDoNotExist++;
                 }
-                counterOfDoNotExist++;
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
             }
             counterOfAllProducts++;
         }

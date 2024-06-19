@@ -1,7 +1,7 @@
 package tools.text_files_tools;
 
-import tools.calendar_tools.DayInCalendar;
 import configuration.Config;
+import tools.calendar_tools.DayInCalendar;
 import tools.products_tools.Product;
 import tools.sql_tools.calendar.InsertToCalendarDayTable;
 
@@ -12,6 +12,58 @@ public class FilesTools {
     public static void main(String[] args) {
 
     }
+
+    //<editor-fold desc="Make methods: makeEmptyFile, makeTextFileForProduct, makeSQLTextFileForProduct">
+    public static void makeEmptyFile(String newFileName, String destination) {
+        try {
+            File newFile = new File(destination + "/" + newFileName + ".txt");
+            if (newFile.createNewFile()) {
+                System.out.println("File created: " + newFile.getName());
+            } else {
+                System.out.println("File already exists.");
+            }
+        } catch (IOException e) {
+            System.out.println("An error occurred. - Class MakeTextFile -> makeEmptyFile");
+            e.printStackTrace();
+        }
+    }
+
+    public static void makeTextFileForProduct(Product product, float macroFor) {
+        String fileName = product.getProductName();
+        makeEmptyFile(fileName, Config.DESTINATION_FOR_TEXT_FILE_PRODUCTS);
+
+
+        try {
+            writeProductToFile("Name: " + product.getProductName(), fileName);
+            writeProductToFile("Brand: " + product.getProductBrand(), fileName);
+            writeProductToFile("Package has: " + product.getProductPackWeight(), fileName);
+
+            writeProductToFile("Macro for: " + macroFor, fileName);
+
+            writeProductToFile("KCal: " + product.getProductMacroForItsSetMeasure().getKcal(), fileName);
+            writeProductToFile("Protein: " + product.getProductMacroForItsSetMeasure().getProtein(), fileName);
+            writeProductToFile("Fat: " + product.getProductMacroForItsSetMeasure().getFat(), fileName);
+
+            writeProductToFile("Carbs: " + product.getProductMacroForItsSetMeasure().getCarbs(), fileName);
+            writeProductToFile("Comment optional: " + product.getCommentOptional(), fileName);
+
+
+        } catch (IOException ex) {
+            throw new RuntimeException(ex);
+        }
+    }
+
+    public static void makeSQLTextFileForProduct(String fileName, String sqlStatement) {
+        makeEmptyFile(fileName, Config.DESTINATION_FOR_SQL_TEXT_FILE_PRODUCTS);
+
+        try {
+            writeProductSQLToFile(sqlStatement, fileName);
+        } catch (IOException ex) {
+            throw new RuntimeException(ex);
+        }
+    }
+    //</editor-fold>
+
 
     public static String[] convertFileToStringArray(String fileNameWithExtension) {
         // This int value may cause problem because max amount of lines in file is dynamic
@@ -68,77 +120,6 @@ public class FilesTools {
         }
     }
 
-    public static void makeEmptyFile(String newFileName, String destination) {
-        try {
-            File newFile = new File(destination + "/" + newFileName + ".txt");
-            if (newFile.createNewFile()) {
-                System.out.println("File created: " + newFile.getName());
-            } else {
-                System.out.println("File already exists.");
-            }
-        } catch (IOException e) {
-            System.out.println("An error occurred. - Class MakeTextFile -> makeEmptyFile");
-            e.printStackTrace();
-        }
-    }
-
-    public static void makeTextFileForProduct(Product product, float macroFor) {
-        String fileName = product.getProductName();
-        makeEmptyFile(fileName, Config.DESTINATION_FOR_TEXT_FILE_PRODUCTS);
-
-
-        try {
-            writeProductToFile("Name: " + product.getProductName(), fileName);
-            writeProductToFile("Brand: " + product.getProductBrand(), fileName);
-            writeProductToFile("Package has: " + product.getProductPackWeight(), fileName);
-
-            writeProductToFile("Macro for: " + macroFor, fileName);
-
-            writeProductToFile("KCal: " + product.getProductMacroForItsSetMeasure().getKcal(), fileName);
-            writeProductToFile("Protein: " + product.getProductMacroForItsSetMeasure().getProtein(), fileName);
-            writeProductToFile("Fat: " + product.getProductMacroForItsSetMeasure().getFat(), fileName);
-
-            writeProductToFile("Carbs: " + product.getProductMacroForItsSetMeasure().getCarbs(), fileName);
-            writeProductToFile("Comment optional: " + product.getCommentOptional(), fileName);
-
-
-        } catch (IOException ex) {
-            throw new RuntimeException(ex);
-        }
-    }
-
-    public static void makeSQLTextFileForProduct(String fileName, String sqlStatement) {
-        makeEmptyFile(fileName, Config.DESTINATION_FOR_SQL_TEXT_FILE_PRODUCTS);
-
-        try {
-            writeProductSQLToFile(sqlStatement, fileName);
-        } catch (IOException ex) {
-            throw new RuntimeException(ex);
-        }
-    }
-
-    public static void writeProductSQLToFile(String lineToWriteToFile, String fileName) throws IOException {
-        String fullPath = Config.DESTINATION_FOR_SQL_TEXT_FILE_PRODUCTS + fileName + ".txt";
-        BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(fullPath, true));
-        bufferedWriter.append(lineToWriteToFile.toString());
-        bufferedWriter.append("\n");
-        bufferedWriter.close();
-    }
-
-    public static void writeProductToFile(String lineToWriteToFile, String fileName) throws IOException {
-        String fullPath = Config.DESTINATION_FOR_TEXT_FILE_PRODUCTS + fileName + ".txt";
-        BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(fullPath, true));
-        bufferedWriter.append(lineToWriteToFile.toString());
-        bufferedWriter.append("\n");
-        bufferedWriter.close();
-    }
-
-    public static void addDayStringToTextFile(String fileName, String inputSting) throws IOException {
-        BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(Config.DESTINATION_FOR_TEXT_FILE_DAYS + fileName + ".txt", true));
-        bufferedWriter.append(inputSting);
-        bufferedWriter.append("\n");
-        bufferedWriter.close();
-    }
 
     public static void writeSQLStatementForDayInCalendarToTXTFile(String fileName, DayInCalendar dayInCalendar) throws IOException {
 
@@ -186,6 +167,33 @@ public class FilesTools {
             }
         }
     }
+    public static void writeProductSQLToFile(String lineToWriteToFile, String fileName) throws IOException {
+        String fullPath = Config.DESTINATION_FOR_SQL_TEXT_FILE_PRODUCTS + fileName + ".txt";
+        BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(fullPath, true));
+        bufferedWriter.append(lineToWriteToFile.toString());
+        bufferedWriter.append("\n");
+        bufferedWriter.close();
+    }
+
+    public static void writeProductToFile(String lineToWriteToFile, String fileName) throws IOException {
+        String fullPath = Config.DESTINATION_FOR_TEXT_FILE_PRODUCTS + fileName + ".txt";
+        BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(fullPath, true));
+        bufferedWriter.append(lineToWriteToFile.toString());
+        bufferedWriter.append("\n");
+        bufferedWriter.close();
+    }
+
+
+
+
+
+
+    public static void addDayStringToTextFile(String fileName, String inputSting) throws IOException {
+        BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(Config.DESTINATION_FOR_TEXT_FILE_DAYS + fileName + ".txt", true));
+        bufferedWriter.append(inputSting);
+        bufferedWriter.append("\n");
+        bufferedWriter.close();
+    }
 
     public static void addLineToAllFilesInDirectory(String lineToAdd, String directory) {
         // Danger and possible problem cause because max amount of files is dynamic
@@ -211,6 +219,8 @@ public class FilesTools {
         }
         System.out.println("Counter: " + counter);
     }
+
+
 
     public static String[] getStringArrayForAllFilesInDirectory(String directory) {
         // Danger and possible problem cause because max amount of files is dynamic
@@ -328,6 +338,8 @@ public class FilesTools {
         }
         return fullPathToFiles;
     }
+
+
 
     public static void sendSQLQueryToTxtFile(DayInCalendar dayInCalendar, String addProductToDayDisplaySelectedFDateDayLabel, String amountOfProductTextField) {
 

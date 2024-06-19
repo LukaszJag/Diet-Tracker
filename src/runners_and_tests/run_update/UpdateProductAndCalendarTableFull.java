@@ -10,11 +10,11 @@ public class UpdateProductAndCalendarTableFull {
         System.out.println("Run: UpdateProductAndCalendarTableFull");
 
         System.out.println("\nAddAllProductInTXTFromDirectory: START");
-        AddAllProductInTXTFromDirectory.main();
+        AddAllProductInTXTFromDirectory.main(null);
         System.out.println("\nAddAllProductInTXTFromDirectory: PASS");
 
         System.out.println("\nAddAllCalendarDaysInTXTFromDirectory: START");
-        AddAllCalendarDaysInTXTFromDirectory.main();
+        AddAllCalendarDaysInTXTFromDirectory.main(null);
         System.out.println("\nAddAllCalendarDaysInTXTFromDirectory: PASS");
     }
 }
