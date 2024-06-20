@@ -19,7 +19,7 @@ Values
 'Tuesday',
 'Second Breakfast',
 166.0,
-'Płatki kukurydziane - miodowe10',
+'Płatki kukurydziane - miodowe',
 401.0,
 7.1,
 4.8,

@@ -57,7 +57,6 @@ public class SQLSelect {
         String sql = "SELECT * FROM diet_tracker_schema.product_table WHERE product_name=\"" + productName + "\";";
         String[] result = new String[Config.SQL_COLUMNS_PRODUCT.length];
 
-
         Connection connection = GetConnection.getConnectionWithLocalHost();
         statement = connection.createStatement();
         resultSet = statement.executeQuery(sql);
@@ -67,6 +66,9 @@ public class SQLSelect {
                 result[i] = resultSet.getString(Config.SQL_COLUMNS_PRODUCT[i].replace("`",""));
             }
         }
+        connection.close();
+        resultSet.close();
+        statement.close();
 
         return result;
     }

@@ -42,6 +42,29 @@ public class Macro {
 
         return true;
     }
+    public static Macro getConsumedMacro(float amount, Macro macro){
+        float amountMultiplier = amount/100.00f;
+        String floatValue = String.format("%2f",amountMultiplier);
+        amountMultiplier = Float.valueOf(floatValue);
+        Macro consumedMacro = new Macro(
+                amountMultiplier * macro.getKcal(),
+                amountMultiplier * macro.getProtein(),
+                amountMultiplier * macro.getFat(),
+                amountMultiplier * macro.getCarbs()
+        );
+        return consumedMacro;
+    }
+
+    public static Macro cutNumberPrecisionForAllValues(Macro macro){
+        Macro cuttedMacro = new Macro(
+                Float.valueOf(String.format("%.0f", macro.getKcal())),
+                 Float.valueOf(String.format("%.0f", macro.getProtein())),
+                 Float.valueOf(String.format("%.0f", macro.getFat())),
+                 Float.valueOf(String.format("%.0f", macro.getCarbs()))
+        );
+
+                 return cuttedMacro;
+    }
 
     public static void printAllValues(Macro macro){
         System.out.println("Kcal \t: " + macro.getKcal());

@@ -45,8 +45,11 @@ public class QuickTests {
         //test19();
         //test20();
         //test21();
-        //test22;
+        //test22();
+        //test23();
     }
+
+
 
     public static void printArrayWithoutNull(String[] arrayToPrint){
         for (int i = 0; i < arrayToPrint.length; i++) {
@@ -58,19 +61,26 @@ public class QuickTests {
 
     public static void printArray(String[] arrayToPrint){
         for (int i = 0; i < arrayToPrint.length; i++) {
-            System.out.println(arrayToPrint[i] + "\n");
+            System.out.println(arrayToPrint[i]);
         }
     }
+
+    public static void printArrayWithNumOfPosition(String[] arrayToPrint){
+        for (int i = 0; i < arrayToPrint.length; i++) {
+            System.out.println("[" + i + "]:" + arrayToPrint[i]);
+        }
+    }
+
     //<editor-fold desc="TESTS 1 -> 10">
     private static void test1() {
-        String[] testArray = ImportDateFromTXTFilesToSQLDB.getPureDateFromFileInArray(FilesTools.convertFileToStringArray("src/data_store_and_backup/text_files/products/Burak.txt"));
+        String[] testArray = ImportDateFromTXTFilesToSQLDB.getPureDateFromFileInArray(FilesTools.convertFileToStringArraySeparatedByColon("src/data_store_and_backup/text_files/products/Burak.txt"));
         for (int i = 0; i < testArray.length; i++) {
             System.out.println(testArray[i]);
         }
     }
 
     private static void test2() {
-        String[] fileInArray = FilesTools.convertFileToStringArray("src/data_store_and_backup/text_files/products/Burak.txt");
+        String[] fileInArray = FilesTools.convertFileToStringArraySeparatedByColon("src/data_store_and_backup/text_files/products/Burak.txt");
         String readyToInsertQuery = ImportDateFromTXTFilesToSQLDB.convertTextFileToSQLQuery(fileInArray);
         try {
             RunQuery.runQuery(readyToInsertQuery);
@@ -275,5 +285,9 @@ public class QuickTests {
 
     private static void test22() {
         ExportAllDaysDataToSQLCalendar.exportDataFromTxtToSQLCalendarTable();
+    }
+
+    private static void test23() throws SQLException {
+        printArray(SQLSelect.getRowFromProductTableByProductNameGetArray("Jajko sadzone"));
     }
 }

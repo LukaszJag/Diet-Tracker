@@ -13,7 +13,7 @@ public class FilesTools {
 
     }
 
-    //<editor-fold desc="Make methods: makeEmptyFile, makeTextFileForProduct, makeSQLTextFileForProduct">
+    //<editor-fold desc="Make files or text  methods: makeEmptyFile, makeTextFileForProduct, makeSQLTextFileForProduct">
     public static void makeEmptyFile(String newFileName, String destination) {
         try {
             File newFile = new File(destination + "/" + newFileName + ".txt");
@@ -65,7 +65,8 @@ public class FilesTools {
     //</editor-fold>
 
 
-    public static String[] convertFileToStringArray(String fileNameWithExtension) {
+    //<editor-fold desc="Convert file - convertFileToStringArray, convertAndPrintFileInStringArray">
+    public static String[] convertFileToStringArraySeparatedByColon(String fileNameWithExtension) {
         // This int value may cause problem because max amount of lines in file is dynamic
         int maxLinesInFile = 160;
         String[] fileByLinesInArray = new String[maxLinesInFile];
@@ -93,7 +94,36 @@ public class FilesTools {
             fileByLinesInArray[i] = "0";
         }
 
-        return fileByLinesInArray;
+        String[] resultFileByLinesInArray = new String[counter];
+        for (int i = 0; i < counter; i++) {
+            resultFileByLinesInArray[i] = fileByLinesInArray[i];
+        }
+        return resultFileByLinesInArray;
+    }
+
+    public static String[] convertFileToStringArray(String fileNameWithExtension) throws FileNotFoundException {
+        // This int value may cause problem because max amount of lines in file is dynamic
+        int maxLinesInFile = 160;
+        String[] fileByLinesInArray = new String[maxLinesInFile];
+        int counter = 0;
+        String line;
+        Scanner fileScanner = new Scanner(new File(fileNameWithExtension));
+        while (fileScanner.hasNext()) {
+            line = fileScanner.nextLine();
+            fileByLinesInArray[counter] = line;
+            counter++;
+        }
+
+
+        for (int i = counter; i < fileByLinesInArray.length; i++) {
+            fileByLinesInArray[i] = "0";
+        }
+
+        String[] resultFileByLinesInArray = new String[counter];
+        for (int i = 0; i < counter; i++) {
+            resultFileByLinesInArray[i] = fileByLinesInArray[i];
+        }
+        return resultFileByLinesInArray;
     }
 
     public static void convertAndPrintFileInStringArray(String fileNameWithExtension) {
@@ -119,8 +149,10 @@ public class FilesTools {
             System.out.println(fileByLinesInArray[i]);
         }
     }
+    //</editor-fold>
 
 
+    //<editor-fold desc="Write data - writeSQLStatementForDayInCalendarToTXTFile, writeProductSQLToFile, writeProductToFile">
     public static void writeSQLStatementForDayInCalendarToTXTFile(String fileName, DayInCalendar dayInCalendar) throws IOException {
 
         String directoryPath = "src/data_store_and_backup/text_files/days/" + dayInCalendar.getDayDateFormatFriendlyForSQL().toString();
@@ -146,7 +178,7 @@ public class FilesTools {
         } else {
             System.out.println("File already exist");
             String alternativePathForDuplicate = directoryPath + "/" + fileName + "_duplicate" + String.valueOf(counter) + ".txt";
-            while(DirectoryTools.doesDirectoryExist(alternativePathForDuplicate)){
+            while (DirectoryTools.doesDirectoryExist(alternativePathForDuplicate)) {
                 counter++;
                 alternativePathForDuplicate = directoryPath + "/" + fileName + "_duplicate_" + String.valueOf(counter) + ".txt";
             }
@@ -157,9 +189,9 @@ public class FilesTools {
             bufferedWriter.append(SQLquery);
             bufferedWriter.append("\n");
             bufferedWriter.close();
-            if (convertFileToStringArray(fullPath).toString().equals(SQLquery)) {
+            if (convertFileToStringArraySeparatedByColon(fullPath).toString().equals(SQLquery)) {
                 System.out.println("Files is equal:\nFirst file:");
-                System.out.println(convertFileToStringArray(fullPath).toString());
+                System.out.println(convertFileToStringArraySeparatedByColon(fullPath).toString());
                 System.out.println();
                 System.out.println("Second file:");
                 System.out.println(SQLquery);
@@ -167,6 +199,7 @@ public class FilesTools {
             }
         }
     }
+
     public static void writeProductSQLToFile(String lineToWriteToFile, String fileName) throws IOException {
         String fullPath = Config.DESTINATION_FOR_SQL_TEXT_FILE_PRODUCTS + fileName + ".txt";
         BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(fullPath, true));
@@ -182,10 +215,7 @@ public class FilesTools {
         bufferedWriter.append("\n");
         bufferedWriter.close();
     }
-
-
-
-
+    //</editor-fold>
 
 
     public static void addDayStringToTextFile(String fileName, String inputSting) throws IOException {
@@ -221,7 +251,7 @@ public class FilesTools {
     }
 
 
-
+    //<editor-fold desc="Read or get">
     public static String[] getStringArrayForAllFilesInDirectory(String directory) {
         // Danger and possible problem cause because max amount of files is dynamic
         int maxAmountOfFiles = 300;
@@ -249,14 +279,14 @@ public class FilesTools {
 
     public static String readTXTFile(String path) {
         String fileContent = "";
-        if (path == null){
+        if (path == null) {
             System.out.println("Path is null");
             return null;
         }
 
         File file = new File(path);
 
-        if (!file.exists()){
+        if (!file.exists()) {
             System.out.println("File doesn't exist");
             return null;
         }
@@ -314,6 +344,41 @@ public class FilesTools {
         return fileContent;
     }
 
+    public static String[] readAndGetAllLinesTXTFile(String path, int lineNumber) throws IOException {
+        String[] fileAllLines;
+        String[] fileLinesTMP = new String[60];
+        File file = new File(path);
+        FileReader fileReader;
+        int counter = 0;
+
+        try {
+            fileReader = new FileReader(file);
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+
+        BufferedReader bufferedReader = new BufferedReader(fileReader);
+
+        String line;
+        while (true) {
+            counter++;
+
+            if (!((line = bufferedReader.readLine()) != null)) break;
+
+
+            if (counter == lineNumber) {
+                fileLinesTMP[counter] += line;
+            }
+        }
+
+        fileAllLines = new String[counter];
+        for (int i = 0; i < counter; i++) {
+            fileAllLines[i] = fileLinesTMP[i];
+        }
+
+        return fileAllLines;
+    }
+
     public static String[] getFullAPathToAllTextFilesInDirectory(String pathToDirectory) {
         // It may cause error: hard code length to 100
 
@@ -338,8 +403,7 @@ public class FilesTools {
         }
         return fullPathToFiles;
     }
-
-
+    //</editor-fold>
 
     public static void sendSQLQueryToTxtFile(DayInCalendar dayInCalendar, String addProductToDayDisplaySelectedFDateDayLabel, String amountOfProductTextField) {
 

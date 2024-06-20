@@ -39,4 +39,40 @@ public class DirectoryTools {
             System.out.println("Wrong directory");
         }
     }
+
+    public static String[] getPathForAllFilesInAllDirectory(String startDirectory){
+        // hard code length - may cause error
+        String[] allFilesPath = new String[500];
+        File dir = new File(startDirectory);
+        File[] directoryListing = dir.listFiles();
+
+        int counter = 0;
+        if (directoryListing != null) {
+            for (File child : directoryListing) {
+
+                if(child.isDirectory()){
+                    File[] directoryListingSecondLevel = child.listFiles();
+                    for (File childSecondLevel : directoryListingSecondLevel) {
+                        if (childSecondLevel.isDirectory()){
+                            System.out.println("Directory in lower level - there should be only files - error");
+                            System.out.println(childSecondLevel.toString());
+                            return null;
+                        }
+                        allFilesPath[counter] = childSecondLevel.getPath();
+                        counter++;
+                    }
+
+                }
+            }
+        } else {
+            System.out.println("Wrong directory");
+        }
+
+        String[] resultArray = new String[counter];
+        for (int i = 0; i < counter; i++) {
+            resultArray[i] = allFilesPath[i];
+        }
+
+        return resultArray;
+    }
 }

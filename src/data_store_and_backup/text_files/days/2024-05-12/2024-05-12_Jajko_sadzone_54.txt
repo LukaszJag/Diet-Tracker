@@ -15,19 +15,19 @@ INSERT INTO `diet_tracker_schema`.`calendar`
 `fat_consume`,
 `protein_consume`)
 Values
-('2024-05-16',
-'Monday',
+('2024-05-12',
+'Sunday',
 'Dinner',
-31.0,
-'Jajko szadzone',
+54.0,
+'Jajko sadzone',
 245.0,
 14.4,
 20.8,
 0.8,
-'2024-05-20 12:11:45',
+'2024-05-12 09:44:33',
 'none',
-75.95,
-0.24800001,
-6.448,
-4.4639997
+132.3,
+0.432,
+11.232,
+7.776
 );

@@ -18,7 +18,7 @@ public class AddAllProductInTXTFromDirectory {
 
         for (int i = 0; i < allProductFromDirectory.length; i++) {
 
-            fileInArray = FilesTools.convertFileToStringArray(allProductFromDirectory[i]);
+            fileInArray = FilesTools.convertFileToStringArraySeparatedByColon(allProductFromDirectory[i]);
             if (fileInArray == null){
                 break;
             }
