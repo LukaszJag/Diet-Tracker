@@ -1,0 +1,9 @@
+Name: 7 Days Cake - wanilia
+Brand: 7 Days
+Package has: 32.0
+Macro for: 100.0
+KCal: 449.0
+Protein: 6.0
+Fat: 20.0
+Carbs: 60.0
+Comment optional: 
