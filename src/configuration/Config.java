@@ -1,6 +1,8 @@
 package configuration;
 
 import gui.GUIManager;
+import logs.LogsController;
+import tools.text_files_tools.FilesTools;
 
 import java.awt.*;
 import java.util.Date;
@@ -80,9 +82,7 @@ public class Config {
     public static String CURRENT_DATABASE_TABLE_CALENDAR = "calendar";
 
 
-
     // Product configuration
-
 
     //TEST
     GUIManager guiManager = new GUIManager();

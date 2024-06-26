@@ -1,5 +1,7 @@
 package runners_and_tests.tests;
 
+import configuration.Config;
+import logs.LogsController;
 import runners_and_tests.tests.get_simple_data_to_test.DayInCalendarFactoryToMakeTest;
 import runners_and_tests.tests.get_simple_data_to_test.ProductFactoryToMakeTests;
 import tools.calendar_tools.DayInCalendar;
@@ -47,28 +49,7 @@ public class QuickTests {
         //test21();
         //test22();
         //test23();
-    }
-
-
-
-    public static void printArrayWithoutNull(String[] arrayToPrint){
-        for (int i = 0; i < arrayToPrint.length; i++) {
-            if (arrayToPrint[i] != null) {
-                System.out.println(arrayToPrint[i] + "\n");
-            }
-        }
-    }
-
-    public static void printArray(String[] arrayToPrint){
-        for (int i = 0; i < arrayToPrint.length; i++) {
-            System.out.println(arrayToPrint[i]);
-        }
-    }
-
-    public static void printArrayWithNumOfPosition(String[] arrayToPrint){
-        for (int i = 0; i < arrayToPrint.length; i++) {
-            System.out.println("[" + i + "]:" + arrayToPrint[i]);
-        }
+        test24();
     }
 
     //<editor-fold desc="TESTS 1 -> 10">
@@ -288,6 +269,11 @@ public class QuickTests {
     }
 
     private static void test23() throws SQLException {
-        printArray(SQLSelect.getRowFromProductTableByProductNameGetArray("Jajko sadzone"));
+
     }
+
+    private static void test24() {
+        System.out.println(LogsController.getAmountOfLogs());
+    }
+
 }

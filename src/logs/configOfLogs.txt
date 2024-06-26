@@ -1,0 +1,11 @@
+Amount of logs:85
+Types of logs:
+###
+ADD PRODUCT TO CALENDAR TABLE BY GUI
+ADD PRODUCT TO PRODUCT TABLE BY GUI
+###
+
+
+
+
+
