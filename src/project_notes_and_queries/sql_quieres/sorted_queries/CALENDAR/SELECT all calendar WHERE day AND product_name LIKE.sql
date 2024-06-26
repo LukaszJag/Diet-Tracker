@@ -1,0 +1,1 @@
+SELECT * FROM calendar WHERE day_date="2024-04-13" AND product_name LIKE "Cuk%";
