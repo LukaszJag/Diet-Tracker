@@ -1,0 +1,9 @@
+Name: Płaty śledziowe smażone w sosie pomidorowym
+Brand: Seko
+Package has: 800.0
+Macro for: 100.0
+KCal: 118.0
+Protein: 7.6
+Fat: 5.5
+Carbs: 9.5
+Comment optional: 

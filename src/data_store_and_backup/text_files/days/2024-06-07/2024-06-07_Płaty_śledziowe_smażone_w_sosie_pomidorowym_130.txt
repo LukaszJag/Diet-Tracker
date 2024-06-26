@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2024-06-07',
+'Friday',
+'Dinner',
+130.0,
+'Płaty śledziowe smażone w sosie pomidorowym',
+118.0,
+7.6,
+5.5,
+9.5,
+'2024-06-26 10:38:25',
+'none',
+153.4,
+12.349999,
+7.1499996,
+9.879999
+);
