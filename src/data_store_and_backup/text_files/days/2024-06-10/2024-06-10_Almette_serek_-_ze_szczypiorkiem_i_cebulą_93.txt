@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2024-06-10',
+'Monday',
+'Breakfast',
+93.0,
+'Almette serek - ze szczypiorkiem i cebulą',
+242.0,
+7.0,
+22.0,
+4.0,
+'2024-06-28 10:09:46',
+'none',
+225.06,
+3.72,
+20.460001,
+6.51
+);

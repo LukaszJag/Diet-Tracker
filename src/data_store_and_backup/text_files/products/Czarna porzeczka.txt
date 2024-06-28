@@ -1,0 +1,9 @@
+Name: Czarna porzeczka
+Brand: 
+Package has: 0.0
+Macro for: 100.0
+KCal: 60.0
+Protein: 1.4
+Fat: 0.4
+Carbs: 11.4
+Comment optional: 

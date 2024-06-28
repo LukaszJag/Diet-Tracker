@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2024-06-08',
+'Saturday',
+'Dinner',
+236.0,
+'Zapiekanka z pieczarkami i serem mozzarella',
+227.0,
+11.0,
+5.9,
+31.0,
+'2024-06-28 09:53:54',
+'none',
+535.72,
+73.159996,
+13.924,
+25.96
+);

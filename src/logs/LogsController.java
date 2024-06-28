@@ -7,6 +7,8 @@ import java.io.*;
 import java.text.ParseException;
 
 public class LogsController {
+    static BufferedWriter bufferedWriter;
+
     public static int getAmountOfLogs(){
         int amountOfLogs = -1;
 
@@ -22,7 +24,6 @@ public class LogsController {
         return amountOfLogs;
     }
 
-    static BufferedWriter bufferedWriter;
     public static BufferedWriter createBufferedWriter(){
         File file = new File("src/logs/all_logs.txt");
         try {

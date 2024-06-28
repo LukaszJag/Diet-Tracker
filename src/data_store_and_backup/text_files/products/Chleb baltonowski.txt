@@ -1,0 +1,9 @@
+Name: Chleb baltonowski
+Brand: Z dobrej piekarni
+Package has: 500.0
+Macro for: 100.0
+KCal: 208.0
+Protein: 7.3
+Fat: 1.2
+Carbs: 41.0
+Comment optional: 

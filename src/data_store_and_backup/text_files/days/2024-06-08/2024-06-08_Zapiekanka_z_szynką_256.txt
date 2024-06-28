@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2024-06-08',
+'Saturday',
+'Dinner',
+256.0,
+'Zapiekanka z szynką',
+215.0,
+11.0,
+5.9,
+28.0,
+'2024-06-28 09:54:19',
+'none',
+550.39996,
+71.68,
+15.104,
+28.16
+);

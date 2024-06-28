@@ -1,0 +1,9 @@
+Name: Panierowane Nuggetsy z Kurczaka
+Brand: SuperDrob
+Package has: 200.0
+Macro for: 100.0
+KCal: 255.0
+Protein: 14.0
+Fat: 15.0
+Carbs: 14.0
+Comment optional: 

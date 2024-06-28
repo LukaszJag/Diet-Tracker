@@ -1,0 +1,9 @@
+Name: Mleko 2,0%
+Brand: Mlekovita
+Package has: 1000.0
+Macro for: 100.0
+KCal: 49.0
+Protein: 3.0
+Fat: 2.0
+Carbs: 4.7
+Comment optional: 

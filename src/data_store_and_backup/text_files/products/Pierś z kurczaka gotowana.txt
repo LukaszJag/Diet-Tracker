@@ -1,0 +1,9 @@
+Name: Pierś z kurczaka gotowana
+Brand: 
+Package has: 0.0
+Macro for: 100.0
+KCal: 151.0
+Protein: 32.9
+Fat: 2.0
+Carbs: 0.0
+Comment optional: 

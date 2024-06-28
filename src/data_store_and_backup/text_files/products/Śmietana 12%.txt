@@ -1,0 +1,9 @@
+Name: Śmietana 12%
+Brand: Mleczna Dolina
+Package has: 330.0
+Macro for: 100.0
+KCal: 137.0
+Protein: 3.0
+Fat: 12.0
+Carbs: 4.3
+Comment optional: 

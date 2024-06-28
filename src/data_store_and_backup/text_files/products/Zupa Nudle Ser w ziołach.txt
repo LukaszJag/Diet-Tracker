@@ -1,0 +1,9 @@
+Name: Zupa Nudle Ser w ziołach
+Brand: Knorr
+Package has: 61.0
+Macro for: 100.0
+KCal: 94.0
+Protein: 1.8
+Fat: 4.8
+Carbs: 10.0
+Comment optional: Opakowanie pozwala na przygotowanie 350g produktu

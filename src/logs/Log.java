@@ -6,9 +6,11 @@ import java.util.Date;
 import java.util.Formatter;
 
 public class Log {
-    String[] allLogsTypes = {"UNSET","UNCATEGORIZED","SQL INSERTION", "WARNING", "ERROR", "SQL IMPORT TXT FILES", "JAVA IMPORT SQL TABLE"};
+    String[] allLogsTypes = {"UNSET","UNCATEGORIZED","SQL INSERTION", "WARNING", "ERROR",
+            "SQL IMPORT TXT FILES", "JAVA IMPORT SQL TABLE",
+    "ADD PRODUCT TO CALENDAR TABLE BY GUI" + "ADD PRODUCT TO PRODUCT TABLE BY GUI"};
     String logType;
-    int logNumber = 0;
+    int logNumber;
 
     Date logDateCreation;
     String logBody;

@@ -1,0 +1,9 @@
+Name: Kotlet mielony
+Brand: 
+Package has: 0.0
+Macro for: 100.0
+KCal: 280.0
+Protein: 13.0
+Fat: 20.4
+Carbs: 11.5
+Comment optional: 

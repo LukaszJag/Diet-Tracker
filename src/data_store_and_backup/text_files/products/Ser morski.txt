@@ -1,0 +1,9 @@
+Name: Ser morski
+Brand: Światowid
+Package has: 0.0
+Macro for: 100.0
+KCal: 321.0
+Protein: 24.0
+Fat: 25.0
+Carbs: 0.0
+Comment optional: 
