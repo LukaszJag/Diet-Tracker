@@ -80,7 +80,18 @@ public class Macro {
         System.out.println("carbs: " + macro.getCarbs());
 
     }
-    // Getters and Setters
+    public static String getShortMacroInformation(Macro macro){
+        String shortMacroInfo = "";
+        shortMacroInfo +=
+        "kcal: " + macro.getKcal() + "--" +
+        "protein: " + macro.getProtein() + "--" +
+        "fat: " + macro.getFat() + "--" +
+        "carbs: " + macro.getCarbs();
+
+        return shortMacroInfo;
+    }
+
+    //<editor-fold desc="Getters and Setters">
     public float getKcal() {
         return kcal;
     }
@@ -112,4 +123,5 @@ public class Macro {
     public void setCarbs(float carbs) {
         this.carbs = carbs;
     }
+    //</editor-fold>
 }
