@@ -1,0 +1,9 @@
+Name: Chleb całe ziarno
+Brand: Biedronka
+Package has: 300.0
+Macro for: 100.0
+KCal: 221.0
+Protein: 7.0
+Fat: 2.0
+Carbs: 41.0
+Comment optional: 

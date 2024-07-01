@@ -1,0 +1,9 @@
+Name: Chleb fitness
+Brand: Biedronka
+Package has: 410.0
+Macro for: 100.0
+KCal: 295.0
+Protein: 12.5
+Fat: 6.5
+Carbs: 44.6
+Comment optional: 

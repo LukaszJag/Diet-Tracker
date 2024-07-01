@@ -1,0 +1,9 @@
+Name: Płatki kukurydziane
+Brand: Lubella
+Package has: 0.0
+Macro for: 100.0
+KCal: 394.0
+Protein: 6.6
+Fat: 2.3
+Carbs: 85.0
+Comment optional: 

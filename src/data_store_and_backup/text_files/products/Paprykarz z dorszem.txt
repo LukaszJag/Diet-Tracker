@@ -1,0 +1,9 @@
+Name: Paprykarz z dorszem
+Brand: Dega
+Package has: 130.0
+Macro for: 100.0
+KCal: 139.0
+Protein: 5.0
+Fat: 8.1
+Carbs: 11.0
+Comment optional: 

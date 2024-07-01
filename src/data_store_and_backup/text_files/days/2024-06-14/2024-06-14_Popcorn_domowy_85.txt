@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2024-06-14',
+'Friday',
+'Supper',
+85.0,
+'Popcorn domowy',
+425.54,
+11.09,
+14.26,
+66.79,
+'2024-06-30 11:08:23',
+'none',
+361.709,
+56.771503,
+12.121,
+9.4265
+);
