@@ -1,6 +1,7 @@
 package runners_and_tests.tests;
 
 import configuration.Config;
+import logs.Log;
 import logs.LogsController;
 import runners_and_tests.tests.get_simple_data_to_test.DayInCalendarFactoryToMakeTest;
 import runners_and_tests.tests.get_simple_data_to_test.ProductFactoryToMakeTests;
@@ -49,8 +50,12 @@ public class QuickTests {
         //test21();
         //test22();
         //test23();
-        test24();
+        //test24();
+        //test25();
+        //test26();
+        test27();
     }
+
 
     //<editor-fold desc="TESTS 1 -> 10">
     private static void test1() {
@@ -253,6 +258,7 @@ public class QuickTests {
     }
     //</editor-fold>
 
+    //<editor-fold desc=""TEST 21 -> 25">
     private static void test21() throws IOException {
 
         /*
@@ -276,4 +282,22 @@ public class QuickTests {
         System.out.println(LogsController.getAmountOfLogs());
     }
 
+    private static void test25() {
+        System.out.println("|" + Log.getLogID() + "|");
+    }
+    //</editor-fold>
+
+
+    private static void test26() {
+        Log.increaseLogAmountByOne();
+    }
+
+    private static void test27() {
+        DayInCalendar dayInCalendar = DayInCalendarFactoryToMakeTest.getExampleDayInCalendarWitDateFriendlyForSQL();
+        Product dayInCalendarProduct = ProductFactoryToMakeTests.productBarExample();
+
+        Log.addNewLogForProductToCalendarGUIAccept(dayInCalendar.getDayDateFormatFriendlyForSQL(), dayInCalendarProduct.getProductName(), dayInCalendar.getDayProductMacro(),
+                dayInCalendar.getDayAmountOfProduct(), dayInCalendar.getDayDateDayName(), dayInCalendar.getMealName() ,dayInCalendar.getDayProductProduct(),
+                dayInCalendar.getConsumedMacro(), dayInCalendar);
+    }
 }

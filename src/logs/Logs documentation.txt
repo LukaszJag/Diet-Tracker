@@ -1,4 +1,8 @@
-Logs documentation
+Logs documentation:
+
+Start adding logs:
+
+    -> ??.??.????
 
 
 

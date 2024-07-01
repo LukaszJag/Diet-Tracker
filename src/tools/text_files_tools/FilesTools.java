@@ -152,7 +152,7 @@ public class FilesTools {
     //</editor-fold>
 
 
-    //<editor-fold desc="Write data - writeSQLStatementForDayInCalendarToTXTFile, writeProductSQLToFile, writeProductToFile">
+    //<editor-fold desc="Write data - writeToFileOverwriteAllFile, writeSQLStatementForDayInCalendarToTXTFile, writeProductSQLToFile, writeProductToFile">
     public static void writeSQLStatementForDayInCalendarToTXTFile(String fileName, DayInCalendar dayInCalendar) throws IOException {
 
         String directoryPath = "src/data_store_and_backup/text_files/days/" + dayInCalendar.getDayDateFormatFriendlyForSQL().toString();
@@ -214,6 +214,29 @@ public class FilesTools {
         bufferedWriter.append(lineToWriteToFile.toString());
         bufferedWriter.append("\n");
         bufferedWriter.close();
+    }
+
+    public static void writeToFileOverwriteAllFile(String fullPathWithExtension, String newContent) {
+        BufferedWriter bufferedWriter = null;
+        try {
+            bufferedWriter = new BufferedWriter(new FileWriter(fullPathWithExtension, false));
+            bufferedWriter.write(newContent);
+            bufferedWriter.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static void writeToFileAtEndOFFile(String fullPathWithExtension, String newContent) {
+        BufferedWriter bufferedWriter = null;
+        try {
+            bufferedWriter = new BufferedWriter(new FileWriter(fullPathWithExtension, true));
+            bufferedWriter.write("\n");
+            bufferedWriter.write(newContent);
+            bufferedWriter.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
     //</editor-fold>
 

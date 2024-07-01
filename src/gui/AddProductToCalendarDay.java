@@ -1,5 +1,6 @@
 package gui;
 
+import logs.Log;
 import tools.calendar_tools.DayInCalendar;
 import configuration.Config;
 import tools.products_tools.Macro;
@@ -376,8 +377,12 @@ public class AddProductToCalendarDay {
         Macro consumedMacro = calculateConsumedMacro(dayInCalendarProduct, amountOfProductInGrams);
         DayInCalendar dayInCalendar = getDayInCalendarFromDataInGUI(dayInCalendarProduct, consumedMacro);
 
-        FilesTools.sendSQLQueryToTxtFile(dayInCalendar, addProductToDayDisplaySelectedFDateDayLabel.getText(), amountOfProductTextField.getText());
+        FilesTools.sendSQLQueryToTxtFile(dayInCalendar,
+                addProductToDayDisplaySelectedFDateDayLabel.getText(), amountOfProductTextField.getText());
 
+        Log.addNewLogForProductToCalendarGUIAccept(dayInCalendar.getDayDateFormatFriendlyForSQL(), dayInCalendarProduct.getProductName(), dayInCalendar.getDayProductMacro(),
+                dayInCalendar.getDayAmountOfProduct(), dayInCalendar.getDayDateDayName(), dayInCalendar.getMealName() ,dayInCalendar.getDayProductProduct(),
+                dayInCalendar.getConsumedMacro(), dayInCalendar);
         try {
             InsertToCalendarDayTable.addRowToCalendarTable(dayInCalendar);
         } catch (SQLException ex) {

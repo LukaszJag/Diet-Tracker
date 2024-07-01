@@ -1,50 +1,88 @@
 package logs;
 
+import tools.calendar_tools.DayInCalendar;
+import tools.products_tools.Macro;
+import tools.products_tools.Product;
+import tools.text_files_tools.FilesTools;
+
+import java.io.File;
 import java.io.IOException;
-import java.text.Format;
+import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Formatter;
 
 public class Log {
-    String[] allLogsTypes = {"UNSET","UNCATEGORIZED","SQL INSERTION", "WARNING", "ERROR",
+
+
+    //<editor-fold desc="Tags">
+    String[] allLogsTypes = {"UNSET", "UNCATEGORIZED", "SQL INSERTION", "WARNING", "ERROR",
             "SQL IMPORT TXT FILES", "JAVA IMPORT SQL TABLE",
-    "ADD PRODUCT TO CALENDAR TABLE BY GUI" + "ADD PRODUCT TO PRODUCT TABLE BY GUI"};
+            "ADD PRODUCT TO CALENDAR TABLE BY GUI" + "ADD PRODUCT TO PRODUCT TABLE BY GUI"};
+
+    String  addNewProductToCalendarTableTag = "ADD PRODUCT TO CALENDAR TABLE BY GUI";
+    String addNewProductToProductTableTag = "ADD PRODUCT TO PRODUCT TABLE BY GUI";
+    String errorTag = "ERROR";
+    //</editor-fold>
+
+
     String logType;
     int logNumber;
 
     Date logDateCreation;
     String logBody;
 
-    public Log(String logBody){
-        this.logNumber += 1;
-        this.logDateCreation = new Date();
-        this.logBody = logBody;
-    };
+    /*
+    (dayInCalendarProduct.getProductName(), dayInCalendar.getDayProductMacro(),
+                dayInCalendar.getDayAmountOfProduct(), dayInCalendar.getDayDateDayName(), dayInCalendar.getMealName() ,dayInCalendar.getDayProductProduct(),
+                dayInCalendar.getConsumedMacro())
+     */
+    public static void addNewLogForProductToCalendarGUIAccept(String dayDateFormatFriendlyForSQL,String productName, Macro productMacro, float amountOfProduct,
+                                                              String dayDateDayName, String mealName, Product dayProductProduct,
+                                                              Macro consumedMacro, DayInCalendar dayInCalendar) {
+        String logBody = "";
+        logBody += getLogID() + ":-:";
 
-    public Log(Date logDateCreation, String logBody) {
-        this.logNumber += 1;
-        this.logDateCreation = logDateCreation;
-        this.logType = "UNSET";
-        this.logBody = logBody;
-    }
-    public Log(Date logDateCreation, String logType, String logBody) {
-        this.logNumber += 1;
-        this.logDateCreation = logDateCreation;
-        this.logType = logType;
-        this.logBody = logBody;
+        increaseLogAmountByOne();
+
+        String date = dayInCalendar.getDayDateFormatFriendlyForSQL();
+
+        // It may cause error hard code value: tag
+        String logLine = "ADD PRODUCT TO CALENDAR TABLE BY GUI" + ":-:" + date + ":-:" + dayDateDayName + ":-:" + productName + ":-:" + amountOfProduct + ":-:" + Macro.getShortMacroInformation(productMacro) +
+                ":-:" + mealName + ":-:" + dayProductProduct.getProductBrand() + ":-:" + Macro.getShortMacroInformation(consumedMacro) + ":-:";
+
+        logBody += logLine;
+        // It may cause error hard code value: path
+        FilesTools.writeToFileAtEndOFFile("src/logs/all_logs.txt", logBody);
+        System.out.println(logBody);
+
     }
 
     public static void makeLogForAddNewProductToSQLTable(String logBody) throws IOException {
-        LogsController.writeLineToAllLogsFile(new Log(logBody));
     }
 
-    public String getLogReadableForm(Log log){
+    public String getLogReadableForm(Log log) {
         String logLine = "";
-        logLine = String.valueOf(log.getLogNumber()) + ":-:" + log.getLogType() +":-:" + log.getLogBody() +
+        logLine = String.valueOf(log.getLogNumber()) + ":-:" + log.getLogType() + ":-:" + log.getLogBody() +
                 ":-:" + log.getLogDateCreation().toString() + ":-:";
 
         return logLine;
     }
+
+    //<editor-fold desc="Handling log ID part">
+    public static int getLogID() {
+        int logID = -1;
+
+        String getLogID = FilesTools.readAndGetLineTXTFile("src/logs/logID.txt", 1);
+        logID = Integer.valueOf(getLogID);
+        return logID;
+    }
+
+    public static void increaseLogAmountByOne() {
+        int logIDNumber = getLogID();
+        String newID = String.valueOf(logIDNumber + 1);
+        FilesTools.writeToFileOverwriteAllFile("src/logs/logID.txt", newID);
+    }
+    //</editor-fold>
+
 
     //<editor-fold desc="Getters and Setters">
     public String getLogType() {
@@ -77,6 +115,29 @@ public class Log {
 
     public void setLogBody(String logBody) {
         this.logBody = logBody;
+    }
+    public String getAddNewProductToCalendarTableTag() {
+        return addNewProductToCalendarTableTag;
+    }
+
+    public void setAddNewProductToCalendarTableTag(String addNewProductToCalendarTableTag) {
+        this.addNewProductToCalendarTableTag = addNewProductToCalendarTableTag;
+    }
+
+    public String getAddNewProductToProductTableTag() {
+        return addNewProductToProductTableTag;
+    }
+
+    public void setAddNewProductToProductTableTag(String addNewProductToProductTableTag) {
+        this.addNewProductToProductTableTag = addNewProductToProductTableTag;
+    }
+
+    public String getErrorTag() {
+        return errorTag;
+    }
+
+    public void setErrorTag(String errorTag) {
+        this.errorTag = errorTag;
     }
     //</editor-fold>
 }
