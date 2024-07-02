@@ -13,3 +13,4 @@
 13:-:2024-01-10:-:ADD PRODUCT TO CALENDAR TABLE BY GUI:-:2024-01-10:-:Wednesday:-:Burak:-:1.0:-:kcal: 42.0--protein: 1.8--fat: 0.1--carbs: 9.5:-:Snack 1:-:None:-:kcal: 0.42--protein: 0.018--fat: 0.001--carbs: 0.095:-:
 14:-:2024-07-02:-:ADD PRODUCT TO CALENDAR TABLE BY GUI:-:2024-01-01:-:Monday:-:Burak:-:2.0:-:kcal: 42.0--protein: 1.8--fat: 0.1--carbs: 9.5:-:Dinner:-:None:-:kcal: 0.84--protein: 0.036--fat: 0.002--carbs: 0.19:-:
 15:-:2024-07-02:-:ADD PRODUCT TO CALENDAR TABLE BY GUI:-:calendar_test:-:2024-01-12:-:Friday:-:Burak:-:4.0:-:kcal: 42.0--protein: 1.8--fat: 0.1--carbs: 9.5:-:Second Breakfast:-:None:-:kcal: 1.68--protein: 0.072--fat: 0.004--carbs: 0.38:-:
+16:-:2024-07-02:-:ADD PRODUCT TO PRODUCT TABLE BY GUI:-:product_table_test:-:bulbulbul:-:gugu:-:kcal: 1.0--protein: 1.0--fat: 1.0--carbs: 1.0:-:0:-:100:-:

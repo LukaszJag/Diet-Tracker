@@ -33,7 +33,7 @@ public class AddSingleProductWindow {
 
     //<editor-fold desc="Labels">
     JLabel productNameLabel;
-    JLabel productBrandLabel ;
+    JLabel productBrandLabel;
     JLabel productPackageHasLabel;
     JLabel productMacroForLabel;
     JLabel productKCalLabel;
@@ -64,7 +64,7 @@ public class AddSingleProductWindow {
     private void startAddNewProductWindow() {
         addProductWindowFrame = new JFrame("Diet Tracker");
         addProductWindowFrame.setSize(Config.ADD_PRODUCT_WINDOWS_WIDTH, Config.ADD_PRODUCT_WINDOWS_HEIGHT);
-        
+
         //Set Layout
         addProductMainPanel.setLayout(new GridLayout(9, 2));
         addProductWindowFrame.setLayout(new BorderLayout());
@@ -97,7 +97,7 @@ public class AddSingleProductWindow {
         addProductWindowFrame.add(addProductPanelSouth, BorderLayout.SOUTH);
     }
 
-    private void addComponentsToPanels(){
+    private void addComponentsToPanels() {
 
         //<editor-fold desc="Add components to - Main Panel">
         addProductMainPanel.add(productNameLabel);
@@ -137,7 +137,7 @@ public class AddSingleProductWindow {
 
     }
 
-    private void setComponents(){
+    private void setComponents() {
 
         //<editor-fold desc="Set Labels">
         productNameLabel = new JLabel("Name:");
@@ -182,7 +182,7 @@ public class AddSingleProductWindow {
 
     }
 
-    private void acceptProduct(){
+    private void acceptProduct() {
 
         //<editor-fold desc="Set variables to store data in String">
         String[] addNewProductData = new String[Config.howManyParametersToAddProduct];
@@ -290,19 +290,18 @@ public class AddSingleProductWindow {
             throw new RuntimeException(ex);
         }
 
-        JOptionPane.showMessageDialog(null, "Product data:\n\n" + "Name: " + name + "\nBrand: " + brand
+
+        Log.makeLogForAddNewProductToSQLTable(
+                name,
+                brand,
+                packageHas,
+                macroFor, newProductMacro);
+
+
+        JOptionPane.showMessageDialog(null, "Product add to library." + "Product data:\n\n" + "Name: " + name + "\nBrand: " + brand
                 + "\nPackage has: " + packageHas + "\nMacro for: " + macroFor
                 + "\nKCal: " + kCal + "\nProtein: " + protein +
                 "\nFat: " + fat + "\nCarbs: " + carbs + "\nComment" + commentOptional);
-
-
-        try {
-            Log.makeLogForAddNewProductToSQLTable("|-" + name+ "-|-" + brand + "-|");
-        } catch (IOException ex) {
-            throw new RuntimeException(ex);
-        }
-
-        JOptionPane.showMessageDialog(null, "Product add to library");
     }
 
     public class AddNewProductButtonActionListener implements ActionListener {

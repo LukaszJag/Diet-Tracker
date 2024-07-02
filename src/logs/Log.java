@@ -20,7 +20,7 @@ public class Log {
             "SQL IMPORT TXT FILES", "JAVA IMPORT SQL TABLE",
             "ADD PRODUCT TO CALENDAR TABLE BY GUI" + "ADD PRODUCT TO PRODUCT TABLE BY GUI"};
 
-    String  addNewProductToCalendarTableTag = "ADD PRODUCT TO CALENDAR TABLE BY GUI";
+    String addNewProductToCalendarTableTag = "ADD PRODUCT TO CALENDAR TABLE BY GUI";
     String addNewProductToProductTableTag = "ADD PRODUCT TO PRODUCT TABLE BY GUI";
     String errorTag = "ERROR";
     //</editor-fold>
@@ -37,7 +37,7 @@ public class Log {
                 dayInCalendar.getDayAmountOfProduct(), dayInCalendar.getDayDateDayName(), dayInCalendar.getMealName() ,dayInCalendar.getDayProductProduct(),
                 dayInCalendar.getConsumedMacro())
      */
-    public static void addNewLogForProductToCalendarGUIAccept(String dayDateFormatFriendlyForSQL,String productName, Macro productMacro, float amountOfProduct,
+    public static void addNewLogForProductToCalendarGUIAccept(String dayDateFormatFriendlyForSQL, String productName, Macro productMacro, float amountOfProduct,
                                                               String dayDateDayName, String mealName, Product dayProductProduct,
                                                               Macro consumedMacro, DayInCalendar dayInCalendar) {
         String logID = "";
@@ -47,20 +47,41 @@ public class Log {
         String date = dayInCalendar.getDayDateFormatFriendlyForSQL();
 
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        String currentDateString = format.format(new Date());
 
-        String currentDateString = format.format( new Date()   );;
         String currentCalendarTable = Config.CURRENT_DATABASE_TABLE_CALENDAR;
+
         // It may cause error hard code value: tag
         String logBody = logID + ":-:" + currentDateString + ":-:" + "ADD PRODUCT TO CALENDAR TABLE BY GUI" + ":-:" + currentCalendarTable + ":-:" + date + ":-:" + dayDateDayName + ":-:" + productName + ":-:" + amountOfProduct + ":-:" + Macro.getShortMacroInformation(productMacro) +
                 ":-:" + mealName + ":-:" + dayProductProduct.getProductBrand() + ":-:" + Macro.getShortMacroInformation(consumedMacro) + ":-:";
 
         // It may cause error hard code value: path
         FilesTools.writeToFileAtEndOFFile("src/logs/all_logs.txt", logBody);
-        System.out.println(logID);
+        System.out.println("Log for calendar window: has been added");
 
     }
 
-    public static void makeLogForAddNewProductToSQLTable(String logBody) throws IOException {
+    public static void makeLogForAddNewProductToSQLTable(
+            String productName,
+            String brand,
+            String packageHas,
+            String macroFor,
+            Macro productMacro) {
+        String logID = "";
+        logID += getLogID();
+        increaseLogAmountByOne();
+
+
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        String currentDateString = format.format(new Date());
+        ;
+        String currentProductTable = Config.CURRENT_DATABASE_TABLE_PRODUCT;
+        String logBody = logID + ":-:" + currentDateString + ":-:" + "ADD PRODUCT TO PRODUCT TABLE BY GUI" + ":-:" + currentProductTable + ":-:" + productName
+                + ":-:" + brand + ":-:" + Macro.getShortMacroInformation(productMacro) +
+                ":-:" + packageHas + ":-:" + macroFor + ":-:";
+
+        FilesTools.writeToFileAtEndOFFile("src/logs/all_logs.txt", logBody);
+        System.out.println("Log for product window: has been added");
     }
 
     public String getLogReadableForm(Log log) {
@@ -120,6 +141,7 @@ public class Log {
     public void setLogBody(String logBody) {
         this.logBody = logBody;
     }
+
     public String getAddNewProductToCalendarTableTag() {
         return addNewProductToCalendarTableTag;
     }
