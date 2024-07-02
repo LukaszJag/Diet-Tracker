@@ -53,7 +53,8 @@ public class QuickTests {
         //test24();
         //test25();
         //test26();
-        test27();
+        //test27();
+        test28();
     }
 
 
@@ -299,5 +300,13 @@ public class QuickTests {
         Log.addNewLogForProductToCalendarGUIAccept(dayInCalendar.getDayDateFormatFriendlyForSQL(), dayInCalendarProduct.getProductName(), dayInCalendar.getDayProductMacro(),
                 dayInCalendar.getDayAmountOfProduct(), dayInCalendar.getDayDateDayName(), dayInCalendar.getMealName() ,dayInCalendar.getDayProductProduct(),
                 dayInCalendar.getConsumedMacro(), dayInCalendar);
+    }
+
+    private static void test28() {
+
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+
+        String dateString = format.format( new Date()   );
+        System.out.println(dateString);
     }
 }

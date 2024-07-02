@@ -182,124 +182,135 @@ public class AddSingleProductWindow {
 
     }
 
+    private void acceptProduct(){
+
+        //<editor-fold desc="Set variables to store data in String">
+        String[] addNewProductData = new String[Config.howManyParametersToAddProduct];
+        String name = "";
+        String brand = "";
+        String packageHas = "";
+        String macroFor = "";
+        String kCal = "";
+        String protein = "";
+        String fat = "";
+        String carbs = "";
+        String commentOptional = productCommentOptionalCarbsTextField.getText();
+        //</editor-fold>
+
+        //<editor-fold desc="Get data from GUI to array in String type">
+        name = productNameTextField.getText();
+        brand = productBrandTextField.getText();
+        if (productPackageHasTextField.getText().equals("")) {
+            System.out.println("Product filed is empty");
+            packageHas = "0";
+        } else {
+            System.out.println("Product filed is not empty");
+            packageHas = productPackageHasTextField.getText();
+        }
+        macroFor = productMacroForComboBox.getSelectedItem().toString();
+        kCal = productKCalTextField.getText();
+        protein = productProteinTextField.getText();
+        fat = productFatTextField.getText();
+        carbs = productCarbsTextField.getText();
+
+        if (macroFor.equals("package")) {
+            macroFor = packageHas;
+        } else {
+            macroFor = "100";
+        }
+
+        try {
+            addNewProductData[0] = name;
+            addNewProductData[1] = brand;
+            addNewProductData[2] = packageHas;
+            addNewProductData[3] = macroFor;
+            addNewProductData[4] = kCal;
+            addNewProductData[5] = protein;
+            addNewProductData[6] = fat;
+            addNewProductData[7] = carbs;
+
+        } catch (IllegalArgumentException exception) {
+            System.out.println("Wrong Type exeption.");
+        }
+        //</editor-fold>
+
+        boolean passTest = true;
+
+        //<editor-fold desc="Parse data to float type">
+        try {
+            packageHas = packageHas.replace(',', '.');
+            Float.parseFloat(packageHas);
+        } catch (Exception ParseToDoubleException) {
+            JOptionPane.showMessageDialog(null, "Wrong input in package has text field.");
+            passTest = false;
+        }
+
+        try {
+            kCal = kCal.replace(',', '.');
+            Float.parseFloat(kCal);
+        } catch (Exception ParseToDoubleException) {
+            JOptionPane.showMessageDialog(null, "Wrong input in KCal text field.");
+            passTest = false;
+        }
+
+        try {
+            protein = protein.replace(',', '.');
+            Float.parseFloat(protein);
+        } catch (Exception ParseToDoubleException) {
+            JOptionPane.showMessageDialog(null, "Wrong input in protein text field.");
+            passTest = false;
+        }
+
+        try {
+            fat = fat.replace(',', '.');
+            Float.parseFloat(fat);
+        } catch (Exception ParseToDoubleException) {
+            JOptionPane.showMessageDialog(null, "Wrong input in fat text field.");
+            passTest = false;
+        }
+
+        try {
+            carbs = carbs.replace(',', '.');
+            Float.parseFloat(carbs);
+        } catch (Exception ParseToDoubleException) {
+            JOptionPane.showMessageDialog(null, "Wrong input in carbs text field.");
+            passTest = false;
+        }
+        //</editor-fold>
+
+        Macro newProductMacro = new Macro(Float.parseFloat(kCal), Float.parseFloat(protein),
+                Float.parseFloat(fat), Float.parseFloat(carbs));
+        Product newProduct = new Product(name, brand, Float.parseFloat(macroFor), newProductMacro, Float.parseFloat(packageHas), commentOptional);
+
+        FilesTools.makeTextFileForProduct(newProduct, Float.parseFloat(macroFor));
+        FilesTools.makeSQLTextFileForProduct(newProduct.getProductName(), InsertProductToSQL_Table.createInsertSQLQueryForProductTable(newProduct));
+        try {
+            InsertProductToSQL_Table.insertProduct(newProduct);
+        } catch (SQLException ex) {
+            throw new RuntimeException(ex);
+        }
+
+        JOptionPane.showMessageDialog(null, "Product data:\n\n" + "Name: " + name + "\nBrand: " + brand
+                + "\nPackage has: " + packageHas + "\nMacro for: " + macroFor
+                + "\nKCal: " + kCal + "\nProtein: " + protein +
+                "\nFat: " + fat + "\nCarbs: " + carbs + "\nComment" + commentOptional);
+
+
+        try {
+            Log.makeLogForAddNewProductToSQLTable("|-" + name+ "-|-" + brand + "-|");
+        } catch (IOException ex) {
+            throw new RuntimeException(ex);
+        }
+
+        JOptionPane.showMessageDialog(null, "Product add to library");
+    }
 
     public class AddNewProductButtonActionListener implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent e) {
             if (e.getSource() == acceptButton) {
-                String[] addNewProductData = new String[Config.howManyParametersToAddProduct];
-                String name = "";
-                String brand = "";
-                String packageHas = "";
-                String macroFor = "";
-                String kCal = "";
-                String protein = "";
-                String fat = "";
-                String carbs = "";
-                String commentOptional = productCommentOptionalCarbsTextField.getText();
-
-                name = productNameTextField.getText();
-                brand = productBrandTextField.getText();
-                if (productPackageHasTextField.getText().equals("")) {
-                    System.out.println("Product filed is empty");
-                    packageHas = "0";
-                } else {
-                    System.out.println("Product filed is not empty");
-                    packageHas = productPackageHasTextField.getText();
-                }
-                macroFor = productMacroForComboBox.getSelectedItem().toString();
-                kCal = productKCalTextField.getText();
-                protein = productProteinTextField.getText();
-                fat = productFatTextField.getText();
-                carbs = productCarbsTextField.getText();
-
-                if (macroFor.equals("package")) {
-                    macroFor = packageHas;
-                } else {
-                    macroFor = "100";
-                }
-
-                try {
-                    addNewProductData[0] = name;
-                    addNewProductData[1] = brand;
-                    addNewProductData[2] = packageHas;
-                    addNewProductData[3] = macroFor;
-                    addNewProductData[4] = kCal;
-                    addNewProductData[5] = protein;
-                    addNewProductData[6] = fat;
-                    addNewProductData[7] = carbs;
-
-                } catch (IllegalArgumentException exception) {
-                    System.out.println("Wrong Type exeption.");
-                }
-
-                boolean passTest = true;
-
-                try {
-                    packageHas = packageHas.replace(',', '.');
-                    Float.parseFloat(packageHas);
-                } catch (Exception ParseToDoubleException) {
-                    JOptionPane.showMessageDialog(null, "Wrong input in package has text field.");
-                    passTest = false;
-                }
-
-                try {
-                    kCal = kCal.replace(',', '.');
-                    Float.parseFloat(kCal);
-                } catch (Exception ParseToDoubleException) {
-                    JOptionPane.showMessageDialog(null, "Wrong input in KCal text field.");
-                    passTest = false;
-                }
-
-                try {
-                    protein = protein.replace(',', '.');
-                    Float.parseFloat(protein);
-                } catch (Exception ParseToDoubleException) {
-                    JOptionPane.showMessageDialog(null, "Wrong input in protein text field.");
-                    passTest = false;
-                }
-
-                try {
-                    fat = fat.replace(',', '.');
-                    Float.parseFloat(fat);
-                } catch (Exception ParseToDoubleException) {
-                    JOptionPane.showMessageDialog(null, "Wrong input in fat text field.");
-                    passTest = false;
-                }
-
-                try {
-                    carbs = carbs.replace(',', '.');
-                    Float.parseFloat(carbs);
-                } catch (Exception ParseToDoubleException) {
-                    JOptionPane.showMessageDialog(null, "Wrong input in carbs text field.");
-                    passTest = false;
-                }
-
-                Macro newProductMacro = new Macro(Float.parseFloat(kCal), Float.parseFloat(protein),
-                        Float.parseFloat(fat), Float.parseFloat(carbs));
-                Product newProduct = new Product(name, brand, Float.parseFloat(macroFor), newProductMacro, Float.parseFloat(packageHas), commentOptional);
-
-                FilesTools.makeTextFileForProduct(newProduct, Float.parseFloat(macroFor));
-                FilesTools.makeSQLTextFileForProduct(newProduct.getProductName(), InsertProductToSQL_Table.createInsertSQLQueryForProductTable(newProduct));
-                try {
-                    InsertProductToSQL_Table.insertProduct(newProduct);
-                } catch (SQLException ex) {
-                    throw new RuntimeException(ex);
-                }
-
-                JOptionPane.showMessageDialog(null, "Product data:\n\n" + "Name: " + name + "\nBrand: " + brand
-                        + "\nPackage has: " + packageHas + "\nMacro for: " + macroFor
-                        + "\nKCal: " + kCal + "\nProtein: " + protein +
-                        "\nFat: " + fat + "\nCarbs: " + carbs + "\nComment" + commentOptional);
-
-
-                try {
-                    Log.makeLogForAddNewProductToSQLTable("|-" + name+ "-|-" + brand + "-|");
-                } catch (IOException ex) {
-                    throw new RuntimeException(ex);
-                }
-                JOptionPane.showMessageDialog(null, "Product add to library");
+                acceptProduct();
             }
         }
     }

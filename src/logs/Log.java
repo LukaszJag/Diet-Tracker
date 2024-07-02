@@ -1,5 +1,6 @@
 package logs;
 
+import configuration.Config;
 import tools.calendar_tools.DayInCalendar;
 import tools.products_tools.Macro;
 import tools.products_tools.Product;
@@ -7,6 +8,7 @@ import tools.text_files_tools.FilesTools;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -38,21 +40,23 @@ public class Log {
     public static void addNewLogForProductToCalendarGUIAccept(String dayDateFormatFriendlyForSQL,String productName, Macro productMacro, float amountOfProduct,
                                                               String dayDateDayName, String mealName, Product dayProductProduct,
                                                               Macro consumedMacro, DayInCalendar dayInCalendar) {
-        String logBody = "";
-        logBody += getLogID() + ":-:";
-
+        String logID = "";
+        logID += getLogID();
         increaseLogAmountByOne();
 
         String date = dayInCalendar.getDayDateFormatFriendlyForSQL();
 
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+
+        String currentDateString = format.format( new Date()   );;
+        String currentCalendarTable = Config.CURRENT_DATABASE_TABLE_CALENDAR;
         // It may cause error hard code value: tag
-        String logLine = "ADD PRODUCT TO CALENDAR TABLE BY GUI" + ":-:" + date + ":-:" + dayDateDayName + ":-:" + productName + ":-:" + amountOfProduct + ":-:" + Macro.getShortMacroInformation(productMacro) +
+        String logBody = logID + ":-:" + currentDateString + ":-:" + "ADD PRODUCT TO CALENDAR TABLE BY GUI" + ":-:" + currentCalendarTable + ":-:" + date + ":-:" + dayDateDayName + ":-:" + productName + ":-:" + amountOfProduct + ":-:" + Macro.getShortMacroInformation(productMacro) +
                 ":-:" + mealName + ":-:" + dayProductProduct.getProductBrand() + ":-:" + Macro.getShortMacroInformation(consumedMacro) + ":-:";
 
-        logBody += logLine;
         // It may cause error hard code value: path
         FilesTools.writeToFileAtEndOFFile("src/logs/all_logs.txt", logBody);
-        System.out.println(logBody);
+        System.out.println(logID);
 
     }
 
