@@ -17,4 +17,5 @@ public class UpdateProductAndCalendarTableFull {
         AddAllCalendarDaysInTXTFromDirectory.main(null);
         System.out.println("\nAddAllCalendarDaysInTXTFromDirectory: PASS");
     }
+
 }

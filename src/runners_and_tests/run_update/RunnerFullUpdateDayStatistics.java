@@ -36,4 +36,8 @@ public class RunnerFullUpdateDayStatistics {
         UpdateDaysStatisticsFilledColumns.updateWholeMonthMacroSumMay();
         System.out.println("updateWholeMonthMacroSumMay : PASS");
     }
+    public static void runFullUpdateMayAndJune() throws SQLException {
+        updateDaysStatisticsMay();
+        updateDaysStatisticsJune();
+    }
 }

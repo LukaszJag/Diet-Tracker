@@ -1,11 +1,13 @@
 package gui;
 
 import configuration.Config;
+import runners_and_tests.run_update.RunnerFullUpdateDayStatistics;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 
 public class MainWindow extends JFrame {
     public MainWindow(){
@@ -173,7 +175,13 @@ public class MainWindow extends JFrame {
     private class RefreshDataBaseButtonActionListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            JOptionPane.showMessageDialog(null, "NOTHING HAPPEN");
+            try {
+                RunnerFullUpdateDayStatistics.runFullUpdateMayAndJune();
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            }
+
+            JOptionPane.showMessageDialog(null, "Day Statistics is fully update");
         }
     }
 }
