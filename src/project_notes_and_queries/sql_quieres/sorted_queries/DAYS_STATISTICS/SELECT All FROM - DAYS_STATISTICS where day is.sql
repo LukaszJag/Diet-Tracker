@@ -1,0 +1,1 @@
+SELECT * FROM days_statistics_test WHERE day_date = "2024-05-10";
