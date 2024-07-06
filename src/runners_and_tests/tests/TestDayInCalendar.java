@@ -1,7 +1,7 @@
 package runners_and_tests.tests;
 
-import runners_and_tests.tests.get_simple_data_to_test.DayInCalendarFactoryToMakeTest;
-import runners_and_tests.tests.get_simple_data_to_test.ProductFactoryToMakeTests;
+import runners_and_tests.tests.test_tools.get_simple_data_to_test.DayInCalendarFactoryToMakeTest;
+import runners_and_tests.tests.test_tools.get_simple_data_to_test.ProductFactoryToMakeTests;
 import tools.calendar_tools.DayInCalendar;
 import tools.sql_tools.calendar.InsertToCalendarDayTable;
 import tools.sql_tools.SearchForKey;

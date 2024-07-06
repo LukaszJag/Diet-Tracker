@@ -16,6 +16,7 @@ import java.sql.SQLException;
 import java.text.Format;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.GregorianCalendar;
 
 public class AddProductToCalendarDay {
@@ -423,7 +424,7 @@ public class AddProductToCalendarDay {
         //<editor-fold desc="Setting correct full date from West Panel Label">
         // Set passing date to correct format
 
-        java.util.Date datePassedToSQL;
+        Date datePassedToSQL;
         try {
             datePassedToSQL = new SimpleDateFormat("yyyy-MM-dd").parse(addProductToDayDisplaySelectedFDateDayLabel.getText());
         } catch (ParseException ex) {
