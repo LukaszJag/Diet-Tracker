@@ -1,10 +1,11 @@
 package runners_and_tests.tests;
 
-import configuration.Config;
+import gui.CalendarMonthStatsView;
 import logs.Log;
 import logs.LogsController;
-import runners_and_tests.tests.get_simple_data_to_test.DayInCalendarFactoryToMakeTest;
-import runners_and_tests.tests.get_simple_data_to_test.ProductFactoryToMakeTests;
+import runners_and_tests.tests.test_tools.get_simple_data_to_test.DayInCalendarFactoryToMakeTest;
+import runners_and_tests.tests.test_tools.get_simple_data_to_test.ProductFactoryToMakeTests;
+import runners_and_tests.tests.test_tools.other_tools_to_name_later.InputData;
 import tools.calendar_tools.DayInCalendar;
 import tools.products_tools.Product;
 import tools.sql_tools.CheckIfRowExist;
@@ -24,6 +25,7 @@ import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Scanner;
 
 public class QuickTests {
     public static void main(String[] args) throws SQLException, ParseException, IOException {
@@ -54,9 +56,10 @@ public class QuickTests {
         //test25();
         //test26();
         //test27();
-        test28();
+        //test28();
+        //test29();
+        test30();
     }
-
 
     //<editor-fold desc="TESTS 1 -> 10">
     private static void test1() {
@@ -259,7 +262,7 @@ public class QuickTests {
     }
     //</editor-fold>
 
-    //<editor-fold desc=""TEST 21 -> 25">
+    //<editor-fold desc="TEST 21 -> 25">
     private static void test21() throws IOException {
 
         /*
@@ -288,7 +291,6 @@ public class QuickTests {
     }
     //</editor-fold>
 
-
     private static void test26() {
         Log.increaseLogAmountByOne();
     }
@@ -308,5 +310,14 @@ public class QuickTests {
 
         String dateString = format.format( new Date()   );
         System.out.println(dateString);
+    }
+
+    private static void test29() {
+        InputData.chooseDateInputByConsole();
+    }
+
+    private static void test30() {
+        CalendarMonthStatsView calendarMonthStatsView = new CalendarMonthStatsView();
+        calendarMonthStatsView.startWindow();
     }
 }
