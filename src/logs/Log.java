@@ -5,6 +5,7 @@ import tools.calendar_tools.DayInCalendar;
 import tools.products_tools.Macro;
 import tools.products_tools.Product;
 import tools.text_files_tools.FilesTools;
+import tools.time_date_tools.DateTools;
 
 import java.io.File;
 import java.io.IOException;
@@ -71,10 +72,8 @@ public class Log {
         logID += getLogID();
         increaseLogAmountByOne();
 
+        String currentDateString = DateTools.getCurrentDateSQLFriendlyFormat();
 
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-        String currentDateString = format.format(new Date());
-        ;
         String currentProductTable = Config.CURRENT_DATABASE_TABLE_PRODUCT;
         String logBody = logID + ":-:" + currentDateString + ":-:" + "ADD PRODUCT TO PRODUCT TABLE BY GUI" + ":-:" + currentProductTable + ":-:" + productName
                 + ":-:" + brand + ":-:" + Macro.getShortMacroInformation(productMacro) +
