@@ -32,6 +32,22 @@ public class Config {
     public static final int ADD_PRODUCT_TO_DAY_PANELS_SOUTH_SIZE = 100;
     public static final Color mainWindowDataBaseProductTableLabelColor = Color.MAGENTA;
     public static final Color mainWindowDataBaseCalendarTableLabelColor = Color.RED;
+
+    // Calendar Month Stats View - GUI
+    public static final int CALENDAR_MONTH_STATS_VIEW_WINDOWS_WIDTH = 900;
+    public static final int CALENDAR_MONTH_STATS_VIEW_WINDOWS_HEIGHT = 600;
+    public static final int CALENDAR_MONTH_STATS_VIEW_PANELS_NORTH_SIZE = 100;
+    public static final int CALENDAR_MONTH_STATS_VIEW_PANELS_CENTER = 60;
+    public static final int CALENDAR_MONTH_STATS_VIEW_PANELS_WEST_EAST_SIZE = 200;
+    public static final int CALENDAR_MONTH_STATS_VIEW_PANELS_SOUTH_SIZE = 100;
+    public static final Color markAsGoodDay = Color.GREEN;
+    public static final Color markAsBadDay = Color.RED;
+    public static final Dimension CALENDAR_MONTH_STATS_VIEW_BUTTONS_SIZE_DIMENSION = new Dimension(5,5);
+
+
+
+
+
     //</editor-fold>
 
     //<editor-fold desc="Add Product To Day Windows Configuration - Panel, Label - Colors">
