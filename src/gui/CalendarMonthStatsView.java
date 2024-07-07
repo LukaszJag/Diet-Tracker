@@ -26,13 +26,22 @@ public class CalendarMonthStatsView {
 
     //<editor-fold desc="GridLayouts">
     GridLayout mainPanelGridLayout = new GridLayout(5, 7, 10, 10);
-    GridLayout northPanelGridLayout = new GridLayout(2, 5, 5, 5);
+    GridLayout northPanelGridLayout = new GridLayout(2, 3, 5, 5);
+    GridLayout eastPanelGridLayout = new GridLayout(3, 1, 5, 5);
     //</editor-fold>
 
     //<editor-fold desc="Labels">
+
+    //<editor-fold desc="Label - North Panel">
     JLabel currentDayDateNorthPanelLabel = new JLabel("Current date: ????-??-??");
     JLabel currentDayMacroTitleNorthPanelLabel = new JLabel("Macro: ");
-    JLabel currentDayMacroValuesNorthPanelLabel = new JLabel("Kcal: ????,?? Protein: ????,??g Fat: ????,??g Carbs: ????,??g");
+    JLabel currentDayMacroValuesNorthPanelLabel = new JLabel("Kcal: ????,?? \nProtein: ????,??g \nFat: ????,??g Carbs: ????,??g");
+    //</editor-fold>
+    JLabel selectedDayStatsTitleEastPanelLabel = new JLabel("Selected day stats:");
+
+    JLabel macroOfSelectedDayEastPanelLabel = new JLabel("Kcal: ????,?? Protein: ????,??g Fat: ????,??g Carbs: ????,??g");
+
+    JLabel macroGoalsEastPanelLabel = new JLabel("Kcal: ????,?? Protein: ????,??g Fat: ????,??g Carbs: ????,??g");
     //</editor-fold>
 
     //</editor-fold>
@@ -68,13 +77,20 @@ public class CalendarMonthStatsView {
     }
 
     private void prepareAndAddContentToNorthPanel() {
+
+        //<editor-fold desc="Set up - North Panel">
         calendarMonthStatsViewPanelNorth.setLayout(northPanelGridLayout);
+        calendarMonthStatsViewPanelNorth.add(new JLabel("test4"), 1, 0);
+        calendarMonthStatsViewPanelNorth.add(new JLabel("test5"), 1, 1);
+
+        calendarMonthStatsViewPanelNorth.add(currentDayMacroValuesNorthPanelLabel, 1, 2);
 
         calendarMonthStatsViewPanelNorth.add(currentDayDateNorthPanelLabel, 0, 0);
+        calendarMonthStatsViewPanelNorth.add(new JLabel("test2"), 0, 1);
+        calendarMonthStatsViewPanelNorth.add(currentDayMacroTitleNorthPanelLabel, 0, 2);
+        //</editor-fold>
 
-        calendarMonthStatsViewPanelNorth.add(currentDayMacroTitleNorthPanelLabel, 0, 1);
 
-        calendarMonthStatsViewPanelNorth.add(currentDayMacroValuesNorthPanelLabel, 0, 2);
 
         //<editor-fold desc="Color and size of font in labels">
         currentDayDateNorthPanelLabel.setForeground(Config.northPanelStaticLabelsColor);
@@ -97,6 +113,14 @@ public class CalendarMonthStatsView {
     }
 
     private void prepareAndAddContentToEastPanel() {
+        //<editor-fold desc="Set up - East Panel">
+        calendarMonthStatsViewPanelEast.setLayout(eastPanelGridLayout);
+        calendarMonthStatsViewPanelEast.add(selectedDayStatsTitleEastPanelLabel, 0, 0);
+        calendarMonthStatsViewPanelEast.add(emptyMacroPanel(), 0, 1);
+        //macroOfSelectedDayEastPanelLabel.setFont(Font.createFont());
+
+        calendarMonthStatsViewPanelEast.add(emptyMacroPanel(), 0, 2);
+        //</editor-fold>
 
     }
 
@@ -107,6 +131,33 @@ public class CalendarMonthStatsView {
 
     //</editor-fold>
 
+    private JPanel emptyMacroPanel(){
+        GridLayout gridLayout = new GridLayout(5,1,5,5);
+
+        JPanel macroPanel = new JPanel();
+        macroPanel.setLayout(gridLayout);
+
+        JLabel titleLabel = new JLabel("Macro");
+
+        JLabel kcalLabel = new JLabel("Kcal:");
+
+        JLabel proteinLabel = new JLabel("Protein:");
+
+        JLabel fatLabel = new JLabel("Fat:");
+
+        JLabel carbsLabel = new JLabel("Carbs:");
+
+        macroPanel.add(titleLabel);
+
+        macroPanel.add(kcalLabel);
+
+        macroPanel.add(proteinLabel);
+
+        macroPanel.add(fatLabel);
+        macroPanel.add(carbsLabel);
+
+        return macroPanel;
+    }
     private void setMainWindowSizeAndLayout() {
         // Set window size
         mainWindow.setSize(Config.CALENDAR_MONTH_STATS_VIEW_WINDOWS_WIDTH, Config.CALENDAR_MONTH_STATS_VIEW_WINDOWS_HEIGHT);
