@@ -6,15 +6,36 @@ import javax.swing.*;
 import java.awt.*;
 
 public class CalendarMonthStatsView {
+    //<editor-fold desc="Main - Calendar Month Stats View - components and variables">
+
+    //<editor-fold desc="Frames">
     JFrame mainWindow = new JFrame("Calendar month stats view");
-    // Panels
+    //</editor-fold>
+
+    //<editor-fold desc="Panels">
     JPanel calendarMonthStatsViewPanelMain = new JPanel();
     JPanel calendarMonthStatsViewPanelNorth = new JPanel();
     JPanel calendarMonthStatsViewPanelWest = new JPanel();
     JPanel calendarMonthStatsViewPanelEast = new JPanel();
     JPanel calendarMonthStatsViewPanelSouth = new JPanel();
+    //</editor-fold>
+
+    //<editor-fold desc="Buttons">
     JButton[] daysButtons = new JButton[30];
-    GridLayout gridLayoutMainPanel = new GridLayout(5, 7, 10, 10);
+    //</editor-fold>
+
+    //<editor-fold desc="GridLayouts">
+    GridLayout mainPanelGridLayout = new GridLayout(5, 7, 10, 10);
+    GridLayout northPanelGridLayout = new GridLayout(2, 5, 5, 5);
+    //</editor-fold>
+
+    //<editor-fold desc="Labels">
+    JLabel currentDayDateNorthPanelLabel = new JLabel("Current date: ????-??-??");
+    JLabel currentDayMacroTitleNorthPanelLabel = new JLabel("Macro: ");
+    JLabel currentDayMacroValuesNorthPanelLabel = new JLabel("Kcal: ????,?? Protein: ????,??g Fat: ????,??g Carbs: ????,??g");
+    //</editor-fold>
+
+    //</editor-fold>
 
     public void startWindow() {
         setMainWindowSizeAndLayout();
@@ -25,7 +46,19 @@ public class CalendarMonthStatsView {
         finishSetUpFrame();
     }
 
+    //<editor-fold desc="Start window: methods">
     private void addComponentsToPanels() {
+
+        prepareAndAddContentToMainPanel();
+        prepareAndAddContentToNorthPanel();
+        prepareAndAddContentToWestPanel();
+        prepareAndAddContentToEastPanel();
+        prepareAndAddContentToSouthPanel();
+
+    }
+
+    //<editor-fold desc="Prepare and add content to: Panels">
+    private void prepareAndAddContentToMainPanel() {
         for (int i = 0; i < 5; i++) {
             calendarMonthStatsViewPanelMain.add(new JLabel(""));
         }
@@ -33,6 +66,46 @@ public class CalendarMonthStatsView {
             calendarMonthStatsViewPanelMain.add(daysButtons[i]);
         }
     }
+
+    private void prepareAndAddContentToNorthPanel() {
+        calendarMonthStatsViewPanelNorth.setLayout(northPanelGridLayout);
+
+        calendarMonthStatsViewPanelNorth.add(currentDayDateNorthPanelLabel, 0, 0);
+
+        calendarMonthStatsViewPanelNorth.add(currentDayMacroTitleNorthPanelLabel, 0, 1);
+
+        calendarMonthStatsViewPanelNorth.add(currentDayMacroValuesNorthPanelLabel, 0, 2);
+
+        //<editor-fold desc="Color and size of font in labels">
+        currentDayDateNorthPanelLabel.setForeground(Config.northPanelStaticLabelsColor);
+        currentDayDateNorthPanelLabel.setFont(calendarMonthStatsViewPanelNorth.getFont().deriveFont(20.0f));
+        currentDayMacroTitleNorthPanelLabel.setForeground(Config.northPanelStaticLabelsColor);
+        currentDayMacroValuesNorthPanelLabel.setForeground(Config.northPanelStaticLabelsColor);
+
+        currentDayDateNorthPanelLabel.setOpaque(true);
+        currentDayMacroTitleNorthPanelLabel.setOpaque(true);
+        currentDayMacroValuesNorthPanelLabel.setOpaque(true);
+
+        currentDayDateNorthPanelLabel.setBackground(Color.RED);
+        currentDayMacroTitleNorthPanelLabel.setBackground(Color.BLUE);
+        currentDayMacroValuesNorthPanelLabel.setBackground(Color.GREEN);
+        //</editor-fold>
+
+    }
+
+    private void prepareAndAddContentToSouthPanel() {
+    }
+
+    private void prepareAndAddContentToEastPanel() {
+
+    }
+
+    private void prepareAndAddContentToWestPanel() {
+
+    }
+
+
+    //</editor-fold>
 
     private void setMainWindowSizeAndLayout() {
         // Set window size
@@ -60,7 +133,7 @@ public class CalendarMonthStatsView {
     private void setPanels() {
         //Set Layout
         calendarMonthStatsViewPanelMain.setBorder(BorderFactory.createEmptyBorder(7, 5, 5, 5));
-        calendarMonthStatsViewPanelMain.setLayout(gridLayoutMainPanel);
+        calendarMonthStatsViewPanelMain.setLayout(mainPanelGridLayout);
 
         // Set panels colors
         calendarMonthStatsViewPanelNorth.setBackground(Color.BLACK);
@@ -79,9 +152,10 @@ public class CalendarMonthStatsView {
 
     private void setDaysButtons() {
         for (int i = 0; i < daysButtons.length; i++) {
-            daysButtons[i] = new JButton(String.valueOf(i+1));
+            daysButtons[i] = new JButton(String.valueOf(i + 1));
             daysButtons[i].setPreferredSize(Config.CALENDAR_MONTH_STATS_VIEW_BUTTONS_SIZE_DIMENSION);
         }
     }
+    //</editor-fold>
 
 }

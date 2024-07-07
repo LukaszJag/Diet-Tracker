@@ -1,8 +1,6 @@
 package configuration;
 
 import gui.GUIManager;
-import logs.LogsController;
-import tools.text_files_tools.FilesTools;
 
 import java.awt.*;
 import java.util.Date;
@@ -40,9 +38,10 @@ public class Config {
     public static final int CALENDAR_MONTH_STATS_VIEW_PANELS_CENTER = 60;
     public static final int CALENDAR_MONTH_STATS_VIEW_PANELS_WEST_EAST_SIZE = 200;
     public static final int CALENDAR_MONTH_STATS_VIEW_PANELS_SOUTH_SIZE = 100;
+    public static final Dimension CALENDAR_MONTH_STATS_VIEW_BUTTONS_SIZE_DIMENSION = new Dimension(5,5);
     public static final Color markAsGoodDay = Color.GREEN;
     public static final Color markAsBadDay = Color.RED;
-    public static final Dimension CALENDAR_MONTH_STATS_VIEW_BUTTONS_SIZE_DIMENSION = new Dimension(5,5);
+    public static final Color northPanelStaticLabelsColor = new Color(58,123,125);
 
 
 
