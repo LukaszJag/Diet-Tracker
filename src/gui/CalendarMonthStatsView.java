@@ -4,6 +4,11 @@ import configuration.Config;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 
 public class CalendarMonthStatsView {
     //<editor-fold desc="Main - Calendar Month Stats View - components and variables">
@@ -21,7 +26,7 @@ public class CalendarMonthStatsView {
     //</editor-fold>
 
     //<editor-fold desc="Buttons">
-    JButton[] daysButtons = new JButton[30];
+    JButton[] daysButtons;
     //</editor-fold>
 
     //<editor-fold desc="GridLayouts">
@@ -44,12 +49,13 @@ public class CalendarMonthStatsView {
     JLabel macroGoalsEastPanelLabel = new JLabel("Kcal: ????,?? Protein: ????,??g Fat: ????,??g Carbs: ????,??g");
     //</editor-fold>
 
+    JComboBox monthSelectComboBox = new JComboBox<>(new String[]{"April", "May", "June", "July"});
+
     //</editor-fold>
 
     public void startWindow() {
         setMainWindowSizeAndLayout();
         setPanels();
-        setDaysButtons();
         addComponentsToPanels();
         addPanelsToFrame();
         finishSetUpFrame();
@@ -67,30 +73,52 @@ public class CalendarMonthStatsView {
     }
 
     //<editor-fold desc="Prepare and add content to: Panels">
+
+
     private void prepareAndAddContentToMainPanel() {
-        for (int i = 0; i < 5; i++) {
-            calendarMonthStatsViewPanelMain.add(new JLabel(""));
-        }
+        calendarMonthStatsViewPanelMain.removeAll();
+        addButtonsToMainPanel("July");
+    }
+    private void addButtonsToMainPanel(String month) {
+        setDaysButtons(month);
+
+        calendarMonthStatsViewPanelMain.removeAll();
+
         for (int i = 0; i < daysButtons.length; i++) {
-            calendarMonthStatsViewPanelMain.add(daysButtons[i]);
+            if (daysButtons[i].getText().equals("null")) {
+                calendarMonthStatsViewPanelMain.add(new JLabel(""));
+            } else {
+                calendarMonthStatsViewPanelMain.add(daysButtons[i]);
+            }
         }
     }
 
     private void prepareAndAddContentToNorthPanel() {
 
+        String pattern = "yyyy-MM-dd";
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+        String date = simpleDateFormat.format(new Date());
+
+        currentDayDateNorthPanelLabel = new JLabel("Current date: " + date);
+
         //<editor-fold desc="Set up - North Panel">
         calendarMonthStatsViewPanelNorth.setLayout(northPanelGridLayout);
-        calendarMonthStatsViewPanelNorth.add(new JLabel("test4"), 1, 0);
+
+        calendarMonthStatsViewPanelNorth.add(monthSelectComboBox, 1, 0);
+        monthSelectComboBox.setSelectedItem("July");
+
         calendarMonthStatsViewPanelNorth.add(new JLabel("test5"), 1, 1);
 
         calendarMonthStatsViewPanelNorth.add(currentDayMacroValuesNorthPanelLabel, 1, 2);
 
         calendarMonthStatsViewPanelNorth.add(currentDayDateNorthPanelLabel, 0, 0);
-        calendarMonthStatsViewPanelNorth.add(new JLabel("test2"), 0, 1);
+
+        setSelectedDateLabelNorthPanel(null, null);
+
         calendarMonthStatsViewPanelNorth.add(currentDayMacroTitleNorthPanelLabel, 0, 2);
         //</editor-fold>
 
-
+        monthSelectComboBox.addItemListener(new MonthSelectComboBoxItemListener());
 
         //<editor-fold desc="Color and size of font in labels">
         currentDayDateNorthPanelLabel.setForeground(Config.northPanelStaticLabelsColor);
@@ -102,11 +130,15 @@ public class CalendarMonthStatsView {
         currentDayMacroTitleNorthPanelLabel.setOpaque(true);
         currentDayMacroValuesNorthPanelLabel.setOpaque(true);
 
-        currentDayDateNorthPanelLabel.setBackground(Color.RED);
+        currentDayDateNorthPanelLabel.setBackground(Config.currentDayDateNorthPanelLabelColor);
         currentDayMacroTitleNorthPanelLabel.setBackground(Color.BLUE);
         currentDayMacroValuesNorthPanelLabel.setBackground(Color.GREEN);
         //</editor-fold>
 
+    }
+
+    private void setSelectedDateLabelNorthPanel(String month, String day){
+        calendarMonthStatsViewPanelNorth.add(new JLabel("Selected date: " + monthSelectComboBox.getSelectedItem()), 0, 1);
     }
 
     private void prepareAndAddContentToSouthPanel() {
@@ -131,8 +163,8 @@ public class CalendarMonthStatsView {
 
     //</editor-fold>
 
-    private JPanel emptyMacroPanel(){
-        GridLayout gridLayout = new GridLayout(5,1,5,5);
+    private JPanel emptyMacroPanel() {
+        GridLayout gridLayout = new GridLayout(5, 1, 5, 5);
 
         JPanel macroPanel = new JPanel();
         macroPanel.setLayout(gridLayout);
@@ -158,6 +190,7 @@ public class CalendarMonthStatsView {
 
         return macroPanel;
     }
+
     private void setMainWindowSizeAndLayout() {
         // Set window size
         mainWindow.setSize(Config.CALENDAR_MONTH_STATS_VIEW_WINDOWS_WIDTH, Config.CALENDAR_MONTH_STATS_VIEW_WINDOWS_HEIGHT);
@@ -201,10 +234,115 @@ public class CalendarMonthStatsView {
         calendarMonthStatsViewPanelSouth.setPreferredSize(new Dimension(Config.CALENDAR_MONTH_STATS_VIEW_PANELS_SOUTH_SIZE, Config.CALENDAR_MONTH_STATS_VIEW_PANELS_SOUTH_SIZE));
     }
 
-    private void setDaysButtons() {
-        for (int i = 0; i < daysButtons.length; i++) {
-            daysButtons[i] = new JButton(String.valueOf(i + 1));
-            daysButtons[i].setPreferredSize(Config.CALENDAR_MONTH_STATS_VIEW_BUTTONS_SIZE_DIMENSION);
+    private void setDaysButtons(String month) {
+        daysButtons = new JButton[35];
+        int counter = 1;
+
+        if (month == null) {
+            for (int i = 0; i < daysButtons.length; i++) {
+                daysButtons[i] = new JButton("");
+                daysButtons[i].setPreferredSize(Config.CALENDAR_MONTH_STATS_VIEW_BUTTONS_SIZE_DIMENSION);
+            }
+        } else {
+
+            if (month.equals("July")) {
+                for (int i = 0; i < daysButtons.length; i++) {
+                    if (i == 31) {
+                        daysButtons[i] = new JButton("null");
+                    } else if (i == 32) {
+                        daysButtons[i] = new JButton("null");
+                    } else if (i == 33) {
+                        daysButtons[i] = new JButton("null");
+                    } else if (i == 34) {
+                        daysButtons[i] = new JButton("null");
+
+                    } else {
+                        daysButtons[i] = new JButton(String.valueOf(i + 1));
+                        daysButtons[i].setPreferredSize(Config.CALENDAR_MONTH_STATS_VIEW_BUTTONS_SIZE_DIMENSION);
+                    }
+                }
+
+            }
+
+            if (month.equals("June")) {
+                for (int i = 0; i < daysButtons.length; i++) {
+
+                    if (i == 0) {
+                        daysButtons[i] = new JButton("null");
+                    } else if (i == 1) {
+                        daysButtons[i] = new JButton("null");
+                    } else if (i == 2) {
+                        daysButtons[i] = new JButton("null");
+                    } else if (i == 3) {
+                        daysButtons[i] = new JButton("null");
+
+                    } else if (i == 4) {
+                        daysButtons[i] = new JButton("null");
+
+                    } else {
+                        daysButtons[i] = new JButton(String.valueOf(counter));
+                        daysButtons[i].setPreferredSize(Config.CALENDAR_MONTH_STATS_VIEW_BUTTONS_SIZE_DIMENSION);
+                        counter++;
+                    }
+                }
+            }
+
+
+            if (month.equals("May")) {
+                for (int i = 0; i < daysButtons.length; i++) {
+
+                    if (i == 0) {
+                        daysButtons[i] = new JButton("null");
+                    } else if (i == 1) {
+                        daysButtons[i] = new JButton("null");
+                    } else if (i == 33) {
+                        daysButtons[i] = new JButton("null");
+                    } else if (i == 34) {
+                        daysButtons[i] = new JButton("null");
+                    } else {
+                        daysButtons[i] = new JButton(String.valueOf(counter));
+                        daysButtons[i].setPreferredSize(Config.CALENDAR_MONTH_STATS_VIEW_BUTTONS_SIZE_DIMENSION);
+                        counter++;
+                    }
+                }
+            }
+
+
+            if (month.equals("April")) {
+                for (int i = 0; i < daysButtons.length; i++) {
+
+                     if (i == 30) {
+                        daysButtons[i] = new JButton("null");
+                    } else if (i == 31) {
+                        daysButtons[i] = new JButton("null");
+                    } else if (i == 32) {
+                        daysButtons[i] = new JButton("null");
+                    } else if (i == 33) {
+                        daysButtons[i] = new JButton("null");
+                    } else if (i == 34) {
+                        daysButtons[i] = new JButton("null");
+
+                    } else {
+                        daysButtons[i] = new JButton(String.valueOf(counter));
+                        daysButtons[i].setPreferredSize(Config.CALENDAR_MONTH_STATS_VIEW_BUTTONS_SIZE_DIMENSION);
+                        counter++;
+                    }
+                }
+            }
+        }
+
+
+    }
+
+    private class MonthSelectComboBoxItemListener implements ItemListener {
+        @Override
+        public void itemStateChanged(ItemEvent event) {
+            if (event.getStateChange() == ItemEvent.SELECTED) {
+                Object item = event.getItem();
+                String getSelectedItem = monthSelectComboBox.getSelectedItem().toString();
+                addButtonsToMainPanel(getSelectedItem);
+                // do something with object
+            }
         }
     }
     //</editor-fold>

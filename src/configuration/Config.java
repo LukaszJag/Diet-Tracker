@@ -42,6 +42,7 @@ public class Config {
     public static final Color markAsGoodDay = Color.GREEN;
     public static final Color markAsBadDay = Color.RED;
     public static final Color northPanelStaticLabelsColor = new Color(58,123,125);
+    public static final Color currentDayDateNorthPanelLabelColor = new Color(0,255,171);
 
 
 
