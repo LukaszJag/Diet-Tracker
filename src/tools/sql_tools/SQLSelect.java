@@ -26,6 +26,10 @@ public class SQLSelect {
             counter++;
         }
 
+        resultSet.close();
+        statement.close();
+        connection.close();
+
         return productsArray;
     }
 

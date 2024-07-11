@@ -4,6 +4,8 @@ import configuration.Config;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.text.SimpleDateFormat;
@@ -259,6 +261,7 @@ public class CalendarMonthStatsView {
                     } else {
                         daysButtons[i] = new JButton(String.valueOf(i + 1));
                         daysButtons[i].setPreferredSize(Config.CALENDAR_MONTH_STATS_VIEW_BUTTONS_SIZE_DIMENSION);
+                        daysButtons[i].addActionListener(new DaysButtonsActionListener(daysButtons[i]));
                     }
                 }
 
@@ -343,6 +346,30 @@ public class CalendarMonthStatsView {
                 addButtonsToMainPanel(getSelectedItem);
                 // do something with object
             }
+        }
+    }
+
+    private class DaysButtonsActionListener implements ActionListener {
+        JButton button;
+        public DaysButtonsActionListener(JButton button){
+            this.button = button;
+        }
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            String fullDate = "2024-";
+            String month = monthSelectComboBox.getSelectedItem().toString();
+            if (month == "July"){
+                fullDate += "07-";
+            }
+
+            if (button.getText().length() == 1){
+                fullDate = fullDate +"0" + button.getText();
+            }
+
+            if (button.getText().length() == 2){
+                fullDate = fullDate + button.getText();
+            }
+            System.out.println(fullDate);
         }
     }
     //</editor-fold>
