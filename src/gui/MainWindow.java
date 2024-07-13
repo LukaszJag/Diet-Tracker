@@ -35,6 +35,11 @@ public class MainWindow extends JFrame {
     JButton mealManagerButton = new JButton("Meal manager");
 
     JButton addProductToDay =new JButton("Add product to day");
+    JButton calculateBMR  =new JButton("Calculate BMR");
+    JButton calendarMonthStatsView =new JButton("Month stats view");
+
+
+
     JButton changeProductDataBase = new JButton("Change product table");
     JButton refreshDataBaseButton = new JButton("Refresh Data base");
     JButton closeApplicationButton =new JButton("Exit");
@@ -101,6 +106,14 @@ public class MainWindow extends JFrame {
         addProductToDay.addActionListener(new AddProducttoDayButton());
         addProductToDay.setBackground(Color.ORANGE);
         panelLeft.add(addProductToDay);
+
+
+        calculateBMR.addActionListener(new calculateBMRActionListener());
+        panelLeft.add(calculateBMR);
+
+        calendarMonthStatsView.addActionListener(new calendarMonthStatsViewActionListener());
+        panelLeft.add(calendarMonthStatsView);
+
 
 
         changeProductDataBase.addActionListener(new ChangeProductTableActioListener());
@@ -182,6 +195,20 @@ public class MainWindow extends JFrame {
             }
 
             JOptionPane.showMessageDialog(null, "Day Statistics is fully update");
+        }
+    }
+
+    private class calculateBMRActionListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            new BMRWindow();
+        }
+    }
+
+    private class calendarMonthStatsViewActionListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            new CalendarMonthStatsView();
         }
     }
 }
