@@ -1,0 +1,68 @@
+Weight and waist:
+
+BMR:
+    Link:
+        https://www.omnicalculator.com/health/bmr-harris-benedict-equation
+
+13.07.24:
+
+    Weight: 143,2 kg
+    Waist: 134 cm
+
+    Current BMR:
+
+        PAL: Moderate exercise 2-3 times a week
+
+        Kcal: 4297
+        Protein: 140 -> 1g for every 1 kg body weight
+        Fat: 120 -> important for hormones and overall health
+        Carbs: 671 -> energy
+
+    Few other basic, BMR + PAL:
+
+        Basic BMR:
+
+            Kcal: 2772.1
+
+        PAL:
+
+            Kcal: ?
+            Protein: ?
+            Fat: ?
+            Carbs: ?
+
+
+
+        PAL: Light exercise 1-2 times a week
+
+            Kcal: 3812
+            Protein: 140
+            Fat: 110
+            Carbs: 567
+
+
+
+
+??.??.??:
+
+    Weight:
+    Waist:
+
+    Kcal:
+    Protein:
+    Fat:
+    Carbs:
+
+
+??.??.??:
+
+    Weight:
+    Waist:
+
+    Kcal:
+    Protein:
+    Fat:
+    Carbs:
+
+
+
