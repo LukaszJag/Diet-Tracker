@@ -1,5 +1,6 @@
 package runners_and_tests.tests;
 
+import gui.BMRWindow;
 import gui.CalendarMonthStatsView;
 import logs.Log;
 import logs.LogsController;
@@ -15,6 +16,7 @@ import tools.sql_tools.SelectDistinctValues;
 import tools.sql_tools.calendar.ExportAllDaysDataToSQLCalendar;
 import tools.sql_tools.calendar.InsertToCalendarDayTable;
 import tools.sql_tools.days_statistics.GenerateSLQTableForDaysStatistics;
+import tools.sql_tools.days_statistics.SelectFromDaysStatistics;
 import tools.sql_tools.general.RunQuery;
 import tools.sql_tools.products.ImportDateFromTXTFilesToSQLDB;
 import tools.text_files_tools.DirectoryTools;
@@ -25,7 +27,6 @@ import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Scanner;
 
 public class QuickTests {
     public static void main(String[] args) throws SQLException, ParseException, IOException {
@@ -58,7 +59,10 @@ public class QuickTests {
         //test27();
         //test28();
         //test29();
-        test30();
+        //          test30();
+        //test31();
+        //test32();
+        test33();
     }
 
     //<editor-fold desc="TESTS 1 -> 10">
@@ -168,27 +172,27 @@ public class QuickTests {
     //<editor-fold desc="TEST 16 -> 20">
     private static void test16() throws ParseException {
 
-            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", java.util.Locale.ENGLISH);
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", java.util.Locale.ENGLISH);
 
-            Date date = null;
+        Date date = null;
 
-            date = sdf.parse("19/05/2024");
+        date = sdf.parse("19/05/2024");
 
-            //specifies the pattern to print
-            sdf.applyPattern("EEEE");
-            String str = sdf.format(date);
+        //specifies the pattern to print
+        sdf.applyPattern("EEEE");
+        String str = sdf.format(date);
 
-            //prints day name with date
-            System.out.println(str);
+        //prints day name with date
+        System.out.println(str);
 
-            String dateString = "";
-            String[] dateStringArray = {"19/05/2024", "13/05/2024", "26/05/2024", "19-05-2024", "13-05-2024", "26-05-2024","2024-05-24",
-            "2024-04-08",
-            "2024-04-13",
-            "2024-04-26",
-            "2024-04-28",
-            "2024-05-02",
-            "2024-05-12"};
+        String dateString = "";
+        String[] dateStringArray = {"19/05/2024", "13/05/2024", "26/05/2024", "19-05-2024", "13-05-2024", "26-05-2024", "2024-05-24",
+                "2024-04-08",
+                "2024-04-13",
+                "2024-04-26",
+                "2024-04-28",
+                "2024-05-02",
+                "2024-05-12"};
 
 
         System.out.println(dateStringArray[7] + " GOOD");
@@ -197,7 +201,7 @@ public class QuickTests {
         System.out.println(dateStringArray[9] + " GOOD");
         System.out.println(dateStringArray[10] + " GOOD");
         System.out.println(dateStringArray[11] + " GOOD");
-        System.out.println(dateStringArray[12] + " GOOD" );
+        System.out.println(dateStringArray[12] + " GOOD");
         System.out.println();
 
         for (int i = 0; i < dateStringArray.length; i++) {
@@ -208,14 +212,14 @@ public class QuickTests {
                 dateString = sdf.format(date);
                 System.out.println(dateStringArray[i] + " -> " + dateString);
             }
-            if (i > 2 && i <=5){
+            if (i > 2 && i <= 5) {
                 sdf = new SimpleDateFormat("dd-MM-yyyy", java.util.Locale.ENGLISH);
                 date = sdf.parse(dateStringArray[i]);
                 sdf.applyPattern("EEEE");
                 dateString = sdf.format(date);
                 System.out.println(dateStringArray[i] + " -> " + dateString);
             }
-            if (i ==6){
+            if (i == 6) {
                 sdf = new SimpleDateFormat("yyyy-MM-dd", java.util.Locale.ENGLISH);
                 date = sdf.parse(dateStringArray[i]);
                 sdf.applyPattern("EEEE");
@@ -225,7 +229,7 @@ public class QuickTests {
                 System.out.println();
                 System.out.println("DIRECT FROM SQL");
             }
-            if(i > 6){
+            if (i > 6) {
                 sdf = new SimpleDateFormat("yyyy-MM-dd", java.util.Locale.ENGLISH);
                 date = sdf.parse(dateStringArray[i]);
                 sdf.applyPattern("EEEE");
@@ -238,7 +242,7 @@ public class QuickTests {
     }
 
     private static void test17() {
-        String SQLquery  = "";
+        String SQLquery = "";
         SQLquery = GenerateSLQTableForDaysStatistics.createInsertSQLQueryForDaysStatistics("2024-05-20");
         System.out.println(SQLquery);
     }
@@ -250,12 +254,12 @@ public class QuickTests {
 
     private static void test19() {
         for (int i = 0; i < 31; i++) {
-            System.out.println(FilesTools.readAndGetLineTXTFile("src/data_store_and_backup/text_files/days_statistics_test/quick_fill_amount_of_point_in_notepad/may_2024.txt.txt",i));
+            System.out.println(FilesTools.readAndGetLineTXTFile("src/data_store_and_backup/text_files/days_statistics_test/quick_fill_amount_of_point_in_notepad/may_2024.txt.txt", i));
         }
     }
 
     private static void test20() throws SQLException {
-        String [] table = SQLSelectDay.getAllRowFromDay(20,05,2024);
+        String[] table = SQLSelectDay.getAllRowFromDay(20, 05, 2024);
         for (int i = 0; i < table.length; i++) {
             System.out.println(i + ": " + table[i]);
         }
@@ -300,7 +304,7 @@ public class QuickTests {
         Product dayInCalendarProduct = ProductFactoryToMakeTests.productBarExample();
 
         Log.addNewLogForProductToCalendarGUIAccept(dayInCalendar.getDayDateFormatFriendlyForSQL(), dayInCalendarProduct.getProductName(), dayInCalendar.getDayProductMacro(),
-                dayInCalendar.getDayAmountOfProduct(), dayInCalendar.getDayDateDayName(), dayInCalendar.getMealName() ,dayInCalendar.getDayProductProduct(),
+                dayInCalendar.getDayAmountOfProduct(), dayInCalendar.getDayDateDayName(), dayInCalendar.getMealName(), dayInCalendar.getDayProductProduct(),
                 dayInCalendar.getConsumedMacro(), dayInCalendar);
     }
 
@@ -308,7 +312,7 @@ public class QuickTests {
 
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 
-        String dateString = format.format( new Date()   );
+        String dateString = format.format(new Date());
         System.out.println(dateString);
     }
 
@@ -319,5 +323,20 @@ public class QuickTests {
     private static void test30() {
         CalendarMonthStatsView calendarMonthStatsView = new CalendarMonthStatsView();
         calendarMonthStatsView.startWindow();
+    }
+
+    private static void test31() throws SQLException {
+        SelectFromDaysStatistics.getMacroFromDaysStatisticsByDate("2024-05-12");
+        System.out.println();
+        System.out.println();
+        SelectFromDaysStatistics.getMacroFromDaysStatisticsByDate("2024-05-11");
+
+    }
+    private static void test32() {
+        GenerateSLQTableForDaysStatistics.generateWholeMonthJuly();
+        GenerateSLQTableForDaysStatistics.generateWholeMonthAndFillAmountOfPointsFromNotepadJULY();
+    }
+    private static void test33() {
+        BMRWindow bmrWindow = new BMRWindow();
     }
 }
