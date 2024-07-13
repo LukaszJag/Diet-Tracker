@@ -113,6 +113,53 @@ public class GenerateSLQTableForDaysStatistics {
         }
     }
 
+    public static void generateWholeMonthJuly() {
+        String year = "2024";
+        String month = "07";
+        String[] readyDateDays = new String[31];
+        for (int i = 0; i < 31; i++) {
+            if (String.valueOf(i+1).length() == 1){
+                readyDateDays[i] = year + "-" + month + "-" + "0" + (i+1);
+            }else {
+                readyDateDays[i] = year + "-" + month + "-"  + (i+1);
+            }
+        }
+
+        for (int i = 0; i < readyDateDays.length; i++) {
+            try {
+                generateDaysStatisticsInTable(createInsertSQLQueryForDaysStatistics(readyDateDays[i]));
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+
+    public static void generateWholeMonthAndFillAmountOfPointsFromNotepadJULY(){
+        String queryForExecute = "";
+        String dateDay = "";
+        String pointInOneDay = "";
+        for (int i = 1; i <= 31; i++) {
+            dateDay = String.valueOf(i);
+            if (dateDay.length() == 1){
+                dateDay = "0" + dateDay;
+            }
+            pointInOneDay =  FilesTools.readAndGetLineTXTFile("src/data_store_and_backup/text_files/days_statistics_test/quick_fill_amount_of_point_in_notepad/july_2024.txt", i);
+            queryForExecute = "UPDATE `diet_tracker_schema`.`days_statistics_test`" +
+                    "SET "
+                    + "`amount_of_points_from_notepad`= " + pointInOneDay
+                    + " WHERE day_date = '2024-07-" + dateDay +  "';";
+            if (pointInOneDay.equals("")){
+                return;
+            }
+
+            try {
+                generateDaysStatisticsInTable(queryForExecute);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+
     public static void generateWholeMonthAndFillAmountOfPointsFromNotepadJUNE(){
         String queryForExecute = "";
         String dateDay = "";
