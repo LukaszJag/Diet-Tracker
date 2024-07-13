@@ -9,45 +9,48 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class SelectFromDaysStatistics {
-    public Macro getMacroFromDaysStatisticsByDate(String SQLFriendlyDateFormat){
+    public static Macro getMacroFromDaysStatisticsByDate(String SQLFriendlyDateFormat) throws SQLException {
         Connection connection;
         ResultSet resultSet;
         Statement statementSQL;
 
-        Macro resultMacro = new Macro(-1,-1,-1,-1);
-        String sql = "SELECT * FROM days_statistics_test WHERE day_date = " + SQLFriendlyDateFormat + ";";
-        String result = "";
+        String sql = "SELECT * FROM days_statistics_test WHERE day_date = " + "\"" + SQLFriendlyDateFormat + "\"" + ";";
 
-        try {
-            connection = GetConnection.getConnectionWithLocalHost();
-            statementSQL = connection.createStatement();
-            resultSet = statementSQL.executeQuery(sql);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        try {
+        connection = GetConnection.getConnectionWithLocalHost();
+        statementSQL = connection.createStatement();
+        resultSet = statementSQL.executeQuery(sql);
 
+        float kcalConsumeFloat = -2;
+        float proteinConsumeFloat = -2;
+        float fatConsumeFloat = -2;
+        float carbsConsumeFloat= -2;
 
-            resultMacro.setKcal(Float.valueOf(resultSet.getString("kcal_consume")));
+        resultSet.next();
 
-            resultMacro.setKcal(Float.valueOf(resultSet.getString("kcal_consume")));
-
-            resultMacro.setKcal(Float.valueOf(resultSet.getString("kcal_consume")));
-
-            resultMacro.setKcal(Float.valueOf(resultSet.getString("kcal_consume")));
-
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+        if (resultSet.getString("kcal_consume") != null) {
+            kcalConsumeFloat = Float.valueOf(resultSet.getString("kcal_consume"));
         }
 
-        try {
-            resultSet.close();
-            statementSQL.close();
-            connection.close();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+        if (resultSet.getString("protein_consume") != null) {
+            proteinConsumeFloat = Float.valueOf(resultSet.getString("protein_consume"));
         }
 
-        return null;
+        if (resultSet.getString("fat_consume") != null) {
+            fatConsumeFloat = Float.valueOf(resultSet.getString("fat_consume"));
+        }
+
+        if (resultSet.getString("carbs_consume") != null) {
+            carbsConsumeFloat = Float.valueOf(resultSet.getString("carbs_consume"));
+        }
+
+        Macro resultMacro = new Macro(-1, -1, -1, -1);
+        resultMacro = new Macro(kcalConsumeFloat, proteinConsumeFloat, fatConsumeFloat, carbsConsumeFloat);
+
+        resultSet.close();
+        statementSQL.close();
+        connection.close();
+
+
+        return resultMacro;
     }
 }
