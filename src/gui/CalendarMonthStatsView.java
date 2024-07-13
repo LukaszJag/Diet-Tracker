@@ -1,13 +1,14 @@
 package gui;
 
 import configuration.Config;
+import tools.products_tools.Macro;
+import tools.sql_tools.days_statistics.SelectFromDaysStatistics;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -55,6 +56,10 @@ public class CalendarMonthStatsView {
 
     //</editor-fold>
 
+    public CalendarMonthStatsView(){
+    startWindow();
+    }
+
     public void startWindow() {
         setMainWindowSizeAndLayout();
         setPanels();
@@ -79,9 +84,17 @@ public class CalendarMonthStatsView {
 
     private void prepareAndAddContentToMainPanel() {
         calendarMonthStatsViewPanelMain.removeAll();
-        addButtonsToMainPanel("July");
+        setDaysButtons("July");
+
+        for (int i = 0; i < daysButtons.length; i++) {
+            if (daysButtons[i].getText().equals("null")) {
+                calendarMonthStatsViewPanelMain.add(new JLabel(""));
+            } else {
+                calendarMonthStatsViewPanelMain.add(daysButtons[i]);
+            }
+        }
     }
-    private void addButtonsToMainPanel(String month) {
+   /* private void addButtonsToMainPanel(String month) {
         setDaysButtons(month);
 
         calendarMonthStatsViewPanelMain.removeAll();
@@ -94,6 +107,7 @@ public class CalendarMonthStatsView {
             }
         }
     }
+*/
 
     private void prepareAndAddContentToNorthPanel() {
 
@@ -120,7 +134,7 @@ public class CalendarMonthStatsView {
         calendarMonthStatsViewPanelNorth.add(currentDayMacroTitleNorthPanelLabel, 0, 2);
         //</editor-fold>
 
-        monthSelectComboBox.addItemListener(new MonthSelectComboBoxItemListener());
+        //monthSelectComboBox.addItemListener(new MonthSelectComboBoxItemListener());
 
         //<editor-fold desc="Color and size of font in labels">
         currentDayDateNorthPanelLabel.setForeground(Config.northPanelStaticLabelsColor);
@@ -150,12 +164,27 @@ public class CalendarMonthStatsView {
         //<editor-fold desc="Set up - East Panel">
         calendarMonthStatsViewPanelEast.setLayout(eastPanelGridLayout);
         calendarMonthStatsViewPanelEast.add(selectedDayStatsTitleEastPanelLabel, 0, 0);
-        calendarMonthStatsViewPanelEast.add(emptyMacroPanel(), 0, 1);
-        //macroOfSelectedDayEastPanelLabel.setFont(Font.createFont());
+        calendarMonthStatsViewPanelEast.add(getSetMacroPanelComponent("Macro - Selected day:" ,42,42,42,42), 0, 1);
 
-        calendarMonthStatsViewPanelEast.add(emptyMacroPanel(), 0, 2);
+        calendarMonthStatsViewPanelEast.add(getSetMacroPanelComponent("Macro - goal:", -2,-2, -2,-2), 0, 2);
         //</editor-fold>
 
+    }
+
+    private void refreshMacroAndAllComponentForSelectedDayMacro(String panelTitleLabelText, Macro macro){
+        calendarMonthStatsViewPanelEast.removeAll();
+
+        //calendarMonthStatsViewPanelEast.setBackground(Color.WHITE);
+        //calendarMonthStatsViewPanelEast.setPreferredSize(new Dimension(Config.CALENDAR_MONTH_STATS_VIEW_PANELS_WEST_EAST_SIZE, Config.CALENDAR_MONTH_STATS_VIEW_PANELS_WEST_EAST_SIZE));
+        calendarMonthStatsViewPanelEast.setLayout(eastPanelGridLayout);
+        calendarMonthStatsViewPanelEast.add(selectedDayStatsTitleEastPanelLabel, 0, 0);
+
+        calendarMonthStatsViewPanelEast.add(getSetMacroPanelComponent(panelTitleLabelText ,
+                macro.getKcal(),macro.getProtein(),macro.getFat(),macro.getCarbs()), 0, 1);
+
+        calendarMonthStatsViewPanelEast.add(getSetMacroPanelComponent("Macro - goal:", -2,-2, -2,-2), 0, 2);
+
+        mainWindow.add(calendarMonthStatsViewPanelEast, BorderLayout.EAST);
     }
 
     private void prepareAndAddContentToWestPanel() {
@@ -165,21 +194,21 @@ public class CalendarMonthStatsView {
 
     //</editor-fold>
 
-    private JPanel emptyMacroPanel() {
+    private JPanel getSetMacroPanelComponent(String panelTitleLabelText, float kcal, float protein, float fat, float carbs) {
         GridLayout gridLayout = new GridLayout(5, 1, 5, 5);
 
         JPanel macroPanel = new JPanel();
         macroPanel.setLayout(gridLayout);
 
-        JLabel titleLabel = new JLabel("Macro");
+        JLabel titleLabel = new JLabel(panelTitleLabelText);
 
-        JLabel kcalLabel = new JLabel("Kcal:");
+        JLabel kcalLabel = new JLabel("Kcal: " + kcal);
 
-        JLabel proteinLabel = new JLabel("Protein:");
+        JLabel proteinLabel = new JLabel("Protein: " + protein);
 
-        JLabel fatLabel = new JLabel("Fat:");
+        JLabel fatLabel = new JLabel("Fat: " + fat);
 
-        JLabel carbsLabel = new JLabel("Carbs:");
+        JLabel carbsLabel = new JLabel("Carbs: " + carbs);
 
         macroPanel.add(titleLabel);
 
@@ -224,7 +253,7 @@ public class CalendarMonthStatsView {
         // Set panels colors
         calendarMonthStatsViewPanelNorth.setBackground(Color.BLACK);
         calendarMonthStatsViewPanelSouth.setBackground(Color.GRAY);
-        calendarMonthStatsViewPanelMain.setBackground(Color.WHITE);
+        calendarMonthStatsViewPanelEast.setBackground(Color.WHITE);
         calendarMonthStatsViewPanelWest.setBackground(Color.DARK_GRAY);
         calendarMonthStatsViewPanelMain.setBackground(Color.BLUE);
 
@@ -285,6 +314,7 @@ public class CalendarMonthStatsView {
                     } else {
                         daysButtons[i] = new JButton(String.valueOf(counter));
                         daysButtons[i].setPreferredSize(Config.CALENDAR_MONTH_STATS_VIEW_BUTTONS_SIZE_DIMENSION);
+                        daysButtons[i].addActionListener(new DaysButtonsActionListener(daysButtons[i]));
                         counter++;
                     }
                 }
@@ -305,6 +335,7 @@ public class CalendarMonthStatsView {
                     } else {
                         daysButtons[i] = new JButton(String.valueOf(counter));
                         daysButtons[i].setPreferredSize(Config.CALENDAR_MONTH_STATS_VIEW_BUTTONS_SIZE_DIMENSION);
+                        daysButtons[i].addActionListener(new DaysButtonsActionListener(daysButtons[i]));
                         counter++;
                     }
                 }
@@ -328,6 +359,7 @@ public class CalendarMonthStatsView {
                     } else {
                         daysButtons[i] = new JButton(String.valueOf(counter));
                         daysButtons[i].setPreferredSize(Config.CALENDAR_MONTH_STATS_VIEW_BUTTONS_SIZE_DIMENSION);
+                         daysButtons[i].addActionListener(new DaysButtonsActionListener(daysButtons[i]));
                         counter++;
                     }
                 }
@@ -337,6 +369,7 @@ public class CalendarMonthStatsView {
 
     }
 
+    /*
     private class MonthSelectComboBoxItemListener implements ItemListener {
         @Override
         public void itemStateChanged(ItemEvent event) {
@@ -348,7 +381,7 @@ public class CalendarMonthStatsView {
             }
         }
     }
-
+*/
     private class DaysButtonsActionListener implements ActionListener {
         JButton button;
         public DaysButtonsActionListener(JButton button){
@@ -357,10 +390,22 @@ public class CalendarMonthStatsView {
         @Override
         public void actionPerformed(ActionEvent e) {
             String fullDate = "2024-";
+
             String month = monthSelectComboBox.getSelectedItem().toString();
+
             if (month == "July"){
                 fullDate += "07-";
             }
+            if (month == "June"){
+                fullDate += "06-";
+            }
+            if (month == "May"){
+                fullDate += "05-";
+            }
+            if (month == "April"){
+                fullDate += "04-";
+            }
+
 
             if (button.getText().length() == 1){
                 fullDate = fullDate +"0" + button.getText();
@@ -369,7 +414,21 @@ public class CalendarMonthStatsView {
             if (button.getText().length() == 2){
                 fullDate = fullDate + button.getText();
             }
+
             System.out.println(fullDate);
+
+            Macro macroToPrintInGUI;
+            try {
+                macroToPrintInGUI = SelectFromDaysStatistics.getMacroFromDaysStatisticsByDate(fullDate);
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            }
+
+
+
+            String panelTitleLabelText = "Macro - Selected day: " + fullDate;
+            refreshMacroAndAllComponentForSelectedDayMacro(panelTitleLabelText, macroToPrintInGUI);
+
         }
     }
     //</editor-fold>
