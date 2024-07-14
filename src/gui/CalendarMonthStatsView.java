@@ -442,9 +442,7 @@ public class CalendarMonthStatsView {
             String fullDate = "2024-";
 
 
-            //String month = monthSelectComboBox.getSelectedItem().toString();
-
-            String month = "June";
+            String month = monthSelectComboBox.getSelectedItem().toString();
 
             if (month == "July") {
                 fullDate += "07-";
