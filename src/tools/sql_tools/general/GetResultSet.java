@@ -36,6 +36,7 @@ public class GetResultSet {
             connection = GetConnection.getConnectionWithLocalHost();
             statementSQL = connection.createStatement();
             resultSet = statementSQL.executeQuery(SQLStatement);
+
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -59,7 +60,7 @@ public class GetResultSet {
         }
     }
 
-    public boolean resultSetNextReturnValue(ResultSet resultSet){
+    public boolean resultSetNextReturnValue(ResultSet resultSet) {
         try {
             return resultSet.next();
         } catch (SQLException e) {
@@ -70,24 +71,57 @@ public class GetResultSet {
     public void closeResultSet(ResultSet resultSet) {
         try {
             if (resultSet != null) resultSet.close();
-        } catch (Exception e) {}
+        } catch (Exception e) {
+        }
 
 
     }
+
     public void closeAllVariables() {
         try {
-            if (resultSet != null) resultSet.close();
-        } catch (Exception e) {}
+            if (this.resultSet != null) this.resultSet.close();
+        } catch (Exception e) {
+        }
 
         try {
-            if (statementSQL != null) statementSQL.close();
-        } catch (Exception e) {}
+            if (this.statementSQL != null) this.statementSQL.close();
+        } catch (Exception e) {
+        }
 
 
         try {
-            if (connection != null) connection.close();
-        } catch (Exception e) {}
+            if (this.connection != null) this.connection.close();
+        } catch (Exception e) {
+        }
 
+    }
+
+    public void checkGetResultSetStatus() {
+
+
+        try {
+            if (this.connection == null) {
+                System.out.println("Connection is null");
+            } else if (this.connection.isClosed() == false) {
+                System.out.println("Connection is active");
+            }
+
+            if (this.statementSQL == null) {
+                System.out.println("Statement is null");
+            } else if (this.statementSQL.isClosed() == false) {
+                System.out.println("Statement is active");
+            }
+
+            if (this.resultSet == null) {
+                System.out.println("ResultSet is null");
+            } else if (this.resultSet.next() == false) {
+                System.out.println("ResultSet is active");
+            }
+
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     //<editor-fold desc="Getters and Setters">

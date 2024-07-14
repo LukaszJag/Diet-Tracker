@@ -4,6 +4,7 @@ import tools.products_tools.Macro;
 import tools.sql_tools.general.GetResultSet;
 
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class SelectFromDaysStatistics {
     public static Macro getMacroFromDaysStatisticsByDate(String SQLFriendlyDateFormat) {
@@ -42,10 +43,20 @@ public class SelectFromDaysStatistics {
             resultMacro = new Macro(kcalConsumeFloat, proteinConsumeFloat, fatConsumeFloat, carbsConsumeFloat);
         }
 
+        try {
+            resultSet.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        System.out.println("Before close");
+        getResultSet.checkGetResultSetStatus();
 
         getResultSet.closeResultSet(resultSet);
         getResultSet.closeAllVariables();
 
+        System.out.println("After close");
+        getResultSet.checkGetResultSetStatus();
         return resultMacro;
     }
 }
