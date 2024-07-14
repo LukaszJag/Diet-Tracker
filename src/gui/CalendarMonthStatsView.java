@@ -35,6 +35,7 @@ public class CalendarMonthStatsView {
     //<editor-fold desc="GridLayouts">
     GridLayout mainPanelGridLayout = new GridLayout(5, 7, 10, 10);
     GridLayout northPanelGridLayout = new GridLayout(2, 3, 5, 5);
+    GridLayout northSelectedMonthStatsPanelGridLayout = new GridLayout(2, 2, 5, 5);
     GridLayout eastPanelGridLayout = new GridLayout(3, 1, 5, 5);
     //</editor-fold>
 
@@ -50,6 +51,13 @@ public class CalendarMonthStatsView {
     JLabel macroOfSelectedDayEastPanelLabel = new JLabel("Kcal: ????,?? Protein: ????,??g Fat: ????,??g Carbs: ????,??g");
 
     JLabel macroGoalsEastPanelLabel = new JLabel("Kcal: ????,?? Protein: ????,??g Fat: ????,??g Carbs: ????,??g");
+
+    JPanel selectedMonthStatsNorthsPanel;
+    JLabel selectedMonthStatsLabel = new JLabel("Selected month stats:");
+    JLabel selectedMonthStatsGoodDaysLabel = new JLabel("Good days: ?");
+    JLabel selectedMonthStatsBadDaysLabel = new JLabel("Bad days: ?");
+    JLabel selectedMonthStatsNoDataDaysLabel = new JLabel("No data: ?");
+
     //</editor-fold>
 
     JComboBox monthSelectComboBox = new JComboBox<>(new String[]{"April", "May", "June", "July"});
@@ -146,7 +154,15 @@ public class CalendarMonthStatsView {
         calendarMonthStatsViewPanelNorth.add(monthSelectComboBox, 1, 0);
         monthSelectComboBox.setSelectedItem("June");
 
-        calendarMonthStatsViewPanelNorth.add(new JLabel("test5"), 1, 1);
+        selectedMonthStatsNorthsPanel = new JPanel();
+        selectedMonthStatsNorthsPanel.setLayout(northSelectedMonthStatsPanelGridLayout);
+
+        selectedMonthStatsNorthsPanel.add(new JLabel("1"));
+        selectedMonthStatsNorthsPanel.add(new JLabel("2"));
+        selectedMonthStatsNorthsPanel.add(new JLabel("3"));
+        selectedMonthStatsNorthsPanel.add(new JLabel("4"));
+
+        calendarMonthStatsViewPanelNorth.add(selectedMonthStatsNorthsPanel,1,1);
 
         calendarMonthStatsViewPanelNorth.add(currentDayMacroValuesNorthPanelLabel, 1, 2);
 
