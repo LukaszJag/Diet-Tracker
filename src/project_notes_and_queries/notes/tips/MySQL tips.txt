@@ -1,0 +1,6 @@
+Change max_connections by MySQL Command Line
+
+set global max_connections = 500;
+
+show variables like "max_connections";
+
