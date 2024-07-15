@@ -16,6 +16,29 @@ import java.util.Date;
 public class CalendarMonthStatsView {
     //<editor-fold desc="Main - Calendar Month Stats View - components and variables">
 
+    //<editor-fold desc="Global Counters">
+    int goodDaysCounter;
+
+    int badDaysCounter;
+
+    int noDataDaysCounter;
+
+    int ComingDaysCounter;
+    //</editor-fold>
+
+    //<editor-fold desc="Global Colors">
+
+    Color selectedMonthStatsGoodDaysDaysPanelColor = new Color(0,255,94);
+    Color selectedMonthStatsBadDaysDaysPanelColor = new Color(230,47,194);
+    Color selectedMonthStatsNoDataDaysDaysPanelColor = new Color(100,100,100);
+    Color selectedMonthStatsComingDaysDaysPanelColor = new Color(65,119,201);
+
+    Color noDataColorButton = new Color(169, 78, 188);
+    Color passDataColorButton = new Color(73, 176, 76);
+    Color braekLimitDataColorButton = new Color(176, 73, 73);
+    //</editor-fold>
+
+
     //<editor-fold desc="Frames">
     JFrame mainWindow = new JFrame("Calendar month stats view");
     //</editor-fold>
@@ -26,6 +49,14 @@ public class CalendarMonthStatsView {
     JPanel calendarMonthStatsViewPanelWest = new JPanel();
     JPanel calendarMonthStatsViewPanelEast = new JPanel();
     JPanel calendarMonthStatsViewPanelSouth = new JPanel();
+
+    JPanel selectedDaysCounterGoodDaysPanel;
+    JPanel selectedDaysCounterBadDaysPanel;
+    JPanel selectedDaysCounterNoDataDaysPanel;
+    JPanel selectedDaysCounterComingDaysPanel;
+
+    JPanel selectedMonthStatsNorthsPanel;
+
     //</editor-fold>
 
     //<editor-fold desc="Buttons">
@@ -41,22 +72,19 @@ public class CalendarMonthStatsView {
 
     //<editor-fold desc="Labels">
 
-    //<editor-fold desc="Label - North Panel">
     JLabel currentDayDateNorthPanelLabel = new JLabel("Current date: ????-??-??");
     JLabel currentDayMacroTitleNorthPanelLabel = new JLabel("Macro: ");
     JLabel currentDayMacroValuesNorthPanelLabel = new JLabel("Kcal: ????,?? \nProtein: ????,??g \nFat: ????,??g Carbs: ????,??g");
-    //</editor-fold>
+
     JLabel selectedDayStatsTitleEastPanelLabel = new JLabel("Selected day stats:");
 
-    JLabel macroOfSelectedDayEastPanelLabel = new JLabel("Kcal: ????,?? Protein: ????,??g Fat: ????,??g Carbs: ????,??g");
 
-    JLabel macroGoalsEastPanelLabel = new JLabel("Kcal: ????,?? Protein: ????,??g Fat: ????,??g Carbs: ????,??g");
 
-    JPanel selectedMonthStatsNorthsPanel;
-    JLabel selectedMonthStatsLabel = new JLabel("Selected month stats:");
-    JLabel selectedMonthStatsGoodDaysLabel = new JLabel("Good days: ?");
-    JLabel selectedMonthStatsBadDaysLabel = new JLabel("Bad days: ?");
-    JLabel selectedMonthStatsNoDataDaysLabel = new JLabel("No data: ?");
+    JLabel selectedMonthStatsGoodDaysDaysLabel =  new JLabel("Good days:");
+    JLabel selectedMonthStatsBadDaysDaysLabel =   new JLabel("Bad days:");
+    JLabel selectedMonthStatsNoDataDaysLabel =  new JLabel("No data:");
+    JLabel selectedMonthStatsComingDaysDaysLabel =   new JLabel("Coming days:");
+
 
     //</editor-fold>
 
@@ -151,25 +179,42 @@ public class CalendarMonthStatsView {
 
         calendarMonthStatsViewPanelNorth.setLayout(northPanelGridLayout);
 
-        calendarMonthStatsViewPanelNorth.add(monthSelectComboBox, 1, 0);
+
         monthSelectComboBox.setSelectedItem("June");
+
+        selectedDaysCounterGoodDaysPanel = new JPanel();
+        selectedDaysCounterBadDaysPanel = new JPanel();
+        selectedDaysCounterNoDataDaysPanel = new JPanel();
+        selectedDaysCounterComingDaysPanel = new JPanel();
+
+        selectedDaysCounterGoodDaysPanel.setBackground(selectedMonthStatsGoodDaysDaysPanelColor);
+        selectedDaysCounterBadDaysPanel.setBackground(selectedMonthStatsBadDaysDaysPanelColor);
+        selectedDaysCounterNoDataDaysPanel.setBackground(selectedMonthStatsNoDataDaysDaysPanelColor);
+        selectedDaysCounterComingDaysPanel.setBackground(selectedMonthStatsComingDaysDaysPanelColor);
+
+        prepareSelectedCounterDaysPanels();
+
+        selectedDaysCounterGoodDaysPanel.add(selectedMonthStatsGoodDaysDaysLabel);
+        selectedDaysCounterBadDaysPanel.add(selectedMonthStatsBadDaysDaysLabel);
+        selectedDaysCounterNoDataDaysPanel.add(selectedMonthStatsNoDataDaysLabel);
+        selectedDaysCounterComingDaysPanel.add(selectedMonthStatsComingDaysDaysLabel);
+
+
 
         selectedMonthStatsNorthsPanel = new JPanel();
         selectedMonthStatsNorthsPanel.setLayout(northSelectedMonthStatsPanelGridLayout);
 
-        selectedMonthStatsNorthsPanel.add(new JLabel("1"));
-        selectedMonthStatsNorthsPanel.add(new JLabel("2"));
-        selectedMonthStatsNorthsPanel.add(new JLabel("3"));
-        selectedMonthStatsNorthsPanel.add(new JLabel("4"));
+        selectedMonthStatsNorthsPanel.add(selectedDaysCounterGoodDaysPanel);
+        selectedMonthStatsNorthsPanel.add(selectedDaysCounterBadDaysPanel);
+        selectedMonthStatsNorthsPanel.add(selectedDaysCounterNoDataDaysPanel);
+        selectedMonthStatsNorthsPanel.add(selectedDaysCounterComingDaysPanel);
 
+
+        calendarMonthStatsViewPanelNorth.add(monthSelectComboBox, 1, 0);
         calendarMonthStatsViewPanelNorth.add(selectedMonthStatsNorthsPanel,1,1);
-
         calendarMonthStatsViewPanelNorth.add(currentDayMacroValuesNorthPanelLabel, 1, 2);
-
         calendarMonthStatsViewPanelNorth.add(currentDayDateNorthPanelLabel, 0, 0);
-
         calendarMonthStatsViewPanelNorth.add(new JLabel("Selected date: " + monthSelectComboBox.getSelectedItem()), 0, 1);
-
         calendarMonthStatsViewPanelNorth.add(currentDayMacroTitleNorthPanelLabel, 0, 2);
 
         monthSelectComboBox.addItemListener(new ComboBoxItemListener());
@@ -236,6 +281,15 @@ public class CalendarMonthStatsView {
 
         return macroPanel;
     }
+    private void prepareSelectedCounterDaysPanels() {
+        System.out.println("Hi");
+        System.out.println(goodDaysCounter);
+        System.out.println();
+        selectedMonthStatsGoodDaysDaysLabel =  new JLabel("Good days: " + goodDaysCounter);
+        selectedMonthStatsBadDaysDaysLabel =   new JLabel("Bad days: " + badDaysCounter);
+        selectedMonthStatsNoDataDaysLabel =  new JLabel("No data: " + noDataDaysCounter);
+        selectedMonthStatsComingDaysDaysLabel =   new JLabel("Coming days: " + ComingDaysCounter);
+    }
 
     private void refreshMacroAndAllComponentForSelectedDayMacro(String panelTitleLabelText, Macro macro) {
         calendarMonthStatsViewPanelEast.removeAll();
@@ -258,8 +312,44 @@ public class CalendarMonthStatsView {
         mainWindow.repaint();
     }
 
+    private void refreshMacroAndAllComponentForNorthPanel() {
+        //calendarMonthStatsViewPanelNorth = new JPanel();
+        calendarMonthStatsViewPanelNorth.removeAll();
+
+        //prepareAndAddContentToNorthPanel();
+        //calendarMonthStatsViewPanelNorth.add(new JLabel("NEW LABEL"));
+        prepareSelectedCounterDaysPanels();
+
+
+        selectedDaysCounterGoodDaysPanel.add(selectedMonthStatsGoodDaysDaysLabel);
+        selectedDaysCounterBadDaysPanel.add(selectedMonthStatsBadDaysDaysLabel);
+        selectedDaysCounterNoDataDaysPanel.add(selectedMonthStatsNoDataDaysLabel);
+        selectedDaysCounterComingDaysPanel.add(selectedMonthStatsComingDaysDaysLabel);
+
+        selectedMonthStatsNorthsPanel.add(selectedDaysCounterGoodDaysPanel);
+        selectedMonthStatsNorthsPanel.add(selectedDaysCounterBadDaysPanel);
+        selectedMonthStatsNorthsPanel.add(selectedDaysCounterNoDataDaysPanel);
+        selectedMonthStatsNorthsPanel.add(selectedDaysCounterComingDaysPanel);
+
+
+
+        calendarMonthStatsViewPanelNorth.add(monthSelectComboBox, 1, 0);
+        calendarMonthStatsViewPanelNorth.add(selectedMonthStatsNorthsPanel,1,1);
+        calendarMonthStatsViewPanelNorth.add(currentDayMacroValuesNorthPanelLabel, 1, 2);
+        calendarMonthStatsViewPanelNorth.add(currentDayDateNorthPanelLabel, 0, 0);
+        calendarMonthStatsViewPanelNorth.add(new JLabel("Selected date: " + monthSelectComboBox.getSelectedItem()), 0, 1);
+        calendarMonthStatsViewPanelNorth.add(currentDayMacroTitleNorthPanelLabel, 0, 2);
+
+        calendarMonthStatsViewPanelNorth.validate();
+        calendarMonthStatsViewPanelNorth.repaint();
+
+        mainWindow.validate();
+        mainWindow.repaint();
+    }
+
     private void setDaysButtonsMainPanel(String month) {
         calendarMonthStatsViewPanelMain.removeAll();
+
         daysButtons = new JButton[35];
         int counter = 1;
 
@@ -370,6 +460,12 @@ public class CalendarMonthStatsView {
     }
 
     private void paintButtons(){
+
+        goodDaysCounter = 0;
+        badDaysCounter = 0;
+        noDataDaysCounter = 0;
+        ComingDaysCounter = 0;
+
         String fullDate = "2024-";
         String month = monthSelectComboBox.getSelectedItem().toString();
 
@@ -388,9 +484,7 @@ public class CalendarMonthStatsView {
 
         String fullDateCache = fullDate;
 
-        Color noDataColor = new Color(169, 78, 188);
-        Color passDataColor = new Color(73, 176, 76);
-        Color braekLimitDataColor = new Color(176, 73, 73);
+
 
         for (int i = 0; i < daysButtons.length; i++) {
             if (!daysButtons[i].getText().equals("null")) {
@@ -405,19 +499,23 @@ public class CalendarMonthStatsView {
                 System.out.println(fullDate);
 
                 if (dayMacroGoalStatus(fullDate) == 0) {
-                    daysButtons[i].setBackground(noDataColor);
+                    daysButtons[i].setBackground(noDataColorButton);
+                    noDataDaysCounter++;
                 }
 
                 if (dayMacroGoalStatus(fullDate) == 1) {
-                    daysButtons[i].setBackground(passDataColor);
+                    daysButtons[i].setBackground(passDataColorButton);
+                    goodDaysCounter++;
                 }
 
                 if (dayMacroGoalStatus(fullDate) == 2) {
-                    daysButtons[i].setBackground(braekLimitDataColor);
+                    daysButtons[i].setBackground(braekLimitDataColorButton);
+                    badDaysCounter++;
                 }
             }
 
             fullDate = fullDateCache;
+            System.out.println(goodDaysCounter);
         }
     }
 
@@ -440,7 +538,6 @@ public class CalendarMonthStatsView {
             dayStatus = 2;
         }
 
-        Macro.printAllValues(dayMacro);
 
         return dayStatus;
     }
@@ -501,6 +598,7 @@ public class CalendarMonthStatsView {
                 System.out.println(itemString);
                 setDaysButtonsMainPanel(itemString);
                 paintButtons();
+                refreshMacroAndAllComponentForNorthPanel();
             }
         }
     }
