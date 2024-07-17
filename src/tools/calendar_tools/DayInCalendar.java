@@ -59,6 +59,7 @@ public class DayInCalendar {
         this.consumedMacro = consumedMacro;
     }
 
+
     public String[] dayDataInStringArray(DayInCalendar dayInCalendar) {
         String[] dayDataInStringArray = new String[Config.DAY_IN_CALENDAR_STRING_ARRAY_LENGTH];
 

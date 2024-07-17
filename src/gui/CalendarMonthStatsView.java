@@ -11,6 +11,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Random;
 
 
 public class CalendarMonthStatsView {
@@ -28,10 +29,10 @@ public class CalendarMonthStatsView {
 
     //<editor-fold desc="Global Colors">
 
-    Color selectedMonthStatsGoodDaysDaysPanelColor = new Color(0,255,94);
-    Color selectedMonthStatsBadDaysDaysPanelColor = new Color(230,47,194);
-    Color selectedMonthStatsNoDataDaysDaysPanelColor = new Color(100,100,100);
-    Color selectedMonthStatsComingDaysDaysPanelColor = new Color(65,119,201);
+    Color selectedMonthStatsGoodDaysDaysPanelColor = new Color(0, 255, 94);
+    Color selectedMonthStatsBadDaysDaysPanelColor = new Color(230, 47, 194);
+    Color selectedMonthStatsNoDataDaysDaysPanelColor = new Color(100, 100, 100);
+    Color selectedMonthStatsComingDaysDaysPanelColor = new Color(65, 119, 201);
 
     Color noDataColorButton = new Color(169, 78, 188);
     Color passDataColorButton = new Color(73, 176, 76);
@@ -61,6 +62,7 @@ public class CalendarMonthStatsView {
 
     //<editor-fold desc="Buttons">
     JButton[] daysButtons;
+    JButton[] listOfTheProductButtons = new JButton[24];
     //</editor-fold>
 
     //<editor-fold desc="GridLayouts">
@@ -68,6 +70,7 @@ public class CalendarMonthStatsView {
     GridLayout northPanelGridLayout = new GridLayout(2, 3, 5, 5);
     GridLayout northSelectedMonthStatsPanelGridLayout = new GridLayout(2, 2, 5, 5);
     GridLayout eastPanelGridLayout = new GridLayout(3, 1, 5, 5);
+    GridLayout westPanelGridLayout = new GridLayout(6, 1, 5, 5);
     //</editor-fold>
 
     //<editor-fold desc="Labels">
@@ -79,16 +82,16 @@ public class CalendarMonthStatsView {
     JLabel selectedDayStatsTitleEastPanelLabel = new JLabel("Selected day stats:");
 
 
-
-    JLabel selectedMonthStatsGoodDaysDaysLabel =  new JLabel("Good days:");
-    JLabel selectedMonthStatsBadDaysDaysLabel =   new JLabel("Bad days:");
-    JLabel selectedMonthStatsNoDataDaysLabel =  new JLabel("No data:");
-    JLabel selectedMonthStatsComingDaysDaysLabel =   new JLabel("Coming days:");
+    JLabel selectedMonthStatsGoodDaysDaysLabel = new JLabel("Good days:");
+    JLabel selectedMonthStatsBadDaysDaysLabel = new JLabel("Bad days:");
+    JLabel selectedMonthStatsNoDataDaysLabel = new JLabel("No data:");
+    JLabel selectedMonthStatsComingDaysDaysLabel = new JLabel("Coming days:");
 
 
     //</editor-fold>
 
     JComboBox monthSelectComboBox = new JComboBox<>(new String[]{"April", "May", "June", "July"});
+    JComboBox selectedDayProductsListComboBox = new JComboBox<String>();
 
     //</editor-fold>
 
@@ -200,7 +203,6 @@ public class CalendarMonthStatsView {
         selectedDaysCounterComingDaysPanel.add(selectedMonthStatsComingDaysDaysLabel);
 
 
-
         selectedMonthStatsNorthsPanel = new JPanel();
         selectedMonthStatsNorthsPanel.setLayout(northSelectedMonthStatsPanelGridLayout);
 
@@ -211,7 +213,7 @@ public class CalendarMonthStatsView {
 
 
         calendarMonthStatsViewPanelNorth.add(monthSelectComboBox, 1, 0);
-        calendarMonthStatsViewPanelNorth.add(selectedMonthStatsNorthsPanel,1,1);
+        calendarMonthStatsViewPanelNorth.add(selectedMonthStatsNorthsPanel, 1, 1);
         calendarMonthStatsViewPanelNorth.add(currentDayMacroValuesNorthPanelLabel, 1, 2);
         calendarMonthStatsViewPanelNorth.add(currentDayDateNorthPanelLabel, 0, 0);
         calendarMonthStatsViewPanelNorth.add(new JLabel("Selected date: " + monthSelectComboBox.getSelectedItem()), 0, 1);
@@ -249,6 +251,20 @@ public class CalendarMonthStatsView {
     }
 
     private void prepareAndAddContentToWestPanel() {
+       calendarMonthStatsViewPanelWest.setLayout(westPanelGridLayout);
+
+        //setProductListEmptyButtons();
+
+//        for (int i = 0; i < 16; i++) {
+//            calendarMonthStatsViewPanelWest.add(listOfTheProductButtons[i]);
+//        }
+        setEmptyTemporarySelectedDayProductListComboBox();
+
+        calendarMonthStatsViewPanelWest.add(selectedDayProductsListComboBox);
+
+        JPanel macorPanelForWestPanel  = getSetMiniMacroPanelComponent("Macro", -33,-33,-33,-33);
+
+        calendarMonthStatsViewPanelWest.add(macorPanelForWestPanel);
 
     }
 
@@ -281,14 +297,45 @@ public class CalendarMonthStatsView {
 
         return macroPanel;
     }
+    private JPanel getSetMiniMacroPanelComponent(String panelTitleLabelText, float kcal, float protein, float fat, float carbs) {
+        GridLayout gridLayout = new GridLayout(3, 2, 5, 5);
+
+        JPanel macroPanel = new JPanel();
+        macroPanel.setLayout(gridLayout);
+
+        JLabel titleLabel = new JLabel(panelTitleLabelText);
+        JLabel emptyLabel = new JLabel("");
+
+        JLabel kcalLabel = new JLabel("Kcal: " + kcal);
+
+        JLabel proteinLabel = new JLabel("Protein: " + protein);
+
+        JLabel fatLabel = new JLabel("Fat: " + fat);
+
+        JLabel carbsLabel = new JLabel("Carbs: " + carbs);
+
+        macroPanel.add(titleLabel);
+
+        macroPanel.add(emptyLabel);
+
+        macroPanel.add(kcalLabel);
+
+        macroPanel.add(proteinLabel);
+
+        macroPanel.add(fatLabel);
+        macroPanel.add(carbsLabel);
+
+        return macroPanel;
+    }
+
     private void prepareSelectedCounterDaysPanels() {
         System.out.println("Hi");
         System.out.println(goodDaysCounter);
         System.out.println();
-        selectedMonthStatsGoodDaysDaysLabel =  new JLabel("Good days: " + goodDaysCounter);
-        selectedMonthStatsBadDaysDaysLabel =   new JLabel("Bad days: " + badDaysCounter);
-        selectedMonthStatsNoDataDaysLabel =  new JLabel("No data: " + noDataDaysCounter);
-        selectedMonthStatsComingDaysDaysLabel =   new JLabel("Coming days: " + ComingDaysCounter);
+        selectedMonthStatsGoodDaysDaysLabel = new JLabel("Good days: " + goodDaysCounter);
+        selectedMonthStatsBadDaysDaysLabel = new JLabel("Bad days: " + badDaysCounter);
+        selectedMonthStatsNoDataDaysLabel = new JLabel("No data: " + noDataDaysCounter);
+        selectedMonthStatsComingDaysDaysLabel = new JLabel("Coming days: " + ComingDaysCounter);
     }
 
     private void refreshMacroAndAllComponentForSelectedDayMacro(String panelTitleLabelText, Macro macro) {
@@ -332,9 +379,8 @@ public class CalendarMonthStatsView {
         selectedMonthStatsNorthsPanel.add(selectedDaysCounterComingDaysPanel);
 
 
-
         calendarMonthStatsViewPanelNorth.add(monthSelectComboBox, 1, 0);
-        calendarMonthStatsViewPanelNorth.add(selectedMonthStatsNorthsPanel,1,1);
+        calendarMonthStatsViewPanelNorth.add(selectedMonthStatsNorthsPanel, 1, 1);
         calendarMonthStatsViewPanelNorth.add(currentDayMacroValuesNorthPanelLabel, 1, 2);
         calendarMonthStatsViewPanelNorth.add(currentDayDateNorthPanelLabel, 0, 0);
         calendarMonthStatsViewPanelNorth.add(new JLabel("Selected date: " + monthSelectComboBox.getSelectedItem()), 0, 1);
@@ -459,7 +505,7 @@ public class CalendarMonthStatsView {
         mainWindow.repaint();
     }
 
-    private void paintButtons(){
+    private void paintButtons() {
 
         goodDaysCounter = 0;
         badDaysCounter = 0;
@@ -483,7 +529,6 @@ public class CalendarMonthStatsView {
         }
 
         String fullDateCache = fullDate;
-
 
 
         for (int i = 0; i < daysButtons.length; i++) {
@@ -519,7 +564,7 @@ public class CalendarMonthStatsView {
         }
     }
 
-    private int dayMacroGoalStatus(String fullDateSQLFriendly){
+    private int dayMacroGoalStatus(String fullDateSQLFriendly) {
         // int = 0 no data
         // int = 1 pass goal
         // int = 2 break goal
@@ -540,6 +585,62 @@ public class CalendarMonthStatsView {
 
 
         return dayStatus;
+    }
+
+    public void setProductListEmptyButtons() {
+        for (int i = 0; i < listOfTheProductButtons.length; i++) {
+            listOfTheProductButtons[i] = new JButton(String.valueOf(+1));
+        }
+    }
+
+    public void setEmptyTemporarySelectedDayProductListComboBox() {
+        String[] exampleProduct = {
+                "Bagietka - BBQ Str",
+                "Bułka grahamka",
+                "Bułka krajzerka",
+                "Burak",
+                "Chałka maślana",
+                "Chleb biały",
+                "Chleb żytni",
+                "Cukier",
+                "Daktyle",
+                "Gularz angielski",
+                "Jajko M",
+                "Jogurt brzoskwinia",
+                "Jogurt jagodowy",
+                "Jogurt kiwi",
+                "Jogurt owoce leśne",
+                "Jogurt truskawka poziomka",
+                "Kakao",
+                "Kaszka manna czekoladowa",
+                "Kaszka manna waniliowa",
+                "Kisiel owoce leśne",
+                "Kisiel truskawkowy",
+                "Kotlet schabowy",
+
+        };
+        Random random = new Random();
+
+        String productName;
+        String label;
+        for (int i = 0; i < exampleProduct.length; i++) {
+            productName = exampleProduct[i];
+            int randomAmount = random.nextInt(20,400);
+            String amountInString = String.valueOf(randomAmount);
+
+            while (amountInString.length() < 5) {
+
+                amountInString += " ";
+            }
+
+
+            label = amountInString+  "- - -" + productName;
+            selectedDayProductsListComboBox.addItem(label);
+        }
+    }
+
+    public void setProductListButtons(String[] namesOfProducts, String[] amountOfProducts) {
+
     }
 
     //<editor-fold desc="Actions Listeners, Item Listeners">
