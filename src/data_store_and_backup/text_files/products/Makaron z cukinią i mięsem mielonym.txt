@@ -1,0 +1,9 @@
+Name: Makaron z cukinią i mięsem mielonym
+Brand: Domowe
+Package has: 0.0
+Macro for: 100.0
+KCal: 134.0
+Protein: 8.3
+Fat: 10.4
+Carbs: 2.0
+Comment optional: Domowe

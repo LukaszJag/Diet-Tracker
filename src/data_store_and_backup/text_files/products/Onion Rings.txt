@@ -1,0 +1,9 @@
+Name: Onion Rings
+Brand: Burger King
+Package has: 60.0
+Macro for: 100.0
+KCal: 309.0
+Protein: 5.2
+Fat: 14.9
+Carbs: 36.7
+Comment optional: Onion Rings - 6 szt.

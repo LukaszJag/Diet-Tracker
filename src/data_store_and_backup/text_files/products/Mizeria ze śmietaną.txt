@@ -1,0 +1,9 @@
+Name: Mizeria ze śmietaną
+Brand: Domowe
+Package has: 0.0
+Macro for: 100.0
+KCal: 66.7
+Protein: 1.53
+Fat: 5.38
+Carbs: 3.59
+Comment optional: Domowe

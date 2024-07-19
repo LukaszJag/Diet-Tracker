@@ -1,0 +1,9 @@
+Name: Frytki XXL
+Brand: Burger King
+Package has: 220.0
+Macro for: 100.0
+KCal: 270.9
+Protein: 4.54
+Fat: 13.18
+Carbs: 33.64
+Comment optional: 

@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2024-07-07',
+'Sunday',
+'Dinner',
+542.0,
+'Makaron z cukinią i mięsem mielonym',
+134.0,
+8.3,
+10.4,
+2.0,
+'2024-07-19 05:44:24',
+'none',
+726.28,
+10.84,
+56.368,
+44.986
+);
