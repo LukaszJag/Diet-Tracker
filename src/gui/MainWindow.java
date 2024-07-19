@@ -189,7 +189,7 @@ public class MainWindow extends JFrame {
         @Override
         public void actionPerformed(ActionEvent e) {
             try {
-                RunnerFullUpdateDayStatistics.runFullUpdateMayAndJune();
+                RunnerFullUpdateDayStatistics.runFullUpdateForDayStatistics();
             } catch (SQLException ex) {
                 throw new RuntimeException(ex);
             }
