@@ -1,0 +1,19 @@
+
+
+[Add Product to Calendar] 
+
+
+	[Product name - text field]
+	
+		-> Dodatkowy klawisz przewijający w doł propozycje produktu z comboBox-a zapętlajacy się na dole
+
+
+
+	[Accept button + Skrót CTR na Amount of product - text field]
+
+		-> Zapytanie czy na pewno  meal name ma buć none
+
+			Tak - Enter - focus na domyślnie na tak
+			Nie - zatrzymanie dodawania produktu
+
+				Znikniecie okienka powiadomienia
