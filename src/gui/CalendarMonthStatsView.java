@@ -32,11 +32,13 @@ public class CalendarMonthStatsView {
     Color selectedMonthStatsGoodDaysDaysPanelColor = new Color(0, 255, 94);
     Color selectedMonthStatsBadDaysDaysPanelColor = new Color(230, 47, 194);
     Color selectedMonthStatsNoDataDaysDaysPanelColor = new Color(100, 100, 100);
-    Color selectedMonthStatsComingDaysDaysPanelColor = new Color(65, 119, 201);
 
-    Color noDataColorButton = new Color(169, 78, 188);
-    Color passDataColorButton = new Color(73, 176, 76);
-    Color braekLimitDataColorButton = new Color(176, 73, 73);
+
+
+    Color noDataColorLabelAndButton = new Color(169, 78, 188);
+    Color goodDayDataColorLabelAndButton = new Color(73, 176, 76);
+    Color badDayDataColorLabelAndButton = new Color(176, 73, 73);
+    Color comingDaysDaysColorLabelAndButton = new Color(65, 119, 201);
     //</editor-fold>
 
 
@@ -190,10 +192,10 @@ public class CalendarMonthStatsView {
         selectedDaysCounterNoDataDaysPanel = new JPanel();
         selectedDaysCounterComingDaysPanel = new JPanel();
 
-        selectedDaysCounterGoodDaysPanel.setBackground(selectedMonthStatsGoodDaysDaysPanelColor);
-        selectedDaysCounterBadDaysPanel.setBackground(selectedMonthStatsBadDaysDaysPanelColor);
-        selectedDaysCounterNoDataDaysPanel.setBackground(selectedMonthStatsNoDataDaysDaysPanelColor);
-        selectedDaysCounterComingDaysPanel.setBackground(selectedMonthStatsComingDaysDaysPanelColor);
+        selectedDaysCounterGoodDaysPanel.setBackground(goodDayDataColorLabelAndButton);
+        selectedDaysCounterBadDaysPanel.setBackground(badDayDataColorLabelAndButton);
+        selectedDaysCounterNoDataDaysPanel.setBackground(noDataColorLabelAndButton);
+        selectedDaysCounterComingDaysPanel.setBackground(comingDaysDaysColorLabelAndButton);
 
         prepareSelectedCounterDaysPanels();
 
@@ -544,17 +546,17 @@ public class CalendarMonthStatsView {
                 System.out.println(fullDate);
 
                 if (dayMacroGoalStatus(fullDate) == 0) {
-                    daysButtons[i].setBackground(noDataColorButton);
+                    daysButtons[i].setBackground(noDataColorLabelAndButton);
                     noDataDaysCounter++;
                 }
 
                 if (dayMacroGoalStatus(fullDate) == 1) {
-                    daysButtons[i].setBackground(passDataColorButton);
+                    daysButtons[i].setBackground(goodDayDataColorLabelAndButton);
                     goodDaysCounter++;
                 }
 
                 if (dayMacroGoalStatus(fullDate) == 2) {
-                    daysButtons[i].setBackground(braekLimitDataColorButton);
+                    daysButtons[i].setBackground(badDayDataColorLabelAndButton);
                     badDaysCounter++;
                 }
             }
