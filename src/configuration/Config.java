@@ -41,12 +41,6 @@ public class Config {
     public static final Dimension CALENDAR_MONTH_STATS_VIEW_BUTTONS_SIZE_DIMENSION = new Dimension(5,5);
     public static final Color markAsGoodDay = Color.GREEN;
     public static final Color markAsBadDay = Color.RED;
-    public static final Color northPanelStaticLabelsColor = new Color(58,123,125);
-    public static final Color currentDayDateNorthPanelLabelColor = new Color(0,255,171);
-
-
-
-
 
     //</editor-fold>
 

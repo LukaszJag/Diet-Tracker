@@ -2,6 +2,7 @@ package runners_and_tests.tests.all_tests;
 
 import tools.sql_tools.CheckIfRowExist;
 import tools.sql_tools.SQLSelect;
+import tools.sql_tools.calendar.SelectFromCalendar;
 import tools.sql_tools.days_statistics.SelectFromDaysStatistics;
 import tools.sql_tools.general.GetResultSet;
 
@@ -12,7 +13,8 @@ public class SQLTests {
         //test1();
         //test2();
         //test3();
-        test4();
+        //test4();
+        test5();
     }
 
     private static void test1() {
@@ -36,5 +38,16 @@ public class SQLTests {
 
     private static void test4() {
         SelectFromDaysStatistics.getMacroFromDaysStatisticsByDate("2024-05-30");
+    }
+
+    private static void test5() throws SQLException {
+        String[][] resultArray = SelectFromCalendar.selectAllDataFromCalendarTableForDay("2024-07-07");
+        System.out.println("Start test:\n");
+        for (int i = 0; i < resultArray.length; i++) {
+            for (int j = 0; j < resultArray[i].length; j++) {
+                System.out.print(resultArray[i][j] + "\t");
+            }
+            System.out.println();
+        }
     }
 }

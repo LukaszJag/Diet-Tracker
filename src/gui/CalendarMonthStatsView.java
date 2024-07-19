@@ -2,6 +2,7 @@ package gui;
 
 import configuration.Config;
 import tools.products_tools.Macro;
+import tools.sql_tools.calendar.SelectFromCalendar;
 import tools.sql_tools.days_statistics.SelectFromDaysStatistics;
 
 import javax.swing.*;
@@ -9,6 +10,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Random;
@@ -34,11 +36,19 @@ public class CalendarMonthStatsView {
     Color selectedMonthStatsNoDataDaysDaysPanelColor = new Color(100, 100, 100);
 
 
+    Color currentDayMacroTitleNorthPanelLabelColor = new Color(15, 50, 90);
+    Color currentDayMacroValuesNorthPanelLabelColor = new Color(39, 192, 50);
 
     Color noDataColorLabelAndButton = new Color(169, 78, 188);
     Color goodDayDataColorLabelAndButton = new Color(73, 176, 76);
     Color badDayDataColorLabelAndButton = new Color(176, 73, 73);
     Color comingDaysDaysColorLabelAndButton = new Color(65, 119, 201);
+
+    Color northPanelStaticLabelsColor = new Color(58, 123, 125);
+    Color currentDayDateNorthPanelLabelColor = new Color(0, 255, 171);
+    Color selectedDateAverageMacroForMonthLabelColor = new Color(238, 154, 28);
+    //Color currentDayMacroTitleNorthPanelLabelColor = new Color(20,60,105);
+
     //</editor-fold>
 
 
@@ -90,6 +100,7 @@ public class CalendarMonthStatsView {
     JLabel selectedMonthStatsComingDaysDaysLabel = new JLabel("Coming days:");
 
 
+    JLabel selectedDateAverageMacroForMonthLabel = new JLabel("Selected date average macro for month: ");
     //</editor-fold>
 
     JComboBox monthSelectComboBox = new JComboBox<>(new String[]{"April", "May", "June", "July"});
@@ -218,24 +229,27 @@ public class CalendarMonthStatsView {
         calendarMonthStatsViewPanelNorth.add(selectedMonthStatsNorthsPanel, 1, 1);
         calendarMonthStatsViewPanelNorth.add(currentDayMacroValuesNorthPanelLabel, 1, 2);
         calendarMonthStatsViewPanelNorth.add(currentDayDateNorthPanelLabel, 0, 0);
-        calendarMonthStatsViewPanelNorth.add(new JLabel("Selected date: " + monthSelectComboBox.getSelectedItem()), 0, 1);
+        calendarMonthStatsViewPanelNorth.add(selectedDateAverageMacroForMonthLabel, 0, 1);
         calendarMonthStatsViewPanelNorth.add(currentDayMacroTitleNorthPanelLabel, 0, 2);
 
         monthSelectComboBox.addItemListener(new ComboBoxItemListener());
 
         //<editor-fold desc="Color and size of font in labels">
-        currentDayDateNorthPanelLabel.setForeground(Config.northPanelStaticLabelsColor);
+        currentDayDateNorthPanelLabel.setForeground(northPanelStaticLabelsColor);
         currentDayDateNorthPanelLabel.setFont(calendarMonthStatsViewPanelNorth.getFont().deriveFont(20.0f));
-        currentDayMacroTitleNorthPanelLabel.setForeground(Config.northPanelStaticLabelsColor);
-        currentDayMacroValuesNorthPanelLabel.setForeground(Config.northPanelStaticLabelsColor);
+        currentDayMacroTitleNorthPanelLabel.setForeground(northPanelStaticLabelsColor);
+        currentDayMacroValuesNorthPanelLabel.setForeground(northPanelStaticLabelsColor);
 
         currentDayDateNorthPanelLabel.setOpaque(true);
         currentDayMacroTitleNorthPanelLabel.setOpaque(true);
         currentDayMacroValuesNorthPanelLabel.setOpaque(true);
+        selectedDateAverageMacroForMonthLabel.setOpaque(true);
 
-        currentDayDateNorthPanelLabel.setBackground(Config.currentDayDateNorthPanelLabelColor);
-        currentDayMacroTitleNorthPanelLabel.setBackground(Color.BLUE);
-        currentDayMacroValuesNorthPanelLabel.setBackground(Color.GREEN);
+
+        selectedDateAverageMacroForMonthLabel.setBackground(selectedDateAverageMacroForMonthLabelColor);
+        currentDayDateNorthPanelLabel.setBackground(currentDayDateNorthPanelLabelColor);
+        currentDayMacroTitleNorthPanelLabel.setBackground(currentDayMacroTitleNorthPanelLabelColor);
+        currentDayMacroValuesNorthPanelLabel.setBackground(currentDayMacroValuesNorthPanelLabelColor);
         //</editor-fold>
 
     }
@@ -253,18 +267,17 @@ public class CalendarMonthStatsView {
     }
 
     private void prepareAndAddContentToWestPanel() {
-       calendarMonthStatsViewPanelWest.setLayout(westPanelGridLayout);
+        calendarMonthStatsViewPanelWest.setLayout(westPanelGridLayout);
 
         //setProductListEmptyButtons();
 
 //        for (int i = 0; i < 16; i++) {
 //            calendarMonthStatsViewPanelWest.add(listOfTheProductButtons[i]);
 //        }
-        setEmptyTemporarySelectedDayProductListComboBox();
 
         calendarMonthStatsViewPanelWest.add(selectedDayProductsListComboBox);
 
-        JPanel macorPanelForWestPanel  = getSetMiniMacroPanelComponent("Macro", -33,-33,-33,-33);
+        JPanel macorPanelForWestPanel = getSetMiniMacroPanelComponent("Macro", -33, -33, -33, -33);
 
         calendarMonthStatsViewPanelWest.add(macorPanelForWestPanel);
 
@@ -299,6 +312,7 @@ public class CalendarMonthStatsView {
 
         return macroPanel;
     }
+
     private JPanel getSetMiniMacroPanelComponent(String panelTitleLabelText, float kcal, float protein, float fat, float carbs) {
         GridLayout gridLayout = new GridLayout(3, 2, 5, 5);
 
@@ -595,54 +609,23 @@ public class CalendarMonthStatsView {
         }
     }
 
-    public void setEmptyTemporarySelectedDayProductListComboBox() {
-        String[] exampleProduct = {
-                "Bagietka - BBQ Str",
-                "Bułka grahamka",
-                "Bułka krajzerka",
-                "Burak",
-                "Chałka maślana",
-                "Chleb biały",
-                "Chleb żytni",
-                "Cukier",
-                "Daktyle",
-                "Gularz angielski",
-                "Jajko M",
-                "Jogurt brzoskwinia",
-                "Jogurt jagodowy",
-                "Jogurt kiwi",
-                "Jogurt owoce leśne",
-                "Jogurt truskawka poziomka",
-                "Kakao",
-                "Kaszka manna czekoladowa",
-                "Kaszka manna waniliowa",
-                "Kisiel owoce leśne",
-                "Kisiel truskawkowy",
-                "Kotlet schabowy",
-
-        };
-        Random random = new Random();
-
-        String productName;
-        String label;
-        for (int i = 0; i < exampleProduct.length; i++) {
-            productName = exampleProduct[i];
-            int randomAmount = random.nextInt(20,400);
-            String amountInString = String.valueOf(randomAmount);
-
-            while (amountInString.length() < 5) {
-
-                amountInString += " ";
-            }
 
 
-            label = amountInString+  "- - -" + productName;
-            selectedDayProductsListComboBox.addItem(label);
-        }
-    }
+    public void refreshComboBox(JComboBox newComboBox) {
+        calendarMonthStatsViewPanelWest.removeAll();
+        calendarMonthStatsViewPanelWest.setLayout(westPanelGridLayout);
 
-    public void setProductListButtons(String[] namesOfProducts, String[] amountOfProducts) {
 
+        calendarMonthStatsViewPanelWest.add(newComboBox);
+
+        JPanel macorPanelForWestPanel = getSetMiniMacroPanelComponent("Macro", -33, -33, -33, -33);
+
+        calendarMonthStatsViewPanelWest.add(macorPanelForWestPanel);
+        calendarMonthStatsViewPanelWest.validate();
+        calendarMonthStatsViewPanelWest.repaint();
+
+        mainWindow.validate();
+        mainWindow.repaint();
     }
 
     //<editor-fold desc="Actions Listeners, Item Listeners">
@@ -682,13 +665,28 @@ public class CalendarMonthStatsView {
                 fullDate = fullDate + button.getText();
             }
 
-
             Macro macroToPrintInGUI;
 
             macroToPrintInGUI = SelectFromDaysStatistics.getMacroFromDaysStatisticsByDate(fullDate);
 
             String panelTitleLabelText = "Macro - Selected day: " + fullDate;
             refreshMacroAndAllComponentForSelectedDayMacro(panelTitleLabelText, macroToPrintInGUI);
+
+
+            String[][] productArrayForComboBox;
+            try {
+                productArrayForComboBox = SelectFromCalendar.selectAllDataFromCalendarTableForDay(fullDate);
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            }
+            String[] listToComboBox = new String[productArrayForComboBox.length];
+
+            for (int i = 0; i < listToComboBox.length; i++) {
+                listToComboBox[i] = productArrayForComboBox[i][2];
+            }
+
+            JComboBox newComboBox = selectedDayProductsListComboBox = new JComboBox<>(listToComboBox);
+            refreshComboBox(newComboBox);
 
         }
     }
