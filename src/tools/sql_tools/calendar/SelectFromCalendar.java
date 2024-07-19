@@ -12,7 +12,6 @@ public class SelectFromCalendar {
         String [][] allRows = new String[26][15];
 
         String sqlStatement = "SELECT * FROM calendar WHERE day_date=" + "'" + dayDateSQLFriendlyFormat + "'" + ";";
-        System.out.println(sqlStatement);
         ResultSet resultSet;
         GetResultSet getResultSet = new GetResultSet();
         resultSet = getResultSet.getResultSetFromSQL(sqlStatement);
@@ -43,5 +42,21 @@ public class SelectFromCalendar {
 
 
         return resultArray;
+    }
+
+    public static String[] selectAllFromCalendarTableForDateAndProductName(String productName, String dayDateSQLFriendlyFormat) throws SQLException {
+        String sqlStatement = "SELECT * FROM calendar WHERE day_date=" + "'" + dayDateSQLFriendlyFormat + "'" + " AND "+ "product_name =" + "'" + productName  + "'" + ";";
+        String[] rowData = new String[15];
+
+        ResultSet resultSet;
+        GetResultSet getResultSet = new GetResultSet();
+        resultSet = getResultSet.getResultSetFromSQL(sqlStatement);
+
+        while (resultSet.next()){
+            for (int i = 0; i < rowData.length; i++) {
+                rowData[i] = resultSet.getString(i+1);
+            }
+        }
+        return rowData;
     }
 }

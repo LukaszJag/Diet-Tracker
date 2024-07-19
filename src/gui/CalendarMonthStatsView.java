@@ -13,12 +13,12 @@ import java.awt.event.ItemEvent;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Random;
 
 
 public class CalendarMonthStatsView {
     //<editor-fold desc="Main - Calendar Month Stats View - components and variables">
 
+    String currentDate = "????-??-??";
     //<editor-fold desc="Global Counters">
     int goodDaysCounter;
 
@@ -179,8 +179,7 @@ public class CalendarMonthStatsView {
     }
     //</editor-fold>
 
-    //<editor-fold desc="Prepare and add content to: Panels">
-
+    //<editor-fold desc="Prepare Add Content - to Panels">
     private void prepareAndAddContentToMainPanel() {
         setDaysButtonsMainPanel("June");
     }
@@ -259,154 +258,36 @@ public class CalendarMonthStatsView {
 
     private void prepareAndAddContentToEastPanel() {
         calendarMonthStatsViewPanelEast.setLayout(eastPanelGridLayout);
-        calendarMonthStatsViewPanelEast.add(selectedDayStatsTitleEastPanelLabel, 0, 0);
-        calendarMonthStatsViewPanelEast.add(getSetMacroPanelComponent("Macro - Selected day:", 42, 42, 42, 42), 0, 1);
+        calendarMonthStatsViewPanelEast.add(getSetMacroPanelComponent("Macro - Selected day:", 42, 42, 42, 42), 0, 0);
 
-        calendarMonthStatsViewPanelEast.add(getSetMacroPanelComponent("Macro - goal:", 4297, 140, 120, 671), 0, 2);
+        calendarMonthStatsViewPanelEast.add(getSetMacroPanelComponent("Macro - goal:", 4297, 140, 120, 671), 0, 1);
+
+        JPanel macroPanelTMP = new JPanel();
+        macroPanelTMP.setLayout(new GridLayout(1,2,1,1));
+        macroPanelTMP.add(new JButton("Difference"),0,0);
+        macroPanelTMP.add(new JButton("Empty"), 0, 1);
+        calendarMonthStatsViewPanelEast.add(macroPanelTMP,0,2);
 
     }
 
     private void prepareAndAddContentToWestPanel() {
         calendarMonthStatsViewPanelWest.setLayout(westPanelGridLayout);
 
-        //setProductListEmptyButtons();
-
-//        for (int i = 0; i < 16; i++) {
-//            calendarMonthStatsViewPanelWest.add(listOfTheProductButtons[i]);
-//        }
-
+        selectedDayProductsListComboBox.addItemListener(new SelectedDayProductsListComboBoxItemListener());
         calendarMonthStatsViewPanelWest.add(selectedDayProductsListComboBox);
 
-        JPanel macorPanelForWestPanel = getSetMiniMacroPanelComponent("Macro", -33, -33, -33, -33);
+        JPanel macroPanelForWestPanel = getSetMiniMacroPanelComponent("Macro", -33, -33, -33, -33);
 
-        calendarMonthStatsViewPanelWest.add(macorPanelForWestPanel);
+        calendarMonthStatsViewPanelWest.add(macroPanelForWestPanel);
 
     }
 
-    //</editor-fold>
-
-    private JPanel getSetMacroPanelComponent(String panelTitleLabelText, float kcal, float protein, float fat, float carbs) {
-        GridLayout gridLayout = new GridLayout(5, 1, 5, 5);
-
-        JPanel macroPanel = new JPanel();
-        macroPanel.setLayout(gridLayout);
-
-        JLabel titleLabel = new JLabel(panelTitleLabelText);
-
-        JLabel kcalLabel = new JLabel("Kcal: " + kcal);
-
-        JLabel proteinLabel = new JLabel("Protein: " + protein);
-
-        JLabel fatLabel = new JLabel("Fat: " + fat);
-
-        JLabel carbsLabel = new JLabel("Carbs: " + carbs);
-
-        macroPanel.add(titleLabel);
-
-        macroPanel.add(kcalLabel);
-
-        macroPanel.add(proteinLabel);
-
-        macroPanel.add(fatLabel);
-        macroPanel.add(carbsLabel);
-
-        return macroPanel;
-    }
-
-    private JPanel getSetMiniMacroPanelComponent(String panelTitleLabelText, float kcal, float protein, float fat, float carbs) {
-        GridLayout gridLayout = new GridLayout(3, 2, 5, 5);
-
-        JPanel macroPanel = new JPanel();
-        macroPanel.setLayout(gridLayout);
-
-        JLabel titleLabel = new JLabel(panelTitleLabelText);
-        JLabel emptyLabel = new JLabel("");
-
-        JLabel kcalLabel = new JLabel("Kcal: " + kcal);
-
-        JLabel proteinLabel = new JLabel("Protein: " + protein);
-
-        JLabel fatLabel = new JLabel("Fat: " + fat);
-
-        JLabel carbsLabel = new JLabel("Carbs: " + carbs);
-
-        macroPanel.add(titleLabel);
-
-        macroPanel.add(emptyLabel);
-
-        macroPanel.add(kcalLabel);
-
-        macroPanel.add(proteinLabel);
-
-        macroPanel.add(fatLabel);
-        macroPanel.add(carbsLabel);
-
-        return macroPanel;
-    }
-
+    //<editor-fold desc="Side help methods - for prepare Panels">
     private void prepareSelectedCounterDaysPanels() {
-        System.out.println("Hi");
-        System.out.println(goodDaysCounter);
-        System.out.println();
         selectedMonthStatsGoodDaysDaysLabel = new JLabel("Good days: " + goodDaysCounter);
         selectedMonthStatsBadDaysDaysLabel = new JLabel("Bad days: " + badDaysCounter);
         selectedMonthStatsNoDataDaysLabel = new JLabel("No data: " + noDataDaysCounter);
         selectedMonthStatsComingDaysDaysLabel = new JLabel("Coming days: " + ComingDaysCounter);
-    }
-
-    private void refreshMacroAndAllComponentForSelectedDayMacro(String panelTitleLabelText, Macro macro) {
-        calendarMonthStatsViewPanelEast.removeAll();
-
-
-        calendarMonthStatsViewPanelEast.setBackground(Color.WHITE);
-        calendarMonthStatsViewPanelEast.setPreferredSize(new Dimension(Config.CALENDAR_MONTH_STATS_VIEW_PANELS_WEST_EAST_SIZE, Config.CALENDAR_MONTH_STATS_VIEW_PANELS_WEST_EAST_SIZE));
-
-        calendarMonthStatsViewPanelEast.setLayout(eastPanelGridLayout);
-        calendarMonthStatsViewPanelEast.add(selectedDayStatsTitleEastPanelLabel, 0, 0);
-
-        calendarMonthStatsViewPanelEast.add(getSetMacroPanelComponent(panelTitleLabelText,
-                macro.getKcal(), macro.getProtein(), macro.getFat(), macro.getCarbs()), 0, 1);
-
-        calendarMonthStatsViewPanelEast.add(getSetMacroPanelComponent("Macro - goal:", 4297, 140, 120, 671), 0, 2);
-
-
-        mainWindow.add(calendarMonthStatsViewPanelEast, BorderLayout.EAST);
-        mainWindow.validate();
-        mainWindow.repaint();
-    }
-
-    private void refreshMacroAndAllComponentForNorthPanel() {
-        //calendarMonthStatsViewPanelNorth = new JPanel();
-        calendarMonthStatsViewPanelNorth.removeAll();
-
-        //prepareAndAddContentToNorthPanel();
-        //calendarMonthStatsViewPanelNorth.add(new JLabel("NEW LABEL"));
-        prepareSelectedCounterDaysPanels();
-
-
-        selectedDaysCounterGoodDaysPanel.add(selectedMonthStatsGoodDaysDaysLabel);
-        selectedDaysCounterBadDaysPanel.add(selectedMonthStatsBadDaysDaysLabel);
-        selectedDaysCounterNoDataDaysPanel.add(selectedMonthStatsNoDataDaysLabel);
-        selectedDaysCounterComingDaysPanel.add(selectedMonthStatsComingDaysDaysLabel);
-
-        selectedMonthStatsNorthsPanel.add(selectedDaysCounterGoodDaysPanel);
-        selectedMonthStatsNorthsPanel.add(selectedDaysCounterBadDaysPanel);
-        selectedMonthStatsNorthsPanel.add(selectedDaysCounterNoDataDaysPanel);
-        selectedMonthStatsNorthsPanel.add(selectedDaysCounterComingDaysPanel);
-
-
-        calendarMonthStatsViewPanelNorth.add(monthSelectComboBox, 1, 0);
-        calendarMonthStatsViewPanelNorth.add(selectedMonthStatsNorthsPanel, 1, 1);
-        calendarMonthStatsViewPanelNorth.add(currentDayMacroValuesNorthPanelLabel, 1, 2);
-        calendarMonthStatsViewPanelNorth.add(currentDayDateNorthPanelLabel, 0, 0);
-        calendarMonthStatsViewPanelNorth.add(new JLabel("Selected date: " + monthSelectComboBox.getSelectedItem()), 0, 1);
-        calendarMonthStatsViewPanelNorth.add(currentDayMacroTitleNorthPanelLabel, 0, 2);
-
-        calendarMonthStatsViewPanelNorth.validate();
-        calendarMonthStatsViewPanelNorth.repaint();
-
-        mainWindow.validate();
-        mainWindow.repaint();
     }
 
     private void setDaysButtonsMainPanel(String month) {
@@ -520,6 +401,70 @@ public class CalendarMonthStatsView {
         mainWindow.validate();
         mainWindow.repaint();
     }
+    //</editor-fold>
+
+    //</editor-fold>
+
+    //<editor-fold desc="get set Macro panel">
+    private JPanel getSetMacroPanelComponent(String panelTitleLabelText, float kcal, float protein, float fat, float carbs) {
+        GridLayout gridLayout = new GridLayout(5, 1, 5, 5);
+
+        JPanel macroPanel = new JPanel();
+        macroPanel.setLayout(gridLayout);
+
+        JLabel titleLabel = new JLabel(panelTitleLabelText);
+
+        JLabel kcalLabel = new JLabel("Kcal: " + kcal);
+
+        JLabel proteinLabel = new JLabel("Protein: " + protein);
+
+        JLabel fatLabel = new JLabel("Fat: " + fat);
+
+        JLabel carbsLabel = new JLabel("Carbs: " + carbs);
+
+        macroPanel.add(titleLabel);
+
+        macroPanel.add(kcalLabel);
+
+        macroPanel.add(proteinLabel);
+
+        macroPanel.add(fatLabel);
+        macroPanel.add(carbsLabel);
+
+        return macroPanel;
+    }
+
+    private JPanel getSetMiniMacroPanelComponent(String panelTitleLabelText, float kcal, float protein, float fat, float carbs) {
+        GridLayout gridLayout = new GridLayout(3, 2, 5, 5);
+
+        JPanel macroPanel = new JPanel();
+        macroPanel.setLayout(gridLayout);
+
+        JLabel titleLabel = new JLabel(panelTitleLabelText);
+        JLabel emptyLabel = new JLabel("");
+
+        JLabel kcalLabel = new JLabel("Kcal: " + kcal);
+
+        JLabel proteinLabel = new JLabel("Protein: " + protein);
+
+        JLabel fatLabel = new JLabel("Fat: " + fat);
+
+        JLabel carbsLabel = new JLabel("Carbs: " + carbs);
+
+        macroPanel.add(titleLabel);
+
+        macroPanel.add(emptyLabel);
+
+        macroPanel.add(kcalLabel);
+
+        macroPanel.add(proteinLabel);
+
+        macroPanel.add(fatLabel);
+        macroPanel.add(carbsLabel);
+
+        return macroPanel;
+    }
+    //</editor-fold>
 
     private void paintButtons() {
 
@@ -556,8 +501,6 @@ public class CalendarMonthStatsView {
                 if (daysButtons[i].getText().length() == 2) {
                     fullDate = fullDate + daysButtons[i].getText();
                 }
-                System.out.println(daysButtons[i].getText());
-                System.out.println(fullDate);
 
                 if (dayMacroGoalStatus(fullDate) == 0) {
                     daysButtons[i].setBackground(noDataColorLabelAndButton);
@@ -576,7 +519,6 @@ public class CalendarMonthStatsView {
             }
 
             fullDate = fullDateCache;
-            System.out.println(goodDaysCounter);
         }
     }
 
@@ -603,24 +545,100 @@ public class CalendarMonthStatsView {
         return dayStatus;
     }
 
-    public void setProductListEmptyButtons() {
-        for (int i = 0; i < listOfTheProductButtons.length; i++) {
-            listOfTheProductButtons[i] = new JButton(String.valueOf(+1));
-        }
+    //<editor-fold desc="Refresh methods">
+    private void refreshMacroAndAllComponentForSelectedDayMacro(String panelTitleLabelText, Macro macro) {
+        calendarMonthStatsViewPanelEast.removeAll();
+
+
+        calendarMonthStatsViewPanelEast.setBackground(Color.WHITE);
+        calendarMonthStatsViewPanelEast.setPreferredSize(new Dimension(Config.CALENDAR_MONTH_STATS_VIEW_PANELS_WEST_EAST_SIZE, Config.CALENDAR_MONTH_STATS_VIEW_PANELS_WEST_EAST_SIZE));
+
+        calendarMonthStatsViewPanelEast.setLayout(eastPanelGridLayout);
+
+
+        calendarMonthStatsViewPanelEast.add(getSetMacroPanelComponent(panelTitleLabelText,
+                macro.getKcal(), macro.getProtein(), macro.getFat(), macro.getCarbs()), 0, 0);
+
+        calendarMonthStatsViewPanelEast.add(getSetMacroPanelComponent("Macro - goal:", 4297, 140, 120, 671), 0, 1);
+
+        JPanel macroPanelTMP = new JPanel();
+        macroPanelTMP.setLayout(new GridLayout(1,2,1,1));
+        macroPanelTMP.add(new JButton("Difference"),0,0);
+        macroPanelTMP.add(new JButton("Empty"), 0, 1);
+        calendarMonthStatsViewPanelEast.add(macroPanelTMP,0,2);
+
+
+        mainWindow.add(calendarMonthStatsViewPanelEast, BorderLayout.EAST);
+        mainWindow.validate();
+        mainWindow.repaint();
     }
+    private void refreshWestPanel(Macro macro, String amountOfProduct){
+        calendarMonthStatsViewPanelWest.removeAll();
+
+        calendarMonthStatsViewPanelWest.setLayout(westPanelGridLayout);
 
 
+
+
+        selectedDayProductsListComboBox.addItemListener(new SelectedDayProductsListComboBoxItemListener());
+        calendarMonthStatsViewPanelWest.add(selectedDayProductsListComboBox);
+
+
+        JPanel macroPanelForWestPanel = getSetMiniMacroPanelComponent("Macro " + currentDate, macro.getKcal(), macro.getProtein(), macro.getFat(), macro.getCarbs());
+
+        calendarMonthStatsViewPanelWest.add(macroPanelForWestPanel);
+
+        calendarMonthStatsViewPanelWest.validate();
+        calendarMonthStatsViewPanelWest.repaint();
+
+        mainWindow.add(calendarMonthStatsViewPanelWest, BorderLayout.WEST);
+        mainWindow.validate();
+        mainWindow.repaint();
+
+    }
+    private void refreshMacroAndAllComponentForNorthPanel() {
+        calendarMonthStatsViewPanelNorth.removeAll();
+
+        prepareSelectedCounterDaysPanels();
+
+
+        selectedDaysCounterGoodDaysPanel.add(selectedMonthStatsGoodDaysDaysLabel);
+        selectedDaysCounterBadDaysPanel.add(selectedMonthStatsBadDaysDaysLabel);
+        selectedDaysCounterNoDataDaysPanel.add(selectedMonthStatsNoDataDaysLabel);
+        selectedDaysCounterComingDaysPanel.add(selectedMonthStatsComingDaysDaysLabel);
+
+        selectedMonthStatsNorthsPanel.add(selectedDaysCounterGoodDaysPanel);
+        selectedMonthStatsNorthsPanel.add(selectedDaysCounterBadDaysPanel);
+        selectedMonthStatsNorthsPanel.add(selectedDaysCounterNoDataDaysPanel);
+        selectedMonthStatsNorthsPanel.add(selectedDaysCounterComingDaysPanel);
+
+
+        calendarMonthStatsViewPanelNorth.add(monthSelectComboBox, 1, 0);
+        calendarMonthStatsViewPanelNorth.add(selectedMonthStatsNorthsPanel, 1, 1);
+        calendarMonthStatsViewPanelNorth.add(currentDayMacroValuesNorthPanelLabel, 1, 2);
+        calendarMonthStatsViewPanelNorth.add(currentDayDateNorthPanelLabel, 0, 0);
+        calendarMonthStatsViewPanelNorth.add(new JLabel("Selected date: " + monthSelectComboBox.getSelectedItem()), 0, 1);
+        calendarMonthStatsViewPanelNorth.add(currentDayMacroTitleNorthPanelLabel, 0, 2);
+
+        calendarMonthStatsViewPanelNorth.validate();
+        calendarMonthStatsViewPanelNorth.repaint();
+
+        mainWindow.validate();
+        mainWindow.repaint();
+    }
+    //</editor-fold>
 
     public void refreshComboBox(JComboBox newComboBox) {
         calendarMonthStatsViewPanelWest.removeAll();
         calendarMonthStatsViewPanelWest.setLayout(westPanelGridLayout);
-
+        calendarMonthStatsViewPanelWest.add(selectedDayProductsListComboBox);
+        selectedDayProductsListComboBox.addItemListener(new SelectedDayProductsListComboBoxItemListener());
 
         calendarMonthStatsViewPanelWest.add(newComboBox);
 
-        JPanel macorPanelForWestPanel = getSetMiniMacroPanelComponent("Macro", -33, -33, -33, -33);
+        JPanel macroPanelForWestPanel = getSetMiniMacroPanelComponent("Macro", -33, -33, -33, -33);
 
-        calendarMonthStatsViewPanelWest.add(macorPanelForWestPanel);
+        calendarMonthStatsViewPanelWest.add(macroPanelForWestPanel);
         calendarMonthStatsViewPanelWest.validate();
         calendarMonthStatsViewPanelWest.repaint();
 
@@ -688,6 +706,7 @@ public class CalendarMonthStatsView {
             JComboBox newComboBox = selectedDayProductsListComboBox = new JComboBox<>(listToComboBox);
             refreshComboBox(newComboBox);
 
+            currentDate = fullDate;
         }
     }
 
@@ -696,10 +715,38 @@ public class CalendarMonthStatsView {
         public void itemStateChanged(ItemEvent event) {
             if (event.getStateChange() == ItemEvent.SELECTED) {
                 String itemString = event.getItem().toString();
-                System.out.println(itemString);
                 setDaysButtonsMainPanel(itemString);
                 paintButtons();
                 refreshMacroAndAllComponentForNorthPanel();
+            }
+        }
+    }
+
+    private class SelectedDayProductsListComboBoxItemListener implements java.awt.event.ItemListener {
+        @Override
+        public void itemStateChanged(ItemEvent event) {
+            if (event.getStateChange() == ItemEvent.SELECTED) {
+                System.out.println("Hello there");
+
+
+                String productName;
+                productName = selectedDayProductsListComboBox.getSelectedItem().toString();
+                String[] rowData;
+
+                try {
+                    rowData = SelectFromCalendar.selectAllFromCalendarTableForDateAndProductName(productName, currentDate);
+                } catch (SQLException ex) {
+                    throw new RuntimeException(ex);
+                }
+
+                float kcal = Float.valueOf(rowData[10]);
+                float protein = Float.valueOf(rowData[11]);
+                float fat = Float.valueOf(rowData[12]);
+                float carbs = Float.valueOf(rowData[13]);
+
+
+                Macro macro = new Macro(kcal, protein, fat, carbs);
+                refreshWestPanel(macro, productName);
             }
         }
     }
