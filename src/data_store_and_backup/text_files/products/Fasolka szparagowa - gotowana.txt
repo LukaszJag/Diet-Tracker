@@ -1,0 +1,9 @@
+Name: Fasolka szparagowa - gotowana
+Brand: Domowe
+Package has: 0.0
+Macro for: 100.0
+KCal: 27.0
+Protein: 2.4
+Fat: 0.2
+Carbs: 7.6
+Comment optional: Domowe
