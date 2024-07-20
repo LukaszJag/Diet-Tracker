@@ -1,7 +1,7 @@
+Git-hub task - local - issues and notes:
 
 
-[Add Product to Calendar] 
-
+->[Add Product to Calendar]
 
 
 	[Accept button + Skrót CTR na Amount of product - text field]
@@ -12,3 +12,14 @@
 			Nie - zatrzymanie dodawania produktu
 
 				Znikniecie okienka powiadomienia
+
+
+-> [CalendarMonthStatsView]
+
+    [selectedDateAverageMacroForMonthLabel - "Selected date average macro for month:"]
+
+        Set full functionality for [selectedDateAverageMacroForMonthLabel]
+        Calculate and display -> "Selected date average macro for month: "
+
+
+
