@@ -697,7 +697,6 @@ public class AddProductToCalendarDay {
         }
     }
 
-
     private class ChangeCalendarTableToCalendarTestButtonListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -794,10 +793,23 @@ public class AddProductToCalendarDay {
             }
 
             if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-                isProductExist();
+                selectNextItemInComboBox();
             }
         }
 
+        public void selectNextItemInComboBox(){
+            int productIndex = productSuggestionNameComboBox.getSelectedIndex();
+            int comboBoxItemCount = productSuggestionNameComboBox.getItemCount();
+
+            int nextProductIndex = productIndex + 1;
+
+            if (nextProductIndex <  comboBoxItemCount) {
+                productSuggestionNameComboBox.setSelectedIndex(nextProductIndex);
+            }else {
+                productSuggestionNameComboBox.setSelectedIndex(0);
+            }
+
+        }
         public String[] searchAllProductWith(String wordToSearch) {
             String[] allProductArray;
             String[] resultArray = new String[200];
