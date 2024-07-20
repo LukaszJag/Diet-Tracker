@@ -173,7 +173,7 @@ public class AddProductToCalendarDay {
         //<editor-fold desc="Add Components to Panel - West">
         // Add Buttons
         addProductToDayPanelWest.add(inputCurrentDayButton);
-        inputCurrentDayButton.addActionListener(new inputCurrentDayButtonActionListener());
+        inputCurrentDayButton.addActionListener(new InputCurrentDayButtonActionListener());
 
         addProductToDayDisplaySelectedDay.setForeground(Config.addProductToDayCurrentDateLabelColor);
         addProductToDayPanelWest.add(addProductToDayDisplaySelectedDay);
@@ -452,13 +452,26 @@ public class AddProductToCalendarDay {
     }
     //</editor-fold>
 
+    public void mealNameAcceptManager(){
+        if (dayMealNameComboBox.getSelectedItem().toString().equals("None")){
+            int reply = JOptionPane.showConfirmDialog(null, "Are you sure you want add product with -None- meal name?", "Right meal name?",  JOptionPane.YES_NO_OPTION);
+            if (reply == JOptionPane.YES_OPTION)
+            {
+                acceptProduct();
+            }else {
+                JOptionPane.showMessageDialog(null,"Back to adding product");
+            }
+        }else {
+            acceptProduct();
+        }
+
+    }
 
     //<editor-fold desc="Action Listeners Classes">
     private class AddProductToDayAcceptButtonListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            acceptProduct();
-            clearGUIMacroValues();
+            mealNameAcceptManager();
         }
 
     }
@@ -725,7 +738,7 @@ public class AddProductToCalendarDay {
         }
     }
 
-    private class inputCurrentDayButtonActionListener implements ActionListener {
+    private class InputCurrentDayButtonActionListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
             JOptionPane.showMessageDialog(null, "NOTHING HAPPENED");
@@ -848,7 +861,7 @@ public class AddProductToCalendarDay {
         @Override
         public void keyReleased(KeyEvent e) {
             if (e.getKeyCode() == KeyEvent.VK_CONTROL) {
-                acceptProduct();
+                mealNameAcceptManager();
             }
         }
 

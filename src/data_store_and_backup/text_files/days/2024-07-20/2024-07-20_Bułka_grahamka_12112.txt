@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar_test`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2024-07-20',
+'Saturday',
+'None',
+12112.0,
+'Bułka grahamka',
+265.0,
+9.6,
+1.7,
+56.1,
+'2024-07-20 05:19:19',
+'none',
+32096.8,
+6794.832,
+205.904,
+1162.7521
+);

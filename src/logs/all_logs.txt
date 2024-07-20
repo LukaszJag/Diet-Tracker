@@ -30,3 +30,5 @@
 30:-:2024-07-19:-:ADD PRODUCT TO CALENDAR TABLE BY GUI:-:calendar:-:2024-07-07:-:Sunday:-:Frytki XXL:-:220.0:-:kcal: 270.9--protein: 4.54--fat: 13.18--carbs: 33.64:-:Supper:-:None:-:kcal: 595.98--protein: 9.988--fat: 28.996002--carbs: 74.008:-:
 31:-:2024-07-19:-:ADD PRODUCT TO PRODUCT TABLE BY GUI:-:product_table:-:Onion Rings:-:Burger King:-:kcal: 309.0--protein: 5.2--fat: 14.9--carbs: 36.7:-:60:-:100:-:
 32:-:2024-07-19:-:ADD PRODUCT TO CALENDAR TABLE BY GUI:-:calendar:-:2024-07-07:-:Sunday:-:Onion Rings:-:60.0:-:kcal: 309.0--protein: 5.2--fat: 14.9--carbs: 36.7:-:Supper:-:None:-:kcal: 185.40001--protein: 3.1200001--fat: 8.940001--carbs: 22.02:-:
+33:-:2024-07-20:-:ADD PRODUCT TO CALENDAR TABLE BY GUI:-:calendar_test:-:2024-07-20:-:Saturday:-:Bułka grahamka:-:12112.0:-:kcal: 265.0--protein: 9.6--fat: 1.7--carbs: 56.1:-:None:-:None:-:kcal: 32096.8--protein: 1162.7521--fat: 205.904--carbs: 6794.832:-:
+34:-:2024-07-20:-:ADD PRODUCT TO CALENDAR TABLE BY GUI:-:calendar_test:-:2024-07-20:-:Saturday:-:Chicken Burger:-:1212134.0:-:kcal: 377.0--protein: 10.0--fat: 20.0--carbs: 40.0:-:None:-:None:-:kcal: 4569745.0--protein: 121213.4--fat: 242426.8--carbs: 484853.6:-:
