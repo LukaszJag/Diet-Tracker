@@ -1,0 +1,9 @@
+Name: Leczo z mięsem mielonym
+Brand: Domowe
+Package has: 0.0
+Macro for: 100.0
+KCal: 142.0
+Protein: 4.47
+Fat: 10.95
+Carbs: 4.56
+Comment optional: Domowe

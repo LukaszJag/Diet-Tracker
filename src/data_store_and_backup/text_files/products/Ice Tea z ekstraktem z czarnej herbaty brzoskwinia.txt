@@ -1,0 +1,9 @@
+Name: Ice Tea z ekstraktem z czarnej herbaty brzoskwinia
+Brand: Remsey
+Package has: 1500.0
+Macro for: 100.0
+KCal: 28.0
+Protein: 0.0
+Fat: 0.0
+Carbs: 6.9
+Comment optional: 

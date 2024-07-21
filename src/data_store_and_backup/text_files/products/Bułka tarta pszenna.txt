@@ -1,0 +1,9 @@
+Name: Bułka tarta pszenna
+Brand: Pano
+Package has: 450.0
+Macro for: 100.0
+KCal: 361.0
+Protein: 14.0
+Fat: 1.1
+Carbs: 71.0
+Comment optional: 

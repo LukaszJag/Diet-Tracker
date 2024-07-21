@@ -1,0 +1,9 @@
+Name: Monte mega white
+Brand: Zott
+Package has: 400.0
+Macro for: 100.0
+KCal: 184.0
+Protein: 2.4
+Fat: 13.5
+Carbs: 12.9
+Comment optional: 

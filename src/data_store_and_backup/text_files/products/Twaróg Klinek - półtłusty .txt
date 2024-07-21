@@ -1,0 +1,9 @@
+Name: Twaróg Klinek - półtłusty 
+Brand: Delikate
+Package has: 250.0
+Macro for: 100.0
+KCal: 111.0
+Protein: 16.0
+Fat: 3.5
+Carbs: 3.8
+Comment optional: 
