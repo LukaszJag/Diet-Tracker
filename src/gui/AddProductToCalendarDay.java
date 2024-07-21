@@ -808,6 +808,41 @@ public class AddProductToCalendarDay {
             if (e.getKeyCode() == KeyEvent.VK_DOWN) {
                 selectNextItemInComboBox();
             }
+
+            if (e.getKeyCode() == KeyEvent.VK_LEFT){
+                selectBackItemInMealComboBox();
+            }
+
+            if (e.getKeyCode() == KeyEvent.VK_RIGHT){
+                selectNextItemInMealComboBox();
+            }
+        }
+
+        public void selectNextItemInMealComboBox(){
+            int productIndex = dayMealNameComboBox.getSelectedIndex();
+            int comboBoxItemCount = dayMealNameComboBox.getItemCount();
+
+            int nextProductIndex = productIndex + 1;
+
+            if (nextProductIndex <  comboBoxItemCount) {
+                dayMealNameComboBox.setSelectedIndex(nextProductIndex);
+            }else {
+                dayMealNameComboBox.setSelectedIndex(0);
+            }
+        }
+
+        public void selectBackItemInMealComboBox(){
+            int productIndex = dayMealNameComboBox.getSelectedIndex();
+            int comboBoxItemCount = dayMealNameComboBox.getItemCount();
+
+            int nextProductIndex = productIndex - 1;
+            
+
+            if (nextProductIndex <= -1) {
+                dayMealNameComboBox.setSelectedIndex(comboBoxItemCount - 1);
+            }else {
+                dayMealNameComboBox.setSelectedIndex(nextProductIndex);
+            }
         }
 
         public void selectNextItemInComboBox(){
