@@ -1,0 +1,9 @@
+Name: Fasolka szparagowa z bułką tartą 
+Brand: Domowe
+Package has: 0.0
+Macro for: 100.0
+KCal: 102.0
+Protein: 2.0
+Fat: 6.9
+Carbs: 3.0
+Comment optional: Domowe

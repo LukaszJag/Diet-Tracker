@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2024-07-14',
+'Sunday',
+'Supper',
+183.0,
+'Crispy Chicken',
+489.0,
+18.0,
+29.0,
+39.0,
+'2024-07-22 04:10:40',
+'none',
+894.87,
+71.37,
+53.07,
+32.940002
+);

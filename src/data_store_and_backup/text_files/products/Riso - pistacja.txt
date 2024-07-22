@@ -1,0 +1,9 @@
+Name: Riso - pistacja
+Brand: Muller
+Package has: 200.0
+Macro for: 100.0
+KCal: 108.0
+Protein: 3.2
+Fat: 2.4
+Carbs: 18.3
+Comment optional: 

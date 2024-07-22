@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2024-07-13',
+'Saturday',
+'Dinner',
+1200.0,
+'Zupa błyskawiczna - Rosół',
+61.0,
+1.2,
+2.7,
+7.9,
+'2024-07-22 04:02:50',
+'none',
+732.0,
+94.8,
+32.4,
+14.400001
+);

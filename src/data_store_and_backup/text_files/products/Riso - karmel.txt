@@ -1,0 +1,9 @@
+Name: Riso - karmel
+Brand: Muller
+Package has: 200.0
+Macro for: 100.0
+KCal: 107.0
+Protein: 3.1
+Fat: 2.3
+Carbs: 18.3
+Comment optional: 

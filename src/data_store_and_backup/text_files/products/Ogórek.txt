@@ -1,0 +1,9 @@
+Name: Ogórek
+Brand: Warzywo
+Package has: 0.0
+Macro for: 100.0
+KCal: 16.0
+Protein: 0.65
+Fat: 0.11
+Carbs: 3.13
+Comment optional: Warzwo

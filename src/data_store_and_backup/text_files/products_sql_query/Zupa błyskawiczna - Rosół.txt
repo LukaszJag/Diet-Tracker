@@ -1,0 +1,20 @@
+INSERT INTO `diet_tracker_schema`.product_table
+(`product_name`,
+`product_brand`,
+`product_package_has`,
+`product_macro_for`,
+`product_kcal`,
+`product_protein`,
+`product_fat`,
+`product_carbs`,
+`comment_optional`)
+Values
+('Zupa błyskawiczna - Rosół',
+'Amino',
+58.0,
+100.0,
+61.0,
+1.2,
+2.7,
+7.9,
+'Opakowanie pozwala na przygotowanie 1 porcji - 400 ml');
