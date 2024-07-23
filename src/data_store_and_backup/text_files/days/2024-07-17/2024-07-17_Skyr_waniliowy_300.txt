@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2024-07-17',
+'Wednesday',
+'Supper',
+300.0,
+'Skyr waniliowy',
+82.0,
+9.6,
+0.0,
+11.0,
+'2024-07-23 09:01:36',
+'none',
+246.0,
+33.0,
+0.0,
+28.800001
+);

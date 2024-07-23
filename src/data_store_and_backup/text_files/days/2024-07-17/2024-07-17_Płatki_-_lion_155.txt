@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2024-07-17',
+'Wednesday',
+'Breakfast',
+155.0,
+'Płatki - lion',
+400.0,
+8.7,
+5.5,
+76.1,
+'2024-07-22 08:22:14',
+'none',
+620.0,
+117.954994,
+8.525,
+13.485
+);

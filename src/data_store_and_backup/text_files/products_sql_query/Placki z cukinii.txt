@@ -1,0 +1,20 @@
+INSERT INTO `diet_tracker_schema`.product_table
+(`product_name`,
+`product_brand`,
+`product_package_has`,
+`product_macro_for`,
+`product_kcal`,
+`product_protein`,
+`product_fat`,
+`product_carbs`,
+`comment_optional`)
+Values
+('Placki z cukinii',
+'Domowe',
+0.0,
+100.0,
+50.61,
+2.85,
+1.36,
+6.98,
+'Domowe');

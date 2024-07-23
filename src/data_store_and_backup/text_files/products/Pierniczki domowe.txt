@@ -1,0 +1,9 @@
+Name: Pierniczki domowe
+Brand: Domowe
+Package has: 0.0
+Macro for: 100.0
+KCal: 361.0
+Protein: 5.5
+Fat: 14.63
+Carbs: 49.26
+Comment optional: Domowe

@@ -1,0 +1,9 @@
+Name: Płatki - hopki - czekoladowe
+Brand: 
+Package has: 0.0
+Macro for: 100.0
+KCal: 374.0
+Protein: 7.4
+Fat: 2.7
+Carbs: 77.0
+Comment optional: Produkt kupowany z biedronki

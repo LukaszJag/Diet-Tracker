@@ -1,0 +1,9 @@
+Name: Placki z cukinii
+Brand: Domowe
+Package has: 0.0
+Macro for: 100.0
+KCal: 50.61
+Protein: 2.85
+Fat: 1.36
+Carbs: 6.98
+Comment optional: Domowe

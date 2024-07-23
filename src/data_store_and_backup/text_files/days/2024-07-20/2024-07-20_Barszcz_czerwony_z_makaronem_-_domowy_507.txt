@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2024-07-20',
+'Saturday',
+'Second Breakfast',
+507.0,
+'Barszcz czerwony z makaronem - domowy',
+94.54,
+3.31,
+0.33,
+19.28,
+'2024-07-23 09:17:47',
+'none',
+479.3178,
+97.7496,
+1.6731001,
+16.7817
+);

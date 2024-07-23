@@ -1,0 +1,9 @@
+Name: Riso - czekolada
+Brand: Muller
+Package has: 200.0
+Macro for: 100.0
+KCal: 109.0
+Protein: 3.4
+Fat: 2.7
+Carbs: 17.5
+Comment optional: 

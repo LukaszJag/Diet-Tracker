@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2024-07-17',
+'Wednesday',
+'Second Breakfast',
+947.0,
+'Fasolka szparagowa z bułką tartą ',
+102.0,
+2.0,
+6.9,
+3.0,
+'2024-07-23 08:58:55',
+'none',
+965.94,
+28.41,
+65.343,
+18.94
+);

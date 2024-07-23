@@ -1,0 +1,9 @@
+Name: Barszcz czerwony z makaronem - domowy
+Brand: Domowy
+Package has: 0.0
+Macro for: 100.0
+KCal: 94.54
+Protein: 3.31
+Fat: 0.33
+Carbs: 19.28
+Comment optional: Domowy

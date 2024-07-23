@@ -1,0 +1,20 @@
+INSERT INTO `diet_tracker_schema`.product_table
+(`product_name`,
+`product_brand`,
+`product_package_has`,
+`product_macro_for`,
+`product_kcal`,
+`product_protein`,
+`product_fat`,
+`product_carbs`,
+`comment_optional`)
+Values
+('Barszcz czerwony z makaronem - domowy',
+'Domowy',
+0.0,
+100.0,
+94.54,
+3.31,
+0.33,
+19.28,
+'Domowy');
