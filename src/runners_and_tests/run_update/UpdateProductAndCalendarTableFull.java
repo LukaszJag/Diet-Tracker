@@ -7,6 +7,10 @@ import java.sql.SQLException;
 
 public class UpdateProductAndCalendarTableFull {
     public static void main(String[] args) throws SQLException {
+        updateProductAndCalendarTableFull();
+    }
+
+    public static void updateProductAndCalendarTableFull() throws SQLException {
         System.out.println("Run: UpdateProductAndCalendarTableFull");
 
         System.out.println("\nAddAllProductInTXTFromDirectory: START");
@@ -17,5 +21,4 @@ public class UpdateProductAndCalendarTableFull {
         AddAllCalendarDaysInTXTFromDirectory.main(null);
         System.out.println("\nAddAllCalendarDaysInTXTFromDirectory: PASS");
     }
-
 }

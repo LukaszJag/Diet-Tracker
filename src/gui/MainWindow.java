@@ -2,6 +2,7 @@ package gui;
 
 import configuration.Config;
 import runners_and_tests.run_update.RunnerFullUpdateDayStatistics;
+import runners_and_tests.run_update.UpdateProductAndCalendarTableFull;
 
 import javax.swing.*;
 import java.awt.*;
@@ -189,6 +190,7 @@ public class MainWindow extends JFrame {
         @Override
         public void actionPerformed(ActionEvent e) {
             try {
+                UpdateProductAndCalendarTableFull.updateProductAndCalendarTableFull();
                 RunnerFullUpdateDayStatistics.runFullUpdateForDayStatistics();
             } catch (SQLException ex) {
                 throw new RuntimeException(ex);
