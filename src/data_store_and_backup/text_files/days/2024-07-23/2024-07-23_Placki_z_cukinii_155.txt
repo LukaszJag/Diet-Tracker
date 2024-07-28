@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2024-07-23',
+'Tuesday',
+'Dinner',
+155.0,
+'Placki z cukinii',
+50.61,
+2.85,
+1.36,
+6.98,
+'2024-07-28 10:03:13',
+'none',
+78.445496,
+10.818999,
+2.108,
+4.4174995
+);

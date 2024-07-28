@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2024-07-21',
+'Sunday',
+'Supper',
+115.0,
+'Płatki - kangus',
+371.0,
+9.1,
+1.9,
+73.8,
+'2024-07-28 09:39:45',
+'none',
+426.65,
+84.87,
+2.185,
+10.465
+);
