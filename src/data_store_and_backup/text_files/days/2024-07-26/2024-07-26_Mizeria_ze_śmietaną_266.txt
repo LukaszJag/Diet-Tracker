@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2024-07-26',
+'Friday',
+'Dinner',
+266.0,
+'Mizeria ze śmietaną',
+66.7,
+1.53,
+5.38,
+3.59,
+'2024-07-31 05:36:31',
+'none',
+177.422,
+9.5494,
+14.310801,
+4.0698
+);

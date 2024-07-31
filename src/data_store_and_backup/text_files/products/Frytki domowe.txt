@@ -1,0 +1,9 @@
+Name: Frytki domowe
+Brand: Domowe
+Package has: 0.0
+Macro for: 100.0
+KCal: 136.78
+Protein: 1.76
+Fat: 7.5
+Carbs: 16.94
+Comment optional: 

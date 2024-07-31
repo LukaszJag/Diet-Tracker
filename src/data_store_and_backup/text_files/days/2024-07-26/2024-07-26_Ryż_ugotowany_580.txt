@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2024-07-26',
+'Friday',
+'Second Breakfast',
+580.0,
+'Ryż ugotowany',
+112.8,
+2.36,
+0.28,
+25.06,
+'2024-07-31 05:35:52',
+'none',
+654.24005,
+145.348,
+1.6240001,
+13.688
+);
