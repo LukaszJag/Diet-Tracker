@@ -897,6 +897,7 @@ public class AddProductToCalendarDay {
         public void keyReleased(KeyEvent e) {
             if (e.getKeyCode() == KeyEvent.VK_CONTROL) {
                 mealNameAcceptManager();
+                productNameTextField.requestFocusInWindow();
             }
         }
 
