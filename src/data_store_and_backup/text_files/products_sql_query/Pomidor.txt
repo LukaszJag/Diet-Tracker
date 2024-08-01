@@ -9,13 +9,12 @@ INSERT INTO `diet_tracker_schema`.product_table
 `product_carbs`,
 `comment_optional`)
 Values
-('Makrela w sosie pomidorowym',
-'Graal',
-300.0,
+('Pomidor',
+'Warzywa',
+0.0,
 100.0,
-90.0,
-11.9,
-2.3,
-5.5,
-'');
-
+20.0,
+1.0,
+0.2,
+3.0,
+'Warzywa');

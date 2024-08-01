@@ -1,0 +1,9 @@
+Name: Pomidor
+Brand: Warzywa
+Package has: 0.0
+Macro for: 100.0
+KCal: 20.0
+Protein: 1.0
+Fat: 0.2
+Carbs: 3.0
+Comment optional: Warzywa

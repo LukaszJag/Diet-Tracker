@@ -1,0 +1,9 @@
+Name: Szprot w pomidorach
+Brand: Graal
+Package has: 300.0
+Macro for: 100.0
+KCal: 108.0
+Protein: 11.8
+Fat: 4.3
+Carbs: 5.6
+Comment optional: 

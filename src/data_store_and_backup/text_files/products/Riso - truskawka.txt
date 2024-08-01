@@ -1,0 +1,9 @@
+Name: Riso - truskawka
+Brand: Muller
+Package has: 200.0
+Macro for: 100.0
+KCal: 104.0
+Protein: 2.9
+Fat: 2.1
+Carbs: 18.0
+Comment optional: 

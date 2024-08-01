@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2024-07-31',
+'Wednesday',
+'Night snack',
+81.0,
+'Sezamki classic',
+527.0,
+11.0,
+29.0,
+53.0,
+'2024-08-01 11:51:31',
+'none',
+426.87,
+42.93,
+23.49,
+8.91
+);
