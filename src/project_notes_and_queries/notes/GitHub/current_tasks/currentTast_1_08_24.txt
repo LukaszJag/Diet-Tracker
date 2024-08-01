@@ -1,0 +1,11 @@
+1.: Training GUI
+
+    Add GUI for training base on CalendarMonthStatsView
+
+2.: Add chart for days in month for better  analysis and view
+
+
+
+
+
+
