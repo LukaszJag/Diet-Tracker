@@ -43,6 +43,7 @@ public class CalendarMonthStatsView {
     Color goodDayDataColorLabelAndButton = new Color(73, 176, 76);
     Color badDayDataColorLabelAndButton = new Color(176, 73, 73);
     Color comingDaysDaysColorLabelAndButton = new Color(65, 119, 201);
+    Color spainHolidaysDaysColorLabelAndButton = new Color(255,196,0);
 
     Color northPanelStaticLabelsColor = new Color(58, 123, 125);
     Color currentDayDateNorthPanelLabelColor = new Color(0, 255, 171);
@@ -103,7 +104,7 @@ public class CalendarMonthStatsView {
     JLabel selectedDateAverageMacroForMonthLabel = new JLabel("Selected date average macro for month: ");
     //</editor-fold>
 
-    JComboBox monthSelectComboBox = new JComboBox<>(new String[]{"April", "May", "June", "July"});
+    JComboBox monthSelectComboBox = new JComboBox<>(new String[]{"April", "May", "June", "July", "August"});
     JComboBox selectedDayProductsListComboBox = new JComboBox<String>();
 
     //</editor-fold>
@@ -181,7 +182,7 @@ public class CalendarMonthStatsView {
 
     //<editor-fold desc="Prepare Add Content - to Panels">
     private void prepareAndAddContentToMainPanel() {
-        setDaysButtonsMainPanel("July");
+        setDaysButtonsMainPanel("August");
     }
 
     private void prepareAndAddContentToNorthPanel() {
@@ -195,7 +196,7 @@ public class CalendarMonthStatsView {
         calendarMonthStatsViewPanelNorth.setLayout(northPanelGridLayout);
 
 
-        monthSelectComboBox.setSelectedItem("July");
+        monthSelectComboBox.setSelectedItem("August");
 
         selectedDaysCounterGoodDaysPanel = new JPanel();
         selectedDaysCounterBadDaysPanel = new JPanel();
@@ -263,10 +264,10 @@ public class CalendarMonthStatsView {
         calendarMonthStatsViewPanelEast.add(getSetMacroPanelComponent("Macro - goal:", 4297, 140, 120, 671), 0, 1);
 
         JPanel macroPanelTMP = new JPanel();
-        macroPanelTMP.setLayout(new GridLayout(1,2,1,1));
-        macroPanelTMP.add(new JButton("Difference"),0,0);
+        macroPanelTMP.setLayout(new GridLayout(1, 2, 1, 1));
+        macroPanelTMP.add(new JButton("Difference"), 0, 0);
         macroPanelTMP.add(new JButton("Empty"), 0, 1);
-        calendarMonthStatsViewPanelEast.add(macroPanelTMP,0,2);
+        calendarMonthStatsViewPanelEast.add(macroPanelTMP, 0, 2);
 
     }
 
@@ -302,7 +303,26 @@ public class CalendarMonthStatsView {
                 daysButtons[i].setPreferredSize(Config.CALENDAR_MONTH_STATS_VIEW_BUTTONS_SIZE_DIMENSION);
             }
         } else {
+            if (month.equals("August")) {
+                for (int i = 0; i < daysButtons.length; i++) {
+                    if (i == 0) {
+                        daysButtons[i] = new JButton("null");
+                    } else if (i == 1) {
+                        daysButtons[i] = new JButton("null");
+                    } else if (i == 2) {
+                        daysButtons[i] = new JButton("null");
+                    } else if (i == 34) {
+                        daysButtons[i] = new JButton("null");
 
+                    } else {
+                        daysButtons[i] = new JButton(String.valueOf(counter));
+                        daysButtons[i].setPreferredSize(Config.CALENDAR_MONTH_STATS_VIEW_BUTTONS_SIZE_DIMENSION);
+                        daysButtons[i].addActionListener(new DaysButtonsActionListener(daysButtons[i]));
+                        counter++;
+                    }
+                }
+
+            }
             if (month.equals("July")) {
                 for (int i = 0; i < daysButtons.length; i++) {
                     if (i == 31) {
@@ -320,7 +340,6 @@ public class CalendarMonthStatsView {
                         daysButtons[i].addActionListener(new DaysButtonsActionListener(daysButtons[i]));
                     }
                 }
-
             }
 
             if (month.equals("June")) {
@@ -476,6 +495,9 @@ public class CalendarMonthStatsView {
         String fullDate = "2024-";
         String month = monthSelectComboBox.getSelectedItem().toString();
 
+        if (month == "August") {
+            fullDate += "08-";
+        }
         if (month == "July") {
             fullDate += "07-";
         }
@@ -516,6 +538,9 @@ public class CalendarMonthStatsView {
                     daysButtons[i].setBackground(badDayDataColorLabelAndButton);
                     badDaysCounter++;
                 }
+                if (dayMacroGoalStatus(fullDate) == 42){
+                    daysButtons[i].setBackground(spainHolidaysDaysColorLabelAndButton);
+                }
             }
 
             fullDate = fullDateCache;
@@ -526,20 +551,39 @@ public class CalendarMonthStatsView {
         // int = 0 no data
         // int = 1 pass goal
         // int = 2 break goal
+        // int = 42 Spain Holiday
         int dayStatus = -1;
 
         // hard code - macro goal - may cause problem - to refactor
         float goalKcal = 4297;
 
-        Macro dayMacro = SelectFromDaysStatistics.getMacroFromDaysStatisticsByDate(fullDateSQLFriendly);
-
-        if (dayMacro.getKcal() == -2) {
-            dayStatus = 0;
-        } else if (dayMacro.getKcal() < goalKcal) {
-            dayStatus = 1;
-        } else if (dayMacro.getKcal() > goalKcal) {
-            dayStatus = 2;
+        // Set holidays buttons - June
+        for (int i = 22; i <= 30 ; i++) {
+            String holidaysDate = "2024-06-" + String.valueOf(i);
+            if (fullDateSQLFriendly.equals(holidaysDate)) {
+                dayStatus = 42;
+                return dayStatus;
+            }
         }
+        // Set holidays buttons - July
+        for (int i = 1; i <= 6 ; i++) {
+            String holidaysDate = "2024-07-0" + String.valueOf(i);
+            if (fullDateSQLFriendly.equals(holidaysDate)) {
+                dayStatus = 42;
+                return dayStatus;
+            }
+        }
+
+            Macro dayMacro = SelectFromDaysStatistics.getMacroFromDaysStatisticsByDate(fullDateSQLFriendly);
+
+            if (dayMacro.getKcal() == -2) {
+                dayStatus = 0;
+            } else if (dayMacro.getKcal() < goalKcal) {
+                dayStatus = 1;
+            } else if (dayMacro.getKcal() > goalKcal) {
+                dayStatus = 2;
+            }
+
 
 
         return dayStatus;
@@ -562,22 +606,21 @@ public class CalendarMonthStatsView {
         calendarMonthStatsViewPanelEast.add(getSetMacroPanelComponent("Macro - goal:", 4297, 140, 120, 671), 0, 1);
 
         JPanel macroPanelTMP = new JPanel();
-        macroPanelTMP.setLayout(new GridLayout(1,2,1,1));
-        macroPanelTMP.add(new JButton("Difference"),0,0);
+        macroPanelTMP.setLayout(new GridLayout(1, 2, 1, 1));
+        macroPanelTMP.add(new JButton("Difference"), 0, 0);
         macroPanelTMP.add(new JButton("Empty"), 0, 1);
-        calendarMonthStatsViewPanelEast.add(macroPanelTMP,0,2);
+        calendarMonthStatsViewPanelEast.add(macroPanelTMP, 0, 2);
 
 
         mainWindow.add(calendarMonthStatsViewPanelEast, BorderLayout.EAST);
         mainWindow.validate();
         mainWindow.repaint();
     }
-    private void refreshWestPanel(Macro macro, String amountOfProduct){
+
+    private void refreshWestPanel(Macro macro, String amountOfProduct) {
         calendarMonthStatsViewPanelWest.removeAll();
 
         calendarMonthStatsViewPanelWest.setLayout(westPanelGridLayout);
-
-
 
 
         selectedDayProductsListComboBox.addItemListener(new SelectedDayProductsListComboBoxItemListener());
@@ -596,6 +639,7 @@ public class CalendarMonthStatsView {
         mainWindow.repaint();
 
     }
+
     private void refreshMacroAndAllComponentForNorthPanel() {
         calendarMonthStatsViewPanelNorth.removeAll();
 
@@ -661,6 +705,9 @@ public class CalendarMonthStatsView {
 
             String month = monthSelectComboBox.getSelectedItem().toString();
 
+            if (month == "August") {
+                fullDate += "08-";
+            }
             if (month == "July") {
                 fullDate += "07-";
             }
@@ -726,7 +773,6 @@ public class CalendarMonthStatsView {
         @Override
         public void itemStateChanged(ItemEvent event) {
             if (event.getStateChange() == ItemEvent.SELECTED) {
-                System.out.println("Hello there");
 
 
                 String productName;
