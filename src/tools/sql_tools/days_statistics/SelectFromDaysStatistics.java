@@ -21,7 +21,6 @@ public class SelectFromDaysStatistics {
         float carbsConsumeFloat = -2;
 
         if (getResultSet.resultSetNextReturnValue(resultSet) == false) {
-            System.out.println("ResultSet .next() -> return: false");
         } else {
 
             if (GetResultSet.getFromResultSetGetString("kcal_consume", resultSet) != null) {
