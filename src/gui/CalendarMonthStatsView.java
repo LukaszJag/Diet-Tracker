@@ -26,7 +26,7 @@ public class CalendarMonthStatsView {
 
     int noDataDaysCounter;
 
-    int ComingDaysCounter;
+    int comingDaysCounter;
     //</editor-fold>
 
     //<editor-fold desc="Global Colors">
@@ -43,7 +43,7 @@ public class CalendarMonthStatsView {
     Color goodDayDataColorLabelAndButton = new Color(73, 176, 76);
     Color badDayDataColorLabelAndButton = new Color(176, 73, 73);
     Color comingDaysDaysColorLabelAndButton = new Color(65, 119, 201);
-    Color spainHolidaysDaysColorLabelAndButton = new Color(255,196,0);
+    Color spainHolidaysDaysColorLabelAndButton = new Color(255, 196, 0);
 
     Color northPanelStaticLabelsColor = new Color(58, 123, 125);
     Color currentDayDateNorthPanelLabelColor = new Color(0, 255, 171);
@@ -123,6 +123,7 @@ public class CalendarMonthStatsView {
         addPanelsToFrame();
         finishSetUpFrame();
         paintButtons();
+        refreshMacroAndAllComponentForNorthPanel();
     }
 
     private void setMainWindowSizeAndLayout() {
@@ -232,7 +233,7 @@ public class CalendarMonthStatsView {
         calendarMonthStatsViewPanelNorth.add(selectedDateAverageMacroForMonthLabel, 0, 1);
         calendarMonthStatsViewPanelNorth.add(currentDayMacroTitleNorthPanelLabel, 0, 2);
 
-        monthSelectComboBox.addItemListener(new ComboBoxItemListener());
+        monthSelectComboBox.addItemListener(new MonthComboBoxItemListener());
 
         //<editor-fold desc="Color and size of font in labels">
         currentDayDateNorthPanelLabel.setForeground(northPanelStaticLabelsColor);
@@ -284,11 +285,42 @@ public class CalendarMonthStatsView {
     }
 
     //<editor-fold desc="Side help methods - for prepare Panels">
+
+    private void refreshCountersForDays() {
+        int goodDaysCounterTMP = 0;
+        int badDaysCounterTMP = 0;
+        int noDataDaysCounterTMP = 0;
+        int comingDaysCounterTMP = 0;
+
+        for (int i = 0; i < daysButtons.length; i++) {
+            if (daysButtons[i].getBackground() == noDataColorLabelAndButton) {
+                noDataDaysCounterTMP++;
+            }
+            if (daysButtons[i].getBackground() == goodDayDataColorLabelAndButton) {
+                goodDaysCounterTMP++;
+            }
+
+            if (daysButtons[i].getBackground() == badDayDataColorLabelAndButton) {
+                badDaysCounterTMP++;
+            }
+
+            if (daysButtons[i].getBackground() == comingDaysDaysColorLabelAndButton) {
+                comingDaysCounterTMP++;
+            }
+        }
+
+        this.goodDaysCounter = goodDaysCounterTMP;
+        this.badDaysCounter = badDaysCounterTMP;
+        this.noDataDaysCounter = noDataDaysCounterTMP;
+        this.comingDaysCounter = comingDaysCounterTMP;
+
+    }
+
     private void prepareSelectedCounterDaysPanels() {
         selectedMonthStatsGoodDaysDaysLabel = new JLabel("Good days: " + goodDaysCounter);
         selectedMonthStatsBadDaysDaysLabel = new JLabel("Bad days: " + badDaysCounter);
         selectedMonthStatsNoDataDaysLabel = new JLabel("No data: " + noDataDaysCounter);
-        selectedMonthStatsComingDaysDaysLabel = new JLabel("Coming days: " + ComingDaysCounter);
+        selectedMonthStatsComingDaysDaysLabel = new JLabel("Coming days: " + comingDaysCounter);
     }
 
     private void setDaysButtonsMainPanel(String month) {
@@ -490,7 +522,7 @@ public class CalendarMonthStatsView {
         goodDaysCounter = 0;
         badDaysCounter = 0;
         noDataDaysCounter = 0;
-        ComingDaysCounter = 0;
+        comingDaysCounter = 0;
 
         String fullDate = "2024-";
         String month = monthSelectComboBox.getSelectedItem().toString();
@@ -524,6 +556,8 @@ public class CalendarMonthStatsView {
                     fullDate = fullDate + daysButtons[i].getText();
                 }
 
+
+                // Set tag and color
                 if (dayMacroGoalStatus(fullDate) == 0) {
                     daysButtons[i].setBackground(noDataColorLabelAndButton);
                     noDataDaysCounter++;
@@ -538,7 +572,7 @@ public class CalendarMonthStatsView {
                     daysButtons[i].setBackground(badDayDataColorLabelAndButton);
                     badDaysCounter++;
                 }
-                if (dayMacroGoalStatus(fullDate) == 42){
+                if (dayMacroGoalStatus(fullDate) == 42) {
                     daysButtons[i].setBackground(spainHolidaysDaysColorLabelAndButton);
                 }
             }
@@ -558,7 +592,7 @@ public class CalendarMonthStatsView {
         float goalKcal = 4297;
 
         // Set holidays buttons - June
-        for (int i = 22; i <= 30 ; i++) {
+        for (int i = 22; i <= 30; i++) {
             String holidaysDate = "2024-06-" + String.valueOf(i);
             if (fullDateSQLFriendly.equals(holidaysDate)) {
                 dayStatus = 42;
@@ -566,7 +600,7 @@ public class CalendarMonthStatsView {
             }
         }
         // Set holidays buttons - July
-        for (int i = 1; i <= 6 ; i++) {
+        for (int i = 1; i <= 6; i++) {
             String holidaysDate = "2024-07-0" + String.valueOf(i);
             if (fullDateSQLFriendly.equals(holidaysDate)) {
                 dayStatus = 42;
@@ -574,16 +608,15 @@ public class CalendarMonthStatsView {
             }
         }
 
-            Macro dayMacro = SelectFromDaysStatistics.getMacroFromDaysStatisticsByDate(fullDateSQLFriendly);
+        Macro dayMacro = SelectFromDaysStatistics.getMacroFromDaysStatisticsByDate(fullDateSQLFriendly);
 
-            if (dayMacro.getKcal() == -2) {
-                dayStatus = 0;
-            } else if (dayMacro.getKcal() < goalKcal) {
-                dayStatus = 1;
-            } else if (dayMacro.getKcal() > goalKcal) {
-                dayStatus = 2;
-            }
-
+        if (dayMacro.getKcal() == -2) {
+            dayStatus = 0;
+        } else if (dayMacro.getKcal() < goalKcal) {
+            dayStatus = 1;
+        } else if (dayMacro.getKcal() > goalKcal) {
+            dayStatus = 2;
+        }
 
 
         return dayStatus;
@@ -643,6 +676,14 @@ public class CalendarMonthStatsView {
     private void refreshMacroAndAllComponentForNorthPanel() {
         calendarMonthStatsViewPanelNorth.removeAll();
 
+        selectedDaysCounterGoodDaysPanel.removeAll();
+        selectedDaysCounterBadDaysPanel.removeAll();
+        selectedDaysCounterNoDataDaysPanel.removeAll();
+        selectedDaysCounterComingDaysPanel.removeAll();
+
+        selectedMonthStatsNorthsPanel.removeAll();
+
+        refreshCountersForDays();
         prepareSelectedCounterDaysPanels();
 
 
@@ -663,6 +704,14 @@ public class CalendarMonthStatsView {
         calendarMonthStatsViewPanelNorth.add(currentDayDateNorthPanelLabel, 0, 0);
         calendarMonthStatsViewPanelNorth.add(new JLabel("Selected date: " + monthSelectComboBox.getSelectedItem()), 0, 1);
         calendarMonthStatsViewPanelNorth.add(currentDayMacroTitleNorthPanelLabel, 0, 2);
+
+
+
+        selectedDaysCounterGoodDaysPanel.validate();
+        selectedDaysCounterBadDaysPanel.validate();
+        selectedDaysCounterNoDataDaysPanel.validate();
+        selectedDaysCounterComingDaysPanel.validate();
+
 
         calendarMonthStatsViewPanelNorth.validate();
         calendarMonthStatsViewPanelNorth.repaint();
@@ -757,7 +806,7 @@ public class CalendarMonthStatsView {
         }
     }
 
-    private class ComboBoxItemListener implements java.awt.event.ItemListener {
+    private class MonthComboBoxItemListener implements java.awt.event.ItemListener {
         @Override
         public void itemStateChanged(ItemEvent event) {
             if (event.getStateChange() == ItemEvent.SELECTED) {
