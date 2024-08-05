@@ -4,6 +4,7 @@ import configuration.Config;
 import tools.products_tools.Macro;
 import tools.sql_tools.calendar.SelectFromCalendar;
 import tools.sql_tools.days_statistics.SelectFromDaysStatistics;
+import tools.time_date_tools.DateTools;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,6 +12,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -323,135 +325,6 @@ public class CalendarMonthStatsView {
         selectedMonthStatsComingDaysDaysLabel = new JLabel("Coming days: " + comingDaysCounter);
     }
 
-    private void setDaysButtonsMainPanel(String month) {
-        calendarMonthStatsViewPanelMain.removeAll();
-
-        daysButtons = new JButton[35];
-        int counter = 1;
-
-        if (month == null) {
-            for (int i = 0; i < daysButtons.length; i++) {
-                daysButtons[i] = new JButton("");
-                daysButtons[i].setPreferredSize(Config.CALENDAR_MONTH_STATS_VIEW_BUTTONS_SIZE_DIMENSION);
-            }
-        } else {
-            if (month.equals("August")) {
-                for (int i = 0; i < daysButtons.length; i++) {
-                    if (i == 0) {
-                        daysButtons[i] = new JButton("null");
-                    } else if (i == 1) {
-                        daysButtons[i] = new JButton("null");
-                    } else if (i == 2) {
-                        daysButtons[i] = new JButton("null");
-                    } else if (i == 34) {
-                        daysButtons[i] = new JButton("null");
-
-                    } else {
-                        daysButtons[i] = new JButton(String.valueOf(counter));
-                        daysButtons[i].setPreferredSize(Config.CALENDAR_MONTH_STATS_VIEW_BUTTONS_SIZE_DIMENSION);
-                        daysButtons[i].addActionListener(new DaysButtonsActionListener(daysButtons[i]));
-                        counter++;
-                    }
-                }
-
-            }
-            if (month.equals("July")) {
-                for (int i = 0; i < daysButtons.length; i++) {
-                    if (i == 31) {
-                        daysButtons[i] = new JButton("null");
-                    } else if (i == 32) {
-                        daysButtons[i] = new JButton("null");
-                    } else if (i == 33) {
-                        daysButtons[i] = new JButton("null");
-                    } else if (i == 34) {
-                        daysButtons[i] = new JButton("null");
-
-                    } else {
-                        daysButtons[i] = new JButton(String.valueOf(i + 1));
-                        daysButtons[i].setPreferredSize(Config.CALENDAR_MONTH_STATS_VIEW_BUTTONS_SIZE_DIMENSION);
-                        daysButtons[i].addActionListener(new DaysButtonsActionListener(daysButtons[i]));
-                    }
-                }
-            }
-
-            if (month.equals("June")) {
-                for (int i = 0; i < daysButtons.length; i++) {
-
-                    if (i == 0) {
-                        daysButtons[i] = new JButton("null");
-                    } else if (i == 1) {
-                        daysButtons[i] = new JButton("null");
-                    } else if (i == 2) {
-                        daysButtons[i] = new JButton("null");
-                    } else if (i == 3) {
-                        daysButtons[i] = new JButton("null");
-
-                    } else if (i == 4) {
-                        daysButtons[i] = new JButton("null");
-
-                    } else {
-                        daysButtons[i] = new JButton(String.valueOf(counter));
-                        daysButtons[i].setPreferredSize(Config.CALENDAR_MONTH_STATS_VIEW_BUTTONS_SIZE_DIMENSION);
-                        daysButtons[i].addActionListener(new DaysButtonsActionListener(daysButtons[i]));
-                        counter++;
-                    }
-                }
-            }
-
-            if (month.equals("May")) {
-                for (int i = 0; i < daysButtons.length; i++) {
-
-                    if (i == 0) {
-                        daysButtons[i] = new JButton("null");
-                    } else if (i == 1) {
-                        daysButtons[i] = new JButton("null");
-                    } else if (i == 33) {
-                        daysButtons[i] = new JButton("null");
-                    } else if (i == 34) {
-                        daysButtons[i] = new JButton("null");
-                    } else {
-                        daysButtons[i] = new JButton(String.valueOf(counter));
-                        daysButtons[i].setPreferredSize(Config.CALENDAR_MONTH_STATS_VIEW_BUTTONS_SIZE_DIMENSION);
-                        daysButtons[i].addActionListener(new DaysButtonsActionListener(daysButtons[i]));
-                        counter++;
-                    }
-                }
-            }
-
-            if (month.equals("April")) {
-                for (int i = 0; i < daysButtons.length; i++) {
-
-                    if (i == 30) {
-                        daysButtons[i] = new JButton("null");
-                    } else if (i == 31) {
-                        daysButtons[i] = new JButton("null");
-                    } else if (i == 32) {
-                        daysButtons[i] = new JButton("null");
-                    } else if (i == 33) {
-                        daysButtons[i] = new JButton("null");
-                    } else if (i == 34) {
-                        daysButtons[i] = new JButton("null");
-
-                    } else {
-                        daysButtons[i] = new JButton(String.valueOf(counter));
-                        daysButtons[i].setPreferredSize(Config.CALENDAR_MONTH_STATS_VIEW_BUTTONS_SIZE_DIMENSION);
-                        daysButtons[i].addActionListener(new DaysButtonsActionListener(daysButtons[i]));
-                        counter++;
-                    }
-                }
-            }
-        }
-
-        for (int i = 0; i < daysButtons.length; i++) {
-            if (daysButtons[i].getText().equals("null")) {
-                calendarMonthStatsViewPanelMain.add(new JLabel(""));
-            } else {
-                calendarMonthStatsViewPanelMain.add(daysButtons[i]);
-            }
-        }
-        mainWindow.validate();
-        mainWindow.repaint();
-    }
     //</editor-fold>
 
     //</editor-fold>
@@ -515,7 +388,134 @@ public class CalendarMonthStatsView {
 
         return macroPanel;
     }
+
     //</editor-fold>
+    private void setDaysButtonsMainPanel(String month) {
+        calendarMonthStatsViewPanelMain.removeAll();
+
+        daysButtons = new JButton[35];
+        int counter = 1;
+
+        if (month == null) {
+            for (int i = 0; i < daysButtons.length; i++) {
+                daysButtons[i] = new JButton("");
+                daysButtons[i].setPreferredSize(Config.CALENDAR_MONTH_STATS_VIEW_BUTTONS_SIZE_DIMENSION);
+            }
+        } else {
+            if (month.equals("August")) {
+                for (int i = 0; i < daysButtons.length; i++) {
+                    if (i == 0) {
+                        daysButtons[i] = new JButton("null");
+                    } else if (i == 1) {
+                        daysButtons[i] = new JButton("null");
+                    } else if (i == 2) {
+                        daysButtons[i] = new JButton("null");
+                    } else if (i == 34) {
+                        daysButtons[i] = new JButton("null");
+
+                    } else {
+                        daysButtons[i] = new JButton(String.valueOf(counter));
+                        daysButtons[i].setPreferredSize(Config.CALENDAR_MONTH_STATS_VIEW_BUTTONS_SIZE_DIMENSION);
+                        daysButtons[i].addActionListener(new DaysButtonsActionListener(daysButtons[i]));
+                        counter++;
+                    }
+                }
+
+            }
+            if (month.equals("July")) {
+                for (int i = 0; i < daysButtons.length; i++) {
+                    if (i == 31) {
+                        daysButtons[i] = new JButton("null");
+                    } else if (i == 32) {
+                        daysButtons[i] = new JButton("null");
+                    } else if (i == 33) {
+                        daysButtons[i] = new JButton("null");
+                    } else if (i == 34) {
+                        daysButtons[i] = new JButton("null");
+
+                    } else {
+                        daysButtons[i] = new JButton(String.valueOf(i + 1));
+                        daysButtons[i].setPreferredSize(Config.CALENDAR_MONTH_STATS_VIEW_BUTTONS_SIZE_DIMENSION);
+                        daysButtons[i].addActionListener(new DaysButtonsActionListener(daysButtons[i]));
+                    }
+                }
+            }
+            if (month.equals("June")) {
+                for (int i = 0; i < daysButtons.length; i++) {
+
+                    if (i == 0) {
+                        daysButtons[i] = new JButton("null");
+                    } else if (i == 1) {
+                        daysButtons[i] = new JButton("null");
+                    } else if (i == 2) {
+                        daysButtons[i] = new JButton("null");
+                    } else if (i == 3) {
+                        daysButtons[i] = new JButton("null");
+
+                    } else if (i == 4) {
+                        daysButtons[i] = new JButton("null");
+
+                    } else {
+                        daysButtons[i] = new JButton(String.valueOf(counter));
+                        daysButtons[i].setPreferredSize(Config.CALENDAR_MONTH_STATS_VIEW_BUTTONS_SIZE_DIMENSION);
+                        daysButtons[i].addActionListener(new DaysButtonsActionListener(daysButtons[i]));
+                        counter++;
+                    }
+                }
+            }
+            if (month.equals("May")) {
+                for (int i = 0; i < daysButtons.length; i++) {
+
+                    if (i == 0) {
+                        daysButtons[i] = new JButton("null");
+                    } else if (i == 1) {
+                        daysButtons[i] = new JButton("null");
+                    } else if (i == 33) {
+                        daysButtons[i] = new JButton("null");
+                    } else if (i == 34) {
+                        daysButtons[i] = new JButton("null");
+                    } else {
+                        daysButtons[i] = new JButton(String.valueOf(counter));
+                        daysButtons[i].setPreferredSize(Config.CALENDAR_MONTH_STATS_VIEW_BUTTONS_SIZE_DIMENSION);
+                        daysButtons[i].addActionListener(new DaysButtonsActionListener(daysButtons[i]));
+                        counter++;
+                    }
+                }
+            }
+            if (month.equals("April")) {
+                for (int i = 0; i < daysButtons.length; i++) {
+
+                    if (i == 30) {
+                        daysButtons[i] = new JButton("null");
+                    } else if (i == 31) {
+                        daysButtons[i] = new JButton("null");
+                    } else if (i == 32) {
+                        daysButtons[i] = new JButton("null");
+                    } else if (i == 33) {
+                        daysButtons[i] = new JButton("null");
+                    } else if (i == 34) {
+                        daysButtons[i] = new JButton("null");
+
+                    } else {
+                        daysButtons[i] = new JButton(String.valueOf(counter));
+                        daysButtons[i].setPreferredSize(Config.CALENDAR_MONTH_STATS_VIEW_BUTTONS_SIZE_DIMENSION);
+                        daysButtons[i].addActionListener(new DaysButtonsActionListener(daysButtons[i]));
+                        counter++;
+                    }
+                }
+            }
+        }
+
+        for (int i = 0; i < daysButtons.length; i++) {
+            if (daysButtons[i].getText().equals("null")) {
+                calendarMonthStatsViewPanelMain.add(new JLabel(""));
+            } else {
+                calendarMonthStatsViewPanelMain.add(daysButtons[i]);
+            }
+        }
+        mainWindow.validate();
+        mainWindow.repaint();
+    }
 
     private void paintButtons() {
 
@@ -572,6 +572,11 @@ public class CalendarMonthStatsView {
                     daysButtons[i].setBackground(badDayDataColorLabelAndButton);
                     badDaysCounter++;
                 }
+
+                if (dayMacroGoalStatus(fullDate) == 3) {
+                    daysButtons[i].setBackground(comingDaysDaysColorLabelAndButton);
+                    comingDaysCounter++;
+                }
                 if (dayMacroGoalStatus(fullDate) == 42) {
                     daysButtons[i].setBackground(spainHolidaysDaysColorLabelAndButton);
                 }
@@ -585,6 +590,7 @@ public class CalendarMonthStatsView {
         // int = 0 no data
         // int = 1 pass goal
         // int = 2 break goal
+        // int = 3 coming days
         // int = 42 Spain Holiday
         int dayStatus = -1;
 
@@ -610,7 +616,21 @@ public class CalendarMonthStatsView {
 
         Macro dayMacro = SelectFromDaysStatistics.getMacroFromDaysStatisticsByDate(fullDateSQLFriendly);
 
-        if (dayMacro.getKcal() == -2) {
+        String currentDateString = DateTools.getCurrentDateSQLFriendlyFormat();
+
+        Date curentDate;
+        Date parameterDate;
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+
+        try {
+            curentDate = dateFormat.parse(currentDateString);
+            parameterDate = dateFormat.parse(fullDateSQLFriendly);
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
+        if (parameterDate.compareTo(curentDate) > 0) {
+            return 3;
+        } else if (dayMacro.getKcal() == -2) {
             dayStatus = 0;
         } else if (dayMacro.getKcal() < goalKcal) {
             dayStatus = 1;
@@ -706,7 +726,6 @@ public class CalendarMonthStatsView {
         calendarMonthStatsViewPanelNorth.add(currentDayMacroTitleNorthPanelLabel, 0, 2);
 
 
-
         selectedDaysCounterGoodDaysPanel.validate();
         selectedDaysCounterBadDaysPanel.validate();
         selectedDaysCounterNoDataDaysPanel.validate();
@@ -719,7 +738,6 @@ public class CalendarMonthStatsView {
         mainWindow.validate();
         mainWindow.repaint();
     }
-    //</editor-fold>
 
     public void refreshComboBox(JComboBox newComboBox) {
         calendarMonthStatsViewPanelWest.removeAll();
@@ -739,6 +757,7 @@ public class CalendarMonthStatsView {
         mainWindow.repaint();
     }
 
+    //</editor-fold>
     //<editor-fold desc="Actions Listeners, Item Listeners">
     private class DaysButtonsActionListener implements ActionListener {
         JButton button;
