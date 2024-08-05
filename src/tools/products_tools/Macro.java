@@ -66,6 +66,15 @@ public class Macro {
                  return cuttedMacro;
     }
 
+    public static Macro sumOfTwoMacros(Macro macro1, Macro macro2){
+        Macro sumMacro = new Macro(0,0,0,0);
+        sumMacro.setKcal(macro1.getKcal() +macro2.getKcal());
+        sumMacro.setProtein(macro1.getProtein() +macro2.getProtein());
+        sumMacro.setFat(macro1.getFat() +macro2.getFat());
+        sumMacro.setCarbs(macro1.getCarbs() +macro2.getCarbs());
+
+        return sumMacro;
+    }
     public static void printAllValues(Macro macro){
         System.out.println("Kcal \t: " + macro.getKcal());
         System.out.println("Protein : " + macro.getProtein());

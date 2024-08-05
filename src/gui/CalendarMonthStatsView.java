@@ -586,6 +586,58 @@ public class CalendarMonthStatsView {
         }
     }
 
+    private Macro getAverageMacroForMonth(String monthString) {
+        String friendlySQLFormatMonthDate = "";
+
+        if (monthString.equals("April")){
+            friendlySQLFormatMonthDate = "2024-" + "08-";
+        }
+        if (monthString.equals("May")){
+            friendlySQLFormatMonthDate = "2024-" + "05-";
+        }
+        if (monthString.equals("June")){
+            friendlySQLFormatMonthDate = "2024-" + "06-";
+        }
+        if (monthString.equals("July")){
+            friendlySQLFormatMonthDate = "2024-" + "07-";
+        }
+        if (monthString.equals("August")){
+            friendlySQLFormatMonthDate = "2024-" + "08-";
+        }
+
+        String fullDate = friendlySQLFormatMonthDate;
+        Macro averageMacro = new Macro(0,0,0,0);
+        Macro dayMacro;
+        int dayCounter = 0;
+
+        for (int i = 0; i < daysButtons.length; i++) {
+
+            if (daysButtons[i].getText() != "null") {
+                if (daysButtons[i].getText().length() == 1) {
+                    fullDate = friendlySQLFormatMonthDate + "0" + daysButtons[i].getText();
+                } else {
+                    fullDate += daysButtons[i].getText();
+                }
+
+                if (dayMacroGoalStatus(fullDate) != 0 && dayMacroGoalStatus(fullDate) != 3 && dayMacroGoalStatus(fullDate) != 42) {
+                    dayMacro = SelectFromDaysStatistics.getMacroFromDaysStatisticsByDate(fullDate);
+                    averageMacro = Macro.sumOfTwoMacros(averageMacro, dayMacro);
+                    dayCounter++;
+                }
+
+                fullDate = friendlySQLFormatMonthDate;
+            }
+        }
+
+        averageMacro.setKcal(averageMacro.getKcal() / dayCounter);
+        averageMacro.setProtein(averageMacro.getProtein() / dayCounter);
+        averageMacro.setFat(averageMacro.getFat() / dayCounter);
+        averageMacro.setCarbs(averageMacro.getCarbs() / dayCounter);
+
+        Macro.printAllValues(averageMacro);
+        return averageMacro;
+    }
+
     private int dayMacroGoalStatus(String fullDateSQLFriendly) {
         // int = 0 no data
         // int = 1 pass goal
@@ -620,7 +672,7 @@ public class CalendarMonthStatsView {
 
         Date curentDate;
         Date parameterDate;
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
         try {
             curentDate = dateFormat.parse(currentDateString);
@@ -628,8 +680,9 @@ public class CalendarMonthStatsView {
         } catch (ParseException e) {
             throw new RuntimeException(e);
         }
+
         if (parameterDate.compareTo(curentDate) > 0) {
-            return 3;
+            dayStatus = 3;
         } else if (dayMacro.getKcal() == -2) {
             dayStatus = 0;
         } else if (dayMacro.getKcal() < goalKcal) {
@@ -691,6 +744,24 @@ public class CalendarMonthStatsView {
         mainWindow.validate();
         mainWindow.repaint();
 
+    }
+    private void refreshAverageMacroPanelForNorthPanel(Macro averageMacro){
+        calendarMonthStatsViewPanelNorth.removeAll();
+
+        currentDayMacroValuesNorthPanelLabel = new JLabel(Macro.getShortMacroInformation(averageMacro));
+
+        calendarMonthStatsViewPanelNorth.add(monthSelectComboBox, 1, 0);
+        calendarMonthStatsViewPanelNorth.add(selectedMonthStatsNorthsPanel, 1, 1);
+        calendarMonthStatsViewPanelNorth.add(currentDayMacroValuesNorthPanelLabel, 1, 2);
+        calendarMonthStatsViewPanelNorth.add(currentDayDateNorthPanelLabel, 0, 0);
+        calendarMonthStatsViewPanelNorth.add(new JLabel("Selected date: " + monthSelectComboBox.getSelectedItem()), 0, 1);
+        calendarMonthStatsViewPanelNorth.add(currentDayMacroTitleNorthPanelLabel, 0, 2);
+
+        currentDayMacroValuesNorthPanelLabel.validate();
+        currentDayMacroValuesNorthPanelLabel.repaint();
+
+        mainWindow.validate();
+        mainWindow.repaint();
     }
 
     private void refreshMacroAndAllComponentForNorthPanel() {
@@ -833,6 +904,7 @@ public class CalendarMonthStatsView {
                 setDaysButtonsMainPanel(itemString);
                 paintButtons();
                 refreshMacroAndAllComponentForNorthPanel();
+                refreshAverageMacroPanelForNorthPanel(getAverageMacroForMonth(itemString));
             }
         }
     }
