@@ -27,7 +27,7 @@ public class GetResultSet {
     }
 
 
-    public ResultSet getResultSetFromSQL(String SQLStatement) {
+    public static ResultSet getResultSetFromSQL(String SQLStatement) {
         Connection connection;
         ResultSet resultSet;
         Statement statementSQL;
@@ -60,7 +60,15 @@ public class GetResultSet {
         }
     }
 
-    public boolean resultSetNextReturnValue(ResultSet resultSet) {
+    public static String getFromResultSetByColumnNumberString(int columnNumber, ResultSet resultSet) {
+        try {
+            return resultSet.getString(columnNumber);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static boolean resultSetNextReturnValue(ResultSet resultSet) {
         try {
             return resultSet.next();
         } catch (SQLException e) {

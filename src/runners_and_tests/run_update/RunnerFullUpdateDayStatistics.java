@@ -10,6 +10,7 @@ public class RunnerFullUpdateDayStatistics {
         updateDaysStatisticsMay();
         updateDaysStatisticsJune();
         updateDaysStatisticsJuly();
+        updateDaysStatisticsAugust();
     }
 
     private static void updateDaysStatisticsJune() throws SQLException {
@@ -51,6 +52,22 @@ public class RunnerFullUpdateDayStatistics {
         System.out.println("updateWholeMonthJuly : PASS");
 
         UpdateDaysStatisticsFilledColumns.updateWholeMonthMacroSumJuly();
+        System.out.println("updateWholeMonthMacroSumMay : PASS");
+    }
+
+    public static void updateDaysStatisticsAugust() throws SQLException {
+        System.out.println("Start: full update - table days_statistics_test - August");
+
+        GenerateSLQTableForDaysStatistics.generateWholeMonthAndFillAmountOfPointsFromNotepadAUGUST();
+
+
+
+        System.out.println("generateWholeMonthAndFillAmountOfPointsFromNotepadAugust : PASS");
+
+        UpdateDaysStatisticsFilledColumns.updateWholeMonthAugust();
+        System.out.println("updateWholeMonthAugust : PASS");
+
+        UpdateDaysStatisticsFilledColumns.updateWholeMonthMacroSumAugust();
         System.out.println("updateWholeMonthMacroSumMay : PASS");
     }
 

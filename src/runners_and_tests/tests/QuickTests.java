@@ -17,6 +17,7 @@ import tools.sql_tools.calendar.ExportAllDaysDataToSQLCalendar;
 import tools.sql_tools.calendar.InsertToCalendarDayTable;
 import tools.sql_tools.days_statistics.GenerateSLQTableForDaysStatistics;
 import tools.sql_tools.days_statistics.SelectFromDaysStatistics;
+import tools.sql_tools.general.IsTheRowAlreadyExist;
 import tools.sql_tools.general.RunQuery;
 import tools.sql_tools.products.ImportDateFromTXTFilesToSQLDB;
 import tools.text_files_tools.DirectoryTools;
@@ -40,25 +41,7 @@ public class QuickTests {
         //test8();
         //test9();
         //test10();
-        //test11();
-        //test12();
-        //test13();
-        //test14();
-        //test15();
-        //test16();
-        //test17();
-        //test18();
-        //test19();
-        //test20();
-        //test21();
-        //test22();
-        //test23();
-        //test24();
-        //test25();
-        //test26();
-        //test27();
-        //test28();
-        //test29();
+        test11();
 
     }
 
@@ -136,12 +119,22 @@ public class QuickTests {
     //<editor-fold desc="TEST 11 -> 15">
 
 
+    private static void test11() {
 
+        String[] dataToCheck = {"2024-07-01",
+                "2024-07-01",
+                "2024-08-01",
+                "2024-08-02",
+                "2024-07-08",
+                "2024-01-01"};
+
+        for (int i = 0; i < dataToCheck.length; i++) {
+
+            System.out.println("i [" + i + "]: " + IsTheRowAlreadyExist.isTheDayAlreadyExist("days_statistics_test","day_date",
+                    dataToCheck[i]));
+        }
+    }
 
     //</editor-fold>
-
-
-
-
 
 }

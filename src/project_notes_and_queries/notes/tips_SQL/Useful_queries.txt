@@ -1,0 +1,9 @@
+Check if object exist
+
+SELECT EXISTS(SELECT * FROM yourTableName WHERE yourCondition);
+
+
+
+
+
+
