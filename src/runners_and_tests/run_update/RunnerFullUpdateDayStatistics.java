@@ -75,5 +75,6 @@ public class RunnerFullUpdateDayStatistics {
         updateDaysStatisticsMay();
         updateDaysStatisticsJune();
         updateDaysStatisticsJuly();
+        updateDaysStatisticsAugust();
     }
 }
