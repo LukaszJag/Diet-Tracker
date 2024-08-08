@@ -1,0 +1,9 @@
+Name: Sos do makaronu z papryką
+Brand: Pudliszki
+Package has: 500.0
+Macro for: 100.0
+KCal: 57.0
+Protein: 1.2
+Fat: 1.0
+Carbs: 10.2
+Comment optional: 

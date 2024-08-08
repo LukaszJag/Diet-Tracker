@@ -1,0 +1,9 @@
+Name: Sos do makaronu z pieczarkami
+Brand: Pudliszki
+Package has: 500.0
+Macro for: 100.0
+KCal: 55.0
+Protein: 1.4
+Fat: 1.0
+Carbs: 9.5
+Comment optional: 

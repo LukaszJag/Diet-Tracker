@@ -1,0 +1,9 @@
+Name: Almette śmietankowy
+Brand: Hochland
+Package has: 150.0
+Macro for: 100.0
+KCal: 256.0
+Protein: 6.7
+Fat: 24.0
+Carbs: 3.2
+Comment optional: 
