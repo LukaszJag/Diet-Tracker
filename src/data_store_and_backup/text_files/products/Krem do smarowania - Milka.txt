@@ -1,0 +1,9 @@
+Name: Krem do smarowania - Milka
+Brand: Milka
+Package has: 350.0
+Macro for: 100.0
+KCal: 552.0
+Protein: 3.8
+Fat: 34.0
+Carbs: 57.0
+Comment optional: 

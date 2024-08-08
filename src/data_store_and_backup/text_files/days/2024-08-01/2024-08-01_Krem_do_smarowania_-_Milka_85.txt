@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2024-08-01',
+'Thursday',
+'Dinner',
+85.0,
+'Krem do smarowania - Milka',
+552.0,
+3.8,
+34.0,
+57.0,
+'2024-08-08 07:26:06',
+'none',
+469.2,
+48.45,
+28.900002,
+3.23
+);

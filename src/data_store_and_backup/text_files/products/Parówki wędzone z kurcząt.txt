@@ -1,0 +1,9 @@
+Name: Parówki wędzone z kurcząt
+Brand: Indukpol
+Package has: 1000.0
+Macro for: 100.0
+KCal: 232.0
+Protein: 12.2
+Fat: 18.8
+Carbs: 2.4
+Comment optional: 

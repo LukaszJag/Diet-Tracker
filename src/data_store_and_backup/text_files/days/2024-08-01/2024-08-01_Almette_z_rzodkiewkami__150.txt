@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2024-08-01',
+'Thursday',
+'Breakfast',
+150.0,
+'Almette z rzodkiewkami ',
+256.0,
+6.6,
+24.0,
+3.5,
+'2024-08-08 07:23:43',
+'none',
+384.0,
+5.25,
+36.0,
+9.9
+);

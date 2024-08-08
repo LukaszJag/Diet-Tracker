@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2024-08-01',
+'Thursday',
+'Dinner',
+400.0,
+'Zupka błyskawiczna grzybowa',
+70.0,
+1.2,
+3.2,
+8.6,
+'2024-08-08 07:26:32',
+'none',
+280.0,
+34.4,
+12.8,
+4.8
+);

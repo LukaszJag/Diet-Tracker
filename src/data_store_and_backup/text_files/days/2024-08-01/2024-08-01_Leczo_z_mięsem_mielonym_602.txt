@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2024-08-01',
+'Thursday',
+'Supper',
+602.0,
+'Leczo z mięsem mielonym',
+142.0,
+4.47,
+10.95,
+4.56,
+'2024-08-08 07:27:50',
+'none',
+854.84,
+27.4512,
+65.919,
+26.909399
+);
