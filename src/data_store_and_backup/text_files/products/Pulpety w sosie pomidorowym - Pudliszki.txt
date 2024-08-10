@@ -1,0 +1,9 @@
+Name: Pulpety w sosie pomidorowym - Pudliszki
+Brand: Pudliszki
+Package has: 600.0
+Macro for: 100.0
+KCal: 181.0
+Protein: 5.1
+Fat: 8.8
+Carbs: 7.3
+Comment optional: 

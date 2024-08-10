@@ -1,0 +1,9 @@
+Name: Popcorn maślany - Helio
+Brand: Helio
+Package has: 90.0
+Macro for: 100.0
+KCal: 430.0
+Protein: 4.6
+Fat: 20.0
+Carbs: 55.0
+Comment optional: 

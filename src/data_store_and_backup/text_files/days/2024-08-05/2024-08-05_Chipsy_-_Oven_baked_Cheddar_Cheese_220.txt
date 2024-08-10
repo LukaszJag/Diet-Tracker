@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2024-08-05',
+'Monday',
+'Supper',
+220.0,
+'Chipsy - Oven baked Cheddar Cheese',
+441.0,
+5.7,
+15.0,
+69.0,
+'2024-08-10 04:47:12',
+'none',
+970.2,
+151.8,
+33.0,
+12.54
+);

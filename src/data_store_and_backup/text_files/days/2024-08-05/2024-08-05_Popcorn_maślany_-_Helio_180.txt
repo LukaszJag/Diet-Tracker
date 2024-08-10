@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2024-08-05',
+'Monday',
+'Supper',
+180.0,
+'Popcorn maślany - Helio',
+430.0,
+4.6,
+20.0,
+55.0,
+'2024-08-10 04:47:33',
+'none',
+774.0,
+99.0,
+36.0,
+8.28
+);

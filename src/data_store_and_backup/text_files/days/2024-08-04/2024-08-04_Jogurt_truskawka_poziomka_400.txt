@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2024-08-04',
+'Sunday',
+'Breakfast',
+400.0,
+'Jogurt truskawka poziomka',
+84.0,
+2.7,
+2.5,
+12.6,
+'2024-08-10 04:10:03',
+'none',
+336.0,
+50.4,
+10.0,
+10.8
+);

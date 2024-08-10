@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2024-08-04',
+'Sunday',
+'Dinner',
+240.0,
+'Bagietka - nuggetsy ',
+262.0,
+7.3,
+15.0,
+23.0,
+'2024-08-10 04:15:29',
+'none',
+628.80005,
+55.2,
+36.0,
+17.52
+);

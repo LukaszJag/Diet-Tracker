@@ -1,0 +1,9 @@
+Name: Chipsy - Oven baked Cheddar Cheese
+Brand: Lay'S
+Package has: 110.0
+Macro for: 100.0
+KCal: 441.0
+Protein: 5.7
+Fat: 15.0
+Carbs: 69.0
+Comment optional: 

@@ -1,0 +1,9 @@
+Name: Bagietka - nuggetsy 
+Brand: Tomcio Paluch
+Package has: 240.0
+Macro for: 100.0
+KCal: 262.0
+Protein: 7.3
+Fat: 15.0
+Carbs: 23.0
+Comment optional: 

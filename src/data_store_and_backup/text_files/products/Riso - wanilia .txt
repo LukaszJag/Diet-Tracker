@@ -1,0 +1,9 @@
+Name: Riso - wanilia 
+Brand: Muller
+Package has: 200.0
+Macro for: 100.0
+KCal: 103.0
+Protein: 3.3
+Fat: 2.5
+Carbs: 16.8
+Comment optional: 

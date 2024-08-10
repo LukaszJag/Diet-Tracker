@@ -1,0 +1,9 @@
+Name: Klopsiki w sosie pomidorowym Pudliszki
+Brand: Pudliszki
+Package has: 600.0
+Macro for: 100.0
+KCal: 127.0
+Protein: 5.4
+Fat: 6.9
+Carbs: 10.0
+Comment optional: 

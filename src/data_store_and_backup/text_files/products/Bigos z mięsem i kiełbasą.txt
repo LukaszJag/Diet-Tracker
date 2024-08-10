@@ -1,0 +1,9 @@
+Name: Bigos z mięsem i kiełbasą
+Brand: Pudliszki
+Package has: 500.0
+Macro for: 100.0
+KCal: 142.0
+Protein: 4.3
+Fat: 11.0
+Carbs: 6.0
+Comment optional: 

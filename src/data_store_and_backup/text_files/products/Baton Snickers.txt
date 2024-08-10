@@ -1,0 +1,9 @@
+Name: Baton Snickers
+Brand: Mars Polska Sp. z o.o. - Sochaczew
+Package has: 50.0
+Macro for: 100.0
+KCal: 485.0
+Protein: 8.6
+Fat: 23.0
+Carbs: 60.2
+Comment optional: 
