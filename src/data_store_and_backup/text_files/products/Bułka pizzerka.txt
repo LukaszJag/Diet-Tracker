@@ -1,0 +1,18 @@
+Name: Bułka pizzerka
+Brand: Familijna
+Package has: 100.0
+Macro for: 100.0
+KCal: 267.0
+Protein: 11.0
+Fat: 5.9
+Carbs: 41.0
+Comment optional: Sprzedawana między innymi w Carrefour
+Name: Bułka pizzerka
+Brand: Familijna
+Package has: 100.0
+Macro for: 100.0
+KCal: 267.0
+Protein: 11.0
+Fat: 5.9
+Carbs: 41.0
+Comment optional: Sprzedawana między innymi w Carrefour

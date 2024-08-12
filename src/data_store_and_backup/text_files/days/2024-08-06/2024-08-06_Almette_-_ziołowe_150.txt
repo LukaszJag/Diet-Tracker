@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2024-08-06',
+'Tuesday',
+'Supper',
+150.0,
+'Almette - ziołowe',
+230.0,
+6.8,
+20.0,
+5.6,
+'2024-08-12 02:50:10',
+'none',
+345.0,
+8.4,
+30.0,
+10.200001
+);

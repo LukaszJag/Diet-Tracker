@@ -1,0 +1,9 @@
+Name: Almette - ogórkiem i ziołami
+Brand: Hochland
+Package has: 150.0
+Macro for: 100.0
+KCal: 239.0
+Protein: 7.0
+Fat: 21.0
+Carbs: 6.0
+Comment optional: 

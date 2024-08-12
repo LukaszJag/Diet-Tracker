@@ -1,0 +1,9 @@
+Name: Almette - jogurtowy 
+Brand: Hochland
+Package has: 150.0
+Macro for: 100.0
+KCal: 260.0
+Protein: 7.1
+Fat: 24.0
+Carbs: 3.8
+Comment optional: 

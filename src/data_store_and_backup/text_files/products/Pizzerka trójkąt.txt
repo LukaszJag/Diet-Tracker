@@ -1,9 +1,0 @@
-Name: Pizzerka trójkąt
-Brand: Familijna
-Package has: 90.0
-Macro for: 100.0
-KCal: 247.0
-Protein: 9.2
-Fat: 4.1
-Carbs: 44.0
-Comment optional: Sprzedawana w - Carrefour

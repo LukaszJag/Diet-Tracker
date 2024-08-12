@@ -1,0 +1,9 @@
+Name: Twist pitny - truskawka
+Brand: Bakoma
+Package has: 370.0
+Macro for: 100.0
+KCal: 68.0
+Protein: 2.7
+Fat: 1.6
+Carbs: 10.6
+Comment optional: 

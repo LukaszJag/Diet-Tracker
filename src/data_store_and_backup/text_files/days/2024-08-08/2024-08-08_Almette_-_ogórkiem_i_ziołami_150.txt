@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2024-08-08',
+'Thursday',
+'Breakfast',
+150.0,
+'Almette - ogórkiem i ziołami',
+239.0,
+7.0,
+21.0,
+6.0,
+'2024-08-12 03:07:08',
+'none',
+358.5,
+9.0,
+31.5,
+10.5
+);

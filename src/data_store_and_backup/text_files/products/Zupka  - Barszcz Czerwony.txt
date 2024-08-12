@@ -1,0 +1,9 @@
+Name: Zupka  - Barszcz Czerwony
+Brand: Amino
+Package has: 69.0
+Macro for: 100.0
+KCal: 70.0
+Protein: 1.0
+Fat: 3.0
+Carbs: 9.0
+Comment optional: Opakowanie pozwala na przygotowanie 1 porcji - 400 ml

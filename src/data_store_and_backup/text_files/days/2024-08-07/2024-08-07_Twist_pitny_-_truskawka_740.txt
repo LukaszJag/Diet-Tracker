@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2024-08-07',
+'Wednesday',
+'Breakfast',
+740.0,
+'Twist pitny - truskawka',
+68.0,
+2.7,
+1.6,
+10.6,
+'2024-08-12 02:57:21',
+'none',
+503.2,
+78.44,
+11.84,
+19.980001
+);

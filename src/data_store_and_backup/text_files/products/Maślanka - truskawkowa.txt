@@ -1,0 +1,9 @@
+Name: Maślanka - truskawkowa
+Brand: Mlekovita
+Package has: 1000.0
+Macro for: 100.0
+KCal: 74.0
+Protein: 3.2
+Fat: 1.5
+Carbs: 12.0
+Comment optional: 

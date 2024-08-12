@@ -1,0 +1,9 @@
+Name: Banan
+Brand: 
+Package has: 0.0
+Macro for: 100.0
+KCal: 89.0
+Protein: 1.09
+Fat: 0.33
+Carbs: 22.84
+Comment optional: 

@@ -1,0 +1,40 @@
+INSERT INTO `diet_tracker_schema`.product_table
+(`product_name`,
+`product_brand`,
+`product_package_has`,
+`product_macro_for`,
+`product_kcal`,
+`product_protein`,
+`product_fat`,
+`product_carbs`,
+`comment_optional`)
+Values
+('Bułka pizzerka',
+'Familijna',
+100.0,
+100.0,
+267.0,
+11.0,
+5.9,
+41.0,
+'Sprzedawana między innymi w Carrefour');
+INSERT INTO `diet_tracker_schema`.product_table
+(`product_name`,
+`product_brand`,
+`product_package_has`,
+`product_macro_for`,
+`product_kcal`,
+`product_protein`,
+`product_fat`,
+`product_carbs`,
+`comment_optional`)
+Values
+('Bułka pizzerka',
+'Familijna',
+100.0,
+100.0,
+267.0,
+11.0,
+5.9,
+41.0,
+'Sprzedawana między innymi w Carrefour');
