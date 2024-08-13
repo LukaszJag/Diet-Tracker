@@ -1,0 +1,9 @@
+Name: Ziemniaki smażone
+Brand: Domowe
+Package has: 0.0
+Macro for: 100.0
+KCal: 113.61
+Protein: 2.08
+Fat: 3.02
+Carbs: 19.46
+Comment optional: 

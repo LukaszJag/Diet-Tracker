@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2024-08-08',
+'Thursday',
+'Dinner',
+620.0,
+'Mini pizza z pieczarkami i cebulą',
+210.0,
+7.0,
+4.5,
+34.7,
+'2024-08-13 05:28:37',
+'none',
+1302.0,
+215.14,
+27.9,
+43.399998
+);

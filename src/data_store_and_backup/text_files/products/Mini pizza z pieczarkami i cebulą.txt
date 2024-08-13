@@ -1,0 +1,9 @@
+Name: Mini pizza z pieczarkami i cebulą
+Brand: Carrefour
+Package has: 155.0
+Macro for: 100.0
+KCal: 210.0
+Protein: 7.0
+Fat: 4.5
+Carbs: 34.7
+Comment optional: 

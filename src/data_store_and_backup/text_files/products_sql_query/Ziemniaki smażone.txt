@@ -1,0 +1,20 @@
+INSERT INTO `diet_tracker_schema`.product_table
+(`product_name`,
+`product_brand`,
+`product_package_has`,
+`product_macro_for`,
+`product_kcal`,
+`product_protein`,
+`product_fat`,
+`product_carbs`,
+`comment_optional`)
+Values
+('Ziemniaki smażone',
+'Domowe',
+0.0,
+100.0,
+113.61,
+2.08,
+3.02,
+19.46,
+'');

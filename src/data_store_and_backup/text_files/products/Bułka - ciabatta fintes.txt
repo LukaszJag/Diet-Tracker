@@ -1,0 +1,9 @@
+Name: Bułka - ciabatta fintes
+Brand: Carrefour
+Package has: 85.0
+Macro for: 100.0
+KCal: 307.0
+Protein: 11.0
+Fat: 6.9
+Carbs: 47.0
+Comment optional: 

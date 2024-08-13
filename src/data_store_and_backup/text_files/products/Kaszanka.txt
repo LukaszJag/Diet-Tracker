@@ -1,0 +1,9 @@
+Name: Kaszanka
+Brand: 
+Package has: 0.0
+Macro for: 100.0
+KCal: 274.0
+Protein: 9.0
+Fat: 20.0
+Carbs: 15.0
+Comment optional: 

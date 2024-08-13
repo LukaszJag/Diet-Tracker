@@ -1,0 +1,9 @@
+Name: Bułka - delicja serowa
+Brand: Carrefour
+Package has: 63.0
+Macro for: 100.0
+KCal: 325.0
+Protein: 13.5
+Fat: 6.93
+Carbs: 52.0
+Comment optional: 
