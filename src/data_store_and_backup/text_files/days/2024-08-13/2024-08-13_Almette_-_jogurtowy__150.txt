@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2024-08-13',
+'Tuesday',
+'Supper',
+150.0,
+'Almette - jogurtowy ',
+260.0,
+7.1,
+24.0,
+3.8,
+'2024-08-14 03:20:52',
+'none',
+390.0,
+5.7,
+36.0,
+10.65
+);

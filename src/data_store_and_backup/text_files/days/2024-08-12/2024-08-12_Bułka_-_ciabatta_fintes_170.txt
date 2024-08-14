@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2024-08-12',
+'Monday',
+'Breakfast',
+170.0,
+'Bułka - ciabatta fintes',
+307.0,
+11.0,
+6.9,
+47.0,
+'2024-08-14 03:10:25',
+'none',
+521.9,
+79.9,
+11.7300005,
+18.7
+);

@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2024-08-12',
+'Monday',
+'Breakfast',
+144.0,
+'Bułka śniadaniowa fintess',
+282.0,
+10.0,
+3.9,
+49.0,
+'2024-08-14 03:09:52',
+'none',
+406.08002,
+70.560005,
+5.616,
+14.400001
+);

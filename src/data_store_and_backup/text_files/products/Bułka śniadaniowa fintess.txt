@@ -1,0 +1,9 @@
+Name: Bułka śniadaniowa fintess
+Brand: Carrefour
+Package has: 72.0
+Macro for: 100.0
+KCal: 282.0
+Protein: 10.0
+Fat: 3.9
+Carbs: 49.0
+Comment optional: 
