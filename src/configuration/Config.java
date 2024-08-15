@@ -12,7 +12,14 @@ public class Config {
     public static final int START_WINDOWS_WIDTH = 700;
     public static final int START_WINDOWS_HEIGHT = 500;
 
-    // Add New Product Window Configuration
+    public static final int BMR_WINDOW_WINDOWS_WIDTH = 900;
+    public static final int BMR_WINDOW_WINDOWS_HEIGHT = 600;
+    public static final int BMR_WINDOW_PANELS_NORTH_SIZE = 50;
+    public static final int BMR_WINDOW_PANELS_CENTER = 20;
+    public static final int BMR_WINDOW_PANELS_WEST_EAST_SIZE = 200;
+    public static final int BMR_WINDOW_PANELS_SOUTH_SIZE = 100;
+
+    //<editor-fold desc="Add New Product Window Configuration">
     public static final int ADD_PRODUCT_WINDOWS_WIDTH = 600;
     public static final int ADD_PRODUCT_WINDOWS_HEIGHT = 400;
     public static final int ADD_PRODUCT_TEXT_FIELD_SIZE = 10;
@@ -20,8 +27,9 @@ public class Config {
     public static final int ADD_PRODUCT_PANELS_CENTER = 20;
     public static final int ADD_PRODUCT_PANELS_WEST_EAST_SIZE = 80;
     public static final int ADD_PRODUCT_PANELS_SOUTH_SIZE = 100;
+    //</editor-fold>
 
-    // Add Product To Day Windows Configuration - Window, Panels - size
+    //<editor-fold desc="Add Product To Day Windows Configuration - Window, Panels - size">
     public static final int ADD_PRODUCT_TO_DAY_WINDOWS_WIDTH = 900;
     public static final int ADD_PRODUCT_TO_DAY_WINDOWS_HEIGHT = 600;
     public static final int ADD_PRODUCT_TO_DAY_PANELS_NORTH_SIZE = 50;
@@ -30,8 +38,9 @@ public class Config {
     public static final int ADD_PRODUCT_TO_DAY_PANELS_SOUTH_SIZE = 100;
     public static final Color mainWindowDataBaseProductTableLabelColor = Color.MAGENTA;
     public static final Color mainWindowDataBaseCalendarTableLabelColor = Color.RED;
+    //</editor-fold>
 
-    // Calendar Month Stats View - GUI
+    //<editor-fold desc="Calendar Month Stats View - GUI">
     public static final int CALENDAR_MONTH_STATS_VIEW_WINDOWS_WIDTH = 900;
     public static final int CALENDAR_MONTH_STATS_VIEW_WINDOWS_HEIGHT = 600;
     public static final int CALENDAR_MONTH_STATS_VIEW_PANELS_NORTH_SIZE = 100;
@@ -39,12 +48,13 @@ public class Config {
     public static final int CALENDAR_MONTH_STATS_VIEW_PANELS_WEST_EAST_SIZE = 200;
     public static final int CALENDAR_MONTH_STATS_VIEW_PANELS_SOUTH_SIZE = 100;
     public static final Dimension CALENDAR_MONTH_STATS_VIEW_BUTTONS_SIZE_DIMENSION = new Dimension(5,5);
-    public static final Color markAsGoodDay = Color.GREEN;
-    public static final Color markAsBadDay = Color.RED;
+    //</editor-fold>
+
+
+    //<editor-fold desc="Add Product To Day Windows Configuration - Panel, Label - Colors">
 
     //</editor-fold>
 
-    //<editor-fold desc="Add Product To Day Windows Configuration - Panel, Label - Colors">
     public static final Color dateTimeLabels = Color.WHITE;
     public static final Color addProductToDayCurrentDateLabelColor = Color.WHITE;
 
