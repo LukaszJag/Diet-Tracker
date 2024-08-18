@@ -1,0 +1,9 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="RunChangeTextFilesForCalendar" type="Application" factoryName="Application" folderName="RunUpdates">
+    <option name="MAIN_CLASS_NAME" value="runners_and_tests.run_update.RunChangeTextFilesForCalendar" />
+    <module name="Diet-Tracker" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>
