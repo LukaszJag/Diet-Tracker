@@ -1,6 +1,8 @@
 package gui;
 
 import configuration.Config;
+import org.jfree.chart.JFreeChart;
+import tools.charts_tools.DisplayChart;
 import tools.products_tools.Macro;
 import tools.sql_tools.calendar.SelectFromCalendar;
 import tools.sql_tools.days_statistics.SelectFromDaysStatistics;
@@ -78,6 +80,10 @@ public class CalendarMonthStatsView {
     //<editor-fold desc="Buttons">
     JButton[] daysButtons;
     JButton[] listOfTheProductButtons = new JButton[24];
+
+    JButton differenceButton = new JButton("Difference");
+    JButton emptyButton = new JButton("Empty");
+    JButton showChartButton = new JButton("Show chart for selected month");
     //</editor-fold>
 
     //<editor-fold desc="GridLayouts">
@@ -117,7 +123,6 @@ public class CalendarMonthStatsView {
     }
     //</editor-fold>
 
-    //<editor-fold desc="Start window: methods">
     public void startWindow() {
         setMainWindowSizeAndLayout();
         setPanels();
@@ -258,6 +263,8 @@ public class CalendarMonthStatsView {
     }
 
     private void prepareAndAddContentToSouthPanel() {
+        showChartButton.addActionListener(new ShowChartButtonActionListener());
+        calendarMonthStatsViewPanelSouth.add(showChartButton);
     }
 
     private void prepareAndAddContentToEastPanel() {
@@ -268,8 +275,8 @@ public class CalendarMonthStatsView {
 
         JPanel macroPanelTMP = new JPanel();
         macroPanelTMP.setLayout(new GridLayout(1, 2, 1, 1));
-        macroPanelTMP.add(new JButton("Difference"), 0, 0);
-        macroPanelTMP.add(new JButton("Empty"), 0, 1);
+        macroPanelTMP.add(differenceButton, 0, 0);
+        macroPanelTMP.add(emptyButton, 0, 1);
         calendarMonthStatsViewPanelEast.add(macroPanelTMP, 0, 2);
 
     }
@@ -517,6 +524,70 @@ public class CalendarMonthStatsView {
         mainWindow.repaint();
     }
 
+    public void showMonthChart(String month) {
+
+        int counter = 0;
+        for (int i = 0; i < daysButtons.length; i++) {
+            if (!daysButtons[i].getText().equals("null")){
+                counter++;
+            }
+        }
+        int amountOfMonthDays = counter;
+        System.out.println(amountOfMonthDays);
+        String[] daysNumbers = new String[amountOfMonthDays];
+        float[] valuesKcal = new float[amountOfMonthDays];
+        String chartName = month + " stats";
+
+        for (int i = 0; i < daysNumbers.length; i++) {
+            daysNumbers[i] = String.valueOf((i+1));
+        }
+
+        String fullDate = "2024-";
+
+        if (month == "August") {
+            fullDate += "08-";
+        }
+        if (month == "July") {
+            fullDate += "07-";
+        }
+        if (month == "June") {
+            fullDate += "06-";
+        }
+        if (month == "May") {
+            fullDate += "05-";
+        }
+        if (month == "April") {
+            fullDate += "04-";
+        }
+
+        String[] allDayWhichNeedData = new String[amountOfMonthDays];
+        String fullDateBuffor = fullDate;
+
+        for (int i = 0; i < amountOfMonthDays; i++) {
+
+
+            if (daysNumbers[i].length() == 1) {
+                fullDate = fullDate + "0" + daysNumbers[i];
+            }
+
+            if (daysNumbers[i].length() == 2) {
+                fullDate = fullDate + daysNumbers[i];
+            }
+
+            allDayWhichNeedData[i] = fullDate;
+            fullDate = fullDateBuffor;
+        }
+
+        for (int i = 0; i < amountOfMonthDays; i++) {
+
+            valuesKcal[i] = SelectFromDaysStatistics.getMacroFromDaysStatisticsByDate(allDayWhichNeedData[i]).getKcal();
+        }
+
+        JFreeChart jFreeChart = DisplayChart.createChartPanel(chartName, "Days", "Kcal",
+                valuesKcal, "Kcal", daysNumbers);
+        DisplayChart.showChart(jFreeChart);
+    }
+
     private void paintButtons() {
 
         goodDaysCounter = 0;
@@ -589,24 +660,24 @@ public class CalendarMonthStatsView {
     private Macro getAverageMacroForMonth(String monthString) {
         String friendlySQLFormatMonthDate = "";
 
-        if (monthString.equals("April")){
+        if (monthString.equals("April")) {
             friendlySQLFormatMonthDate = "2024-" + "08-";
         }
-        if (monthString.equals("May")){
+        if (monthString.equals("May")) {
             friendlySQLFormatMonthDate = "2024-" + "05-";
         }
-        if (monthString.equals("June")){
+        if (monthString.equals("June")) {
             friendlySQLFormatMonthDate = "2024-" + "06-";
         }
-        if (monthString.equals("July")){
+        if (monthString.equals("July")) {
             friendlySQLFormatMonthDate = "2024-" + "07-";
         }
-        if (monthString.equals("August")){
+        if (monthString.equals("August")) {
             friendlySQLFormatMonthDate = "2024-" + "08-";
         }
 
         String fullDate = friendlySQLFormatMonthDate;
-        Macro averageMacro = new Macro(0,0,0,0);
+        Macro averageMacro = new Macro(0, 0, 0, 0);
         Macro dayMacro;
         int dayCounter = 0;
 
@@ -745,7 +816,8 @@ public class CalendarMonthStatsView {
         mainWindow.repaint();
 
     }
-    private void refreshAverageMacroPanelForNorthPanel(Macro averageMacro){
+
+    private void refreshAverageMacroPanelForNorthPanel(Macro averageMacro) {
         calendarMonthStatsViewPanelNorth.removeAll();
 
         currentDayMacroValuesNorthPanelLabel = new JLabel(Macro.getShortMacroInformation(averageMacro));
@@ -934,6 +1006,13 @@ public class CalendarMonthStatsView {
                 Macro macro = new Macro(kcal, protein, fat, carbs);
                 refreshWestPanel(macro, productName);
             }
+        }
+    }
+
+    private class ShowChartButtonActionListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            showMonthChart(monthSelectComboBox.getSelectedItem().toString());
         }
     }
 
