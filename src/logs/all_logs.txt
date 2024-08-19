@@ -595,3 +595,6 @@
 595:-:2024-08-15:-:ADD PRODUCT TO CALENDAR TABLE BY GUI:-:calendar:-:2024-08-14:-:Wednesday:-:Choco Kulki:-:86.0:-:kcal: 377.0--protein: 9.0--fat: 4.5--carbs: 71.0:-:After workout:-:None:-:kcal: 324.22--protein: 7.7400002--fat: 3.8700001--carbs: 61.06:-:
 596:-:2024-08-17:-:ADD PRODUCT TO PRODUCT TABLE BY GUI:-:product_table:-:Maślanka Konecka - truskawkowa:-:Polmlek:-:kcal: 77.0--protein: 3.2--fat: 1.5--carbs: 12.0:-:1000:-:100:-:
 597:-:2024-08-17:-:ADD PRODUCT TO CALENDAR TABLE BY GUI:-:calendar:-:2024-08-17:-:Saturday:-:Maślanka Konecka - truskawkowa:-:1000.0:-:kcal: 77.0--protein: 3.2--fat: 1.5--carbs: 12.0:-:Breakfast:-:None:-:kcal: 770.0--protein: 32.0--fat: 15.0--carbs: 120.0:-:
+598:-:2024-08-19:-:ADD PRODUCT TO PRODUCT TABLE BY GUI:-:product_table:-:Chrupki - Peppies Bekon:-:Lorenz:-:kcal: 493.0--protein: 5.6--fat: 27.0--carbs: 56.0:-:100:-:100:-:
+599:-:2024-08-19:-:ADD PRODUCT TO PRODUCT TABLE BY GUI:-:product_table:-:Chrupki - Curly Classic:-:Lorenz:-:kcal: 495.0--protein: 14.0--fat: 25.0--carbs: 51.0:-:120:-:100:-:
+600:-:2024-08-19:-:ADD PRODUCT TO PRODUCT TABLE BY GUI:-:product_table:-:Chipsy - Crunchips X-Cut Papryka:-:Lorenz:-:kcal: 519.0--protein: 5.8--fat: 31.0--carbs: 52.0:-:140:-:100:-:

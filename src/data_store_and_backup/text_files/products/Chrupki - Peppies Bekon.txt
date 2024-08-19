@@ -1,0 +1,9 @@
+Name: Chrupki - Peppies Bekon
+Brand: Lorenz
+Package has: 100.0
+Macro for: 100.0
+KCal: 493.0
+Protein: 5.6
+Fat: 27.0
+Carbs: 56.0
+Comment optional: 

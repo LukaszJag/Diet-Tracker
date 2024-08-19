@@ -1,0 +1,9 @@
+Name: Chrupki - Curly Classic
+Brand: Lorenz
+Package has: 120.0
+Macro for: 100.0
+KCal: 495.0
+Protein: 14.0
+Fat: 25.0
+Carbs: 51.0
+Comment optional: 

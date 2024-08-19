@@ -1,0 +1,9 @@
+Name: Chipsy - Crunchips X-Cut Papryka
+Brand: Lorenz
+Package has: 140.0
+Macro for: 100.0
+KCal: 519.0
+Protein: 5.8
+Fat: 31.0
+Carbs: 52.0
+Comment optional: 

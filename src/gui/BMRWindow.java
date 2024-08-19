@@ -286,7 +286,7 @@ public class BMRWindow {
 
             String messageBMR = "Basic BMR on current data: " + basicBMR + "\n" +
                     "Total BMR on current data: " + totalBMR ;
-            
+
             JOptionPane.showMessageDialog(null, messageBMR);
         }
     }
