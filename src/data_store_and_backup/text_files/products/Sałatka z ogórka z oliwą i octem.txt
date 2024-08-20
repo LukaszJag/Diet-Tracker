@@ -1,0 +1,9 @@
+Name: Sałatka z ogórka z oliwą i octem
+Brand: Domowa
+Package has: 0.0
+Macro for: 100.0
+KCal: 43.59
+Protein: 0.83
+Fat: 2.79
+Carbs: 3.77
+Comment optional: Przepis: https://www.tabele-kalorii.pl/kalorie,Salatka-z-ogorka-z-oliwa-i-octem-Przepis-od-ufaye.html

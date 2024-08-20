@@ -1,0 +1,9 @@
+Name: Chleb razowy
+Brand: Biedronka
+Package has: 500.0
+Macro for: 100.0
+KCal: 235.0
+Protein: 7.0
+Fat: 8.0
+Carbs: 30.0
+Comment optional: 

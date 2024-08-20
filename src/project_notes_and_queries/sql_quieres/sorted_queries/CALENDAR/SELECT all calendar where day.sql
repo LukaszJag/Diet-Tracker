@@ -1,1 +1,1 @@
-SELECT * FROM calendar WHERE day_date="2024-07-08";
+SELECT * FROM calendar WHERE day_date="2024-07-15";

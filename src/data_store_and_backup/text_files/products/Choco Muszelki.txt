@@ -1,0 +1,9 @@
+Name: Choco Muszelki
+Brand: Lubella
+Package has: 500.0
+Macro for: 100.0
+KCal: 380.0
+Protein: 8.5
+Fat: 3.7
+Carbs: 75.0
+Comment optional: 

@@ -1,0 +1,20 @@
+INSERT INTO `diet_tracker_schema`.product_table
+(`product_name`,
+`product_brand`,
+`product_package_has`,
+`product_macro_for`,
+`product_kcal`,
+`product_protein`,
+`product_fat`,
+`product_carbs`,
+`comment_optional`)
+Values
+('Sałatka z ogórka z oliwą i octem',
+'Domowa',
+0.0,
+100.0,
+43.59,
+0.83,
+2.79,
+3.77,
+'Przepis: https://www.tabele-kalorii.pl/kalorie,Salatka-z-ogorka-z-oliwa-i-octem-Przepis-od-ufaye.html');

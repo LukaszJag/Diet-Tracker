@@ -405,7 +405,7 @@ public class FilesTools {
     public static String[] getFullAPathToAllTextFilesInDirectory(String pathToDirectory) {
         // It may cause error: hard code length to 100
 
-        String[] fullPathToFiles = new String[1000];
+        String[] fullPathToFiles = new String[1500];
         File dir = new File(pathToDirectory);
         File[] directoryListing = dir.listFiles();
         int counter = 0;

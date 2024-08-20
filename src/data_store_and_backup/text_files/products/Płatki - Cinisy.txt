@@ -1,0 +1,9 @@
+Name: Płatki - Cinisy
+Brand: Lubella
+Package has: 500.0
+Macro for: 100.0
+KCal: 408.0
+Protein: 9.0
+Fat: 8.2
+Carbs: 70.0
+Comment optional: 
