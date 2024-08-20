@@ -15,19 +15,19 @@ INSERT INTO `diet_tracker_schema`.`calendar`
 `fat_consume`,
 `protein_consume`)
 Values
-('2024-08-17',
-'Saturday',
-'Breakfast',
-179.0,
-'Tost maślany',
-267.0,
-8.6,
-3.2,
-50.0,
-'2024-08-20 03:37:23',
+('2024-08-18',
+'Sunday',
+'Supper',
+100.0,
+'Chrupki - Peppies Bekon',
+493.0,
+5.6,
+27.0,
+56.0,
+'2024-08-20 04:14:42',
 'none',
-477.93,
-89.5,
-5.728,
-15.394
+493.0,
+56.0,
+27.0,
+5.6
 );

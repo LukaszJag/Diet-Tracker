@@ -15,19 +15,19 @@ INSERT INTO `diet_tracker_schema`.`calendar`
 `fat_consume`,
 `protein_consume`)
 Values
-('2024-08-17',
-'Saturday',
+('2024-08-18',
+'Sunday',
 'Supper',
-74.0,
-'Frytki małe',
-200.5,
-3.5,
-9.7,
-25.0,
-'2024-08-20 03:39:51',
+140.0,
+'Chipsy - Crunchips X-Cut Papryka',
+519.0,
+5.8,
+31.0,
+52.0,
+'2024-08-20 04:15:20',
 'none',
-148.37,
-18.5,
-7.178,
-2.5900002
+726.6,
+72.799995,
+43.399998,
+8.12
 );

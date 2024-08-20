@@ -15,19 +15,19 @@ INSERT INTO `diet_tracker_schema`.`calendar`
 `fat_consume`,
 `protein_consume`)
 Values
-('2024-08-17',
-'Saturday',
-'Dinner',
-1500.0,
-'Lipton Ice Tea - Lemon',
-30.0,
-0.5,
-0.5,
-7.0,
-'2024-08-20 03:39:29',
+('2024-08-18',
+'Sunday',
+'Supper',
+120.0,
+'Chrupki - Curly Classic',
+495.0,
+14.0,
+25.0,
+51.0,
+'2024-08-20 04:14:59',
 'none',
-450.0,
-105.0,
-7.5,
-7.5
+594.0,
+61.2,
+30.000002,
+16.800001
 );
