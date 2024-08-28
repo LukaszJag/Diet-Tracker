@@ -1,0 +1,9 @@
+Name: Winogrona
+Brand: Owoce
+Package has: 0.0
+Macro for: 100.0
+KCal: 70.0
+Protein: 0.72
+Fat: 0.16
+Carbs: 17.2
+Comment optional: 
