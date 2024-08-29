@@ -14,7 +14,7 @@ public class DisplayChart {
         frame.setSize(1000, 700);
         frame.setContentPane(chartPanel);
         frame.setLocationRelativeTo(null);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.setVisible(true);
     }
 

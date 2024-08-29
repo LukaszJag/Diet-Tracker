@@ -1,0 +1,9 @@
+Name: Sok Cytryna limonka
+Brand: Hortex
+Package has: 1000.0
+Macro for: 100.0
+KCal: 45.0
+Protein: 0.0
+Fat: 0.0
+Carbs: 11.2
+Comment optional: 

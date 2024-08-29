@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2024-08-22',
+'Thursday',
+'Second Breakfast',
+1000.0,
+'Sok Cytryna limonka',
+45.0,
+0.0,
+0.0,
+11.2,
+'2024-08-29 09:01:21',
+'none',
+450.0,
+112.0,
+0.0,
+0.0
+);

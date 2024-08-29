@@ -1,0 +1,9 @@
+Name: Napój jabłko brzoskwinia
+Brand: Tymbark
+Package has: 250.0
+Macro for: 100.0
+KCal: 34.0
+Protein: 0.0
+Fat: 0.0
+Carbs: 8.4
+Comment optional: 

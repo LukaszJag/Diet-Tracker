@@ -1,0 +1,20 @@
+INSERT INTO `diet_tracker_schema`.product_table
+(`product_name`,
+`product_brand`,
+`product_package_has`,
+`product_macro_for`,
+`product_kcal`,
+`product_protein`,
+`product_fat`,
+`product_carbs`,
+`comment_optional`)
+Values
+('Prince Polo Classic XXL',
+'Kraft Foods Polska S.A. Oddział Olza',
+50.0,
+100.0,
+530.0,
+5.4,
+29.5,
+58.0,
+'');

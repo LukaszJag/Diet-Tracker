@@ -1,0 +1,9 @@
+Name: Prince Polo Classic XXL
+Brand: Kraft Foods Polska S.A. Oddział Olza
+Package has: 50.0
+Macro for: 100.0
+KCal: 530.0
+Protein: 5.4
+Fat: 29.5
+Carbs: 58.0
+Comment optional: 
