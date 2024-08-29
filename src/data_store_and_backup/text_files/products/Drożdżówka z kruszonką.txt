@@ -1,0 +1,9 @@
+Name: Drożdżówka z kruszonką
+Brand: Familijna
+Package has: 110.0
+Macro for: 100.0
+KCal: 370.0
+Protein: 7.4
+Fat: 12.0
+Carbs: 57.0
+Comment optional: 

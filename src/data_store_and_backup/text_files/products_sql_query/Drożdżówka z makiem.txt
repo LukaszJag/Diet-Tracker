@@ -1,0 +1,20 @@
+INSERT INTO `diet_tracker_schema`.product_table
+(`product_name`,
+`product_brand`,
+`product_package_has`,
+`product_macro_for`,
+`product_kcal`,
+`product_protein`,
+`product_fat`,
+`product_carbs`,
+`comment_optional`)
+Values
+('Drożdżówka z makiem',
+'Familijna',
+110.0,
+100.0,
+435.0,
+7.4,
+20.0,
+55.0,
+'');
