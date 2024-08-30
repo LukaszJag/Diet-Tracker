@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2024-08-27',
+'Tuesday',
+'Dinner',
+43.0,
+'Sos 1000 wysp',
+271.0,
+0.7,
+25.0,
+11.0,
+'2024-08-29 08:30:37',
+'none',
+116.53,
+4.73,
+10.75,
+0.301
+);
