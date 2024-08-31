@@ -1,0 +1,9 @@
+Name: Serek - śmietankowy z ziołami - do smarowania
+Brand: Piątnica
+Package has: 135.0
+Macro for: 100.0
+KCal: 243.0
+Protein: 6.0
+Fat: 23.0
+Carbs: 3.0
+Comment optional: 
