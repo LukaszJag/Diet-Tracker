@@ -825,3 +825,4 @@
 825:-:2024-08-29:-:ADD PRODUCT TO CALENDAR TABLE BY GUI:-:calendar:-:2024-08-28:-:Wednesday:-:Choco Muszelki:-:190.0:-:kcal: 380.0--protein: 8.5--fat: 3.7--carbs: 75.0:-:Breakfast:-:None:-:kcal: 722.0--protein: 16.15--fat: 7.03--carbs: 142.5:-:
 826:-:2024-08-29:-:ADD PRODUCT TO CALENDAR TABLE BY GUI:-:calendar:-:2024-08-28:-:Wednesday:-:Choco Muszelki:-:190.0:-:kcal: 380.0--protein: 8.5--fat: 3.7--carbs: 75.0:-:Night snack:-:None:-:kcal: 722.0--protein: 16.15--fat: 7.03--carbs: 142.5:-:
 827:-:2024-08-29:-:ADD PRODUCT TO CALENDAR TABLE BY GUI:-:calendar:-:2024-08-28:-:Wednesday:-:Mleko 1,5%:-:394.0:-:kcal: 44.0--protein: 3.0--fat: 1.5--carbs: 4.7:-:Night snack:-:None:-:kcal: 173.36--protein: 11.82--fat: 5.91--carbs: 18.518:-:
+828:-:2024-08-31:-:ADD PRODUCT TO PRODUCT TABLE BY GUI:-:product_table:-:Lody o smaku śmietankowym:-:Auchan:-:kcal: 210.0--protein: 3.0--fat: 13.0--carbs: 21.0:-:110:-:100:-:

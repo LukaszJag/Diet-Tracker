@@ -1,0 +1,9 @@
+Name: Lody o smaku śmietankowym
+Brand: Auchan
+Package has: 110.0
+Macro for: 100.0
+KCal: 210.0
+Protein: 3.0
+Fat: 13.0
+Carbs: 21.0
+Comment optional: 
