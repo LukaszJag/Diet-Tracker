@@ -74,6 +74,24 @@ public class UpdateDaysStatisticsFilledColumns {
             dayDate = "2024-08-";
         }
     }
+
+
+    public static void updateWholeMonthSeptember() throws SQLException {
+        String dayDate = "2024-09-";
+
+        for (int i = 1; i <= 30; i++) {
+            if (String.valueOf(i).length() == 1) {
+                dayDate = dayDate + "0" + String.valueOf(i);
+            } else {
+                dayDate = dayDate + String.valueOf(i);
+            }
+
+            RunQuery.runQuery(prepareQueryForUpdateAmountOfFilledPointsFromNotepad(dayDate));
+
+
+            dayDate = "2024-09-";
+        }
+    }
     public static String prepareQueryForUpdateAmountOfFilledPointsFromNotepad(String day_date) {
         String updateQuery = "UPDATE `diet_tracker_schema`.`days_statistics_test`\n"
                 + "SET\n"
@@ -141,6 +159,21 @@ public class UpdateDaysStatisticsFilledColumns {
 
             RunQuery.runQuery(prepareQueryForFillConsumedMacro(dayDate));
             dayDate = "2024-08-";
+        }
+    }
+
+    public static void updateWholeMonthMacroSumSeptember() throws SQLException {
+        String dayDate = "2024-09-";
+
+        for (int i = 1; i <= 31; i++) {
+            if (String.valueOf(i).length() == 1) {
+                dayDate = dayDate + "0" + String.valueOf(i);
+            } else {
+                dayDate = dayDate + String.valueOf(i);
+            }
+
+            RunQuery.runQuery(prepareQueryForFillConsumedMacro(dayDate));
+            dayDate = "2024-09-";
         }
     }
 

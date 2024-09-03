@@ -165,6 +165,57 @@ public class GenerateSLQTableForDaysStatistics {
             }
         }
     }
+
+    public static void generateWholeMonthSeptember() {
+        String year = "2024";
+        String month = "09";
+        String[] readyDateDays = new String[30];
+        for (int i = 0; i < 30; i++) {
+            if (String.valueOf(i + 1).length() == 1) {
+                readyDateDays[i] = year + "-" + month + "-" + "0" + (i + 1);
+            } else {
+                readyDateDays[i] = year + "-" + month + "-" + (i + 1);
+            }
+        }
+
+
+        for (int i = 0; i < readyDateDays.length; i++) {
+            if (!IsTheRowAlreadyExist.isTheDayAlreadyExist("days_statistics_test", "day_date", readyDateDays[i])) {
+                try {
+                    generateDaysStatisticsInTable(createInsertSQLQueryForDaysStatistics(readyDateDays[i]));
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+    }
+
+
+    public static void generateWholeMonthAndFillAmountOfPointsFromNotepadSeptember() {
+        String queryForExecute = "";
+        String dateDay = "";
+        String pointInOneDay = "";
+        for (int i = 1; i <= 30; i++) {
+            dateDay = String.valueOf(i);
+            if (dateDay.length() == 1) {
+                dateDay = "0" + dateDay;
+            }
+            pointInOneDay = FilesTools.readAndGetLineTXTFile("src/data_store_and_backup/text_files/days_statistics_test/quick_fill_amount_of_point_in_notepad/september_2024.txt", i);
+            queryForExecute = "UPDATE `diet_tracker_schema`.`days_statistics_test`" +
+                    "SET "
+                    + "`amount_of_points_from_notepad`= " + pointInOneDay
+                    + " WHERE day_date = '2024-09-" + dateDay + "';";
+            if (pointInOneDay.equals("")) {
+                return;
+            }
+
+            try {
+                generateDaysStatisticsInTable(queryForExecute);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
     public static void generateWholeMonthAndFillAmountOfPointsFromNotepadAUGUST() {
         String queryForExecute = "";
         String dateDay = "";
