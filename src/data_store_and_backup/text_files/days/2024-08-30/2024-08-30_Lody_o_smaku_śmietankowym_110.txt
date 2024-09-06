@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2024-08-30',
+'Friday',
+'Snack 2',
+110.0,
+'Lody o smaku śmietankowym',
+210.0,
+3.0,
+13.0,
+21.0,
+'2024-09-06 04:23:59',
+'none',
+231.0,
+23.1,
+14.3,
+3.3000002
+);

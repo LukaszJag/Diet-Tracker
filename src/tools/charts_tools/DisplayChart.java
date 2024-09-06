@@ -3,9 +3,16 @@ package tools.charts_tools;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
+import org.jfree.chart.annotations.XYLineAnnotation;
+import org.jfree.chart.plot.CategoryMarker;
+import org.jfree.chart.plot.CategoryPlot;
+import org.jfree.chart.plot.ValueMarker;
+import org.jfree.chart.plot.XYPlot;
 import org.jfree.data.category.DefaultCategoryDataset;
+import org.jfree.data.xy.XYDataset;
 
 import javax.swing.*;
+import java.awt.*;
 
 public class DisplayChart {
     public static void showChart(JFreeChart chart){
@@ -30,6 +37,35 @@ public class DisplayChart {
             dataset.addValue(values[i], rowKey, columnsKeys[i]);
         }
 
+        JFreeChart chart = ChartFactory.createAreaChart(
+                chartName,
+                categoryAxisLabel,
+                valueAxisLabel,
+                dataset);
+
+        ValueMarker marker = new ValueMarker(4356);  // position is the value on the axis
+        marker.setPaint(Color.GREEN);
+
+        //marker.setLabel("here"); // see JavaDoc for labels, colors, strokes
+
+
+        CategoryPlot plot = chart.getCategoryPlot();
+        plot.addRangeMarker(marker);
+        return chart;
+    }
+
+    public static JFreeChart createAreaChartPanel(String chartName, String categoryAxisLabel, String valueAxisLabel, float[] values, String rowKey, String[] columnsKeys){
+        if (values.length != columnsKeys.length){
+            System.out.println("Invalid data arrays have different sizes");
+            return null;
+        }
+
+        DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+
+        for (int i = 0; i < values.length; i++) {
+            dataset.addValue(values[i], rowKey, columnsKeys[i]);
+        }
+
         JFreeChart chart = ChartFactory.createLineChart(
                 chartName,
                 categoryAxisLabel,
@@ -39,3 +75,4 @@ public class DisplayChart {
         return chart;
     }
 }
+
