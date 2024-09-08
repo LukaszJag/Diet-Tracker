@@ -977,7 +977,7 @@ public class CalendarMonthStatsView {
             Macro macroToPrintInGUI;
 
             macroToPrintInGUI = SelectFromDaysStatistics.getMacroFromDaysStatisticsByDate(fullDate);
-
+            System.out.println("Full date: " + fullDate);
             String panelTitleLabelText = "Macro - Selected day: " + fullDate;
             refreshMacroAndAllComponentForSelectedDayMacro(panelTitleLabelText, macroToPrintInGUI);
 

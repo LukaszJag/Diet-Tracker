@@ -55,6 +55,7 @@ public class AddProductToCalendarDay {
 
     JButton clearTextFieldsButton = new JButton("Clear");
     JButton getProductFullInfo = new JButton("Get product full info");
+    JButton showEnableShortCutsButton = new JButton("Shortcuts tips");
     //</editor-fold>
 
     //<editor-fold desc="Labels">
@@ -218,17 +219,9 @@ public class AddProductToCalendarDay {
         addProductToDayPanelEast.add(getProductFullInfo);
         getProductFullInfo.addActionListener(new GetProductFullInfoActionListener());
 
-        Color labelsColor = Color.yellow;
-        shortcutWordLabel.setForeground(Color.RED);
-        shortcutsCRTTipsLabel.setForeground(labelsColor);
-        shortcutsDOWNArrowTipsLabel.setForeground(labelsColor);
-        shortcutsUPArrowTipsLabel.setForeground(labelsColor);
 
-        addProductToDayPanelEast.add(shortcutWordLabel);
-        addProductToDayPanelEast.add(shortcutsCRTTipsLabel);
-        addProductToDayPanelEast.add(shortcutsDOWNArrowTipsLabel);
-        addProductToDayPanelEast.add(shortcutsUPArrowTipsLabel);
-        addProductToDayPanelEast.add(shortcutsCRTLAmountOfProductTipsLabel);
+        showEnableShortCutsButton.addActionListener(new ShowEnableShortCutsButtonActionListener());
+        addProductToDayPanelEast.add(showEnableShortCutsButton);
 
 
         //</editor-fold>
@@ -903,5 +896,41 @@ public class AddProductToCalendarDay {
 
 
 
+    }
+
+    private class ShowEnableShortCutsButtonActionListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            Panel shortcutsPanel = new Panel();
+            JDialog shortcutsDialog = new JDialog(addProductToDayFrame, "Shortcuts");
+            JButton shortcutsForProductNameButton = new JButton("Product name text field");
+            JButton shortcutsForAmountOfProductButton = new JButton("Amount Of Product text field");
+            JButton closeDialogButton = new JButton("Close");
+
+            shortcutsDialog.setSize(300,300);
+
+            Color labelsColor = Color.BLACK;
+            //shortcutWordLabel.setForeground(Color.RED);
+            shortcutsCRTTipsLabel.setForeground(labelsColor);
+            shortcutsDOWNArrowTipsLabel.setForeground(labelsColor);
+            shortcutsUPArrowTipsLabel.setForeground(labelsColor);
+
+            shortcutsPanel.add(shortcutsForProductNameButton);
+            shortcutsPanel.add(shortcutsForAmountOfProductButton);
+
+
+            //shortcutsPanel.add(shortcutWordLabel);
+            shortcutsPanel.add(shortcutsCRTTipsLabel);
+            shortcutsPanel.add(shortcutsDOWNArrowTipsLabel);
+            shortcutsPanel.add(shortcutsUPArrowTipsLabel);
+            shortcutsPanel.add(shortcutsCRTLAmountOfProductTipsLabel);
+
+            shortcutsPanel.add(closeDialogButton);
+
+            shortcutsDialog.setLocationRelativeTo(null);
+            shortcutsDialog.add(shortcutsPanel);
+            shortcutsDialog.setVisible(true);
+
+        }
     }
 }
