@@ -1,0 +1,9 @@
+Name: Filety śledziowe w sosie salsa
+Brand: Seko
+Package has: 500.0
+Macro for: 100.0
+KCal: 133.0
+Protein: 6.9
+Fat: 5.2
+Carbs: 14.7
+Comment optional: 

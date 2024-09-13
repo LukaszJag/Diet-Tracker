@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2024-09-10',
+'Tuesday',
+'Second Breakfast',
+330.0,
+'Filety śledziowe w sosie salsa',
+133.0,
+6.9,
+5.2,
+14.7,
+'2024-09-13 09:55:02',
+'none',
+438.9,
+48.51,
+17.16,
+22.77
+);

@@ -1,0 +1,9 @@
+Name: Maślanka Mrągowska - Truskawkowa
+Brand: Mlekpol
+Package has: 1000.0
+Macro for: 100.0
+KCal: 72.0
+Protein: 3.3
+Fat: 1.5
+Carbs: 11.3
+Comment optional: 

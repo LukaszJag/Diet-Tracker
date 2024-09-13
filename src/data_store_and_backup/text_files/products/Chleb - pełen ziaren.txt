@@ -1,0 +1,9 @@
+Name: Chleb - pełen ziaren
+Brand: Piekarnia Lwowska
+Package has: 0.0
+Macro for: 100.0
+KCal: 260.0
+Protein: 7.2
+Fat: 4.7
+Carbs: 44.6
+Comment optional: 
