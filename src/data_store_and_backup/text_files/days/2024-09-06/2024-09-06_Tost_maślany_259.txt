@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2024-09-06',
+'Friday',
+'Second Breakfast',
+259.0,
+'Tost maślany',
+267.0,
+8.6,
+3.2,
+50.0,
+'2024-09-13 04:25:54',
+'none',
+691.52997,
+129.5,
+8.288,
+22.274
+);

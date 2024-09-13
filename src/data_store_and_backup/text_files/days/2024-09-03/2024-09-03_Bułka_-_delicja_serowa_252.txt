@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2024-09-03',
+'Tuesday',
+'Second Breakfast',
+252.0,
+'Bułka - delicja serowa',
+325.0,
+13.5,
+6.93,
+52.0,
+'2024-09-13 04:01:45',
+'none',
+819.0,
+131.04,
+17.4636,
+34.02
+);

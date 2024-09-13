@@ -1,0 +1,9 @@
+Name: Polędwica drobiowa - Kraina Wędlin
+Brand: Kraina Wędlin
+Package has: 250.0
+Macro for: 100.0
+KCal: 100.0
+Protein: 18.0
+Fat: 2.0
+Carbs: 2.5
+Comment optional: 
