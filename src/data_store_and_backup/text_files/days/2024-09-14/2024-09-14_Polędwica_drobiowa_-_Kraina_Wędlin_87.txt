@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2024-09-14',
+'Saturday',
+'Supper',
+87.0,
+'Polędwica drobiowa - Kraina Wędlin',
+100.0,
+18.0,
+2.0,
+2.5,
+'2024-09-26 02:26:29',
+'none',
+87.0,
+2.175,
+1.74,
+15.66
+);

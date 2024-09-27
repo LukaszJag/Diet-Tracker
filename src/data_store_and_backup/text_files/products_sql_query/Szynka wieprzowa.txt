@@ -1,0 +1,20 @@
+INSERT INTO `diet_tracker_schema`.product_table
+(`product_name`,
+`product_brand`,
+`product_package_has`,
+`product_macro_for`,
+`product_kcal`,
+`product_protein`,
+`product_fat`,
+`product_carbs`,
+`comment_optional`)
+Values
+('Szynka wieprzowa',
+'',
+0.0,
+100.0,
+136.0,
+20.5,
+5.41,
+0.0,
+'Produkt ogólny');

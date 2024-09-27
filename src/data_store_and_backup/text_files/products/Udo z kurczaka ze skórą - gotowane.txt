@@ -1,0 +1,9 @@
+Name: Udo z kurczaka ze skórą - gotowane
+Brand: 
+Package has: 0.0
+Macro for: 100.0
+KCal: 136.0
+Protein: 15.0
+Fat: 9.0
+Carbs: 0.0
+Comment optional: Domowa potrawa
