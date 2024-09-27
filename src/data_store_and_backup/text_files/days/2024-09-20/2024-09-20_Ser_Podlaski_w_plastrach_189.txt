@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2024-09-20',
+'Friday',
+'Dinner',
+189.0,
+'Ser Podlaski w plastrach',
+347.0,
+26.0,
+27.0,
+0.0,
+'2024-09-27 03:35:14',
+'none',
+655.83,
+0.0,
+51.03,
+49.14
+);

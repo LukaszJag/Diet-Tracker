@@ -1,0 +1,20 @@
+INSERT INTO `diet_tracker_schema`.product_table
+(`product_name`,
+`product_brand`,
+`product_package_has`,
+`product_macro_for`,
+`product_kcal`,
+`product_protein`,
+`product_fat`,
+`product_carbs`,
+`comment_optional`)
+Values
+('Pierogi ruskie domowe',
+'Domowe',
+0.0,
+100.0,
+232.61,
+7.6,
+4.67,
+39.22,
+'Przepis: https://www.tabele-kalorii.pl/kalorie,Pierogi-ruskie-domowe-Przepis-od-mystik.html');

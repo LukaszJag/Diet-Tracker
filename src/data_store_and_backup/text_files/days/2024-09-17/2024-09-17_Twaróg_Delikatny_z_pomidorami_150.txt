@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2024-09-17',
+'Tuesday',
+'Supper',
+150.0,
+'Twaróg Delikatny z pomidorami',
+111.0,
+8.2,
+7.0,
+3.7,
+'2024-09-27 03:14:28',
+'none',
+166.5,
+5.55,
+10.5,
+12.299999
+);

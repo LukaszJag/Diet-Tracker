@@ -1,0 +1,9 @@
+Name: Twaróg Delikatny rzodkiewka
+Brand: President
+Package has: 350.0
+Macro for: 100.0
+KCal: 132.0
+Protein: 5.8
+Fat: 10.0
+Carbs: 4.5
+Comment optional: 

@@ -1,0 +1,9 @@
+Name: Twaróg Delikatny z pomidorami
+Brand: President
+Package has: 150.0
+Macro for: 100.0
+KCal: 111.0
+Protein: 8.2
+Fat: 7.0
+Carbs: 3.7
+Comment optional: 

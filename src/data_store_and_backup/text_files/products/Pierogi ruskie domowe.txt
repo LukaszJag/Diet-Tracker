@@ -1,0 +1,9 @@
+Name: Pierogi ruskie domowe
+Brand: Domowe
+Package has: 0.0
+Macro for: 100.0
+KCal: 232.61
+Protein: 7.6
+Fat: 4.67
+Carbs: 39.22
+Comment optional: Przepis: https://www.tabele-kalorii.pl/kalorie,Pierogi-ruskie-domowe-Przepis-od-mystik.html
