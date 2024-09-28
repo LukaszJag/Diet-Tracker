@@ -1,0 +1,9 @@
+Name: Wafle ryżowe w czekoladzie mlecznej
+Brand: SONKO
+Package has: 65.0
+Macro for: 100.0
+KCal: 475.0
+Protein: 8.0
+Fat: 19.6
+Carbs: 65.3
+Comment optional: 

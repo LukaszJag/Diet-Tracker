@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2024-09-21',
+'Saturday',
+'Second Breakfast',
+65.0,
+'Wafle ryżowe w czekoladzie mlecznej',
+475.0,
+8.0,
+19.6,
+65.3,
+'2024-09-28 08:24:50',
+'none',
+308.75,
+42.445,
+12.74,
+5.2
+);
