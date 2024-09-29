@@ -1,0 +1,9 @@
+Name: Rogalik z nadzieniem karmelowym
+Brand: Kaufland
+Package has: 240.0
+Macro for: 100.0
+KCal: 470.0
+Protein: 6.5
+Fat: 26.0
+Carbs: 52.0
+Comment optional: 

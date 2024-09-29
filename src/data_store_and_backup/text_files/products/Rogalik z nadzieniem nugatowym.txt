@@ -1,0 +1,9 @@
+Name: Rogalik z nadzieniem nugatowym
+Brand: Kaufland
+Package has: 240.0
+Macro for: 100.0
+KCal: 484.0
+Protein: 6.4
+Fat: 28.0
+Carbs: 51.0
+Comment optional: 

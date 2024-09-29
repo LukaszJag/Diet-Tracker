@@ -1,0 +1,9 @@
+Name: Placki ziemniaczane
+Brand: Domowe
+Package has: 0.0
+Macro for: 100.0
+KCal: 268.0
+Protein: 6.0
+Fat: 15.0
+Carbs: 28.0
+Comment optional: Domowe

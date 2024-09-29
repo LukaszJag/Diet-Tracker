@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2024-09-24',
+'Tuesday',
+'Supper',
+311.0,
+'Placki ziemniaczane',
+268.0,
+6.0,
+15.0,
+28.0,
+'2024-09-29 05:26:25',
+'none',
+833.48,
+87.079994,
+46.649998,
+18.66
+);

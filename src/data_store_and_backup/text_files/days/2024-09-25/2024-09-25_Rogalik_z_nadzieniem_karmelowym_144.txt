@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2024-09-25',
+'Wednesday',
+'Supper',
+144.0,
+'Rogalik z nadzieniem karmelowym',
+470.0,
+6.5,
+26.0,
+52.0,
+'2024-09-29 05:50:30',
+'none',
+676.80005,
+74.880005,
+37.440002,
+9.360001
+);

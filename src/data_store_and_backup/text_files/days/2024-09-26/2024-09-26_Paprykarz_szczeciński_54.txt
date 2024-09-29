@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2024-09-26',
+'Thursday',
+'Night snack',
+54.0,
+'Paprykarz szczeciński',
+159.0,
+5.3,
+10.0,
+10.0,
+'2024-09-29 05:53:02',
+'none',
+85.86,
+5.4,
+5.4,
+2.8620002
+);

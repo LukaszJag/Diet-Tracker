@@ -1,0 +1,9 @@
+Name: Schab wędzony na wiśniowo
+Brand: Kraina Wędlin
+Package has: 250.0
+Macro for: 100.0
+KCal: 102.0
+Protein: 18.0
+Fat: 2.4
+Carbs: 2.0
+Comment optional: 

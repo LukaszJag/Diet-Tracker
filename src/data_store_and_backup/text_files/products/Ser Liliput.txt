@@ -1,0 +1,9 @@
+Name: Ser Liliput
+Brand: Światowid
+Package has: 350.0
+Macro for: 100.0
+KCal: 343.0
+Protein: 25.0
+Fat: 27.0
+Carbs: 0.0
+Comment optional: 
