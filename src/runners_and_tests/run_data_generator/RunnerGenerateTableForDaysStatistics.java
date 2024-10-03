@@ -8,6 +8,7 @@ public class RunnerGenerateTableForDaysStatistics {
         GenerateSLQTableForDaysStatistics.generateWholeMonthAndFillAmountOfPointsFromNotepadJULY();
         GenerateSLQTableForDaysStatistics.generateWholeMonthAndFillAmountOfPointsFromNotepadJUNE();
         GenerateSLQTableForDaysStatistics.generateWholeMonthAndFillAmountOfPointsFromNotepadAUGUST();
-        GenerateSLQTableForDaysStatistics.generateWholeMonthAndFillAmountOfPointsFromNotepadSeptember();
+        GenerateSLQTableForDaysStatistics.generateWholeMonthAndFillAmountOfPointsFromNotepadSEPTEMBER();
+        GenerateSLQTableForDaysStatistics.generateWholeMonthAndFillAmountOfPointsFromNotepadOCTOBER();
     }
 }

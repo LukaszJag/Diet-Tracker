@@ -7,6 +7,7 @@ import java.sql.SQLException;
 
 public class UpdateDaysStatisticsFilledColumns {
 
+    //<editor-fold desc="updateWholeMonth">
     public static void updateWholeMonthMay() throws SQLException {
         String dayDate = "2024-05-";
 
@@ -23,7 +24,6 @@ public class UpdateDaysStatisticsFilledColumns {
             dayDate = "2024-05-";
         }
     }
-
     public static void updateWholeMonthJune() throws SQLException {
         String dayDate = "2024-06-";
 
@@ -39,8 +39,6 @@ public class UpdateDaysStatisticsFilledColumns {
             dayDate = "2024-06-";
         }
     }
-
-
     public static void updateWholeMonthJuly() throws SQLException {
         String dayDate = "2024-07-";
 
@@ -57,7 +55,6 @@ public class UpdateDaysStatisticsFilledColumns {
             dayDate = "2024-07-";
         }
     }
-
     public static void updateWholeMonthAugust() throws SQLException {
         String dayDate = "2024-08-";
 
@@ -74,8 +71,6 @@ public class UpdateDaysStatisticsFilledColumns {
             dayDate = "2024-08-";
         }
     }
-
-
     public static void updateWholeMonthSeptember() throws SQLException {
         String dayDate = "2024-09-";
 
@@ -92,16 +87,26 @@ public class UpdateDaysStatisticsFilledColumns {
             dayDate = "2024-09-";
         }
     }
-    public static String prepareQueryForUpdateAmountOfFilledPointsFromNotepad(String day_date) {
-        String updateQuery = "UPDATE `diet_tracker_schema`.`days_statistics_test`\n"
-                + "SET\n"
-                + "`amount_of_filled_points_from_notepad` = (SELECT COUNT(day_date) FROM calendar WHERE day_date ="
-                + "'" + day_date + "')\n"
-                + "WHERE day_date ="
-                + "'" + day_date + "'";
-        return updateQuery;
-    }
 
+    public static void updateWholeMonthOctober() throws SQLException {
+        String dayDate = "2024-10-";
+
+        for (int i = 1; i <= 31; i++) {
+            if (String.valueOf(i).length() == 1) {
+                dayDate = dayDate + "0" + String.valueOf(i);
+            } else {
+                dayDate = dayDate + String.valueOf(i);
+            }
+
+            RunQuery.runQuery(prepareQueryForUpdateAmountOfFilledPointsFromNotepad(dayDate));
+
+
+            dayDate = "2024-10-";
+        }
+    }
+    //</editor-fold>
+
+    //<editor-fold desc="updateWholeMonthMacroSum">
     public static void updateWholeMonthMacroSumMay() throws SQLException {
         String dayDate = "2024-05-";
 
@@ -116,7 +121,6 @@ public class UpdateDaysStatisticsFilledColumns {
             dayDate = "2024-05-";
         }
     }
-
     public static void updateWholeMonthMacroSumJune() throws SQLException {
         String dayDate = "2024-06-";
 
@@ -131,7 +135,6 @@ public class UpdateDaysStatisticsFilledColumns {
             dayDate = "2024-06-";
         }
     }
-
     public static void updateWholeMonthMacroSumJuly() throws SQLException {
         String dayDate = "2024-07-";
 
@@ -146,7 +149,6 @@ public class UpdateDaysStatisticsFilledColumns {
             dayDate = "2024-07-";
         }
     }
-
     public static void updateWholeMonthMacroSumAugust() throws SQLException {
         String dayDate = "2024-08-";
 
@@ -161,7 +163,6 @@ public class UpdateDaysStatisticsFilledColumns {
             dayDate = "2024-08-";
         }
     }
-
     public static void updateWholeMonthMacroSumSeptember() throws SQLException {
         String dayDate = "2024-09-";
 
@@ -176,7 +177,31 @@ public class UpdateDaysStatisticsFilledColumns {
             dayDate = "2024-09-";
         }
     }
+    public static void updateWholeMonthMacroSumOctober() throws SQLException {
+        String dayDate = "2024-10-";
 
+        for (int i = 1; i <= 31; i++) {
+            if (String.valueOf(i).length() == 1) {
+                dayDate = dayDate + "0" + String.valueOf(i);
+            } else {
+                dayDate = dayDate + String.valueOf(i);
+            }
+
+            RunQuery.runQuery(prepareQueryForFillConsumedMacro(dayDate));
+            dayDate = "2024-10-";
+        }
+    }
+    //</editor-fold>
+
+    public static String prepareQueryForUpdateAmountOfFilledPointsFromNotepad(String day_date) {
+        String updateQuery = "UPDATE `diet_tracker_schema`.`days_statistics_test`\n"
+                + "SET\n"
+                + "`amount_of_filled_points_from_notepad` = (SELECT COUNT(day_date) FROM calendar WHERE day_date ="
+                + "'" + day_date + "')\n"
+                + "WHERE day_date ="
+                + "'" + day_date + "'";
+        return updateQuery;
+    }
     public static String prepareQueryForFillConsumedMacro(String day_date) {
         String query = "UPDATE `diet_tracker_schema`.`days_statistics_test`\n"
                 + "SET\n"
