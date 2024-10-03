@@ -1,22 +1,11 @@
 package runners_and_tests.tests;
 
-import gui.BMRWindow;
-import gui.CalendarMonthStatsView;
-import logs.Log;
-import logs.LogsController;
 import runners_and_tests.tests.test_tools.get_simple_data_to_test.DayInCalendarFactoryToMakeTest;
 import runners_and_tests.tests.test_tools.get_simple_data_to_test.ProductFactoryToMakeTests;
-import runners_and_tests.tests.test_tools.other_tools_to_name_later.InputData;
 import tools.calendar_tools.DayInCalendar;
 import tools.products_tools.Product;
-import tools.sql_tools.CheckIfRowExist;
 import tools.sql_tools.SQLSelect;
-import tools.sql_tools.SQLSelectDay;
-import tools.sql_tools.SelectDistinctValues;
-import tools.sql_tools.calendar.ExportAllDaysDataToSQLCalendar;
 import tools.sql_tools.calendar.InsertToCalendarDayTable;
-import tools.sql_tools.days_statistics.GenerateSLQTableForDaysStatistics;
-import tools.sql_tools.days_statistics.SelectFromDaysStatistics;
 import tools.sql_tools.general.IsTheRowAlreadyExist;
 import tools.sql_tools.general.RunQuery;
 import tools.sql_tools.products.ImportDateFromTXTFilesToSQLDB;
@@ -27,6 +16,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.Month;
 import java.util.Date;
 
 public class QuickTests {
@@ -41,9 +31,12 @@ public class QuickTests {
         //test8();
         //test9();
         //test10();
-        test11();
+        //test11();
+        test12();
 
     }
+
+
 
     //<editor-fold desc="TESTS 1 -> 10">
     private static void test1() {
@@ -134,7 +127,9 @@ public class QuickTests {
                     dataToCheck[i]));
         }
     }
-
+    private static void test12() {
+        System.out.println(Month.valueOf("MAY"));
+    }
     //</editor-fold>
 
 }

@@ -18,7 +18,7 @@ public class RunnerFullUpdateDayStatistics {
     private static void updateDaysStatisticsJune() throws SQLException {
         System.out.println("Start: full update - table days_statistics_test June");
 
-        GenerateSLQTableForDaysStatistics.generateWholeMonthAndFillAmountOfPointsFromNotepadJUNE();
+        GenerateSLQTableForDaysStatistics.generateWholeMonthAndFillAmountOfPointsFromNotepad("June", 2024);
         System.out.println("generateWholeMonthAndFillAmountOfPointsFromNotepadJune : PASS");
 
         UpdateDaysStatisticsFilledColumns.updateWholeMonthJune();
@@ -31,7 +31,7 @@ public class RunnerFullUpdateDayStatistics {
     private static void updateDaysStatisticsMay() throws SQLException {
         System.out.println("Start: full update - table days_statistics_test - May");
 
-        GenerateSLQTableForDaysStatistics.generateWholeMonthAndFillAmountOfPointsFromNotepadMAY();
+        GenerateSLQTableForDaysStatistics.generateWholeMonthAndFillAmountOfPointsFromNotepad("May", 2024);
         System.out.println("generateWholeMonthAndFillAmountOfPointsFromNotepadMAY : PASS");
 
         UpdateDaysStatisticsFilledColumns.updateWholeMonthMay();
@@ -44,7 +44,7 @@ public class RunnerFullUpdateDayStatistics {
     public static void updateDaysStatisticsJuly() throws SQLException {
         System.out.println("Start: full update - table days_statistics_test - July");
 
-        GenerateSLQTableForDaysStatistics.generateWholeMonthAndFillAmountOfPointsFromNotepadJULY();
+        GenerateSLQTableForDaysStatistics.generateWholeMonthAndFillAmountOfPointsFromNotepad("July", 2024);
 
 
         System.out.println("generateWholeMonthAndFillAmountOfPointsFromNotepadJULY : PASS");
@@ -59,7 +59,7 @@ public class RunnerFullUpdateDayStatistics {
     public static void updateDaysStatisticsAugust() throws SQLException {
         System.out.println("Start: full update - table days_statistics_test - August");
 
-        GenerateSLQTableForDaysStatistics.generateWholeMonthAndFillAmountOfPointsFromNotepadAUGUST();
+        GenerateSLQTableForDaysStatistics.generateWholeMonthAndFillAmountOfPointsFromNotepad("August", 2024);
 
 
         System.out.println("generateWholeMonthAndFillAmountOfPointsFromNotepadAugust : PASS");
@@ -74,7 +74,7 @@ public class RunnerFullUpdateDayStatistics {
     public static void updateDaysStatisticsSeptember() throws SQLException {
         System.out.println("Start: full update - table days_statistics_test - September");
 
-        GenerateSLQTableForDaysStatistics.generateWholeMonthAndFillAmountOfPointsFromNotepadSEPTEMBER();
+        GenerateSLQTableForDaysStatistics.generateWholeMonthAndFillAmountOfPointsFromNotepad("September", 2024);
 
 
         System.out.println("generateWholeMonthAndFillAmountOfPointsFromNotepadSeptember : PASS");
@@ -89,7 +89,7 @@ public class RunnerFullUpdateDayStatistics {
     public static void updateDaysStatisticsOctober() throws SQLException {
         System.out.println("Start: full update - table days_statistics_test - October");
 
-        GenerateSLQTableForDaysStatistics.generateWholeMonthAndFillAmountOfPointsFromNotepadOCTOBER();
+        GenerateSLQTableForDaysStatistics.generateWholeMonthAndFillAmountOfPointsFromNotepad("October", 2024);
 
 
         System.out.println("generateWholeMonthAndFillAmountOfPointsFromNotepadOctober : PASS");
