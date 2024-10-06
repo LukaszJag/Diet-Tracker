@@ -1,9 +1,0 @@
-Name: Fix - MAC'N CHEESE
-Brand: Knorr
-Package has: 33.0
-Macro for: 100.0
-KCal: 435.0
-Protein: 14.0
-Fat: 20.0
-Carbs: 48.0
-Comment optional: Makro samej saszetki przed przygotowaniem
