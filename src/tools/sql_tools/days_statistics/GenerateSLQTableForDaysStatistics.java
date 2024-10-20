@@ -74,6 +74,35 @@ public class GenerateSLQTableForDaysStatistics {
     public static void generateWholeMonth(String month, int year) {
         int daysInMonth = MyDate.getAmountOfDaysInMonth(month, year);
 
+
+        if(month.equals("December")){
+            month = "12";
+        }
+        if(month.equals("November")){
+            month = "11";
+        }
+        if(month.equals("October")){
+            month = "10";
+        }
+        if(month.equals("September")){
+            month = "09";
+        }
+        if(month.equals("August")){
+            month = "08";
+        }
+        if(month.equals("July")){
+            month = "07";
+        }
+        if(month.equals("June")){
+            month = "06";
+        }
+        if(month.equals("May")){
+            month = "05";
+        }
+        if(month.equals("April")){
+            month = "04";
+        }
+
         String[] readyDateDays = new String[daysInMonth];
         for (int i = 0; i < readyDateDays.length; i++) {
             if (String.valueOf(i + 1).length() == 1) {
