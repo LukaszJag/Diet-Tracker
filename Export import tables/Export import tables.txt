@@ -1,0 +1,98 @@
+CREATE TABLE `product_table` (
+  `product_name` varchar(80) NOT NULL,
+  `product_brand` varchar(80) NOT NULL,
+  `product_package_has` float NOT NULL,
+  `product_macro_for` float NOT NULL,
+  `product_kcal` float NOT NULL,
+  `product_protein` float NOT NULL,
+  `product_fat` float NOT NULL,
+  `product_carbs` float NOT NULL,
+  `comment_optional` varchar(160) DEFAULT NULL,
+  PRIMARY KEY (`product_name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
+
+
+
+
+
+
+
+CREATE TABLE `calendar` (
+  `day_date` date NOT NULL,
+  `day_name` varchar(45) NOT NULL,
+  `product_name` varchar(80) DEFAULT NULL,
+  `amount_of_product` float DEFAULT NULL,
+  `kcal` float DEFAULT NULL,
+  `protein` float DEFAULT NULL,
+  `fat` float DEFAULT NULL,
+  `carbs` float DEFAULT NULL,
+  `time_optional` datetime DEFAULT NULL,
+  `comment_optional` varchar(80) DEFAULT NULL,
+  `kcal_consume` float DEFAULT NULL,
+  `carbs_consume` float DEFAULT NULL,
+  `fat_consume` float DEFAULT NULL,
+  `protein_consume` float DEFAULT NULL,
+  `meal_name` varchar(100) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
+
+
+
+
+
+
+CREATE TABLE `calendar_test` (
+  `day_date` date NOT NULL,
+  `day_name` varchar(100) NOT NULL,
+  `meal_name` varchar(40) DEFAULT NULL,
+  `product_name` varchar(80) DEFAULT NULL,
+  `amount_of_product` float DEFAULT NULL,
+  `kcal` float DEFAULT NULL,
+  `protein` float DEFAULT NULL,
+  `fat` float DEFAULT NULL,
+  `carbs` float DEFAULT NULL,
+  `time_optional` datetime DEFAULT NULL,
+  `comment_optional` varchar(80) DEFAULT NULL,
+  `kcal_consume` float DEFAULT NULL,
+  `carbs_consume` float DEFAULT NULL,
+  `fat_consume` float DEFAULT NULL,
+  `protein_consume` float DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
+
+
+
+
+
+CREATE TABLE `product_table_test` (
+  `product_name` varchar(80) NOT NULL,
+  `product_brand` varchar(80) NOT NULL,
+  `product_package_has` float NOT NULL,
+  `product_macro_for` float NOT NULL,
+  `product_kcal` float NOT NULL,
+  `product_protein` float NOT NULL,
+  `product_fat` float NOT NULL,
+  `product_carbs` float NOT NULL,
+  `comment_optional` varchar(160) DEFAULT NULL,
+  PRIMARY KEY (`product_name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
+
+
+
+
+
+
+
+CREATE TABLE `days_statistics_test` (
+  `day_date` date DEFAULT NULL,
+  `amount_of_points_from_notepad` int DEFAULT NULL,
+  `amount_of_filled_points_from_notepad` int DEFAULT NULL,
+  `kcal_consume` float DEFAULT NULL,
+  `protein_consume` float DEFAULT NULL,
+  `fat_consume` float DEFAULT NULL,
+  `carbs_consume` float DEFAULT NULL,
+  `day_name` varchar(30) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
+
+
+
+
+
