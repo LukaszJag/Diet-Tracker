@@ -1,0 +1,9 @@
+Name: Gorący Kubek - Pomidorowa z makaronem
+Brand: Knorr
+Package has: 19.0
+Macro for: 100.0
+KCal: 64.0
+Protein: 2.1
+Fat: 0.7
+Carbs: 12.0
+Comment optional: Opakowanie pozwala na przygotowanie 1 porcji - 200 ml

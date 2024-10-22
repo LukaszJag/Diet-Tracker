@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2024-10-01',
+'Tuesday',
+'Snack 2',
+40.0,
+'Twaróg Delikatny z ziołami',
+113.0,
+7.8,
+7.0,
+4.2,
+'2024-10-22 11:15:29',
+'none',
+45.2,
+1.68,
+2.8,
+3.1200001
+);

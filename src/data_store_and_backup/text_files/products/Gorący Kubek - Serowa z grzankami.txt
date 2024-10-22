@@ -1,0 +1,9 @@
+Name: Gorący Kubek - Serowa z grzankami
+Brand: Knorr
+Package has: 22.0
+Macro for: 100.0
+KCal: 52.0
+Protein: 1.2
+Fat: 2.6
+Carbs: 5.9
+Comment optional: Opakowanie pozwala na przygotowanie 1 porcji - 200 ml.

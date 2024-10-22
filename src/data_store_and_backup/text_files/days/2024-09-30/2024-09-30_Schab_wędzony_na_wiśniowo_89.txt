@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2024-09-30',
+'Monday',
+'Night snack',
+89.0,
+'Schab wędzony na wiśniowo',
+102.0,
+18.0,
+2.4,
+2.0,
+'2024-10-22 11:00:40',
+'none',
+90.78,
+1.78,
+2.1360002,
+16.02
+);
