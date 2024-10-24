@@ -16,8 +16,11 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.Month;
+import java.time.format.TextStyle;
+import java.util.Calendar;
 import java.util.Date;
+import java.time.Month;
+import java.util.Locale;
 
 public class QuickTests {
     public static void main(String[] args) throws SQLException, ParseException, IOException {
@@ -32,10 +35,10 @@ public class QuickTests {
         //test9();
         //test10();
         //test11();
-        test12();
+        //test12();
+        test13GetAmountOfDaysInMonth();
 
     }
-
 
 
     //<editor-fold desc="TESTS 1 -> 10">
@@ -129,6 +132,19 @@ public class QuickTests {
     }
     private static void test12() {
         System.out.println(Month.valueOf("MAY"));
+    }
+
+    private static void test13GetAmountOfDaysInMonth() {
+        String[] monthsString = {"Jan", "Feb", "Mar", "Apr",
+                "May", "Jun", "Jul", "Aug",
+                "Sep", "Oct", "Nov", "Dec"};
+
+        Calendar calendar = Calendar.getInstance();
+        Month[] monthsMonth = Month.values();
+        for (int i = 0; i < monthsMonth.length; i++) {
+            System.out.println((monthsMonth[i].getDisplayName(
+                    TextStyle.FULL, Locale.ENGLISH)).toUpperCase());
+        }
     }
     //</editor-fold>
 

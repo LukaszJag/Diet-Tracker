@@ -1,6 +1,7 @@
 package gui;
 
 import logs.Log;
+import runners_and_tests.run_update.RunnerFullUpdateDayStatistics;
 import tools.calendar_tools.DayInCalendar;
 import configuration.Config;
 import tools.products_tools.Macro;
@@ -8,6 +9,7 @@ import tools.products_tools.Product;
 import tools.sql_tools.calendar.InsertToCalendarDayTable;
 import tools.sql_tools.SQLSelect;
 import tools.text_files_tools.FilesTools;
+import tools.time_date_tools.DateTools;
 
 import javax.swing.*;
 import java.awt.*;
@@ -40,7 +42,7 @@ public class AddProductToCalendarDay {
     //</editor-fold>
 
     //<editor-fold desc="Buttons">
-    // Buttons
+    JButton refreshDaysStatisticsDataBaseButton = new JButton("Refresh DaysStatistics Data");
     JButton addProductToDayAcceptButton = new JButton("Accept");
     JButton inputCurrentDayButton = new JButton("Input  current day");
     JButton checkIfProductExistButton = new JButton("Check Product existing");
@@ -52,10 +54,10 @@ public class AddProductToCalendarDay {
     JButton exitProgramProductWindowButton = new JButton("Exit application");
     JButton changeToCalendarMainTableButton = new JButton("Calendar Table");
     JButton changeToCalendarTestTableButton = new JButton("Calendar TEST Table");
-
     JButton clearTextFieldsButton = new JButton("Clear");
     JButton getProductFullInfo = new JButton("Get product full info");
     JButton showEnableShortCutsButton = new JButton("Shortcuts tips");
+    JButton checkDaysStatisticFilledTable = new JButton("Check days statistic");
     //</editor-fold>
 
     //<editor-fold desc="Labels">
@@ -109,12 +111,14 @@ public class AddProductToCalendarDay {
     // ComboBox
     JComboBox<String> dayMealNameComboBox = new JComboBox<>(new String[]{"None", "Breakfast", "Second Breakfast", "Snack 1", "Dinner", "Snack 2"
             , "Supper", "After workout", "Night snack"});
+    JComboBox<String> checkDaysStatisticsDialogMonthsComboBox = new JComboBox<>(DateTools.getAllMonthsNamesInUpperCase());
 
     JComboBox<String> productSuggestionNameComboBox = new JComboBox<>(new String[]{""});
     //</editor-fold>
 
     //<editor-fold desc="Grid Layout">
     GridLayout gridLayoutMainPanel = new GridLayout(12, 2, 10, 10);
+    GridLayout checkDaysStatisticsDialogGridLayout = new GridLayout(34, 4, 0,0 );
     //</editor-fold>
 
     //</editor-fold>
@@ -193,6 +197,12 @@ public class AddProductToCalendarDay {
         chosenCalendarTableLabel.setForeground(Config.CHOSE_TABLE_TO_INSERT_DATA);
 
         addProductToDayPanelWest.add(chosenCalendarTableLabel);
+
+        refreshDaysStatisticsDataBaseButton.addActionListener(new RefreshDaysStatisticsDataBaseButtonActionListener());
+        addProductToDayPanelWest.add(refreshDaysStatisticsDataBaseButton);
+
+        checkDaysStatisticFilledTable.addActionListener(new CheckDaysStatisticFilledTableActionListener());
+        addProductToDayPanelWest.add(checkDaysStatisticFilledTable);
         //</editor-fold>
 
         //<editor-fold desc="Add Components to Panel - East">
@@ -757,6 +767,38 @@ public class AddProductToCalendarDay {
             JOptionPane.showMessageDialog(null, "Full product info: " + productInfoInString);
         }
     }
+
+    private class RefreshDaysStatisticsDataBaseButtonActionListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            try {
+                RunnerFullUpdateDayStatistics.runFullUpdateForDayStatistics();
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            }
+
+            JOptionPane.showMessageDialog(null, "Day Statistics is update");
+        }
+    }
+
+    private class CheckDaysStatisticFilledTableActionListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            JDialog checkDaysStatisticsDialog = new JDialog();
+
+            checkDaysStatisticsDialog.setLayout(checkDaysStatisticsDialogGridLayout);
+            checkDaysStatisticsDialog.add(checkDaysStatisticsDialogMonthsComboBox);
+
+            for (int i = 0; i < 120; i++) {
+                checkDaysStatisticsDialog.add(new JButton(String.valueOf(i)));
+            }
+            checkDaysStatisticsDialog.setName("Check days Statistics");
+            checkDaysStatisticsDialog.setLocationRelativeTo(null);
+            checkDaysStatisticsDialog.setSize(1000,800);
+            checkDaysStatisticsDialog.setResizable(true);
+            checkDaysStatisticsDialog.setVisible(true);
+        }
+    }
     //</editor-fold>
 
 
@@ -933,4 +975,6 @@ public class AddProductToCalendarDay {
 
         }
     }
+
+
 }
