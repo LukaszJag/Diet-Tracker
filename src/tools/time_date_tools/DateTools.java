@@ -1,10 +1,11 @@
 package tools.time_date_tools;
 
-import java.sql.SQLOutput;
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.Month;
+import java.time.format.TextStyle;
 import java.util.Date;
+import java.util.Locale;
 
 public class DateTools {
 
@@ -24,5 +25,32 @@ public class DateTools {
             System.out.println("Wrong date from string required: yyyy-MM-dd");
         }
         return date;
+    }
+    public static String getMonthNameInUpperCase(int month){
+        Month[] monthsMonth = Month.values();
+        return (monthsMonth[month].getDisplayName(TextStyle.FULL, Locale.ENGLISH)).toUpperCase();
+    }
+    public static String[] getAllMonthsNamesInUpperCase(){
+        Month[] monthsMonth = Month.values();
+        String[] monthsInUpperCase = new String[12];
+        for (int i = 0; i < monthsMonth.length; i++) {
+            monthsInUpperCase[i] = (monthsMonth[i].getDisplayName(
+                    TextStyle.FULL, Locale.ENGLISH)).toUpperCase();
+        }
+        return monthsInUpperCase;
+    }
+
+    public static String getMonthNameInLowerCase(int month){
+        Month[] monthsMonth = Month.values();
+        return (monthsMonth[month].getDisplayName(TextStyle.FULL, Locale.ENGLISH)).toLowerCase();
+    }
+    public static String[] getAllMonthsNamesInLowerCase(){
+        Month[] monthsMonth = Month.values();
+        String[] monthsInLowerCase = new String[12];
+        for (int i = 0; i < monthsMonth.length; i++) {
+            monthsInLowerCase[0] = (monthsMonth[i].getDisplayName(
+                    TextStyle.FULL, Locale.ENGLISH)).toLowerCase();
+        }
+        return monthsInLowerCase;
     }
 }
