@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2024-10-05',
+'Saturday',
+'Dinner',
+260.0,
+'McWrap Klasyczny Chrupiący Kurczak',
+491.0,
+24.0,
+19.0,
+56.0,
+'2024-11-01 12:04:46',
+'none',
+1276.6,
+145.59999,
+49.399998,
+62.399998
+);

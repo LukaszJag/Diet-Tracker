@@ -1,0 +1,9 @@
+Name: Frytki Małe - McDonald's
+Brand: McDonald's
+Package has: 72.0
+Macro for: 100.0
+KCal: 299.0
+Protein: 3.4
+Fat: 15.0
+Carbs: 37.0
+Comment optional: 

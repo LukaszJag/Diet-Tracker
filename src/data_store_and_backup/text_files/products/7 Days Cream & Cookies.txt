@@ -1,0 +1,9 @@
+Name: 7 Days Cream & Cookies
+Brand: 7 Days
+Package has: 60.0
+Macro for: 100.0
+KCal: 485.0
+Protein: 6.0
+Fat: 30.0
+Carbs: 47.0
+Comment optional: 

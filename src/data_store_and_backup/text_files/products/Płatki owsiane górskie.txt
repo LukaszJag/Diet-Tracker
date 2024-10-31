@@ -1,0 +1,9 @@
+Name: Płatki owsiane górskie
+Brand: Vitanella
+Package has: 500.0
+Macro for: 100.0
+KCal: 363.0
+Protein: 13.0
+Fat: 5.7
+Carbs: 60.0
+Comment optional: 

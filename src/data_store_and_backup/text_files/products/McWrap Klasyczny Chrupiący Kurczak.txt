@@ -1,0 +1,9 @@
+Name: McWrap Klasyczny Chrupiący Kurczak
+Brand: McDonalds
+Package has: 260.0
+Macro for: 100.0
+KCal: 491.0
+Protein: 24.0
+Fat: 19.0
+Carbs: 56.0
+Comment optional: 

@@ -1,0 +1,20 @@
+INSERT INTO `diet_tracker_schema`.product_table
+(`product_name`,
+`product_brand`,
+`product_package_has`,
+`product_macro_for`,
+`product_kcal`,
+`product_protein`,
+`product_fat`,
+`product_carbs`,
+`comment_optional`)
+Values
+('7 Days Cream & Cookies',
+'7 Days',
+60.0,
+100.0,
+485.0,
+6.0,
+30.0,
+47.0,
+'');

@@ -1,0 +1,9 @@
+Name: 7 Days Cream & Cookies Super Max
+Brand: 7 Days
+Package has: 110.0
+Macro for: 100.0
+KCal: 489.0
+Protein: 6.0
+Fat: 30.0
+Carbs: 48.0
+Comment optional: 

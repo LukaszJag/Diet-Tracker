@@ -1,0 +1,9 @@
+Name: Cheeseburger - McDonalds
+Brand: McDonalds
+Package has: 116.0
+Macro for: 100.0
+KCal: 262.9
+Protein: 13.8
+Fat: 11.2
+Carbs: 25.9
+Comment optional: 

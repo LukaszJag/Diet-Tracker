@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2024-10-05',
+'Saturday',
+'Breakfast',
+110.0,
+'7 Days Cream & Cookies Super Max',
+489.0,
+6.0,
+30.0,
+48.0,
+'2024-10-31 11:57:17',
+'none',
+537.9,
+52.800003,
+33.0,
+6.6000004
+);

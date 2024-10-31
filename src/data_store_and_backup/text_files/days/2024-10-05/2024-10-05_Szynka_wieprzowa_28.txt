@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2024-10-05',
+'Saturday',
+'Night snack',
+28.0,
+'Szynka wieprzowa',
+136.0,
+20.5,
+5.41,
+0.0,
+'2024-10-31 11:45:35',
+'none',
+38.08,
+0.0,
+1.5148,
+5.7400002
+);
