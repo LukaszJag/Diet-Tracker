@@ -1,0 +1,9 @@
+Name: Mielonka Tyrolska
+Brand: Produkt ogolny
+Package has: 0.0
+Macro for: 100.0
+KCal: 224.0
+Protein: 11.0
+Fat: 18.0
+Carbs: 4.5
+Comment optional: 

@@ -1,6 +1,5 @@
 package tools.sql_tools.days_statistics;
 
-import tools.sql_tools.CheckIfRowExist;
 import tools.sql_tools.general.RunQuery;
 
 import java.sql.SQLException;
@@ -104,6 +103,25 @@ public class UpdateDaysStatisticsFilledColumns {
             dayDate = "2024-10-";
         }
     }
+
+    public static void updateWholeMonthNovember() throws SQLException {
+        String dayDate = "2024-11-";
+
+        for (int i = 1; i <= 30; i++) {
+            if (String.valueOf(i).length() == 1) {
+                dayDate = dayDate + "0" + String.valueOf(i);
+            } else {
+                dayDate = dayDate + String.valueOf(i);
+            }
+
+            RunQuery.runQuery(prepareQueryForUpdateAmountOfFilledPointsFromNotepad(dayDate));
+
+
+            dayDate = "2024-11-";
+        }
+    }
+
+
     //</editor-fold>
 
     //<editor-fold desc="updateWholeMonthMacroSum">
@@ -189,6 +207,21 @@ public class UpdateDaysStatisticsFilledColumns {
 
             RunQuery.runQuery(prepareQueryForFillConsumedMacro(dayDate));
             dayDate = "2024-10-";
+        }
+    }
+
+    public static void updateWholeMonthMacroSumNovember() throws SQLException {
+        String dayDate = "2024-11-";
+
+        for (int i = 1; i <= 31; i++) {
+            if (String.valueOf(i).length() == 1) {
+                dayDate = dayDate + "0" + String.valueOf(i);
+            } else {
+                dayDate = dayDate + String.valueOf(i);
+            }
+
+            RunQuery.runQuery(prepareQueryForFillConsumedMacro(dayDate));
+            dayDate = "2024-11-";
         }
     }
     //</editor-fold>

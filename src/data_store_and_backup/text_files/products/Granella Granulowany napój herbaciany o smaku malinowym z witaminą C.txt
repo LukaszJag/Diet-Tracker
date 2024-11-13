@@ -1,0 +1,9 @@
+Name: Granella Granulowany napój herbaciany o smaku malinowym z witaminą C
+Brand: Granella
+Package has: 400.0
+Macro for: 100.0
+KCal: 387.0
+Protein: 0.1
+Fat: 0.0
+Carbs: 95.0
+Comment optional: 

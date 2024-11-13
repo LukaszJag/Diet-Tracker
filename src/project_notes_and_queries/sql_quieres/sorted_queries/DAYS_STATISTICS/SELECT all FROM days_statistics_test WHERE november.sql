@@ -1,0 +1,1 @@
+SELECT * FROM days_statistics_test WHERE day_date LIKE "2024-11%";

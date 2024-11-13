@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2024-11-12',
+'Tuesday',
+'Dinner',
+52.0,
+'Wątróbka drobiowa smażona',
+259.0,
+17.6,
+19.5,
+4.0,
+'2024-11-13 11:51:33',
+'none',
+134.68,
+2.08,
+10.139999,
+9.151999
+);
