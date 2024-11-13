@@ -111,7 +111,7 @@ public class CalendarMonthStatsView {
     JLabel selectedDateAverageMacroForMonthLabel = new JLabel("Selected date average macro for month: ");
     //</editor-fold>
 
-    JComboBox monthSelectComboBox = new JComboBox<>(new String[]{"April", "May", "June", "July", "August", "September", "October"});
+    JComboBox monthSelectComboBox = new JComboBox<>(new String[]{"April", "May", "June", "July", "August", "September", "October", "November"});
     JComboBox selectedDayProductsListComboBox = new JComboBox<String>();
 
     //</editor-fold>
@@ -411,6 +411,20 @@ public class CalendarMonthStatsView {
                 daysButtons[i].setPreferredSize(Config.CALENDAR_MONTH_STATS_VIEW_BUTTONS_SIZE_DIMENSION);
             }
         } else {
+            if (month.equals("November")) {
+                for (int i = 0; i < daysButtons.length; i++) {
+                    if (i == 0 || i < 4) {
+                        daysButtons[i] = new JButton("null");
+                    } else if (i == 34){
+                        daysButtons[i] = new JButton("null");
+                    } else {
+                        daysButtons[i] = new JButton(String.valueOf(counter));
+                        daysButtons[i].setPreferredSize(Config.CALENDAR_MONTH_STATS_VIEW_BUTTONS_SIZE_DIMENSION);
+                        daysButtons[i].addActionListener(new DaysButtonsActionListener(daysButtons[i]));
+                        counter++;
+                    }
+                }
+            }
             if (month.equals("October")) {
                 for (int i = 0; i < daysButtons.length; i++) {
                     if (i == 0 && i < 6) {
@@ -424,7 +438,6 @@ public class CalendarMonthStatsView {
                         counter++;
                     }
                 }
-
             }
             if (month.equals("September")) {
                 for (int i = 0; i < daysButtons.length; i++) {
@@ -638,6 +651,9 @@ public class CalendarMonthStatsView {
         String fullDate = "2024-";
         String month = monthSelectComboBox.getSelectedItem().toString();
 
+        if (month == "November") {
+            fullDate += "11-";
+        }
         if(month == "October"){
             fullDate += "10-";
         }
@@ -967,6 +983,9 @@ public class CalendarMonthStatsView {
 
             String month = monthSelectComboBox.getSelectedItem().toString();
 
+            if (month == "November") {
+                fullDate += "11-";
+            }
             if (month == "October") {
                 fullDate += "10-";
             }
