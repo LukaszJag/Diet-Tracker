@@ -98,8 +98,9 @@ public class BMRWindow {
 
         BMRWindowFrame.setResizable(false);
         BMRWindowFrame.setLocationRelativeTo(null);
-        BMRWindowFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        BMRWindowFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         BMRWindowFrame.setVisible(true);
+
     }
 
     private void setPanels() {

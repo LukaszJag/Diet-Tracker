@@ -1,0 +1,9 @@
+Name: Twaróg Delikatny ze szczypiorkiem
+Brand: President
+Package has: 150.0
+Macro for: 100.0
+KCal: 87.0
+Protein: 9.0
+Fat: 4.0
+Carbs: 2.7
+Comment optional: 

@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2024-11-13',
+'Wednesday',
+'Dinner',
+600.0,
+'Gorący Kubek - Pieczarkowa z grzankami',
+32.0,
+0.6,
+1.6,
+3.9,
+'2024-11-16 02:44:06',
+'none',
+192.0,
+23.400002,
+9.6,
+3.6000001
+);

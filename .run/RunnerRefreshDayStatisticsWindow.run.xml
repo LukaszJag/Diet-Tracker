@@ -1,0 +1,9 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="RunnerRefreshDayStatisticsWindow" type="Application" factoryName="Application" folderName="Runner GUI">
+    <option name="MAIN_CLASS_NAME" value="runners_and_tests.run_GUI.RunnerRefreshDayStatisticsWindow" />
+    <module name="Diet-Tracker" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>

@@ -183,12 +183,13 @@ public class CalendarMonthStatsView {
         mainWindow.setLocationRelativeTo(null);
         mainWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         mainWindow.setVisible(true);
+        mainWindow.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     }
     //</editor-fold>
 
     //<editor-fold desc="Prepare Add Content - to Panels">
     private void prepareAndAddContentToMainPanel() {
-        setDaysButtonsMainPanel("October");
+        setDaysButtonsMainPanel("November");
     }
 
     private void prepareAndAddContentToNorthPanel() {
@@ -202,7 +203,7 @@ public class CalendarMonthStatsView {
         calendarMonthStatsViewPanelNorth.setLayout(northPanelGridLayout);
 
 
-        monthSelectComboBox.setSelectedItem("October");
+        monthSelectComboBox.setSelectedItem("November");
 
         selectedDaysCounterGoodDaysPanel = new JPanel();
         selectedDaysCounterBadDaysPanel = new JPanel();
@@ -413,7 +414,7 @@ public class CalendarMonthStatsView {
         } else {
             if (month.equals("November")) {
                 for (int i = 0; i < daysButtons.length; i++) {
-                    if (i == 0 || i < 4) {
+                    if (i == 0 || i == 1 || i < 4) {
                         daysButtons[i] = new JButton("null");
                     } else if (i == 34){
                         daysButtons[i] = new JButton("null");

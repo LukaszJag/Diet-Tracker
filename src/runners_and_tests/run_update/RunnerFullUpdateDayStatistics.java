@@ -15,6 +15,32 @@ public class RunnerFullUpdateDayStatistics {
         updateDaysStatisticsNovember();
     }
 
+    public static void updateMonth(String month) throws SQLException {
+        if (month.equalsIgnoreCase("november")) {
+            updateDaysStatisticsNovember();
+        }
+
+        if (month.equalsIgnoreCase("september")) {
+            updateDaysStatisticsSeptember();
+        }
+
+        if (month.equalsIgnoreCase("august")) {
+            updateDaysStatisticsAugust();
+        }
+
+        if (month.equalsIgnoreCase("july")) {
+            updateDaysStatisticsJuly();
+        }
+        if (month.equalsIgnoreCase("june")) {
+            updateDaysStatisticsJune();
+        }
+
+        if (month.equalsIgnoreCase("may")) {
+            updateDaysStatisticsMay();
+        }
+    }
+
+
     //<editor-fold desc="updateDaysStatistics">
     private static void updateDaysStatisticsJune() throws SQLException {
         System.out.println("Start: full update - table days_statistics_test June");

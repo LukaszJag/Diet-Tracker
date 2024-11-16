@@ -4,6 +4,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Month;
 import java.time.format.TextStyle;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
@@ -26,10 +27,12 @@ public class DateTools {
         }
         return date;
     }
+
     public static String getMonthNameInUpperCase(int month){
         Month[] monthsMonth = Month.values();
         return (monthsMonth[month].getDisplayName(TextStyle.FULL, Locale.ENGLISH)).toUpperCase();
     }
+
     public static String[] getAllMonthsNamesInUpperCase(){
         Month[] monthsMonth = Month.values();
         String[] monthsInUpperCase = new String[12];
@@ -43,6 +46,27 @@ public class DateTools {
     public static String getMonthNameInLowerCase(int month){
         Month[] monthsMonth = Month.values();
         return (monthsMonth[month].getDisplayName(TextStyle.FULL, Locale.ENGLISH)).toLowerCase();
+    }
+
+    public static String getCurrentMontNameCamelCase(){
+            String months[] = {
+                    "January"
+                    ,"February"
+                    ,"March"
+                    ,"April"
+                    ,"May"
+                    ,"June"
+                    ,"July"
+                    ,"August"
+                    ,"September"
+                    ,"October"
+                    ,"November"
+                    ,"December"};
+
+            Calendar calendar = Calendar.getInstance();
+            String month = months[calendar.get(Calendar.MONTH)];
+
+            return  month;
     }
     public static String[] getAllMonthsNamesInLowerCase(){
         Month[] monthsMonth = Month.values();

@@ -37,6 +37,7 @@ public class AddAllProductInTXTFromDirectory {
                     counterOfDoNotExist++;
                 }
             } catch (SQLException e) {
+                System.out.println(readyToInsertQuery);
                 throw new RuntimeException(e);
             }
             counterOfAllProducts++;

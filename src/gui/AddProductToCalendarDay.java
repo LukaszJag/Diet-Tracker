@@ -43,6 +43,7 @@ public class AddProductToCalendarDay {
 
     //<editor-fold desc="Buttons">
     JButton refreshDaysStatisticsDataBaseButton = new JButton("Refresh DaysStatistics Data");
+    JButton refreshDaysStatisticsDataGUIButton = new JButton("Refresh Selected DaysStatistics Data");
     JButton addProductToDayAcceptButton = new JButton("Accept");
     JButton inputCurrentDayButton = new JButton("Input  current day");
     JButton checkIfProductExistButton = new JButton("Check Product existing");
@@ -126,6 +127,7 @@ public class AddProductToCalendarDay {
     //<editor-fold desc="Starting Constructors">
     // Starting Constructor
     public AddProductToCalendarDay() {
+
         startAddProductToDayWindow();
     }
     //</editor-fold>
@@ -203,6 +205,9 @@ public class AddProductToCalendarDay {
 
         checkDaysStatisticFilledTable.addActionListener(new CheckDaysStatisticFilledTableActionListener());
         addProductToDayPanelWest.add(checkDaysStatisticFilledTable);
+
+        refreshDaysStatisticsDataGUIButton.addActionListener(new RefreshDaysStatisticsDataGUIButtonActionListener());
+        addProductToDayPanelWest.add(refreshDaysStatisticsDataGUIButton);
         //</editor-fold>
 
         //<editor-fold desc="Add Components to Panel - East">
@@ -291,6 +296,7 @@ public class AddProductToCalendarDay {
         //</editor-fold>
     }
 
+
     private void addPanelsToFrame() {
         // Add Panels to Frame
         addProductToDayFrame.add(addProductToDayPanelNorth, BorderLayout.NORTH);
@@ -304,7 +310,7 @@ public class AddProductToCalendarDay {
     private void finishSetUpFrame() {
         addProductToDayFrame.setResizable(false);
         addProductToDayFrame.setLocationRelativeTo(null);
-        addProductToDayFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        addProductToDayFrame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
         addProductToDayFrame.setVisible(true);
     }
 
@@ -977,4 +983,10 @@ public class AddProductToCalendarDay {
     }
 
 
+    private class RefreshDaysStatisticsDataGUIButtonActionListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            RefreshDayStatisticsWindow refreshDayStatisticsWindow = new RefreshDayStatisticsWindow();
+        }
+    }
 }

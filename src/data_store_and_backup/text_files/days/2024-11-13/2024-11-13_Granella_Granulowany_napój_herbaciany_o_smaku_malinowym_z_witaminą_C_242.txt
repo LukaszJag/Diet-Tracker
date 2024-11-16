@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2024-11-13',
+'Wednesday',
+'Supper',
+242.0,
+'Granella Granulowany napój herbaciany o smaku malinowym z witaminą C',
+387.0,
+0.1,
+0.0,
+95.0,
+'2024-11-16 02:53:15',
+'none',
+936.54004,
+229.90001,
+0.0,
+0.24200001
+);

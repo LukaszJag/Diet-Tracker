@@ -2,16 +2,15 @@ package gui;
 
 import configuration.Config;
 import logs.Log;
-import tools.sql_tools.products.InsertProductToSQL_Table;
 import tools.products_tools.Macro;
 import tools.products_tools.Product;
+import tools.sql_tools.products.InsertProductToSQL_Table;
 import tools.text_files_tools.FilesTools;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
 import java.sql.SQLException;
 
 public class AddSingleProductWindow {
@@ -79,6 +78,7 @@ public class AddSingleProductWindow {
         addProductWindowFrame.setLocationRelativeTo(null);
         addProductWindowFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         addProductWindowFrame.setVisible(true);
+        addProductWindowFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     }
 
     private void setPanels() {
