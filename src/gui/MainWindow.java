@@ -147,6 +147,7 @@ public class MainWindow extends JFrame {
         panelDown.add(currentProductTableLabel);
     }
 
+    //<editor-fold desc="Actions Listeners">
     private class AddProductButton implements ActionListener {
 
         @Override
@@ -244,4 +245,5 @@ public class MainWindow extends JFrame {
             JOptionPane.showMessageDialog(null, "Calendar and product database is update");
         }
     }
+    //</editor-fold>
 }
