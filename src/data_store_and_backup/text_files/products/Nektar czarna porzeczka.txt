@@ -1,0 +1,9 @@
+Name: Nektar czarna porzeczka
+Brand: Tymbark
+Package has: 1000.0
+Macro for: 100.0
+KCal: 55.0
+Protein: 0.1
+Fat: 0.0
+Carbs: 13.2
+Comment optional: Link: https://www.tabele-kalorii.pl/kalorie,Nektar-czarna-porzeczka-Tymbark.html

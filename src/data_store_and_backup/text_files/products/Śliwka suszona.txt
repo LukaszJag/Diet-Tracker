@@ -1,0 +1,9 @@
+Name: Śliwka suszona
+Brand: Owoce suszone
+Package has: 0.0
+Macro for: 100.0
+KCal: 294.0
+Protein: 3.4
+Fat: 3.2
+Carbs: 58.3
+Comment optional: Link: https://www.tabele-kalorii.pl/kalorie,Sliwka-suszona-Helio.html

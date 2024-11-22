@@ -1,0 +1,9 @@
+Name: Chleb słonecznikowy
+Brand: Biedronka
+Package has: 480.0
+Macro for: 100.0
+KCal: 224.0
+Protein: 8.4
+Fat: 5.5
+Carbs: 35.1
+Comment optional: 

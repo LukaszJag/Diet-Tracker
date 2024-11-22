@@ -1,0 +1,20 @@
+INSERT INTO `diet_tracker_schema`.product_table
+(`product_name`,
+`product_brand`,
+`product_package_has`,
+`product_macro_for`,
+`product_kcal`,
+`product_protein`,
+`product_fat`,
+`product_carbs`,
+`comment_optional`)
+Values
+('Instant Tea Forest Fruits',
+'Kaufland',
+350.0,
+100.0,
+389.0,
+0.5,
+0.0,
+94.0,
+'Link: https://www.fitatu.com/catalog/pl/instant-tea-forest-fruits--65393641');

@@ -1,0 +1,9 @@
+Name: Pestki dyni
+Brand: Nasiona i ziarna
+Package has: 0.0
+Macro for: 100.0
+KCal: 556.0
+Protein: 24.5
+Fat: 45.8
+Carbs: 12.7
+Comment optional: Link: https://www.tabele-kalorii.pl/kalorie,Pestki-dyni.html

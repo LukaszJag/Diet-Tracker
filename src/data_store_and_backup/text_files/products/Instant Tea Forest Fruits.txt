@@ -1,0 +1,9 @@
+Name: Instant Tea Forest Fruits
+Brand: Kaufland
+Package has: 350.0
+Macro for: 100.0
+KCal: 389.0
+Protein: 0.5
+Fat: 0.0
+Carbs: 94.0
+Comment optional: Link: https://www.fitatu.com/catalog/pl/instant-tea-forest-fruits--65393641

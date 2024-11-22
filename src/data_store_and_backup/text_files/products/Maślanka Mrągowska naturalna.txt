@@ -1,0 +1,9 @@
+Name: Maślanka Mrągowska naturalna
+Brand: Mlekpol
+Package has: 1000.0
+Macro for: 100.0
+KCal: 48.0
+Protein: 3.5
+Fat: 1.5
+Carbs: 5.0
+Comment optional: Link: https://www.tabele-kalorii.pl/kalorie,Maslanka-Mragowska-naturalna-Mlekpol.html
