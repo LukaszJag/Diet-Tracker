@@ -1,0 +1,9 @@
+Name: Ryba po grecku - [Marinero]
+Brand: Marinero
+Package has: 500.0
+Macro for: 100.0
+KCal: 151.0
+Protein: 8.1
+Fat: 10.0
+Carbs: 7.1
+Comment optional: link: https://www.tabele-kalorii.pl/kalorie,Ryba-po-grecku-Marinero.html

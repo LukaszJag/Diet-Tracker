@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2024-11-17',
+'Sunday',
+'Night snack',
+100.0,
+' Czekolada deserowa z nadzieniem o smaku malinowym',
+454.0,
+3.2,
+21.0,
+62.0,
+'2024-11-23 02:35:22',
+'none',
+454.0,
+62.0,
+21.0,
+3.2
+);

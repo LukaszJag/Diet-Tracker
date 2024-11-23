@@ -1,0 +1,9 @@
+Name:  Czekolada deserowa z nadzieniem o smaku malinowym
+Brand: Allegro
+Package has: 100.0
+Macro for: 100.0
+KCal: 454.0
+Protein: 3.2
+Fat: 21.0
+Carbs: 62.0
+Comment optional: Link: https://pl.openfoodfacts.org/product/5907443601823/czekolada-deserowa-z-nadzieniem-o-smaku-malinowym-allegro
