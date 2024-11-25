@@ -1,0 +1,9 @@
+Name: Napój jabłko-mięta - Tymbark
+Brand: Tymbark
+Package has: 1000.0
+Macro for: 100.0
+KCal: 41.0
+Protein: 0.1
+Fat: 0.1
+Carbs: 9.8
+Comment optional: Link: https://www.tabele-kalorii.pl/kalorie,Napoj-jablko-mieta-Tymbark.html

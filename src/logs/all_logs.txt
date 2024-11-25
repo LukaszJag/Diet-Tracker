@@ -1526,3 +1526,6 @@
 1526:-:2024-11-25:-:ADD PRODUCT TO CALENDAR TABLE BY GUI:-:calendar:-:2024-11-24:-:Sunday:-:Frytki małe:-:74.0:-:kcal: 200.5--protein: 3.5--fat: 9.7--carbs: 25.0:-:Supper:-:None:-:kcal: 148.37--protein: 2.5900002--fat: 7.178--carbs: 18.5:-:
 1527:-:2024-11-25:-:ADD PRODUCT TO PRODUCT TABLE BY GUI:-:product_table:-:Biala czekolada melite:-:Meltie:-:kcal: 568.0--protein: 6.3--fat: 36.0--carbs: 55.0:-:100:-:100:-:
 1528:-:2024-11-25:-:ADD PRODUCT TO CALENDAR TABLE BY GUI:-:calendar:-:2024-11-25:-:Monday:-:Biala czekolada melite:-:100.0:-:kcal: 568.0--protein: 6.3--fat: 36.0--carbs: 55.0:-:Breakfast:-:None:-:kcal: 568.0--protein: 6.3--fat: 36.0--carbs: 55.0:-:
+1529:-:2024-11-25:-:ADD PRODUCT TO PRODUCT TABLE BY GUI:-:product_table:-:Napój jabłko-mięta - Tymbark:-:Tymbark:-:kcal: 41.0--protein: 0.1--fat: 0.1--carbs: 9.8:-:1000:-:100:-:
+1530:-:2024-11-25:-:ADD PRODUCT TO CALENDAR TABLE BY GUI:-:calendar:-:2024-11-24:-:Sunday:-:Napój jabłko-mięta - Tymbark:-:771.0:-:kcal: 41.0--protein: 0.1--fat: 0.1--carbs: 9.8:-:Dinner:-:None:-:kcal: 316.11002--protein: 0.771--fat: 0.771--carbs: 75.558:-:
+1531:-:2024-11-25:-:ADD PRODUCT TO CALENDAR TABLE BY GUI:-:calendar:-:2024-11-25:-:Monday:-:Sok pomarańczowy 100%:-:1000.0:-:kcal: 42.0--protein: 0.7--fat: 0.0--carbs: 8.7:-:Breakfast:-:None:-:kcal: 420.0--protein: 7.0--fat: 0.0--carbs: 87.0:-:
