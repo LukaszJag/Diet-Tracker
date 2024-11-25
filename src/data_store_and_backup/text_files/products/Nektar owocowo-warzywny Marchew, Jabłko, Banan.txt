@@ -1,0 +1,9 @@
+Name: Nektar owocowo-warzywny Marchew, Jabłko, Banan
+Brand: Riviva
+Package has: 1000.0
+Macro for: 100.0
+KCal: 37.0
+Protein: 0.52
+Fat: 0.2
+Carbs: 8.0
+Comment optional: Link: https://pl.openfoodfacts.org/product/5901886035443/nektar-owocowo-warzywny-marchew-jab%C5%82ko-banan-riviva

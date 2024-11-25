@@ -1,0 +1,9 @@
+Name: Kotlet z jajka i bułki tartej
+Brand: 
+Package has: 0.0
+Macro for: 100.0
+KCal: 230.0
+Protein: 12.54
+Fat: 10.12
+Carbs: 21.0
+Comment optional: Link: https://www.tabele-kalorii.pl/kalorie,Kotlet-z-jajka-i-bulki-tartej-Przepis-od-olan.html

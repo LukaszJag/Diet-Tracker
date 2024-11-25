@@ -1,0 +1,9 @@
+Name: Biala czekolada melite
+Brand: Meltie
+Package has: 100.0
+Macro for: 100.0
+KCal: 568.0
+Protein: 6.3
+Fat: 36.0
+Carbs: 55.0
+Comment optional: Link: https://www.fitatu.com/catalog/pl/biala-czekolada-melite--102218015

@@ -1,0 +1,20 @@
+INSERT INTO `diet_tracker_schema`.product_table
+(`product_name`,
+`product_brand`,
+`product_package_has`,
+`product_macro_for`,
+`product_kcal`,
+`product_protein`,
+`product_fat`,
+`product_carbs`,
+`comment_optional`)
+Values
+('Kotlet z jajka i bułki tartej',
+'',
+0.0,
+100.0,
+230.0,
+12.54,
+10.12,
+21.0,
+'Link: https://www.tabele-kalorii.pl/kalorie,Kotlet-z-jajka-i-bulki-tartej-Przepis-od-olan.html');

@@ -1,0 +1,9 @@
+Name: Ciasteczka kruche
+Brand: 
+Package has: 0.0
+Macro for: 100.0
+KCal: 429.0
+Protein: 5.0
+Fat: 22.4
+Carbs: 65.0
+Comment optional: 

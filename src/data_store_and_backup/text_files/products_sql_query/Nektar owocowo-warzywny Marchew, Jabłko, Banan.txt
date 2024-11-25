@@ -1,0 +1,20 @@
+INSERT INTO `diet_tracker_schema`.product_table
+(`product_name`,
+`product_brand`,
+`product_package_has`,
+`product_macro_for`,
+`product_kcal`,
+`product_protein`,
+`product_fat`,
+`product_carbs`,
+`comment_optional`)
+Values
+('Nektar owocowo-warzywny Marchew, Jabłko, Banan',
+'Riviva',
+1000.0,
+100.0,
+37.0,
+0.52,
+0.2,
+8.0,
+'Link: https://pl.openfoodfacts.org/product/5901886035443/nektar-owocowo-warzywny-marchew-jab%C5%82ko-banan-riviva');

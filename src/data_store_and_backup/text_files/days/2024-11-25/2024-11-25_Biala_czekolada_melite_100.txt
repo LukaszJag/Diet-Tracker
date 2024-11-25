@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2024-11-25',
+'Monday',
+'Breakfast',
+100.0,
+'Biala czekolada melite',
+568.0,
+6.3,
+36.0,
+55.0,
+'2024-11-25 12:36:17',
+'none',
+568.0,
+55.0,
+36.0,
+6.3
+);

@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2024-11-23',
+'Saturday',
+'Second Breakfast',
+1000.0,
+'Nektar owocowo-warzywny Marchew, Jabłko, Banan',
+37.0,
+0.52,
+0.2,
+8.0,
+'2024-11-25 12:01:36',
+'none',
+370.0,
+80.0,
+2.0,
+5.2
+);

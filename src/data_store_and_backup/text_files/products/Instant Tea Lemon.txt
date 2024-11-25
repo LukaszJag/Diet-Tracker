@@ -1,0 +1,9 @@
+Name: Instant Tea Lemon
+Brand: Kaufland
+Package has: 350.0
+Macro for: 100.0
+KCal: 393.0
+Protein: 0.5
+Fat: 0.0
+Carbs: 96.0
+Comment optional: Link: https://www.dine4fit.pl/produkty/k-classic-instant-tea-lemon-herbata-granulowana
