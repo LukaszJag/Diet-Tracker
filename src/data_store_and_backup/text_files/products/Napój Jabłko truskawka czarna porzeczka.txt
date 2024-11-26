@@ -1,0 +1,9 @@
+Name: Napój Jabłko truskawka czarna porzeczka
+Brand: Tymbark
+Package has: 1750.0
+Macro for: 100.0
+KCal: 20.0
+Protein: 0.0
+Fat: 0.0
+Carbs: 4.8
+Comment optional: 

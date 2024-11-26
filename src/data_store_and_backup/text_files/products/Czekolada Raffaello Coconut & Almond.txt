@@ -1,0 +1,9 @@
+Name: Czekolada Raffaello Coconut & Almond
+Brand: Ferrero
+Package has: 90.0
+Macro for: 100.0
+KCal: 599.0
+Protein: 8.1
+Fat: 41.8
+Carbs: 46.5
+Comment optional: 

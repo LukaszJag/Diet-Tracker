@@ -592,6 +592,9 @@ public class CalendarMonthStatsView {
 
         String fullDate = "2024-";
 
+        if(month == "November"){
+            fullDate += "11-";
+        }
         if(month == "October"){
             fullDate += "10-";
         }
