@@ -111,7 +111,7 @@ public class CalendarMonthStatsView {
     JLabel selectedDateAverageMacroForMonthLabel = new JLabel("Selected date average macro for month: ");
     //</editor-fold>
 
-    JComboBox monthSelectComboBox = new JComboBox<>(new String[]{"April", "May", "June", "July", "August", "September", "October", "November"});
+    JComboBox monthSelectComboBox = new JComboBox<>(new String[]{"April", "May", "June", "July", "August", "September", "October", "November", "December"});
     JComboBox selectedDayProductsListComboBox = new JComboBox<String>();
 
     //</editor-fold>
@@ -189,7 +189,7 @@ public class CalendarMonthStatsView {
 
     //<editor-fold desc="Prepare Add Content - to Panels">
     private void prepareAndAddContentToMainPanel() {
-        setDaysButtonsMainPanel("November");
+        setDaysButtonsMainPanel("December");
     }
 
     private void prepareAndAddContentToNorthPanel() {
@@ -203,7 +203,7 @@ public class CalendarMonthStatsView {
         calendarMonthStatsViewPanelNorth.setLayout(northPanelGridLayout);
 
 
-        monthSelectComboBox.setSelectedItem("November");
+        monthSelectComboBox.setSelectedItem("December");
 
         selectedDaysCounterGoodDaysPanel = new JPanel();
         selectedDaysCounterBadDaysPanel = new JPanel();
@@ -404,6 +404,14 @@ public class CalendarMonthStatsView {
             daysButtons = new JButton[35];
             mainPanelGridLayout = new GridLayout(5, 7, 10, 10);
         }
+
+        if (month.equals("December")) {
+            daysButtons = new JButton[42];
+            mainPanelGridLayout = new GridLayout(6, 7, 10, 10);
+        } else {
+            daysButtons = new JButton[35];
+            mainPanelGridLayout = new GridLayout(5, 7, 10, 10);
+        }
         int counter = 1;
 
         if (month == null) {
@@ -412,6 +420,20 @@ public class CalendarMonthStatsView {
                 daysButtons[i].setPreferredSize(Config.CALENDAR_MONTH_STATS_VIEW_BUTTONS_SIZE_DIMENSION);
             }
         } else {
+            if (month.equals("December")) {
+                for (int i = 0; i < daysButtons.length; i++) {
+                    if (i >= 0 && i < 6) {
+                        daysButtons[i] = new JButton("null");
+                    } else if (i >= 37 && i <= 41){
+                        daysButtons[i] = new JButton("null");
+                    } else {
+                        daysButtons[i] = new JButton(String.valueOf(counter));
+                        daysButtons[i].setPreferredSize(Config.CALENDAR_MONTH_STATS_VIEW_BUTTONS_SIZE_DIMENSION);
+                        daysButtons[i].addActionListener(new DaysButtonsActionListener(daysButtons[i]));
+                        counter++;
+                    }
+                }
+            }
             if (month.equals("November")) {
                 for (int i = 0; i < daysButtons.length; i++) {
                     if (i == 0 || i == 1 || i < 4) {
@@ -453,7 +475,6 @@ public class CalendarMonthStatsView {
                         counter++;
                     }
                 }
-
             }
             if (month.equals("August")) {
                 for (int i = 0; i < daysButtons.length; i++) {
@@ -592,6 +613,9 @@ public class CalendarMonthStatsView {
 
         String fullDate = "2024-";
 
+        if(month == "December"){
+            fullDate += "12-";
+        }
         if(month == "November"){
             fullDate += "11-";
         }
@@ -655,6 +679,9 @@ public class CalendarMonthStatsView {
         String fullDate = "2024-";
         String month = monthSelectComboBox.getSelectedItem().toString();
 
+        if (month == "December") {
+            fullDate += "12-";
+        }
         if (month == "November") {
             fullDate += "11-";
         }

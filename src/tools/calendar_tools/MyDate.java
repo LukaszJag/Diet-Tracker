@@ -28,6 +28,9 @@ public class MyDate {
             if (month.equals("November")) {
                 return 30;
             }
+            if (month.equals("December")) {
+                return 31;
+            }
         }
 
         return  -1;
@@ -68,7 +71,6 @@ public class MyDate {
         if (month.equals("November")) {
             return 11;
         }
-
         if (month.equals("December")) {
             return 12;
         }
