@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2024-11-28',
+'Thursday',
+'Breakfast',
+209.0,
+'Chleb baltonowski',
+208.0,
+7.3,
+1.2,
+41.0,
+'2024-12-02 07:22:16',
+'none',
+434.71997,
+85.689995,
+2.508,
+15.257
+);

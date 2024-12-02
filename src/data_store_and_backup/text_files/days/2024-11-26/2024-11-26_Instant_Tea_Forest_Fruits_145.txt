@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2024-11-26',
+'Tuesday',
+'Supper',
+145.0,
+'Instant Tea Forest Fruits',
+389.0,
+0.5,
+0.0,
+94.0,
+'2024-12-02 07:06:44',
+'none',
+564.05005,
+136.3,
+0.0,
+0.725
+);

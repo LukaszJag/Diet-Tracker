@@ -1,0 +1,9 @@
+Name: Szynka z indyka - Pyszny indyk
+Brand: Pyszny indyk
+Package has: 570.0
+Macro for: 100.0
+KCal: 107.0
+Protein: 13.0
+Fat: 4.9
+Carbs: 3.2
+Comment optional: Link: https://www.tabele-kalorii.pl/kalorie,Szynka-z-indyka-Pyszny-indyk.html

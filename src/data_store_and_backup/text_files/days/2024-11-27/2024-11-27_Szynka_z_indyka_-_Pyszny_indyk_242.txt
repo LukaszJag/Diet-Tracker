@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2024-11-27',
+'Wednesday',
+'Night snack',
+242.0,
+'Szynka z indyka - Pyszny indyk',
+107.0,
+13.0,
+4.9,
+3.2,
+'2024-12-02 07:16:57',
+'none',
+258.94,
+7.7440004,
+11.858001,
+31.460001
+);
