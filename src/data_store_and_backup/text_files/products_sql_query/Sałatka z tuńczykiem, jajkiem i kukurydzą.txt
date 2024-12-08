@@ -1,0 +1,20 @@
+INSERT INTO `diet_tracker_schema`.product_table
+(`product_name`,
+`product_brand`,
+`product_package_has`,
+`product_macro_for`,
+`product_kcal`,
+`product_protein`,
+`product_fat`,
+`product_carbs`,
+`comment_optional`)
+Values
+('Sałatka z tuńczykiem, jajkiem i kukurydzą',
+'domowa',
+0.0,
+100.0,
+111.09,
+8.43,
+4.44,
+9.23,
+'Link: https://www.tabele-kalorii.pl/kalorie,Salatka-z-tunczykiem-jajkiem-i-kukurydza-Przepis-od-hrumpek.html');

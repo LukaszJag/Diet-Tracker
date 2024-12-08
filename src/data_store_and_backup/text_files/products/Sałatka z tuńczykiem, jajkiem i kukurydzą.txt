@@ -1,0 +1,9 @@
+Name: Sałatka z tuńczykiem, jajkiem i kukurydzą
+Brand: domowa
+Package has: 0.0
+Macro for: 100.0
+KCal: 111.09
+Protein: 8.43
+Fat: 4.44
+Carbs: 9.23
+Comment optional: Link: https://www.tabele-kalorii.pl/kalorie,Salatka-z-tunczykiem-jajkiem-i-kukurydza-Przepis-od-hrumpek.html

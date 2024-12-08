@@ -1,0 +1,9 @@
+Name: Zupa pomidorowa z ryżem domowa
+Brand: domowe
+Package has: 0.0
+Macro for: 100.0
+KCal: 38.0
+Protein: 1.4
+Fat: 1.8
+Carbs: 3.9
+Comment optional: Link: https://www.tabele-kalorii.pl/kalorie,Zupa-pomidorowa-z-ryzem-domowa.html

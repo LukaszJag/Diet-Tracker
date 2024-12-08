@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2024-11-03',
+'Sunday',
+'Night snack',
+150.0,
+'Twaróg Delikatny rzodkiewka',
+132.0,
+5.8,
+10.0,
+4.5,
+'2024-12-08 02:49:53',
+'none',
+198.0,
+6.75,
+15.0,
+8.700001
+);

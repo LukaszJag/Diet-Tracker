@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2024-11-02',
+'Saturday',
+'Breakfast',
+217.0,
+'Zupa pomidorowa z ryżem domowa',
+38.0,
+1.4,
+1.8,
+3.9,
+'2024-12-08 02:39:29',
+'none',
+82.46001,
+8.463,
+3.9060001,
+3.038
+);

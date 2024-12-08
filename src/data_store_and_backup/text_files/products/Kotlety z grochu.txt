@@ -1,0 +1,9 @@
+Name: Kotlety z grochu
+Brand: domowe
+Package has: 0.0
+Macro for: 100.0
+KCal: 129.59
+Protein: 7.45
+Fat: 0.55
+Carbs: 22.8
+Comment optional: Link: https://www.tabele-kalorii.pl/kalorie,Kotlety-z-grochu-Przepis-od-daniello.html

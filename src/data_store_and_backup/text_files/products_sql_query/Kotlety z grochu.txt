@@ -1,0 +1,20 @@
+INSERT INTO `diet_tracker_schema`.product_table
+(`product_name`,
+`product_brand`,
+`product_package_has`,
+`product_macro_for`,
+`product_kcal`,
+`product_protein`,
+`product_fat`,
+`product_carbs`,
+`comment_optional`)
+Values
+('Kotlety z grochu',
+'domowe',
+0.0,
+100.0,
+129.59,
+7.45,
+0.55,
+22.8,
+'Link: https://www.tabele-kalorii.pl/kalorie,Kotlety-z-grochu-Przepis-od-daniello.html');

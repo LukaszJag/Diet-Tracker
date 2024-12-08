@@ -1,0 +1,9 @@
+Name: Cukier puder
+Brand: Diamant
+Package has: 400.0
+Macro for: 100.0
+KCal: 406.0
+Protein: 0.0
+Fat: 0.0
+Carbs: 100.0
+Comment optional: Link: https://www.tabele-kalorii.pl/kalorie,Cukier-puder-Diamant.html
