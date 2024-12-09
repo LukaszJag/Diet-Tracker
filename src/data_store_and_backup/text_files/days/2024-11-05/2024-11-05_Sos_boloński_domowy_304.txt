@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2024-11-05',
+'Tuesday',
+'Dinner',
+304.0,
+'Sos boloński domowy',
+57.63,
+7.99,
+1.47,
+3.1,
+'2024-12-09 02:13:49',
+'none',
+175.1952,
+9.424,
+4.4688,
+24.289598
+);

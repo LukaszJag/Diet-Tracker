@@ -1,0 +1,20 @@
+INSERT INTO `diet_tracker_schema`.product_table
+(`product_name`,
+`product_brand`,
+`product_package_has`,
+`product_macro_for`,
+`product_kcal`,
+`product_protein`,
+`product_fat`,
+`product_carbs`,
+`comment_optional`)
+Values
+('Grochówka wojskowa',
+'domowe',
+0.0,
+100.0,
+62.03,
+2.79,
+2.06,
+8.55,
+'Link: https://www.tabele-kalorii.pl/kalorie,Grochowka-wojskowa-Przepis-od-laycool.html');

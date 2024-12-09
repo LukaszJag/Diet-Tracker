@@ -1,0 +1,9 @@
+Name: Grochówka wojskowa
+Brand: domowe
+Package has: 0.0
+Macro for: 100.0
+KCal: 62.03
+Protein: 2.79
+Fat: 2.06
+Carbs: 8.55
+Comment optional: Link: https://www.tabele-kalorii.pl/kalorie,Grochowka-wojskowa-Przepis-od-laycool.html
