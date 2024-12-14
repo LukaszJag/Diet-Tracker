@@ -86,7 +86,6 @@ public class UpdateDaysStatisticsFilledColumns {
             dayDate = "2024-09-";
         }
     }
-
     public static void updateWholeMonthOctober() throws SQLException {
         String dayDate = "2024-10-";
 
@@ -103,7 +102,6 @@ public class UpdateDaysStatisticsFilledColumns {
             dayDate = "2024-10-";
         }
     }
-
     public static void updateWholeMonthNovember() throws SQLException {
         String dayDate = "2024-11-";
 
@@ -121,6 +119,22 @@ public class UpdateDaysStatisticsFilledColumns {
         }
     }
 
+    public static void updateWholeMonthDecember() throws SQLException {
+        String dayDate = "2024-12-";
+
+        for (int i = 1; i <= 31; i++) {
+            if (String.valueOf(i).length() == 1) {
+                dayDate = dayDate + "0" + String.valueOf(i);
+            } else {
+                dayDate = dayDate + String.valueOf(i);
+            }
+
+            RunQuery.runQuery(prepareQueryForUpdateAmountOfFilledPointsFromNotepad(dayDate));
+
+
+            dayDate = "2024-12-";
+        }
+    }
 
     //</editor-fold>
 
@@ -209,9 +223,23 @@ public class UpdateDaysStatisticsFilledColumns {
             dayDate = "2024-10-";
         }
     }
-
     public static void updateWholeMonthMacroSumNovember() throws SQLException {
         String dayDate = "2024-11-";
+
+        for (int i = 1; i <= 30; i++) {
+            if (String.valueOf(i).length() == 1) {
+                dayDate = dayDate + "0" + String.valueOf(i);
+            } else {
+                dayDate = dayDate + String.valueOf(i);
+            }
+
+            RunQuery.runQuery(prepareQueryForFillConsumedMacro(dayDate));
+            dayDate = "2024-11-";
+        }
+    }
+
+    public static void updateWholeMonthMacroSumDecember() throws SQLException {
+        String dayDate = "2024-12-";
 
         for (int i = 1; i <= 31; i++) {
             if (String.valueOf(i).length() == 1) {
@@ -221,7 +249,7 @@ public class UpdateDaysStatisticsFilledColumns {
             }
 
             RunQuery.runQuery(prepareQueryForFillConsumedMacro(dayDate));
-            dayDate = "2024-11-";
+            dayDate = "2024-12-";
         }
     }
     //</editor-fold>

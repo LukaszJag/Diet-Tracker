@@ -1,0 +1,9 @@
+Name: Kalafior gotowany
+Brand: warzywo
+Package has: 0.0
+Macro for: 100.0
+KCal: 22.0
+Protein: 2.4
+Fat: 0.0
+Carbs: 5.0
+Comment optional: Link: https://www.tabele-kalorii.pl/kalorie,Kalafior-gotowany.html
