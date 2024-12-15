@@ -1,0 +1,9 @@
+Name: Sok jabłkowy
+Brand: Riviva
+Package has: 1000.0
+Macro for: 100.0
+KCal: 42.0
+Protein: 0.1
+Fat: 0.1
+Carbs: 10.2
+Comment optional: Link: https://www.tabele-kalorii.pl/kalorie,Sok-jablkowy-Riviva.html

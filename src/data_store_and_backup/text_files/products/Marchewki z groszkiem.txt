@@ -1,0 +1,9 @@
+Name: Marchewki z groszkiem
+Brand: domowe
+Package has: 0.0
+Macro for: 100.0
+KCal: 38.0
+Protein: 2.2
+Fat: 0.0
+Carbs: 8.5
+Comment optional: Link: https://food.food-nutrients-calculator.com/peas-carrots,100g.html

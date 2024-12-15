@@ -1,0 +1,20 @@
+INSERT INTO `diet_tracker_schema`.product_table
+(`product_name`,
+`product_brand`,
+`product_package_has`,
+`product_macro_for`,
+`product_kcal`,
+`product_protein`,
+`product_fat`,
+`product_carbs`,
+`comment_optional`)
+Values
+('Sushi wegetariańskie',
+'',
+0.0,
+100.0,
+170.0,
+3.6,
+2.2,
+35.2,
+'https://dietly.pl/blog/sushi-kcal-ile-kalorii-ma-sushi?srsltid=AfmBOor1giNPJbr5dCZcjMC5fo71H8JQMdhup5Y5Q0l7K-Dl6OrQMnQ5');

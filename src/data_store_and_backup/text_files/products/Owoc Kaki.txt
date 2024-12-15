@@ -1,0 +1,9 @@
+Name: Owoc Kaki
+Brand: owoce
+Package has: 0.0
+Macro for: 100.0
+KCal: 74.0
+Protein: 1.0
+Fat: 0.0
+Carbs: 17.0
+Comment optional: Link: https://kalkulatorkalorii.net/kalkulator-kalorii/9667-100-owoc-kaki

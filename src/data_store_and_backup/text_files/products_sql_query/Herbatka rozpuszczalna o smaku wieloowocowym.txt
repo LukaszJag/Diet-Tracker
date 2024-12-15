@@ -1,0 +1,20 @@
+INSERT INTO `diet_tracker_schema`.product_table
+(`product_name`,
+`product_brand`,
+`product_package_has`,
+`product_macro_for`,
+`product_kcal`,
+`product_protein`,
+`product_fat`,
+`product_carbs`,
+`comment_optional`)
+Values
+('Herbatka rozpuszczalna o smaku wieloowocowym',
+'Auchan',
+350.0,
+100.0,
+389.0,
+0.0,
+0.0,
+97.0,
+'Auchan - Celiko S.A. Link: https://zakupy.auchan.pl/products/herbatka-rozpuszczalna-o-smaku-wieloowocowym-auchan-350-g/00386757');

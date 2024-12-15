@@ -1,0 +1,20 @@
+INSERT INTO `diet_tracker_schema`.product_table
+(`product_name`,
+`product_brand`,
+`product_package_has`,
+`product_macro_for`,
+`product_kcal`,
+`product_protein`,
+`product_fat`,
+`product_carbs`,
+`comment_optional`)
+Values
+('Marchewki z groszkiem',
+'domowe',
+0.0,
+100.0,
+38.0,
+2.2,
+0.0,
+8.5,
+'Link: https://food.food-nutrients-calculator.com/peas-carrots,100g.html');

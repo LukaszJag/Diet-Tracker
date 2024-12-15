@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2024-11-09',
+'Saturday',
+'Supper',
+78.0,
+'Pestki dyni',
+556.0,
+24.5,
+45.8,
+12.7,
+'2024-12-15 07:37:21',
+'none',
+433.68,
+9.905999,
+35.724,
+19.109999
+);

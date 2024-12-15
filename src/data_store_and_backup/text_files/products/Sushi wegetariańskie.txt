@@ -1,0 +1,9 @@
+Name: Sushi wegetariańskie
+Brand: 
+Package has: 0.0
+Macro for: 100.0
+KCal: 170.0
+Protein: 3.6
+Fat: 2.2
+Carbs: 35.2
+Comment optional: https://dietly.pl/blog/sushi-kcal-ile-kalorii-ma-sushi?srsltid=AfmBOor1giNPJbr5dCZcjMC5fo71H8JQMdhup5Y5Q0l7K-Dl6OrQMnQ5

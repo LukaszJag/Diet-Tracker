@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2024-11-09',
+'Saturday',
+'Supper',
+205.0,
+'Sushi wegetariańskie',
+170.0,
+3.6,
+2.2,
+35.2,
+'2024-12-15 07:33:03',
+'none',
+348.5,
+72.16,
+4.51,
+7.3799996
+);

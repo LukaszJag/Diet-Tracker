@@ -1,0 +1,20 @@
+INSERT INTO `diet_tracker_schema`.product_table
+(`product_name`,
+`product_brand`,
+`product_package_has`,
+`product_macro_for`,
+`product_kcal`,
+`product_protein`,
+`product_fat`,
+`product_carbs`,
+`comment_optional`)
+Values
+('Smażone ziemniaki z warzywami',
+'domowe',
+0.0,
+100.0,
+171.0,
+1.7,
+11.8,
+15.6,
+'Link: https://tools.myfooddata.com/nutrition-facts/787077/100g/1');

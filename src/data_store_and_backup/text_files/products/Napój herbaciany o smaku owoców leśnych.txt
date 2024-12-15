@@ -1,0 +1,9 @@
+Name: Napój herbaciany o smaku owoców leśnych
+Brand: Granella
+Package has: 400.0
+Macro for: 100.0
+KCal: 394.0
+Protein: 0.0
+Fat: 0.0
+Carbs: 97.92
+Comment optional: Link: https://www.tabele-kalorii.pl/kalorie,Napoj-herbaciany-o-smaku-owocow-lesnych-Granella.html

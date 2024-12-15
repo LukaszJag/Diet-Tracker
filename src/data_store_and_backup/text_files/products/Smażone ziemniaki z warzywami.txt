@@ -1,0 +1,9 @@
+Name: Smażone ziemniaki z warzywami
+Brand: domowe
+Package has: 0.0
+Macro for: 100.0
+KCal: 171.0
+Protein: 1.7
+Fat: 11.8
+Carbs: 15.6
+Comment optional: Link: https://tools.myfooddata.com/nutrition-facts/787077/100g/1

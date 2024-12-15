@@ -1,0 +1,9 @@
+Name: Tort czekoladowy - urodzinowy
+Brand: 
+Package has: 0.0
+Macro for: 100.0
+KCal: 410.0
+Protein: 17.0
+Fat: 22.9
+Carbs: 58.0
+Comment optional: Link: https://www.tabele-kalorii.pl/kalorie,Tort-czekoladowy.html
