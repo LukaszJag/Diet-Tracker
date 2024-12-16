@@ -1,0 +1,9 @@
+Name: Maślanka truskawkowa
+Brand: Mleczna Dolina
+Package has: 1000.0
+Macro for: 100.0
+KCal: 72.0
+Protein: 3.5
+Fat: 1.5
+Carbs: 11.0
+Comment optional: Link: https://zakupy.biedronka.pl/mleczna-dolina-mleczna-dolina-maslanka-truskawkowa-1-l-0000001424.html

@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2024-11-10',
+'Sunday',
+'Supper',
+175.0,
+'Napój herbaciany o smaku owoców leśnych',
+394.0,
+0.0,
+0.0,
+97.92,
+'2024-12-16 03:04:25',
+'none',
+689.5,
+171.36,
+0.0,
+0.0
+);
