@@ -1,0 +1,9 @@
+Name: Por
+Brand: warzywa
+Package has: 0.0
+Macro for: 100.0
+KCal: 61.0
+Protein: 1.5
+Fat: 0.3
+Carbs: 12.35
+Comment optional: Link: https://www.tabele-kalorii.pl/kalorie,Por.html

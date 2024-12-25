@@ -1,0 +1,9 @@
+Name: Skyr z truskawkami
+Brand: Mlekovita
+Package has: 500.0
+Macro for: 100.0
+KCal: 72.0
+Protein: 10.0
+Fat: 0.0
+Carbs: 8.0
+Comment optional: Link: https://www.tabele-kalorii.pl/kalorie,Skyr-jogurt-typu-islandzkiego-z-truskawkami-Mlekovita.html

@@ -1,0 +1,9 @@
+Name: Bagietka czosnkowa
+Brand: Żabka
+Package has: 165.0
+Macro for: 100.0
+KCal: 267.0
+Protein: 5.0
+Fat: 14.0
+Carbs: 29.0
+Comment optional: Linki: https://www.afterfit-catering.pl/blog/bagietka-czosnkowa-kcal/   https://www.zabka.pl/wypiekane-pieczywo/
