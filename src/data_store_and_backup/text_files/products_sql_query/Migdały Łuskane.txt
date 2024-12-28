@@ -1,0 +1,20 @@
+INSERT INTO `diet_tracker_schema`.product_table
+(`product_name`,
+`product_brand`,
+`product_package_has`,
+`product_macro_for`,
+`product_kcal`,
+`product_protein`,
+`product_fat`,
+`product_carbs`,
+`comment_optional`)
+Values
+('Migdały Łuskane',
+'Makar',
+1000.0,
+100.0,
+604.0,
+20.0,
+52.0,
+7.6,
+'Link: https://www.fit-zone.pl/p598,makar-migdaly-luskane-1kg-premium.html?srsltid=AfmBOorQ-rI6oDFfXdrc21bIPkeJ5vDkF0jo3my3eky0DWa8T-h4x0eB');

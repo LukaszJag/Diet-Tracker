@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2024-12-16',
+'Monday',
+'Supper',
+12.0,
+'Orzechy włoskie',
+645.0,
+16.0,
+60.3,
+18.0,
+'2024-12-28 04:14:12',
+'none',
+77.4,
+2.1599998,
+7.2359996,
+1.92
+);

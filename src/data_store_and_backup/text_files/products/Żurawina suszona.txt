@@ -1,0 +1,9 @@
+Name: Żurawina suszona
+Brand: Makar
+Package has: 500.0
+Macro for: 100.0
+KCal: 342.0
+Protein: 0.3
+Fat: 0.5
+Carbs: 84.0
+Comment optional: Link: https://www.tabele-kalorii.pl/kalorie,Zurawina-suszona-Makar.html

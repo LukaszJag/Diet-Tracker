@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2024-12-16',
+'Monday',
+'Breakfast',
+540.0,
+'Twaróg Sernikowy',
+92.0,
+9.7,
+4.0,
+4.2,
+'2024-12-28 04:04:58',
+'none',
+496.80002,
+22.68,
+21.6,
+52.38
+);
