@@ -1,5 +1,6 @@
 package tools.sql_tools.days_statistics;
 
+import tools.calendar_tools.MyDate;
 import tools.sql_tools.general.RunQuery;
 
 import java.sql.SQLException;
@@ -240,6 +241,28 @@ public class UpdateDaysStatisticsFilledColumns {
 
     public static void updateWholeMonthMacroSumDecember() throws SQLException {
         String dayDate = "2024-12-";
+
+        for (int i = 1; i <= 31; i++) {
+            if (String.valueOf(i).length() == 1) {
+                dayDate = dayDate + "0" + String.valueOf(i);
+            } else {
+                dayDate = dayDate + String.valueOf(i);
+            }
+
+            RunQuery.runQuery(prepareQueryForFillConsumedMacro(dayDate));
+            dayDate = "2024-12-";
+        }
+    }
+
+    public static void updateWholeMonthMacroSum(String month, int year) throws SQLException {
+        String dayDate = "xxxx-xx-";
+        int monthNumber = MyDate.getNumberOfMonthInYear(month);
+        if (monthNumber < 10){
+            dayDate = year + "-0" + monthNumber;
+        }else {
+            dayDate = year + "-" + monthNumber;
+        }
+
 
         for (int i = 1; i <= 31; i++) {
             if (String.valueOf(i).length() == 1) {

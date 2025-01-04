@@ -149,15 +149,29 @@ public class RunnerFullUpdateDayStatistics {
         GenerateSLQTableForDaysStatistics.generateWholeMonthAndFillAmountOfPointsFromNotepad("December", 2024);
 
 
-        System.out.println("generateWholeMonthAndFillAmountOfPointsFromNotepadOctober : PASS");
+        System.out.println("generateWholeMonthAndFillAmountOfPointsFromNotepadDecember : PASS");
 
         UpdateDaysStatisticsFilledColumns.updateWholeMonthDecember();
-        System.out.println("updateWholeMonthOctober : PASS");
+        System.out.println("updateWholeMonthDecember : PASS");
 
         UpdateDaysStatisticsFilledColumns.updateWholeMonthMacroSumDecember();
         System.out.println("updateWholeMonthMacroSumMay : PASS");
     }
 
+    private static void updateDaysStatisticsJanuary2025() throws SQLException {
+        System.out.println("Start: full update - table days_statistics_test - November");
+
+        GenerateSLQTableForDaysStatistics.generateWholeMonthAndFillAmountOfPointsFromNotepad("January", 2025);
+
+
+        System.out.println("generateWholeMonthAndFillAmountOfPointsFromNotepadJanuary : PASS");
+
+        UpdateDaysStatisticsFilledColumns.updateWholeMonthMacroSum("January", 2025);
+        System.out.println("updateWholeMonthJanuary : PASS");
+
+        UpdateDaysStatisticsFilledColumns.updateWholeMonthMacroSum("January", 2025);
+        System.out.println("updateWholeMonthMacroSumMay : PASS");
+    }
 
     //</editor-fold>
 
@@ -170,5 +184,6 @@ public class RunnerFullUpdateDayStatistics {
         updateDaysStatisticsOctober();
         updateDaysStatisticsNovember();
         updateDaysStatisticsDecember();
+        updateDaysStatisticsJanuary2025();
     }
 }

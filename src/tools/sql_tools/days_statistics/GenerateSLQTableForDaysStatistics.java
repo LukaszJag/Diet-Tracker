@@ -72,8 +72,7 @@ public class GenerateSLQTableForDaysStatistics {
         return sqlStatement;
     }
     public static void generateWholeMonth(String month, int year) {
-        int daysInMonth = MyDate.getAmountOfDaysInMonth(month, year);
-
+        int daysInMonth = MyDate.getAmountOfDaysInMonth(month);
 
         if(month.equals("December")){
             month = "12";
@@ -103,6 +102,10 @@ public class GenerateSLQTableForDaysStatistics {
             month = "04";
         }
 
+        if(month.equals("January")){
+            month = "01";
+        }
+
         String[] readyDateDays = new String[daysInMonth];
         for (int i = 0; i < readyDateDays.length; i++) {
             if (String.valueOf(i + 1).length() == 1) {
@@ -122,6 +125,7 @@ public class GenerateSLQTableForDaysStatistics {
             }
         }
     }
+
     public static void generateWholeMonthAndFillAmountOfPointsFromNotepad(String month, int year) {
         String queryForExecute = "";
         String dateDay = "";
@@ -145,7 +149,7 @@ public class GenerateSLQTableForDaysStatistics {
             queryForExecute = "UPDATE `diet_tracker_schema`.`days_statistics_test`" +
                     "SET "
                     + "`amount_of_points_from_notepad`= " + pointInOneDay
-                    + " WHERE day_date = '2024-" + numberOfMonthInYear + "-" + dateDay + "';";
+                    + " WHERE day_date = '" + year + "-" + numberOfMonthInYear + "-" + dateDay + "';";
             if (pointInOneDay.equals("")) {
                 return;
             }
