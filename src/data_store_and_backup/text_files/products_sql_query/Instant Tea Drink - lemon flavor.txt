@@ -1,0 +1,20 @@
+INSERT INTO `diet_tracker_schema`.product_table
+(`product_name`,
+`product_brand`,
+`product_package_has`,
+`product_macro_for`,
+`product_kcal`,
+`product_protein`,
+`product_fat`,
+`product_carbs`,
+`comment_optional`)
+Values
+('Instant Tea Drink - lemon flavor',
+'Stilla Dolce',
+350.0,
+100.0,
+396.0,
+0.0,
+0.0,
+97.0,
+'Dane prosto z opakowania');

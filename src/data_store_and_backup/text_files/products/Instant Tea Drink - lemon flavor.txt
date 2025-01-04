@@ -1,0 +1,9 @@
+Name: Instant Tea Drink - lemon flavor
+Brand: Stilla Dolce
+Package has: 350.0
+Macro for: 100.0
+KCal: 396.0
+Protein: 0.0
+Fat: 0.0
+Carbs: 97.0
+Comment optional: Dane prosto z opakowania

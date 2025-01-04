@@ -1807,3 +1807,6 @@
 1807:-:2024-12-28:-:ADD PRODUCT TO CALENDAR TABLE BY GUI:-:calendar:-:2024-12-16:-:Monday:-:Cukier:-:8.0:-:kcal: 399.0--protein: 0.0--fat: 0.0--carbs: 99.8:-:Night snack:-:None:-:kcal: 31.92--protein: 0.0--fat: 0.0--carbs: 7.984:-:
 1808:-:2024-12-28:-:ADD PRODUCT TO CALENDAR TABLE BY GUI:-:calendar:-:2024-12-16:-:Monday:-:Ser Gouda:-:131.0:-:kcal: 334.0--protein: 25.0--fat: 26.0--carbs: 0.0:-:Night snack:-:None:-:kcal: 437.53998--protein: 32.75--fat: 34.059998--carbs: 0.0:-:
 1809:-:2024-12-28:-:ADD PRODUCT TO CALENDAR TABLE BY GUI:-:calendar:-:2024-12-16:-:Monday:-:Ketchup Tomatini łagodny:-:54.0:-:kcal: 93.0--protein: 0.5--fat: 1.15--carbs: 22.0:-:Night snack:-:None:-:kcal: 50.22--protein: 0.27--fat: 0.621--carbs: 11.88:-:
+1810:-:2025-01-04:-:ADD PRODUCT TO PRODUCT TABLE BY GUI:-:product_table:-:Instant Tea Drink - forest fruit flavor:-:Stilla Dolce:-:kcal: 382.0--protein: 0.0--fat: 0.0--carbs: 94.0:-:350:-:100:-:
+1811:-:2025-01-04:-:ADD PRODUCT TO PRODUCT TABLE BY GUI:-:product_table:-:Instant Tea Drink - lemon flavor:-:Stilla Dolce:-:kcal: 396.0--protein: 0.0--fat: 0.0--carbs: 97.0:-:350:-:100:-:
+1812:-:2025-01-04:-:ADD PRODUCT TO PRODUCT TABLE BY GUI:-:product_table:-:Instant Tea Drink - raspberry flavor:-:Stilla Dolce:-:kcal: 383.0--protein: 0.0--fat: 0.0--carbs: 94.0:-:350:-:100:-:
