@@ -1810,3 +1810,4 @@
 1810:-:2025-01-04:-:ADD PRODUCT TO PRODUCT TABLE BY GUI:-:product_table:-:Instant Tea Drink - forest fruit flavor:-:Stilla Dolce:-:kcal: 382.0--protein: 0.0--fat: 0.0--carbs: 94.0:-:350:-:100:-:
 1811:-:2025-01-04:-:ADD PRODUCT TO PRODUCT TABLE BY GUI:-:product_table:-:Instant Tea Drink - lemon flavor:-:Stilla Dolce:-:kcal: 396.0--protein: 0.0--fat: 0.0--carbs: 97.0:-:350:-:100:-:
 1812:-:2025-01-04:-:ADD PRODUCT TO PRODUCT TABLE BY GUI:-:product_table:-:Instant Tea Drink - raspberry flavor:-:Stilla Dolce:-:kcal: 383.0--protein: 0.0--fat: 0.0--carbs: 94.0:-:350:-:100:-:
+1813:-:2025-01-06:-:ADD PRODUCT TO PRODUCT TABLE BY GUI:-:product_table:-:Gulasz wieprzowy - domowy:-:domowe:-:kcal: 248.98--protein: 14.6--fat: 20.69--carbs: 1.67:-:0:-:100:-:

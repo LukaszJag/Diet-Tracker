@@ -1,0 +1,9 @@
+Name: Gulasz wieprzowy - domowy
+Brand: domowe
+Package has: 0.0
+Macro for: 100.0
+KCal: 248.98
+Protein: 14.6
+Fat: 20.69
+Carbs: 1.67
+Comment optional: Link: https://www.tabele-kalorii.pl/kalorie,Gulasz-wieprzowy-Przepis-od-ewa1234.html

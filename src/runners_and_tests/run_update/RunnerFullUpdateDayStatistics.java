@@ -7,12 +7,7 @@ import java.sql.SQLException;
 
 public class RunnerFullUpdateDayStatistics {
     public static void main(String[] args) throws SQLException {
-        updateDaysStatisticsMay();
-        updateDaysStatisticsJune();
-        updateDaysStatisticsJuly();
-        updateDaysStatisticsAugust();
-        updateDaysStatisticsSeptember();
-        updateDaysStatisticsNovember();
+        runFullUpdateForDayStatistics();
     }
 
     public static void updateMonth(String month) throws SQLException {

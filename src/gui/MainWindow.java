@@ -117,7 +117,7 @@ public class MainWindow extends JFrame {
         panelLeft.add(calendarMonthStatsView);
 
 
-        changeProductDataBase.addActionListener(new ChangeProductTableActioListener());
+        changeProductDataBase.addActionListener(new ChangeProductTableActionListener());
         panelRight.add(changeProductDataBase);
         changeProductDataBase.setBackground(Color.PINK);
 
@@ -178,7 +178,7 @@ public class MainWindow extends JFrame {
         }
     }
 
-    private class ChangeProductTableActioListener implements ActionListener {
+    private class ChangeProductTableActionListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
             if (Config.CURRENT_DATABASE_TABLE_PRODUCT.equals("product_table")) {
