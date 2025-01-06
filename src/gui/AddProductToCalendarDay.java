@@ -563,6 +563,15 @@ public class AddProductToCalendarDay {
 
             otherThenCurrentDateButtonWindowFrame.addMouseListener(new OtherThenCurrentDateButtonListener.dialogWindowPanelMouseListener());
             dialogWindowAcceptButton.addMouseListener(new OtherThenCurrentDateButtonListener.dialogWindowPanelMouseListener());
+            JButton year2024 = new JButton("2024");
+            JButton year2025 = new JButton("2025");
+            
+            year2024.addMouseListener(new OtherThenCurrentDateButtonListener.dialogWindowPanelMouseListener());
+            year2025.addMouseListener(new OtherThenCurrentDateButtonListener.dialogWindowPanelMouseListener());
+
+            dialogWindowPanel.add(year2024);
+            dialogWindowPanel.add(year2025);
+
 
             for (int i = 0; i < monthsInYearButtons.length; i++) {
                 dialogWindowPanel.add(monthsInYearButtons[i]);
@@ -620,13 +629,16 @@ public class AddProductToCalendarDay {
                     clickedButton = (JButton) e.getSource();
 
                     if (!clickedButton.getText().equals("Accept new date")) {
-                        if (clickedButton.getText().length() == 1) {
-                            reulstString = otherDataTextField.getText() + "-" + "0" + clickedButton.getText();
-                        } else {
-                            reulstString = otherDataTextField.getText() + "-" + clickedButton.getText();
+                        if (clickedButton.getText().equals("2024") || clickedButton.getText().equals("2025")){
+                            otherDataTextField.setText(clickedButton.getText());
+                        }else {
+                            if (clickedButton.getText().length() == 1) {
+                                reulstString = otherDataTextField.getText() + "-" + "0" + clickedButton.getText();
+                            } else {
+                                reulstString = otherDataTextField.getText() + "-" + clickedButton.getText();
+                            }
+                            otherDataTextField.setText(reulstString);
                         }
-                        otherDataTextField.setText(reulstString);
-
                     } else {
                         boolean ifDateIsIncorrect = checkIfDateIsCorrect();
 
@@ -660,7 +672,18 @@ public class AddProductToCalendarDay {
                 }
                 int month = Integer.valueOf(otherThanCurrentDateString);
 
-                java.util.Date utilDateImport = new GregorianCalendar(2024, month-1, dayNameOtherDateInt).getTime();;
+                String dateInString = otherDataTextField.getText();
+                String year = "";
+                int yearInInt = 0;
+                if(dateInString.substring(0,4).equals("2025")){
+                    yearInInt = 2025;
+                }
+
+                if(dateInString.substring(0,4).equals("2024")){
+                    yearInInt = 2024;
+                }
+
+                java.util.Date utilDateImport = new GregorianCalendar(yearInInt, month-1, dayNameOtherDateInt).getTime();;
                 String dayNameCurrentDateOnStartWindow = format.format(utilDateImport);
                 addProductToDayDisplaySelectedFDateNameDayLabel.setText(dayNameCurrentDateOnStartWindow);
                 addProductToDayDisplaySelectedFDateDayLabel.setText(otherDataTextField.getText());
@@ -694,6 +717,7 @@ public class AddProductToCalendarDay {
 
             }
         }
+
 
     }
 
