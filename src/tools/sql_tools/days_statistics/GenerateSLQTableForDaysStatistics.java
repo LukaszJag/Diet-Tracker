@@ -131,7 +131,7 @@ public class GenerateSLQTableForDaysStatistics {
         String dateDay = "";
         String pointInOneDay = "";
 
-        int daysInMonth = MyDate.getAmountOfDaysInMonth(month, year);
+        int daysInMonth = MyDate.getAmountOfDaysInMonth(month);
         String numberOfMonthInYear = String.valueOf(MyDate.getNumberOfMonthInYear(month));
 
         if (numberOfMonthInYear.length() == 1) {

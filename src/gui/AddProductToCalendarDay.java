@@ -802,7 +802,7 @@ public class AddProductToCalendarDay {
         @Override
         public void actionPerformed(ActionEvent e) {
             try {
-                RunnerFullUpdateDayStatistics.runFullUpdateForDayStatistics();
+                RunnerFullUpdateDayStatistics.runFullUpdateForAllMonthInDayStatistics();
             } catch (SQLException ex) {
                 throw new RuntimeException(ex);
             }

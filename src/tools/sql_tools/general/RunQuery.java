@@ -19,7 +19,7 @@ public class RunQuery {
             preparedStatement = connection.prepareStatement(SQLStatement);
             preparedStatement.execute(SQLStatement);
         } catch (SQLException e) {
-            System.out.println("SQL Exception in: RunQuery.runQuery()");
+            System.out.println("SQL Exception in: RunQuery.runQuery()\n" + SQLStatement + "\n\n");
         } finally {
             if (preparedStatement != null) {
                 try {

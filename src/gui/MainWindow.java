@@ -198,7 +198,7 @@ public class MainWindow extends JFrame {
         public void actionPerformed(ActionEvent e) {
             try {
                 UpdateProductAndCalendarTableFull.updateProductAndCalendarTableFull();
-                RunnerFullUpdateDayStatistics.runFullUpdateForDayStatistics();
+                RunnerFullUpdateDayStatistics.runFullUpdateForAllMonthInDayStatistics();
             } catch (SQLException ex) {
                 throw new RuntimeException(ex);
             }
@@ -225,7 +225,7 @@ public class MainWindow extends JFrame {
         @Override
         public void actionPerformed(ActionEvent e) {
             try {
-                RunnerFullUpdateDayStatistics.runFullUpdateForDayStatistics();
+                RunnerFullUpdateDayStatistics.runFullUpdateForAllMonthInDayStatistics();
             } catch (SQLException ex) {
                 throw new RuntimeException(ex);
             }

@@ -1,7 +1,6 @@
 package gui;
 
 import runners_and_tests.run_update.RunnerFullUpdateDayStatistics;
-import tools.time_date_tools.DateTools;
 
 import javax.swing.*;
 import java.awt.*;
@@ -27,7 +26,6 @@ public class RefreshDayStatisticsWindow {
     JRadioButton[] selectScopeToRefresh = new JRadioButton[radioButtonsArgs.length];
     JButton refreshDaysStatisticsButton = new JButton("Refresh Days Statistics");
     JButton refreshDaysStatisticsFullButton = new JButton("Refresh Days Statistics Full");
-    JButton refreshDaysStatisticsSeptemberButton = new JButton("Refresh Days Statistics September");
     JButton getRefreshDaysStatisticsRadioButtonScopeButton = new JButton("Refresh");
     ButtonGroup buttonGroup = new ButtonGroup();
 
@@ -66,8 +64,7 @@ public class RefreshDayStatisticsWindow {
 
     private void setButtons() {
         refreshDaysStatisticsButton.addActionListener(new RefreshDayStatisticsButtonActionListener());
-        refreshDaysStatisticsFullButton.addActionListener( new refreshDaysStatisticsFullButtonActionListener());
-        refreshDaysStatisticsSeptemberButton.addActionListener(new refreshDaysStatisticsSeptemberButtonActionListener());
+        refreshDaysStatisticsFullButton.addActionListener(new refreshDaysStatisticsFullButtonActionListener());
         getRefreshDaysStatisticsRadioButtonScopeButton.addActionListener(new getRefreshDaysStatisticsRadioButtonScopeButtonActionListener());
     }
 
@@ -92,10 +89,8 @@ public class RefreshDayStatisticsWindow {
     private void addComponentsToPanels() {
         // Panel Center
         panelCenter.add(refreshDaysStatisticsFullButton);
-        panelCenter.add(refreshDaysStatisticsSeptemberButton);
         panelCenter.add(refreshDaysStatisticsButton);
         // Panel Down
-
 
 
         // Panel Right
@@ -120,17 +115,17 @@ public class RefreshDayStatisticsWindow {
         public void actionPerformed(ActionEvent e) {
             String months[] = {
                     "January"
-                    ,"February"
-                    ,"March"
-                    ,"April"
-                    ,"May"
-                    ,"June"
-                    ,"July"
-                    ,"August"
-                    ,"September"
-                    ,"October"
-                    ,"November"
-                    ,"December"};
+                    , "February"
+                    , "March"
+                    , "April"
+                    , "May"
+                    , "June"
+                    , "July"
+                    , "August"
+                    , "September"
+                    , "October"
+                    , "November"
+                    , "December"};
 
             Calendar calendar = Calendar.getInstance();
             String month = months[calendar.get(Calendar.MONTH)];
@@ -155,7 +150,7 @@ public class RefreshDayStatisticsWindow {
         public void actionPerformed(ActionEvent e) {
             long timeStart = System.currentTimeMillis();
             try {
-                RunnerFullUpdateDayStatistics.runFullUpdateForDayStatistics();
+                RunnerFullUpdateDayStatistics.runFullUpdateForAllMonthInDayStatistics();
             } catch (SQLException ex) {
                 throw new RuntimeException(ex);
             }
@@ -165,49 +160,10 @@ public class RefreshDayStatisticsWindow {
         }
     }
 
-    private class refreshDaysStatisticsSeptemberButtonActionListener implements ActionListener {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            long timeStart = System.currentTimeMillis();
-
-            try {
-                RunnerFullUpdateDayStatistics.updateDaysStatisticsSeptember();
-            } catch (SQLException ex) {
-                throw new RuntimeException(ex);
-            }
-
-            long timeEnd = System.currentTimeMillis();
-            long duration = timeEnd - timeStart;
-            JOptionPane.showMessageDialog(null, "September update has finished time: " + duration);
-
-        }
-    }
-
     private class getRefreshDaysStatisticsRadioButtonScopeButtonActionListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            String message = "";
-
-            for (int i = 0; i < selectScopeToRefresh.length; i++) {
-                if (selectScopeToRefresh[i].isSelected()) {
-                    message = selectScopeToRefresh[i].getText();
-                }
-
-            }
-
-            if (message.equals("This month")) {
-                String monthName = DateTools.getCurrentMontNameCamelCase();
-
-                try {
-                    RunnerFullUpdateDayStatistics.updateMonth(monthName);
-                } catch (SQLException ex) {
-                    throw new RuntimeException(ex);
-                }
-
-                JOptionPane.showMessageDialog(null, "Refresh - " + monthName);
-            } else {
-                JOptionPane.showMessageDialog(null, "Nothing happened");
-            }
+            JOptionPane.showMessageDialog(null, "Nothing happened");
         }
     }
 }
