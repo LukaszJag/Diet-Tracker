@@ -1,0 +1,9 @@
+Name: Kukurydza konserwowa
+Brand: Nasza Spiżarnia
+Package has: 285.0
+Macro for: 100.0
+KCal: 91.0
+Protein: 2.9
+Fat: 2.4
+Carbs: 12.2
+Comment optional: Masa netto: 340 g (po odsączeniu 285 g) Link: https://www.tabele-kalorii.pl/kalorie,Kukurydza-konserwowa-Nasza-Spizarnia.html

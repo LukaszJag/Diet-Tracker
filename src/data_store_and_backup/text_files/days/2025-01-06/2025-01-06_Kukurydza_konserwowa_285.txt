@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2025-01-06',
+'Monday',
+'Supper',
+285.0,
+'Kukurydza konserwowa',
+91.0,
+2.9,
+2.4,
+12.2,
+'2025-01-10 12:00:52',
+'none',
+259.35,
+34.769997,
+6.84,
+8.265
+);

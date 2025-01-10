@@ -1,0 +1,9 @@
+Name: Cheeseburger - KFC
+Brand: KFC
+Package has: 125.0
+Macro for: 100.0
+KCal: 326.0
+Protein: 16.0
+Fat: 15.0
+Carbs: 32.0
+Comment optional: Link: https://www.dine4fit.pl/produkty/cheeseburger-kfc

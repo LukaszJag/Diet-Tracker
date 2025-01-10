@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2025-01-06',
+'Monday',
+'Supper',
+800.0,
+'Gorący Kubek - Borowikowa z grzankami',
+32.0,
+0.5,
+1.4,
+4.3,
+'2025-01-10 12:07:45',
+'none',
+256.0,
+34.4,
+11.2,
+4.0
+);

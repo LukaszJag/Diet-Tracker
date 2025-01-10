@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2025-01-03',
+'Friday',
+'Supper',
+1200.0,
+'Gorący Kubek - Serowa z grzankami',
+52.0,
+1.2,
+2.6,
+5.9,
+'2025-01-10 12:24:33',
+'none',
+624.0,
+70.8,
+31.199999,
+14.400001
+);

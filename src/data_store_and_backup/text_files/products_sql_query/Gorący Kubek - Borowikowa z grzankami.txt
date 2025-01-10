@@ -1,0 +1,20 @@
+INSERT INTO `diet_tracker_schema`.product_table
+(`product_name`,
+`product_brand`,
+`product_package_has`,
+`product_macro_for`,
+`product_kcal`,
+`product_protein`,
+`product_fat`,
+`product_carbs`,
+`comment_optional`)
+Values
+('Gorący Kubek - Borowikowa z grzankami',
+'Knorr',
+15.0,
+100.0,
+32.0,
+0.5,
+1.4,
+4.3,
+'Opakowanie pozwala na przygotowanie 1 porcji - 200 ml Link: https://esklep.pelcowizna.pl/pl/p/KNORR-GORACY-KUBEK-15G-BOROWIKOWA-Z-GRZANKAMI/26122');

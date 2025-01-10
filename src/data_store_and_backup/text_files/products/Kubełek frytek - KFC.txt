@@ -1,0 +1,9 @@
+Name: Kubełek frytek - KFC
+Brand: KFC
+Package has: 240.0
+Macro for: 100.0
+KCal: 255.0
+Protein: 3.9
+Fat: 2.4
+Carbs: 33.8
+Comment optional: Link: https://www.fitatu.com/catalog/pl/kubelek-frytek--59644317

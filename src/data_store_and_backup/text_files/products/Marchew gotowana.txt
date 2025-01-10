@@ -1,0 +1,9 @@
+Name: Marchew gotowana
+Brand: Warzywa
+Package has: 0.0
+Macro for: 100.0
+KCal: 28.0
+Protein: 1.0
+Fat: 0.2
+Carbs: 5.2
+Comment optional: Link: https://www.tabele-kalorii.pl/kalorie,Marchew-gotowana.html

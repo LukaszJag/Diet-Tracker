@@ -1,0 +1,9 @@
+Name: Leniwe pierogi
+Brand: domowe
+Package has: 0.0
+Macro for: 100.0
+KCal: 150.46
+Protein: 10.62
+Fat: 0.39
+Carbs: 26.32
+Comment optional: Link: https://www.tabele-kalorii.pl/kalorie,Leniwe-z-ziemniakami-Przepis-od-kaarol116.html

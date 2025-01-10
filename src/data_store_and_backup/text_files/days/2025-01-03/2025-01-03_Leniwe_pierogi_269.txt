@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2025-01-03',
+'Friday',
+'Night snack',
+269.0,
+'Leniwe pierogi',
+150.46,
+10.62,
+0.39,
+26.32,
+'2025-01-10 12:29:31',
+'none',
+404.73743,
+70.800804,
+1.0491,
+28.5678
+);
