@@ -119,7 +119,6 @@ public class UpdateDaysStatisticsFilledColumns {
             dayDate = "2024-11-";
         }
     }
-
     public static void updateWholeMonthDecember() throws SQLException {
         String dayDate = "2024-12-";
 
@@ -254,15 +253,22 @@ public class UpdateDaysStatisticsFilledColumns {
         }
     }
 
+
+    //</editor-fold>
     public static void updateWholeMonthMacroSum(String month, int year) throws SQLException {
-        String dayDate = "xxxx-xx-";
-        int monthNumber = MyDate.getNumberOfMonthInYear(month);
-        if (monthNumber < 10){
-            dayDate = year + "-0" + monthNumber;
-        }else {
-            dayDate = year + "-" + monthNumber;
+        int monthInt = MyDate.getNumberOfMonthInYear(month);
+        String dayDate = year + "-";
+
+        if (monthInt < 10){
+            dayDate =  dayDate  + "0" +  monthInt + "-";
+
         }
 
+        if (monthInt >= 10){
+            dayDate += month + "-";
+        }
+
+        String dayDateBuffor = dayDate;
 
         for (int i = 1; i <= 31; i++) {
             if (String.valueOf(i).length() == 1) {
@@ -272,10 +278,36 @@ public class UpdateDaysStatisticsFilledColumns {
             }
 
             RunQuery.runQuery(prepareQueryForFillConsumedMacro(dayDate));
-            dayDate = "2024-12-";
+            dayDate = dayDateBuffor;
         }
     }
-    //</editor-fold>
+
+    public static void updateAmountOfFilledPointsFromNotepad(String month, int year) throws SQLException {
+        int monthInt = MyDate.getNumberOfMonthInYear(month);
+        String dayDate = year + "-";
+
+        if (monthInt < 10){
+            dayDate =  dayDate  + "0" +  monthInt + "-";
+
+        }
+
+        if (monthInt >= 10){
+            dayDate += month + "-";
+        }
+
+        String dayDateBuffor = dayDate;
+
+        for (int i = 1; i <= MyDate.getAmountOfDaysInMonth(month); i++) {
+            if (String.valueOf(i).length() == 1) {
+                dayDate = dayDate + "0" + String.valueOf(i);
+            } else {
+                dayDate = dayDate + String.valueOf(i);
+            }
+
+            RunQuery.runQuery(prepareQueryForUpdateAmountOfFilledPointsFromNotepad(dayDate));
+            dayDate = dayDateBuffor;
+        }
+    }
 
     public static String prepareQueryForUpdateAmountOfFilledPointsFromNotepad(String day_date) {
         String updateQuery = "UPDATE `diet_tracker_schema`.`days_statistics_test`\n"

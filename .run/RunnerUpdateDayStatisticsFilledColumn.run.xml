@@ -1,9 +1,0 @@
-<component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="RunnerUpdateDayStatisticsFilledColumn" type="Application" factoryName="Application" folderName="RunUpdates">
-    <option name="MAIN_CLASS_NAME" value="runners_and_tests.run_update.RunnerUpdateDayStatisticsFilledColumn" />
-    <module name="Diet-Tracker" />
-    <method v="2">
-      <option name="Make" enabled="true" />
-    </method>
-  </configuration>
-</component>

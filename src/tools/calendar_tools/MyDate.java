@@ -74,7 +74,7 @@ public class MyDate {
         return -1;
     }
     public static int getNumberOfMonthInYear(String month) {
-        if (month.equalsIgnoreCase("January ")) {
+        if (month.equalsIgnoreCase("January")) {
             return 1;
         }
         if (month.equalsIgnoreCase("February")) {

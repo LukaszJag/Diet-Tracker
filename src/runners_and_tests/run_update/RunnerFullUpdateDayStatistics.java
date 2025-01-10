@@ -35,6 +35,15 @@ public class RunnerFullUpdateDayStatistics {
         }
     }
 
+    public static void updateMonth(String month, int year) throws SQLException {
+        System.out.println("Start: full update - table days_statistics_test -\t" +month + " - - " + year);
+
+        GenerateSLQTableForDaysStatistics.generateWholeMonthAndFillAmountOfPointsFromNotepad(month, year);
+        UpdateDaysStatisticsFilledColumns.updateWholeMonthMacroSum(month, year);
+        UpdateDaysStatisticsFilledColumns.updateAmountOfFilledPointsFromNotepad(month, year);
+
+        System.out.println("Finish: full update - table days_statistics_test -\t" + month + " - - " + year);
+    }
 
     //<editor-fold desc="updateDaysStatistics">
     private static void updateDaysStatisticsJune() throws SQLException {
@@ -164,12 +173,41 @@ public class RunnerFullUpdateDayStatistics {
         UpdateDaysStatisticsFilledColumns.updateWholeMonthMacroSum("January", 2025);
         System.out.println("updateWholeMonthJanuary : PASS");
 
-        UpdateDaysStatisticsFilledColumns.updateWholeMonthMacroSum("January", 2025);
+        UpdateDaysStatisticsFilledColumns.updateAmountOfFilledPointsFromNotepad("January", 2025);
         System.out.println("updateWholeMonthMacroSumMay : PASS");
     }
 
     //</editor-fold>
 
+    public static void runFullUpdateForAllMonthInDayStatistics() throws SQLException {
+        System.out.println("Start: full update - table days_statistics_test - xxxxx");
+        String[] monthsFrom2024 = { "May", "June", "July", "August", "September", "October", "November", "December"};
+        String[] monthsFrom2025 = { "January"};
+
+        for (int i = 0; i < monthsFrom2024.length; i++) {
+            System.out.println("Start: full update - table days_statistics_test -\t" + monthsFrom2024[i] + " - - " + 2024);
+
+            GenerateSLQTableForDaysStatistics.generateWholeMonthAndFillAmountOfPointsFromNotepad(monthsFrom2024[i], 2024);
+            UpdateDaysStatisticsFilledColumns.updateWholeMonthMacroSum(monthsFrom2024[i], 2024);
+            UpdateDaysStatisticsFilledColumns.updateAmountOfFilledPointsFromNotepad(monthsFrom2024[i], 2024);
+
+            System.out.println("Finish: full update - table days_statistics_test -\t" + monthsFrom2024[i] + " - - " + 2024);
+        }
+
+        for (int i = 0; i < monthsFrom2025.length; i++) {
+            System.out.println("Start: full update - table days_statistics_test -\t" + monthsFrom2024[i] + " - - " + 2025);
+
+            GenerateSLQTableForDaysStatistics.generateWholeMonthAndFillAmountOfPointsFromNotepad(monthsFrom2025[i], 2025);
+            UpdateDaysStatisticsFilledColumns.updateWholeMonthMacroSum(monthsFrom2025[i], 2025);
+            UpdateDaysStatisticsFilledColumns.updateAmountOfFilledPointsFromNotepad(monthsFrom2025[i], 2025);
+
+            System.out.println("Finish: full update - table days_statistics_test -\t" + monthsFrom2024[i] + " - - " + 2025);
+
+        }
+
+
+
+    }
     public static void runFullUpdateForDayStatistics() throws SQLException {
         updateDaysStatisticsMay();
         updateDaysStatisticsJune();
