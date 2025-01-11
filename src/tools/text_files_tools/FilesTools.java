@@ -277,7 +277,7 @@ public class FilesTools {
     //<editor-fold desc="Read or get">
     public static String[] getStringArrayForAllFilesInDirectory(String directory) {
         // Danger and possible problem cause because max amount of files is dynamic
-        int maxAmountOfFiles = 300;
+        int maxAmountOfFiles = 600;
         String[] fileNameAndDirectory = new String[maxAmountOfFiles];
         int counter = 0;
 

@@ -1,0 +1,9 @@
+Name: Chleb żytni ze słonecznikiem
+Brand: Julka
+Package has: 600.0
+Macro for: 100.0
+KCal: 253.0
+Protein: 6.4
+Fat: 6.8
+Carbs: 39.0
+Comment optional: Link: https://www.tabele-kalorii.pl/kalorie,Chleb-zytni-ze-slonecznikiem-Piekarnia-Jul-ka.html
