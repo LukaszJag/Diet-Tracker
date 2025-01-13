@@ -78,10 +78,11 @@ public class AddProductToCalendarDay {
     JLabel proteinLabel = new JLabel("Protein:");
     JLabel fatLabel = new JLabel("Fat:");
     JLabel carbsLabel = new JLabel("Carbs:");
+    JLabel brandLabel = new JLabel("Brand:");
+    JLabel PackageLabel = new JLabel("Package has:");
     JLabel timeOptionalLabel = new JLabel("Time(optional):");
     JLabel commentOptionalLabel = new JLabel("Comment(optional):");
     JLabel chosenCalendarTableLabel = new JLabel();
-    JLabel shortcutWordLabel = new JLabel("SHORTCUTS:");
     JLabel shortcutsCRTTipsLabel = new JLabel("CTRL - Search product by name");
     JLabel shortcutsDOWNArrowTipsLabel = new JLabel("Down arrow - Fill selected name");
     JLabel shortcutsUPArrowTipsLabel = new JLabel("Up arrow - Fill macro for product");
@@ -92,6 +93,8 @@ public class AddProductToCalendarDay {
     JLabel proteinAmountJLabel = new JLabel("?");
     JLabel fatAmountJLabel = new JLabel("?");
     JLabel carbsAmountJLabel = new JLabel("?");
+    JLabel brandNameLabel = new JLabel("?");
+    JLabel packageHasAmountJLabel = new JLabel("?");
     //</editor-fold>
 
     //<editor-fold desc="TextFields">
@@ -285,8 +288,19 @@ public class AddProductToCalendarDay {
         addProductToDayPanelMain.add(fatLabel);
         addProductToDayPanelMain.add(fatAmountJLabel);
 
-        addProductToDayPanelMain.add(carbsLabel);
-        addProductToDayPanelMain.add(carbsAmountJLabel);
+        addProductToDayPanelMain.add(brandLabel);
+        addProductToDayPanelMain.add(brandNameLabel);
+
+
+
+        addProductToDayPanelMain.add(PackageLabel);
+        addProductToDayPanelMain.add(packageHasAmountJLabel);
+
+        addProductToDayPanelMain.add(timeOptionalLabel);
+        addProductToDayPanelMain.add(timeOptionalTextField);
+
+
+
 
         addProductToDayPanelMain.add(timeOptionalLabel);
         addProductToDayPanelMain.add(timeOptionalTextField);
@@ -344,6 +358,8 @@ public class AddProductToCalendarDay {
             proteinAmountJLabel.setText(resultOfCheckIfProductExist[5]);
             fatAmountJLabel.setText(resultOfCheckIfProductExist[6]);
             carbsAmountJLabel.setText(resultOfCheckIfProductExist[7]);
+            brandNameLabel.setText(resultOfCheckIfProductExist[1]);
+            packageHasAmountJLabel.setText(resultOfCheckIfProductExist[2]);
 
             String productData = "Product name:    " + resultOfCheckIfProductExist[0] + "\nKcal:    " + resultOfCheckIfProductExist[4]
                     + "\nProtein:    " + resultOfCheckIfProductExist[5] + "\nFat:    " + resultOfCheckIfProductExist[6]
