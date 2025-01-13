@@ -1,0 +1,9 @@
+Name: Zinger
+Brand: KFC
+Package has: 179.0
+Macro for: 100.0
+KCal: 270.0
+Protein: 13.7
+Fat: 13.7
+Carbs: 22.7
+Comment optional: Link: https://www.tabele-kalorii.pl/kalorie,Kanapka-Zinger-KFC.html

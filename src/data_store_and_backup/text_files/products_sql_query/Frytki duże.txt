@@ -18,3 +18,63 @@ Values
 15.0,
 39.0,
 '');
+INSERT INTO `diet_tracker_schema`.product_table
+(`product_name`,
+`product_brand`,
+`product_package_has`,
+`product_macro_for`,
+`product_kcal`,
+`product_protein`,
+`product_fat`,
+`product_carbs`,
+`comment_optional`)
+Values
+('Frytki duże',
+'KFC',
+105.0,
+100.0,
+268.0,
+4.0,
+12.0,
+36.0,
+'Link: https://kalkulatorkalorii.net/kalkulator-kalorii/8220-100-frytki-duze-kfc');
+INSERT INTO `diet_tracker_schema`.product_table
+(`product_name`,
+`product_brand`,
+`product_package_has`,
+`product_macro_for`,
+`product_kcal`,
+`product_protein`,
+`product_fat`,
+`product_carbs`,
+`comment_optional`)
+Values
+('Frytki duże',
+'KFC',
+105.0,
+100.0,
+268.0,
+4.0,
+12.0,
+36.0,
+'Link: https://kalkulatorkalorii.net/kalkulator-kalorii/8220-100-frytki-duze-kfc');
+INSERT INTO `diet_tracker_schema`.product_table
+(`product_name`,
+`product_brand`,
+`product_package_has`,
+`product_macro_for`,
+`product_kcal`,
+`product_protein`,
+`product_fat`,
+`product_carbs`,
+`comment_optional`)
+Values
+('Frytki duże',
+'KFC',
+105.0,
+100.0,
+268.0,
+4.0,
+12.0,
+36.0,
+'Link: https://kalkulatorkalorii.net/kalkulator-kalorii/8220-100-frytki-duze-kfc');

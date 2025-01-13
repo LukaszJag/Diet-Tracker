@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2025-01-02',
+'Thursday',
+'Supper',
+58.0,
+'Chupa Chups Flavour Playlist XXL Lizak z gumą do żucia',
+361.0,
+0.0,
+0.0,
+90.0,
+'2025-01-13 10:10:40',
+'none',
+209.37999,
+52.199997,
+0.0,
+0.0
+);

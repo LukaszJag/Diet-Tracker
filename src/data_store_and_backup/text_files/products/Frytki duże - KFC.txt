@@ -1,0 +1,9 @@
+Name: Frytki duże - KFC
+Brand: KFC
+Package has: 105.0
+Macro for: 100.0
+KCal: 268.0
+Protein: 4.0
+Fat: 12.0
+Carbs: 36.0
+Comment optional: Link: https://kalkulatorkalorii.net/kalkulator-kalorii/8220-100-frytki-duze-kfc

@@ -1,0 +1,9 @@
+Name: Pizza domowa
+Brand: Domowe
+Package has: 0.0
+Macro for: 100.0
+KCal: 181.24
+Protein: 7.93
+Fat: 7.34
+Carbs: 20.42
+Comment optional: Link: https://www.tabele-kalorii.pl/kalorie,Pizza-domowa-Przepis-od-doopek.html

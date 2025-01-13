@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2025-01-02',
+'Thursday',
+'Dinner',
+360.0,
+'Ziemniaki smażone',
+113.61,
+2.08,
+3.02,
+19.46,
+'2025-01-13 10:06:32',
+'none',
+408.996,
+70.05599,
+10.872,
+7.4879994
+);

@@ -296,7 +296,6 @@ public class AddProductToCalendarDay {
         //</editor-fold>
     }
 
-
     private void addPanelsToFrame() {
         // Add Panels to Frame
         addProductToDayFrame.add(addProductToDayPanelNorth, BorderLayout.NORTH);
