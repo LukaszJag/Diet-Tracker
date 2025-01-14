@@ -1,0 +1,20 @@
+INSERT INTO `diet_tracker_schema`.product_table
+(`product_name`,
+`product_brand`,
+`product_package_has`,
+`product_macro_for`,
+`product_kcal`,
+`product_protein`,
+`product_fat`,
+`product_carbs`,
+`comment_optional`)
+Values
+(' Kubuś - jabłko, banan, brzoskwinia , marchew ',
+'Kubuś',
+850.0,
+100.0,
+57.0,
+0.4,
+0.2,
+13.1,
+'Link: https://kubus.pl/produkt/kubus-banan-jablko-brzoskwnia-850/');

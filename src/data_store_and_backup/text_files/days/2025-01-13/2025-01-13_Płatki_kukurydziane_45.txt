@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2025-01-13',
+'Monday',
+'Breakfast',
+45.0,
+'Płatki kukurydziane',
+394.0,
+6.6,
+2.3,
+85.0,
+'2025-01-14 09:17:08',
+'none',
+177.29999,
+38.25,
+1.035,
+2.9699998
+);

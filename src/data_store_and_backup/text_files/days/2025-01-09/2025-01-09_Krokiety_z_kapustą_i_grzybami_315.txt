@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2025-01-09',
+'Thursday',
+'Second Breakfast',
+315.0,
+'Krokiety z kapustą i grzybami',
+196.0,
+5.7,
+10.0,
+20.0,
+'2025-01-14 09:45:07',
+'none',
+617.4,
+63.0,
+31.5,
+17.955
+);

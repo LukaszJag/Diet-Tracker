@@ -1,0 +1,9 @@
+Name: Krokiety z kapustą i grzybami
+Brand: Virtu
+Package has: 1000.0
+Macro for: 100.0
+KCal: 196.0
+Protein: 5.7
+Fat: 10.0
+Carbs: 20.0
+Comment optional: Link: https://zakupy.auchan.pl/products/krokiety-z-kapust%C4%85-i-grzybami-virtu-1-kg/00977813

@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2025-01-12',
+'Sunday',
+'Dinner',
+358.0,
+'Jajecznica - domowa',
+212.0,
+13.0,
+17.0,
+0.0,
+'2025-01-14 09:21:52',
+'none',
+758.95996,
+0.0,
+60.86,
+46.54
+);

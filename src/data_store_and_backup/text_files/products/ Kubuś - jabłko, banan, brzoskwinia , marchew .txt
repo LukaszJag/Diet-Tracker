@@ -1,0 +1,9 @@
+Name:  Kubuś - jabłko, banan, brzoskwinia , marchew 
+Brand: Kubuś
+Package has: 850.0
+Macro for: 100.0
+KCal: 57.0
+Protein: 0.4
+Fat: 0.2
+Carbs: 13.1
+Comment optional: Link: https://kubus.pl/produkt/kubus-banan-jablko-brzoskwnia-850/

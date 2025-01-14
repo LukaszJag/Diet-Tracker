@@ -1,0 +1,9 @@
+Name: Pierś z kurczaka smażona w panierce
+Brand: domowe
+Package has: 0.0
+Macro for: 100.0
+KCal: 260.0
+Protein: 25.0
+Fat: 13.0
+Carbs: 9.0
+Comment optional: Link: https://www.tabele-kalorii.pl/kalorie,Piers-z-kurczaka-smazona-w-panierce.html
