@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2025-01-18',
+'Saturday',
+'Supper',
+850.0,
+' Kubuś - jabłko, banan, brzoskwinia , marchew ',
+57.0,
+0.4,
+0.2,
+13.1,
+'2025-01-19 09:28:41',
+'none',
+484.5,
+111.350006,
+1.7,
+3.4
+);

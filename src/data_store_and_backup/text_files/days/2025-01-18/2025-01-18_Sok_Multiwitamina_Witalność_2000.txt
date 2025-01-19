@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2025-01-18',
+'Saturday',
+'Supper',
+2000.0,
+'Sok Multiwitamina Witalność',
+20.0,
+0.0,
+0.0,
+4.9,
+'2025-01-19 09:27:54',
+'none',
+400.0,
+98.0,
+0.0,
+0.0
+);
