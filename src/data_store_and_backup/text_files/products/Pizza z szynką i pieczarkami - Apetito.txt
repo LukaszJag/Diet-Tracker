@@ -1,0 +1,9 @@
+Name: Pizza z szynką i pieczarkami - Apetito
+Brand: Apetito
+Package has: 1000.0
+Macro for: 100.0
+KCal: 194.0
+Protein: 5.8
+Fat: 6.8
+Carbs: 27.2
+Comment optional: Produkt dostępny w biedronce Link: https://www.tabele-kalorii.pl/kalorie,Pizza-z-szynka-i-pieczarkami-Apetito.html

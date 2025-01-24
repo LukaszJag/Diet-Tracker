@@ -1,0 +1,9 @@
+Name: Spaghetti bolognese - domowe
+Brand: domowe
+Package has: 0.0
+Macro for: 100.0
+KCal: 172.14
+Protein: 9.77
+Fat: 9.02
+Carbs: 13.1
+Comment optional: Link: https://www.tabele-kalorii.pl/kalorie,Spaghetti-bolognese-Przepis-od-zoe-87.html

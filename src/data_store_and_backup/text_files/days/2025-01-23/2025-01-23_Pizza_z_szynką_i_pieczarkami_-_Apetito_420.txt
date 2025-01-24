@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2025-01-23',
+'Thursday',
+'Dinner',
+420.0,
+'Pizza z szynką i pieczarkami - Apetito',
+194.0,
+5.8,
+6.8,
+27.2,
+'2025-01-24 12:30:06',
+'none',
+814.8,
+114.24,
+28.56,
+24.36
+);

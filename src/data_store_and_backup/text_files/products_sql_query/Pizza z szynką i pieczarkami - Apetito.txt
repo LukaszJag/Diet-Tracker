@@ -1,0 +1,20 @@
+INSERT INTO `diet_tracker_schema`.product_table
+(`product_name`,
+`product_brand`,
+`product_package_has`,
+`product_macro_for`,
+`product_kcal`,
+`product_protein`,
+`product_fat`,
+`product_carbs`,
+`comment_optional`)
+Values
+('Pizza z szynką i pieczarkami - Apetito',
+'Apetito',
+1000.0,
+100.0,
+194.0,
+5.8,
+6.8,
+27.2,
+'Produkt dostępny w biedronce Link: https://www.tabele-kalorii.pl/kalorie,Pizza-z-szynka-i-pieczarkami-Apetito.html');

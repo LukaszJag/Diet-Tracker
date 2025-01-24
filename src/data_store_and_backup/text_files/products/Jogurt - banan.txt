@@ -1,0 +1,9 @@
+Name: Jogurt - banan
+Brand: Fruvita
+Package has: 350.0
+Macro for: 100.0
+KCal: 104.0
+Protein: 3.8
+Fat: 2.8
+Carbs: 15.0
+Comment optional: Link: https://www.tabele-kalorii.pl/kalorie,Jogurt-FruVita-banan-FruVita.html

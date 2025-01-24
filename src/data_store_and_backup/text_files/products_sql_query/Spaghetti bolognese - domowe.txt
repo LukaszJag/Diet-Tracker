@@ -1,0 +1,20 @@
+INSERT INTO `diet_tracker_schema`.product_table
+(`product_name`,
+`product_brand`,
+`product_package_has`,
+`product_macro_for`,
+`product_kcal`,
+`product_protein`,
+`product_fat`,
+`product_carbs`,
+`comment_optional`)
+Values
+('Spaghetti bolognese - domowe',
+'domowe',
+0.0,
+100.0,
+172.14,
+9.77,
+9.02,
+13.1,
+'Link: https://www.tabele-kalorii.pl/kalorie,Spaghetti-bolognese-Przepis-od-zoe-87.html');
