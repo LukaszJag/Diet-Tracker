@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2025-01-25',
+'Saturday',
+'Dinner',
+256.0,
+'Pierś z kurczaka gotowana',
+151.0,
+32.9,
+2.0,
+0.0,
+'2025-01-26 11:56:48',
+'none',
+386.56,
+0.0,
+5.12,
+84.224
+);

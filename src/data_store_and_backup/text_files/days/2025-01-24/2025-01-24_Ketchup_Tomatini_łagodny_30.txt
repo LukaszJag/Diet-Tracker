@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2025-01-24',
+'Friday',
+'Supper',
+30.0,
+'Ketchup Tomatini łagodny',
+93.0,
+0.5,
+1.15,
+22.0,
+'2025-01-26 11:52:30',
+'none',
+27.900002,
+6.6000004,
+0.345,
+0.15
+);

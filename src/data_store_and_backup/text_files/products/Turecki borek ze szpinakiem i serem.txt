@@ -1,0 +1,9 @@
+Name: Turecki borek ze szpinakiem i serem
+Brand: Biedronka
+Package has: 75.0
+Macro for: 100.0
+KCal: 287.0
+Protein: 6.2
+Fat: 16.0
+Carbs: 28.0
+Comment optional: Link: https://zakupy.biedronka.pl/biedronka-turecki-borek-ze-szpinakiem-i-serem-75-g-0000009559.html
