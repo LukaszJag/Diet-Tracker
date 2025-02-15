@@ -1,0 +1,9 @@
+Name: Pomarańcza
+Brand: owoce
+Package has: 0.0
+Macro for: 100.0
+KCal: 45.0
+Protein: 0.7
+Fat: 0.21
+Carbs: 9.14
+Comment optional: Link: https://www.tabele-kalorii.pl/kalorie,Pomarancza.html

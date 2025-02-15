@@ -1,0 +1,9 @@
+Name: Mandarynka
+Brand: owoc
+Package has: 0.0
+Macro for: 100.0
+KCal: 53.0
+Protein: 0.81
+Fat: 0.31
+Carbs: 13.34
+Comment optional: Link: https://www.tabele-kalorii.pl/kalorie,Mandarynka.html

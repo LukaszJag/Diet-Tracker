@@ -59,6 +59,7 @@ public class AddProductToCalendarDay {
     JButton getProductFullInfo = new JButton("Get product full info");
     JButton showEnableShortCutsButton = new JButton("Shortcuts tips");
     JButton checkDaysStatisticFilledTable = new JButton("Check days statistic");
+    JButton productsCommentDisplayJButton = new JButton("Get comment");
     //</editor-fold>
 
     //<editor-fold desc="Labels">
@@ -70,7 +71,6 @@ public class AddProductToCalendarDay {
     JLabel addProductToDayCurrentDateLabel = new JLabel("dd.mm.yyyy");
     JLabel dateLabel = new JLabel("Date:");
     JLabel dayMealNameLabel = new JLabel("Meal name(IN PROGRESS):");
-
     JLabel productNameLabel = new JLabel("Product name:");
     JLabel productNameSuggestionLabel = new JLabel("Product name suggestion:");
     JLabel amountOfProductLabel = new JLabel("Amount of product:");
@@ -80,6 +80,7 @@ public class AddProductToCalendarDay {
     JLabel carbsLabel = new JLabel("Carbs:");
     JLabel brandLabel = new JLabel("Brand:");
     JLabel PackageLabel = new JLabel("Package has:");
+    JLabel productsCommentJLabel = new JLabel("Product's comment:");
     JLabel timeOptionalLabel = new JLabel("Time(optional):");
     JLabel commentOptionalLabel = new JLabel("Comment(optional):");
     JLabel chosenCalendarTableLabel = new JLabel();
@@ -121,7 +122,7 @@ public class AddProductToCalendarDay {
     //</editor-fold>
 
     //<editor-fold desc="Grid Layout">
-    GridLayout gridLayoutMainPanel = new GridLayout(12, 2, 10, 10);
+    GridLayout gridLayoutMainPanel = new GridLayout(13, 2, 10, 10);
     GridLayout checkDaysStatisticsDialogGridLayout = new GridLayout(34, 4, 0,0 );
     //</editor-fold>
 
@@ -300,6 +301,9 @@ public class AddProductToCalendarDay {
         addProductToDayPanelMain.add(timeOptionalTextField);
 
 
+        addProductToDayPanelMain.add(productsCommentJLabel);
+        productsCommentDisplayJButton.addActionListener(new ProductsCommentDisplayJButtonActionListener());
+        addProductToDayPanelMain.add(productsCommentDisplayJButton);
 
 
         addProductToDayPanelMain.add(timeOptionalLabel);
@@ -844,6 +848,19 @@ public class AddProductToCalendarDay {
             checkDaysStatisticsDialog.setVisible(true);
         }
     }
+
+    private class ProductsCommentDisplayJButtonActionListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            String productsComment;
+            try {
+                productsComment = SQLSelect.getRowFromProductTableByProductNameGetArray(productNameTextField.getText())[8];
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            }
+            JOptionPane.showMessageDialog(null, "Product's comment: " + productsComment);
+        }
+    }
     //</editor-fold>
 
 
@@ -1028,4 +1045,5 @@ public class AddProductToCalendarDay {
             RefreshDayStatisticsWindow refreshDayStatisticsWindow = new RefreshDayStatisticsWindow();
         }
     }
+
 }
