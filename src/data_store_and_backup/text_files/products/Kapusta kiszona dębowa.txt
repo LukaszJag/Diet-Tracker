@@ -1,0 +1,9 @@
+Name: Kapusta kiszona dębowa
+Brand: Witpol
+Package has: 1000.0
+Macro for: 100.0
+KCal: 20.0
+Protein: 0.9
+Fat: 0.0
+Carbs: 1.4
+Comment optional: dane wprowadzone ręcznie z opakowania

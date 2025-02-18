@@ -1,0 +1,9 @@
+Name: Jajko gotowane na twardo
+Brand: domowe
+Package has: 0.0
+Macro for: 100.0
+KCal: 155.0
+Protein: 12.5
+Fat: 10.6
+Carbs: 1.1
+Comment optional: Link: https://www.tabele-kalorii.pl/kalorie,Jajko-na-twardo.html

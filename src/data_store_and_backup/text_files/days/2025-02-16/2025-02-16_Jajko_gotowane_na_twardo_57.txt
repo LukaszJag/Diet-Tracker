@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2025-02-16',
+'Sunday',
+'Second Breakfast',
+57.0,
+'Jajko gotowane na twardo',
+155.0,
+12.5,
+10.6,
+1.1,
+'2025-02-18 12:49:11',
+'none',
+88.35,
+0.62700003,
+6.0420003,
+7.125
+);
