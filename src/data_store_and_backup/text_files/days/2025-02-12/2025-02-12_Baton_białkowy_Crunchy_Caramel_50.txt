@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2025-02-12',
+'Wednesday',
+'Supper',
+50.0,
+'Baton białkowy Crunchy Caramel',
+397.0,
+30.0,
+16.0,
+37.0,
+'2025-02-19 05:52:42',
+'none',
+198.5,
+18.5,
+8.0,
+15.0
+);

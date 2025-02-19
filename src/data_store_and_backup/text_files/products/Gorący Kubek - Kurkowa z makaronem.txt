@@ -1,0 +1,9 @@
+Name: Gorący Kubek - Kurkowa z makaronem
+Brand: Knorr
+Package has: 13.0
+Macro for: 100.0
+KCal: 22.0
+Protein: 0.7
+Fat: 0.5
+Carbs: 4.1
+Comment optional: Opakowanie pozwala na przygotowanie 1 porcji - 200 ml Link: https://www.tabele-kalorii.pl/kalorie,Kurkowa-z-makaronem-Knorr-Goracy-kubek.html

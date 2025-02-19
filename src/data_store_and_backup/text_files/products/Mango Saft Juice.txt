@@ -1,0 +1,9 @@
+Name: Mango Saft Juice
+Brand: Dimes
+Package has: 330.0
+Macro for: 100.0
+KCal: 109.0
+Protein: 0.8
+Fat: 0.3
+Carbs: 25.0
+Comment optional: Link: https://tukwila.de/index.php/product/mango-saft-juice-330ml/

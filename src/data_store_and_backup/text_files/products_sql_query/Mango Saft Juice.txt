@@ -1,0 +1,20 @@
+INSERT INTO `diet_tracker_schema`.product_table
+(`product_name`,
+`product_brand`,
+`product_package_has`,
+`product_macro_for`,
+`product_kcal`,
+`product_protein`,
+`product_fat`,
+`product_carbs`,
+`comment_optional`)
+Values
+('Mango Saft Juice',
+'Dimes',
+330.0,
+100.0,
+109.0,
+0.8,
+0.3,
+25.0,
+'Link: https://tukwila.de/index.php/product/mango-saft-juice-330ml/');

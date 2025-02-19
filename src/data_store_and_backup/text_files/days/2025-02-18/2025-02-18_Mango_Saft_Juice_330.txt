@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2025-02-18',
+'Tuesday',
+'Night snack',
+330.0,
+'Mango Saft Juice',
+109.0,
+0.8,
+0.3,
+25.0,
+'2025-02-19 06:01:57',
+'none',
+359.69998,
+82.5,
+0.99,
+2.64
+);

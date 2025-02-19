@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2025-02-18',
+'Tuesday',
+'Night snack',
+100.0,
+'Czekolada mleczna z orzeszkami arachidowymi',
+527.0,
+9.1,
+33.0,
+47.0,
+'2025-02-19 06:01:32',
+'none',
+527.0,
+47.0,
+33.0,
+9.1
+);

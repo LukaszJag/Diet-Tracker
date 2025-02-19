@@ -1,0 +1,9 @@
+Name: Baton białkowy Crunchy Caramel
+Brand: BioTechUSA
+Package has: 50.0
+Macro for: 100.0
+KCal: 397.0
+Protein: 30.0
+Fat: 16.0
+Carbs: 37.0
+Comment optional: Link: https://shop.biotechusa.pl/collections/batony-napoje/products/baton-bialkowy-protein-dessert-bar-50-g

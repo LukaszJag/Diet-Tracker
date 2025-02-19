@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2025-02-18',
+'Tuesday',
+'Night snack',
+295.0,
+'Instant Tea Drink - raspberry flavor',
+383.0,
+0.0,
+0.0,
+94.0,
+'2025-02-19 06:01:02',
+'none',
+1129.85,
+277.30002,
+0.0,
+0.0
+);
