@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2025-02-11',
+'Tuesday',
+'After workout',
+375.0,
+'Cheeseburger - KFC',
+326.0,
+16.0,
+15.0,
+32.0,
+'2025-02-20 03:19:40',
+'none',
+1222.5,
+120.0,
+56.25,
+60.0
+);

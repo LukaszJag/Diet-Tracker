@@ -1,0 +1,9 @@
+Name: Ciastko z mozzarellą i pomidorami
+Brand: Biedronka
+Package has: 105.0
+Macro for: 100.0
+KCal: 264.0
+Protein: 6.4
+Fat: 13.4
+Carbs: 28.5
+Comment optional: Link: https://www.fitatu.com/catalog/pl/ciastko-z-mozzarella-i-pomidorami--67626879

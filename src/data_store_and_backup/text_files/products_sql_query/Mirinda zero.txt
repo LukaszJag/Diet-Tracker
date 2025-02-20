@@ -1,0 +1,20 @@
+INSERT INTO `diet_tracker_schema`.product_table
+(`product_name`,
+`product_brand`,
+`product_package_has`,
+`product_macro_for`,
+`product_kcal`,
+`product_protein`,
+`product_fat`,
+`product_carbs`,
+`comment_optional`)
+Values
+('Mirinda zero',
+'Mirinda',
+0.0,
+100.0,
+1.0,
+0.0,
+0.0,
+0.0,
+'Link: https://www.frisco.pl/pid,137340/n,mirinda-zero-cukru-napoj-gazowany-o-smaku-pomaranczowym-bez-cukru/stn,product');
