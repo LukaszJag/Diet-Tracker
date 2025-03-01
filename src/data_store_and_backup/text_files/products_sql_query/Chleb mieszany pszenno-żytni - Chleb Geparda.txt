@@ -1,0 +1,20 @@
+INSERT INTO `diet_tracker_schema`.product_table
+(`product_name`,
+`product_brand`,
+`product_package_has`,
+`product_macro_for`,
+`product_kcal`,
+`product_protein`,
+`product_fat`,
+`product_carbs`,
+`comment_optional`)
+Values
+('Chleb mieszany pszenno-żytni - Chleb Geparda',
+'Chleb Geparda',
+450.0,
+100.0,
+269.0,
+9.1,
+2.5,
+51.0,
+'Link: https://www.tabele-kalorii.pl/kalorie,Chleb-mieszany-pszenno-zytni-Chleb-Geparda.html');

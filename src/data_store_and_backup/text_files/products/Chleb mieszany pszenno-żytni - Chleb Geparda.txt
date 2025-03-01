@@ -1,0 +1,9 @@
+Name: Chleb mieszany pszenno-żytni - Chleb Geparda
+Brand: Chleb Geparda
+Package has: 450.0
+Macro for: 100.0
+KCal: 269.0
+Protein: 9.1
+Fat: 2.5
+Carbs: 51.0
+Comment optional: Link: https://www.tabele-kalorii.pl/kalorie,Chleb-mieszany-pszenno-zytni-Chleb-Geparda.html
