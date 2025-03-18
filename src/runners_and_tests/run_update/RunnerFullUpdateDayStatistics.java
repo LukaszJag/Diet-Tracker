@@ -21,7 +21,7 @@ public class RunnerFullUpdateDayStatistics {
 
     public static void runFullUpdateForAllMonthInDayStatistics() throws SQLException {
         String[] monthsFrom2024 = {"May", "June", "July", "August", "September", "October", "November", "December"};
-        String[] monthsFrom2025 = {"January", "February"};
+        String[] monthsFrom2025 = {"January", "February", "March"};
 
         for (int i = 0; i < monthsFrom2024.length; i++) {
             System.out.println("Start: full update - table days_statistics_test -\t" + monthsFrom2024[i] + " - - " + 2024);
