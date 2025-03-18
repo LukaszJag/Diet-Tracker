@@ -110,6 +110,10 @@ public class GenerateSLQTableForDaysStatistics {
             month = "02";
         }
 
+        if(month.equals("March")){
+            month = "03";
+        }
+
 
         String[] readyDateDays = new String[daysInMonth];
         for (int i = 0; i < readyDateDays.length; i++) {
