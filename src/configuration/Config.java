@@ -102,8 +102,10 @@ public class Config {
     public static String CURRENT_DATABASE_TABLE_CALENDAR = "calendar";
 
 
-    // Product configuration
+    // Months configuration
 
+    String[] MONTHS2024 = {"May", "June", "July", "August", "September", "October", "November", "December"};
+    String[] MONTHS2025 = {"January", "February", "March", "April"};
     //TEST
     GUIManager guiManager = new GUIManager();
 }
