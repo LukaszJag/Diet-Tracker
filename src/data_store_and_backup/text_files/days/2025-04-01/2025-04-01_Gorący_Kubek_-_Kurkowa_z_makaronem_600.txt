@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2025-04-01',
+'Tuesday',
+'Snack 2',
+600.0,
+'Gorący Kubek - Kurkowa z makaronem',
+22.0,
+0.7,
+0.5,
+4.1,
+'2025-04-04 10:38:12',
+'none',
+132.0,
+24.599998,
+3.0,
+4.2
+);

@@ -1,0 +1,9 @@
+Name: Serek Łaciaty z czosnkiem
+Brand: Łaciaty
+Package has: 150.0
+Macro for: 100.0
+KCal: 250.0
+Protein: 5.8
+Fat: 23.0
+Carbs: 4.9
+Comment optional: Link: https://www.tabele-kalorii.pl/kalorie,Serek-Laciaty-z-czosnkiem-Laciaty.html

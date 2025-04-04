@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2025-04-02',
+'Wednesday',
+'Night snack',
+76.0,
+'Twój Smak Serek śmietankowy naturalny',
+243.0,
+6.0,
+23.0,
+3.0,
+'2025-04-04 10:25:25',
+'none',
+184.68,
+2.28,
+17.48,
+4.56
+);

@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2025-04-02',
+'Wednesday',
+'Night snack',
+157.0,
+'Płatki - Cinisy',
+408.0,
+9.0,
+8.2,
+70.0,
+'2025-04-04 10:17:39',
+'none',
+640.56,
+109.9,
+12.874001,
+14.13
+);

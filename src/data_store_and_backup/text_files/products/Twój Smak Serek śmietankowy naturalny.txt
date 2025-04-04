@@ -1,0 +1,9 @@
+Name: Twój Smak Serek śmietankowy naturalny
+Brand: Piątnica
+Package has: 200.0
+Macro for: 100.0
+KCal: 243.0
+Protein: 6.0
+Fat: 23.0
+Carbs: 3.0
+Comment optional: Link: https://www.tabele-kalorii.pl/kalorie,Twoj-Smak-Serek-smietankowy-naturalny-Piatnica.html

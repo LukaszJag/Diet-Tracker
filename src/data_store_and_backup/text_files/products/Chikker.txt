@@ -1,0 +1,9 @@
+Name: Chikker
+Brand: McDonalds
+Package has: 152.0
+Macro for: 100.0
+KCal: 279.0
+Protein: 14.0
+Fat: 13.0
+Carbs: 29.0
+Comment optional: Link: https://www.fitatu.com/catalog/pl/mcdonalds-chikker--68421959
