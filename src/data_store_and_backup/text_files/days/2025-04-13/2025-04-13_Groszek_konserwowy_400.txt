@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2025-04-13',
+'Sunday',
+'Night snack',
+400.0,
+'Groszek konserwowy',
+80.0,
+5.5,
+0.8,
+8.7,
+'2025-04-14 06:32:23',
+'none',
+320.0,
+34.8,
+3.2,
+22.0
+);

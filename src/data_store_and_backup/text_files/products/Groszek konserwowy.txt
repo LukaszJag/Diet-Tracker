@@ -1,0 +1,9 @@
+Name: Groszek konserwowy
+Brand: Nasza Spiżarnia
+Package has: 400.0
+Macro for: 100.0
+KCal: 80.0
+Protein: 5.5
+Fat: 0.8
+Carbs: 8.7
+Comment optional: Link: https://zakupy.biedronka.pl/nasza-spizarnia-nasza-spizarnia-groszek-konserwowy-400-g-0000000115.html Masa netto po odsączeniu: 240 g 

@@ -1,0 +1,9 @@
+Name: Nektar o smaku czarnej porzeczki z dodatkiem witaminy C
+Brand: Riviva
+Package has: 1000.0
+Macro for: 100.0
+KCal: 27.0
+Protein: 0.5
+Fat: 0.5
+Carbs: 6.5
+Comment optional: Link: https://zakupy.biedronka.pl/riviva-riviva-nektar-o-smaku-czarnej-porzeczki-z-dodatkiem-witaminy-c-1-l-0000011183.html

@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2025-04-10',
+'Thursday',
+'Breakfast',
+246.0,
+'Choco Kulki',
+377.0,
+9.0,
+4.5,
+71.0,
+'2025-04-14 06:55:31',
+'none',
+927.42004,
+174.66,
+11.07,
+22.14
+);

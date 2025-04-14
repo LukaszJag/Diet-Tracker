@@ -1,0 +1,9 @@
+Name: Napój Pomarańczowy
+Brand: Dr. Witt
+Package has: 1000.0
+Macro for: 100.0
+KCal: 44.0
+Protein: 0.0
+Fat: 0.6
+Carbs: 10.0
+Comment optional: Link: https://www.pakomarket.pl/produkt/dr-witt-sok-pomaranczowy-aseptic-1l/
