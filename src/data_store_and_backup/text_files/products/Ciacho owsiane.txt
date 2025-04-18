@@ -1,0 +1,9 @@
+Name: Ciacho owsiane
+Brand: McDonalds
+Package has: 80.0
+Macro for: 100.0
+KCal: 358.0
+Protein: 4.9
+Fat: 17.0
+Carbs: 43.0
+Comment optional: Link: https://cdn.mcdonalds.pl/uploads/20250403091917/352978-tabela-wo-8-11-2023-mop.pdf?openOutsideMcd=true

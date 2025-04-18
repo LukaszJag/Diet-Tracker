@@ -1,0 +1,20 @@
+INSERT INTO `diet_tracker_schema`.product_table
+(`product_name`,
+`product_brand`,
+`product_package_has`,
+`product_macro_for`,
+`product_kcal`,
+`product_protein`,
+`product_fat`,
+`product_carbs`,
+`comment_optional`)
+Values
+('Ciacho owsiane',
+'McDonalds',
+80.0,
+100.0,
+358.0,
+4.9,
+17.0,
+43.0,
+'Link: https://cdn.mcdonalds.pl/uploads/20250403091917/352978-tabela-wo-8-11-2023-mop.pdf?openOutsideMcd=true');
