@@ -43,7 +43,6 @@ public class AddProductToCalendarDay {
 
     //<editor-fold desc="Buttons">
     JButton refreshDaysStatisticsDataBaseButton = new JButton("Refresh DaysStatistics Data");
-    JButton refreshDaysStatisticsDataGUIButton = new JButton("Refresh Selected DaysStatistics Data");
     JButton addProductToDayAcceptButton = new JButton("Accept");
     JButton inputCurrentDayButton = new JButton("Input  current day");
     JButton checkIfProductExistButton = new JButton("Check Product existing");
@@ -209,9 +208,6 @@ public class AddProductToCalendarDay {
 
         checkDaysStatisticFilledTable.addActionListener(new CheckDaysStatisticFilledTableActionListener());
         addProductToDayPanelWest.add(checkDaysStatisticFilledTable);
-
-        refreshDaysStatisticsDataGUIButton.addActionListener(new RefreshDaysStatisticsDataGUIButtonActionListener());
-        addProductToDayPanelWest.add(refreshDaysStatisticsDataGUIButton);
         //</editor-fold>
 
         //<editor-fold desc="Add Components to Panel - East">
@@ -1035,14 +1031,6 @@ public class AddProductToCalendarDay {
             shortcutsDialog.add(shortcutsPanel);
             shortcutsDialog.setVisible(true);
 
-        }
-    }
-
-
-    private class RefreshDaysStatisticsDataGUIButtonActionListener implements ActionListener {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            RefreshDayStatisticsWindow refreshDayStatisticsWindow = new RefreshDayStatisticsWindow();
         }
     }
 

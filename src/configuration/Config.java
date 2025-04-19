@@ -9,15 +9,30 @@ public class Config {
 
 
     //<editor-fold desc="GUI Configuration">
+
+
+
+
+    //<editor-fold desc="DaysStatisticsViewer - configuration">
+    public static final int DAYS_STATISTICS_VIEWER_WIDTH = 1200;
+    public static final int DAYS_STATISTICS_VIEWER_HEIGHT = 800;
+
+
+    //</editor-fold>
+
+    //<editor-fold desc="Start windows - configuration">
     public static final int START_WINDOWS_WIDTH = 700;
     public static final int START_WINDOWS_HEIGHT = 500;
+    //</editor-fold>
 
+    //<editor-fold desc="BMR window - configuration">
     public static final int BMR_WINDOW_WINDOWS_WIDTH = 900;
     public static final int BMR_WINDOW_WINDOWS_HEIGHT = 600;
     public static final int BMR_WINDOW_PANELS_NORTH_SIZE = 50;
     public static final int BMR_WINDOW_PANELS_CENTER = 20;
     public static final int BMR_WINDOW_PANELS_WEST_EAST_SIZE = 200;
     public static final int BMR_WINDOW_PANELS_SOUTH_SIZE = 100;
+    //</editor-fold>
 
     //<editor-fold desc="Add New Product Window Configuration">
     public static final int ADD_PRODUCT_WINDOWS_WIDTH = 600;
@@ -38,6 +53,11 @@ public class Config {
     public static final int ADD_PRODUCT_TO_DAY_PANELS_SOUTH_SIZE = 100;
     public static final Color mainWindowDataBaseProductTableLabelColor = Color.MAGENTA;
     public static final Color mainWindowDataBaseCalendarTableLabelColor = Color.RED;
+    public static final Color dateTimeLabels = Color.WHITE;
+    public static final Color addProductToDayCurrentDateLabelColor = Color.WHITE;
+
+    public static final Color CHOSE_TABLE_TO_INSERT_DATA = Color.GREEN;
+    public static final Date date = new Date();
     //</editor-fold>
 
     //<editor-fold desc="Calendar Month Stats View - GUI">
@@ -51,17 +71,7 @@ public class Config {
     //</editor-fold>
 
 
-    //<editor-fold desc="Add Product To Day Windows Configuration - Panel, Label - Colors">
-
     //</editor-fold>
-
-    public static final Color dateTimeLabels = Color.WHITE;
-    public static final Color addProductToDayCurrentDateLabelColor = Color.WHITE;
-
-    public static final Color CHOSE_TABLE_TO_INSERT_DATA = Color.GREEN;
-    public static final Date date = new Date();
-    //</editor-fold>
-
 
     //<editor-fold desc="SQL CONFIGURATION AND OTHER DATA">
 
