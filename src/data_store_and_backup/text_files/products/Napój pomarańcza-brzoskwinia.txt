@@ -1,0 +1,9 @@
+Name: Napój pomarańcza-brzoskwinia
+Brand: Tymbark
+Package has: 1000.0
+Macro for: 100.0
+KCal: 38.0
+Protein: 0.0
+Fat: 0.0
+Carbs: 9.4
+Comment optional: Link: https://www.tabele-kalorii.pl/kalorie,Napoj-pomarancza-brzoskwinia-Tymbark.html

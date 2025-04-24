@@ -1,0 +1,20 @@
+INSERT INTO `diet_tracker_schema`.product_table
+(`product_name`,
+`product_brand`,
+`product_package_has`,
+`product_macro_for`,
+`product_kcal`,
+`product_protein`,
+`product_fat`,
+`product_carbs`,
+`comment_optional`)
+Values
+('Kiełbasa białą z szynki',
+'Kraina Wędlin',
+500.0,
+100.0,
+253.0,
+15.0,
+20.0,
+2.2,
+'Link: https://zakupy.biedronka.pl/kraina-wedlin-kraina-wedlin-kielbasa-biala-z-szynki-500-g-0000004780.html');

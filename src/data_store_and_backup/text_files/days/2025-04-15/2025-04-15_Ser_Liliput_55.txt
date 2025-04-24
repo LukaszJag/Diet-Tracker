@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2025-04-15',
+'Tuesday',
+'Dinner',
+55.0,
+'Ser Liliput',
+343.0,
+25.0,
+27.0,
+0.0,
+'2025-04-24 03:00:39',
+'none',
+188.65001,
+0.0,
+14.85,
+13.75
+);

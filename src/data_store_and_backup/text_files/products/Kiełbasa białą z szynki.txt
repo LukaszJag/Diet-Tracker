@@ -1,0 +1,9 @@
+Name: Kiełbasa białą z szynki
+Brand: Kraina Wędlin
+Package has: 500.0
+Macro for: 100.0
+KCal: 253.0
+Protein: 15.0
+Fat: 20.0
+Carbs: 2.2
+Comment optional: Link: https://zakupy.biedronka.pl/kraina-wedlin-kraina-wedlin-kielbasa-biala-z-szynki-500-g-0000004780.html

@@ -1,0 +1,9 @@
+Name: Nektar - czarna porzeczka
+Brand: Hortex
+Package has: 1000.0
+Macro for: 100.0
+KCal: 21.0
+Protein: 0.1
+Fat: 0.0
+Carbs: 5.2
+Comment optional: Link: https://esklep.pelcowizna.pl/pl/p/HORTEX-1L-PET-CZARNA-PORZECZKA/25999
