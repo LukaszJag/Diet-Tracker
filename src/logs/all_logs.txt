@@ -2414,3 +2414,4 @@
 2414:-:2025-04-24:-:ADD PRODUCT TO PRODUCT TABLE BY GUI:-:product_table:-:Napój pomarańcza-brzoskwinia:-:Tymbark:-:kcal: 38.0--protein: 0.0--fat: 0.0--carbs: 9.4:-:1000:-:100:-:
 2415:-:2025-04-24:-:ADD PRODUCT TO PRODUCT TABLE BY GUI:-:product_table:-:Kiełbasa białą z szynki:-:Kraina Wędlin:-:kcal: 253.0--protein: 15.0--fat: 20.0--carbs: 2.2:-:500:-:100:-:
 2416:-:2025-04-24:-:ADD PRODUCT TO CALENDAR TABLE BY GUI:-:calendar:-:2025-04-15:-:Tuesday:-:Nektar - czarna porzeczka:-:1000.0:-:kcal: 21.0--protein: 0.1--fat: 0.0--carbs: 5.2:-:Breakfast:-:None:-:kcal: 210.0--protein: 1.0--fat: 0.0--carbs: 52.0:-:
+2417:-:2025-04-24:-:ADD PRODUCT TO PRODUCT TABLE BY GUI:-:product_table:-:Napój mango mięta:-:Tymbark:-:kcal: 19.0--protein: 0.0--fat: 0.0--carbs: 4.8:-:2000:-:100:-:

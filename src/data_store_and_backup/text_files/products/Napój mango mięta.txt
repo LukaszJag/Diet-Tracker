@@ -1,0 +1,9 @@
+Name: Napój mango mięta
+Brand: Tymbark
+Package has: 2000.0
+Macro for: 100.0
+KCal: 19.0
+Protein: 0.0
+Fat: 0.0
+Carbs: 4.8
+Comment optional: Dane prosto z opakowania
