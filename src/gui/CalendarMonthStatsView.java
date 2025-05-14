@@ -112,7 +112,7 @@ public class CalendarMonthStatsView {
     //</editor-fold>
 
     JComboBox monthSelectComboBox = new JComboBox<>(new String[]{"April", "May", "June", "July", "August", "September", "October",
-            "November", "December", "January2025", "February2025", "March2025", "April2025"});
+            "November", "December", "January2025", "February2025", "March2025", "April2025" , "May2025"});
     JComboBox selectedDayProductsListComboBox = new JComboBox<String>();
 
     //</editor-fold>
@@ -190,7 +190,7 @@ public class CalendarMonthStatsView {
 
     //<editor-fold desc="Prepare Add Content - to Panels">
     private void prepareAndAddContentToMainPanel() {
-        setDaysButtonsMainPanel("April2025");
+        setDaysButtonsMainPanel("May2025");
     }
 
     private void prepareAndAddContentToNorthPanel() {
@@ -204,7 +204,7 @@ public class CalendarMonthStatsView {
         calendarMonthStatsViewPanelNorth.setLayout(northPanelGridLayout);
 
 
-        monthSelectComboBox.setSelectedItem("April2025");
+        monthSelectComboBox.setSelectedItem("May2025");
 
         selectedDaysCounterGoodDaysPanel = new JPanel();
         selectedDaysCounterBadDaysPanel = new JPanel();
@@ -420,6 +420,20 @@ public class CalendarMonthStatsView {
                 daysButtons[i].setPreferredSize(Config.CALENDAR_MONTH_STATS_VIEW_BUTTONS_SIZE_DIMENSION);
             }
         } else {
+            if (month.equals("May2025")) {
+                for (int i = 0; i < daysButtons.length; i++) {
+                    if (i >= 0 && i <= 2) {
+                        daysButtons[i] = new JButton("null");
+                    } else if (i == 34) {
+                        daysButtons[i] = new JButton("null");
+                    } else {
+                        daysButtons[i] = new JButton(String.valueOf(counter));
+                        daysButtons[i].setPreferredSize(Config.CALENDAR_MONTH_STATS_VIEW_BUTTONS_SIZE_DIMENSION);
+                        daysButtons[i].addActionListener(new DaysButtonsActionListener(daysButtons[i]));
+                        counter++;
+                    }
+                }
+            }
             if (month.equals("February2025")) {
                 for (int i = 0; i < daysButtons.length; i++) {
                     if (i < 5) {
@@ -783,16 +797,17 @@ public class CalendarMonthStatsView {
         if (month.equals("January2025")) {
             fullDate = "2025-01-";
         }
-
         if (month.equals("February2025")) {
             fullDate = "2025-02-";
         }
-
         if (month.equals("March2025")) {
             fullDate = "2025-03-";
         }
         if (month.equals("April2025")) {
             fullDate = "2025-04-";
+        }
+        if (month.equals("May2025")) {
+            fullDate = "2025-05-";
         }
         String fullDateCache = fullDate;
 
@@ -1153,6 +1168,9 @@ public class CalendarMonthStatsView {
 
             if (month.equals("April2025")) {
                 fullDate = "2025-04-";
+            }
+            if (month.equals("May2025")) {
+                fullDate = "2025-05-";
             }
 
             if (button.getText().length() == 1) {
