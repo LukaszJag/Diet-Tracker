@@ -1,0 +1,9 @@
+Name: Naleśnik domowy
+Brand: domowe
+Package has: 0.0
+Macro for: 100.0
+KCal: 214.4
+Protein: 8.1
+Fat: 5.0
+Carbs: 34.5
+Comment optional: Link: https://www.tabele-kalorii.pl/kalorie,Nalesnik-domowy.html

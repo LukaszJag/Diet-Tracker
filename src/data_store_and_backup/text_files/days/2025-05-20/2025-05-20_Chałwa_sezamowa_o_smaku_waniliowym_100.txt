@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2025-05-20',
+'Tuesday',
+'Night snack',
+100.0,
+'Chałwa sezamowa o smaku waniliowym',
+526.0,
+13.0,
+30.0,
+48.0,
+'2025-05-21 11:51:24',
+'none',
+526.0,
+48.0,
+30.0,
+13.0
+);

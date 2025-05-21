@@ -1,0 +1,9 @@
+Name: Syrop klonowy
+Brand: Maple Joe
+Package has: 250.0
+Macro for: 100.0
+KCal: 268.0
+Protein: 0.0
+Fat: 0.0
+Carbs: 67.0
+Comment optional: Dane z opakowania
