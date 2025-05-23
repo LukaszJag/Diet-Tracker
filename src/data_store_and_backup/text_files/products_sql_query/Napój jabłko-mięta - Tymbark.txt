@@ -18,3 +18,23 @@ Values
 0.1,
 9.8,
 'Link: https://www.tabele-kalorii.pl/kalorie,Napoj-jablko-mieta-Tymbark.html');
+INSERT INTO `diet_tracker_schema`.product_table
+(`product_name`,
+`product_brand`,
+`product_package_has`,
+`product_macro_for`,
+`product_kcal`,
+`product_protein`,
+`product_fat`,
+`product_carbs`,
+`comment_optional`)
+Values
+('Napój jabłko-mięta - Tymbark',
+'Tymbark',
+2000.0,
+100.0,
+19.0,
+0.0,
+0.0,
+4.6,
+'Link: https://tymbark.com/produkt/jablko-arbuz/');
