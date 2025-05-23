@@ -1,0 +1,20 @@
+INSERT INTO `diet_tracker_schema`.product_table
+(`product_name`,
+`product_brand`,
+`product_package_has`,
+`product_macro_for`,
+`product_kcal`,
+`product_protein`,
+`product_fat`,
+`product_carbs`,
+`comment_optional`)
+Values
+('Kapusta biała',
+'Warzywa',
+0.0,
+100.0,
+25.0,
+1.28,
+0.1,
+5.8,
+'Link: https://www.tabele-kalorii.pl/kalorie,Kapusta-biala.html');

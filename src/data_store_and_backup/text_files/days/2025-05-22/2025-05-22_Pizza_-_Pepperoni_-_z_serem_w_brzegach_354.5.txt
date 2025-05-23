@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2025-05-22',
+'Thursday',
+'Dinner',
+354.5,
+'Pizza - Pepperoni - z serem w brzegach',
+314.0,
+19.6,
+15.3,
+22.9,
+'2025-05-23 03:07:06',
+'none',
+1113.13,
+81.180504,
+54.238503,
+69.482
+);

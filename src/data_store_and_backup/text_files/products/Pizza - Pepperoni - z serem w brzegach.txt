@@ -1,0 +1,9 @@
+Name: Pizza - Pepperoni - z serem w brzegach
+Brand: Pizza Hut
+Package has: 709.0
+Macro for: 100.0
+KCal: 314.0
+Protein: 19.6
+Fat: 15.3
+Carbs: 22.9
+Comment optional: Dane z pdfu w projekcie

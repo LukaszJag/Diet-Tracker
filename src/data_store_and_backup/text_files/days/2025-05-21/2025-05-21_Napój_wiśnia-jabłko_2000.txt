@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2025-05-21',
+'Wednesday',
+'Supper',
+2000.0,
+'Napój wiśnia-jabłko',
+19.0,
+0.0,
+0.0,
+4.5,
+'2025-05-23 02:49:55',
+'none',
+380.0,
+90.0,
+0.0,
+0.0
+);

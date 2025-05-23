@@ -1,0 +1,9 @@
+Name: Kapusta biała
+Brand: Warzywa
+Package has: 0.0
+Macro for: 100.0
+KCal: 25.0
+Protein: 1.28
+Fat: 0.1
+Carbs: 5.8
+Comment optional: Link: https://www.tabele-kalorii.pl/kalorie,Kapusta-biala.html
