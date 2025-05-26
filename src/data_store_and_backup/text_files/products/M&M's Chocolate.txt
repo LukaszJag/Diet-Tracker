@@ -1,0 +1,9 @@
+Name: M&M's Chocolate
+Brand: Mars Polska Sp. z o.o. - Sochaczew
+Package has: 45.0
+Macro for: 100.0
+KCal: 480.0
+Protein: 5.3
+Fat: 19.0
+Carbs: 70.0
+Comment optional: Dane prosto z opakowania
