@@ -1,0 +1,9 @@
+Name: Lody Nogger Toffi
+Brand: Algida
+Package has: 60.0
+Macro for: 100.0
+KCal: 320.0
+Protein: 2.0
+Fat: 21.0
+Carbs: 30.0
+Comment optional: Link: https://emmamarket.pl/lody/7765-algida-nogger-toffi-lody-90-ml.html

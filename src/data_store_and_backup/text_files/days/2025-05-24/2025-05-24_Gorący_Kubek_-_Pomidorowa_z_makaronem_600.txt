@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2025-05-24',
+'Saturday',
+'Second Breakfast',
+600.0,
+'Gorący Kubek - Pomidorowa z makaronem',
+64.0,
+2.1,
+0.7,
+12.0,
+'2025-05-26 01:58:59',
+'none',
+384.0,
+72.0,
+4.2,
+12.599999
+);

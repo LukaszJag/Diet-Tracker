@@ -1,0 +1,20 @@
+INSERT INTO `diet_tracker_schema`.product_table
+(`product_name`,
+`product_brand`,
+`product_package_has`,
+`product_macro_for`,
+`product_kcal`,
+`product_protein`,
+`product_fat`,
+`product_carbs`,
+`comment_optional`)
+Values
+('Herbatniki Petit Beurre',
+'Bonitki',
+400.0,
+100.0,
+442.0,
+7.9,
+14.0,
+70.0,
+'Link: https://www.tabele-kalorii.pl/kalorie,Herbatniki-Petit-Beurre-Bonitki.html');

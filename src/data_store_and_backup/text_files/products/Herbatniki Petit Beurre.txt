@@ -1,0 +1,9 @@
+Name: Herbatniki Petit Beurre
+Brand: Bonitki
+Package has: 400.0
+Macro for: 100.0
+KCal: 442.0
+Protein: 7.9
+Fat: 14.0
+Carbs: 70.0
+Comment optional: Link: https://www.tabele-kalorii.pl/kalorie,Herbatniki-Petit-Beurre-Bonitki.html

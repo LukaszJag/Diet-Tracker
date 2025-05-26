@@ -1,0 +1,9 @@
+Name: Śledź smażony
+Brand: Domowe
+Package has: 0.0
+Macro for: 100.0
+KCal: 222.0
+Protein: 14.73
+Fat: 14.63
+Carbs: 7.98
+Comment optional: Link: https://www.tabele-kalorii.pl/kalorie,Sledzie-swieze-smazone-Przepis-od-zabczykowna.html

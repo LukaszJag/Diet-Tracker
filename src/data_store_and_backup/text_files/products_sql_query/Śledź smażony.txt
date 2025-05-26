@@ -1,0 +1,20 @@
+INSERT INTO `diet_tracker_schema`.product_table
+(`product_name`,
+`product_brand`,
+`product_package_has`,
+`product_macro_for`,
+`product_kcal`,
+`product_protein`,
+`product_fat`,
+`product_carbs`,
+`comment_optional`)
+Values
+('Śledź smażony',
+'Domowe',
+0.0,
+100.0,
+222.0,
+14.73,
+14.63,
+7.98,
+'Link: https://www.tabele-kalorii.pl/kalorie,Sledzie-swieze-smazone-Przepis-od-zabczykowna.html');
