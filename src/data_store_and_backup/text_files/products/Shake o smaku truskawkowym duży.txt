@@ -1,0 +1,9 @@
+Name: Shake o smaku truskawkowym duży
+Brand: McDonalds
+Package has: 200.0
+Macro for: 100.0
+KCal: 117.0
+Protein: 3.0
+Fat: 2.1
+Carbs: 21.0
+Comment optional: Dane z pdfu w projekcie
