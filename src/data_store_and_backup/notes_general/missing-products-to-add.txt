@@ -6,11 +6,3 @@ To add data from package of product:
 
 
 Missing product in calendar:
-
-M&M's Chocolate Czekolada mleczna w kolorowych skorupkach 45 g:
-
-M&M's Chocolate
-
-    -> 25.5.25
-    -> kupić i spisać makro z opakowania
-
