@@ -1,0 +1,9 @@
+Name: Kapusta kiszona z marchewką
+Brand: Domowe
+Package has: 0.0
+Macro for: 100.0
+KCal: 75.88
+Protein: 0.86
+Fat: 6.39
+Carbs: 2.23
+Comment optional: Link: https://www.tabele-kalorii.pl/kalorie,Kapusta-kiszona-z-marchewka-Przepis-od-mrmr.html

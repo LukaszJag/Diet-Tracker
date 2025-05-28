@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2025-05-18',
+'Sunday',
+'Dinner',
+358.0,
+'Kasza gryczana - ugotowana',
+121.0,
+4.7,
+1.1,
+22.2,
+'2025-05-28 06:10:30',
+'none',
+433.18,
+79.476,
+3.938,
+16.825998
+);
