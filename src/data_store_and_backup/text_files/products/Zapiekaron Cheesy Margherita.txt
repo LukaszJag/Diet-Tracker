@@ -1,0 +1,9 @@
+Name: Zapiekaron Cheesy Margherita
+Brand: Pizza Hut
+Package has: 310.0
+Macro for: 100.0
+KCal: 190.0
+Protein: 8.4
+Fat: 9.2
+Carbs: 17.7
+Comment optional: Dane z pdfu w projekcie

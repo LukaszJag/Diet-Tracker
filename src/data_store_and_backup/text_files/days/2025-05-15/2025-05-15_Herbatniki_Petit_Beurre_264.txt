@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2025-05-15',
+'Thursday',
+'Night snack',
+264.0,
+'Herbatniki Petit Beurre',
+442.0,
+7.9,
+14.0,
+70.0,
+'2025-05-29 11:21:59',
+'none',
+1166.88,
+184.8,
+36.960003,
+20.856
+);
