@@ -728,6 +728,10 @@ public class CalendarMonthStatsView {
             fullDate = "2025-04-";
         }
 
+        if (month.equals("May2025")) {
+            fullDate = "2025-05-";
+        }
+
         String[] allDayWhichNeedData = new String[amountOfMonthDays];
         String fullDateBuffor = fullDate;
 
