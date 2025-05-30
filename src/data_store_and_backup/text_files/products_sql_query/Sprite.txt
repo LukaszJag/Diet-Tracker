@@ -1,0 +1,20 @@
+INSERT INTO `diet_tracker_schema`.product_table
+(`product_name`,
+`product_brand`,
+`product_package_has`,
+`product_macro_for`,
+`product_kcal`,
+`product_protein`,
+`product_fat`,
+`product_carbs`,
+`comment_optional`)
+Values
+('Sprite',
+'The Coca-Cola Company',
+0.0,
+100.0,
+37.0,
+0.0,
+0.0,
+9.0,
+'Link: https://online.makro.pl/shop/pv/BTY-X337449/0032/0022/Sprite-FS-Nap%C3%B3j-gazowany-850-ml-12-sztuk');

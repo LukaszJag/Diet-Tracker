@@ -1,0 +1,9 @@
+Name: Frytki Duże - McDonalds
+Brand: McDonalds
+Package has: 144.0
+Macro for: 100.0
+KCal: 299.0
+Protein: 3.4
+Fat: 15.0
+Carbs: 37.0
+Comment optional: Link: https://www.tabele-kalorii.pl/kalorie,Frytki-Duze-McDonald-s.html

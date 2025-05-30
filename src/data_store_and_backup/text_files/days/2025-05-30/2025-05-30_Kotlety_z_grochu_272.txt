@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2025-05-30',
+'Friday',
+'Dinner',
+272.0,
+'Kotlety z grochu',
+129.59,
+7.45,
+0.55,
+22.8,
+'2025-05-30 08:59:44',
+'none',
+352.4848,
+62.016,
+1.496,
+20.264
+);

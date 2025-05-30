@@ -1,0 +1,9 @@
+Name: Sprite
+Brand: The Coca-Cola Company
+Package has: 0.0
+Macro for: 100.0
+KCal: 37.0
+Protein: 0.0
+Fat: 0.0
+Carbs: 9.0
+Comment optional: Link: https://online.makro.pl/shop/pv/BTY-X337449/0032/0022/Sprite-FS-Nap%C3%B3j-gazowany-850-ml-12-sztuk
