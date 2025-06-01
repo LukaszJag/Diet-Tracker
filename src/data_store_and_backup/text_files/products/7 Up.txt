@@ -1,0 +1,9 @@
+Name: 7 Up
+Brand: Pepsi Cola General Bottlers Poland Sp. z o.o.
+Package has: 0.0
+Macro for: 100.0
+KCal: 29.0
+Protein: 0.0
+Fat: 0.0
+Carbs: 7.0
+Comment optional: Link: https://online.makro.pl/shop/pv/BTY-X548428/0032/0021/7UP-Nap%C3%B3j-gazowany-0-5-l-12-sztuk

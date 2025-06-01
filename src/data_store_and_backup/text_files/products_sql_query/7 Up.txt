@@ -1,0 +1,20 @@
+INSERT INTO `diet_tracker_schema`.product_table
+(`product_name`,
+`product_brand`,
+`product_package_has`,
+`product_macro_for`,
+`product_kcal`,
+`product_protein`,
+`product_fat`,
+`product_carbs`,
+`comment_optional`)
+Values
+('7 Up',
+'Pepsi Cola General Bottlers Poland Sp. z o.o.',
+0.0,
+100.0,
+29.0,
+0.0,
+0.0,
+7.0,
+'Link: https://online.makro.pl/shop/pv/BTY-X548428/0032/0021/7UP-Nap%C3%B3j-gazowany-0-5-l-12-sztuk');
