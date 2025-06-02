@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2025-06-01',
+'Sunday',
+'After workout',
+160.0,
+'Ciacho owsiane',
+358.0,
+4.9,
+17.0,
+43.0,
+'2025-06-02 07:19:33',
+'none',
+572.8,
+68.8,
+27.2,
+7.84
+);
