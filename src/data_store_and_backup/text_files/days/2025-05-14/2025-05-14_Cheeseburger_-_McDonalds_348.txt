@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2025-05-14',
+'Wednesday',
+'Dinner',
+348.0,
+'Cheeseburger - McDonalds',
+262.9,
+13.8,
+11.2,
+25.9,
+'2025-06-04 12:47:29',
+'none',
+914.89197,
+90.131996,
+38.975998,
+48.024002
+);
