@@ -2701,3 +2701,4 @@
 2701:-:2025-06-02:-:ADD PRODUCT TO CALENDAR TABLE BY GUI:-:calendar:-:2025-06-02:-:Monday:-:Kotlet schabowy:-:229.0:-:kcal: 151.0--protein: 16.8--fat: 4.7--carbs: 9.4:-:Snack 2:-:None:-:kcal: 345.79--protein: 38.471996--fat: 10.763--carbs: 21.526:-:
 2702:-:2025-06-02:-:ADD PRODUCT TO CALENDAR TABLE BY GUI:-:calendar:-:2025-05-26:-:Monday:-:Napój wiśnia-jabłko:-:2000.0:-:kcal: 19.0--protein: 0.0--fat: 0.0--carbs: 4.5:-:Supper:-:None:-:kcal: 380.0--protein: 0.0--fat: 0.0--carbs: 90.0:-:
 2703:-:2025-06-02:-:ADD PRODUCT TO CALENDAR TABLE BY GUI:-:calendar:-:2025-05-21:-:Wednesday:-:Napój jabłko-mięta - Tymbark:-:2000.0:-:kcal: 41.0--protein: 0.1--fat: 0.1--carbs: 9.8:-:Supper:-:None:-:kcal: 820.0--protein: 2.0--fat: 2.0--carbs: 196.0:-:
+2704:-:2025-06-03:-:ADD PRODUCT TO PRODUCT TABLE BY GUI:-:product_table:-:Chleb żytni z ziarnami:-:Z Piekarni Regionalnej:-:kcal: 242.0--protein: 7.5--fat: 5.9--carbs: 37.0:-:400:-:100:-:

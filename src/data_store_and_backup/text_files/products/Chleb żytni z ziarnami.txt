@@ -1,0 +1,9 @@
+Name: Chleb żytni z ziarnami
+Brand: Z Piekarni Regionalnej
+Package has: 400.0
+Macro for: 100.0
+KCal: 242.0
+Protein: 7.5
+Fat: 5.9
+Carbs: 37.0
+Comment optional: Link: https://www.tabele-kalorii.pl/kalorie,Chleb-zytni-z-ziarnami-Wypieczone-ze-Smakiem-Z-Piekarni-Regionalnej.html
