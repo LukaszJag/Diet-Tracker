@@ -1,0 +1,1 @@
+SHOW GLOBAL VARIABLES WHERE Variable_name = "max_connections";
