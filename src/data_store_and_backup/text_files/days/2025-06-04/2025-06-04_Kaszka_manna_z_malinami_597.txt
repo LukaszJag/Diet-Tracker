@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2025-06-04',
+'Wednesday',
+'Dinner',
+597.0,
+'Kaszka manna z malinami',
+90.0,
+3.0,
+0.4,
+18.0,
+'2025-06-04 04:47:41',
+'none',
+537.3,
+107.46,
+2.388,
+17.91
+);
