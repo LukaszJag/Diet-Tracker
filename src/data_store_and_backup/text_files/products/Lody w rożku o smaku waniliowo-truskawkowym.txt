@@ -1,0 +1,18 @@
+Name: Lody w rożku o smaku waniliowo-truskawkowym
+Brand: Diuna
+Package has: 75.0
+Macro for: 100.0
+KCal: 253.0
+Protein: 3.2
+Fat: 12.0
+Carbs: 34.0
+Comment optional: Dane z opakowania
+Name: Lody w rożku o smaku waniliowo-truskawkowym
+Brand: Diuna
+Package has: 75.0
+Macro for: 100.0
+KCal: 253.0
+Protein: 3.2
+Fat: 12.0
+Carbs: 34.0
+Comment optional: Dane z opakowania

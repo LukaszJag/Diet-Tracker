@@ -1,0 +1,9 @@
+Name: Wiejskie filety śledzione z cebulką
+Brand: Marinero
+Package has: 474.0
+Macro for: 100.0
+KCal: 195.0
+Protein: 9.9
+Fat: 12.7
+Carbs: 10.0
+Comment optional: Dane z opakowania
