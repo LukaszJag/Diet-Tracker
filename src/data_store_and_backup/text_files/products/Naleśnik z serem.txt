@@ -1,0 +1,9 @@
+Name: Naleśnik z serem
+Brand: domowy
+Package has: 0.0
+Macro for: 100.0
+KCal: 238.0
+Protein: 8.0
+Fat: 11.0
+Carbs: 29.0
+Comment optional: Link: https://kalkulatorkalorii.net/kalkulator-kalorii/1114-100-nalesnik+z+serem

@@ -1,0 +1,9 @@
+Name: Cukierek - Krówka mleczna
+Brand: Mieszko
+Package has: 0.0
+Macro for: 100.0
+KCal: 424.0
+Protein: 3.2
+Fat: 12.0
+Carbs: 76.0
+Comment optional: Link: https://zakupy.auchan.pl/products/kr%C3%B3wka-mleczna-mieszko-215-g/00201533
