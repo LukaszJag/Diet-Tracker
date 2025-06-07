@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2025-06-06',
+'Friday',
+'Supper',
+121.0,
+'Cukierek - Krówka mleczna',
+424.0,
+3.2,
+12.0,
+76.0,
+'2025-06-07 05:40:08',
+'none',
+513.04004,
+91.96001,
+14.52,
+3.8720002
+);
