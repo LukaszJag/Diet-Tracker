@@ -1,5 +1,6 @@
 package runners_and_tests.tests;
 
+import gui.LoadingBarGUI;
 import runners_and_tests.tests.test_tools.get_simple_data_to_test.DayInCalendarFactoryToMakeTest;
 import runners_and_tests.tests.test_tools.get_simple_data_to_test.ProductFactoryToMakeTests;
 import tools.calendar_tools.DayInCalendar;
@@ -36,8 +37,14 @@ public class QuickTests {
         //test10();
         //test11();
         //test12();
-        test13GetAmountOfDaysInMonth();
+        //test13GetAmountOfDaysInMonth();
+        testLoadingBar();
 
+    }
+
+    private static void testLoadingBar() {
+        LoadingBarGUI loadingBarGUI = new LoadingBarGUI();
+        loadingBarGUI.displayLoadingBar();
     }
 
 

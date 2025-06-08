@@ -196,9 +196,10 @@ public class MainWindow extends JFrame {
     private class RefreshDataBaseButtonActionListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
+            System.out.println("here-4");
             try {
-                UpdateProductAndCalendarTableFull.updateProductAndCalendarTableFull();
                 RunnerFullUpdateDayStatistics.runFullUpdateForAllMonthInDayStatistics();
+                UpdateProductAndCalendarTableFull.updateProductAndCalendarTableFull();
             } catch (SQLException ex) {
                 throw new RuntimeException(ex);
             }
@@ -210,7 +211,13 @@ public class MainWindow extends JFrame {
     private class calculateBMRActionListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            new BMRWindow();
+            System.out.println("here-bmr");
+            try{
+
+            LoadingBarGUI loadingBarGUI = new LoadingBarGUI();
+            }catch (Exception ex){
+
+            }
         }
     }
 
@@ -224,11 +231,13 @@ public class MainWindow extends JFrame {
     private class RefreshDaysStatisticsDataBaseButtonActionListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
+            LoadingBarGUI loadingBarGUI = new LoadingBarGUI();
             try {
                 RunnerFullUpdateDayStatistics.runFullUpdateForAllMonthInDayStatistics();
-            } catch (SQLException ex) {
-                throw new RuntimeException(ex);
+            } catch (SQLException ignored) {
+                throw new RuntimeException(ignored);
             }
+
 
             JOptionPane.showMessageDialog(null, "Day Statistics is update");
         }
