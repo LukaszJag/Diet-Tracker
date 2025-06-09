@@ -1,6 +1,7 @@
 package runners_and_tests.tests;
 
 import gui.LoadingBarGUI;
+import runners_and_tests.run_update.RunnerFullUpdateDayStatistics;
 import runners_and_tests.tests.test_tools.get_simple_data_to_test.DayInCalendarFactoryToMakeTest;
 import runners_and_tests.tests.test_tools.get_simple_data_to_test.ProductFactoryToMakeTests;
 import tools.calendar_tools.DayInCalendar;
@@ -38,8 +39,19 @@ public class QuickTests {
         //test11();
         //test12();
         //test13GetAmountOfDaysInMonth();
-        testLoadingBar();
 
+        //testLoadingBar();
+
+        testRunRunnerFullUpdateDayStatistics();
+
+    }
+
+    private static void testRunRunnerFullUpdateDayStatistics() {
+        try {
+            RunnerFullUpdateDayStatistics.runFullUpdateForAllMonthInDayStatistics();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private static void testLoadingBar() {
