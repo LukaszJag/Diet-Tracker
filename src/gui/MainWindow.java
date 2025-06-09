@@ -198,8 +198,8 @@ public class MainWindow extends JFrame {
         public void actionPerformed(ActionEvent e) {
             System.out.println("here-4");
             try {
-                RunnerFullUpdateDayStatistics.runFullUpdateForAllMonthInDayStatistics();
                 UpdateProductAndCalendarTableFull.updateProductAndCalendarTableFull();
+                RunnerFullUpdateDayStatistics.runFullUpdateForAllMonthInDayStatistics();
             } catch (SQLException ex) {
                 throw new RuntimeException(ex);
             }
