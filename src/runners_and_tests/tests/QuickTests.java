@@ -1,23 +1,20 @@
 package runners_and_tests.tests;
 
 import gui.LoadingBarGUI;
-import runners_and_tests.run_update.RunnerFullUpdateDayStatistics;
 import runners_and_tests.tests.test_tools.get_simple_data_to_test.DayInCalendarFactoryToMakeTest;
 import runners_and_tests.tests.test_tools.get_simple_data_to_test.ProductFactoryToMakeTests;
 import tools.calendar_tools.DayInCalendar;
 import tools.products_tools.Product;
 import tools.sql_tools.SQLSelect;
 import tools.sql_tools.calendar.InsertToCalendarDayTable;
+import tools.sql_tools.days_statistics.GenerateSLQTableForDaysStatistics;
+import tools.sql_tools.days_statistics.UpdateDaysStatisticsFilledData;
 import tools.sql_tools.general.IsTheRowAlreadyExist;
 import tools.sql_tools.general.RunQuery;
 import tools.sql_tools.products.ImportDateFromTXTFilesToSQLDB;
 import tools.text_files_tools.DirectoryTools;
 import tools.text_files_tools.FilesTools;
 
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.text.ParseException;
@@ -42,48 +39,80 @@ public class QuickTests {
         //test10();
         //test11();
         //test12();
-        //test13GetAmountOfDaysInMonth();
 
-        //testLoadingBar();
-
-       // testRunRunnerFullUpdateDayStatistics();
-
-       QuickTests quickTests = new QuickTests();
-       quickTests.testbutton();
+        QuickTests.runFullUpdateForAllMonthInDayStatisticsQuickTest();
+        QuickTests.runFullUpdateForAllMonthInDayStatisticsQuickTest2(null);
 
     }
 
-    private void testbutton() {
-        JButton button = new JButton();
-        button.add(new OtherThenCurrentDateButtonListener());
-        button.doClick(100);
-    }
-
-
-    private class OtherThenCurrentDateButtonListener extends PopupMenu implements ActionListener{
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            try {
-                RunnerFullUpdateDayStatistics.runFullUpdateForAllMonthInDayStatistics();
-            } catch (SQLException ex) {
-                throw new RuntimeException(ex);
-            }
-        }
-    }
-
-    private static void testRunRunnerFullUpdateDayStatistics() {
-        try {
-            RunnerFullUpdateDayStatistics.runFullUpdateForAllMonthInDayStatistics();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    private static void testLoadingBar() {
+    public static void runFullUpdateForAllMonthInDayStatisticsQuickTest() throws SQLException {
         LoadingBarGUI loadingBarGUI = new LoadingBarGUI();
-        loadingBarGUI.displayLoadingBar();
+        String[] monthsFrom2024 = {"May", "June", "July", "August", "September", "October", "November", "December"};
+        String[] monthsFrom2025 = {"January", "February", "March", "April", "May", "June"};
+
+        int amountOfMonths = monthsFrom2024.length + monthsFrom2025.length;
+        int progressForProgressBar = 100 / amountOfMonths;
+        for (int i = 0; i < monthsFrom2024.length; i++) {
+            System.out.println("Start: full update - table days_statistics_test -\t" + monthsFrom2024[i] + " - - " + 2024);
+
+            GenerateSLQTableForDaysStatistics.generateWholeMonthAndFillAmountOfPointsFromNotepad(monthsFrom2024[i], 2024);
+
+            UpdateDaysStatisticsFilledData.updateWholeMonthMacroSum(monthsFrom2024[i], 2024);
+
+            UpdateDaysStatisticsFilledData.updateAmountOfFilledPointsFromNotepad(monthsFrom2024[i], 2024);
+
+            System.out.println("Finish: full update - table days_statistics_test -\t" + monthsFrom2024[i] + " - - " + 2024);
+            //  loadingBarGUI.setLabel(monthsFrom2024[i] + " - 2024");
+            //   loadingBarGUI.fill(progressForProgressBar);
+        }
+
+        for (int i = 0; i < monthsFrom2025.length; i++) {
+            System.out.println("Start: full update - table days_statistics_test -\t" + monthsFrom2025[i] + " - - " + 2025);
+
+            GenerateSLQTableForDaysStatistics.generateWholeMonthAndFillAmountOfPointsFromNotepad(monthsFrom2025[i], 2025);
+            UpdateDaysStatisticsFilledData.updateWholeMonthMacroSum(monthsFrom2025[i], 2025);
+            UpdateDaysStatisticsFilledData.updateAmountOfFilledPointsFromNotepad(monthsFrom2025[i], 2025);
+
+            System.out.println("Finish: full update - table days_statistics_test -\t" + monthsFrom2025[i] + " - - " + 2025);
+
+            // loadingBarGUI.setLabel(monthsFrom2025[i] + " - 2025");
+            //loadingBarGUI.fill(progressForProgressBar);
+        }
     }
+
+
+    public static void runFullUpdateForAllMonthInDayStatisticsQuickTest2(LoadingBarGUI loadingBarGUI) {
+        loadingBarGUI.displayLoadingBar();
+        String[] monthsFrom2024 = {"May", "June", "July", "August", "September", "October", "November", "December"};
+        String[] monthsFrom2025 = {"January", "February", "March", "April", "May", "June"};
+
+        int amountOfMonths = monthsFrom2024.length + monthsFrom2025.length;
+        int progressForProgressBar = 100 / amountOfMonths;
+        for (int i = 0; i < monthsFrom2024.length; i++) {
+            System.out.println("Start: full update - table days_statistics_test -\t" + monthsFrom2024[i] + " - - " + 2024);
+
+            //GenerateSLQTableForDaysStatistics.generateWholeMonthAndFillAmountOfPointsFromNotepad(monthsFrom2024[i], 2024);
+
+
+
+
+            System.out.println("Finish: full update - table days_statistics_test -\t" + monthsFrom2024[i] + " - - " + 2024);
+            //  loadingBarGUI.setLabel(monthsFrom2024[i] + " - 2024");
+            //   loadingBarGUI.fill(progressForProgressBar);
+        }
+
+        for (int i = 0; i < monthsFrom2025.length; i++) {
+            System.out.println("Start: full update - table days_statistics_test -\t" + monthsFrom2025[i] + " - - " + 2025);
+
+            GenerateSLQTableForDaysStatistics.generateWholeMonthAndFillAmountOfPointsFromNotepad(monthsFrom2025[i], 2025);
+
+            System.out.println("Finish: full update - table days_statistics_test -\t" + monthsFrom2025[i] + " - - " + 2025);
+
+            // loadingBarGUI.setLabel(monthsFrom2025[i] + " - 2025");
+            //loadingBarGUI.fill(progressForProgressBar);
+        }
+    }
+
 
 
     //<editor-fold desc="TESTS 1 -> 10">

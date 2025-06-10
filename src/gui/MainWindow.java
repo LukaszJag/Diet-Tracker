@@ -3,6 +3,7 @@ package gui;
 import configuration.Config;
 import runners_and_tests.run_update.RunnerFullUpdateDayStatistics;
 import runners_and_tests.run_update.UpdateProductAndCalendarTableFull;
+import runners_and_tests.tests.QuickTests;
 
 import javax.swing.*;
 import java.awt.*;
@@ -37,22 +38,24 @@ public class MainWindow extends JFrame {
     JButton mealManagerButton = new JButton("Meal manager");
 
     JButton addProductToDay = new JButton("Add product to day");
-    JButton calculateBMR = new JButton("Calculate BMR");
+    JButton calculateBMR = new JButton("Test loading bar");
     JButton calendarMonthStatsView = new JButton("Month stats view");
     JButton changeProductDataBase = new JButton("Change product table");
     JButton refreshDataBaseButton = new JButton("Refresh Data base");
     JButton refreshCalendarAndProductDataBaseButton = new JButton("Refresh CalendarAndProduct Data");
     JButton refreshDaysStatisticsDataBaseButton = new JButton("Refresh DaysStatistics Data");
-
     JButton closeApplicationButton = new JButton("Exit");
     //</editor-fold>
 
+    // TEST AREA
+    LoadingBarGUI loadingBarGUI;
 
     public void makeRunWindow() {
         setUpAndStartMenuWindow();
     }
 
     private void setUpAndStartMenuWindow() {
+
 
         startWindow = new JFrame("Diet Tracker - main window");
         startWindow.setSize(Config.START_WINDOWS_WIDTH, Config.START_WINDOWS_HEIGHT);
@@ -193,35 +196,6 @@ public class MainWindow extends JFrame {
         }
     }
 
-    private class RefreshDataBaseButtonActionListener implements ActionListener {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            System.out.println("here-4");
-            try {
-                UpdateProductAndCalendarTableFull.updateProductAndCalendarTableFull();
-                RunnerFullUpdateDayStatistics.runFullUpdateForAllMonthInDayStatistics();
-            } catch (SQLException ex) {
-                throw new RuntimeException(ex);
-            }
-
-            JOptionPane.showMessageDialog(null, "Whole database is update");
-        }
-    }
-
-    private class calculateBMRActionListener implements ActionListener {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            System.out.println("here-bmr");
-
-            try {
-                RunnerFullUpdateDayStatistics.runFullUpdateForAllMonthInDayStatistics();
-            } catch (SQLException ex) {
-                throw new RuntimeException(ex);
-            }
-
-        }
-    }
-
     private class calendarMonthStatsViewActionListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -229,16 +203,15 @@ public class MainWindow extends JFrame {
         }
     }
 
-    private class RefreshDaysStatisticsDataBaseButtonActionListener implements ActionListener {
+    public class RefreshDaysStatisticsDataBaseButtonActionListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            LoadingBarGUI loadingBarGUI = new LoadingBarGUI();
+            // try {
             try {
                 RunnerFullUpdateDayStatistics.runFullUpdateForAllMonthInDayStatistics();
-            } catch (SQLException ignored) {
-                throw new RuntimeException(ignored);
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
             }
-
 
             JOptionPane.showMessageDialog(null, "Day Statistics is update");
         }
@@ -256,4 +229,30 @@ public class MainWindow extends JFrame {
         }
     }
     //</editor-fold>
+
+    private class RefreshDataBaseButtonActionListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            try {
+                UpdateProductAndCalendarTableFull.updateProductAndCalendarTableFull();
+                RunnerFullUpdateDayStatistics.runFullUpdateForAllMonthInDayStatistics();
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            }
+
+            JOptionPane.showMessageDialog(null, "Whole database is update");
+        }
+    }
+
+    // TEST AREA
+    private class calculateBMRActionListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            // TEST AREA
+            loadingBarGUI = new LoadingBarGUI(1);
+            // TEST AREA
+            QuickTests.runFullUpdateForAllMonthInDayStatisticsQuickTest2(loadingBarGUI);
+
+        }
+    }
 }

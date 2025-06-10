@@ -1,12 +1,13 @@
 package gui;
 
 import javax.swing.*;
+import java.awt.*;
 
 public class LoadingBarGUI {
-    private static JPanel panelCenter;
-    private static JFrame frame;
-    private static JLabel label;
-    private static JProgressBar progressBar;
+    public static JPanel panelCenter;
+    public static JFrame frame;
+    public static JLabel label;
+    public static JProgressBar progressBar;
 
     public LoadingBarGUI() {
         this.panelCenter = new JPanel();
@@ -16,19 +17,28 @@ public class LoadingBarGUI {
         displayLoadingBar();
     }
 
+    public LoadingBarGUI(int ver) {
+        this.panelCenter = new JPanel();
+        this.frame = new JFrame("loading bar - window");
+        this.progressBar = new JProgressBar();
+        this.label = new JLabel("test");
+    }
+
+
     public void displayLoadingBar() {
 
+        frame.setSize(400, 100);
         progressBar.setValue(0);
         progressBar.setStringPainted (true);
 
         panelCenter.setSize(300,50);
+        panelCenter.setLayout(new GridLayout());
         panelCenter.add(progressBar);
         panelCenter.add(label);
         panelCenter.add(new JLabel("test test"));
         System.out.println("loading bar - point");
 
         frame.add(panelCenter);
-        frame.setSize(400, 100);
         frame.setVisible(true);
         frame.setLocationRelativeTo(null);
     }
