@@ -10,7 +10,7 @@ public class LoadingBarGUI {
 
     public LoadingBarGUI() {
         this.panelCenter = new JPanel();
-        this.frame = new JFrame();
+        this.frame = new JFrame("loading bar - window");
         this.progressBar = new JProgressBar();
         this.label = new JLabel("test");
         displayLoadingBar();
@@ -25,6 +25,7 @@ public class LoadingBarGUI {
         panelCenter.add(progressBar);
         panelCenter.add(label);
         panelCenter.add(new JLabel("test test"));
+        System.out.println("loading bar - point");
 
         frame.add(panelCenter);
         frame.setSize(400, 100);

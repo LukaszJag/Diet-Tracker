@@ -14,14 +14,18 @@ import tools.sql_tools.products.ImportDateFromTXTFilesToSQLDB;
 import tools.text_files_tools.DirectoryTools;
 import tools.text_files_tools.FilesTools;
 
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.Month;
 import java.time.format.TextStyle;
 import java.util.Calendar;
 import java.util.Date;
-import java.time.Month;
 import java.util.Locale;
 
 public class QuickTests {
@@ -42,8 +46,30 @@ public class QuickTests {
 
         //testLoadingBar();
 
-        testRunRunnerFullUpdateDayStatistics();
+       // testRunRunnerFullUpdateDayStatistics();
 
+       QuickTests quickTests = new QuickTests();
+       quickTests.testbutton();
+
+    }
+
+    private void testbutton() {
+        JButton button = new JButton();
+        button.add(new OtherThenCurrentDateButtonListener());
+        button.doClick(100);
+    }
+
+
+    private class OtherThenCurrentDateButtonListener extends PopupMenu implements ActionListener{
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            try {
+                RunnerFullUpdateDayStatistics.runFullUpdateForAllMonthInDayStatistics();
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            }
+        }
     }
 
     private static void testRunRunnerFullUpdateDayStatistics() {

@@ -212,12 +212,13 @@ public class MainWindow extends JFrame {
         @Override
         public void actionPerformed(ActionEvent e) {
             System.out.println("here-bmr");
-            try{
 
-            LoadingBarGUI loadingBarGUI = new LoadingBarGUI();
-            }catch (Exception ex){
-
+            try {
+                RunnerFullUpdateDayStatistics.runFullUpdateForAllMonthInDayStatistics();
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
             }
+
         }
     }
 
