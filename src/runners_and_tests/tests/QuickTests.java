@@ -1,6 +1,7 @@
 package runners_and_tests.tests;
 
 import gui.LoadingBarGUI;
+import runners_and_tests.run_update.RunnerFullUpdateDayStatistics;
 import runners_and_tests.tests.test_tools.get_simple_data_to_test.DayInCalendarFactoryToMakeTest;
 import runners_and_tests.tests.test_tools.get_simple_data_to_test.ProductFactoryToMakeTests;
 import tools.calendar_tools.DayInCalendar;
@@ -40,9 +41,18 @@ public class QuickTests {
         //test11();
         //test12();
 
-        QuickTests.runFullUpdateForAllMonthInDayStatisticsQuickTest();
-        QuickTests.runFullUpdateForAllMonthInDayStatisticsQuickTest2(null);
+        //QuickTests.runFullUpdateForAllMonthInDayStatisticsQuickTest();
+        //QuickTests.runFullUpdateForAllMonthInDayStatisticsQuickTest2(null);
 
+        directExecuteRunner();
+    }
+
+    private static void directExecuteRunner() {
+        try {
+            RunnerFullUpdateDayStatistics.runFullUpdateForAllMonthInDayStatistics();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public static void runFullUpdateForAllMonthInDayStatisticsQuickTest() throws SQLException {
@@ -81,8 +91,7 @@ public class QuickTests {
     }
 
 
-    public static void runFullUpdateForAllMonthInDayStatisticsQuickTest2(LoadingBarGUI loadingBarGUI) {
-        loadingBarGUI.displayLoadingBar();
+    public static void runFullUpdateForAllMonthInDayStatisticsQuickTest2(LoadingBarGUI loadingBarGUI) throws SQLException {
         String[] monthsFrom2024 = {"May", "June", "July", "August", "September", "October", "November", "December"};
         String[] monthsFrom2025 = {"January", "February", "March", "April", "May", "June"};
 
@@ -92,7 +101,7 @@ public class QuickTests {
             System.out.println("Start: full update - table days_statistics_test -\t" + monthsFrom2024[i] + " - - " + 2024);
 
             //GenerateSLQTableForDaysStatistics.generateWholeMonthAndFillAmountOfPointsFromNotepad(monthsFrom2024[i], 2024);
-
+            UpdateDaysStatisticsFilledData.updateAmountOfFilledPointsFromNotepad(monthsFrom2024[i], 2024);
 
 
 
@@ -104,7 +113,7 @@ public class QuickTests {
         for (int i = 0; i < monthsFrom2025.length; i++) {
             System.out.println("Start: full update - table days_statistics_test -\t" + monthsFrom2025[i] + " - - " + 2025);
 
-            GenerateSLQTableForDaysStatistics.generateWholeMonthAndFillAmountOfPointsFromNotepad(monthsFrom2025[i], 2025);
+            //GenerateSLQTableForDaysStatistics.generateWholeMonthAndFillAmountOfPointsFromNotepad(monthsFrom2025[i], 2025);
 
             System.out.println("Finish: full update - table days_statistics_test -\t" + monthsFrom2025[i] + " - - " + 2025);
 

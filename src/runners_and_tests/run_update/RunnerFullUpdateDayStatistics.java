@@ -1,5 +1,6 @@
 package runners_and_tests.run_update;
 
+import gui.LoadingBarGUI;
 import tools.sql_tools.days_statistics.GenerateSLQTableForDaysStatistics;
 import tools.sql_tools.days_statistics.UpdateDaysStatisticsFilledData;
 
@@ -23,6 +24,7 @@ public class RunnerFullUpdateDayStatistics {
 
     public static void runFullUpdateForAllMonthInDayStatistics() throws SQLException {
 
+        LoadingBarGUI loadingBarGUI = new LoadingBarGUI();
         String[] monthsFrom2024 = {"May", "June", "July", "August", "September", "October", "November", "December"};
         String[] monthsFrom2025 = {"January", "February", "March", "April", "May", "June"};
 

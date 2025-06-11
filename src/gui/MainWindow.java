@@ -249,9 +249,15 @@ public class MainWindow extends JFrame {
         @Override
         public void actionPerformed(ActionEvent e) {
             // TEST AREA
-            loadingBarGUI = new LoadingBarGUI(1);
+            LoadingBarGUI loadingBarGUI1 = new LoadingBarGUI();
+
+            QuickTests quickTests = new QuickTests();
             // TEST AREA
-            QuickTests.runFullUpdateForAllMonthInDayStatisticsQuickTest2(loadingBarGUI);
+            try {
+                quickTests.runFullUpdateForAllMonthInDayStatisticsQuickTest2(loadingBarGUI);
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            }
 
         }
     }
