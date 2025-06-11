@@ -1,13 +1,13 @@
 package gui;
 
+import configuration.Config;
 import logs.Log;
 import runners_and_tests.run_update.RunnerFullUpdateDayStatistics;
 import tools.calendar_tools.DayInCalendar;
-import configuration.Config;
 import tools.products_tools.Macro;
 import tools.products_tools.Product;
-import tools.sql_tools.calendar.InsertToCalendarDayTable;
 import tools.sql_tools.SQLSelect;
+import tools.sql_tools.calendar.InsertToCalendarDayTable;
 import tools.text_files_tools.FilesTools;
 import tools.time_date_tools.DateTools;
 
@@ -413,6 +413,22 @@ public class AddProductToCalendarDay {
         } catch (SQLException ex) {
             throw new RuntimeException(ex);
         }
+
+
+        //<editor-fold desc="Prepare and Execute update data for selected month">
+        String addProductToDayDisplaySelectedFDateDayLabelString = addProductToDayDisplaySelectedFDateDayLabel.getText();
+        String monthInNumberString = "" + addProductToDayDisplaySelectedFDateDayLabelString.charAt(5) + addProductToDayDisplaySelectedFDateDayLabelString.charAt(6);
+
+        if (monthInNumberString.charAt(0) == '0'){
+            monthInNumberString = "" +  monthInNumberString.charAt(1);
+        }
+        int monthInNumberInt = Integer.valueOf(monthInNumberString);
+
+        String yearInString =  addProductToDayDisplaySelectedFDateDayLabelString.substring(0,4);
+        int yearInNumber = Integer.valueOf(yearInString);
+
+        RunnerFullUpdateDayStatistics.runFullUpdateForAllOneMonthInDayStatistics(monthInNumberInt, yearInNumber);
+        //</editor-fold>
 
         JOptionPane.showMessageDialog(null, "Product has been added. Date: " +
                 addProductToDayDisplaySelectedFDateNameDayLabel.getText()

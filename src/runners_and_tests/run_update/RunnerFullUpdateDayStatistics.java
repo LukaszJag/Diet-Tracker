@@ -1,12 +1,17 @@
 package runners_and_tests.run_update;
 
 import gui.LoadingBarGUI;
+import tools.calendar_tools.MyDate;
 import tools.sql_tools.days_statistics.GenerateSLQTableForDaysStatistics;
 import tools.sql_tools.days_statistics.UpdateDaysStatisticsFilledData;
 
 import java.sql.SQLException;
 
 public class RunnerFullUpdateDayStatistics {
+
+    static String[] monthsFrom2024 = {"May", "June", "July", "August", "September", "October", "November", "December"};
+    static String[] monthsFrom2025 = {"January", "February", "March", "April", "May", "June"};
+
     public static void main(String[] args) throws SQLException {
         runFullUpdateForAllMonthInDayStatistics();
     }
@@ -25,8 +30,7 @@ public class RunnerFullUpdateDayStatistics {
     public static void runFullUpdateForAllMonthInDayStatistics() throws SQLException {
 
         LoadingBarGUI loadingBarGUI = new LoadingBarGUI();
-        String[] monthsFrom2024 = {"May", "June", "July", "August", "September", "October", "November", "December"};
-        String[] monthsFrom2025 = {"January", "February", "March", "April", "May", "June"};
+
 
         int amountOfMonths = monthsFrom2024.length + monthsFrom2025.length;
         int progressForProgressBar = 100 / amountOfMonths;
@@ -52,5 +56,22 @@ public class RunnerFullUpdateDayStatistics {
             System.out.println("Finish: full update - table days_statistics_test -\t" + monthsFrom2025[i] + " - - " + 2025);
         }
     }
+
+    public static void runFullUpdateForAllOneMonthInDayStatistics(int numberOfMonth, int year) {
+        String nameOfMonth = MyDate.getNameOfMonthFromNumber(numberOfMonth);
+
+        System.out.println("Start: full update - table days_statistics_test -\t" + nameOfMonth + " - - " + year);
+
+        GenerateSLQTableForDaysStatistics.generateWholeMonthAndFillAmountOfPointsFromNotepad(nameOfMonth, 2025);
+        try {
+            UpdateDaysStatisticsFilledData.updateWholeMonthMacroSum(nameOfMonth, 2025);
+            UpdateDaysStatisticsFilledData.updateAmountOfFilledPointsFromNotepad(nameOfMonth, 2025);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        System.out.println("Finish: full update - table days_statistics_test -\t" + nameOfMonth + " - - " + year);
+    }
+
 
 }
