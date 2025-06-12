@@ -72,6 +72,20 @@ public class RunnerFullUpdateDayStatistics {
 
         System.out.println("Finish: full update - table days_statistics_test -\t" + nameOfMonth + " - - " + year);
     }
+    public static void runFullUpdateForAllOneMonthInDayStatistics(int numberOfDay, int numberOfMonth, int year) {
+        String nameOfMonth = MyDate.getNameOfMonthFromNumber(numberOfMonth);
 
+        System.out.println("Start: full update - table days_statistics_test -\t" + nameOfMonth + " - - " + year);
+
+        GenerateSLQTableForDaysStatistics.generateWholeMonthAndFillAmountOfPointsFromNotepad(numberOfDay, nameOfMonth, 2025);
+        try {
+            UpdateDaysStatisticsFilledData.updateWholeMonthMacroSum(numberOfDay, nameOfMonth, 2025);
+            UpdateDaysStatisticsFilledData.updateAmountOfFilledPointsFromNotepad(numberOfDay, nameOfMonth, 2025);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        System.out.println("Finish: full update - table days_statistics_test -\t" + nameOfMonth + " - - " + year);
+    }
 
 }

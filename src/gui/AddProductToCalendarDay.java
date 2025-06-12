@@ -427,7 +427,14 @@ public class AddProductToCalendarDay {
         String yearInString =  addProductToDayDisplaySelectedFDateDayLabelString.substring(0,4);
         int yearInNumber = Integer.valueOf(yearInString);
 
-        RunnerFullUpdateDayStatistics.runFullUpdateForAllOneMonthInDayStatistics(monthInNumberInt, yearInNumber);
+        String numberOfDay = "" + addProductToDayDisplaySelectedFDateDayLabelString.charAt(8) + addProductToDayDisplaySelectedFDateDayLabelString.charAt(9);
+        int numberOfDayInt;
+        if(numberOfDay.charAt(0) == '0'){
+            numberOfDayInt = Integer.parseInt("" + numberOfDay.charAt(1));
+        }
+
+        numberOfDayInt = Integer.parseInt(numberOfDay);
+        RunnerFullUpdateDayStatistics.runFullUpdateForAllOneMonthInDayStatistics(numberOfDayInt, monthInNumberInt, yearInNumber);
         //</editor-fold>
 
         JOptionPane.showMessageDialog(null, "Product has been added. Date: " +
