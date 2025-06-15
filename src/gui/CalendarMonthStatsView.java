@@ -751,6 +751,10 @@ public class CalendarMonthStatsView {
             fullDate = "2025-05-";
         }
 
+        if (month.equals("June2025")) {
+            fullDate = "2025-06-";
+        }
+
         String[] allDayWhichNeedData = new String[amountOfMonthDays];
         String fullDateBuffor = fullDate;
 
@@ -914,6 +918,14 @@ public class CalendarMonthStatsView {
 
         if (monthString.equals("April2025")) {
             friendlySQLFormatMonthDate = "2025-" + "04-";
+        }
+
+        if (monthString.equals("May2025")) {
+            friendlySQLFormatMonthDate = "2025-" + "05-";
+        }
+
+        if (monthString.equals("June2025")) {
+            friendlySQLFormatMonthDate = "2025-" + "06-";
         }
 
         String fullDate = friendlySQLFormatMonthDate;
