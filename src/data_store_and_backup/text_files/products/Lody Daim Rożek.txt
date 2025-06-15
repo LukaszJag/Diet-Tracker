@@ -1,0 +1,9 @@
+Name: Lody Daim Rożek
+Brand: Mondelez
+Package has: 68.5
+Macro for: 100.0
+KCal: 352.0
+Protein: 3.3
+Fat: 21.0
+Carbs: 38.0
+Comment optional: Link: https://www.froneri.com/pl/products/daim-rozek-prod/
