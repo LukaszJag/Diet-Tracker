@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2025-06-15',
+'Sunday',
+'Supper',
+144.0,
+'Frytki Duże - McDonalds',
+299.0,
+3.4,
+15.0,
+37.0,
+'2025-06-16 04:27:18',
+'none',
+430.56003,
+53.280003,
+21.6,
+4.8960004
+);
