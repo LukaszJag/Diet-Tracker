@@ -1,0 +1,15 @@
+McDonalds - meal
+
+													product_package_has		product_macro_for	product_carbs
+Cheeseburger - McDonalds							McDonalds	116						100					262.9			13.8	11.2	25.9
+Chikker												McDonalds	152						100					279				14	13	29
+Ciacho owsiane						-> 286,4		McDonalds	80						100					358				4.9	17	43
+Frytki Duże - McDonalds								McDonalds	144						100					299				3.4	15	37
+Frytki Małe - McDonalds								McDonalds	72						100					299				3.4	15	37
+McWrap Klasyczny Chrupiący Kurczak					McDonalds	260						100					491				24	19	56
+Shake o smaku truskawkowym duży    	-> 234			McDonalds	200						100					117				3	2.1	21
+
+Shake + ciastko 	= 234 + 286,4 = 520,4
+Shake + 2 * ciastko = 234 + 572,8 = 806.8
+
+
