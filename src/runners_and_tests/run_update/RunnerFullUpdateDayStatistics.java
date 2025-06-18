@@ -1,6 +1,5 @@
 package runners_and_tests.run_update;
 
-import gui.LoadingBarGUI;
 import tools.calendar_tools.MyDate;
 import tools.sql_tools.days_statistics.GenerateSLQTableForDaysStatistics;
 import tools.sql_tools.days_statistics.UpdateDaysStatisticsFilledData;
@@ -29,11 +28,6 @@ public class RunnerFullUpdateDayStatistics {
 
     public static void runFullUpdateForAllMonthInDayStatistics() throws SQLException {
 
-        LoadingBarGUI loadingBarGUI = new LoadingBarGUI();
-
-
-        int amountOfMonths = monthsFrom2024.length + monthsFrom2025.length;
-        int progressForProgressBar = 100 / amountOfMonths;
         for (int i = 0; i < monthsFrom2024.length; i++) {
             System.out.println("Start: full update - table days_statistics_test -\t" + monthsFrom2024[i] + " - - " + 2024);
 
@@ -57,21 +51,6 @@ public class RunnerFullUpdateDayStatistics {
         }
     }
 
-    public static void runFullUpdateForAllOneMonthInDayStatistics(int numberOfMonth, int year) {
-        String nameOfMonth = MyDate.getNameOfMonthFromNumber(numberOfMonth);
-
-        System.out.println("Start: full update - table days_statistics_test -\t" + nameOfMonth + " - - " + year);
-
-        GenerateSLQTableForDaysStatistics.generateWholeMonthAndFillAmountOfPointsFromNotepad(nameOfMonth, 2025);
-        try {
-            UpdateDaysStatisticsFilledData.updateWholeMonthMacroSum(nameOfMonth, 2025);
-            UpdateDaysStatisticsFilledData.updateAmountOfFilledPointsFromNotepad(nameOfMonth, 2025);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-
-        System.out.println("Finish: full update - table days_statistics_test -\t" + nameOfMonth + " - - " + year);
-    }
     public static void runFullUpdateForAllOneMonthInDayStatistics(int numberOfDay, int numberOfMonth, int year) {
         String nameOfMonth = MyDate.getNameOfMonthFromNumber(numberOfMonth);
 

@@ -47,9 +47,6 @@ public class MainWindow extends JFrame {
     JButton closeApplicationButton = new JButton("Exit");
     //</editor-fold>
 
-    // TEST AREA
-    LoadingBarGUI loadingBarGUI;
-
     public void makeRunWindow() {
         setUpAndStartMenuWindow();
     }
@@ -248,17 +245,7 @@ public class MainWindow extends JFrame {
     private class calculateBMRActionListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            // TEST AREA
-            LoadingBarGUI loadingBarGUI1 = new LoadingBarGUI();
-
-            QuickTests quickTests = new QuickTests();
-            // TEST AREA
-            try {
-                quickTests.runFullUpdateForAllMonthInDayStatisticsQuickTest2(loadingBarGUI);
-            } catch (SQLException ex) {
-                throw new RuntimeException(ex);
-            }
-
+            JOptionPane.showMessageDialog(null, "Nothing happen");
         }
     }
 }
