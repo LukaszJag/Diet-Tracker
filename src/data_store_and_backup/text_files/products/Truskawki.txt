@@ -1,0 +1,9 @@
+Name: Truskawki
+Brand: owoce
+Package has: 0.0
+Macro for: 100.0
+KCal: 29.0
+Protein: 0.61
+Fat: 0.37
+Carbs: 4.71
+Comment optional: Link: https://www.tabele-kalorii.pl/kalorie,Truskawki.html
