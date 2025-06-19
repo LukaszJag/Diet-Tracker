@@ -1,5 +1,10 @@
 package tools.calendar_tools;
 
+import configuration.Config;
+
+import java.text.Format;
+import java.text.SimpleDateFormat;
+
 public class MyDate {
     public static int getAmountOfDaysInMonth(String month) {
         if (month.equals("January")) {
@@ -134,5 +139,23 @@ public class MyDate {
         }
 
         return "-1";
+    }
+
+    public static String getCurrentDayInSQLFormat(){
+         return new SimpleDateFormat("yyyy-MM-dd").format(Config.date);
+    }
+
+    public static String getDayNameInPascalCase(){
+        Format format = new SimpleDateFormat("EEEE");
+        java.util.Date utilDateImport = new java.util.Date();
+        String dayNameCurrentDatePascalCase = format.format(utilDateImport);
+        return dayNameCurrentDatePascalCase;
+    }
+
+    public static String getDayNameInLowerCase(){
+        Format format = new SimpleDateFormat("EEEE");
+        java.util.Date utilDateImport = new java.util.Date();
+        String dayNameCurrentDateLowerCase = format.format(utilDateImport);
+        return dayNameCurrentDateLowerCase.toLowerCase();
     }
 }

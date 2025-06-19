@@ -4,6 +4,7 @@ import configuration.Config;
 import logs.Log;
 import runners_and_tests.run_update.RunnerFullUpdateDayStatistics;
 import tools.calendar_tools.DayInCalendar;
+import tools.calendar_tools.MyDate;
 import tools.products_tools.Macro;
 import tools.products_tools.Product;
 import tools.sql_tools.SQLSelect;
@@ -321,7 +322,7 @@ public class AddProductToCalendarDay {
     }
 
     private void finishSetUpFrame() {
-        addProductToDayFrame.setResizable(false);
+        addProductToDayFrame.setResizable(true);
         addProductToDayFrame.setLocationRelativeTo(null);
         addProductToDayFrame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
         addProductToDayFrame.setVisible(true);
@@ -812,7 +813,7 @@ public class AddProductToCalendarDay {
     private class InputCurrentDayButtonActionListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            JOptionPane.showMessageDialog(null, "NOTHING HAPPENED");
+            addProductToDayDisplaySelectedFDateDayLabel.setText(MyDate.getCurrentDayInSQLFormat());
         }
     }
 

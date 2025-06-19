@@ -45,11 +45,11 @@ public class Config {
     //</editor-fold>
 
     //<editor-fold desc="Add Product To Day Windows Configuration - Window, Panels - size">
-    public static final int ADD_PRODUCT_TO_DAY_WINDOWS_WIDTH = 1000;
-    public static final int ADD_PRODUCT_TO_DAY_WINDOWS_HEIGHT = 700;
+    public static final int ADD_PRODUCT_TO_DAY_WINDOWS_WIDTH = 1300;
+    public static final int ADD_PRODUCT_TO_DAY_WINDOWS_HEIGHT = 800;
     public static final int ADD_PRODUCT_TO_DAY_PANELS_NORTH_SIZE = 50;
     public static final int ADD_PRODUCT_TO_DAY_PANELS_CENTER = 20;
-    public static final int ADD_PRODUCT_TO_DAY_PANELS_WEST_EAST_SIZE = 200;
+    public static final int ADD_PRODUCT_TO_DAY_PANELS_WEST_EAST_SIZE = 300;
     public static final int ADD_PRODUCT_TO_DAY_PANELS_SOUTH_SIZE = 100;
     public static final Color mainWindowDataBaseProductTableLabelColor = Color.MAGENTA;
     public static final Color mainWindowDataBaseCalendarTableLabelColor = Color.RED;
@@ -57,7 +57,6 @@ public class Config {
     public static final Color addProductToDayCurrentDateLabelColor = Color.WHITE;
 
     public static final Color CHOSE_TABLE_TO_INSERT_DATA = Color.GREEN;
-    public static final Date date = new Date();
     //</editor-fold>
 
     //<editor-fold desc="Calendar Month Stats View - GUI">
@@ -118,4 +117,6 @@ public class Config {
     String[] MONTHS2025 = {"January", "February", "March", "April"};
     //TEST
     GUIManager guiManager = new GUIManager();
+
+    public static final Date date = new Date();
 }
