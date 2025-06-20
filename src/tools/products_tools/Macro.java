@@ -100,6 +100,18 @@ public class Macro {
         return shortMacroInfo;
     }
 
+    public static String getShortMacroInformationPrettyFormat(Macro macro){
+        String shortMacroInfo = "";
+        shortMacroInfo +=
+                "kcal: " + macro.getKcal() + "--\n" +
+                        "protein: " + macro.getProtein() + "--\n" +
+                        "fat: " + macro.getFat() + "--\n" +
+                        "carbs: " + macro.getCarbs();
+
+        return shortMacroInfo;
+    }
+
+
     //<editor-fold desc="Getters and Setters">
     public float getKcal() {
         return kcal;

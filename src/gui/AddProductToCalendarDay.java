@@ -9,6 +9,7 @@ import tools.products_tools.Macro;
 import tools.products_tools.Product;
 import tools.sql_tools.SQLSelect;
 import tools.sql_tools.calendar.InsertToCalendarDayTable;
+import tools.sql_tools.days_statistics.SelectFromDaysStatistics;
 import tools.text_files_tools.FilesTools;
 import tools.time_date_tools.DateTools;
 
@@ -124,6 +125,12 @@ public class AddProductToCalendarDay {
     //<editor-fold desc="Grid Layout">
     GridLayout gridLayoutMainPanel = new GridLayout(13, 2, 10, 10);
     GridLayout checkDaysStatisticsDialogGridLayout = new GridLayout(34, 4, 0,0 );
+    GridLayout panelWestGridLayout = new GridLayout(10, 1, 10, 10);
+
+    //</editor-fold>
+
+    //<editor-fold desc="TextAreas">
+    JTextArea dayMacroTextArea = new JTextArea(6, 4);
     //</editor-fold>
 
     //</editor-fold>
@@ -147,7 +154,9 @@ public class AddProductToCalendarDay {
         //Set Layout
         addProductToDayPanelMain.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
         addProductToDayPanelMain.setLayout(gridLayoutMainPanel);
+        addProductToDayPanelWest.setLayout(panelWestGridLayout);
 
+//        addProductToDayPanelWest.setLayout(westPanelBoxLayout);
         // Set panels colors
         addProductToDayPanelNorth.setBackground(Color.BLACK);
         addProductToDayPanelSouth.setBackground(Color.GRAY);
@@ -170,6 +179,8 @@ public class AddProductToCalendarDay {
         Format format = new SimpleDateFormat("EEEE");
         java.util.Date utilDateImport = new java.util.Date();
         String dayNameCurrentDateOnStartWindow = format.format(utilDateImport);
+
+        Macro curretDayMacro = SelectFromDaysStatistics.getMacroFromDaysStatisticsByDate(MyDate.getCurrentDayInSQLFormat());
         //</editor-fold>
 
         //<editor-fold desc="Add Components to Panel - North">
@@ -209,6 +220,11 @@ public class AddProductToCalendarDay {
 
         checkDaysStatisticFilledTable.addActionListener(new CheckDaysStatisticFilledTableActionListener());
         addProductToDayPanelWest.add(checkDaysStatisticFilledTable);
+
+        dayMacroTextArea.setPreferredSize(new Dimension(200, 500));
+        dayMacroTextArea.setText(curretDayMacro.getShortMacroInformationPrettyFormat(curretDayMacro));
+        addProductToDayPanelWest.add(dayMacroTextArea);
+
         //</editor-fold>
 
         //<editor-fold desc="Add Components to Panel - East">
