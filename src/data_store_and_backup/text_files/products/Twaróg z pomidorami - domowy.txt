@@ -1,0 +1,9 @@
+Name: Twaróg z pomidorami - domowy
+Brand: domowe
+Package has: 0.0
+Macro for: 100.0
+KCal: 78.74
+Protein: 10.09
+Fat: 2.38
+Carbs: 4.33
+Comment optional: Link: https://www.tabele-kalorii.pl/kalorie,Twarog-z-pomidorami-Przepis-od-altmer.html

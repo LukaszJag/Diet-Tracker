@@ -1,0 +1,9 @@
+Name: Bułeczki mleczne z czekoladą
+Brand: Dan Cake
+Package has: 400.0
+Macro for: 100.0
+KCal: 382.0
+Protein: 8.4
+Fat: 13.0
+Carbs: 57.0
+Comment optional: Link: https://dancake.pl/produkty/buleczki-mleczne-z-czekolada/

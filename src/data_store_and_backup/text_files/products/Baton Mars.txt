@@ -1,0 +1,9 @@
+Name: Baton Mars
+Brand: Mars Polska Sp. z o.o. - Sochaczew
+Package has: 47.0
+Macro for: 100.0
+KCal: 452.0
+Protein: 3.7
+Fat: 17.0
+Carbs: 70.3
+Comment optional: Link: https://www.tabele-kalorii.pl/kalorie,Baton-Mars-Mars.html
