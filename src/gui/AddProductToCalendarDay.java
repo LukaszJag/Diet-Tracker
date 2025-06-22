@@ -122,10 +122,11 @@ public class AddProductToCalendarDay {
     JComboBox<String> productSuggestionNameComboBox = new JComboBox<>(new String[]{""});
     //</editor-fold>
 
-    //<editor-fold desc="Grid Layout">
+    //<editor-fold desc="Layout">
+    BoxLayout panelWestBoxLayout = new BoxLayout(addProductToDayPanelWest, BoxLayout.Y_AXIS);
     GridLayout gridLayoutMainPanel = new GridLayout(13, 2, 10, 10);
     GridLayout checkDaysStatisticsDialogGridLayout = new GridLayout(34, 4, 0,0 );
-    GridLayout panelWestGridLayout = new GridLayout(10, 1, 10, 10);
+    GridLayout panelWestGridLayout = new GridLayout(8, 1, 5, 10);
 
     //</editor-fold>
 
@@ -133,6 +134,7 @@ public class AddProductToCalendarDay {
     JTextArea dayMacroTextArea = new JTextArea(6, 4);
     //</editor-fold>
 
+    JTable macroTable = new JTable(6,2);
     //</editor-fold>
 
     //<editor-fold desc="Starting Constructors">
@@ -145,6 +147,7 @@ public class AddProductToCalendarDay {
 
     //<editor-fold desc="Main Methods">
     private void setFrame() {
+        setUpMacroTable();
         // Set window size
         addProductToDayFrame.setSize(Config.ADD_PRODUCT_TO_DAY_WINDOWS_WIDTH, Config.ADD_PRODUCT_TO_DAY_WINDOWS_HEIGHT);
         addProductToDayFrame.setLayout(new BorderLayout());
@@ -154,7 +157,7 @@ public class AddProductToCalendarDay {
         //Set Layout
         addProductToDayPanelMain.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
         addProductToDayPanelMain.setLayout(gridLayoutMainPanel);
-        addProductToDayPanelWest.setLayout(panelWestGridLayout);
+        addProductToDayPanelWest.setLayout(panelWestBoxLayout);
 
 //        addProductToDayPanelWest.setLayout(westPanelBoxLayout);
         // Set panels colors
@@ -194,6 +197,8 @@ public class AddProductToCalendarDay {
 
         //<editor-fold desc="Add Components to Panel - West">
         // Add Buttons
+
+        inputCurrentDayButton.setPreferredSize(new Dimension(200,10));
         addProductToDayPanelWest.add(inputCurrentDayButton);
         inputCurrentDayButton.addActionListener(new InputCurrentDayButtonActionListener());
 
@@ -223,7 +228,10 @@ public class AddProductToCalendarDay {
 
         dayMacroTextArea.setPreferredSize(new Dimension(200, 500));
         dayMacroTextArea.setText(curretDayMacro.getShortMacroInformationPrettyFormat(curretDayMacro));
-        addProductToDayPanelWest.add(dayMacroTextArea);
+        //addProductToDayPanelWest.add(dayMacroTextArea);
+
+        macroTable.setPreferredSize(new Dimension(200,600));
+        addProductToDayPanelWest.add(macroTable);
 
         //</editor-fold>
 
@@ -531,6 +539,26 @@ public class AddProductToCalendarDay {
 
     }
 
+    public void setUpMacroTable(){
+        Macro macroToDisplay = SelectFromDaysStatistics.getMacroFromDaysStatisticsByDate(MyDate.getCurrentDayInSQLFormat());
+        macroTable.setValueAt("amount_of_points_from_notepad", 0,0);
+        macroTable.setValueAt("--2", 0,1);
+        macroTable.setValueAt("amount_of_filled_points_from_notepad", 1,0);
+        macroTable.setValueAt("--4", 1,1);
+        macroTable.setValueAt("kcal_consume", 2,0);
+        macroTable.setValueAt(macroToDisplay.getKcal(), 2,1);
+        macroTable.setValueAt("protein_consume", 3,0);
+        macroTable.setValueAt(macroToDisplay.getProtein(), 3,1);
+        macroTable.setValueAt("fat_consume", 4,0);
+        macroTable.setValueAt(macroToDisplay.getFat(), 4,1);
+        macroTable.setValueAt("carbs_consume", 5,0);
+        macroTable.setValueAt(macroToDisplay.getCarbs(), 5,1);
+
+
+
+
+
+    }
     //<editor-fold desc="Action Listeners Classes">
     private class AddProductToDayAcceptButtonListener implements ActionListener {
         @Override
@@ -1031,6 +1059,7 @@ public class AddProductToCalendarDay {
             if (e.getKeyCode() == KeyEvent.VK_CONTROL) {
                 mealNameAcceptManager();
                 productNameTextField.requestFocusInWindow();
+                setUpMacroTable();
             }
         }
 
