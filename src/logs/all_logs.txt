@@ -2968,3 +2968,4 @@
 2968:-:2025-06-21:-:ADD PRODUCT TO CALENDAR TABLE BY GUI:-:calendar:-:2025-06-21:-:Friday:-:Kisiel truskawkowy:-:618.0:-:kcal: 59.0--protein: 0.1--fat: 0.0--carbs: 14.0:-:Supper:-:None:-:kcal: 364.62--protein: 0.618--fat: 0.0--carbs: 86.52:-:
 2969:-:2025-06-21:-:ADD PRODUCT TO CALENDAR TABLE BY GUI:-:calendar:-:2025-06-21:-:Friday:-:Serek wiejski:-:200.0:-:kcal: 97.0--protein: 11.0--fat: 6.0--carbs: 2.7:-:Supper:-:None:-:kcal: 194.0--protein: 22.0--fat: 12.0--carbs: 5.4:-:
 2970:-:2025-06-21:-:ADD PRODUCT TO CALENDAR TABLE BY GUI:-:calendar:-:2025-06-21:-:Friday:-:Cukier puder:-:52.0:-:kcal: 406.0--protein: 0.0--fat: 0.0--carbs: 100.0:-:Supper:-:None:-:kcal: 211.12--protein: 0.0--fat: 0.0--carbs: 52.0:-:
+2971:-:2025-06-22:-:ADD PRODUCT TO CALENDAR TABLE BY GUI:-:calendar:-:2025-06-21:-:Saturday:-:Rzodkiew:-:132.0:-:kcal: 16.0--protein: 1.0--fat: 0.0--carbs: 3.0:-:Supper:-:None:-:kcal: 21.12--protein: 1.32--fat: 0.0--carbs: 3.96:-:
