@@ -1,6 +1,6 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="AddAllProductInTXTFromDirectory" type="Application" factoryName="Application" folderName="Runners">
-    <option name="MAIN_CLASS_NAME" value="runners_and_tests.run_export_inport_data.AddAllProductInTXTFromDirectory" />
+  <configuration default="false" name="AddAllProductInTXTFromDirectory" type="Application" factoryName="Application" folderName="Export import data">
+    <option name="MAIN_CLASS_NAME" value="runners_and_tests.run_export_import_data.AddAllProductInTXTFromDirectory" />
     <module name="Diet-Tracker" />
     <method v="2">
       <option name="Make" enabled="true" />

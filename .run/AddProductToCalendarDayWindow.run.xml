@@ -1,5 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="RunnerAddProductToCalendarDayWindow" type="Application" factoryName="Application" folderName="Runner GUI">
+  <configuration default="false" name="AddProductToCalendarDayWindow" type="Application" factoryName="Application" folderName="GUI">
     <option name="MAIN_CLASS_NAME" value="runners_and_tests.run_GUI.RunnerAddProductToCalendarDayWindow" />
     <module name="Diet-Tracker" />
     <method v="2">

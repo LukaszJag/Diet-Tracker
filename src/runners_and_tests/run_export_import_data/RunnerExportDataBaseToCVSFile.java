@@ -1,4 +1,4 @@
-package runners_and_tests.run_export_inport_data;
+package runners_and_tests.run_export_import_data;
 
 import sql_queries.csv_tools.ExportDataBaseToCVSFile;
 

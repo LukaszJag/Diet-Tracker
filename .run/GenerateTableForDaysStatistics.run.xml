@@ -1,5 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="RunnerGenerateTableForDaysStatistics" type="Application" factoryName="Application" folderName="Runners">
+  <configuration default="false" name="GenerateTableForDaysStatistics" type="Application" factoryName="Application" folderName="Data Generator">
     <option name="MAIN_CLASS_NAME" value="runners_and_tests.run_data_generator.RunnerGenerateTableForDaysStatistics" />
     <module name="Diet-Tracker" />
     <method v="2">

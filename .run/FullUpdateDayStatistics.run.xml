@@ -1,5 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="RunnerFullUpdateDayStatistics" type="Application" factoryName="Application" folderName="RunUpdates">
+  <configuration default="false" name="FullUpdateDayStatistics" type="Application" factoryName="Application" folderName="Updates">
     <option name="MAIN_CLASS_NAME" value="runners_and_tests.run_update.RunnerFullUpdateDayStatistics" />
     <module name="Diet-Tracker" />
     <method v="2">
