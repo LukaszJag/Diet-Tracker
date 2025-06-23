@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2025-06-22',
+'Sunday',
+'Supper',
+383.0,
+'Twaróg z pomidorami - domowy',
+78.74,
+10.09,
+2.38,
+4.33,
+'2025-06-23 04:46:42',
+'none',
+301.5742,
+16.583899,
+9.1154,
+38.6447
+);

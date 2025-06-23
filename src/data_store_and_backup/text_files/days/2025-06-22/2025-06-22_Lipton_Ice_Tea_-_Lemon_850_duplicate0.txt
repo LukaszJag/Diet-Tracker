@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2025-06-22',
+'Sunday',
+'Supper',
+850.0,
+'Lipton Ice Tea - Lemon',
+30.0,
+0.5,
+0.5,
+7.0,
+'2025-06-23 04:46:05',
+'none',
+255.0,
+59.5,
+4.25,
+4.25
+);
