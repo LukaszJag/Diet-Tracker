@@ -47,4 +47,40 @@ public class SelectFromDaysStatistics {
 
         return resultMacro;
     }
+
+    public static int getAmountOfPointsFromNotepad(String SQLFriendlyDateFormat) {
+        ResultSet resultSet;
+        int amountOfPointsFromNotepad = -1;
+
+        String sql = "SELECT * FROM days_statistics_test WHERE day_date = " + "\"" + SQLFriendlyDateFormat + "\"" + ";";
+
+        GetResultSet getResultSet = new GetResultSet();
+        resultSet = getResultSet.getResultSetFromSQL(sql);
+        if (getResultSet.resultSetNextReturnValue(resultSet) == false) {
+        } else {
+            if (GetResultSet.getFromResultSetGetString("amount_of_points_from_notepad", resultSet) != null) {
+                amountOfPointsFromNotepad = Integer.valueOf(GetResultSet.getFromResultSetGetString("amount_of_points_from_notepad", resultSet));
+                System.out.println("amount_of_points_from_notepad" + amountOfPointsFromNotepad);
+            }
+        }
+
+        return amountOfPointsFromNotepad;
+    }
+
+    public static int getAmountOfFilledPointsFromNotepad(String SQLFriendlyDateFormat) {
+        ResultSet resultSet;
+        int amountOfFilledPointsFromNotepad = -1;
+
+        String sql = "SELECT * FROM days_statistics_test WHERE day_date = " + "\"" + SQLFriendlyDateFormat + "\"" + ";";
+
+        GetResultSet getResultSet = new GetResultSet();
+        resultSet = getResultSet.getResultSetFromSQL(sql);
+        if (getResultSet.resultSetNextReturnValue(resultSet) == false) {}
+        else {
+            if (GetResultSet.getFromResultSetGetString("amount_of_filled_points_from_notepad", resultSet) != null) {
+                amountOfFilledPointsFromNotepad = Integer.valueOf(GetResultSet.getFromResultSetGetString("amount_of_filled_points_from_notepad", resultSet));
+            }
+        }
+        return amountOfFilledPointsFromNotepad;
+    }
 }
