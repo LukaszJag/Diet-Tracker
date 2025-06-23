@@ -134,7 +134,10 @@ public class AddProductToCalendarDay {
     JTextArea dayMacroTextArea = new JTextArea(6, 4);
     //</editor-fold>
 
+    //<editor-fold desc="Tables">
     JTable macroTable = new JTable(6,2);
+    //</editor-fold>
+
     //</editor-fold>
 
     //<editor-fold desc="Starting Constructors">
@@ -464,8 +467,7 @@ public class AddProductToCalendarDay {
 
         JOptionPane.showMessageDialog(null, "Product has been added. Date: " +
                 addProductToDayDisplaySelectedFDateNameDayLabel.getText()
-                + " \nDay name: " + addProductToDayDisplaySelectedFDateDayLabel.getText() +
-                chosenCalendarTableLabel.getText());
+                + "\n" + consumedMacro.getShortMacroInformation());
         clearGUIMacroValues();
     }
 
@@ -542,9 +544,9 @@ public class AddProductToCalendarDay {
     public void setUpMacroTable(){
         Macro macroToDisplay = SelectFromDaysStatistics.getMacroFromDaysStatisticsByDate(MyDate.getCurrentDayInSQLFormat());
         macroTable.setValueAt("amount_of_points_from_notepad", 0,0);
-        macroTable.setValueAt("--2", 0,1);
+        macroTable.setValueAt(SelectFromDaysStatistics.getAmountOfPointsFromNotepad(MyDate.getCurrentDayInSQLFormat()), 0,1);
         macroTable.setValueAt("amount_of_filled_points_from_notepad", 1,0);
-        macroTable.setValueAt("--4", 1,1);
+        macroTable.setValueAt(SelectFromDaysStatistics.getAmountOfFilledPointsFromNotepad(MyDate.getCurrentDayInSQLFormat()), 1,1);
         macroTable.setValueAt("kcal_consume", 2,0);
         macroTable.setValueAt(macroToDisplay.getKcal(), 2,1);
         macroTable.setValueAt("protein_consume", 3,0);
