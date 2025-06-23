@@ -111,6 +111,17 @@ public class Macro {
         return shortMacroInfo;
     }
 
+    public String getShortMacroInformation(){
+        String shortMacroInfo = "";
+        shortMacroInfo +=
+                "kcal: " + String.format("%.2f", this.kcal) + "\n" +
+                        "protein: " + String.format("%.2f", this.protein)  + "\n" +
+                        "fat: " + String.format("%.2f", this.fat)  + "\n" +
+                        "carbs: " + String.format("%.2f", this.carbs) ;
+
+        return shortMacroInfo;
+    }
+
 
     //<editor-fold desc="Getters and Setters">
     public float getKcal() {
