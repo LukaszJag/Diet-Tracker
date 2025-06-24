@@ -1,0 +1,9 @@
+Name: Maślanka naturalna
+Brand: Mleczna Dolina
+Package has: 1000.0
+Macro for: 100.0
+KCal: 47.0
+Protein: 3.4
+Fat: 1.5
+Carbs: 4.6
+Comment optional: Link: https://www.tabele-kalorii.pl/kalorie,Maslanka-naturalna-Mleczna-Dolina.html
