@@ -1,0 +1,9 @@
+Name: Wiśnie
+Brand: owoce
+Package has: 0.0
+Macro for: 100.0
+KCal: 60.0
+Protein: 1.1
+Fat: 0.2
+Carbs: 14.0
+Comment optional: Link: https://www.tabele-kalorii.pl/kalorie,Wisnie.html
