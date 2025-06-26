@@ -122,6 +122,16 @@ public class Macro {
         return shortMacroInfo;
     }
 
+    public static Macro divisionMacroByValue(Macro macro, float value){
+        Macro divisionedMacro = new Macro(macro.getKcal() / value,
+                macro.getProtein() / value,
+                macro.getFat() / value,
+                macro.getCarbs() / value
+                );
+
+        return divisionedMacro;
+    }
+
 
     //<editor-fold desc="Getters and Setters">
     public float getKcal() {

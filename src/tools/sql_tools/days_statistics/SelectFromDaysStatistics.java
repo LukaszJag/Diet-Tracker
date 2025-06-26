@@ -75,12 +75,58 @@ public class SelectFromDaysStatistics {
 
         GetResultSet getResultSet = new GetResultSet();
         resultSet = getResultSet.getResultSetFromSQL(sql);
-        if (getResultSet.resultSetNextReturnValue(resultSet) == false) {}
-        else {
+        if (getResultSet.resultSetNextReturnValue(resultSet) == false) {
+        } else {
             if (GetResultSet.getFromResultSetGetString("amount_of_filled_points_from_notepad", resultSet) != null) {
                 amountOfFilledPointsFromNotepad = Integer.valueOf(GetResultSet.getFromResultSetGetString("amount_of_filled_points_from_notepad", resultSet));
             }
         }
         return amountOfFilledPointsFromNotepad;
+    }
+
+    public static Macro getAverageMacroForMonth(int year, int month, int beginFromDayNumber, int endToDayNumber) {
+        //<editor-fold desc="Setup variables">
+        Macro averageMacro = new Macro(0, 0, 0, 0);
+        Macro sumMacro = new Macro(0, 0, 0, 0);
+
+        int amountOfDays = endToDayNumber - beginFromDayNumber;
+        String[] dayInSQLFriendlyFormat = new String[endToDayNumber - beginFromDayNumber];
+        //</editor-fold>
+
+
+        //<editor-fold desc="Fill String array with SQL friendly days">
+        int beginFromDayNumberTMP = beginFromDayNumber;
+        for (int i = 0; i < dayInSQLFriendlyFormat.length; i++) {
+            beginFromDayNumberTMP += 1;
+            if (beginFromDayNumberTMP < 10) {
+                dayInSQLFriendlyFormat[i] = "0" + beginFromDayNumberTMP;
+            }else {
+                dayInSQLFriendlyFormat[i] ="" + beginFromDayNumberTMP;
+            }
+        }
+        //</editor-fold>
+
+
+        //<editor-fold desc="Prepare correct SQL month format ">
+        String monthString = "" + month;
+        if (monthString.length() == 1) {
+            monthString = "0" + monthString;
+        }
+        //</editor-fold>
+
+        //<editor-fold desc="Sum of all days Macro">
+        String yearAndMonthInSQLFriendlyFormat = year + "-" + monthString + "-";
+        String dateSQLFormat;
+        for (int i = 0; i < dayInSQLFriendlyFormat.length; i++) {
+            dateSQLFormat =yearAndMonthInSQLFriendlyFormat + dayInSQLFriendlyFormat[i];
+            sumMacro = Macro.sumOfTwoMacros(sumMacro, SelectFromDaysStatistics.getMacroFromDaysStatisticsByDate(
+                    dateSQLFormat));
+        }
+        //</editor-fold>
+
+        averageMacro = Macro.divisionMacroByValue(sumMacro, amountOfDays);
+        System.out.println(Macro.getShortMacroInformationPrettyFormat(sumMacro));
+        System.out.println(Macro.getShortMacroInformationPrettyFormat(averageMacro));
+        return averageMacro;
     }
 }

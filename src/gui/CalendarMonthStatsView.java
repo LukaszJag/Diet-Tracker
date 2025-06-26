@@ -242,6 +242,9 @@ public class CalendarMonthStatsView {
 
         monthSelectComboBox.addItemListener(new MonthComboBoxItemListener());
 
+        //can be buggy hard code values
+        currentDayMacroValuesNorthPanelLabel.setText("test1" + Macro.getShortMacroInformation(
+                SelectFromDaysStatistics.getAverageMacroForMonth(2025,6,1,26)));
         //<editor-fold desc="Color and size of font in labels">
         currentDayDateNorthPanelLabel.setForeground(northPanelStaticLabelsColor);
         currentDayDateNorthPanelLabel.setFont(calendarMonthStatsViewPanelNorth.getFont().deriveFont(20.0f));

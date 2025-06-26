@@ -229,7 +229,7 @@ public class AddProductToCalendarDay {
 
         dayMacroTextArea.setPreferredSize(new Dimension(200, 500));
         dayMacroTextArea.setText(Macro.getShortMacroInformationPrettyFormat(curretDayMacro));
-        
+
         addProductToDayPanelWest.add(macroTable);
 
         //</editor-fold>
