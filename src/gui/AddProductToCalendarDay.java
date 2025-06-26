@@ -48,8 +48,6 @@ public class AddProductToCalendarDay {
     JButton addProductToDayAcceptButton = new JButton("Accept");
     JButton inputCurrentDayButton = new JButton("Input  current day");
     JButton checkIfProductExistButton = new JButton("Check Product existing");
-    JButton displayProductMacroButton = new JButton("Display Product Macro");
-    JButton importProductMacroFromLibraryButton = new JButton("Import product macro");
     JButton fillTheExistingProductMacroButton = new JButton("Fill product");
     JButton otherThenCurrentDateButton = new JButton("Other then current");
     JButton backToMainWindowButton = new JButton("Go to Start");
@@ -126,7 +124,7 @@ public class AddProductToCalendarDay {
     BoxLayout panelWestBoxLayout = new BoxLayout(addProductToDayPanelWest, BoxLayout.Y_AXIS);
     GridLayout gridLayoutMainPanel = new GridLayout(13, 2, 10, 10);
     GridLayout checkDaysStatisticsDialogGridLayout = new GridLayout(34, 4, 0,0 );
-    GridLayout panelWestGridLayout = new GridLayout(8, 1, 5, 10);
+    GridLayout panelWestGridLayout = new GridLayout(9, 1, 5, 10);
 
     //</editor-fold>
 
@@ -135,7 +133,7 @@ public class AddProductToCalendarDay {
     //</editor-fold>
 
     //<editor-fold desc="Tables">
-    JTable macroTable = new JTable(6,2);
+    public JTable macroTable = new JTable(6,2);
     //</editor-fold>
 
     //</editor-fold>
@@ -230,10 +228,8 @@ public class AddProductToCalendarDay {
         addProductToDayPanelWest.add(checkDaysStatisticFilledTable);
 
         dayMacroTextArea.setPreferredSize(new Dimension(200, 500));
-        dayMacroTextArea.setText(curretDayMacro.getShortMacroInformationPrettyFormat(curretDayMacro));
-        //addProductToDayPanelWest.add(dayMacroTextArea);
-
-        macroTable.setPreferredSize(new Dimension(200,600));
+        dayMacroTextArea.setText(Macro.getShortMacroInformationPrettyFormat(curretDayMacro));
+        
         addProductToDayPanelWest.add(macroTable);
 
         //</editor-fold>
@@ -555,12 +551,24 @@ public class AddProductToCalendarDay {
         macroTable.setValueAt(macroToDisplay.getFat(), 4,1);
         macroTable.setValueAt("carbs_consume", 5,0);
         macroTable.setValueAt(macroToDisplay.getCarbs(), 5,1);
-
-
-
-
-
     }
+
+    public void setUpMacroTable(String selectedDayInSQLFormat){
+        Macro macroToDisplay = SelectFromDaysStatistics.getMacroFromDaysStatisticsByDate(selectedDayInSQLFormat);
+        macroTable.setValueAt("amount_of_points_from_notepad", 0,0);
+        macroTable.setValueAt(SelectFromDaysStatistics.getAmountOfPointsFromNotepad(selectedDayInSQLFormat), 0,1);
+        macroTable.setValueAt("amount_of_filled_points_from_notepad", 1,0);
+        macroTable.setValueAt(SelectFromDaysStatistics.getAmountOfFilledPointsFromNotepad(selectedDayInSQLFormat), 1,1);
+        macroTable.setValueAt("kcal_consume", 2,0);
+        macroTable.setValueAt(macroToDisplay.getKcal(), 2,1);
+        macroTable.setValueAt("protein_consume", 3,0);
+        macroTable.setValueAt(macroToDisplay.getProtein(), 3,1);
+        macroTable.setValueAt("fat_consume", 4,0);
+        macroTable.setValueAt(macroToDisplay.getFat(), 4,1);
+        macroTable.setValueAt("carbs_consume", 5,0);
+        macroTable.setValueAt(macroToDisplay.getCarbs(), 5,1);
+    }
+
     //<editor-fold desc="Action Listeners Classes">
     private class AddProductToDayAcceptButtonListener implements ActionListener {
         @Override
@@ -702,7 +710,7 @@ public class AddProductToCalendarDay {
             showDialogWindow();
         }
 
-        private static class dialogWindowPanelMouseListener implements MouseListener {
+        private class dialogWindowPanelMouseListener implements MouseListener {
 
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -772,6 +780,7 @@ public class AddProductToCalendarDay {
                 String dayNameCurrentDateOnStartWindow = format.format(utilDateImport);
                 addProductToDayDisplaySelectedFDateNameDayLabel.setText(dayNameCurrentDateOnStartWindow);
                 addProductToDayDisplaySelectedFDateDayLabel.setText(otherDataTextField.getText());
+                setUpMacroTable(otherDataTextField.getText());
             }
             private boolean checkIfDateIsCorrect() {
                 String dateToCheck = otherDataTextField.getText();
