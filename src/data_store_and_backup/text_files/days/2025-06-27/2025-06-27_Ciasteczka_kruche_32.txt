@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2025-06-27',
+'Friday',
+'Second Breakfast',
+32.0,
+'Ciasteczka kruche',
+429.0,
+5.0,
+22.4,
+65.0,
+'2025-06-27 04:56:02',
+'none',
+137.28,
+20.8,
+7.1679997,
+1.5999999
+);
