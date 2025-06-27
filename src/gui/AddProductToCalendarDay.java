@@ -10,6 +10,7 @@ import tools.products_tools.Product;
 import tools.sql_tools.SQLSelect;
 import tools.sql_tools.calendar.InsertToCalendarDayTable;
 import tools.sql_tools.days_statistics.SelectFromDaysStatistics;
+import tools.sql_tools.products.SelectFromProductTable;
 import tools.text_files_tools.FilesTools;
 import tools.time_date_tools.DateTools;
 
@@ -1021,6 +1022,11 @@ public class AddProductToCalendarDay {
             int productIndex = productSuggestionNameComboBox.getSelectedIndex();
             int comboBoxItemCount = productSuggestionNameComboBox.getItemCount();
 
+            try {
+                brandNameLabel.setText(SelectFromProductTable.selectProductsBrandFromProductName(productSuggestionNameComboBox.getSelectedItem().toString()));
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
             int nextProductIndex = productIndex + 1;
 
             if (nextProductIndex <  comboBoxItemCount) {
