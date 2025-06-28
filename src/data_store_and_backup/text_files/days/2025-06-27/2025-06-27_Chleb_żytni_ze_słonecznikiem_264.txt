@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2025-06-27',
+'Friday',
+'Night snack',
+264.0,
+'Chleb żytni ze słonecznikiem',
+253.0,
+6.4,
+6.8,
+39.0,
+'2025-06-28 01:16:05',
+'none',
+667.92004,
+102.96001,
+17.952002,
+16.896002
+);
