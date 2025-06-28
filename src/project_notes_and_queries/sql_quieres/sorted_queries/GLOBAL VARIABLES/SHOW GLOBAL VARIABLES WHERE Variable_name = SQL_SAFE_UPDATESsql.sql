@@ -1,0 +1,1 @@
+SHOW GLOBAL VARIABLES WHERE variable_name like "SQL_SAFE_UPDATES";
