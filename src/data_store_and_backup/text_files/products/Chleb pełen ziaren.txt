@@ -1,0 +1,9 @@
+Name: Chleb pełen ziaren
+Brand: Lidl
+Package has: 400.0
+Macro for: 100.0
+KCal: 211.0
+Protein: 9.0
+Fat: 4.0
+Carbs: 36.0
+Comment optional: Link: https://www.tabele-kalorii.pl/kalorie,Chleb-pelen-ziaren-Lidl.html

@@ -1,0 +1,9 @@
+Name: Cukier brązowy - kostka
+Brand: 
+Package has: 3.0
+Macro for: 100.0
+KCal: 375.0
+Protein: 0.0
+Fat: 0.0
+Carbs: 100.0
+Comment optional: Link: https://www.snapcalorie.com/nutrition/brown_sugar_cubes_nutrition.html
