@@ -149,7 +149,6 @@ public class AddProductToCalendarDay {
 
     //<editor-fold desc="Main Methods">
     private void setFrame() {
-        setUpMacroTable();
         // Set window size
         addProductToDayFrame.setSize(Config.ADD_PRODUCT_TO_DAY_WINDOWS_WIDTH, Config.ADD_PRODUCT_TO_DAY_WINDOWS_HEIGHT);
         addProductToDayFrame.setLayout(new BorderLayout());
@@ -210,6 +209,8 @@ public class AddProductToCalendarDay {
         addProductToDayDisplaySelectedFDateDayLabel.setForeground(Config.addProductToDayCurrentDateLabelColor);
         addProductToDayDisplaySelectedFDateDayLabel.setText(new SimpleDateFormat("yyyy-MM-dd").format(Config.date));
 
+        setUpMacroTable();
+        
         addProductToDayDisplaySelectedFDateNameDayLabel.setForeground(Config.addProductToDayCurrentDateLabelColor);
 
         addProductToDayDisplaySelectedFDateNameDayLabel.setText(dayNameCurrentDateOnStartWindow);
@@ -539,7 +540,7 @@ public class AddProductToCalendarDay {
     }
 
     public void setUpMacroTable(){
-        Macro macroToDisplay = SelectFromDaysStatistics.getMacroFromDaysStatisticsByDate(MyDate.getCurrentDayInSQLFormat());
+        Macro macroToDisplay = SelectFromDaysStatistics.getMacroFromDaysStatisticsByDate(addProductToDayDisplaySelectedFDateDayLabel.getText());
         macroTable.setValueAt("amount_of_points_from_notepad", 0,0);
         macroTable.setValueAt(SelectFromDaysStatistics.getAmountOfPointsFromNotepad(MyDate.getCurrentDayInSQLFormat()), 0,1);
         macroTable.setValueAt("amount_of_filled_points_from_notepad", 1,0);
