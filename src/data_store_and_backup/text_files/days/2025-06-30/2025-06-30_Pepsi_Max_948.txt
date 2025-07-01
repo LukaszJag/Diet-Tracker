@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2025-06-30',
+'Monday',
+'Supper',
+948.0,
+'Pepsi Max',
+0.3,
+0.0,
+0.0,
+0.1,
+'2025-07-01 10:48:49',
+'none',
+2.8439999,
+0.94799995,
+0.0,
+0.0
+);
