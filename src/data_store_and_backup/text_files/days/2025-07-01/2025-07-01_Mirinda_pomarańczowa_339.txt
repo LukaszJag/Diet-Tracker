@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2025-07-01',
+'Tuesday',
+'Breakfast',
+339.0,
+'Mirinda pomarańczowa',
+48.0,
+0.0,
+0.1,
+12.9,
+'2025-07-02 11:49:57',
+'none',
+162.72,
+43.731,
+0.33900002,
+0.0
+);
