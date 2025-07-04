@@ -1,0 +1,20 @@
+INSERT INTO `diet_tracker_schema`.product_table
+(`product_name`,
+`product_brand`,
+`product_package_has`,
+`product_macro_for`,
+`product_kcal`,
+`product_protein`,
+`product_fat`,
+`product_carbs`,
+`comment_optional`)
+Values
+('Masło',
+'Produkt ogolny',
+0.0,
+100.0,
+746.0,
+1.0,
+82.0,
+1.0,
+'Produkt ogolny na bazie: https://www.tabele-kalorii.pl/kalorie,Maslo-Polskie-Ekstra-200-g-Mlekovita.html');

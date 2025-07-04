@@ -1,0 +1,9 @@
+Name: Pomidorowa na rosole
+Brand: Produkt ogolny
+Package has: 0.0
+Macro for: 100.0
+KCal: 33.58
+Protein: 2.42
+Fat: 2.86
+Carbs: 1.79
+Comment optional: Link: https://www.tabele-kalorii.pl/kalorie,Pomidorowa-na-rosole-Przepis-od-wiedma.html

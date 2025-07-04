@@ -1,0 +1,9 @@
+Name: Masło
+Brand: Produkt ogolny
+Package has: 0.0
+Macro for: 100.0
+KCal: 746.0
+Protein: 1.0
+Fat: 82.0
+Carbs: 1.0
+Comment optional: Produkt ogolny na bazie: https://www.tabele-kalorii.pl/kalorie,Maslo-Polskie-Ekstra-200-g-Mlekovita.html

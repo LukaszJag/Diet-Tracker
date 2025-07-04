@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2025-07-03',
+'Thursday',
+'Supper',
+1340.0,
+'Pomidorowa na rosole',
+33.58,
+2.42,
+2.86,
+1.79,
+'2025-07-04 04:01:32',
+'none',
+449.97202,
+23.985998,
+38.323997,
+32.428
+);

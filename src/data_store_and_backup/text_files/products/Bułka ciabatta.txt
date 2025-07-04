@@ -1,0 +1,9 @@
+Name: Bułka ciabatta
+Brand: Lidl
+Package has: 85.0
+Macro for: 100.0
+KCal: 256.0
+Protein: 9.1
+Fat: 1.0
+Carbs: 51.6
+Comment optional: Link: https://www.tabele-kalorii.pl/kalorie,Bulka-ciabatta-Lidl.html
