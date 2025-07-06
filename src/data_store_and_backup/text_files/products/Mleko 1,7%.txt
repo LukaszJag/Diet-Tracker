@@ -1,0 +1,9 @@
+Name: Mleko 1,7%
+Brand: Produkt ogolny
+Package has: 0.0
+Macro for: 100.0
+KCal: 49.0
+Protein: 3.5
+Fat: 1.7
+Carbs: 4.7
+Comment optional: Produkt ogolny na bazie: https://uk-gd.openfoodfacts.org/product/4056489000921/west-country-semi-skimmed-milk-lidl?
