@@ -1,0 +1,9 @@
+Name: Napój o smaku brzoskwini i hibiskusa
+Brand: FuzeTea
+Package has: 0.0
+Macro for: 100.0
+KCal: 18.0
+Protein: 0.0
+Fat: 0.0
+Carbs: 4.2
+Comment optional: Link: https://online.makro.pl/shop/store/pv/BTY-X389726/0032/0022/fuzetea-Nap%C3%B3j-niegazowany-o-smaku-brzoskwini-i-hibiskusa-12-x-500-ml

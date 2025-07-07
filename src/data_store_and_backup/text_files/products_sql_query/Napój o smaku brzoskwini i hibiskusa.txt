@@ -1,0 +1,20 @@
+INSERT INTO `diet_tracker_schema`.product_table
+(`product_name`,
+`product_brand`,
+`product_package_has`,
+`product_macro_for`,
+`product_kcal`,
+`product_protein`,
+`product_fat`,
+`product_carbs`,
+`comment_optional`)
+Values
+('Napój o smaku brzoskwini i hibiskusa',
+'FuzeTea',
+0.0,
+100.0,
+18.0,
+0.0,
+0.0,
+4.2,
+'Link: https://online.makro.pl/shop/store/pv/BTY-X389726/0032/0022/fuzetea-Nap%C3%B3j-niegazowany-o-smaku-brzoskwini-i-hibiskusa-12-x-500-ml');
