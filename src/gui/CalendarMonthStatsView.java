@@ -1244,6 +1244,10 @@ public class CalendarMonthStatsView {
                 fullDate = "2025-06-";
             }
 
+            if (month == "July2025") {
+                fullDate = "2025-07-";
+            }
+
             if (button.getText().length() == 1) {
                 fullDate = fullDate + "0" + button.getText();
             }

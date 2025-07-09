@@ -60,6 +60,8 @@ public class AddProductToCalendarDay {
     JButton showEnableShortCutsButton = new JButton("Shortcuts tips");
     JButton checkDaysStatisticFilledTable = new JButton("Check days statistic");
     JButton productsCommentDisplayJButton = new JButton("Get comment");
+    JButton calendarMonthStatsView = new JButton("Month stats view");
+
     //</editor-fold>
 
     //<editor-fold desc="Labels">
@@ -160,7 +162,7 @@ public class AddProductToCalendarDay {
         addProductToDayPanelMain.setLayout(gridLayoutMainPanel);
         addProductToDayPanelWest.setLayout(panelWestBoxLayout);
 
-//        addProductToDayPanelWest.setLayout(westPanelBoxLayout);
+        // addProductToDayPanelWest.setLayout(westPanelBoxLayout);
         // Set panels colors
         addProductToDayPanelNorth.setBackground(Color.BLACK);
         addProductToDayPanelSouth.setBackground(Color.GRAY);
@@ -264,6 +266,8 @@ public class AddProductToCalendarDay {
         showEnableShortCutsButton.addActionListener(new ShowEnableShortCutsButtonActionListener());
         addProductToDayPanelEast.add(showEnableShortCutsButton);
 
+        calendarMonthStatsView.addActionListener(new CalendarMonthStatsViewActionListener());
+        addProductToDayPanelEast.add(calendarMonthStatsView);
 
         //</editor-fold>
 
@@ -1121,4 +1125,10 @@ public class AddProductToCalendarDay {
         }
     }
 
+    private class CalendarMonthStatsViewActionListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            new CalendarMonthStatsView();
+        }
+    }
 }
