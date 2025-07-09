@@ -1,0 +1,9 @@
+Name: Napój o smaku cytryny
+Brand: FuzeTea
+Package has: 0.0
+Macro for: 100.0
+KCal: 18.0
+Protein: 0.0
+Fat: 0.0
+Carbs: 4.2
+Comment optional: Link: https://leclerc24.pl/fuze-tea-juicy-napoj-niegazowany-o-smaku-cytryny-15-l

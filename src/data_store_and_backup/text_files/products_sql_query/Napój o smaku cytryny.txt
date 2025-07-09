@@ -1,0 +1,20 @@
+INSERT INTO `diet_tracker_schema`.product_table
+(`product_name`,
+`product_brand`,
+`product_package_has`,
+`product_macro_for`,
+`product_kcal`,
+`product_protein`,
+`product_fat`,
+`product_carbs`,
+`comment_optional`)
+Values
+('Napój o smaku cytryny',
+'FuzeTea',
+0.0,
+100.0,
+18.0,
+0.0,
+0.0,
+4.2,
+'Link: https://leclerc24.pl/fuze-tea-juicy-napoj-niegazowany-o-smaku-cytryny-15-l');
