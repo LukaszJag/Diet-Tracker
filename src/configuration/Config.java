@@ -17,7 +17,6 @@ public class Config {
     public static final int DAYS_STATISTICS_VIEWER_WIDTH = 1200;
     public static final int DAYS_STATISTICS_VIEWER_HEIGHT = 800;
 
-
     //</editor-fold>
 
     //<editor-fold desc="Start windows - configuration">
@@ -69,6 +68,14 @@ public class Config {
     public static final Dimension CALENDAR_MONTH_STATS_VIEW_BUTTONS_SIZE_DIMENSION = new Dimension(5,5);
     //</editor-fold>
 
+    //<editor-fold desc="AddWorkoutToTableForWorkout window - configuration">
+    public static final int ADD_WORKOUT_TO_DATABASE_GUI_WINDOW_WINDOWS_WIDTH = 900;
+    public static final int ADD_WORKOUT_TO_DATABASE_GUI_WINDOW_WINDOWS_HEIGHT = 600;
+    public static final int ADD_WORKOUT_TO_DATABASE_GUI_WINDOW_PANELS_NORTH_SIZE = 50;
+    public static final int ADD_WORKOUT_TO_DATABASE_GUI_WINDOW_PANELS_CENTER = 20;
+    public static final int ADD_WORKOUT_TO_DATABASE_GUI_WINDOW_PANELS_WEST_EAST_SIZE = 200;
+    public static final int ADD_WORKOUT_TO_DATABASE_GUI_WINDOW_PANELS_SOUTH_SIZE = 100;
+    //</editor-fold>
 
     //</editor-fold>
 
