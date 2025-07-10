@@ -1,0 +1,9 @@
+Name: Napój o smaku leśnych owoców
+Brand: FuzeTea
+Package has: 0.0
+Macro for: 100.0
+KCal: 20.1
+Protein: 0.0
+Fat: 0.0
+Carbs: 4.5
+Comment optional: Link: https://www.dine4fit.pl/produkty/black-fruits-of-forest-fuzetea
