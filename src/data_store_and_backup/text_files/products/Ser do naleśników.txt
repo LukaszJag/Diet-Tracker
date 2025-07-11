@@ -1,0 +1,9 @@
+Name: Ser do naleśników
+Brand: domowe
+Package has: 0.0
+Macro for: 100.0
+KCal: 165.17
+Protein: 14.23
+Fat: 3.03
+Carbs: 19.96
+Comment optional: Link: https://www.tabele-kalorii.pl/kalorie,Ser-do-nalesnikow-Przepis-od-doopek.html

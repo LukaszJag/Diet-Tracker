@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2025-07-11',
+'Thursday',
+'Dinner',
+586.0,
+'Arbuz',
+30.0,
+0.61,
+0.15,
+7.15,
+'2025-07-11 10:59:02',
+'none',
+175.8,
+41.899002,
+0.87900007,
+3.5746002
+);
