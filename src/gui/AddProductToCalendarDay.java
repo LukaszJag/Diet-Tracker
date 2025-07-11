@@ -25,8 +25,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 
 public class AddProductToCalendarDay {
-
-
+    
     //<editor-fold desc="Main - AddProductToCalendarDay - components and variables">
 
     //<editor-fold desc="Panels">
@@ -123,10 +122,22 @@ public class AddProductToCalendarDay {
     JComboBox<String> productSuggestionNameComboBox = new JComboBox<>(new String[]{""});
     //</editor-fold>
 
+    //<editor-fold desc="RadioButton">
+
+    JRadioButton productSearchSelectedRadioButton = new JRadioButton("Product search");
+
+    JRadioButton brandSearchSelectedRadioButton = new JRadioButton("Brand search");
+
+    //</editor-fold>
+
+    //<editor-fold desc="ButtonGroup">
+    ButtonGroup selectSearchTypeButtonGroup;
+    //</editor-fold>
+
     //<editor-fold desc="Layout">
     BoxLayout panelWestBoxLayout = new BoxLayout(addProductToDayPanelWest, BoxLayout.Y_AXIS);
     GridLayout gridLayoutMainPanel = new GridLayout(13, 2, 10, 10);
-    GridLayout checkDaysStatisticsDialogGridLayout = new GridLayout(34, 4, 0,0 );
+    GridLayout checkDaysStatisticsDialogGridLayout = new GridLayout(34, 4, 0, 0);
     GridLayout panelWestGridLayout = new GridLayout(9, 1, 5, 10);
 
     //</editor-fold>
@@ -136,25 +147,57 @@ public class AddProductToCalendarDay {
     //</editor-fold>
 
     //<editor-fold desc="Tables">
-    public JTable macroTable = new JTable(6,2);
+    public JTable macroTable = new JTable(6, 2);
     //</editor-fold>
 
     //</editor-fold>
 
-    //<editor-fold desc="Starting Constructors">
+    //<editor-fold desc="Starting constructors and methods">
+
     // Starting Constructor
     public AddProductToCalendarDay() {
 
         startAddProductToDayWindow();
     }
+
+    private void startAddProductToDayWindow() {
+        setFrame();
+        setPanels();
+        addComponentsToPanels();
+        addPanelsToFrame();
+        finishSetUpFrame();
+    }
+
     //</editor-fold>
 
-    //<editor-fold desc="Main Methods">
+    //<editor-fold desc="Frame methods">
+
     private void setFrame() {
         // Set window size
         addProductToDayFrame.setSize(Config.ADD_PRODUCT_TO_DAY_WINDOWS_WIDTH, Config.ADD_PRODUCT_TO_DAY_WINDOWS_HEIGHT);
         addProductToDayFrame.setLayout(new BorderLayout());
     }
+
+    private void addPanelsToFrame() {
+        // Add Panels to Frame
+        addProductToDayFrame.add(addProductToDayPanelNorth, BorderLayout.NORTH);
+        addProductToDayFrame.add(addProductToDayPanelWest, BorderLayout.WEST);
+        addProductToDayFrame.add(addProductToDayPanelMain, BorderLayout.CENTER);
+        addProductToDayFrame.add(addProductToDayPanelEast, BorderLayout.EAST);
+        addProductToDayFrame.add(addProductToDayPanelSouth, BorderLayout.SOUTH);
+
+    }
+
+    private void finishSetUpFrame() {
+        addProductToDayFrame.setResizable(true);
+        addProductToDayFrame.setLocationRelativeTo(null);
+        addProductToDayFrame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+        addProductToDayFrame.setVisible(true);
+    }
+
+    //</editor-fold>
+
+    //<editor-fold desc="Panels methods">
 
     private void setPanels() {
         //Set Layout
@@ -201,7 +244,7 @@ public class AddProductToCalendarDay {
         //<editor-fold desc="Add Components to Panel - West">
         // Add Buttons
 
-        inputCurrentDayButton.setPreferredSize(new Dimension(200,10));
+        inputCurrentDayButton.setPreferredSize(new Dimension(200, 10));
         addProductToDayPanelWest.add(inputCurrentDayButton);
         inputCurrentDayButton.addActionListener(new InputCurrentDayButtonActionListener());
 
@@ -284,86 +327,70 @@ public class AddProductToCalendarDay {
         //</editor-fold>
 
         //<editor-fold desc="Add Components to Center Panel">
-        // Add Components to Center Panel
+
+        // 1 - row
         addProductToDayPanelMain.add(dateLabel);
         addProductToDayPanelMain.add(otherThenCurrentDateButton);
         otherThenCurrentDateButton.addActionListener(new OtherThenCurrentDateButtonListener());
 
+        // 2 - row
         addProductToDayPanelMain.add(dayMealNameLabel);
-
-
         dayMealNameComboBox.setSelectedItem("None");
         addProductToDayPanelMain.add(dayMealNameComboBox);
 
+        // 3 - row
         addProductToDayPanelMain.add(productNameLabel);
         addProductToDayPanelMain.add(productNameTextField);
         productNameTextField.addKeyListener(new ProductNameTextFieldKeyListener());
 
+        // 4 - row
         addProductToDayPanelMain.add(productNameSuggestionLabel);
         addProductToDayPanelMain.add(productSuggestionNameComboBox);
 
+        // 5 - row
         addProductToDayPanelMain.add(amountOfProductLabel);
         addProductToDayPanelMain.add(amountOfProductTextField);
         amountOfProductTextField.addKeyListener(new AmountOfProductTextFieldKeyListener());
 
+        // 6 - row
         addProductToDayPanelMain.add(kcalLabel);
         addProductToDayPanelMain.add(kcalAmountJLabel);
 
+        // 7 - row
         addProductToDayPanelMain.add(proteinLabel);
         addProductToDayPanelMain.add(proteinAmountJLabel);
 
+        // 8 - row
         addProductToDayPanelMain.add(fatLabel);
         addProductToDayPanelMain.add(fatAmountJLabel);
 
+        // 9 - row
         addProductToDayPanelMain.add(brandLabel);
         addProductToDayPanelMain.add(brandNameLabel);
 
-
-
+        // 10 - row
         addProductToDayPanelMain.add(PackageLabel);
         addProductToDayPanelMain.add(packageHasAmountJLabel);
 
-        addProductToDayPanelMain.add(timeOptionalLabel);
-        addProductToDayPanelMain.add(timeOptionalTextField);
-
-
+        // 11 - row
         addProductToDayPanelMain.add(productsCommentJLabel);
         productsCommentDisplayJButton.addActionListener(new ProductsCommentDisplayJButtonActionListener());
         addProductToDayPanelMain.add(productsCommentDisplayJButton);
 
-
+        // 12 - row
         addProductToDayPanelMain.add(timeOptionalLabel);
         addProductToDayPanelMain.add(timeOptionalTextField);
 
+        // 13 - row
         addProductToDayPanelMain.add(commentOptionalLabel);
         addProductToDayPanelMain.add(commentOptionalTextField);
+
         //</editor-fold>
     }
 
-    private void addPanelsToFrame() {
-        // Add Panels to Frame
-        addProductToDayFrame.add(addProductToDayPanelNorth, BorderLayout.NORTH);
-        addProductToDayFrame.add(addProductToDayPanelWest, BorderLayout.WEST);
-        addProductToDayFrame.add(addProductToDayPanelMain, BorderLayout.CENTER);
-        addProductToDayFrame.add(addProductToDayPanelEast, BorderLayout.EAST);
-        addProductToDayFrame.add(addProductToDayPanelSouth, BorderLayout.SOUTH);
+    //</editor-fold>
 
-    }
-
-    private void finishSetUpFrame() {
-        addProductToDayFrame.setResizable(true);
-        addProductToDayFrame.setLocationRelativeTo(null);
-        addProductToDayFrame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-        addProductToDayFrame.setVisible(true);
-    }
-
-    private void startAddProductToDayWindow() {
-        setFrame();
-        setPanels();
-        addComponentsToPanels();
-        addPanelsToFrame();
-        finishSetUpFrame();
-    }
+    //<editor-fold desc="Main Methods">
 
     public boolean isProductExist() {
 
@@ -400,7 +427,8 @@ public class AddProductToCalendarDay {
 
         }
     }
-    public void clearGUIMacroValues(){
+
+    public void clearGUIMacroValues() {
         amountOfProductTextField.setText("");
         kcalAmountJLabel.setText("?");
         proteinAmountJLabel.setText("?");
@@ -417,7 +445,6 @@ public class AddProductToCalendarDay {
 
         //JComboBox<String> productSuggestionNameComboBox = new JComboBox<>(new String[]{""});
     }
-
 
     //<editor-fold desc="Accept product to calendar table methods">
     private void acceptProduct() {
@@ -436,7 +463,7 @@ public class AddProductToCalendarDay {
                 addProductToDayDisplaySelectedFDateDayLabel.getText(), amountOfProductTextField.getText());
 
         Log.addNewLogForProductToCalendarGUIAccept(dayInCalendar.getDayDateFormatFriendlyForSQL(), dayInCalendarProduct.getProductName(), dayInCalendar.getDayProductMacro(),
-                dayInCalendar.getDayAmountOfProduct(), dayInCalendar.getDayDateDayName(), dayInCalendar.getMealName() ,dayInCalendar.getDayProductProduct(),
+                dayInCalendar.getDayAmountOfProduct(), dayInCalendar.getDayDateDayName(), dayInCalendar.getMealName(), dayInCalendar.getDayProductProduct(),
                 dayInCalendar.getConsumedMacro(), dayInCalendar);
         try {
             InsertToCalendarDayTable.addRowToCalendarTable(dayInCalendar);
@@ -449,17 +476,17 @@ public class AddProductToCalendarDay {
         String addProductToDayDisplaySelectedFDateDayLabelString = addProductToDayDisplaySelectedFDateDayLabel.getText();
         String monthInNumberString = "" + addProductToDayDisplaySelectedFDateDayLabelString.charAt(5) + addProductToDayDisplaySelectedFDateDayLabelString.charAt(6);
 
-        if (monthInNumberString.charAt(0) == '0'){
-            monthInNumberString = "" +  monthInNumberString.charAt(1);
+        if (monthInNumberString.charAt(0) == '0') {
+            monthInNumberString = "" + monthInNumberString.charAt(1);
         }
         int monthInNumberInt = Integer.valueOf(monthInNumberString);
 
-        String yearInString =  addProductToDayDisplaySelectedFDateDayLabelString.substring(0,4);
+        String yearInString = addProductToDayDisplaySelectedFDateDayLabelString.substring(0, 4);
         int yearInNumber = Integer.valueOf(yearInString);
 
         String numberOfDay = "" + addProductToDayDisplaySelectedFDateDayLabelString.charAt(8) + addProductToDayDisplaySelectedFDateDayLabelString.charAt(9);
         int numberOfDayInt;
-        if(numberOfDay.charAt(0) == '0'){
+        if (numberOfDay.charAt(0) == '0') {
             numberOfDayInt = Integer.parseInt("" + numberOfDay.charAt(1));
         }
 
@@ -528,54 +555,56 @@ public class AddProductToCalendarDay {
     }
     //</editor-fold>
 
-    public void mealNameAcceptManager(){
-        if (dayMealNameComboBox.getSelectedItem().toString().equals("None")){
-            int reply = JOptionPane.showConfirmDialog(null, "Are you sure you want add product with -None- meal name?", "Right meal name?",  JOptionPane.YES_NO_OPTION);
-            if (reply == JOptionPane.YES_OPTION)
-            {
+    public void mealNameAcceptManager() {
+        if (dayMealNameComboBox.getSelectedItem().toString().equals("None")) {
+            int reply = JOptionPane.showConfirmDialog(null, "Are you sure you want add product with -None- meal name?", "Right meal name?", JOptionPane.YES_NO_OPTION);
+            if (reply == JOptionPane.YES_OPTION) {
                 acceptProduct();
-            }else {
-                JOptionPane.showMessageDialog(null,"Back to adding product");
+            } else {
+                JOptionPane.showMessageDialog(null, "Back to adding product");
             }
-        }else {
+        } else {
             acceptProduct();
         }
 
     }
 
-    public void setUpMacroTable(){
+    public void setUpMacroTable() {
         Macro macroToDisplay = SelectFromDaysStatistics.getMacroFromDaysStatisticsByDate(addProductToDayDisplaySelectedFDateDayLabel.getText());
-        macroTable.setValueAt("amount_of_points_from_notepad", 0,0);
-        macroTable.setValueAt(SelectFromDaysStatistics.getAmountOfPointsFromNotepad(MyDate.getCurrentDayInSQLFormat()), 0,1);
-        macroTable.setValueAt("amount_of_filled_points_from_notepad", 1,0);
-        macroTable.setValueAt(SelectFromDaysStatistics.getAmountOfFilledPointsFromNotepad(MyDate.getCurrentDayInSQLFormat()), 1,1);
-        macroTable.setValueAt("kcal_consume", 2,0);
-        macroTable.setValueAt(macroToDisplay.getKcal(), 2,1);
-        macroTable.setValueAt("protein_consume", 3,0);
-        macroTable.setValueAt(macroToDisplay.getProtein(), 3,1);
-        macroTable.setValueAt("fat_consume", 4,0);
-        macroTable.setValueAt(macroToDisplay.getFat(), 4,1);
-        macroTable.setValueAt("carbs_consume", 5,0);
-        macroTable.setValueAt(macroToDisplay.getCarbs(), 5,1);
+        macroTable.setValueAt("amount_of_points_from_notepad", 0, 0);
+        macroTable.setValueAt(SelectFromDaysStatistics.getAmountOfPointsFromNotepad(MyDate.getCurrentDayInSQLFormat()), 0, 1);
+        macroTable.setValueAt("amount_of_filled_points_from_notepad", 1, 0);
+        macroTable.setValueAt(SelectFromDaysStatistics.getAmountOfFilledPointsFromNotepad(MyDate.getCurrentDayInSQLFormat()), 1, 1);
+        macroTable.setValueAt("kcal_consume", 2, 0);
+        macroTable.setValueAt(macroToDisplay.getKcal(), 2, 1);
+        macroTable.setValueAt("protein_consume", 3, 0);
+        macroTable.setValueAt(macroToDisplay.getProtein(), 3, 1);
+        macroTable.setValueAt("fat_consume", 4, 0);
+        macroTable.setValueAt(macroToDisplay.getFat(), 4, 1);
+        macroTable.setValueAt("carbs_consume", 5, 0);
+        macroTable.setValueAt(macroToDisplay.getCarbs(), 5, 1);
     }
 
-    public void setUpMacroTable(String selectedDayInSQLFormat){
+    public void setUpMacroTable(String selectedDayInSQLFormat) {
         Macro macroToDisplay = SelectFromDaysStatistics.getMacroFromDaysStatisticsByDate(selectedDayInSQLFormat);
-        macroTable.setValueAt("amount_of_points_from_notepad", 0,0);
-        macroTable.setValueAt(SelectFromDaysStatistics.getAmountOfPointsFromNotepad(selectedDayInSQLFormat), 0,1);
-        macroTable.setValueAt("amount_of_filled_points_from_notepad", 1,0);
-        macroTable.setValueAt(SelectFromDaysStatistics.getAmountOfFilledPointsFromNotepad(selectedDayInSQLFormat), 1,1);
-        macroTable.setValueAt("kcal_consume", 2,0);
-        macroTable.setValueAt(macroToDisplay.getKcal(), 2,1);
-        macroTable.setValueAt("protein_consume", 3,0);
-        macroTable.setValueAt(macroToDisplay.getProtein(), 3,1);
-        macroTable.setValueAt("fat_consume", 4,0);
-        macroTable.setValueAt(macroToDisplay.getFat(), 4,1);
-        macroTable.setValueAt("carbs_consume", 5,0);
-        macroTable.setValueAt(macroToDisplay.getCarbs(), 5,1);
+        macroTable.setValueAt("amount_of_points_from_notepad", 0, 0);
+        macroTable.setValueAt(SelectFromDaysStatistics.getAmountOfPointsFromNotepad(selectedDayInSQLFormat), 0, 1);
+        macroTable.setValueAt("amount_of_filled_points_from_notepad", 1, 0);
+        macroTable.setValueAt(SelectFromDaysStatistics.getAmountOfFilledPointsFromNotepad(selectedDayInSQLFormat), 1, 1);
+        macroTable.setValueAt("kcal_consume", 2, 0);
+        macroTable.setValueAt(macroToDisplay.getKcal(), 2, 1);
+        macroTable.setValueAt("protein_consume", 3, 0);
+        macroTable.setValueAt(macroToDisplay.getProtein(), 3, 1);
+        macroTable.setValueAt("fat_consume", 4, 0);
+        macroTable.setValueAt(macroToDisplay.getFat(), 4, 1);
+        macroTable.setValueAt("carbs_consume", 5, 0);
+        macroTable.setValueAt(macroToDisplay.getCarbs(), 5, 1);
     }
+
+    //</editor-fold>
 
     //<editor-fold desc="Action Listeners Classes">
+
     private class AddProductToDayAcceptButtonListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -664,7 +693,7 @@ public class AddProductToCalendarDay {
             dialogWindowAcceptButton.addMouseListener(new OtherThenCurrentDateButtonListener.dialogWindowPanelMouseListener());
             JButton year2024 = new JButton("2024");
             JButton year2025 = new JButton("2025");
-            
+
             year2024.addMouseListener(new OtherThenCurrentDateButtonListener.dialogWindowPanelMouseListener());
             year2025.addMouseListener(new OtherThenCurrentDateButtonListener.dialogWindowPanelMouseListener());
 
@@ -728,9 +757,9 @@ public class AddProductToCalendarDay {
                     clickedButton = (JButton) e.getSource();
 
                     if (!clickedButton.getText().equals("Accept new date")) {
-                        if (clickedButton.getText().equals("2024") || clickedButton.getText().equals("2025")){
+                        if (clickedButton.getText().equals("2024") || clickedButton.getText().equals("2025")) {
                             otherDataTextField.setText(clickedButton.getText());
-                        }else {
+                        } else {
                             if (clickedButton.getText().length() == 1) {
                                 reulstString = otherDataTextField.getText() + "-" + "0" + clickedButton.getText();
                             } else {
@@ -754,19 +783,19 @@ public class AddProductToCalendarDay {
                 }
             }
 
-            private void changeDateOnCalendarWindowGUI(){
+            private void changeDateOnCalendarWindowGUI() {
                 Format format = new SimpleDateFormat("EEEE");
 
                 String otherThanCurrentDateString = otherDataTextField.getText();
                 String dayNameOtherDate = String.valueOf(otherThanCurrentDateString.charAt(8)) + String.valueOf(otherThanCurrentDateString.charAt(9));
                 otherThanCurrentDateString = String.valueOf(otherThanCurrentDateString.charAt(5)) + String.valueOf(otherThanCurrentDateString.charAt(6));
 
-                if (String.valueOf(dayNameOtherDate.charAt(0)).equals("0")){
+                if (String.valueOf(dayNameOtherDate.charAt(0)).equals("0")) {
                     dayNameOtherDate = String.valueOf(dayNameOtherDate.charAt(1));
                 }
                 int dayNameOtherDateInt = Integer.valueOf(dayNameOtherDate);
 
-                if (String.valueOf(otherThanCurrentDateString.charAt(0)).equals("0")){
+                if (String.valueOf(otherThanCurrentDateString.charAt(0)).equals("0")) {
                     otherThanCurrentDateString = String.valueOf(otherThanCurrentDateString.charAt(1));
                 }
                 int month = Integer.valueOf(otherThanCurrentDateString);
@@ -774,20 +803,22 @@ public class AddProductToCalendarDay {
                 String dateInString = otherDataTextField.getText();
                 String year = "";
                 int yearInInt = 0;
-                if(dateInString.substring(0,4).equals("2025")){
+                if (dateInString.substring(0, 4).equals("2025")) {
                     yearInInt = 2025;
                 }
 
-                if(dateInString.substring(0,4).equals("2024")){
+                if (dateInString.substring(0, 4).equals("2024")) {
                     yearInInt = 2024;
                 }
 
-                java.util.Date utilDateImport = new GregorianCalendar(yearInInt, month-1, dayNameOtherDateInt).getTime();;
+                java.util.Date utilDateImport = new GregorianCalendar(yearInInt, month - 1, dayNameOtherDateInt).getTime();
+                ;
                 String dayNameCurrentDateOnStartWindow = format.format(utilDateImport);
                 addProductToDayDisplaySelectedFDateNameDayLabel.setText(dayNameCurrentDateOnStartWindow);
                 addProductToDayDisplaySelectedFDateDayLabel.setText(otherDataTextField.getText());
                 setUpMacroTable(otherDataTextField.getText());
             }
+
             private boolean checkIfDateIsCorrect() {
                 String dateToCheck = otherDataTextField.getText();
                 System.out.println(dateToCheck);
@@ -924,7 +955,7 @@ public class AddProductToCalendarDay {
             }
             checkDaysStatisticsDialog.setName("Check days Statistics");
             checkDaysStatisticsDialog.setLocationRelativeTo(null);
-            checkDaysStatisticsDialog.setSize(1000,800);
+            checkDaysStatisticsDialog.setSize(1000, 800);
             checkDaysStatisticsDialog.setResizable(true);
             checkDaysStatisticsDialog.setVisible(true);
         }
@@ -942,8 +973,53 @@ public class AddProductToCalendarDay {
             JOptionPane.showMessageDialog(null, "Product's comment: " + productsComment);
         }
     }
+
+    private class ShowEnableShortCutsButtonActionListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            Panel shortcutsPanel = new Panel();
+            JDialog shortcutsDialog = new JDialog(addProductToDayFrame, "Shortcuts");
+            JButton shortcutsForProductNameButton = new JButton("Product name text field");
+            JButton shortcutsForAmountOfProductButton = new JButton("Amount Of Product text field");
+            JButton closeDialogButton = new JButton("Close");
+
+            shortcutsDialog.setSize(300, 300);
+
+            Color labelsColor = Color.BLACK;
+            //shortcutWordLabel.setForeground(Color.RED);
+            shortcutsCRTTipsLabel.setForeground(labelsColor);
+            shortcutsDOWNArrowTipsLabel.setForeground(labelsColor);
+            shortcutsUPArrowTipsLabel.setForeground(labelsColor);
+
+            shortcutsPanel.add(shortcutsForProductNameButton);
+            shortcutsPanel.add(shortcutsForAmountOfProductButton);
+
+
+            //shortcutsPanel.add(shortcutWordLabel);
+            shortcutsPanel.add(shortcutsCRTTipsLabel);
+            shortcutsPanel.add(shortcutsDOWNArrowTipsLabel);
+            shortcutsPanel.add(shortcutsUPArrowTipsLabel);
+            shortcutsPanel.add(shortcutsCRTLAmountOfProductTipsLabel);
+
+            shortcutsPanel.add(closeDialogButton);
+
+            shortcutsDialog.setLocationRelativeTo(null);
+            shortcutsDialog.add(shortcutsPanel);
+            shortcutsDialog.setVisible(true);
+
+        }
+    }
+
+    private class CalendarMonthStatsViewActionListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            new CalendarMonthStatsView();
+        }
+    }
+
     //</editor-fold>
 
+    //<editor-fold desc="KeyListener Classes">
 
     private class ProductNameTextFieldKeyListener implements KeyListener {
         @Override
@@ -987,43 +1063,43 @@ public class AddProductToCalendarDay {
                 selectNextItemInComboBox();
             }
 
-            if (e.getKeyCode() == KeyEvent.VK_LEFT){
+            if (e.getKeyCode() == KeyEvent.VK_LEFT) {
                 selectBackItemInMealComboBox();
             }
 
-            if (e.getKeyCode() == KeyEvent.VK_RIGHT){
+            if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
                 selectNextItemInMealComboBox();
             }
         }
 
-        public void selectNextItemInMealComboBox(){
+        public void selectNextItemInMealComboBox() {
             int productIndex = dayMealNameComboBox.getSelectedIndex();
             int comboBoxItemCount = dayMealNameComboBox.getItemCount();
 
             int nextProductIndex = productIndex + 1;
 
-            if (nextProductIndex <  comboBoxItemCount) {
+            if (nextProductIndex < comboBoxItemCount) {
                 dayMealNameComboBox.setSelectedIndex(nextProductIndex);
-            }else {
+            } else {
                 dayMealNameComboBox.setSelectedIndex(0);
             }
         }
 
-        public void selectBackItemInMealComboBox(){
+        public void selectBackItemInMealComboBox() {
             int productIndex = dayMealNameComboBox.getSelectedIndex();
             int comboBoxItemCount = dayMealNameComboBox.getItemCount();
 
             int nextProductIndex = productIndex - 1;
-            
+
 
             if (nextProductIndex <= -1) {
                 dayMealNameComboBox.setSelectedIndex(comboBoxItemCount - 1);
-            }else {
+            } else {
                 dayMealNameComboBox.setSelectedIndex(nextProductIndex);
             }
         }
 
-        public void selectNextItemInComboBox(){
+        public void selectNextItemInComboBox() {
             int productIndex = productSuggestionNameComboBox.getSelectedIndex();
             int comboBoxItemCount = productSuggestionNameComboBox.getItemCount();
 
@@ -1034,13 +1110,14 @@ public class AddProductToCalendarDay {
             }
             int nextProductIndex = productIndex + 1;
 
-            if (nextProductIndex <  comboBoxItemCount) {
+            if (nextProductIndex < comboBoxItemCount) {
                 productSuggestionNameComboBox.setSelectedIndex(nextProductIndex);
-            }else {
+            } else {
                 productSuggestionNameComboBox.setSelectedIndex(0);
             }
 
         }
+
         public String[] searchAllProductWith(String wordToSearch) {
             String[] allProductArray;
             String[] resultArray = new String[500];
@@ -1086,49 +1163,8 @@ public class AddProductToCalendarDay {
         }
 
 
-
     }
 
-    private class ShowEnableShortCutsButtonActionListener implements ActionListener {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            Panel shortcutsPanel = new Panel();
-            JDialog shortcutsDialog = new JDialog(addProductToDayFrame, "Shortcuts");
-            JButton shortcutsForProductNameButton = new JButton("Product name text field");
-            JButton shortcutsForAmountOfProductButton = new JButton("Amount Of Product text field");
-            JButton closeDialogButton = new JButton("Close");
+    //</editor-fold>
 
-            shortcutsDialog.setSize(300,300);
-
-            Color labelsColor = Color.BLACK;
-            //shortcutWordLabel.setForeground(Color.RED);
-            shortcutsCRTTipsLabel.setForeground(labelsColor);
-            shortcutsDOWNArrowTipsLabel.setForeground(labelsColor);
-            shortcutsUPArrowTipsLabel.setForeground(labelsColor);
-
-            shortcutsPanel.add(shortcutsForProductNameButton);
-            shortcutsPanel.add(shortcutsForAmountOfProductButton);
-
-
-            //shortcutsPanel.add(shortcutWordLabel);
-            shortcutsPanel.add(shortcutsCRTTipsLabel);
-            shortcutsPanel.add(shortcutsDOWNArrowTipsLabel);
-            shortcutsPanel.add(shortcutsUPArrowTipsLabel);
-            shortcutsPanel.add(shortcutsCRTLAmountOfProductTipsLabel);
-
-            shortcutsPanel.add(closeDialogButton);
-
-            shortcutsDialog.setLocationRelativeTo(null);
-            shortcutsDialog.add(shortcutsPanel);
-            shortcutsDialog.setVisible(true);
-
-        }
-    }
-
-    private class CalendarMonthStatsViewActionListener implements ActionListener {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            new CalendarMonthStatsView();
-        }
-    }
 }
