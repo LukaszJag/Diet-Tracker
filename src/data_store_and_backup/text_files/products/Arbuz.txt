@@ -1,0 +1,9 @@
+Name: Arbuz
+Brand: owoce
+Package has: 0.0
+Macro for: 100.0
+KCal: 30.0
+Protein: 0.61
+Fat: 0.15
+Carbs: 7.15
+Comment optional: Link: https://www.tabele-kalorii.pl/kalorie,Arbuz.html
