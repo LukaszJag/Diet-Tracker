@@ -25,7 +25,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 
 public class AddProductToCalendarDay {
-    
+
     //<editor-fold desc="Main - AddProductToCalendarDay - components and variables">
 
     //<editor-fold desc="Panels">
