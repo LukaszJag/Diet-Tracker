@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2025-07-11',
+'Friday',
+'Supper',
+360.0,
+'Chleb pełen ziaren',
+211.0,
+9.0,
+4.0,
+36.0,
+'2025-07-12 01:42:11',
+'none',
+759.6,
+129.59999,
+14.4,
+32.399998
+);
