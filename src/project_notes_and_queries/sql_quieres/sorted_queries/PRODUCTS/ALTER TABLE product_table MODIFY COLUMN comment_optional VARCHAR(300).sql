@@ -1,0 +1,1 @@
+ALTER TABLE product_table MODIFY COLUMN comment_optional VARCHAR(300);
