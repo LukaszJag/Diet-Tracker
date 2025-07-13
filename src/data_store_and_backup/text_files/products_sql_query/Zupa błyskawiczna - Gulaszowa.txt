@@ -1,0 +1,40 @@
+INSERT INTO `diet_tracker_schema`.product_table
+(`product_name`,
+`product_brand`,
+`product_package_has`,
+`product_macro_for`,
+`product_kcal`,
+`product_protein`,
+`product_fat`,
+`product_carbs`,
+`comment_optional`)
+Values
+('Zupa błyskawiczna - Gulaszowa',
+'Amino',
+0.0,
+100.0,
+72.0,
+1.4,
+3.3,
+8.5,
+'Opakowanie pozwala na przygotowanie 1 porcji - 400ml Link: https://www.carrefour.pl/artykuly-spozywcze/konserwy-i-dania-gotowe/zupy/amino-zupa-blyskawiczna-gulaszowa-z-wieprzowina-i-papryka-59-g');
+INSERT INTO `diet_tracker_schema`.product_table
+(`product_name`,
+`product_brand`,
+`product_package_has`,
+`product_macro_for`,
+`product_kcal`,
+`product_protein`,
+`product_fat`,
+`product_carbs`,
+`comment_optional`)
+Values
+('Zupa błyskawiczna - Gulaszowa',
+'Amino',
+0.0,
+100.0,
+72.0,
+1.4,
+3.3,
+8.5,
+'Opakowanie pozwala na przygotowanie 1 porcji - 400ml Link: https://www.carrefour.pl/artykuly-spozywcze/konserwy-i-dania-gotowe/zupy/amino-zupa-blyskawiczna-gulaszowa-z-wieprzowina-i-papryka-59-g');

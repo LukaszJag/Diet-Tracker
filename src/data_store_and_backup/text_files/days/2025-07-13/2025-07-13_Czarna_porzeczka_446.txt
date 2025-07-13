@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2025-07-13',
+'Sunday',
+'Snack 2',
+446.0,
+'Czarna porzeczka',
+60.0,
+1.4,
+0.4,
+11.4,
+'2025-07-13 09:49:22',
+'none',
+267.6,
+50.843998,
+1.784,
+6.244
+);

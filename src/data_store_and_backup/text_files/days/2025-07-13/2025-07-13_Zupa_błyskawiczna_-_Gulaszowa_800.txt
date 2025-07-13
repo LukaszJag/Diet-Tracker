@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2025-07-13',
+'Sunday',
+'Dinner',
+800.0,
+'Zupa błyskawiczna - Gulaszowa',
+72.0,
+1.4,
+3.3,
+8.5,
+'2025-07-13 09:43:27',
+'none',
+576.0,
+68.0,
+26.4,
+11.2
+);
