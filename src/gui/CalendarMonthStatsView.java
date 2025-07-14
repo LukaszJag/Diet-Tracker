@@ -99,9 +99,6 @@ public class CalendarMonthStatsView {
     JLabel currentDayMacroTitleNorthPanelLabel = new JLabel("Macro: ");
     JLabel currentDayMacroValuesNorthPanelLabel = new JLabel("Kcal: ????,?? \nProtein: ????,??g \nFat: ????,??g Carbs: ????,??g");
 
-    JLabel selectedDayStatsTitleEastPanelLabel = new JLabel("Selected day stats:");
-
-
     JLabel selectedMonthStatsGoodDaysDaysLabel = new JLabel("Good days:");
     JLabel selectedMonthStatsBadDaysDaysLabel = new JLabel("Bad days:");
     JLabel selectedMonthStatsNoDataDaysLabel = new JLabel("No data:");

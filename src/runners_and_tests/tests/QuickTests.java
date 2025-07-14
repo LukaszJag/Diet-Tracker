@@ -1,18 +1,14 @@
 package runners_and_tests.tests;
 
-import configuration.Config;
-import gui.LoadingBarGUI;
-import runners_and_tests.run_update.RunnerFullUpdateDayStatistics;
 import runners_and_tests.tests.test_tools.get_simple_data_to_test.DayInCalendarFactoryToMakeTest;
 import runners_and_tests.tests.test_tools.get_simple_data_to_test.ProductFactoryToMakeTests;
 import tools.calendar_tools.DayInCalendar;
 import tools.products_tools.Product;
 import tools.sql_tools.SQLSelect;
 import tools.sql_tools.calendar.InsertToCalendarDayTable;
-import tools.sql_tools.days_statistics.GenerateSLQTableForDaysStatistics;
-import tools.sql_tools.days_statistics.UpdateDaysStatisticsFilledData;
 import tools.sql_tools.general.IsTheRowAlreadyExist;
 import tools.sql_tools.general.RunQuery;
+import tools.sql_tools.general.SumTable;
 import tools.sql_tools.products.ImportDateFromTXTFilesToSQLDB;
 import tools.text_files_tools.DirectoryTools;
 import tools.text_files_tools.FilesTools;
@@ -42,8 +38,18 @@ public class QuickTests {
         //test10();
         //test11();
         //test12();
-        testDisplayCurrentDayInSQLFormat();
+        //testDisplayCurrentDayInSQLFormat();
+        checkSumTableQueryCorrectness();
 
+    }
+
+    private static void checkSumTableQueryCorrectness() {
+        String tableName = "days_statistics_test";
+        String[] fieldsNamesToSum = {"kcal_consume", "protein_consume", "fat_consume", "carbs_consume"};
+        String whereColumnName = "day_date";
+        String whereColumnValue = "2025-07%";
+
+        System.out.println(SumTable.sumRowsInTableWhereColumnLike(tableName, fieldsNamesToSum, whereColumnName,whereColumnValue));
     }
 
     private static void testDisplayCurrentDayInSQLFormat() {
