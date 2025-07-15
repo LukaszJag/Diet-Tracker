@@ -1,0 +1,9 @@
+Name: Rurki z kremem czekoladowym
+Brand: Bonitki
+Package has: 280.0
+Macro for: 100.0
+KCal: 506.0
+Protein: 5.6
+Fat: 25.0
+Carbs: 63.0
+Comment optional: Dane z opakowania

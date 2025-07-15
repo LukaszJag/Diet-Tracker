@@ -1,0 +1,9 @@
+Name: Lody wodne truskawkowe
+Brand: Marletto
+Package has: 115.0
+Macro for: 100.0
+KCal: 117.0
+Protein: 0.3
+Fat: 0.5
+Carbs: 28.0
+Comment optional: Link: https://pl.openfoodfacts.org/product/5905704316035/lody-wodne-truskawkowe-marletto

@@ -1,0 +1,20 @@
+INSERT INTO `diet_tracker_schema`.product_table
+(`product_name`,
+`product_brand`,
+`product_package_has`,
+`product_macro_for`,
+`product_kcal`,
+`product_protein`,
+`product_fat`,
+`product_carbs`,
+`comment_optional`)
+Values
+('Lody wodne truskawkowe',
+'Marletto',
+115.0,
+100.0,
+117.0,
+0.3,
+0.5,
+28.0,
+'Link: https://pl.openfoodfacts.org/product/5905704316035/lody-wodne-truskawkowe-marletto');
