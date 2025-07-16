@@ -1,30 +1,44 @@
 package tools.sql_tools.general;
 
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Dictionary;
+import java.util.Hashtable;
 
 public class SumTable {
-    public static Dictionary sumRowsInTableWhereColumnLike(String tableName, String[] fieldsNamesToSum, String whereColumnName, String whereColumnValue) {
+    public static Hashtable sumRowsInTableWhereColumnLike(String tableName, String[] fieldsNamesToSum, String whereColumnName, String whereColumnValue) {
         Connection connection;
 
         String sqlQuery = prepareSQLQuery(tableName, fieldsNamesToSum, whereColumnName, whereColumnValue);
 
-        Dictionary<String, Float> dict = null; //new Dictionary<Integer, String>();
+        Hashtable<String, Float> fieldAndSum = new Hashtable<>();
+
+        ResultSet resultSet = GetResultSet.getResultSetFromSQL(sqlQuery);
         try {
-            connection = GetConnection.getConnectionWithLocalHost();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+            while (resultSet.next()) {
+                for (int i = 0; i < fieldsNamesToSum.length; i++) {
+                    fieldAndSum.put(fieldsNamesToSum[i], Float.valueOf((resultSet.getString(fieldsNamesToSum[i])).replace(",", "")));
+
+                }
+            }
+        }catch (SQLException e){
+            System.out.println(e);
         }
 
-        return dict;
+
+        return fieldAndSum;
     }
 
-    private static String prepareSQLQuery(String tableName, String[] fieldsNamesToSum, String whereColumnName, String whereColumnValue) {
+    public static String prepareSQLQuery(String tableName, String[] fieldsNamesToSum, String whereColumnName, String whereColumnValue) {
         String fieldsSumQuery = "";
 
         for (int i = 0; i < fieldsNamesToSum.length; i++) {
-            fieldsSumQuery += "FORMAT((SUM(" + fieldsNamesToSum[i] + ")), '0.00') AS \"" + fieldsNamesToSum[i] + "\", \n";
+            if (i == (fieldsNamesToSum.length - 1)) {
+                fieldsSumQuery += "FORMAT((SUM(" + fieldsNamesToSum[i] + ")), '0.00') AS \"" + fieldsNamesToSum[i] + "\" \n";
+            } else {
+                fieldsSumQuery += "FORMAT((SUM(" + fieldsNamesToSum[i] + ")), '0.00') AS \"" + fieldsNamesToSum[i] + "\", \n";
+            }
         }
 
         String sqlQuery = "SELECT \n" +
@@ -32,7 +46,7 @@ public class SumTable {
                 "\n" +
                 "FROM " + tableName + "\n" +
                 "\n" +
-                "WHERE " + whereColumnName + " LIKE " + whereColumnValue + ";\n";
+                "WHERE " + whereColumnName + " LIKE \"" + whereColumnValue + "\";\n";
 
         return sqlQuery;
     }

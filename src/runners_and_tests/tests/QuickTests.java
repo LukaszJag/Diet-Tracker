@@ -20,9 +20,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Month;
 import java.time.format.TextStyle;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Locale;
+import java.util.*;
 
 public class QuickTests {
     public static void main(String[] args) throws SQLException, ParseException, IOException {
@@ -39,8 +37,29 @@ public class QuickTests {
         //test11();
         //test12();
         //testDisplayCurrentDayInSQLFormat();
-        checkSumTableQueryCorrectness();
+        //checkSumTableQueryCorrectness();
+        checkSumTableResultCorrectness();
 
+    }
+
+    private static void checkSumTableResultCorrectness() {
+        Hashtable<String, Float> fieldAndSum = new Hashtable<>();
+
+        String tableName = "days_statistics_test";
+        String[] fieldsNamesToSum = {"kcal_consume", "protein_consume", "fat_consume", "carbs_consume"};
+        String whereColumnName = "day_date";
+        String whereColumnValue = "2025-07%";
+
+        fieldAndSum = SumTable.sumRowsInTableWhereColumnLike(tableName, fieldsNamesToSum, whereColumnName,whereColumnValue);
+
+        Enumeration<String> namesOfFields = fieldAndSum.keys();
+        while (namesOfFields.hasMoreElements()){
+            String nextElement = namesOfFields.nextElement();
+            System.out.println(nextElement + " <-> " + fieldAndSum.get(nextElement));
+        }
+        for (int i = 0; i < fieldAndSum.size(); i++) {
+            System.out.println();
+        }
     }
 
     private static void checkSumTableQueryCorrectness() {
@@ -49,7 +68,7 @@ public class QuickTests {
         String whereColumnName = "day_date";
         String whereColumnValue = "2025-07%";
 
-        System.out.println(SumTable.sumRowsInTableWhereColumnLike(tableName, fieldsNamesToSum, whereColumnName,whereColumnValue));
+        System.out.println(SumTable.prepareSQLQuery(tableName, fieldsNamesToSum, whereColumnName,whereColumnValue));
     }
 
     private static void testDisplayCurrentDayInSQLFormat() {
