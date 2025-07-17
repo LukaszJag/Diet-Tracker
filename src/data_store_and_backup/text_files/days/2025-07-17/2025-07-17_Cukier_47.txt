@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2025-07-17',
+'Wednesday',
+'Second Breakfast',
+47.0,
+'Cukier',
+399.0,
+0.0,
+0.0,
+99.8,
+'2025-07-17 06:33:19',
+'Do herbaty - [herbapol] - malina z cytryną - 2 torebki - duża szklanka',
+187.53,
+46.906002,
+0.0,
+0.0
+);
