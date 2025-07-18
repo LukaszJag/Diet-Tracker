@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2025-07-17',
+'Thursday',
+'Night snack',
+59.0,
+'Migdały Łuskane',
+604.0,
+20.0,
+52.0,
+7.6,
+'2025-07-18 06:38:38',
+'none',
+356.36,
+4.4839997,
+30.679998,
+11.799999
+);
