@@ -1,0 +1,9 @@
+Name: Agrest
+Brand: owoce
+Package has: 0.0
+Macro for: 100.0
+KCal: 44.0
+Protein: 0.8
+Fat: 0.15
+Carbs: 8.8
+Comment optional: Link: https://www.tabele-kalorii.pl/kalorie,Agrest.html
