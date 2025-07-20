@@ -20,13 +20,44 @@ public class AddWorkoutToDataBaseGUI {
 
     //<editor-fold desc="Frame">
     // Frame
-    JFrame mainFrame = new JFrame("Add Workout");
+    JFrame mainFrame = new JFrame("Add Workout to - table_for_workout - table");
 
     //</editor-fold>
 
     //<editor-fold desc="Layout">
+    GridLayout gridLayoutMainPanel = new GridLayout(8, 2, 10, 10);
 
-    GridLayout gridLayoutMainPanel = new GridLayout(13, 2, 10, 10);
+    //</editor-fold>
+
+    //<editor-fold desc="Buttons">
+    JButton acceptAddWorkoutButton = new JButton("Accept");
+
+    //</editor-fold>
+
+    //<editor-fold desc="Labels">
+    // Labels
+    JLabel dayDateLabel = new JLabel("dayDate:");
+    JLabel dayNameDateLabel = new JLabel("dayNameDate:");
+    JLabel typeOfWorkoutLabel = new JLabel("typeOfWorkout:");
+    JLabel locationOfWorkoutLabel = new JLabel("locationOfWorkout:");
+
+    //</editor-fold>
+
+    //<editor-fold desc="TextFields">
+    // TextFields
+    JTextField dayDateTextField = new JTextField();
+    JTextField dayNameDateTextField = new JTextField();
+    JTextField typeOfWorkoutTextField = new JTextField();
+    JTextField locationOfWorkoutTextField = new JTextField();
+
+
+    //</editor-fold>
+
+    //<editor-fold desc="ComboBox">
+    // ComboBox
+    JComboBox<String> typeOfWorkoutComboBox = new JComboBox<>(new String[]{"static strength", "walking", "running",
+            "swimming", "cardio", "lift weight", "calisthenics", "street workout", "stretch", "riding bike", "mobility",});
+
     //</editor-fold>
 
 
@@ -42,11 +73,10 @@ public class AddWorkoutToDataBaseGUI {
     private void startAddWorkoutToTableForWorkout() {
         setFrame();
         setPanels();
-        //addComponentsToPanels();
+        addComponentsToPanels();
         addPanelsToFrame();
         finishSetUpFrame();
     }
-
 
     private void addPanelsToFrame() {
         // Add Panels to Frame
@@ -78,7 +108,6 @@ public class AddWorkoutToDataBaseGUI {
         panelMain.setLayout(gridLayoutMainPanel);
         //</editor-fold>
 
-
         //<editor-fold desc="Set panels colors">
         panelNorth.setBackground(Color.BLACK);
         panelSouth.setBackground(Color.GRAY);
@@ -87,16 +116,47 @@ public class AddWorkoutToDataBaseGUI {
         panelEast.setBackground(Color.BLUE);
         //</editor-fold>
 
-
         //<editor-fold desc="Set preferred size of panel">
 
-        //addProductToDayPanelNorth.setPreferredSize(new Dimension(Config.ADD_PRODUCT_TO_DAY_PANELS_NORTH_SIZE, Config.ADD_PRODUCT_TO_DAY_PANELS_NORTH_SIZE));
-        //addProductToDayPanelEast.setPreferredSize(new Dimension(Config.ADD_PRODUCT_TO_DAY_PANELS_WEST_EAST_SIZE, Config.ADD_PRODUCT_TO_DAY_PANELS_WEST_EAST_SIZE));
-        //addProductToDayPanelMain.setPreferredSize(new Dimension(Config.ADD_PRODUCT_TO_DAY_PANELS_CENTER, Config.ADD_PRODUCT_TO_DAY_PANELS_CENTER));
-        //addProductToDayPanelWest.setPreferredSize(new Dimension(Config.ADD_PRODUCT_TO_DAY_PANELS_WEST_EAST_SIZE, Config.ADD_PRODUCT_TO_DAY_PANELS_WEST_EAST_SIZE));
-        //addProductToDayPanelSouth.setPreferredSize(new Dimension(Config.ADD_PRODUCT_TO_DAY_PANELS_SOUTH_SIZE, Config.ADD_PRODUCT_TO_DAY_PANELS_SOUTH_SIZE));
+        panelNorth.setPreferredSize(new Dimension(Config.ADD_WORKOUT_TO_DATABASE_GUI_WINDOW_PANELS_NORTH_SIZE, Config.ADD_WORKOUT_TO_DATABASE_GUI_WINDOW_PANELS_NORTH_SIZE));
+        panelEast.setPreferredSize(new Dimension(Config.ADD_WORKOUT_TO_DATABASE_GUI_WINDOW_PANELS_WEST_EAST_SIZE, Config.ADD_WORKOUT_TO_DATABASE_GUI_WINDOW_PANELS_WEST_EAST_SIZE));
+        panelMain.setPreferredSize(new Dimension(Config.ADD_WORKOUT_TO_DATABASE_GUI_WINDOW_PANELS_CENTER, Config.ADD_WORKOUT_TO_DATABASE_GUI_WINDOW_PANELS_CENTER));
+        panelWest.setPreferredSize(new Dimension(Config.ADD_WORKOUT_TO_DATABASE_GUI_WINDOW_PANELS_WEST_EAST_SIZE, Config.ADD_WORKOUT_TO_DATABASE_GUI_WINDOW_PANELS_WEST_EAST_SIZE));
+        panelSouth.setPreferredSize(new Dimension(Config.ADD_WORKOUT_TO_DATABASE_GUI_WINDOW_PANELS_SOUTH_SIZE, Config.ADD_WORKOUT_TO_DATABASE_GUI_WINDOW_PANELS_SOUTH_SIZE));
 
         //</editor-fold>
+
+    }
+
+    private void addComponentsToPanels() {
+        panelSouth.add(acceptAddWorkoutButton);
+
+
+        panelMain.add(dayDateLabel);
+        panelMain.add(dayDateTextField);
+
+        panelMain.add(dayNameDateLabel);
+        panelMain.add(dayNameDateTextField);
+
+        panelMain.add(typeOfWorkoutLabel);
+        panelMain.add(typeOfWorkoutTextField);
+
+
+        panelMain.add(new Button("1"));
+        panelMain.add(new Button("1"));
+
+        panelMain.add(new Button("1"));
+        panelMain.add(new Button("1"));
+
+        panelMain.add(new Button("1"));
+        panelMain.add(new Button("1"));
+
+        panelMain.add(new Button("1"));
+        panelMain.add(new Button("1"));
+
+        panelMain.add(new Button("1"));
+        panelMain.add(new Button("1"));
+
 
     }
     //</editor-fold>
