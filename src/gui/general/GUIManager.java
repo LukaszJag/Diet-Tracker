@@ -1,4 +1,7 @@
-package gui;
+package gui.general;
+
+import gui.AddProductToCalendarDay;
+import gui.AddSingleProductWindow;
 
 public class GUIManager {
     AddSingleProductWindow addSingleProductWindow;

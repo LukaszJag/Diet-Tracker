@@ -1,6 +1,10 @@
-package gui;
+package gui.general;
 
 import configuration.Config;
+import gui.AddProductToCalendarDay;
+import gui.AddSingleProductWindow;
+import gui.CalendarMonthStatsView;
+import gui.gym.AddWorkoutToDataBaseGUI;
 import runners_and_tests.run_update.RunnerFullUpdateDayStatistics;
 import runners_and_tests.run_update.UpdateProductAndCalendarTableFull;
 

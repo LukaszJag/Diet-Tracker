@@ -1,6 +1,6 @@
 package configuration;
 
-import gui.GUIManager;
+import gui.general.GUIManager;
 
 import java.awt.*;
 import java.util.Date;
