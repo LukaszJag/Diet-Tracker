@@ -1,4 +1,4 @@
-package gui;
+package gui.gym;
 
 import configuration.Config;
 
@@ -6,6 +6,16 @@ import javax.swing.*;
 import java.awt.*;
 
 public class AddWorkoutToDataBaseGUI {
+
+//    (`ID`,
+//            `day_date`,
+//            `day_name`,
+//            `type_of_workout`,
+//            `location_of_workout`,
+//            `enter_workout_area_full_time_date`,
+//            `start_workout_time_full`,
+//            `end_workout_time_full`,
+//            `duration_workout_time_seconds`)
 
     //<editor-fold desc="Main - AddProductToCalendarDay - components and variables">
 
@@ -30,16 +40,25 @@ public class AddWorkoutToDataBaseGUI {
     //</editor-fold>
 
     //<editor-fold desc="Buttons">
+    JButton selectDateButton = new JButton("Select date");
     JButton acceptAddWorkoutButton = new JButton("Accept");
 
     //</editor-fold>
 
     //<editor-fold desc="Labels">
     // Labels
+    JLabel IDLabel = new JLabel("ID:");
     JLabel dayDateLabel = new JLabel("dayDate:");
     JLabel dayNameDateLabel = new JLabel("dayNameDate:");
     JLabel typeOfWorkoutLabel = new JLabel("typeOfWorkout:");
     JLabel locationOfWorkoutLabel = new JLabel("locationOfWorkout:");
+    JLabel enterWorkoutAreaFullTimeDateLabel = new JLabel("Enter Time:");
+    JLabel startWorkoutTimeFullLabel = new JLabel("Start workout time:");
+    JLabel endWorkoutTimeFullLabel = new JLabel("End workout time:");
+    JLabel durationWorkoutTimeSecondsLabel = new JLabel("Duration of workout:");
+
+    JLabel selectedDateLabel = new JLabel("Selected Date");
+    JLabel selectedDateValueLabel = new JLabel("yyyy-mm-dd");
 
     //</editor-fold>
 
@@ -49,8 +68,10 @@ public class AddWorkoutToDataBaseGUI {
     JTextField dayNameDateTextField = new JTextField();
     JTextField typeOfWorkoutTextField = new JTextField();
     JTextField locationOfWorkoutTextField = new JTextField();
-
-
+    JTextField enterWorkoutAreaFullTimeDateTextField = new JTextField();
+    JTextField startWorkoutTimeFullTextField = new JTextField();
+    JTextField endWorkoutTimeFullTextField = new JTextField();
+    JTextField durationWorkoutTimeSecondsTextField = new JTextField();
     //</editor-fold>
 
     //<editor-fold desc="ComboBox">
@@ -129,9 +150,12 @@ public class AddWorkoutToDataBaseGUI {
     }
 
     private void addComponentsToPanels() {
+
+        //<editor-fold desc="panelSouth - add components">
         panelSouth.add(acceptAddWorkoutButton);
+        //</editor-fold>
 
-
+        //<editor-fold desc="panelMain - add components">
         panelMain.add(dayDateLabel);
         panelMain.add(dayDateTextField);
 
@@ -139,23 +163,33 @@ public class AddWorkoutToDataBaseGUI {
         panelMain.add(dayNameDateTextField);
 
         panelMain.add(typeOfWorkoutLabel);
-        panelMain.add(typeOfWorkoutTextField);
+        panelMain.add(typeOfWorkoutComboBox);
 
+        panelMain.add(locationOfWorkoutLabel);
+        panelMain.add(locationOfWorkoutTextField);
 
-        panelMain.add(new Button("1"));
-        panelMain.add(new Button("1"));
+        panelMain.add(enterWorkoutAreaFullTimeDateLabel);
+        panelMain.add(enterWorkoutAreaFullTimeDateTextField);
 
-        panelMain.add(new Button("1"));
-        panelMain.add(new Button("1"));
+        panelMain.add(startWorkoutTimeFullLabel);
+        panelMain.add(startWorkoutTimeFullTextField);
 
-        panelMain.add(new Button("1"));
-        panelMain.add(new Button("1"));
+        panelMain.add(endWorkoutTimeFullLabel);
+        panelMain.add(endWorkoutTimeFullTextField);
 
-        panelMain.add(new Button("1"));
-        panelMain.add(new Button("1"));
+        panelMain.add(durationWorkoutTimeSecondsLabel);
+        panelMain.add(durationWorkoutTimeSecondsTextField);
+        //</editor-fold>
 
-        panelMain.add(new Button("1"));
-        panelMain.add(new Button("1"));
+        //<editor-fold desc="panelWest - add components">
+        panelWest.add(selectDateButton);
+
+        selectedDateLabel.setForeground(Color.WHITE);
+        panelWest.add(selectedDateLabel);
+
+        selectedDateValueLabel.setForeground(Color.WHITE);
+        panelWest.add(selectedDateValueLabel);
+        //</editor-fold>
 
 
     }
