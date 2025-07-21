@@ -1,0 +1,9 @@
+Name: Mięso mielone z szynki smażone
+Brand: domowe
+Package has: 0.0
+Macro for: 100.0
+KCal: 179.1
+Protein: 27.0
+Fat: 7.78
+Carbs: 0.25
+Comment optional: Link: https://www.tabele-kalorii.pl/kalorie,Mieso-mielone-z-szynki-smazone-Przepis-od-missy66.html
