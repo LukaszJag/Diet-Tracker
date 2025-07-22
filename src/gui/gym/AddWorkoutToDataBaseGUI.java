@@ -4,6 +4,8 @@ import configuration.Config;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class AddWorkoutToDataBaseGUI {
 
@@ -36,11 +38,12 @@ public class AddWorkoutToDataBaseGUI {
 
     //<editor-fold desc="Layout">
     GridLayout gridLayoutMainPanel = new GridLayout(8, 2, 10, 10);
+    BoxLayout westPanelBoxLayout = new BoxLayout(panelWest, BoxLayout.Y_AXIS);
 
     //</editor-fold>
 
     //<editor-fold desc="Buttons">
-    JButton selectDateButton = new JButton("Select date");
+    JButton selectDateButton = new JButton("Other then current date");
     JButton acceptAddWorkoutButton = new JButton("Accept");
 
     //</editor-fold>
@@ -91,6 +94,7 @@ public class AddWorkoutToDataBaseGUI {
     }
     //</editor-fold>
 
+    //<editor-fold desc="startAddWorkoutToTableForWorkout - methods">
     private void startAddWorkoutToTableForWorkout() {
         setFrame();
         setPanels();
@@ -109,7 +113,7 @@ public class AddWorkoutToDataBaseGUI {
 
     }
 
-    //<editor-fold desc="startAddWorkoutToTableForWorkout - methods">
+
     private void setFrame() {
         // Set window size
         mainFrame.setSize(Config.ADD_WORKOUT_TO_DATABASE_GUI_WINDOW_WINDOWS_WIDTH, Config.ADD_WORKOUT_TO_DATABASE_GUI_WINDOW_WINDOWS_HEIGHT);
@@ -127,6 +131,8 @@ public class AddWorkoutToDataBaseGUI {
         //<editor-fold desc="Set Layout">
         panelMain.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
         panelMain.setLayout(gridLayoutMainPanel);
+
+        panelWest.setLayout(westPanelBoxLayout);
         //</editor-fold>
 
         //<editor-fold desc="Set panels colors">
@@ -182,6 +188,7 @@ public class AddWorkoutToDataBaseGUI {
         //</editor-fold>
 
         //<editor-fold desc="panelWest - add components">
+        selectDateButton.addActionListener(new SelectDateButtonActionListener());
         panelWest.add(selectDateButton);
 
         selectedDateLabel.setForeground(Color.WHITE);
@@ -191,7 +198,17 @@ public class AddWorkoutToDataBaseGUI {
         panelWest.add(selectedDateValueLabel);
         //</editor-fold>
 
+        //<editor-fold desc="panelEast - add components">
 
+        //</editor-fold>
+
+    }
+
+    private class SelectDateButtonActionListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+
+        }
     }
     //</editor-fold>
 
