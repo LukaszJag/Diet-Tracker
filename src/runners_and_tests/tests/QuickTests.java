@@ -6,6 +6,7 @@ import tools.calendar_tools.DayInCalendar;
 import tools.products_tools.Product;
 import tools.sql_tools.SQLSelect;
 import tools.sql_tools.calendar.InsertToCalendarDayTable;
+import tools.sql_tools.general.InsertToTable;
 import tools.sql_tools.general.IsTheRowAlreadyExist;
 import tools.sql_tools.general.RunQuery;
 import tools.sql_tools.general.SumTable;
@@ -38,8 +39,27 @@ public class QuickTests {
         //test12();
         //testDisplayCurrentDayInSQLFormat();
         //checkSumTableQueryCorrectness();
-        checkSumTableResultCorrectness();
+        //checkSumTableResultCorrectness();
+        checkCorrectnessOfStatementInClassInsertToTable();
 
+    }
+
+    private static void checkCorrectnessOfStatementInClassInsertToTable() {
+        Hashtable<String, String> testHashTable = new Hashtable<String, String>();
+
+        testHashTable.put("product_name" , "Agrest");
+        testHashTable.put("product_brand" , "owoce");
+        testHashTable.put("product_package_has" , "0");
+        testHashTable.put("product_macro_for" , "100");
+        testHashTable.put("product_kcal" , "44");
+        testHashTable.put("product_protein" , "0.8");
+        testHashTable.put("product_fat" , "0.15");
+        testHashTable.put("product_carbs" , "8.8");
+        testHashTable.put("comment_optional" , "Link: https://www.tabele-kalorii.pl/kalorie,Agrest.html");
+
+
+        String  resultStatement = InsertToTable.prepareSQLStatement("tableTestName", testHashTable);
+        System.out.println(resultStatement);
     }
 
     private static void checkSumTableResultCorrectness() {

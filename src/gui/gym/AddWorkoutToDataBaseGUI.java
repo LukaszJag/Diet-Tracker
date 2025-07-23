@@ -6,6 +6,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Hashtable;
 
 public class AddWorkoutToDataBaseGUI {
 
@@ -37,14 +38,14 @@ public class AddWorkoutToDataBaseGUI {
     //</editor-fold>
 
     //<editor-fold desc="Layout">
-    GridLayout gridLayoutMainPanel = new GridLayout(8, 2, 10, 10);
+    GridLayout gridLayoutMainPanel = new GridLayout(9, 2, 10, 10);
     BoxLayout westPanelBoxLayout = new BoxLayout(panelWest, BoxLayout.Y_AXIS);
 
     //</editor-fold>
 
     //<editor-fold desc="Buttons">
     JButton selectDateButton = new JButton("Other then current date");
-    JButton acceptAddWorkoutButton = new JButton("Accept");
+    JButton acceptAddWorkoutButton = new JButton("Test statement");
 
     //</editor-fold>
 
@@ -67,6 +68,7 @@ public class AddWorkoutToDataBaseGUI {
 
     //<editor-fold desc="TextFields">
     // TextFields
+    JTextField IDTextField = new JTextField();
     JTextField dayDateTextField = new JTextField();
     JTextField dayNameDateTextField = new JTextField();
     JTextField typeOfWorkoutTextField = new JTextField();
@@ -80,7 +82,8 @@ public class AddWorkoutToDataBaseGUI {
     //<editor-fold desc="ComboBox">
     // ComboBox
     JComboBox<String> typeOfWorkoutComboBox = new JComboBox<>(new String[]{"static strength", "walking", "running",
-            "swimming", "cardio", "lift weight", "calisthenics", "street workout", "stretch", "riding bike", "mobility",});
+            "swimming", "cardio", "lift weight", "calisthenics", "street workout",
+            "stretch", "riding bike", "mobility", "chest, shoulders and triceps"});
 
     //</editor-fold>
 
@@ -94,7 +97,7 @@ public class AddWorkoutToDataBaseGUI {
     }
     //</editor-fold>
 
-    //<editor-fold desc="startAddWorkoutToTableForWorkout - methods">
+    //<editor-fold desc="startAddWorkoutToTableForWorkout - GUI Components methods">
     private void startAddWorkoutToTableForWorkout() {
         setFrame();
         setPanels();
@@ -112,7 +115,6 @@ public class AddWorkoutToDataBaseGUI {
         mainFrame.add(panelSouth, BorderLayout.SOUTH);
 
     }
-
 
     private void setFrame() {
         // Set window size
@@ -158,10 +160,16 @@ public class AddWorkoutToDataBaseGUI {
     private void addComponentsToPanels() {
 
         //<editor-fold desc="panelSouth - add components">
+        acceptAddWorkoutButton.addActionListener(new AcceptAddWorkoutButtonActionListener());
         panelSouth.add(acceptAddWorkoutButton);
         //</editor-fold>
 
         //<editor-fold desc="panelMain - add components">
+
+        panelMain.add(IDLabel);
+        panelMain.add(IDTextField);
+
+
         panelMain.add(dayDateLabel);
         panelMain.add(dayDateTextField);
 
@@ -204,12 +212,29 @@ public class AddWorkoutToDataBaseGUI {
 
     }
 
+    //</editor-fold>
+
+private Hashtable getDataFromGUIComponents(){
+        Hashtable<String, String> dataFRomGUIComponents = new Hashtable<String, String>();
+
+        
+
+        return dataFRomGUIComponents;
+}
+
+    //<editor-fold desc="Action Listeners Classes">
     private class SelectDateButtonActionListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+        JOptionPane.showMessageDialog(null, "Nothing happened");
+        }
+    }
+
+    private class AcceptAddWorkoutButtonActionListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
 
         }
     }
     //</editor-fold>
-
 }
