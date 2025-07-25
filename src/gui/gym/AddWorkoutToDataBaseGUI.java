@@ -217,7 +217,7 @@ public class AddWorkoutToDataBaseGUI {
 private Hashtable getDataFromGUIComponents(){
         Hashtable<String, String> dataFRomGUIComponents = new Hashtable<String, String>();
 
-        
+
 
         return dataFRomGUIComponents;
 }

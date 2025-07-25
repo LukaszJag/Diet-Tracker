@@ -1,0 +1,9 @@
+Name: Nudle pomidorowe łagodne
+Brand: Knorr
+Package has: 65.0
+Macro for: 100.0
+KCal: 85.0
+Protein: 1.6
+Fat: 3.6
+Carbs: 11.0
+Comment optional: Opakowanie pozwala na przygotowanie 350g produktu, Dane z opakowania
