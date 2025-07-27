@@ -1,0 +1,9 @@
+Name: Łazanki z mięsem i kapustą
+Brand: domowe
+Package has: 0.0
+Macro for: 100.0
+KCal: 154.9
+Protein: 6.41
+Fat: 8.09
+Carbs: 13.73
+Comment optional: Link: https://www.tabele-kalorii.pl/kalorie,Lazanki-z-miesem-i-kapusta-Przepis-od-mirime777.html

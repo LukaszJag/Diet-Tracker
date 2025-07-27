@@ -1,0 +1,20 @@
+INSERT INTO `diet_tracker_schema`.product_table
+(`product_name`,
+`product_brand`,
+`product_package_has`,
+`product_macro_for`,
+`product_kcal`,
+`product_protein`,
+`product_fat`,
+`product_carbs`,
+`comment_optional`)
+Values
+('Łazanki z mięsem i kapustą',
+'domowe',
+0.0,
+100.0,
+154.9,
+6.41,
+8.09,
+13.73,
+'Link: https://www.tabele-kalorii.pl/kalorie,Lazanki-z-miesem-i-kapusta-Przepis-od-mirime777.html');
