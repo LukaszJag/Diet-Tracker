@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2025-07-25',
+'Friday',
+'Supper',
+340.0,
+'Lody Sorbet z cytryn',
+133.0,
+0.2,
+0.1,
+32.5,
+'2025-07-27 12:43:36',
+'none',
+452.2,
+110.5,
+0.34,
+0.68
+);

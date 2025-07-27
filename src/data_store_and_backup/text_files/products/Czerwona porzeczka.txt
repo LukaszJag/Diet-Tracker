@@ -1,0 +1,9 @@
+Name: Czerwona porzeczka
+Brand: owoc
+Package has: 0.0
+Macro for: 100.0
+KCal: 31.0
+Protein: 1.1
+Fat: 0.2
+Carbs: 6.0
+Comment optional: Link: https://www.tabele-kalorii.pl/kalorie,Porzeczka-czerwona.html

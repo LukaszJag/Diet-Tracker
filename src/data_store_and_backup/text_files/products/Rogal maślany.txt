@@ -1,0 +1,9 @@
+Name: Rogal maślany
+Brand: produkt ogólny
+Package has: 100.0
+Macro for: 100.0
+KCal: 322.0
+Protein: 8.6
+Fat: 5.7
+Carbs: 58.3
+Comment optional: produkt ogólny Link: https://www.tabele-kalorii.pl/kalorie,Rogal-maslany.html

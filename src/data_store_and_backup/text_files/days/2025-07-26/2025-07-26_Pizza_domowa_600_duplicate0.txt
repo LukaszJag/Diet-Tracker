@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2025-07-26',
+'Saturday',
+'Dinner',
+600.0,
+'Pizza domowa',
+181.24,
+7.93,
+7.34,
+20.42,
+'2025-07-27 01:04:35',
+'Pizza z restauracji - duże - 4 sery - Pizzeria Maestro - Prudnicka 1, 47-370 Kujawy',
+1087.4401,
+122.520004,
+44.04,
+47.579998
+);
