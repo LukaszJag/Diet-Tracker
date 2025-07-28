@@ -10,9 +10,6 @@ public class Config {
 
     //<editor-fold desc="GUI Configuration">
 
-
-
-
     //<editor-fold desc="DaysStatisticsViewer - configuration">
     public static final int DAYS_STATISTICS_VIEWER_WIDTH = 1200;
     public static final int DAYS_STATISTICS_VIEWER_HEIGHT = 800;

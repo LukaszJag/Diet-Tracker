@@ -37,13 +37,20 @@ public class QuickTests {
         //test10();
         //test11();
         //test12();
+
+        // test -> DisplayCurrentDayInSQLFormat - method
         //testDisplayCurrentDayInSQLFormat();
+
+        // test -> SumTable - class
         //checkSumTableQueryCorrectness();
-        //checkSumTableResultCorrectness();
-        checkCorrectnessOfStatementInClassInsertToTable();
+       checkSumTableResultCorrectness();
+
+        // test -> InsertToTable - class
+        //checkCorrectnessOfStatementInClassInsertToTable();
 
     }
 
+    //<editor-fold desc="test -> InsertToTable - class">
     private static void checkCorrectnessOfStatementInClassInsertToTable() {
         Hashtable<String, String> testHashTable = new Hashtable<String, String>();
 
@@ -61,7 +68,9 @@ public class QuickTests {
         String  resultStatement = InsertToTable.prepareSQLStatement("tableTestName", testHashTable);
         System.out.println(resultStatement);
     }
+    //</editor-fold>
 
+    //<editor-fold desc="test -> SumTable - class">
     private static void checkSumTableResultCorrectness() {
         Hashtable<String, Float> fieldAndSum = new Hashtable<>();
 
@@ -90,14 +99,15 @@ public class QuickTests {
 
         System.out.println(SumTable.prepareSQLQuery(tableName, fieldsNamesToSum, whereColumnName,whereColumnValue));
     }
+    //</editor-fold>
 
+    //<editor-fold desc="test -> DisplayCurrentDayInSQLFormat - method">
     private static void testDisplayCurrentDayInSQLFormat() {
         Format format = new SimpleDateFormat("EEEE");
         java.util.Date utilDateImport = new java.util.Date();
         String dayNameCurrentDateOnStartWindow = format.format(utilDateImport);
-
     }
-
+    //</editor-fold>
 
     //<editor-fold desc="TESTS 1 -> 10">
     private static void test1() {

@@ -1179,6 +1179,7 @@ public class CalendarMonthStatsView {
     }
 
     //</editor-fold>
+
     //<editor-fold desc="Actions Listeners, Item Listeners">
     private class DaysButtonsActionListener implements ActionListener {
         JButton button;
