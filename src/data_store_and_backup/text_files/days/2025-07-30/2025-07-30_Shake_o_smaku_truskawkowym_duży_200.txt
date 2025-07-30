@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2025-07-30',
+'Tuesday',
+'Snack 2',
+200.0,
+'Shake o smaku truskawkowym duży',
+117.0,
+3.0,
+2.1,
+21.0,
+'2025-07-30 03:12:11',
+'none',
+234.0,
+42.0,
+4.2,
+6.0
+);
