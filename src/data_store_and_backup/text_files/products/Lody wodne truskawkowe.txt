@@ -7,3 +7,12 @@ Protein: 0.3
 Fat: 0.5
 Carbs: 28.0
 Comment optional: Link: https://pl.openfoodfacts.org/product/5905704316035/lody-wodne-truskawkowe-marletto
+Name: Lody wodne truskawkowe
+Brand: Chupa Chups
+Package has: 105.0
+Macro for: 100.0
+KCal: 85.0
+Protein: 0.0
+Fat: 0.0
+Carbs: 21.0
+Comment optional: Dane z opakowania

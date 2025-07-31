@@ -1,0 +1,9 @@
+Name: Lody wodne truskawkowe - Chupa Chups
+Brand: Chupa Chups
+Package has: 105.0
+Macro for: 100.0
+KCal: 85.0
+Protein: 0.0
+Fat: 0.0
+Carbs: 21.0
+Comment optional: Dane z opakowania

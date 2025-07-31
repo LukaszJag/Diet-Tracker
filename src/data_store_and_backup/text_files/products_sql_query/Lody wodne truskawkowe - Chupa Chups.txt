@@ -1,0 +1,20 @@
+INSERT INTO `diet_tracker_schema`.product_table
+(`product_name`,
+`product_brand`,
+`product_package_has`,
+`product_macro_for`,
+`product_kcal`,
+`product_protein`,
+`product_fat`,
+`product_carbs`,
+`comment_optional`)
+Values
+('Lody wodne truskawkowe - Chupa Chups',
+'Chupa Chups',
+105.0,
+100.0,
+85.0,
+0.0,
+0.0,
+21.0,
+'Dane z opakowania');

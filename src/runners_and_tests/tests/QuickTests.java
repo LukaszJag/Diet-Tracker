@@ -79,7 +79,7 @@ public class QuickTests {
         String whereColumnName = "day_date";
         String whereColumnValue = "2025-07%";
 
-        fieldAndSum = SumTable.sumRowsInTableWhereColumnLike(tableName, fieldsNamesToSum, whereColumnName,whereColumnValue);
+       // fieldAndSum = SumTable.sumRowsInTableWhereColumnLike(tableName, fieldsNamesToSum, whereColumnName,whereColumnValue);
 
         Enumeration<String> namesOfFields = fieldAndSum.keys();
         while (namesOfFields.hasMoreElements()){
@@ -97,7 +97,7 @@ public class QuickTests {
         String whereColumnName = "day_date";
         String whereColumnValue = "2025-07%";
 
-        System.out.println(SumTable.prepareSQLQuery(tableName, fieldsNamesToSum, whereColumnName,whereColumnValue));
+       // System.out.println(SumTable.prepareSQLQuery(tableName, fieldsNamesToSum, whereColumnName,whereColumnValue));
     }
     //</editor-fold>
 
