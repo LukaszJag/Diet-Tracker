@@ -77,9 +77,9 @@ public class QuickTests {
         String tableName = "days_statistics_test";
         String[] fieldsNamesToSum = {"kcal_consume", "protein_consume", "fat_consume", "carbs_consume"};
         String whereColumnName = "day_date";
-        String whereColumnValue = "2025-07%";
+        String whereColumnValue = "2025-08%";
 
-       // fieldAndSum = SumTable.sumRowsInTableWhereColumnLike(tableName, fieldsNamesToSum, whereColumnName,whereColumnValue);
+       fieldAndSum = SumTable.sumRowsInTableWhereMonthOfTime(tableName, fieldsNamesToSum, whereColumnName,whereColumnValue);
 
         Enumeration<String> namesOfFields = fieldAndSum.keys();
         while (namesOfFields.hasMoreElements()){

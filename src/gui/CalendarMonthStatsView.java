@@ -240,8 +240,9 @@ public class CalendarMonthStatsView {
         monthSelectComboBox.addItemListener(new MonthComboBoxItemListener());
 
         //can be buggy hard code values
+        //HERE IS LABEL WITH AVERAGE MACRO
         currentDayMacroValuesNorthPanelLabel.setText(Macro.getShortMacroInformation(
-                SelectFromDaysStatistics.getAverageMacroForMonth(2025,6,1,27)));
+                SelectFromDaysStatistics.getAverageMacroForMonth(2025,8,1,6)));
         //<editor-fold desc="Color and size of font in labels">
         currentDayDateNorthPanelLabel.setForeground(northPanelStaticLabelsColor);
         currentDayDateNorthPanelLabel.setFont(calendarMonthStatsViewPanelNorth.getFont().deriveFont(20.0f));
