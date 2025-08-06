@@ -241,8 +241,15 @@ public class CalendarMonthStatsView {
 
         //can be buggy hard code values
         //HERE IS LABEL WITH AVERAGE MACRO
+boolean monthHasPassed = true;
+if (monthHasPassed){
+    getDateFromComboBox();
+    not finish
+}
         currentDayMacroValuesNorthPanelLabel.setText(Macro.getShortMacroInformation(
                 SelectFromDaysStatistics.getAverageMacroForMonth(2025,8,1,6)));
+
+
         //<editor-fold desc="Color and size of font in labels">
         currentDayDateNorthPanelLabel.setForeground(northPanelStaticLabelsColor);
         currentDayDateNorthPanelLabel.setFont(calendarMonthStatsViewPanelNorth.getFont().deriveFont(20.0f));
@@ -821,13 +828,7 @@ public class CalendarMonthStatsView {
         DisplayChart.showChart(jFreeChart);
     }
 
-    private void paintButtons() {
-
-        goodDaysCounter = 0;
-        badDaysCounter = 0;
-        noDataDaysCounter = 0;
-        comingDaysCounter = 0;
-
+    private String getDateFromComboBox(){
         String fullDate = "2024-";
         String month = monthSelectComboBox.getSelectedItem().toString();
 
@@ -885,7 +886,18 @@ public class CalendarMonthStatsView {
             fullDate = "2025-08-";
         }
 
-        String fullDateCache = fullDate;
+        return fullDate;
+    }
+    private void paintButtons() {
+
+        goodDaysCounter = 0;
+        badDaysCounter = 0;
+        noDataDaysCounter = 0;
+        comingDaysCounter = 0;
+
+
+
+        String fullDate = getDateFromComboBox();
 
 
         for (int i = 0; i < daysButtons.length; i++) {
@@ -924,7 +936,6 @@ public class CalendarMonthStatsView {
                 }
             }
 
-            fullDate = fullDateCache;
         }
     }
 

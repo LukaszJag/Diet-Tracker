@@ -2,8 +2,10 @@ package tools.sql_tools.days_statistics;
 
 import tools.products_tools.Macro;
 import tools.sql_tools.general.GetResultSet;
+import tools.sql_tools.general.SumTable;
 
 import java.sql.ResultSet;
+import java.util.Hashtable;
 
 public class SelectFromDaysStatistics {
     public static Macro getMacroFromDaysStatisticsByDate(String SQLFriendlyDateFormat) {
@@ -85,48 +87,34 @@ public class SelectFromDaysStatistics {
     }
 
     public static Macro getAverageMacroForMonth(int year, int month, int beginFromDayNumber, int endToDayNumber) {
-        //<editor-fold desc="Setup variables">
-        Macro averageMacro = new Macro(0, 0, 0, 0);
-        Macro sumMacro = new Macro(0, 0, 0, 0);
+        String tableName = "days_statistics_test";
+        String[] fieldsNamesToSum = {"kcal_consume", "protein_consume", "fat_consume", "carbs_consume"};
+        String whereColumnName = "day_date";
 
-        int amountOfDays = endToDayNumber - beginFromDayNumber;
-        String[] dayInSQLFriendlyFormat = new String[endToDayNumber - beginFromDayNumber];
-        //</editor-fold>
-
-
-        //<editor-fold desc="Fill String array with SQL friendly days">
-        int beginFromDayNumberTMP = beginFromDayNumber;
-        for (int i = 0; i < dayInSQLFriendlyFormat.length; i++) {
-            beginFromDayNumberTMP += 1;
-            if (beginFromDayNumberTMP < 10) {
-                dayInSQLFriendlyFormat[i] = "0" + beginFromDayNumberTMP;
-            }else {
-                dayInSQLFriendlyFormat[i] ="" + beginFromDayNumberTMP;
-            }
+        String monthInSQLFormat = "";
+        if (month < 10) {
+            monthInSQLFormat = year + "-" + "0" + month + "%";
+        } else {
+            monthInSQLFormat = year + "-" + month + "%";
         }
-        //</editor-fold>
+        Hashtable<String, Float> macroTable = SumTable.sumRowsInTableWhereMonthOfTime(tableName, fieldsNamesToSum, whereColumnName, monthInSQLFormat);
 
+        Macro sumMacro = new Macro(
+                macroTable.get("kcal_consume"),
+                macroTable.get("protein_consume"),
+                macroTable.get("fat_consume"),
+                macroTable.get("carbs_consume"));
 
-        //<editor-fold desc="Prepare correct SQL month format ">
-        String monthString = "" + month;
-        if (monthString.length() == 1) {
-            monthString = "0" + monthString;
-        }
-        //</editor-fold>
+        int amountOfDays = endToDayNumber - beginFromDayNumber + 1;
 
-        //<editor-fold desc="Sum of all days Macro">
-        String yearAndMonthInSQLFriendlyFormat = year + "-" + monthString + "-";
-        String dateSQLFormat;
-        for (int i = 0; i < dayInSQLFriendlyFormat.length; i++) {
-            dateSQLFormat =yearAndMonthInSQLFriendlyFormat + dayInSQLFriendlyFormat[i];
-            sumMacro = Macro.sumOfTwoMacros(sumMacro, SelectFromDaysStatistics.getMacroFromDaysStatisticsByDate(
-                    dateSQLFormat));
-        }
-        //</editor-fold>
+        Macro averageMacro = new Macro(
+                sumMacro.getKcal(),
+                sumMacro.getProtein(),
+                sumMacro.getFat(),
+                sumMacro.getCarbs());
 
-        averageMacro = Macro.divisionMacroByValue(sumMacro, amountOfDays);
-        System.out.println(Macro.getShortMacroInformationPrettyFormat(sumMacro));
-        System.out.println(Macro.getShortMacroInformationPrettyFormat(averageMacro));
+        averageMacro = Macro.divisionMacroByValue(averageMacro, amountOfDays);
+
         return averageMacro;
     }
 }

@@ -158,4 +158,8 @@ public class MyDate {
         String dayNameCurrentDateLowerCase = format.format(utilDateImport);
         return dayNameCurrentDateLowerCase.toLowerCase();
     }
+
+    public static boolean isYearAndMonthHasPassed(int year, int month){
+       not finish  Config.date
+    }
 }
