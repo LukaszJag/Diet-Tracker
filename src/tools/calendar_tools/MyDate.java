@@ -4,6 +4,7 @@ import configuration.Config;
 
 import java.text.Format;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class MyDate {
     public static int getAmountOfDaysInMonth(String month) {
@@ -41,6 +42,46 @@ public class MyDate {
             return 30;
         }
         if (month.equals("December")) {
+            return 31;
+        }
+        return -1;
+    }
+
+    public static int getAmountOfDaysInMonth(int month) {
+        if (month == 1) {
+            return 31;
+        }
+        if (month == 2) {
+            return 28;
+        }
+        if (month == 3) {
+            return 31;
+        }
+        if (month == 4) {
+            return 30;
+        }
+        if (month == 5) {
+            return 31;
+        }
+        if (month == 6) {
+            return 30;
+        }
+        if (month == 7) {
+            return 31;
+        }
+        if (month == 8) {
+            return 31;
+        }
+        if (month == 9) {
+            return 30;
+        }
+        if (month == 10) {
+            return 31;
+        }
+        if (month == 11) {
+            return 30;
+        }
+        if (month == 12) {
             return 31;
         }
         return -1;
@@ -159,7 +200,13 @@ public class MyDate {
         return dayNameCurrentDateLowerCase.toLowerCase();
     }
 
-    public static boolean isYearAndMonthHasPassed(int year, int month){
-       not finish  Config.date
+    public static boolean isYearAndMonthHasPassed(int year, int month, int day){
+       Date date = Config.date;
+       Date passedDate = new Date(year, month, day);
+       if (passedDate.before(date)){
+           return true;
+       }else{
+           return false;
+       }
     }
 }

@@ -1,5 +1,6 @@
 package tools.sql_tools.days_statistics;
 
+import tools.calendar_tools.MyDate;
 import tools.products_tools.Macro;
 import tools.sql_tools.general.GetResultSet;
 import tools.sql_tools.general.SumTable;
@@ -12,7 +13,6 @@ public class SelectFromDaysStatistics {
         ResultSet resultSet;
 
         String sql = "SELECT * FROM days_statistics_test WHERE day_date = " + "\"" + SQLFriendlyDateFormat + "\"" + ";";
-
         GetResultSet getResultSet = new GetResultSet();
         resultSet = getResultSet.getResultSetFromSQL(sql);
 
@@ -106,6 +106,38 @@ public class SelectFromDaysStatistics {
                 macroTable.get("carbs_consume"));
 
         int amountOfDays = endToDayNumber - beginFromDayNumber + 1;
+
+        Macro averageMacro = new Macro(
+                sumMacro.getKcal(),
+                sumMacro.getProtein(),
+                sumMacro.getFat(),
+                sumMacro.getCarbs());
+
+        averageMacro = Macro.divisionMacroByValue(averageMacro, amountOfDays);
+
+        return averageMacro;
+    }
+
+    public static Macro getAverageMacroForMonth(int year, int month) {
+        String tableName = "days_statistics_test";
+        String[] fieldsNamesToSum = {"kcal_consume", "protein_consume", "fat_consume", "carbs_consume"};
+        String whereColumnName = "day_date";
+
+        String monthInSQLFormat = "";
+        if (month < 10) {
+            monthInSQLFormat = year + "-" + "0" + month + "%";
+        } else {
+            monthInSQLFormat = year + "-" + month + "%";
+        }
+        Hashtable<String, Float> macroTable = SumTable.sumRowsInTableWhereMonthOfTime(tableName, fieldsNamesToSum, whereColumnName, monthInSQLFormat);
+
+        Macro sumMacro = new Macro(
+                macroTable.get("kcal_consume"),
+                macroTable.get("protein_consume"),
+                macroTable.get("fat_consume"),
+                macroTable.get("carbs_consume"));
+
+        int amountOfDays = MyDate.getAmountOfDaysInMonth(month);
 
         Macro averageMacro = new Macro(
                 sumMacro.getKcal(),

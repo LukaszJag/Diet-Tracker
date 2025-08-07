@@ -109,7 +109,7 @@ public class CalendarMonthStatsView {
     //</editor-fold>
 
     JComboBox monthSelectComboBox = new JComboBox<>(new String[]{"April", "May", "June", "July", "August", "September", "October",
-            "November", "December", "January2025", "February2025", "March2025", "April2025" , "May2025", "June2025", "July2025", "August2025"});
+            "November", "December", "January2025", "February2025", "March2025", "April2025", "May2025", "June2025", "July2025", "August2025"});
     JComboBox selectedDayProductsListComboBox = new JComboBox<String>();
 
     //</editor-fold>
@@ -241,13 +241,20 @@ public class CalendarMonthStatsView {
 
         //can be buggy hard code values
         //HERE IS LABEL WITH AVERAGE MACRO
-boolean monthHasPassed = true;
-if (monthHasPassed){
-    getDateFromComboBox();
-    not finish
-}
-        currentDayMacroValuesNorthPanelLabel.setText(Macro.getShortMacroInformation(
-                SelectFromDaysStatistics.getAverageMacroForMonth(2025,8,1,6)));
+        boolean monthHasPassed = true;
+        Macro averageMacroForMonth = null;
+        if (monthHasPassed) {
+            String yearAndMonthDateInSQLFormat = getDateFromComboBox();
+            int year = Integer.valueOf(yearAndMonthDateInSQLFormat.substring(0, 4));
+            int month;
+            if (yearAndMonthDateInSQLFormat.charAt(5) == '0') {
+                month = Integer.valueOf(yearAndMonthDateInSQLFormat.charAt(6) + "");
+            } else {
+                month = Integer.valueOf(yearAndMonthDateInSQLFormat.charAt(5) + "" + yearAndMonthDateInSQLFormat.charAt(6));
+            }
+            averageMacroForMonth = SelectFromDaysStatistics.getAverageMacroForMonth(year, month);
+        }
+        currentDayMacroValuesNorthPanelLabel.setText(Macro.getShortMacroInformation(averageMacroForMonth));
 
 
         //<editor-fold desc="Color and size of font in labels">
@@ -462,7 +469,7 @@ if (monthHasPassed){
                 }
             }
 
-            if (month.equals("August2025")){
+            if (month.equals("August2025")) {
                 for (int i = 0; i < daysButtons.length; i++) {
                     if (i <= 3) {
                         daysButtons[i] = new JButton("null");
@@ -729,7 +736,6 @@ if (monthHasPassed){
             }
         }
         int amountOfMonthDays = counter;
-        System.out.println(amountOfMonthDays);
         String[] daysNumbers = new String[amountOfMonthDays];
         float[] valuesKcal = new float[amountOfMonthDays];
         String chartName = month + " stats";
@@ -828,7 +834,7 @@ if (monthHasPassed){
         DisplayChart.showChart(jFreeChart);
     }
 
-    private String getDateFromComboBox(){
+    private String getDateFromComboBox() {
         String fullDate = "2024-";
         String month = monthSelectComboBox.getSelectedItem().toString();
 
@@ -888,13 +894,13 @@ if (monthHasPassed){
 
         return fullDate;
     }
+
     private void paintButtons() {
 
         goodDaysCounter = 0;
         badDaysCounter = 0;
         noDataDaysCounter = 0;
         comingDaysCounter = 0;
-
 
 
         String fullDate = getDateFromComboBox();
@@ -904,6 +910,7 @@ if (monthHasPassed){
             if (!daysButtons[i].getText().equals("null")) {
                 if (daysButtons[i].getText().length() == 1) {
                     fullDate = fullDate + "0" + daysButtons[i].getText();
+
                 }
 
                 if (daysButtons[i].getText().length() == 2) {
@@ -935,7 +942,8 @@ if (monthHasPassed){
                     daysButtons[i].setBackground(spainHolidaysDaysColorLabelAndButton);
                 }
             }
-
+            fullDate = getDateFromComboBox();
+            System.out.println("full date: paint buttons: " + fullDate);
         }
     }
 
@@ -1052,7 +1060,6 @@ if (monthHasPassed){
                 return dayStatus;
             }
         }
-
         Macro dayMacro = SelectFromDaysStatistics.getMacroFromDaysStatisticsByDate(fullDateSQLFriendly);
 
         String currentDateString = DateTools.getCurrentDateSQLFriendlyFormat();
@@ -1283,6 +1290,10 @@ if (monthHasPassed){
             if (month == "July2025") {
                 fullDate = "2025-07-";
             }
+            if (month.equals("August2025")) {
+                fullDate = "2025-08-";
+            }
+
 
             if (button.getText().length() == 1) {
                 fullDate = fullDate + "0" + button.getText();
@@ -1295,7 +1306,6 @@ if (monthHasPassed){
             Macro macroToPrintInGUI;
 
             macroToPrintInGUI = SelectFromDaysStatistics.getMacroFromDaysStatisticsByDate(fullDate);
-            System.out.println("Full date: " + fullDate);
             String panelTitleLabelText = "Macro - Selected day: " + fullDate;
             refreshMacroAndAllComponentForSelectedDayMacro(panelTitleLabelText, macroToPrintInGUI);
 

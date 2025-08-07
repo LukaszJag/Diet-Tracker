@@ -21,7 +21,7 @@ public class SumTable {
 
                 }
             }
-        }catch (SQLException e){
+        } catch (SQLException e) {
             System.out.println(e);
         }
 
@@ -44,7 +44,7 @@ public class SumTable {
 
                 }
             }
-        }catch (SQLException e){
+        } catch (SQLException e) {
             System.out.println(e);
         }
 
@@ -63,17 +63,26 @@ public class SumTable {
         try {
             while (resultSet.next()) {
                 for (int i = 0; i < fieldsNamesToSum.length; i++) {
-                    fieldAndSum.put(fieldsNamesToSum[i], Float.valueOf((resultSet.getString(fieldsNamesToSum[i])).replace(",", "")));
+                    if (resultSet.getString(fieldsNamesToSum[i]) == null) {
+                        System.out.println("i is null for: " + i);
+                    } else {
+                        String buffor = (resultSet.getString(fieldsNamesToSum[i])).replace(",", "");
+                        if (buffor == null) {
 
+                            fieldAndSum.put(fieldsNamesToSum[i], 0.0f);
+                        } else {
+                            fieldAndSum.put(fieldsNamesToSum[i], Float.valueOf(buffor));
+                        }
+                    }
                 }
             }
-        }catch (SQLException e){
+        } catch (SQLException e) {
             System.out.println(e);
         }
 
-
         return fieldAndSum;
     }
+
     public static String prepareSQLQueryWhereMonthOfTime(String tableName, String[] fieldsNamesToSum, String timeColumnName, String monthInSQLFormat) {
         String fieldsSumQuery = "";
 
