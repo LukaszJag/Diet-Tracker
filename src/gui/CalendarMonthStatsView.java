@@ -2,6 +2,7 @@ package gui;
 
 import configuration.Config;
 import org.jfree.chart.JFreeChart;
+import tools.calendar_tools.MyDate;
 import tools.charts_tools.DisplayChart;
 import tools.products_tools.Macro;
 import tools.sql_tools.calendar.SelectFromCalendar;
@@ -239,23 +240,7 @@ public class CalendarMonthStatsView {
 
         monthSelectComboBox.addItemListener(new MonthComboBoxItemListener());
 
-        //can be buggy hard code values
-        //HERE IS LABEL WITH AVERAGE MACRO
-        boolean monthHasPassed = true;
-        Macro averageMacroForMonth = null;
-        if (monthHasPassed) {
-            String yearAndMonthDateInSQLFormat = getDateFromComboBox();
-            int year = Integer.valueOf(yearAndMonthDateInSQLFormat.substring(0, 4));
-            int month;
-            if (yearAndMonthDateInSQLFormat.charAt(5) == '0') {
-                month = Integer.valueOf(yearAndMonthDateInSQLFormat.charAt(6) + "");
-            } else {
-                month = Integer.valueOf(yearAndMonthDateInSQLFormat.charAt(5) + "" + yearAndMonthDateInSQLFormat.charAt(6));
-            }
-            averageMacroForMonth = SelectFromDaysStatistics.getAverageMacroForMonth(year, month);
-        }
-        currentDayMacroValuesNorthPanelLabel.setText(Macro.getShortMacroInformation(averageMacroForMonth));
-
+        setupAverageMacroLabel();
 
         //<editor-fold desc="Color and size of font in labels">
         currentDayDateNorthPanelLabel.setForeground(northPanelStaticLabelsColor);
@@ -410,6 +395,26 @@ public class CalendarMonthStatsView {
     }
 
     //</editor-fold>
+
+    private void setupAverageMacroLabel(){
+
+        Macro averageMacroForMonth = null;
+
+        String yearAndMonthDateInSQLFormat = getDateFromComboBox();
+        int year = Integer.valueOf(yearAndMonthDateInSQLFormat.substring(0, 4));
+        int month;
+        if (yearAndMonthDateInSQLFormat.charAt(5) == '0') {
+            month = Integer.valueOf(yearAndMonthDateInSQLFormat.charAt(6) + "");
+        } else {
+            month = Integer.valueOf(yearAndMonthDateInSQLFormat.charAt(5) + "" + yearAndMonthDateInSQLFormat.charAt(6));
+        }
+        averageMacroForMonth = SelectFromDaysStatistics.getAverageMacroForMonth(year, month);
+
+        MyDate.getAmountOfDaysInCurrentMonthOPassedMonth(year, month);
+
+        currentDayMacroValuesNorthPanelLabel.setFont(new Font("Dialog", Font.TRUETYPE_FONT, 10));
+        currentDayMacroValuesNorthPanelLabel.setText(Macro.getShortMacroInformationMinimalFormat(averageMacroForMonth).replace("-", ""));
+    }
     private void setDaysButtonsMainPanel(String month) {
         calendarMonthStatsViewPanelMain.removeAll();
 
@@ -746,33 +751,7 @@ public class CalendarMonthStatsView {
 
         String fullDate = "2024-";
 
-        if (month == "December") {
-            fullDate += "12-";
-        }
-        if (month == "November") {
-            fullDate += "11-";
-        }
-        if (month == "October") {
-            fullDate += "10-";
-        }
-        if (month == "September") {
-            fullDate += "09-";
-        }
-        if (month == "August") {
-            fullDate += "08-";
-        }
-        if (month == "July") {
-            fullDate += "07-";
-        }
-        if (month == "June") {
-            fullDate += "06-";
-        }
-        if (month == "May") {
-            fullDate += "05-";
-        }
-        if (month == "April") {
-            fullDate += "04-";
-        }
+        fullDate = fullDate + "-" + MyDate.getNameOfMonthFromNumberSQLFormat(month) + "-";
 
         if (month.equals("January2025")) {
             fullDate = "2025-01-";
@@ -838,33 +817,7 @@ public class CalendarMonthStatsView {
         String fullDate = "2024-";
         String month = monthSelectComboBox.getSelectedItem().toString();
 
-        if (month == "December") {
-            fullDate += "12-";
-        }
-        if (month == "November") {
-            fullDate += "11-";
-        }
-        if (month == "October") {
-            fullDate += "10-";
-        }
-        if (month == "September") {
-            fullDate += "09-";
-        }
-        if (month == "August") {
-            fullDate += "08-";
-        }
-        if (month == "July") {
-            fullDate += "07-";
-        }
-        if (month == "June") {
-            fullDate += "06-";
-        }
-        if (month == "May") {
-            fullDate += "05-";
-        }
-        if (month == "April") {
-            fullDate += "04-";
-        }
+        fullDate = fullDate + "-" + MyDate.getNameOfMonthFromNumberSQLFormat(month) + "-";
 
         if (month.equals("January2025")) {
             fullDate = "2025-01-";
@@ -887,7 +840,6 @@ public class CalendarMonthStatsView {
         if (month.equals("July2025")) {
             fullDate = "2025-07-";
         }
-
         if (month.equals("August2025")) {
             fullDate = "2025-08-";
         }
@@ -943,34 +895,15 @@ public class CalendarMonthStatsView {
                 }
             }
             fullDate = getDateFromComboBox();
-            System.out.println("full date: paint buttons: " + fullDate);
         }
     }
 
     private Macro getAverageMacroForMonth(String monthString) {
         String friendlySQLFormatMonthDate = "";
 
-        if (monthString.equals("April")) {
-            friendlySQLFormatMonthDate = "2024-" + "08-";
-        }
-        if (monthString.equals("May")) {
-            friendlySQLFormatMonthDate = "2024-" + "05-";
-        }
-        if (monthString.equals("June")) {
-            friendlySQLFormatMonthDate = "2024-" + "06-";
-        }
-        if (monthString.equals("July")) {
-            friendlySQLFormatMonthDate = "2024-" + "07-";
-        }
-        if (monthString.equals("August")) {
-            friendlySQLFormatMonthDate = "2024-" + "08-";
-        }
-        if (monthString.equals("September")) {
-            friendlySQLFormatMonthDate = "2024-" + "09-";
-        }
-        if (monthString.equals("October")) {
-            friendlySQLFormatMonthDate = "2024-" + "10-";
-        }
+        friendlySQLFormatMonthDate = "2024";
+
+        friendlySQLFormatMonthDate = friendlySQLFormatMonthDate + "-" + MyDate.getNameOfMonthFromNumberSQLFormat(monthString) + "-";
 
         if (monthString.equals("January2025")) {
             friendlySQLFormatMonthDate = "2025-" + "01-";
@@ -1014,7 +947,7 @@ public class CalendarMonthStatsView {
                     fullDate += daysButtons[i].getText();
                 }
 
-                if (dayMacroGoalStatus(fullDate) != 0 && dayMacroGoalStatus(fullDate) != 3 && dayMacroGoalStatus(fullDate) != 42) {
+                if (dayMacroGoalStatus(fullDate) != 3 && dayMacroGoalStatus(fullDate) != 42) {
                     dayMacro = SelectFromDaysStatistics.getMacroFromDaysStatisticsByDate(fullDate);
                     averageMacro = Macro.sumOfTwoMacros(averageMacro, dayMacro);
                     dayCounter++;
@@ -1143,7 +1076,7 @@ public class CalendarMonthStatsView {
     private void refreshAverageMacroPanelForNorthPanel(Macro averageMacro) {
         calendarMonthStatsViewPanelNorth.removeAll();
 
-        currentDayMacroValuesNorthPanelLabel = new JLabel(Macro.getShortMacroInformation(averageMacro));
+        setupAverageMacroLabel();
 
         calendarMonthStatsViewPanelNorth.add(monthSelectComboBox, 1, 0);
         calendarMonthStatsViewPanelNorth.add(selectedMonthStatsNorthsPanel, 1, 1);
@@ -1239,30 +1172,8 @@ public class CalendarMonthStatsView {
 
             String month = monthSelectComboBox.getSelectedItem().toString();
 
-            if (month == "November") {
-                fullDate += "11-";
-            }
-            if (month == "October") {
-                fullDate += "10-";
-            }
-            if (month == "September") {
-                fullDate += "09-";
-            }
-            if (month == "August") {
-                fullDate += "08-";
-            }
-            if (month == "July") {
-                fullDate += "07-";
-            }
-            if (month == "June") {
-                fullDate += "06-";
-            }
-            if (month == "May") {
-                fullDate += "05-";
-            }
-            if (month == "April") {
-                fullDate += "04-";
-            }
+            fullDate = fullDate + "-" + MyDate.getNameOfMonthFromNumberSQLFormat(month) + "-";
+
 
             if (month.equals("January2025")) {
                 fullDate = "2025-01-";

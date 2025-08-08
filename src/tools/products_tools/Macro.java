@@ -100,6 +100,17 @@ public class Macro {
         return shortMacroInfo;
     }
 
+    public static String getShortMacroInformationMinimalFormat(Macro macro){
+        String shortMacroInfo = "";
+        shortMacroInfo +=
+                "kcal: " + macro.getKcal() + " " +
+                        "protein: " + macro.getProtein() + " " +
+                        "fat: " + macro.getFat() + " " +
+                        "carbs: " + macro.getCarbs();
+
+        return shortMacroInfo;
+    }
+
     public static String getShortMacroInformationPrettyFormat(Macro macro){
         String shortMacroInfo = "";
         shortMacroInfo +=

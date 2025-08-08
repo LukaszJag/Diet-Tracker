@@ -137,7 +137,9 @@ public class SelectFromDaysStatistics {
                 macroTable.get("fat_consume"),
                 macroTable.get("carbs_consume"));
 
-        int amountOfDays = MyDate.getAmountOfDaysInMonth(month);
+
+        int amountOfDays = MyDate.getAmountOfDaysInCurrentMonthOPassedMonth(year,month);
+
 
         Macro averageMacro = new Macro(
                 sumMacro.getKcal(),
