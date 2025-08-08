@@ -311,10 +311,10 @@ public class MyDate {
 
         LocalDate passedDate = LocalDate.of(year, month, MyDate.getAmountOfDaysInMonth(month));
 
-        if (passedDate.compareTo(date) == -1) {
+        if (date.isAfter(passedDate)) {
             return MyDate.getAmountOfDaysInMonth(month);
         } else {
-            return passedDate.getDayOfMonth();
+            return date.getDayOfMonth();
         }
     }
 }

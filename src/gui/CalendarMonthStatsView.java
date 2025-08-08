@@ -415,6 +415,7 @@ public class CalendarMonthStatsView {
         currentDayMacroValuesNorthPanelLabel.setFont(new Font("Dialog", Font.TRUETYPE_FONT, 10));
         currentDayMacroValuesNorthPanelLabel.setText(Macro.getShortMacroInformationMinimalFormat(averageMacroForMonth).replace("-", ""));
     }
+
     private void setDaysButtonsMainPanel(String month) {
         calendarMonthStatsViewPanelMain.removeAll();
 

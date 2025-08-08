@@ -103,10 +103,10 @@ public class Macro {
     public static String getShortMacroInformationMinimalFormat(Macro macro){
         String shortMacroInfo = "";
         shortMacroInfo +=
-                "kcal: " + macro.getKcal() + " " +
-                        "protein: " + macro.getProtein() + " " +
-                        "fat: " + macro.getFat() + " " +
-                        "carbs: " + macro.getCarbs();
+                "kcal: " + String.format("%.2f", macro.getKcal())+ " " +
+                        "protein: " + String.format("%.2f", macro.getProtein()) + " " +
+                        "fat: " + String.format("%.2f", macro.getFat()) + " " +
+                        "carbs: " + String.format("%.2f", macro.getCarbs());
 
         return shortMacroInfo;
     }

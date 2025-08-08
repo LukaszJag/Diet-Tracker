@@ -140,7 +140,6 @@ public class SelectFromDaysStatistics {
 
         int amountOfDays = MyDate.getAmountOfDaysInCurrentMonthOPassedMonth(year,month);
 
-
         Macro averageMacro = new Macro(
                 sumMacro.getKcal(),
                 sumMacro.getProtein(),
