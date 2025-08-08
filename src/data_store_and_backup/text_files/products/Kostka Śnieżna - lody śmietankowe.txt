@@ -1,0 +1,9 @@
+Name: Kostka Śnieżna - lody śmietankowe
+Brand: Koral
+Package has: 87.0
+Macro for: 100.0
+KCal: 197.0
+Protein: 3.7
+Fat: 9.0
+Carbs: 25.4
+Comment optional: Link: https://www.tabele-kalorii.pl/kalorie,Kostka-Sniezna-lody-smietankowe-Koral.html

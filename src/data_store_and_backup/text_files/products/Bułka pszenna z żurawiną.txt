@@ -1,0 +1,9 @@
+Name: Bułka pszenna z żurawiną
+Brand: Auchan
+Package has: 100.0
+Macro for: 100.0
+KCal: 287.0
+Protein: 8.7
+Fat: 3.3
+Carbs: 54.0
+Comment optional: Link: https://zakupy.auchan.pl/products/bu%C5%82ka-pszenna-z-%C5%BCurawin%C4%85-inter-europol-100-g/00266873

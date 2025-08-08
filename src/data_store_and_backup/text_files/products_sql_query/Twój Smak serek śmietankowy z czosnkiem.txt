@@ -1,0 +1,20 @@
+INSERT INTO `diet_tracker_schema`.product_table
+(`product_name`,
+`product_brand`,
+`product_package_has`,
+`product_macro_for`,
+`product_kcal`,
+`product_protein`,
+`product_fat`,
+`product_carbs`,
+`comment_optional`)
+Values
+('Twój Smak serek śmietankowy z czosnkiem',
+'Piątnica',
+125.0,
+100.0,
+239.0,
+6.0,
+22.0,
+4.3,
+'Link: https://www.tabele-kalorii.pl/kalorie,Twoj-Smak-serek-smietankowy-z-czosnkiem-Piatnica.html');

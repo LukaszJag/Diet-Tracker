@@ -1,0 +1,20 @@
+INSERT INTO `diet_tracker_schema`.product_table
+(`product_name`,
+`product_brand`,
+`product_package_has`,
+`product_macro_for`,
+`product_kcal`,
+`product_protein`,
+`product_fat`,
+`product_carbs`,
+`comment_optional`)
+Values
+('Bułka pszenna z cebulą',
+'Auchan',
+100.0,
+100.0,
+295.0,
+9.3,
+3.2,
+55.0,
+'Link: https://zakupy.auchan.pl/products/bu%C5%82ka-pszenna-z-cebul%C4%85-inter-europol-100-g/00104841');

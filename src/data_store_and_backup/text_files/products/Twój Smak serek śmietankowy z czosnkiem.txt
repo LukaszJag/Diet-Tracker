@@ -1,0 +1,9 @@
+Name: Twój Smak serek śmietankowy z czosnkiem
+Brand: Piątnica
+Package has: 125.0
+Macro for: 100.0
+KCal: 239.0
+Protein: 6.0
+Fat: 22.0
+Carbs: 4.3
+Comment optional: Link: https://www.tabele-kalorii.pl/kalorie,Twoj-Smak-serek-smietankowy-z-czosnkiem-Piatnica.html

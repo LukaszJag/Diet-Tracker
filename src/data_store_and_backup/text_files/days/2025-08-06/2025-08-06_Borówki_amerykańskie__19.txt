@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2025-08-06',
+'Wednesday',
+'Supper',
+19.0,
+'Borówki amerykańskie ',
+57.0,
+1.0,
+0.0,
+14.0,
+'2025-08-08 08:47:49',
+'none',
+10.83,
+2.6599998,
+0.0,
+0.19
+);
