@@ -1,5 +1,7 @@
 package gui.general;
 
+import configuration.Config;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -19,8 +21,11 @@ public abstract class SimpleInputWindowGUI {
     int windowWidth;
     int windowHeight;
 
-    Dimension windowSize = new Dimension(windowWidth, windowHeight);
+    Dimension windowSize = Config.SIMPLE_INPUT_WINDOW_GUI_WINDOW_SIZE;
 
+    public SimpleInputWindowGUI(){
+        startAddNewProductWindow();
+    }
 
     private void startAddNewProductWindow() {
         windowFrame = new JFrame(windowName);
@@ -29,6 +34,11 @@ public abstract class SimpleInputWindowGUI {
         addPanelsToFrame();
         setComponents();
         addComponentsToPanels();
+
+        windowFrame.setLocationRelativeTo(null);
+        windowFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        windowFrame.setResizable(false);
+        windowFrame.setVisible(true);
     }
 
     private void addComponentsToPanels() {

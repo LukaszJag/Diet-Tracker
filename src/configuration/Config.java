@@ -74,6 +74,10 @@ public class Config {
     public static final int ADD_WORKOUT_TO_DATABASE_GUI_WINDOW_PANELS_SOUTH_SIZE = 100;
     //</editor-fold>
 
+    //<editor-fold desc="SimpleInputWindowGUI">
+    public static final Dimension SIMPLE_INPUT_WINDOW_GUI_WINDOW_SIZE = new Dimension(600, 400);
+    //</editor-fold>
+
     //</editor-fold>
 
     //<editor-fold desc="SQL CONFIGURATION AND OTHER DATA">

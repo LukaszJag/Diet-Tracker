@@ -5,6 +5,12 @@ import gui.general.SimpleInputWindowGUI;
 
 public class SimpleInputWindowGUITestClass extends SimpleInputWindowGUI implements InputWindowMethodsGUI {
 
+
+
+    SimpleInputWindowGUITestClass(){
+        super();
+
+    }
     @Override
     public void addComponentsToPanels() {
 
