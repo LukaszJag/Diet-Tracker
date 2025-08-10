@@ -1,6 +1,6 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="CalendarMonthStatsViewWindow" type="Application" factoryName="Application" folderName="GUI">
-    <option name="MAIN_CLASS_NAME" value="runners_and_tests.run_GUI.RunnerCalendarMonthStatsViewWindow" />
+    <option name="MAIN_CLASS_NAME" value="runners_and_tests.run_GUI.diet.CalendarMonthStatsViewWindow" />
     <module name="Diet-Tracker" />
     <method v="2">
       <option name="Make" enabled="true" />

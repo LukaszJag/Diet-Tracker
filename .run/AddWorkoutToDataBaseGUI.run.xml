@@ -1,6 +1,6 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="AddWorkoutToDataBaseGUI" type="Application" factoryName="Application" folderName="GUI">
-    <option name="MAIN_CLASS_NAME" value="runners_and_tests.run_GUI.RunnerAddWorkoutToDataBaseGUI" />
+    <option name="MAIN_CLASS_NAME" value="runners_and_tests.run_GUI.gym.AddWorkoutToDataBaseGUI" />
     <module name="Diet-Tracker" />
     <method v="2">
       <option name="Make" enabled="true" />

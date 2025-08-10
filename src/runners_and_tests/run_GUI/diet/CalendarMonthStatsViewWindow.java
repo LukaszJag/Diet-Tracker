@@ -1,8 +1,8 @@
-package runners_and_tests.run_GUI;
+package runners_and_tests.run_GUI.diet;
 
 import gui.CalendarMonthStatsView;
 
-public class RunnerCalendarMonthStatsViewWindow {
+public class CalendarMonthStatsViewWindow {
     public static void main(String[] args) {
         CalendarMonthStatsView calendarMonthStatsView = new CalendarMonthStatsView();
     }
