@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2025-08-12',
+'Tuesday',
+'Dinner',
+300.0,
+'Bułka pszenna z żurawiną',
+287.0,
+8.7,
+3.3,
+54.0,
+'2025-08-13 10:59:57',
+'none',
+861.0,
+162.0,
+9.9,
+26.099998
+);
