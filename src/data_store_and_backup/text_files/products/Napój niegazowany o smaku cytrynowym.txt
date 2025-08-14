@@ -1,0 +1,9 @@
+Name: Napój niegazowany o smaku cytrynowym
+Brand: Polaris
+Package has: 1500.0
+Macro for: 100.0
+KCal: 10.7
+Protein: 0.1
+Fat: 0.0
+Carbs: 2.5
+Comment optional: Link: https://www.tabele-kalorii.pl/kalorie,Napoj-niegazowany-Polaris-o-smaku-cytrynowym.html

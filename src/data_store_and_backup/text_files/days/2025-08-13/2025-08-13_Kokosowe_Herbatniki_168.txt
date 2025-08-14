@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2025-08-13',
+'Wednesday',
+'Supper',
+168.0,
+'Kokosowe Herbatniki',
+506.0,
+7.4,
+25.0,
+61.0,
+'2025-08-14 01:59:14',
+'none',
+850.07996,
+102.479996,
+42.0,
+12.432
+);
