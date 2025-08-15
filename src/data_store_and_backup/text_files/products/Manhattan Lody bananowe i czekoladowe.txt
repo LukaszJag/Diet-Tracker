@@ -1,0 +1,9 @@
+Name: Manhattan Lody bananowe i czekoladowe
+Brand: Manhattan
+Package has: 742.0
+Macro for: 100.0
+KCal: 204.0
+Protein: 2.0
+Fat: 9.4
+Carbs: 27.0
+Comment optional: Link: https://leclerc-online.pl/manhattan-lody-bananowe-i-czekoladowe-1400-ml
