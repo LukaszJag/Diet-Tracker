@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2025-08-15',
+'Friday',
+'Snack 2',
+210.0,
+'Lody wodne truskawkowe - Chupa Chups',
+85.0,
+0.0,
+0.0,
+21.0,
+'2025-08-15 10:42:11',
+'none',
+178.49998,
+44.1,
+0.0,
+0.0
+);
