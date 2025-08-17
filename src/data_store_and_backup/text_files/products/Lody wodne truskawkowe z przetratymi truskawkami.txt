@@ -1,0 +1,9 @@
+Name: Lody wodne truskawkowe z przetratymi truskawkami
+Brand: Carrefour
+Package has: 115.0
+Macro for: 100.0
+KCal: 117.0
+Protein: 0.3
+Fat: 0.1
+Carbs: 28.4
+Comment optional: Dane z opakowania

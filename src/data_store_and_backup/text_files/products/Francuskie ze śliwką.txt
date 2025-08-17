@@ -1,0 +1,9 @@
+Name: Francuskie ze śliwką
+Brand: domowe
+Package has: 0.0
+Macro for: 100.0
+KCal: 151.34
+Protein: 2.0
+Fat: 7.05
+Carbs: 19.52
+Comment optional: Link: https://www.tabele-kalorii.pl/kalorie,Francuskie-ze-sliwka-Przepis-od-elusiaw.html
