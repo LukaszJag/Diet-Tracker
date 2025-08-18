@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2025-08-17',
+'Sunday',
+'Supper',
+92.0,
+'Francuskie ze śliwką',
+151.34,
+2.0,
+7.05,
+19.52,
+'2025-08-18 11:01:08',
+'none',
+139.2328,
+17.9584,
+6.486,
+1.84
+);
