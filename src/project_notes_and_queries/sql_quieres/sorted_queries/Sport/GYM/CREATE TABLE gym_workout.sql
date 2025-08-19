@@ -29,6 +29,7 @@ CREATE TABLE `gym_workout` (
 `duration_of_break_seconds` int DEFAULT NULL,
 `duration_in_seconds` int DEFAULT NULL,
 `distance_in_meters` int DEFAULT NULL,
-`amount_of_sets` int DEFAULT NULL
+`amount_of_sets` int DEFAULT NULL,
+`comment` varchar(200) DEFAULT NULL
 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
