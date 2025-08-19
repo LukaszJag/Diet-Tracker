@@ -2,6 +2,7 @@ CREATE TABLE `table_for_workout` (
    `ID` int DEFAULT NULL,
   `day_date` date NOT NULL,
   `day_name` varchar(45) NOT NULL,
+   `workout_name` varchar(45) NOT NULL,
    `type_of_workout` varchar(100) DEFAULT NULL,
    `location_of_workout` varchar(100) DEFAULT NULL,
   `enter_workout_area_full_time_date` date DEFAULT NULL,
