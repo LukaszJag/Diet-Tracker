@@ -75,7 +75,7 @@ public class Config {
     //</editor-fold>
 
     //<editor-fold desc="SimpleInputWindowGUI">
-    public static final Dimension SIMPLE_INPUT_WINDOW_GUI_WINDOW_SIZE = new Dimension(600, 400);
+    public static final Dimension SIMPLE_INPUT_WINDOW_GUI_WINDOW_SIZE = new Dimension(1000, 800);
     //</editor-fold>
 
     //</editor-fold>
@@ -127,4 +127,14 @@ public class Config {
     GUIManager guiManager = new GUIManager();
 
     public static final Date date = new Date();
+
+    // Tables fields
+    public static final String [] gym_workoutTable = {"workout_ID", "day_date", "day_name", "location_of_workout",
+            "general_type_of_workout", "type_of_workout", "name_of_exercise", "number_of_set",
+            "weight_in_kilograms", "type_of_weight", "reps", "duration_of_break_seconds",
+            "duration_in_seconds", "distance_in_meters", "amount_of_sets", "comment"};
+
+
+
+
 }
