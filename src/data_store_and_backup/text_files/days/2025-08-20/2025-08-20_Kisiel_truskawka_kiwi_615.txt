@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2025-08-20',
+'Tuesday',
+'Second Breakfast',
+615.0,
+'Kisiel truskawka kiwi',
+60.0,
+0.1,
+0.0,
+15.0,
+'2025-08-20 02:01:16',
+'none',
+369.0,
+92.25,
+0.0,
+0.615
+);
