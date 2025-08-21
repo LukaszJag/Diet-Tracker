@@ -124,7 +124,6 @@ public class Config {
     String[] MONTHS2024 = {"May", "June", "July", "August", "September", "October", "November", "December"};
     String[] MONTHS2025 = {"January", "February", "March", "April"};
     //TEST
-    GUIManager guiManager = new GUIManager();
 
     public static final Date date = new Date();
 
@@ -133,8 +132,6 @@ public class Config {
             "general_type_of_workout", "type_of_workout", "name_of_exercise", "number_of_set",
             "weight_in_kilograms", "type_of_weight", "reps", "duration_of_break_seconds",
             "duration_in_seconds", "distance_in_meters", "amount_of_sets", "comment"};
-
-
 
 
 }

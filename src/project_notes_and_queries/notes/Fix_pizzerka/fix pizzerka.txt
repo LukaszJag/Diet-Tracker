@@ -1,9 +1,0 @@
-delete pizzerka from txt database
-products
-
-calendar 2024-08-05
-
-And data base:
-
-DELETE FROM calendar WHERE product_name like "Pizze%";
-

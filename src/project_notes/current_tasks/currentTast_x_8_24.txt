@@ -1,0 +1,38 @@
+1.: Training GUI
+
+    Add GUI for training base on CalendarMonthStatsView
+
+2.: Add chart for days in month for better  analysis and view
+
+
+
+Issues to add on github website:
+
+    -> Zmienić konsekwencje wprowadzania bez konkretnego posiłku(None) - obecnie przez nieuwage można wprowadzić taki produkt klikając enter
+
+    -> Ogarnąć layout obecny lub inny dla westPanel w AddProductToCalendarDay.java
+
+    -> Dodać możliwoć dodania produktu będać w product comment wciskając CTRL
+
+
+Core:
+
+    - fridge:
+
+        - ...
+
+    - days:
+
+        - made of products eaten that day
+
+        - have own macro
+
+        - have meals
+
+
+
+1 - make parent class window for other class to extend
+
+2 - consider how to define dish, singleDish, and parent in clean form
+
+
