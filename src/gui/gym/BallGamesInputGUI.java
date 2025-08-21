@@ -7,7 +7,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class PlayOnFieldInputGUI {
+public class BallGamesInputGUI {
     public static void main(String[] args) {
         InputPatternWindowGUI inputPatternWindowGUI = new InputPatternWindowGUI();
 
