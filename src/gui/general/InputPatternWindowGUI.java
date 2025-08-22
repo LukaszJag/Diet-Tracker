@@ -84,7 +84,13 @@ public class InputPatternWindowGUI {
         southPanel.setPreferredSize(new Dimension(100, 80));
     }
 
-
+    public void setPanelsColors(Color mainPanelColor, Color westPanelColor, Color eastPanelColor, Color southPanelColor, Color northPanelColor) {
+        westPanel.setBackground(westPanelColor);
+        eastPanel.setBackground(eastPanelColor);
+        mainPanel.setBackground(mainPanelColor);
+        northPanel.setBackground(northPanelColor);
+        southPanel.setBackground(southPanelColor);
+    }
 
     public ArrayList<String> getDataFromEveryTextField(){
         ArrayList<String> dataToReturn = new ArrayList<String>();
