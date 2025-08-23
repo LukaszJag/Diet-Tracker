@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2025-08-22',
+'Friday',
+'Supper',
+315.0,
+'Fasolka szparagowa - gotowana',
+27.0,
+2.4,
+0.2,
+7.6,
+'2025-08-23 02:32:12',
+'none',
+85.05,
+23.94,
+0.63000005,
+7.5600004
+);
