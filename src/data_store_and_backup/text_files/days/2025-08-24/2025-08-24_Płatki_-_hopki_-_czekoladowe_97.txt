@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2025-08-24',
+'Saturday',
+'Breakfast',
+97.0,
+'Płatki - hopki - czekoladowe',
+374.0,
+7.4,
+2.7,
+77.0,
+'2025-08-24 10:08:11',
+'none',
+362.78,
+74.69,
+2.6190002,
+7.1780005
+);
