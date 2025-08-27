@@ -136,18 +136,10 @@ public class InputPatternWindowGUI {
     }
 
     public void setGeneralComponents(){
-        acceptButton.addActionListener(new AcceptButtonActionListener());
         southPanel.add(acceptButton);
     }
 
-    public ActionListener getAcceptButtonActionListener(){
-        return acceptButton.getActionListeners()[0];
-    }
 
-    private class AcceptButtonActionListener implements ActionListener {
-        @Override
-        public void actionPerformed(ActionEvent e) {
 
-        }
-    }
+
 }

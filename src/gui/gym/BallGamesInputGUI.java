@@ -9,9 +9,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class BallGamesInputGUI {
+    static InputPatternWindowGUI inputPatternWindowGUI;
     public static void main(String[] args) {
-        InputPatternWindowGUI inputPatternWindowGUI = new InputPatternWindowGUI();
-
+        inputPatternWindowGUI = new InputPatternWindowGUI();
         inputPatternWindowGUI.setPanelsColors(Color.WHITE, Color.DARK_GRAY, Color.BLUE, Color.GRAY,  Color.BLACK);
 
         ArrayList<String> fieldsToAdd = new ArrayList<String>(Arrays.asList("workout_ID", "day_date", "day_name", "location_of_workout",
@@ -21,9 +21,14 @@ public class BallGamesInputGUI {
         inputPatternWindowGUI.addComponentsToMainPanel(fieldsToAdd);
 
         inputPatternWindowGUI.displayWindow();
-        ActionListener acceptButtonActionListener = inputPatternWindowGUI.getAcceptButtonActionListener();
 
-        ActionEvent actionEvent = null;
-        acceptButtonActionListener.actionPerformed(actionEvent);
+        inputPatternWindowGUI.acceptButton.addActionListener(new AcceptButtonActionListener());
+    }
+
+    private static class AcceptButtonActionListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            inputPatternWindowGUI.getDataFromEveryTextField();
+        }
     }
 }
