@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2025-08-27',
+'Tuesday',
+'Breakfast',
+328.0,
+'Makaron z mięsem mielonym',
+134.61,
+11.13,
+3.81,
+13.08,
+'2025-08-27 10:35:42',
+'none',
+441.5208,
+42.9024,
+12.496799,
+36.5064
+);
