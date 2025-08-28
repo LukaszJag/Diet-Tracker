@@ -1,0 +1,39 @@
+How to split data to different tables:
+
+
+There will be this table in sport:
+
+Workout tables:
+    Will contain general information about workout like:
+        -> date
+        -> location
+        -> start training
+        -> finish training
+
+
+    Exercises table:
+         Will contain specifics information about exercise one per row:
+            -> ID
+            -> Name
+            -> Instructions
+            -> Body part
+            -> Exercise target
+            -> Added weight
+            -> Weight type
+
+    Single workout table:
+        Will contain single workout like gym, playing on field
+        Problem:
+            how contain different exercise with unique fields
+
+
+
+
+
+
+
+
+
+
+
+

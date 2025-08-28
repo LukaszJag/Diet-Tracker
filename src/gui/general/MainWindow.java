@@ -4,7 +4,7 @@ import configuration.Config;
 import gui.AddProductToCalendarDay;
 import gui.AddSingleProductWindow;
 import gui.CalendarMonthStatsView;
-import gui.gym.AddWorkoutToDataBaseGUI;
+import gui.gym.WorkoutsPickupGUI;
 import runners_and_tests.run_update.RunnerFullUpdateDayStatistics;
 import runners_and_tests.run_update.UpdateProductAndCalendarTableFull;
 
@@ -141,7 +141,9 @@ public class MainWindow extends JFrame {
 
         addWorkoutButton.setBackground(new Color(67, 120, 144));
         addWorkoutButton.addActionListener(new AddWorkoutButtonActionListener());
+
         panelLeft.add(addWorkoutButton);
+
     }
 
     private void addLabels() {
@@ -262,7 +264,7 @@ public class MainWindow extends JFrame {
     private class AddWorkoutButtonActionListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            new AddWorkoutToDataBaseGUI();
+            new WorkoutsPickupGUI();
         }
     }
 }
