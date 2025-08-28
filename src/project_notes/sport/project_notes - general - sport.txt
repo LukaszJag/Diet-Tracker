@@ -27,7 +27,7 @@ Workout tables:
             how contain different exercise with unique fields
 
 
-
+Workouts data must be present by GUI without query SQL database
 
 
 
