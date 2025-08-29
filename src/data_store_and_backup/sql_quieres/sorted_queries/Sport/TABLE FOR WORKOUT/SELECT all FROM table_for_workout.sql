@@ -1,1 +1,0 @@
-SELECT * FROM table_for_workout;

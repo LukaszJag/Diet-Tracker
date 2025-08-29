@@ -1,1 +1,0 @@
-SELECT * FROM sets_in_exercise;
