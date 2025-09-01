@@ -131,23 +131,26 @@ public class SelectFromDaysStatistics {
         }
         Hashtable<String, Float> macroTable = SumTable.sumRowsInTableWhereMonthOfTime(tableName, fieldsNamesToSum, whereColumnName, monthInSQLFormat);
 
-        Macro sumMacro = new Macro(
-                macroTable.get("kcal_consume"),
-                macroTable.get("protein_consume"),
-                macroTable.get("fat_consume"),
-                macroTable.get("carbs_consume"));
+        if (!macroTable.isEmpty()) {
+            Macro sumMacro = new Macro(
+                    macroTable.get("kcal_consume"),
+                    macroTable.get("protein_consume"),
+                    macroTable.get("fat_consume"),
+                    macroTable.get("carbs_consume"));
 
 
-        int amountOfDays = MyDate.getAmountOfDaysInCurrentMonthOPassedMonth(year,month);
+            int amountOfDays = MyDate.getAmountOfDaysInCurrentMonthOPassedMonth(year, month);
 
-        Macro averageMacro = new Macro(
-                sumMacro.getKcal(),
-                sumMacro.getProtein(),
-                sumMacro.getFat(),
-                sumMacro.getCarbs());
+            Macro averageMacro = new Macro(
+                    sumMacro.getKcal(),
+                    sumMacro.getProtein(),
+                    sumMacro.getFat(),
+                    sumMacro.getCarbs());
 
-        averageMacro = Macro.divisionMacroByValue(averageMacro, amountOfDays);
+            averageMacro = Macro.divisionMacroByValue(averageMacro, amountOfDays);
 
-        return averageMacro;
+            return averageMacro;
+        }
+        return new Macro(0,0,0,0);
     }
 }
