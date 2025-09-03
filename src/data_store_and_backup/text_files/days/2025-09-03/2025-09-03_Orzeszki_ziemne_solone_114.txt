@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2025-09-03',
+'Tuesday',
+'Breakfast',
+114.0,
+'Orzeszki ziemne solone',
+605.0,
+24.9,
+50.2,
+13.4,
+'2025-09-03 02:53:15',
+'none',
+689.7,
+15.275999,
+57.228,
+28.386
+);

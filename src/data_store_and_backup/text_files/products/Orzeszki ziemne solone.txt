@@ -1,0 +1,9 @@
+Name: Orzeszki ziemne solone
+Brand: Produkt ogolny
+Package has: 0.0
+Macro for: 100.0
+KCal: 605.0
+Protein: 24.9
+Fat: 50.2
+Carbs: 13.4
+Comment optional: Link: https://www.tabele-kalorii.pl/kalorie,Orzeszki-ziemne-solone-Felix.html
