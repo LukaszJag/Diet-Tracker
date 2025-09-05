@@ -1,0 +1,9 @@
+Name: Baton Lion White
+Brand: Lion
+Package has: 42.0
+Macro for: 100.0
+KCal: 192.0
+Protein: 5.7
+Fat: 22.6
+Carbs: 66.2
+Comment optional: Link: https://www.frisco.pl/pid,4873/n,lion-baton-white/stn,product
