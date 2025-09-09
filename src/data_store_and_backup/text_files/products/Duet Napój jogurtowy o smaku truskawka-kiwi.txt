@@ -1,0 +1,9 @@
+Name: Duet Napój jogurtowy o smaku truskawka-kiwi
+Brand: Jovi
+Package has: 350.0
+Macro for: 100.0
+KCal: 56.0
+Protein: 1.7
+Fat: 0.8
+Carbs: 10.5
+Comment optional: Link: https://www.carrefour.pl/mleko-nabial-jaja/jogurt-kefir-maslanka-serki-homogenizowane/jogurty-pitne/jovi-duet-napoj-jogurtowy-o-smaku-truskawkakiwi-350-g

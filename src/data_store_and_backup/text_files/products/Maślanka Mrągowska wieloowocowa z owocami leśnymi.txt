@@ -1,0 +1,9 @@
+Name: Maślanka Mrągowska wieloowocowa z owocami leśnymi
+Brand: Mlekpol
+Package has: 1000.0
+Macro for: 100.0
+KCal: 78.0
+Protein: 3.2
+Fat: 1.5
+Carbs: 13.0
+Comment optional: Link: https://www.carrefour.pl/napoje/mleko-napoje-mleczne-i-roslinne/napoje-mleczne-kawowe/mlekpol-maslanka-mragowska-wieloowocowa-z-owocami-lesnymi-1-l

@@ -1,0 +1,9 @@
+Name: Paprika corn cakes
+Brand: Good Food
+Package has: 120.0
+Macro for: 100.0
+KCal: 415.0
+Protein: 7.4
+Fat: 8.5
+Carbs: 75.0
+Comment optional: Link: https://www.dine4fit.pl/produkty/paprika-corn-cakes-good-food-1
