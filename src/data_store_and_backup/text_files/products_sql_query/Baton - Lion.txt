@@ -1,0 +1,20 @@
+INSERT INTO `diet_tracker_schema`.product_table
+(`product_name`,
+`product_brand`,
+`product_package_has`,
+`product_macro_for`,
+`product_kcal`,
+`product_protein`,
+`product_fat`,
+`product_carbs`,
+`comment_optional`)
+Values
+('Baton - Lion',
+'Nestle',
+42.0,
+100.0,
+492.0,
+5.2,
+23.1,
+65.1,
+'Link: https://e-delikatesydwojka.pl/produkt/nestle-lion-baton-chocolate-42g/');

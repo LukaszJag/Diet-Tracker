@@ -1,0 +1,9 @@
+Name: Baton - Lion
+Brand: Nestle
+Package has: 42.0
+Macro for: 100.0
+KCal: 492.0
+Protein: 5.2
+Fat: 23.1
+Carbs: 65.1
+Comment optional: Link: https://e-delikatesydwojka.pl/produkt/nestle-lion-baton-chocolate-42g/

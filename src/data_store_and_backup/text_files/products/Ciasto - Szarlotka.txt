@@ -1,0 +1,9 @@
+Name: Ciasto - Szarlotka
+Brand: domowe
+Package has: 0.0
+Macro for: 100.0
+KCal: 290.0
+Protein: 2.7
+Fat: 13.5
+Carbs: 40.3
+Comment optional: Link: https://www.tabele-kalorii.pl/kalorie,Szarlotka.html

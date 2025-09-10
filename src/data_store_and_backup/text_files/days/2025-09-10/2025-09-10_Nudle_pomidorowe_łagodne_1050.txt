@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2025-09-10',
+'Tuesday',
+'Supper',
+1050.0,
+'Nudle pomidorowe łagodne',
+85.0,
+1.6,
+3.6,
+11.0,
+'2025-09-10 09:29:27',
+'none',
+892.5,
+115.5,
+37.8,
+16.800001
+);
