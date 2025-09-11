@@ -16,7 +16,13 @@ Workout tables:
             -> ID
             -> Name
             -> Instructions
-            -> Body part
+            -> Type (Strength, Cardio, Flexibility, Balance, Mobility)
+            -> Muscle group
+            -> Units type
+            -> equipment
+
+
+
             -> Exercise target
             -> Added weight
             -> Weight type
