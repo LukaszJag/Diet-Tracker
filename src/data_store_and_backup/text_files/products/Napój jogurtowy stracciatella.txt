@@ -1,0 +1,9 @@
+Name: Napój jogurtowy stracciatella
+Brand: Pilos
+Package has: 850.0
+Macro for: 100.0
+KCal: 76.2
+Protein: 3.3
+Fat: 1.3
+Carbs: 11.8
+Comment optional: Link: https://www.dine4fit.pl/produkty/napoj-jogurtowy-stracciatella-pilos

@@ -1,0 +1,9 @@
+Name: Mixer smak truskawkowy
+Brand: Pilos
+Package has: 850.0
+Macro for: 100.0
+KCal: 68.0
+Protein: 3.3
+Fat: 0.8
+Carbs: 11.2
+Comment optional: Link: https://www.dine4fit.pl/produkty/mixer-smak-truskawkowy-pilos

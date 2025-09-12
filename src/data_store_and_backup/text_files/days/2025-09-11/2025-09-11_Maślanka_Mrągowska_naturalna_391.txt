@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2025-09-11',
+'Thursday',
+'Supper',
+391.0,
+'Maślanka Mrągowska naturalna',
+48.0,
+3.5,
+1.5,
+5.0,
+'2025-09-12 07:39:35',
+'none',
+187.68001,
+19.550001,
+5.8650002,
+13.685
+);
