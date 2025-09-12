@@ -73,4 +73,11 @@
             Od zera do 21 - 21:32 - 21:54 [22']
                 1. czas - 12' -> 20:40 - 20:52 [12']
                 2. czas - 18' -> 20:54 - 21:12 [18']
+2025-09-11
+    Trening na boisku 14:23 - 15:17 [54']:
+    Localization: Boisko - Estadio Pola - Wrocław
 
+        Koszykówka 14:23 - 15:17 [54']
+            Od zera do 21 - 14:23 - 15:17  [54']
+                1. czas - 16' -> 14:23 - 15:17 [16']
+                2. czas - 17' -> 14:40 - 15:17 [17']
