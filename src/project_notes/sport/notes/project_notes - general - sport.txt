@@ -11,16 +11,6 @@ Workout tables:
         -> finish training
 
 
-    Exercises table:
-         Will contain specifics information about exercise one per row:
-            -> ID
-            -> Name
-            -> Instructions
-            -> Type (Strength, Cardio, Flexibility, Balance, Mobility)
-            -> Muscle group
-            -> Units type
-            -> equipment
-
 
 
             -> Exercise target
@@ -36,7 +26,33 @@ Workout tables:
 Workouts data must be present by GUI without query SQL database
 
 
+Merge notes:
 
+    Exercises table:
+         Will contain specifics information about exercise one per row:
+            -> ID
+            -> Name
+            -> Instructions
+            -> Type (Strength, Cardio, Flexibility, Balance, Mobility)
+            -> Muscle group
+            -> Units type
+            -> equipment
+
+
+    Exercises table:
+         Will contain specifics information about exercise one per row:
+            -> ID
+            -> Name
+            -> Instructions
+            -> Body part
+            
+            -> Exercise target
+            -> Added weight
+            -> Weight type
+
+            -> Muscle Group / Focus Area
+
+               Units of Measurement
 
 
 

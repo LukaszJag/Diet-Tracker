@@ -1,9 +1,0 @@
-    Exercises table:
-         Will contain specifics information about exercise one per row:
-            -> ID
-            -> Name
-            -> Instructions
-            -> Body part
-            -> Exercise target
-            -> Added weight
-            -> Weight type
