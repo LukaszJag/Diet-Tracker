@@ -81,3 +81,12 @@
             Od zera do 21 - 14:23 - 15:17  [54']
                 1. czas - 16' -> 14:23 - 15:17 [16']
                 2. czas - 17' -> 14:40 - 15:17 [17']
+
+2025-09-13
+    Trening na boisku 16:03 - 16:29 [26']:
+    Localization: Boisko - koło akademików - pl. Grunwaldzki
+
+        Koszykówka 16:03 - 16:29 [26']
+            Od zera do 21 - 16:03 - 16:29 [26']
+                1. czas - 13' -> 16:03 - 16:16 [13']
+                2. czas - 12' -> 16:17 - 16:29 [12']
