@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2025-09-14',
+'Saturday',
+'Dinner',
+298.0,
+'Udka z kurczaka',
+250.0,
+22.5,
+7.5,
+0.0,
+'2025-09-14 10:39:58',
+'none',
+745.0,
+0.0,
+22.35,
+67.05
+);
