@@ -1,0 +1,9 @@
+Name: Miód wielokwiatowy nektarowy
+Brand: Tip
+Package has: 900.0
+Macro for: 100.0
+KCal: 318.0
+Protein: 0.3
+Fat: 0.0
+Carbs: 79.5
+Comment optional: Produkt używany jako ogólny, Link: https://www.tabele-kalorii.pl/kalorie,Miod-wielokwiatowy-nektarowy-Tip.html
