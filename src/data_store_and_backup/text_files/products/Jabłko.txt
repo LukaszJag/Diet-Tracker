@@ -1,0 +1,9 @@
+Name: Jabłko
+Brand: owoce
+Package has: 0.0
+Macro for: 100.0
+KCal: 50.0
+Protein: 0.26
+Fat: 0.17
+Carbs: 11.41
+Comment optional: Link: https://www.tabele-kalorii.pl/kalorie,Jablko.html
