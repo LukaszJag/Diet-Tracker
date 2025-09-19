@@ -1,0 +1,9 @@
+Name: Mixo Napój jogurtowy o smaku truskawka kiwi
+Brand: Fruvita
+Package has: 700.0
+Macro for: 100.0
+KCal: 65.0
+Protein: 1.7
+Fat: 0.8
+Carbs: 12.8
+Comment optional: Link: https://zakupy.biedronka.pl/fruvita-fruvita-mixo-napoj-jogurtowy-o-smaku-truskawka-kiwi-700g-0000002422.html
