@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2025-09-20',
+'Saturday',
+'Supper',
+1500.0,
+'Napój o smaku cytryny',
+18.0,
+0.0,
+0.0,
+4.2,
+'2025-09-21 12:35:35',
+'none',
+270.0,
+62.999996,
+0.0,
+0.0
+);

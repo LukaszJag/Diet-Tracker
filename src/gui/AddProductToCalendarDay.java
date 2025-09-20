@@ -452,6 +452,8 @@ public class AddProductToCalendarDay {
         dayMealNameComboBox.setSelectedItem("None");
         productSuggestionNameComboBox.setSelectedItem(null);
 
+        brandTextField.setText("");
+
         //JComboBox<String> dayMealNameComboBox = new JComboBox<>(new String[]{"None", "Breakfast", "Second Breakfast", "Snack 1", "Dinner", "Snack 2"
         //        , "Supper", "After workout", "Night snack"});
 
