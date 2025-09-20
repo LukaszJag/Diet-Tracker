@@ -1,0 +1,9 @@
+Name: Stołowy sos hamburger pomidorowo-jogurtowy
+Brand: Madero
+Package has: 410.0
+Macro for: 100.0
+KCal: 265.0
+Protein: 1.7
+Fat: 23.0
+Carbs: 11.0
+Comment optional: Link: https://zakupy.biedronka.pl/madero-madero-stolowy-sos-hamburger-pomidorowo-jogurtowy-410-g-0000003350.html

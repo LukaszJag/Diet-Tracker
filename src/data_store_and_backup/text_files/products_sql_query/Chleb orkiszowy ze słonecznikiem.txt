@@ -1,0 +1,20 @@
+INSERT INTO `diet_tracker_schema`.product_table
+(`product_name`,
+`product_brand`,
+`product_package_has`,
+`product_macro_for`,
+`product_kcal`,
+`product_protein`,
+`product_fat`,
+`product_carbs`,
+`comment_optional`)
+Values
+('Chleb orkiszowy ze słonecznikiem',
+'Piekarnia Ju-lka',
+550.0,
+100.0,
+249.0,
+8.2,
+9.0,
+26.0,
+'Link: https://leclerc24.pl/jul-ka-chleb-orkiszowy-ze-slonecznikiem-550g');

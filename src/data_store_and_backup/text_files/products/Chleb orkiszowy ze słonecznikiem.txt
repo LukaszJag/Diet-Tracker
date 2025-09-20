@@ -1,0 +1,9 @@
+Name: Chleb orkiszowy ze słonecznikiem
+Brand: Piekarnia Ju-lka
+Package has: 550.0
+Macro for: 100.0
+KCal: 249.0
+Protein: 8.2
+Fat: 9.0
+Carbs: 26.0
+Comment optional: Link: https://leclerc24.pl/jul-ka-chleb-orkiszowy-ze-slonecznikiem-550g

@@ -1,0 +1,20 @@
+INSERT INTO `diet_tracker_schema`.product_table
+(`product_name`,
+`product_brand`,
+`product_package_has`,
+`product_macro_for`,
+`product_kcal`,
+`product_protein`,
+`product_fat`,
+`product_carbs`,
+`comment_optional`)
+Values
+('Pizza - serowa  - pan - mała',
+'Pizza hut',
+282.0,
+100.0,
+130.0,
+6.0,
+4.0,
+16.0,
+'Dane z pdfa: nutrition_information_eng--pizza hut.pdf');

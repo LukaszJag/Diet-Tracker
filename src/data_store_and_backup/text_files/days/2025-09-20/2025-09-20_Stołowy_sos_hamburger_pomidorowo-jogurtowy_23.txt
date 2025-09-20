@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2025-09-20',
+'Friday',
+'Breakfast',
+23.0,
+'Stołowy sos hamburger pomidorowo-jogurtowy',
+265.0,
+1.7,
+23.0,
+11.0,
+'2025-09-20 03:41:21',
+'none',
+60.95,
+2.53,
+5.29,
+0.39100003
+);

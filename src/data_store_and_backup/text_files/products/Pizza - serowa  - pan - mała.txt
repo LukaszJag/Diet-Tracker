@@ -1,0 +1,9 @@
+Name: Pizza - serowa  - pan - mała
+Brand: Pizza hut
+Package has: 282.0
+Macro for: 100.0
+KCal: 130.0
+Protein: 6.0
+Fat: 4.0
+Carbs: 16.0
+Comment optional: Dane z pdfa: nutrition_information_eng--pizza hut.pdf
