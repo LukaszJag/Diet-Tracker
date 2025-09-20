@@ -4,6 +4,7 @@ import configuration.Config;
 import tools.sql_tools.general.GetConnection;
 
 import java.sql.*;
+import java.util.HashMap;
 
 public class SQLSelect {
     public static String[] getAllProductNamesFromProductTable() throws SQLException {
@@ -13,15 +14,13 @@ public class SQLSelect {
         String[] productsArray = new String[500];
 
         String sql = "SELECT product_name FROM diet_tracker_schema.product_table";
-        String result = "";
-
 
         Connection connection = GetConnection.getConnectionWithLocalHost();
         statement = connection.createStatement();
         resultSet = statement.executeQuery(sql);
 
         int counter = 0;
-        while(resultSet.next()){
+        while (resultSet.next()) {
             productsArray[counter] = resultSet.getString(1);
             counter++;
         }
@@ -32,6 +31,44 @@ public class SQLSelect {
 
         return productsArray;
     }
+
+    public static HashMap<String, String> getAllProductAndBrandNamesFromProductTable() {
+        ResultSet resultSet;
+        Statement statement;
+
+        HashMap<String, String> allProductnameBrandnameHashMap = new HashMap<String, String>();
+
+        String SQLStatement = "SELECT product_name, product_brand FROM diet_tracker_schema.product_table;";
+
+        String result = "";
+        Connection connection = null;
+
+        try {
+            connection = GetConnection.getConnectionWithLocalHost();
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery(SQLStatement);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        String brandFieldSQl = "";
+        try {
+            while (resultSet.next()) {
+                if ((resultSet.getString(2)).equals(" ")) {
+                    brandFieldSQl = "none";
+                } else {
+                    brandFieldSQl = resultSet.getString(2);
+                }
+
+                allProductnameBrandnameHashMap.put(resultSet.getString(1), brandFieldSQl);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return allProductnameBrandnameHashMap;
+    }
+
 
     public static String getRowFromProductTableByProductNameGetString(String productName) throws SQLException {
         ResultSet resultSet;
@@ -45,9 +82,9 @@ public class SQLSelect {
         statement = connection.createStatement();
         resultSet = statement.executeQuery(sql);
 
-        while(resultSet.next()){
+        while (resultSet.next()) {
             for (int i = 0; i < Config.SQL_COLUMNS_PRODUCT.length; i++) {
-                result += resultSet.getString(Config.SQL_COLUMNS_PRODUCT[i].replace("`","")) + " ";
+                result += resultSet.getString(Config.SQL_COLUMNS_PRODUCT[i].replace("`", "")) + " ";
             }
         }
 
@@ -65,9 +102,9 @@ public class SQLSelect {
         statement = connection.createStatement();
         resultSet = statement.executeQuery(sql);
 
-        while(resultSet.next()){
+        while (resultSet.next()) {
             for (int i = 0; i < Config.SQL_COLUMNS_PRODUCT.length; i++) {
-                result[i] = resultSet.getString(Config.SQL_COLUMNS_PRODUCT[i].replace("`",""));
+                result[i] = resultSet.getString(Config.SQL_COLUMNS_PRODUCT[i].replace("`", ""));
             }
         }
         connection.close();
@@ -93,7 +130,7 @@ public class SQLSelect {
         resultSetMetaData = resultSet.getMetaData();
         int amountOfColumns = resultSetMetaData.getColumnCount();
 
-        while(resultSet.next()){
+        while (resultSet.next()) {
             for (int i = 1; i <= amountOfColumns; i++) {
                 result += resultSetMetaData.getColumnName(i) + " : ";
                 result += resultSet.getString(i) + "\n";
@@ -120,7 +157,7 @@ public class SQLSelect {
 
         String rowInString = "";
         int counter = 0;
-        while(resultSet.next()){
+        while (resultSet.next()) {
             for (int i = 1; i <= amountOfColumns; i++) {
                 rowInString += resultSetMetaData.getColumnName(i) + " : ";
                 rowInString += resultSet.getString(i) + "\n";
@@ -154,7 +191,7 @@ public class SQLSelect {
 
         String rowInString = "";
         int counter = 0;
-        while(resultSet.next()){
+        while (resultSet.next()) {
             for (int i = 1; i <= amountOfColumns; i++) {
                 rowInString += resultSetMetaData.getColumnName(i) + " : ";
                 rowInString += resultSet.getString(i) + "\n";
@@ -188,7 +225,7 @@ public class SQLSelect {
 
         String rowInString = "";
         int counter = 0;
-        while(resultSet.next()){
+        while (resultSet.next()) {
             for (int i = 1; i <= amountOfColumns; i++) {
                 // Temporary modification
                 rowInString += resultSetMetaData.getColumnName(i) + " : ";

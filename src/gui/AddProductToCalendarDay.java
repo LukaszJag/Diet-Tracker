@@ -10,7 +10,6 @@ import tools.products_tools.Product;
 import tools.sql_tools.SQLSelect;
 import tools.sql_tools.calendar.InsertToCalendarDayTable;
 import tools.sql_tools.days_statistics.SelectFromDaysStatistics;
-import tools.sql_tools.products.SelectFromProductTable;
 import tools.text_files_tools.FilesTools;
 import tools.time_date_tools.DateTools;
 
@@ -23,6 +22,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.HashMap;
 
 public class AddProductToCalendarDay {
 
@@ -75,11 +75,16 @@ public class AddProductToCalendarDay {
     JLabel productNameLabel = new JLabel("Product name:");
     JLabel productNameSuggestionLabel = new JLabel("Product name suggestion:");
     JLabel amountOfProductLabel = new JLabel("Amount of product:");
+
+    JLabel brandLabel = new JLabel("Brand:");
+
     JLabel kcalLabel = new JLabel("Kcal:");
     JLabel proteinLabel = new JLabel("Protein:");
     JLabel fatLabel = new JLabel("Fat:");
+
     JLabel carbsLabel = new JLabel("Carbs:");
-    JLabel brandLabel = new JLabel("Brand:");
+
+
     JLabel PackageLabel = new JLabel("Package has:");
     JLabel productsCommentJLabel = new JLabel("Product's comment:");
     JLabel timeOptionalLabel = new JLabel("Time(optional):");
@@ -95,7 +100,6 @@ public class AddProductToCalendarDay {
     JLabel proteinAmountJLabel = new JLabel("?");
     JLabel fatAmountJLabel = new JLabel("?");
     JLabel carbsAmountJLabel = new JLabel("?");
-    JLabel brandNameLabel = new JLabel("?");
     JLabel packageHasAmountJLabel = new JLabel("?");
     //</editor-fold>
 
@@ -103,6 +107,8 @@ public class AddProductToCalendarDay {
     // TextFields
     JTextField productNameTextField = new JTextField();
     JTextField amountOfProductTextField = new JTextField();
+
+    JTextField brandTextField = new JTextField();
 
     JTextField kcalTextField = new JTextField();
     JTextField proteinLTextField = new JTextField();
@@ -136,7 +142,7 @@ public class AddProductToCalendarDay {
 
     //<editor-fold desc="Layout">
     BoxLayout panelWestBoxLayout = new BoxLayout(addProductToDayPanelWest, BoxLayout.Y_AXIS);
-    GridLayout gridLayoutMainPanel = new GridLayout(13, 2, 10, 10);
+    GridLayout gridLayoutMainPanel = new GridLayout(15, 2, 10, 10);
     GridLayout checkDaysStatisticsDialogGridLayout = new GridLayout(34, 4, 0, 0);
     GridLayout panelWestGridLayout = new GridLayout(9, 1, 5, 10);
 
@@ -353,20 +359,25 @@ public class AddProductToCalendarDay {
         amountOfProductTextField.addKeyListener(new AmountOfProductTextFieldKeyListener());
 
         // 6 - row
+        addProductToDayPanelMain.add(brandLabel);
+        addProductToDayPanelMain.add(brandTextField);
+        brandTextField.addKeyListener(new ProductBrandTextFieldKeyListener());
+
+        // 7 - row
         addProductToDayPanelMain.add(kcalLabel);
         addProductToDayPanelMain.add(kcalAmountJLabel);
 
-        // 7 - row
+        // 8 - row
         addProductToDayPanelMain.add(proteinLabel);
         addProductToDayPanelMain.add(proteinAmountJLabel);
 
-        // 8 - row
+        // 9 - row
         addProductToDayPanelMain.add(fatLabel);
         addProductToDayPanelMain.add(fatAmountJLabel);
 
-        // 9 - row
-        addProductToDayPanelMain.add(brandLabel);
-        addProductToDayPanelMain.add(brandNameLabel);
+        // 10 - row
+        addProductToDayPanelMain.add(carbsLabel);
+        addProductToDayPanelMain.add(carbsAmountJLabel);
 
         // 10 - row
         addProductToDayPanelMain.add(PackageLabel);
@@ -415,7 +426,8 @@ public class AddProductToCalendarDay {
             proteinAmountJLabel.setText(resultOfCheckIfProductExist[5]);
             fatAmountJLabel.setText(resultOfCheckIfProductExist[6]);
             carbsAmountJLabel.setText(resultOfCheckIfProductExist[7]);
-            brandNameLabel.setText(resultOfCheckIfProductExist[1]);
+            brandTextField.setText(resultOfCheckIfProductExist[1]);
+
             packageHasAmountJLabel.setText(resultOfCheckIfProductExist[2]);
 
             String productData = "Product name:    " + resultOfCheckIfProductExist[0] + "\nKcal:    " + resultOfCheckIfProductExist[4]
@@ -1037,7 +1049,6 @@ public class AddProductToCalendarDay {
             if (e.getKeyCode() == KeyEvent.VK_CONTROL) {
                 productSuggestionNameComboBox.removeAllItems();
                 String[] allRightNamesProductsArray = searchAllProductWith(productNameTextField.getText());
-                String allRightNamesProductsString = "";
                 JOptionPane.showMessageDialog(null, searchAllProductWith(productNameTextField.getText()));
 
                 for (int i = 0; i < allRightNamesProductsArray.length; i++) {
@@ -1045,7 +1056,6 @@ public class AddProductToCalendarDay {
                         productSuggestionNameComboBox.addItem(allRightNamesProductsArray[i]);
                     }
                 }
-                //productSuggestionNameComboBox.addItem(searchAllProductWith(productNameTextField.getText()));
                 kcalAmountJLabel.setText("?");
                 proteinAmountJLabel.setText("?");
                 fatAmountJLabel.setText("?");
@@ -1103,11 +1113,7 @@ public class AddProductToCalendarDay {
             int productIndex = productSuggestionNameComboBox.getSelectedIndex();
             int comboBoxItemCount = productSuggestionNameComboBox.getItemCount();
 
-            try {
-                brandNameLabel.setText(SelectFromProductTable.selectProductsBrandFromProductName(productSuggestionNameComboBox.getSelectedItem().toString()));
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
+
             int nextProductIndex = productIndex + 1;
 
             if (nextProductIndex < comboBoxItemCount) {
@@ -1163,6 +1169,76 @@ public class AddProductToCalendarDay {
         }
 
 
+    }
+
+    private class ProductBrandTextFieldKeyListener implements KeyListener {
+        @Override
+        public void keyTyped(KeyEvent e) {
+
+        }
+
+        @Override
+        public void keyPressed(KeyEvent e) {
+
+        }
+
+        @Override
+        public void keyReleased(KeyEvent e) {
+            if (e.getKeyCode() == KeyEvent.VK_CONTROL) {
+                productSuggestionNameComboBox.removeAllItems();
+                String[] allRightNamesProductsArray = searchAllProductWithBrand(brandTextField.getText());
+                JOptionPane.showMessageDialog(null, searchAllProductWithBrandIncludedToResult(brandTextField.getText()));
+
+                for (int i = 0; i < allRightNamesProductsArray.length; i++) {
+                    if (allRightNamesProductsArray[i] != null) {
+                        productSuggestionNameComboBox.addItem(allRightNamesProductsArray[i]);
+                    }
+                }
+                kcalAmountJLabel.setText("?");
+                proteinAmountJLabel.setText("?");
+                fatAmountJLabel.setText("?");
+                carbsAmountJLabel.setText("?");
+            }
+            if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+                productNameTextField.requestFocus();
+            }
+        }
+
+        public String[] searchAllProductWithBrand(String brandToSearch) {
+            HashMap<String, String> allProductAndBrandHashMap;
+            String[] resultArray = new String[500];
+
+            allProductAndBrandHashMap = SQLSelect.getAllProductAndBrandNamesFromProductTable();
+
+            int counter = 0;
+            for (String key : allProductAndBrandHashMap.keySet()) {
+                if (allProductAndBrandHashMap.get(key).toLowerCase().contains(brandToSearch.toLowerCase())) {
+                    resultArray[counter] = key;
+                    counter++;
+                    System.out.println("Good");
+                }
+            }
+            System.out.println("HashMap size: " + allProductAndBrandHashMap.size());
+
+            return resultArray;
+        }
+
+        public String[] searchAllProductWithBrandIncludedToResult(String brandToSearch) {
+            HashMap<String, String> allProductAndBrandHashMap;
+            String[] resultArray = new String[500];
+
+            allProductAndBrandHashMap = SQLSelect.getAllProductAndBrandNamesFromProductTable();
+
+            int counter = 0;
+            for (String key : allProductAndBrandHashMap.keySet()) {
+                if (allProductAndBrandHashMap.get(key).toLowerCase().contains(brandToSearch.toLowerCase())) {
+                    resultArray[counter] = key + " - " + allProductAndBrandHashMap.get(key);
+                    counter++;
+                }
+            }
+
+            return resultArray;
+        }
     }
 
     //</editor-fold>
