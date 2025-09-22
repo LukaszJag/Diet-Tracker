@@ -1,0 +1,9 @@
+Name: Ketchup łagodny
+Brand: Auchan
+Package has: 470.0
+Macro for: 100.0
+KCal: 93.0
+Protein: 0.6
+Fat: 0.5
+Carbs: 22.0
+Comment optional: Link: https://zakupy.auchan.pl/products/ketchup-%C5%82agodny-auchan-470-g/00673110
