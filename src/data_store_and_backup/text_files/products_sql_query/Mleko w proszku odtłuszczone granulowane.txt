@@ -1,0 +1,20 @@
+INSERT INTO `diet_tracker_schema`.product_table
+(`product_name`,
+`product_brand`,
+`product_package_has`,
+`product_macro_for`,
+`product_kcal`,
+`product_protein`,
+`product_fat`,
+`product_carbs`,
+`comment_optional`)
+Values
+('Mleko w proszku odtłuszczone granulowane',
+'SM Gostyń',
+250.0,
+100.0,
+357.0,
+35.0,
+1.0,
+52.0,
+'Link: https://leclerc.com.pl/gostyn-mleko-w-proszku-odtluszczone-granulowane');

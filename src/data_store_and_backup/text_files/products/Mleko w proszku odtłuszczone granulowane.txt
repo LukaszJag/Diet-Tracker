@@ -1,0 +1,9 @@
+Name: Mleko w proszku odtłuszczone granulowane
+Brand: SM Gostyń
+Package has: 250.0
+Macro for: 100.0
+KCal: 357.0
+Protein: 35.0
+Fat: 1.0
+Carbs: 52.0
+Comment optional: Link: https://leclerc.com.pl/gostyn-mleko-w-proszku-odtluszczone-granulowane
