@@ -1,0 +1,9 @@
+Name: Chleb - żytni razowy z ziarnami
+Brand: Familijna
+Package has: 550.0
+Macro for: 100.0
+KCal: 246.0
+Protein: 6.5
+Fat: 5.2
+Carbs: 40.0
+Comment optional: Dane z opakowania

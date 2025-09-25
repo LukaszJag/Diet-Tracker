@@ -1,0 +1,20 @@
+INSERT INTO `diet_tracker_schema`.product_table
+(`product_name`,
+`product_brand`,
+`product_package_has`,
+`product_macro_for`,
+`product_kcal`,
+`product_protein`,
+`product_fat`,
+`product_carbs`,
+`comment_optional`)
+Values
+('Chleb - żytni razowy z ziarnami',
+'Familijna',
+550.0,
+100.0,
+246.0,
+6.5,
+5.2,
+40.0,
+'Dane z opakowania');
