@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2025-09-25',
+'Thursday',
+'Second Breakfast',
+77.0,
+'Kiełbasa białą z szynki',
+253.0,
+15.0,
+20.0,
+2.2,
+'2025-09-25 06:25:45',
+'none',
+194.81,
+1.694,
+15.4,
+11.549999
+);

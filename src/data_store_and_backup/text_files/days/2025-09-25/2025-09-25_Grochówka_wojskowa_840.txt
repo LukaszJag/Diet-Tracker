@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2025-09-25',
+'Thursday',
+'Dinner',
+840.0,
+'Grochówka wojskowa',
+62.03,
+2.79,
+2.06,
+8.55,
+'2025-09-25 06:26:02',
+'none',
+521.05194,
+71.82,
+17.303999,
+23.435999
+);
