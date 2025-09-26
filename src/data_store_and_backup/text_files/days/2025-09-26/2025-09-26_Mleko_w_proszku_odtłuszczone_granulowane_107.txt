@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2025-09-26',
+'Thursday',
+'Breakfast',
+107.0,
+'Mleko w proszku odtłuszczone granulowane',
+357.0,
+35.0,
+1.0,
+52.0,
+'2025-09-26 11:13:07',
+'none',
+381.99002,
+55.640003,
+1.07,
+37.45
+);
