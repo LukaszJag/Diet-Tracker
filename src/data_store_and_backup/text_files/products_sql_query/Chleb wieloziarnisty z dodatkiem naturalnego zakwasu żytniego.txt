@@ -1,0 +1,20 @@
+INSERT INTO `diet_tracker_schema`.product_table
+(`product_name`,
+`product_brand`,
+`product_package_has`,
+`product_macro_for`,
+`product_kcal`,
+`product_protein`,
+`product_fat`,
+`product_carbs`,
+`comment_optional`)
+Values
+('Chleb wieloziarnisty z dodatkiem naturalnego zakwasu żytniego',
+'Pano',
+400.0,
+100.0,
+277.0,
+9.8,
+4.6,
+46.0,
+'Link: https://zakupy.biedronka.pl/pano-pano-chleb-wieloziarnisty-zloty-lan-z-dodatkiem-naturalnego-zakwasu-zytniego-400-g-0000004628.html');
