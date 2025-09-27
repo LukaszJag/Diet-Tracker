@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2025-09-26',
+'Friday',
+'Supper',
+67.0,
+'Chleb - żytni razowy z ziarnami',
+246.0,
+6.5,
+5.2,
+40.0,
+'2025-09-27 11:03:09',
+'none',
+164.82,
+26.800001,
+3.484,
+4.355
+);
