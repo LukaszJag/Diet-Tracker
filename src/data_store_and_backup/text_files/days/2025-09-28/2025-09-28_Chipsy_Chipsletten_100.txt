@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2025-09-28',
+'Sunday',
+'Supper',
+100.0,
+'Chipsy Chipsletten',
+510.0,
+4.3,
+27.0,
+61.0,
+'2025-09-29 01:23:35',
+'none',
+510.0,
+61.0,
+27.0,
+4.3
+);

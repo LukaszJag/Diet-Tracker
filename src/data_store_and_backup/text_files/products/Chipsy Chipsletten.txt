@@ -1,0 +1,9 @@
+Name: Chipsy Chipsletten
+Brand: Lorenz
+Package has: 100.0
+Macro for: 100.0
+KCal: 510.0
+Protein: 4.3
+Fat: 27.0
+Carbs: 61.0
+Comment optional: Dane z opakowania
