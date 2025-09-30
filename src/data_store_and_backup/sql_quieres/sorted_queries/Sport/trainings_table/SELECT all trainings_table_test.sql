@@ -1,0 +1,1 @@
+SELECT * FROM trainings_table_test;

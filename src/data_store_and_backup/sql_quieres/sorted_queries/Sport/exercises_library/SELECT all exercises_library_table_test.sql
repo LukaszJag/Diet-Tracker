@@ -1,0 +1,1 @@
+SELECT * FROM exercises_library_table_test;

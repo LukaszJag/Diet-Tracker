@@ -1,1 +1,1 @@
-DROP TABLE IF EXISTS exercises_library_table,  gym_workout,  sets_in_exercise,  table_for_workout;
+DROP TABLE IF EXISTS exercises_library_table_test, workouts_table_test,  trainings_table_test;
