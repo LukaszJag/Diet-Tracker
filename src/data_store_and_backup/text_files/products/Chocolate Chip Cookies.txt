@@ -1,0 +1,18 @@
+Name: Chocolate Chip Cookies
+Brand: Bergen
+Package has: 100.0
+Macro for: 100.0
+KCal: 486.0
+Protein: 6.8
+Fat: 22.0
+Carbs: 65.0
+Comment optional: Dane z opakowania
+Name: Chocolate Chip Cookies
+Brand: Bergen
+Package has: 100.0
+Macro for: 100.0
+KCal: 486.0
+Protein: 6.8
+Fat: 22.0
+Carbs: 65.0
+Comment optional: Dane z opakowania

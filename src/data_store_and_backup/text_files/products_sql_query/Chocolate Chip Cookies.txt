@@ -1,0 +1,40 @@
+INSERT INTO `diet_tracker_schema`.product_table
+(`product_name`,
+`product_brand`,
+`product_package_has`,
+`product_macro_for`,
+`product_kcal`,
+`product_protein`,
+`product_fat`,
+`product_carbs`,
+`comment_optional`)
+Values
+('Chocolate Chip Cookies',
+'Bergen',
+100.0,
+100.0,
+486.0,
+6.8,
+22.0,
+65.0,
+'Dane z opakowania');
+INSERT INTO `diet_tracker_schema`.product_table
+(`product_name`,
+`product_brand`,
+`product_package_has`,
+`product_macro_for`,
+`product_kcal`,
+`product_protein`,
+`product_fat`,
+`product_carbs`,
+`comment_optional`)
+Values
+('Chocolate Chip Cookies',
+'Bergen',
+100.0,
+100.0,
+486.0,
+6.8,
+22.0,
+65.0,
+'Dane z opakowania');
