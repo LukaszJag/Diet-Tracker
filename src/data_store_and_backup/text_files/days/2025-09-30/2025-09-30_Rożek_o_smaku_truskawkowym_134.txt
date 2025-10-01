@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2025-09-30',
+'Tuesday',
+'Supper',
+134.0,
+'Rożek o smaku truskawkowym',
+257.0,
+2.9,
+12.0,
+34.0,
+'2025-10-01 02:10:48',
+'none',
+344.38,
+45.56,
+16.08,
+3.8860002
+);
