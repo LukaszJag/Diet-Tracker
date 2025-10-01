@@ -1,0 +1,9 @@
+Name: Delikate Twaróg półtłusty
+Brand: Delikate
+Package has: 250.0
+Macro for: 100.0
+KCal: 118.0
+Protein: 17.0
+Fat: 4.0
+Carbs: 3.4
+Comment optional: Link: https://zakupy.biedronka.pl/delikate-delikate-twarog-poltlusty-250g-0000000205.html
