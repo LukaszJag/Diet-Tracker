@@ -1,4 +1,4 @@
-package gui.gym;
+package gui.sport;
 
 import javax.swing.*;
 import java.awt.*;

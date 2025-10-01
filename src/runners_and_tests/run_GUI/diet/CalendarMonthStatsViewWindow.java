@@ -1,6 +1,6 @@
 package runners_and_tests.run_GUI.diet;
 
-import gui.CalendarMonthStatsView;
+import gui.diet.CalendarMonthStatsView;
 
 public class CalendarMonthStatsViewWindow {
     public static void main(String[] args) {

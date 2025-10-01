@@ -1,4 +1,4 @@
-package gui;
+package gui.diet;
 
 import configuration.Config;
 

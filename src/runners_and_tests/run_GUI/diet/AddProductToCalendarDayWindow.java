@@ -1,6 +1,6 @@
 package runners_and_tests.run_GUI.diet;
 
-import gui.AddProductToCalendarDay;
+import gui.diet.AddProductToCalendarDay;
 
 public class AddProductToCalendarDayWindow {
     public static void main(String[] args) {
