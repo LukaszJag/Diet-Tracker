@@ -4,7 +4,6 @@ import configuration.Config;
 import gui.diet.AddProductToCalendarDay;
 import gui.diet.AddSingleProductWindow;
 import gui.diet.CalendarMonthStatsView;
-import gui.sport.WorkoutsPickupGUI;
 import runners_and_tests.run_update.RunnerFullUpdateDayStatistics;
 import runners_and_tests.run_update.UpdateProductAndCalendarTableFull;
 
@@ -43,7 +42,6 @@ public class MainWindow extends JFrame {
     JButton addProductToDay = new JButton("Add product to day");
     JButton calculateBMR = new JButton("Test loading bar");
     JButton calendarMonthStatsView = new JButton("Month stats view");
-    JButton addWorkoutButton = new JButton("Add Workout");
 
 
     JButton changeProductDataBase = new JButton("Change product table");
@@ -138,12 +136,6 @@ public class MainWindow extends JFrame {
 
         closeApplicationButton.addActionListener(new CloseAplicationButtonActionListener());
         panelRight.add(closeApplicationButton);
-
-        addWorkoutButton.setBackground(new Color(67, 120, 144));
-        addWorkoutButton.addActionListener(new AddWorkoutButtonActionListener());
-
-        panelLeft.add(addWorkoutButton);
-
     }
 
     private void addLabels() {
@@ -261,10 +253,4 @@ public class MainWindow extends JFrame {
         }
     }
 
-    private class AddWorkoutButtonActionListener implements ActionListener {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            new WorkoutsPickupGUI();
-        }
-    }
 }
