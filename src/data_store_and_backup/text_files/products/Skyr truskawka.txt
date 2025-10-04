@@ -1,0 +1,9 @@
+Name: Skyr truskawka
+Brand: Fruvita
+Package has: 400.0
+Macro for: 100.0
+KCal: 83.0
+Protein: 9.5
+Fat: 0.5
+Carbs: 10.0
+Comment optional: Dane z opakowania

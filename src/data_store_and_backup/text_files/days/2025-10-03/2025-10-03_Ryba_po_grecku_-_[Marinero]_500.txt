@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2025-10-03',
+'Friday',
+'Supper',
+500.0,
+'Ryba po grecku - [Marinero]',
+151.0,
+8.1,
+10.0,
+7.1,
+'2025-10-04 08:34:54',
+'none',
+755.0,
+35.5,
+50.0,
+40.5
+);

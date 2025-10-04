@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2025-10-04',
+'Friday',
+'Dinner',
+793.0,
+'Pizza domowa',
+181.24,
+7.93,
+7.34,
+20.42,
+'2025-10-04 08:42:04',
+'none',
+1437.2332,
+161.9306,
+58.2062,
+62.8849
+);
