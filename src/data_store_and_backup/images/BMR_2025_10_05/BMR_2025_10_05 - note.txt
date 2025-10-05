@@ -1,0 +1,23 @@
+BMR_2025_10_05 - note:
+
+
+Old goal:
+    kcal: 4297
+    p: 140
+    f: 120
+    c: 671
+
+New goal:
+    kcal:
+    p:
+    f:
+    c:
+
+
+BMR calculate:
+    weight: ~ 151,5 kg
+    Height: 185cm
+    website to calculate BMR: https://potreningu.pl/kalkulatory/bmr
+    activity: low
+
+
