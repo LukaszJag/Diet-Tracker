@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2025-10-05',
+'Saturday',
+'Breakfast',
+50.0,
+'Baton Snickers',
+485.0,
+8.6,
+23.0,
+60.2,
+'2025-10-05 12:35:35',
+'none',
+242.5,
+30.1,
+11.5,
+4.3
+);
