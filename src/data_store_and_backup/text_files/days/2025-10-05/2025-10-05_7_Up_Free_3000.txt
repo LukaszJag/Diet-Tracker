@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2025-10-05',
+'Sunday',
+'Supper',
+3000.0,
+'7 Up Free',
+2.0,
+0.0,
+0.0,
+0.0,
+'2025-10-06 11:06:57',
+'none',
+60.0,
+0.0,
+0.0,
+0.0
+);

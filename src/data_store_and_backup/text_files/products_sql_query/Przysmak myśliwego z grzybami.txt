@@ -1,0 +1,20 @@
+INSERT INTO `diet_tracker_schema`.product_table
+(`product_name`,
+`product_brand`,
+`product_package_has`,
+`product_macro_for`,
+`product_kcal`,
+`product_protein`,
+`product_fat`,
+`product_carbs`,
+`comment_optional`)
+Values
+('Przysmak myśliwego z grzybami',
+'Produkt ogolny',
+0.0,
+100.0,
+234.0,
+7.1,
+21.0,
+4.8,
+'Produkt ogólny na bazie: Link: https://sekosa.pl/przysmak-mysliwego-z-grzybami-3kg,233,pl');

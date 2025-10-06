@@ -1,0 +1,9 @@
+Name: Przysmak myśliwego z grzybami
+Brand: Produkt ogolny
+Package has: 0.0
+Macro for: 100.0
+KCal: 234.0
+Protein: 7.1
+Fat: 21.0
+Carbs: 4.8
+Comment optional: Produkt ogólny na bazie: Link: https://sekosa.pl/przysmak-mysliwego-z-grzybami-3kg,233,pl
