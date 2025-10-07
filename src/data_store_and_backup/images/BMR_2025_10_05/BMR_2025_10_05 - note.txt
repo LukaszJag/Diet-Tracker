@@ -7,17 +7,27 @@ Old goal:
     f: 120
     c: 671
 
-New goal:
-    kcal:
-    p:
-    f:
-    c:
+New goal - BMR - 07-10-2025 - To keep weight -> 4031 - 500 = 3531:
 
+    kcal: 3531
+    p: weight * 1,5 = 227
+    f: weight = 151
+    c: the rest kcal to carb -> 318
 
-BMR calculate:
+    accord to fitatu:
+        kcal: 3531
+        p: 227 - 26%
+        f: 151 - 38%
+        c: 318 - 36%
+
+BMR calculate - 07-10-2025:
     weight: ~ 151,5 kg
     Height: 185cm
     website to calculate BMR: https://potreningu.pl/kalkulatory/bmr
     activity: low
 
+    Basic BMR:
+        Kcal: 2879
 
+    To keep weight:
+        Kcal: 4031
