@@ -271,7 +271,8 @@ public class CalendarMonthStatsView {
         calendarMonthStatsViewPanelEast.setLayout(eastPanelGridLayout);
         calendarMonthStatsViewPanelEast.add(getSetMacroPanelComponent("Macro - Selected day:", 42, 42, 42, 42), 0, 0);
 
-        calendarMonthStatsViewPanelEast.add(getSetMacroPanelComponent("Macro - goal:", 4297, 140, 120, 671), 0, 1);
+        calendarMonthStatsViewPanelEast.add(getSetMacroPanelComponent("Macro - goal:",
+                Config.BMRActual.getKcal(), Config.BMRActual.getProtein(), Config.BMRActual.getFat(), Config.BMRActual.getCarbs()), 0, 1);
 
         JPanel macroPanelTMP = new JPanel();
         macroPanelTMP.setLayout(new GridLayout(1, 2, 1, 1));
@@ -1024,7 +1025,7 @@ public class CalendarMonthStatsView {
         int dayStatus = -1;
 
         // hard code - macro goal - may cause problem - to refactor
-        float goalKcal = 4297;
+        float goalKcal = Config.BMRActual.getKcal();
 
         // Set holidays buttons - June
         for (int i = 22; i <= 30; i++) {
@@ -1085,7 +1086,7 @@ public class CalendarMonthStatsView {
         calendarMonthStatsViewPanelEast.add(getSetMacroPanelComponent(panelTitleLabelText,
                 macro.getKcal(), macro.getProtein(), macro.getFat(), macro.getCarbs()), 0, 0);
 
-        calendarMonthStatsViewPanelEast.add(getSetMacroPanelComponent("Macro - goal:", 4297, 140, 120, 671), 0, 1);
+        calendarMonthStatsViewPanelEast.add(getSetMacroPanelComponent("Macro - goal:", Config.BMRActual.getKcal(), Config.BMRActual.getProtein(), Config.BMRActual.getFat(), Config.BMRActual.getCarbs()), 0, 1);
 
         JPanel macroPanelTMP = new JPanel();
         macroPanelTMP.setLayout(new GridLayout(1, 2, 1, 1));

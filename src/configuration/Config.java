@@ -1,5 +1,7 @@
 package configuration;
 
+import tools.products_tools.Macro;
+
 import java.awt.*;
 import java.util.Date;
 
@@ -92,6 +94,13 @@ public class Config {
             "`product_macro_for`", "`product_kcal`", "`product_protein`", "`product_fat`", "`product_carbs`", "`comment_optional`"};
     public static final String[] SQL_COLUMNS_DAYS_STATISTICS_TEST = {"`day_date`", "`amount_of_points_from_notepad`",
             "`amount_of_filled_points_from_notepad`", "`kcal_consume`", "`protein_consume`", "`fat_consume`", "`carbs_consume`", "`day_name`"};
+    public static final String [] gym_workoutTable = {"workout_ID", "day_date", "day_name", "location_of_workout",
+            "general_type_of_workout", "type_of_workout", "name_of_exercise", "number_of_set",
+            "weight_in_kilograms", "type_of_weight", "reps", "duration_of_break_seconds",
+            "duration_in_seconds", "distance_in_meters", "amount_of_sets", "comment"};
+
+    public static String CURRENT_DATABASE_TABLE_PRODUCT =  "product_table";
+    public static String CURRENT_DATABASE_TABLE_CALENDAR = "calendar";
     //</editor-fold>
 
     //<editor-fold desc="DAY IN CALENDAR - Configuration">
@@ -111,25 +120,16 @@ public class Config {
     public static final String DESTINATION_FOR_SQL_QUERIES_TO_TEXT_FILE = "src/data_store_and_backup/text_files/sql_queries/";
     //</editor-fold>
 
-    // On run configuration
-
-    public static String CURRENT_DATABASE_TABLE_PRODUCT =  "product_table";
-    public static String CURRENT_DATABASE_TABLE_CALENDAR = "calendar";
-
-
-    // Months configuration
-
+    //<editor-fold desc="Date configuration">
     String[] MONTHS2024 = {"May", "June", "July", "August", "September", "October", "November", "December"};
     String[] MONTHS2025 = {"January", "February", "March", "April"};
-    //TEST
-
     public static final Date date = new Date();
+    //</editor-fold>
 
-    // Tables fields
-    public static final String [] gym_workoutTable = {"workout_ID", "day_date", "day_name", "location_of_workout",
-            "general_type_of_workout", "type_of_workout", "name_of_exercise", "number_of_set",
-            "weight_in_kilograms", "type_of_weight", "reps", "duration_of_break_seconds",
-            "duration_in_seconds", "distance_in_meters", "amount_of_sets", "comment"};
+    //<editor-fold desc="BMR values">
+    public static Macro BMR_07_10_2025 = new Macro(3531, 227, 151, 318);
+    public static Macro BMRActual = BMR_07_10_2025;
+    //</editor-fold>
 
 
 }

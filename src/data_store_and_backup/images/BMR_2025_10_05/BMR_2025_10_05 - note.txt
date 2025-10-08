@@ -20,6 +20,13 @@ New goal - BMR - 07-10-2025 - To keep weight -> 4031 - 500 = 3531:
         f: 151 - 38%
         c: 318 - 36%
 
+    final BMR:
+
+        kcal: 3531
+        p: 227
+        f: 151
+        c: 318
+
 BMR calculate - 07-10-2025:
     weight: ~ 151,5 kg
     Height: 185cm
