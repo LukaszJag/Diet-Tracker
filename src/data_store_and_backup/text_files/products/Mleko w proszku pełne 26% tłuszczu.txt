@@ -1,0 +1,9 @@
+Name: Mleko w proszku pełne 26% tłuszczu
+Brand: Siedlce
+Package has: 400.0
+Macro for: 100.0
+KCal: 490.0
+Protein: 26.0
+Fat: 26.0
+Carbs: 38.0
+Comment optional: Dane z opakowania
