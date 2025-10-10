@@ -1,0 +1,9 @@
+Name: Kaszka manna z truskawkami
+Brand: Dr. Oetker
+Package has: 47.5
+Macro for: 47.5
+KCal: 175.0
+Protein: 5.2
+Fat: 0.7
+Carbs: 36.0
+Comment optional: Link: https://www.oetker.pl/produkty/p/slodka-chwila-kaszka-manna-z-truskawkami
