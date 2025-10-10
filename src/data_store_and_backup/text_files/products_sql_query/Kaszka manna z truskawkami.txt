@@ -18,3 +18,23 @@ Values
 0.7,
 36.0,
 'Link: https://www.oetker.pl/produkty/p/slodka-chwila-kaszka-manna-z-truskawkami');
+INSERT INTO `diet_tracker_schema`.product_table
+(`product_name`,
+`product_brand`,
+`product_package_has`,
+`product_macro_for`,
+`product_kcal`,
+`product_protein`,
+`product_fat`,
+`product_carbs`,
+`comment_optional`)
+Values
+('Kaszka manna z truskawkami',
+'Dr. Oetker',
+47.5,
+100.0,
+362.0,
+12.0,
+1.5,
+72.0,
+'Link: https://www.oetker.pl/produkty/p/slodka-chwila-kaszka-manna-z-truskawkami Jedna saszetka to 47,5g macro na szaszetke');

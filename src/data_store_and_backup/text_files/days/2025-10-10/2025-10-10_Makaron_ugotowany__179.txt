@@ -15,19 +15,19 @@ INSERT INTO `diet_tracker_schema`.`calendar`
 `fat_consume`,
 `protein_consume`)
 Values
-('2025-10-09',
+('2025-10-10',
 'Thursday',
-'Supper',
-47.5,
-'Kaszka manna z truskawkami',
-362.0,
-12.0,
-1.5,
-72.0,
-'2025-10-10 09:42:42',
+'Second Breakfast',
+179.0,
+'Makaron ugotowany ',
+114.0,
+4.2,
+0.8,
+23.3,
+'2025-10-10 09:48:44',
 'none',
-171.95,
-34.2,
-0.7125,
-5.7
+204.06,
+41.706997,
+1.432,
+7.5179996
 );
