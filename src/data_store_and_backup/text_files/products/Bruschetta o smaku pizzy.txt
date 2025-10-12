@@ -1,0 +1,9 @@
+Name: Bruschetta o smaku pizzy
+Brand: Maretti
+Package has: 70.0
+Macro for: 100.0
+KCal: 467.0
+Protein: 9.0
+Fat: 18.0
+Carbs: 66.0
+Comment optional: Link: https://zakupy.biedronka.pl/maretti-maretti-bruschetta-pizza-70-g-0000017822.html
