@@ -1,0 +1,9 @@
+Name: Twaróg półtłusty
+Brand: Kanka
+Package has: 250.0
+Macro for: 100.0
+KCal: 114.0
+Protein: 16.0
+Fat: 4.0
+Carbs: 3.6
+Comment optional: Dane z opakowania
