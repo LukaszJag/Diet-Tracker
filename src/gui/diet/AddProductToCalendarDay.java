@@ -101,6 +101,8 @@ public class AddProductToCalendarDay {
     JLabel fatAmountJLabel = new JLabel("?");
     JLabel carbsAmountJLabel = new JLabel("?");
     JLabel packageHasAmountJLabel = new JLabel("?");
+
+    JLabel BMRTitleJLabel = new JLabel("BMR table:");
     //</editor-fold>
 
     //<editor-fold desc="TextFields">
@@ -154,6 +156,7 @@ public class AddProductToCalendarDay {
 
     //<editor-fold desc="Tables">
     public JTable macroTable = new JTable(6, 2);
+    public JTable BMRTAble = new JTable(4, 2);
     //</editor-fold>
 
     //</editor-fold>
@@ -162,7 +165,6 @@ public class AddProductToCalendarDay {
 
     // Starting Constructor
     public AddProductToCalendarDay() {
-
         startAddProductToDayWindow();
     }
 
@@ -285,6 +287,11 @@ public class AddProductToCalendarDay {
 
         addProductToDayPanelWest.add(macroTable);
 
+        BMRTitleJLabel.setForeground(Color.GREEN);
+        addProductToDayPanelWest.add(BMRTitleJLabel);
+
+        addProductToDayPanelWest.add(BMRTAble);
+        setupBMRTable();
         //</editor-fold>
 
         //<editor-fold desc="Add Components to Panel - East">
@@ -597,6 +604,17 @@ public class AddProductToCalendarDay {
         macroTable.setValueAt(macroToDisplay.getFat(), 4, 1);
         macroTable.setValueAt("carbs_consume", 5, 0);
         macroTable.setValueAt(macroToDisplay.getCarbs(), 5, 1);
+    }
+    private void setupBMRTable() {
+        BMRTAble.setValueAt("BMR_kcal", 0, 0);
+        BMRTAble.setValueAt("BMR_protein", 1, 0);
+        BMRTAble.setValueAt("BMR_fat", 2, 0);
+        BMRTAble.setValueAt("BMR_carbs", 3, 0);
+        BMRTAble.setValueAt(Config.BMRActual.getKcal(), 0, 1);
+        BMRTAble.setValueAt(Config.BMRActual.getProtein(), 1, 1);
+        BMRTAble.setValueAt(Config.BMRActual.getFat(), 2, 1);
+        BMRTAble.setValueAt(Config.BMRActual.getCarbs(), 3, 1);
+
     }
 
     public void setUpMacroTable(String selectedDayInSQLFormat) {
