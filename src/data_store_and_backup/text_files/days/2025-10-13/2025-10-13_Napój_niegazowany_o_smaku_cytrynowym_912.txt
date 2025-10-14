@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2025-10-13',
+'Monday',
+'Supper',
+912.0,
+'Napój niegazowany o smaku cytrynowym',
+10.7,
+0.1,
+0.0,
+2.5,
+'2025-10-14 12:38:16',
+'none',
+97.584,
+22.8,
+0.0,
+0.912
+);

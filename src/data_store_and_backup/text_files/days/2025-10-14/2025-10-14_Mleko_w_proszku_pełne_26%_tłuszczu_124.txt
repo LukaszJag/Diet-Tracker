@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2025-10-14',
+'Monday',
+'Breakfast',
+124.0,
+'Mleko w proszku pełne 26% tłuszczu',
+490.0,
+26.0,
+26.0,
+38.0,
+'2025-10-14 12:42:11',
+'none',
+607.6,
+47.12,
+32.24,
+32.24
+);
