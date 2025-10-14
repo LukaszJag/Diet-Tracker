@@ -43,7 +43,8 @@ public class DisplayChart {
                 valueAxisLabel,
                 dataset);
 
-        ValueMarker marker = new ValueMarker(4356);  // position is the value on the axis
+        // BMR value line
+        ValueMarker marker = new ValueMarker(3531);  // position is the value on the axis
         marker.setPaint(Color.GREEN);
 
         //marker.setLabel("here"); // see JavaDoc for labels, colors, strokes
