@@ -103,6 +103,7 @@ public class AddProductToCalendarDay {
     JLabel packageHasAmountJLabel = new JLabel("?");
 
     JLabel BMRTitleJLabel = new JLabel("BMR table:");
+    JLabel howMuchMacroLeftJLabel = new JLabel("Macro left");
     //</editor-fold>
 
     //<editor-fold desc="TextFields">
@@ -156,7 +157,14 @@ public class AddProductToCalendarDay {
 
     //<editor-fold desc="Tables">
     public JTable macroTable = new JTable(6, 2);
-    public JTable BMRTAble = new JTable(4, 2);
+    public JTable BMRTable = new JTable(4, 2);
+    public JTable howMuchMacroLeftTable = new JTable(4, 2);
+
+    //</editor-fold>
+
+    //<editor-fold desc="Macros">
+    Macro macroToDisplay = new Macro();
+
     //</editor-fold>
 
     //</editor-fold>
@@ -290,8 +298,13 @@ public class AddProductToCalendarDay {
         BMRTitleJLabel.setForeground(Color.GREEN);
         addProductToDayPanelWest.add(BMRTitleJLabel);
 
-        addProductToDayPanelWest.add(BMRTAble);
+        addProductToDayPanelWest.add(BMRTable);
         setupBMRTable();
+
+        howMuchMacroLeftJLabel.setForeground(Color.GREEN);
+        addProductToDayPanelWest.add(howMuchMacroLeftJLabel);
+        addProductToDayPanelWest.add(howMuchMacroLeftTable);
+        setupHowMuchMacroLeftTable(new Macro());
         //</editor-fold>
 
         //<editor-fold desc="Add Components to Panel - East">
@@ -591,7 +604,7 @@ public class AddProductToCalendarDay {
     }
 
     public void setUpMacroTable() {
-        Macro macroToDisplay = SelectFromDaysStatistics.getMacroFromDaysStatisticsByDate(addProductToDayDisplaySelectedFDateDayLabel.getText());
+        macroToDisplay = SelectFromDaysStatistics.getMacroFromDaysStatisticsByDate(addProductToDayDisplaySelectedFDateDayLabel.getText());
         macroTable.setValueAt("amount_of_points_from_notepad", 0, 0);
         macroTable.setValueAt(SelectFromDaysStatistics.getAmountOfPointsFromNotepad(MyDate.getCurrentDayInSQLFormat()), 0, 1);
         macroTable.setValueAt("amount_of_filled_points_from_notepad", 1, 0);
@@ -606,15 +619,27 @@ public class AddProductToCalendarDay {
         macroTable.setValueAt(macroToDisplay.getCarbs(), 5, 1);
     }
     private void setupBMRTable() {
-        BMRTAble.setValueAt("BMR_kcal", 0, 0);
-        BMRTAble.setValueAt("BMR_protein", 1, 0);
-        BMRTAble.setValueAt("BMR_fat", 2, 0);
-        BMRTAble.setValueAt("BMR_carbs", 3, 0);
-        BMRTAble.setValueAt(Config.BMRActual.getKcal(), 0, 1);
-        BMRTAble.setValueAt(Config.BMRActual.getProtein(), 1, 1);
-        BMRTAble.setValueAt(Config.BMRActual.getFat(), 2, 1);
-        BMRTAble.setValueAt(Config.BMRActual.getCarbs(), 3, 1);
+        BMRTable.setValueAt("BMR_kcal", 0, 0);
+        BMRTable.setValueAt("BMR_protein", 1, 0);
+        BMRTable.setValueAt("BMR_fat", 2, 0);
+        BMRTable.setValueAt("BMR_carbs", 3, 0);
+        BMRTable.setValueAt(Config.BMRActual.getKcal(), 0, 1);
+        BMRTable.setValueAt(Config.BMRActual.getProtein(), 1, 1);
+        BMRTable.setValueAt(Config.BMRActual.getFat(), 2, 1);
+        BMRTable.setValueAt(Config.BMRActual.getCarbs(), 3, 1);
 
+    }
+
+    private void setupHowMuchMacroLeftTable(Macro macroToSet){
+        howMuchMacroLeftTable.setValueAt("kcal", 0, 0);
+        howMuchMacroLeftTable.setValueAt("protein", 1, 0);
+        howMuchMacroLeftTable.setValueAt("fat", 2, 0);
+        howMuchMacroLeftTable.setValueAt("carbs", 3, 0);
+
+        howMuchMacroLeftTable.setValueAt(Config.BMRActual.getKcal() - macroToDisplay.getKcal(), 0, 1);
+        howMuchMacroLeftTable.setValueAt(Config.BMRActual.getProtein() - macroToDisplay.getProtein(), 1, 1);
+        howMuchMacroLeftTable.setValueAt(Config.BMRActual.getFat() - macroToDisplay.getFat(), 2, 1);
+        howMuchMacroLeftTable.setValueAt(Config.BMRActual.getCarbs() - macroToDisplay.getCarbs(), 3, 1);
     }
 
     public void setUpMacroTable(String selectedDayInSQLFormat) {

@@ -8,7 +8,12 @@ public class Macro {
     private float carbs;
 
     // Constructors
-    public Macro(){}
+    public Macro(){
+        this.kcal = 0;
+        this.protein = 0;
+        this.fat = 0;
+        this.carbs = 0;
+    }
 
     public Macro(float kcal, float protein, float fat, float carbs){
         this.kcal = kcal;
