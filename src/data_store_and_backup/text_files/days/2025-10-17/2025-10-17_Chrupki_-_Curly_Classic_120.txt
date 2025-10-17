@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2025-10-17',
+'Friday',
+'Dinner',
+120.0,
+'Chrupki - Curly Classic',
+495.0,
+14.0,
+25.0,
+51.0,
+'2025-10-17 04:10:25',
+'none',
+594.0,
+61.2,
+30.000002,
+16.800001
+);

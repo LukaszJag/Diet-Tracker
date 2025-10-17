@@ -1,0 +1,20 @@
+INSERT INTO `diet_tracker_schema`.product_table
+(`product_name`,
+`product_brand`,
+`product_package_has`,
+`product_macro_for`,
+`product_kcal`,
+`product_protein`,
+`product_fat`,
+`product_carbs`,
+`comment_optional`)
+Values
+('Bajgiel z makiem',
+'Putka',
+90.0,
+100.0,
+311.0,
+9.2,
+3.9,
+58.0,
+'Link: https://www.putka.pl/produkt/766/bulki/bajgiel-z-makiem-80g');

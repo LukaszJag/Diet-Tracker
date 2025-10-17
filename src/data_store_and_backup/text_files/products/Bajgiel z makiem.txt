@@ -1,0 +1,9 @@
+Name: Bajgiel z makiem
+Brand: Putka
+Package has: 90.0
+Macro for: 100.0
+KCal: 311.0
+Protein: 9.2
+Fat: 3.9
+Carbs: 58.0
+Comment optional: Link: https://www.putka.pl/produkt/766/bulki/bajgiel-z-makiem-80g
