@@ -304,7 +304,7 @@ public class AddProductToCalendarDay {
         howMuchMacroLeftJLabel.setForeground(Color.GREEN);
         addProductToDayPanelWest.add(howMuchMacroLeftJLabel);
         addProductToDayPanelWest.add(howMuchMacroLeftTable);
-        setupHowMuchMacroLeftTable(new Macro());
+        setupHowMuchMacroLeftTable();
         //</editor-fold>
 
         //<editor-fold desc="Add Components to Panel - East">
@@ -618,6 +618,7 @@ public class AddProductToCalendarDay {
         macroTable.setValueAt("carbs_consume", 5, 0);
         macroTable.setValueAt(macroToDisplay.getCarbs(), 5, 1);
     }
+
     private void setupBMRTable() {
         BMRTable.setValueAt("BMR_kcal", 0, 0);
         BMRTable.setValueAt("BMR_protein", 1, 0);
@@ -630,7 +631,7 @@ public class AddProductToCalendarDay {
 
     }
 
-    private void setupHowMuchMacroLeftTable(Macro macroToSet){
+    private void setupHowMuchMacroLeftTable(){
         howMuchMacroLeftTable.setValueAt("kcal", 0, 0);
         howMuchMacroLeftTable.setValueAt("protein", 1, 0);
         howMuchMacroLeftTable.setValueAt("fat", 2, 0);
@@ -1210,6 +1211,7 @@ public class AddProductToCalendarDay {
                 mealNameAcceptManager();
                 productNameTextField.requestFocusInWindow();
                 setUpMacroTable();
+                setupHowMuchMacroLeftTable();
             }
         }
 
