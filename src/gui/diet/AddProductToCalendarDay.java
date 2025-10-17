@@ -10,13 +10,17 @@ import tools.products_tools.Product;
 import tools.sql_tools.SQLSelect;
 import tools.sql_tools.calendar.InsertToCalendarDayTable;
 import tools.sql_tools.days_statistics.SelectFromDaysStatistics;
+import tools.sql_tools.general.GetConnection;
 import tools.text_files_tools.FilesTools;
-import tools.time_date_tools.DateTools;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.*;
+import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.text.Format;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -126,8 +130,6 @@ public class AddProductToCalendarDay {
     // ComboBox
     JComboBox<String> dayMealNameComboBox = new JComboBox<>(new String[]{"None", "Breakfast", "Second Breakfast", "Snack 1", "Dinner", "Snack 2"
             , "Supper", "After workout", "Night snack"});
-    JComboBox<String> checkDaysStatisticsDialogMonthsComboBox = new JComboBox<>(DateTools.getAllMonthsNamesInUpperCase());
-
     JComboBox<String> productSuggestionNameComboBox = new JComboBox<>(new String[]{""});
     //</editor-fold>
 
@@ -146,7 +148,6 @@ public class AddProductToCalendarDay {
     //<editor-fold desc="Layout">
     BoxLayout panelWestBoxLayout = new BoxLayout(addProductToDayPanelWest, BoxLayout.Y_AXIS);
     GridLayout gridLayoutMainPanel = new GridLayout(15, 2, 10, 10);
-    GridLayout checkDaysStatisticsDialogGridLayout = new GridLayout(34, 4, 0, 0);
     GridLayout panelWestGridLayout = new GridLayout(9, 1, 5, 10);
 
     //</editor-fold>
@@ -165,6 +166,10 @@ public class AddProductToCalendarDay {
     //<editor-fold desc="Macros">
     Macro macroToDisplay = new Macro();
 
+    //</editor-fold>
+
+    //<editor-fold desc="Strings and String arrays">
+    String[] columnsNamesToDisplayOnQuickView = {"index", "day_date", "day_name", "product_name", "amount_of_product", "kcal_consume", "carbs_consume", "fat_consume", "protein_consume", "meal_name"};
     //</editor-fold>
 
     //</editor-fold>
@@ -631,7 +636,7 @@ public class AddProductToCalendarDay {
 
     }
 
-    private void setupHowMuchMacroLeftTable(){
+    private void setupHowMuchMacroLeftTable() {
         howMuchMacroLeftTable.setValueAt("kcal", 0, 0);
         howMuchMacroLeftTable.setValueAt("protein", 1, 0);
         howMuchMacroLeftTable.setValueAt("fat", 2, 0);
@@ -1003,19 +1008,52 @@ public class AddProductToCalendarDay {
     private class CheckDaysStatisticFilledTableActionListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            JDialog checkDaysStatisticsDialog = new JDialog();
+            JFrame checkDaysStatisticFilledTableButtonWindowFrame = new JFrame("frame");
 
-            checkDaysStatisticsDialog.setLayout(checkDaysStatisticsDialogGridLayout);
-            checkDaysStatisticsDialog.add(checkDaysStatisticsDialogMonthsComboBox);
+            DefaultTableModel model = new DefaultTableModel();
 
-            for (int i = 0; i < 120; i++) {
-                checkDaysStatisticsDialog.add(new JButton(String.valueOf(i)));
+            for (int i = 0; i < columnsNamesToDisplayOnQuickView.length; i++) {
+                model.addColumn(columnsNamesToDisplayOnQuickView[i]);
             }
-            checkDaysStatisticsDialog.setName("Check days Statistics");
-            checkDaysStatisticsDialog.setLocationRelativeTo(null);
-            checkDaysStatisticsDialog.setSize(1000, 800);
-            checkDaysStatisticsDialog.setResizable(true);
-            checkDaysStatisticsDialog.setVisible(true);
+
+            JTable table = new JTable(model);
+            table.setModel(model);
+            JScrollPane scrollPane = new JScrollPane(table);
+            String date = addProductToDayDisplaySelectedFDateDayLabel.getText();
+            Connection connection;
+            String sql = "SELECT `day_date`, `day_name`, `product_name`, `amount_of_product`,  " +
+                    "`kcal_consume`, `carbs_consume`, `fat_consume`, `protein_consume`, `meal_name` " +
+                    "FROM calendar WHERE day_date=\"" +
+                    date +
+                    "\";";
+            try {
+                connection = GetConnection.getConnectionWithLocalHost();
+                Statement statement = connection.createStatement();
+                ResultSet resultSet = statement.executeQuery(sql);
+                int counter = 1;
+                while(resultSet.next()){
+                    String day_date = resultSet.getString(1);
+                    String day_name = resultSet.getString(2);
+                    String product_name = resultSet.getString(3);
+                    String amount_of_product  = resultSet.getString(4);
+                    String kcal_consume = resultSet.getString(5);
+                    String carbs_consume = resultSet.getString(6);
+                    String fat_consume = resultSet.getString(7);
+                    String protein_consume = resultSet.getString(8);
+                    String meal_name = resultSet.getString(9);
+
+                    model.addRow(new Object[]{counter, day_date, day_name, product_name, amount_of_product, kcal_consume, carbs_consume, fat_consume, protein_consume, meal_name});
+                    counter++;
+                }
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            }
+
+            checkDaysStatisticFilledTableButtonWindowFrame.add(scrollPane);
+            checkDaysStatisticFilledTableButtonWindowFrame.setSize(1100, 400);
+            checkDaysStatisticFilledTableButtonWindowFrame.setResizable(false);
+            checkDaysStatisticFilledTableButtonWindowFrame.setLocationRelativeTo(null);
+            checkDaysStatisticFilledTableButtonWindowFrame.show();
         }
     }
 
@@ -1289,5 +1327,5 @@ public class AddProductToCalendarDay {
     }
 
     //</editor-fold>
-
 }
+
