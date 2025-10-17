@@ -1,5 +1,5 @@
 #26
-2025-09-28
+2025-10-16
     Trening na boisku:  14:34 - 14:55 [21']
     Localization: Boisko - koło akademików - pl. Grunwaldzki
 
@@ -7,7 +7,15 @@
             Od zera do 21 -14:34 - 14:55 [21']
                 1. czas - 21' -> 14:34 - 14:55 [21']
 
+#27
+2025-10-17
+    Trening na boisku:  14:24 - 14:46 [22']
+    Localization: Boisko - koło akademików - pl. Grunwaldzki
 
+        Piłkanożna 14:24 - 14:46 [22']
+            Freestyle 14:24 - 14:46 [22']
+                    1. czas -  22' -> 14:24 - 14:46 [22']
+                        -> max żonglerek 14<= - 15 , 21, 15, 25, 14, 14, 16, 26, 21
 
 
 
