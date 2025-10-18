@@ -61,7 +61,10 @@ public class AddProductToCalendarDay {
     JButton clearTextFieldsButton = new JButton("Clear");
     JButton getProductFullInfo = new JButton("Get product full info");
     JButton showEnableShortCutsButton = new JButton("Shortcuts tips");
-    JButton checkDaysStatisticFilledTable = new JButton("Check days statistic");
+    JButton checkCalendarTableButton = new JButton("Check calendar table");
+
+    JButton checkDaysStatisticFilledTableButton = new JButton("Check days statistic");
+
     JButton productsCommentDisplayJButton = new JButton("Get comment");
     JButton calendarMonthStatsView = new JButton("Month stats view");
 
@@ -170,6 +173,7 @@ public class AddProductToCalendarDay {
 
     //<editor-fold desc="Strings and String arrays">
     String[] columnsNamesToDisplayOnQuickView = {"index", "day_date", "day_name", "product_name", "amount_of_product", "kcal_consume", "carbs_consume", "fat_consume", "protein_consume", "meal_name"};
+    String[] columnsNamesFromDaysStatisticsToDisplayOnQuickView = {"day_date", "amount_of_points_from_notepad", "amount_of_filled_points_from_notepad", "kcal_consume", "protein_consume", "fat_consume", "carbs_consume", "day_name"};
     //</editor-fold>
 
     //</editor-fold>
@@ -292,8 +296,11 @@ public class AddProductToCalendarDay {
         refreshDaysStatisticsDataBaseButton.addActionListener(new RefreshDaysStatisticsDataBaseButtonActionListener());
         addProductToDayPanelWest.add(refreshDaysStatisticsDataBaseButton);
 
-        checkDaysStatisticFilledTable.addActionListener(new CheckDaysStatisticFilledTableActionListener());
-        addProductToDayPanelWest.add(checkDaysStatisticFilledTable);
+        checkCalendarTableButton.addActionListener(new CheckCalendarTableActionListener());
+        addProductToDayPanelWest.add(checkCalendarTableButton);
+
+        checkDaysStatisticFilledTableButton.addActionListener(new CheckDaysStatisticFilledTableActionListener());
+        addProductToDayPanelWest.add(checkDaysStatisticFilledTableButton);
 
         dayMacroTextArea.setPreferredSize(new Dimension(200, 500));
         dayMacroTextArea.setText(Macro.getShortMacroInformationPrettyFormat(curretDayMacro));
@@ -1005,10 +1012,10 @@ public class AddProductToCalendarDay {
         }
     }
 
-    private class CheckDaysStatisticFilledTableActionListener implements ActionListener {
+    private class CheckCalendarTableActionListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            JFrame checkDaysStatisticFilledTableButtonWindowFrame = new JFrame("frame");
+            JFrame checkDaysStatisticFilledTableButtonWindowFrame = new JFrame("Calendar Table");
 
             DefaultTableModel model = new DefaultTableModel();
 
@@ -1323,6 +1330,58 @@ public class AddProductToCalendarDay {
             }
 
             return resultArray;
+        }
+    }
+
+    private class CheckDaysStatisticFilledTableActionListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            JFrame checkDaysStatisticFilledTableButtonWindowFrame = new JFrame("Days Statistics");
+
+            DefaultTableModel model = new DefaultTableModel();
+
+            for (int i = 0; i < columnsNamesFromDaysStatisticsToDisplayOnQuickView.length; i++) {
+                model.addColumn(columnsNamesFromDaysStatisticsToDisplayOnQuickView[i]);
+            }
+
+            JTable table = new JTable(model);
+            table.setModel(model);
+            JScrollPane scrollPane = new JScrollPane(table);
+            String date = "2025-10%";
+            Connection connection;
+            String sql = "SELECT `day_date`, `amount_of_points_from_notepad`, " +
+                    "`amount_of_filled_points_from_notepad`, `kcal_consume`, " +
+                    "`protein_consume`, `fat_consume`, `carbs_consume`, `day_name`" +
+                    "FROM days_statistics_test WHERE day_date LIKE\"" +
+                    date +
+                    "\";";
+            try {
+                connection = GetConnection.getConnectionWithLocalHost();
+                Statement statement = connection.createStatement();
+                ResultSet resultSet = statement.executeQuery(sql);
+                int counter = 1;
+                while(resultSet.next()){
+                    String day_date = resultSet.getString(1);
+                    String day_name = resultSet.getString(2);
+                    String product_name = resultSet.getString(3);
+                    String amount_of_product  = resultSet.getString(4);
+                    String kcal_consume = resultSet.getString(5);
+                    String carbs_consume = resultSet.getString(6);
+                    String fat_consume = resultSet.getString(7);
+                    String protein_consume = resultSet.getString(8);
+
+                    model.addRow(new Object[]{counter, day_date, day_name, product_name, amount_of_product, kcal_consume, carbs_consume, fat_consume, protein_consume});
+                    counter++;
+                }
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            }
+
+            checkDaysStatisticFilledTableButtonWindowFrame.add(scrollPane);
+            checkDaysStatisticFilledTableButtonWindowFrame.setSize(1100, 400);
+            checkDaysStatisticFilledTableButtonWindowFrame.setResizable(false);
+            checkDaysStatisticFilledTableButtonWindowFrame.setLocationRelativeTo(null);
+            checkDaysStatisticFilledTableButtonWindowFrame.show();
         }
     }
 
