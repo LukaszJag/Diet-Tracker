@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2025-10-18',
+'Saturday',
+'Dinner',
+333.0,
+'Kapusta biała',
+25.0,
+1.28,
+0.1,
+5.8,
+'2025-10-18 06:38:09',
+'none',
+83.25,
+19.314001,
+0.333,
+4.2623997
+);
