@@ -45,8 +45,9 @@ public class Config {
     public static final int ADD_PRODUCT_TO_DAY_WINDOWS_HEIGHT = 800;
     public static final int ADD_PRODUCT_TO_DAY_PANELS_NORTH_SIZE = 50;
     public static final int ADD_PRODUCT_TO_DAY_PANELS_CENTER = 20;
-    public static final int ADD_PRODUCT_TO_DAY_PANELS_WEST_EAST_SIZE = 300;
-    public static final int ADD_PRODUCT_TO_DAY_PANELS_SOUTH_SIZE = 100;
+    public static final int ADD_PRODUCT_TO_DAY_PANELS_EAST_SIZE = 170;
+    public static final int ADD_PRODUCT_TO_DAY_PANELS_WEST__SIZE = 400;
+    public static final int ADD_PRODUCT_TO_DAY_PANELS_SOUTH_SIZE = 50;
     public static final Color mainWindowDataBaseProductTableLabelColor = Color.MAGENTA;
     public static final Color mainWindowDataBaseCalendarTableLabelColor = Color.RED;
     public static final Color dateTimeLabels = Color.WHITE;

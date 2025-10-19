@@ -196,10 +196,11 @@ public class AddExercisesToLibraryGUI {
         addExercisesToLibraryPanelEast.setBackground(Color.BLUE);
 
         // Set preferred size of panel
+        // DO TO - add hard coded values to cobfig
         addExercisesToLibraryPanelNorth.setPreferredSize(new Dimension(Config.ADD_PRODUCT_TO_DAY_PANELS_NORTH_SIZE, Config.ADD_PRODUCT_TO_DAY_PANELS_NORTH_SIZE));
-        addExercisesToLibraryPanelEast.setPreferredSize(new Dimension(Config.ADD_PRODUCT_TO_DAY_PANELS_WEST_EAST_SIZE, Config.ADD_PRODUCT_TO_DAY_PANELS_WEST_EAST_SIZE));
+        addExercisesToLibraryPanelEast.setPreferredSize(new Dimension(200, 200));
         addExercisesToLibraryPanelMain.setPreferredSize(new Dimension(Config.ADD_PRODUCT_TO_DAY_PANELS_CENTER, Config.ADD_PRODUCT_TO_DAY_PANELS_CENTER));
-        addExercisesToLibraryPanelWest.setPreferredSize(new Dimension(Config.ADD_PRODUCT_TO_DAY_PANELS_WEST_EAST_SIZE, Config.ADD_PRODUCT_TO_DAY_PANELS_WEST_EAST_SIZE));
+        addExercisesToLibraryPanelWest.setPreferredSize(new Dimension(200, 200));
         addExercisesToLibraryPanelSouth.setPreferredSize(new Dimension(Config.ADD_PRODUCT_TO_DAY_PANELS_SOUTH_SIZE, Config.ADD_PRODUCT_TO_DAY_PANELS_SOUTH_SIZE));
     }
 

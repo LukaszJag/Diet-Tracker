@@ -153,7 +153,7 @@ public class AddProductToCalendarDay {
     //<editor-fold desc="Layout">
     BoxLayout panelWestBoxLayout = new BoxLayout(addProductToDayPanelWest, BoxLayout.Y_AXIS);
     GridLayout gridLayoutMainPanel = new GridLayout(15, 2, 10, 10);
-    GridLayout panelWestGridLayout = new GridLayout(16, 1, 5, 10);
+    GridLayout panelWestGridLayout = new GridLayout(8, 2, 5, 10);
 
     //</editor-fold>
 
@@ -230,7 +230,10 @@ public class AddProductToCalendarDay {
         //Set Layout
         addProductToDayPanelMain.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
         addProductToDayPanelMain.setLayout(gridLayoutMainPanel);
+
+
         addProductToDayPanelWest.setLayout(panelWestBoxLayout);
+
 
         // addProductToDayPanelWest.setLayout(westPanelBoxLayout);
         // Set panels colors
@@ -242,9 +245,9 @@ public class AddProductToCalendarDay {
 
         // Set preferred size of panel
         addProductToDayPanelNorth.setPreferredSize(new Dimension(Config.ADD_PRODUCT_TO_DAY_PANELS_NORTH_SIZE, Config.ADD_PRODUCT_TO_DAY_PANELS_NORTH_SIZE));
-        addProductToDayPanelEast.setPreferredSize(new Dimension(Config.ADD_PRODUCT_TO_DAY_PANELS_WEST_EAST_SIZE, Config.ADD_PRODUCT_TO_DAY_PANELS_WEST_EAST_SIZE));
+        addProductToDayPanelEast.setPreferredSize(new Dimension(Config.ADD_PRODUCT_TO_DAY_PANELS_EAST_SIZE, Config.ADD_PRODUCT_TO_DAY_PANELS_EAST_SIZE));
         addProductToDayPanelMain.setPreferredSize(new Dimension(Config.ADD_PRODUCT_TO_DAY_PANELS_CENTER, Config.ADD_PRODUCT_TO_DAY_PANELS_CENTER));
-        addProductToDayPanelWest.setPreferredSize(new Dimension(Config.ADD_PRODUCT_TO_DAY_PANELS_WEST_EAST_SIZE, Config.ADD_PRODUCT_TO_DAY_PANELS_WEST_EAST_SIZE));
+        addProductToDayPanelWest.setPreferredSize(new Dimension(Config.ADD_PRODUCT_TO_DAY_PANELS_WEST__SIZE, Config.ADD_PRODUCT_TO_DAY_PANELS_WEST__SIZE));
         addProductToDayPanelSouth.setPreferredSize(new Dimension(Config.ADD_PRODUCT_TO_DAY_PANELS_SOUTH_SIZE, Config.ADD_PRODUCT_TO_DAY_PANELS_SOUTH_SIZE));
     }
 
@@ -272,9 +275,13 @@ public class AddProductToCalendarDay {
         // Add Buttons
 
         inputCurrentDayButton.setPreferredSize(new Dimension(200, 10));
+
+        inputCurrentDayButton.setAlignmentX(Component.LEFT_ALIGNMENT);
         addProductToDayPanelWest.add(inputCurrentDayButton);
+
         inputCurrentDayButton.addActionListener(new InputCurrentDayButtonActionListener());
 
+        addProductToDayDisplaySelectedDay.setAlignmentX(Component.LEFT_ALIGNMENT);
         addProductToDayDisplaySelectedDay.setForeground(Config.addProductToDayCurrentDateLabelColor);
         addProductToDayPanelWest.add(addProductToDayDisplaySelectedDay);
 
@@ -301,6 +308,7 @@ public class AddProductToCalendarDay {
         checkCalendarTableButton.addActionListener(new CheckCalendarTableActionListener());
         addProductToDayPanelWest.add(checkCalendarTableButton);
 
+        checkCalendarTableDateTextField.setMaximumSize(new Dimension(100,30));
         checkCalendarTableDateTextField.setText(addProductToDayDisplaySelectedFDateDayLabel.getText());
         addProductToDayPanelWest.add(checkCalendarTableDateTextField);
 
@@ -310,13 +318,15 @@ public class AddProductToCalendarDay {
         String dateForCheckDaysDStatisticsTable = addProductToDayDisplaySelectedFDateDayLabel.getText().substring(0,5) + "10%";
         checkDaysStatisticsTableDateTextField.setText(dateForCheckDaysDStatisticsTable);
 
-        checkDaysStatisticsTableDateTextField.setSize(new Dimension(100,10));
+        checkDaysStatisticsTableDateTextField.setMaximumSize(new Dimension(100,30));
+
 
         addProductToDayPanelWest.add(checkDaysStatisticsTableDateTextField);
 
         dayMacroTextArea.setPreferredSize(new Dimension(200, 500));
         dayMacroTextArea.setText(Macro.getShortMacroInformationPrettyFormat(curretDayMacro));
 
+        macroTable.setMinimumSize(new Dimension(200, 150));
         addProductToDayPanelWest.add(macroTable);
 
         BMRTitleJLabel.setForeground(Color.GREEN);
