@@ -151,9 +151,10 @@ public class AddProductToCalendarDay {
     //</editor-fold>
 
     //<editor-fold desc="Layout">
-    BoxLayout panelWestBoxLayout = new BoxLayout(addProductToDayPanelWest, BoxLayout.Y_AXIS);
     GridLayout gridLayoutMainPanel = new GridLayout(15, 2, 10, 10);
-    GridLayout panelWestGridLayout = new GridLayout(8, 2, 5, 10);
+
+    BoxLayout panelWestBoxLayout = new BoxLayout(addProductToDayPanelWest, BoxLayout.Y_AXIS);
+    GridLayout panelWestGridLayout = new GridLayout(2, 1, 5, 10);
 
     //</editor-fold>
 
@@ -232,7 +233,7 @@ public class AddProductToCalendarDay {
         addProductToDayPanelMain.setLayout(gridLayoutMainPanel);
 
 
-        addProductToDayPanelWest.setLayout(panelWestBoxLayout);
+        addProductToDayPanelWest.setLayout(panelWestGridLayout);
 
 
         // addProductToDayPanelWest.setLayout(westPanelBoxLayout);
@@ -274,16 +275,28 @@ public class AddProductToCalendarDay {
         //<editor-fold desc="Add Components to Panel - West">
         // Add Buttons
 
+
+        JPanel upperPanelWest = new JPanel();
+        JPanel middlePanelWest = new JPanel();
+        JPanel bottomPanelWest = new JPanel();
+
+        upperPanelWest.setLayout(new GridLayout(4,2));
+        middlePanelWest.setLayout(new BoxLayout(middlePanelWest, BoxLayout.Y_AXIS));
+
+        upperPanelWest.setBackground(Color.BLACK);
+        middlePanelWest.setBackground(Color.BLACK);
+        bottomPanelWest.setBackground(Color.BLACK);
+
         inputCurrentDayButton.setPreferredSize(new Dimension(200, 10));
 
         inputCurrentDayButton.setAlignmentX(Component.LEFT_ALIGNMENT);
-        addProductToDayPanelWest.add(inputCurrentDayButton);
+
 
         inputCurrentDayButton.addActionListener(new InputCurrentDayButtonActionListener());
 
         addProductToDayDisplaySelectedDay.setAlignmentX(Component.LEFT_ALIGNMENT);
         addProductToDayDisplaySelectedDay.setForeground(Config.addProductToDayCurrentDateLabelColor);
-        addProductToDayPanelWest.add(addProductToDayDisplaySelectedDay);
+
 
         addProductToDayDisplaySelectedFDateDayLabel.setForeground(Config.addProductToDayCurrentDateLabelColor);
         addProductToDayDisplaySelectedFDateDayLabel.setText(new SimpleDateFormat("yyyy-MM-dd").format(Config.date));
@@ -294,51 +307,75 @@ public class AddProductToCalendarDay {
 
         addProductToDayDisplaySelectedFDateNameDayLabel.setText(dayNameCurrentDateOnStartWindow);
 
-        addProductToDayPanelWest.add(addProductToDayDisplaySelectedFDateNameDayLabel);
-        addProductToDayPanelWest.add(addProductToDayDisplaySelectedFDateDayLabel);
 
         chosenCalendarTableLabel = new JLabel("Current Table is: " + Config.CURRENT_DATABASE_TABLE_CALENDAR);
         chosenCalendarTableLabel.setForeground(Config.CHOSE_TABLE_TO_INSERT_DATA);
+        chosenCalendarTableLabel.setFont(new Font(chosenCalendarTableLabel.getFont().getFontName(), chosenCalendarTableLabel.getFont().getStyle(), 11));
 
-        addProductToDayPanelWest.add(chosenCalendarTableLabel);
 
-        refreshDaysStatisticsDataBaseButton.addActionListener(new RefreshDaysStatisticsDataBaseButtonActionListener());
-        addProductToDayPanelWest.add(refreshDaysStatisticsDataBaseButton);
 
         checkCalendarTableButton.addActionListener(new CheckCalendarTableActionListener());
-        addProductToDayPanelWest.add(checkCalendarTableButton);
 
-        checkCalendarTableDateTextField.setMaximumSize(new Dimension(100,30));
+
+        checkCalendarTableDateTextField.setMaximumSize(new Dimension(100, 30));
         checkCalendarTableDateTextField.setText(addProductToDayDisplaySelectedFDateDayLabel.getText());
-        addProductToDayPanelWest.add(checkCalendarTableDateTextField);
+
 
         checkDaysStatisticFilledTableButton.addActionListener(new CheckDaysStatisticFilledTableActionListener());
-        addProductToDayPanelWest.add(checkDaysStatisticFilledTableButton);
 
-        String dateForCheckDaysDStatisticsTable = addProductToDayDisplaySelectedFDateDayLabel.getText().substring(0,5) + "10%";
+
+        String dateForCheckDaysDStatisticsTable = addProductToDayDisplaySelectedFDateDayLabel.getText().substring(0, 5) + "10%";
         checkDaysStatisticsTableDateTextField.setText(dateForCheckDaysDStatisticsTable);
 
-        checkDaysStatisticsTableDateTextField.setMaximumSize(new Dimension(100,30));
+        checkDaysStatisticsTableDateTextField.setMaximumSize(new Dimension(100, 30));
 
-
-        addProductToDayPanelWest.add(checkDaysStatisticsTableDateTextField);
 
         dayMacroTextArea.setPreferredSize(new Dimension(200, 500));
         dayMacroTextArea.setText(Macro.getShortMacroInformationPrettyFormat(curretDayMacro));
 
         macroTable.setMinimumSize(new Dimension(200, 150));
-        addProductToDayPanelWest.add(macroTable);
+
 
         BMRTitleJLabel.setForeground(Color.GREEN);
-        addProductToDayPanelWest.add(BMRTitleJLabel);
 
-        addProductToDayPanelWest.add(BMRTable);
         setupBMRTable();
 
         howMuchMacroLeftJLabel.setForeground(Color.GREEN);
-        addProductToDayPanelWest.add(howMuchMacroLeftJLabel);
-        addProductToDayPanelWest.add(howMuchMacroLeftTable);
+
         setupHowMuchMacroLeftTable();
+
+
+        upperPanelWest.add(inputCurrentDayButton);
+        upperPanelWest.add(chosenCalendarTableLabel);
+
+        JPanel upperSecondPanel = new JPanel();
+        upperSecondPanel.setLayout(new BoxLayout(upperSecondPanel, BoxLayout.Y_AXIS));
+        upperSecondPanel.setBackground(Color.black);
+
+
+        upperSecondPanel.add(addProductToDayDisplaySelectedDay);
+        upperSecondPanel.add(addProductToDayDisplaySelectedFDateNameDayLabel);
+        upperSecondPanel.add(addProductToDayDisplaySelectedFDateDayLabel);
+
+        upperPanelWest.add(upperSecondPanel);
+        upperPanelWest.add(new JLabel());
+        upperPanelWest.add(checkCalendarTableButton);
+        upperPanelWest.add(checkCalendarTableDateTextField);
+        upperPanelWest.add(checkDaysStatisticFilledTableButton);
+        upperPanelWest.add(checkDaysStatisticsTableDateTextField);
+
+
+        middlePanelWest.add(macroTable);
+
+        middlePanelWest.add(BMRTitleJLabel);
+        middlePanelWest.add(BMRTable);
+        middlePanelWest.add(howMuchMacroLeftJLabel);
+        middlePanelWest.add(howMuchMacroLeftTable);
+
+        addProductToDayPanelWest.add(upperPanelWest);
+        addProductToDayPanelWest.add(middlePanelWest);
+        //addProductToDayPanelWest.add(bottomPanelWest);
+
         //</editor-fold>
 
         //<editor-fold desc="Add Components to Panel - East">
@@ -371,6 +408,9 @@ public class AddProductToCalendarDay {
 
         calendarMonthStatsView.addActionListener(new CalendarMonthStatsViewActionListener());
         addProductToDayPanelEast.add(calendarMonthStatsView);
+
+        refreshDaysStatisticsDataBaseButton.addActionListener(new RefreshDaysStatisticsDataBaseButtonActionListener());
+        addProductToDayPanelEast.add(refreshDaysStatisticsDataBaseButton);
 
         //</editor-fold>
 
@@ -997,6 +1037,7 @@ public class AddProductToCalendarDay {
     private class InputCurrentDayButtonActionListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
+            addProductToDayDisplaySelectedFDateNameDayLabel.setText(MyDate.getDayNameInPascalCase());
             addProductToDayDisplaySelectedFDateDayLabel.setText(MyDate.getCurrentDayInSQLFormat());
         }
     }
@@ -1060,11 +1101,11 @@ public class AddProductToCalendarDay {
                 Statement statement = connection.createStatement();
                 ResultSet resultSet = statement.executeQuery(sql);
                 int counter = 1;
-                while(resultSet.next()){
+                while (resultSet.next()) {
                     String day_date = resultSet.getString(1);
                     String day_name = resultSet.getString(2);
                     String product_name = resultSet.getString(3);
-                    String amount_of_product  = resultSet.getString(4);
+                    String amount_of_product = resultSet.getString(4);
                     String kcal_consume = resultSet.getString(5);
                     String carbs_consume = resultSet.getString(6);
                     String fat_consume = resultSet.getString(7);
@@ -1169,11 +1210,11 @@ public class AddProductToCalendarDay {
                 Statement statement = connection.createStatement();
                 ResultSet resultSet = statement.executeQuery(sql);
                 int counter = 1;
-                while(resultSet.next()){
+                while (resultSet.next()) {
                     String day_date = resultSet.getString(1);
                     String day_name = resultSet.getString(2);
                     String product_name = resultSet.getString(3);
-                    String amount_of_product  = resultSet.getString(4);
+                    String amount_of_product = resultSet.getString(4);
                     String kcal_consume = resultSet.getString(5);
                     String carbs_consume = resultSet.getString(6);
                     String fat_consume = resultSet.getString(7);
