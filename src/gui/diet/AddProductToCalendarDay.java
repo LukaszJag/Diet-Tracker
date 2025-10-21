@@ -1120,7 +1120,7 @@ public class AddProductToCalendarDay {
             }
 
             checkDaysStatisticFilledTableButtonWindowFrame.add(scrollPane);
-            checkDaysStatisticFilledTableButtonWindowFrame.setSize(1100, 400);
+            checkDaysStatisticFilledTableButtonWindowFrame.setSize(1100, 500);
             checkDaysStatisticFilledTableButtonWindowFrame.setResizable(false);
             checkDaysStatisticFilledTableButtonWindowFrame.setLocationRelativeTo(null);
             checkDaysStatisticFilledTableButtonWindowFrame.show();
@@ -1228,7 +1228,7 @@ public class AddProductToCalendarDay {
             }
 
             checkDaysStatisticFilledTableButtonWindowFrame.add(scrollPane);
-            checkDaysStatisticFilledTableButtonWindowFrame.setSize(1100, 400);
+            checkDaysStatisticFilledTableButtonWindowFrame.setSize(1100, 600);
             checkDaysStatisticFilledTableButtonWindowFrame.setResizable(false);
             checkDaysStatisticFilledTableButtonWindowFrame.setLocationRelativeTo(null);
             checkDaysStatisticFilledTableButtonWindowFrame.show();
