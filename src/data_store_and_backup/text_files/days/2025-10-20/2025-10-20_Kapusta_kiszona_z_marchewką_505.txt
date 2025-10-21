@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2025-10-20',
+'Monday',
+'Supper',
+505.0,
+'Kapusta kiszona z marchewką',
+75.88,
+0.86,
+6.39,
+2.23,
+'2025-10-21 12:44:38',
+'none',
+383.194,
+11.2615,
+32.2695,
+4.3430004
+);
