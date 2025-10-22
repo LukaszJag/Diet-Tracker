@@ -908,6 +908,8 @@ public class AddProductToCalendarDay {
                             otherThenCurrentDateButtonWindowFrame.dispose();
                         } else {
                             changeDateOnCalendarWindowGUI();
+                            setUpMacroTable();
+                            setupHowMuchMacroLeftTable();
                             dialogWindowPanel.disable();
                             otherThenCurrentDateButtonWindowFrame.dispose();
                         }
@@ -944,16 +946,16 @@ public class AddProductToCalendarDay {
                 }
 
                 java.util.Date utilDateImport = new GregorianCalendar(yearInInt, month - 1, dayNameOtherDateInt).getTime();
-                ;
+
                 String dayNameCurrentDateOnStartWindow = format.format(utilDateImport);
                 addProductToDayDisplaySelectedFDateNameDayLabel.setText(dayNameCurrentDateOnStartWindow);
                 addProductToDayDisplaySelectedFDateDayLabel.setText(otherDataTextField.getText());
                 setUpMacroTable(otherDataTextField.getText());
+                setupHowMuchMacroLeftTable();
             }
 
             private boolean checkIfDateIsCorrect() {
                 String dateToCheck = otherDataTextField.getText();
-                System.out.println(dateToCheck);
                 if (dateToCheck.length() != 10) {
                     System.out.println("Too long: " + dateToCheck.length());
                     return false;
