@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2025-10-21',
+'Tuesday',
+'Supper',
+250.0,
+'Twaróg półtłusty',
+114.0,
+16.0,
+4.0,
+3.6,
+'2025-10-22 11:57:32',
+'none',
+285.0,
+9.0,
+10.0,
+40.0
+);
