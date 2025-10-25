@@ -1,0 +1,9 @@
+Name: Maltanki
+Brand: Krakuski
+Package has: 80.0
+Macro for: 100.0
+KCal: 503.0
+Protein: 7.0
+Fat: 24.2
+Carbs: 62.4
+Comment optional: Link: https://hurtowniadoran.pl/pl/p/Herbatniki-w-Polewie-Kakaowej-MALTANKI-Ciastka-PRL-Krakuski-80g/3043

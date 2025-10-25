@@ -1,1 +1,1 @@
-DELETE FROM calendar WHERE product_name='EXAMPLE' AND  day_date="";
+DELETE FROM calendar WHERE product_name='Prince Polo Classic XXL' AND  day_date="2025-10-23";
