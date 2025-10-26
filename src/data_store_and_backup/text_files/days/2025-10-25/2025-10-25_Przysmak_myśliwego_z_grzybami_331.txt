@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2025-10-25',
+'Saturday',
+'Supper',
+331.0,
+'Przysmak myśliwego z grzybami',
+234.0,
+7.1,
+21.0,
+4.8,
+'2025-10-26 01:17:21',
+'none',
+774.54,
+15.8880005,
+69.51,
+23.501
+);
