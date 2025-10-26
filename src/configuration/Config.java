@@ -52,6 +52,8 @@ public class Config {
     public static final Color mainWindowDataBaseCalendarTableLabelColor = Color.RED;
     public static final Color dateTimeLabels = Color.WHITE;
     public static final Color addProductToDayCurrentDateLabelColor = Color.WHITE;
+    public static final Dimension CHECK_DAYS_STATISTIC_FILLED_TABLE_BUTTON_WINDOW_FRAME_SIZE = new Dimension(1100, 600);
+    public static final Dimension CHECK_CALENDAR_TABLE_BUTTON_WINDOW_FRAME_SIZE = new Dimension(1200, 600);
 
     public static final Color CHOSE_TABLE_TO_INSERT_DATA = Color.GREEN;
     //</editor-fold>

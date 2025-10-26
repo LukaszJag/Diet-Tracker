@@ -1080,7 +1080,7 @@ public class AddProductToCalendarDay {
     private class CheckCalendarTableActionListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            JFrame checkDaysStatisticFilledTableButtonWindowFrame = new JFrame("Calendar Table");
+            JFrame checkCalendarTableButtonWindowFrame = new JFrame("Calendar Table");
 
             DefaultTableModel model = new DefaultTableModel();
 
@@ -1089,7 +1089,27 @@ public class AddProductToCalendarDay {
             }
 
             JTable table = new JTable(model);
+
             table.setModel(model);
+
+            table.getColumnModel().getColumn(0).setMaxWidth(50);
+
+            int minWidthForProductNameColumn = 300;
+            table.getColumnModel().getColumn(3).setMinWidth(minWidthForProductNameColumn);
+
+            //amount of product
+            int maxWidthForAmountOfProductColumn = 300;
+            table.getColumnModel().getColumn(4).setMaxWidth(maxWidthForAmountOfProductColumn);
+
+            //<editor-fold desc="Macro Columns">
+            int maxWidthForMacroColumns = 250;
+            table.getColumnModel().getColumn(5).setMaxWidth(maxWidthForMacroColumns);
+            table.getColumnModel().getColumn(6).setMaxWidth(maxWidthForMacroColumns);
+            table.getColumnModel().getColumn(7).setMaxWidth(maxWidthForMacroColumns);
+            table.getColumnModel().getColumn(8).setMaxWidth(maxWidthForMacroColumns);
+            //</editor-fold>
+
+
             JScrollPane scrollPane = new JScrollPane(table);
             String date = checkCalendarTableDateTextField.getText();
             Connection connection;
@@ -1121,11 +1141,11 @@ public class AddProductToCalendarDay {
                 throw new RuntimeException(ex);
             }
 
-            checkDaysStatisticFilledTableButtonWindowFrame.add(scrollPane);
-            checkDaysStatisticFilledTableButtonWindowFrame.setSize(1100, 500);
-            checkDaysStatisticFilledTableButtonWindowFrame.setResizable(false);
-            checkDaysStatisticFilledTableButtonWindowFrame.setLocationRelativeTo(null);
-            checkDaysStatisticFilledTableButtonWindowFrame.show();
+            checkCalendarTableButtonWindowFrame.add(scrollPane);
+            checkCalendarTableButtonWindowFrame.setSize(Config.CHECK_CALENDAR_TABLE_BUTTON_WINDOW_FRAME_SIZE);
+            checkCalendarTableButtonWindowFrame.setResizable(false);
+            checkCalendarTableButtonWindowFrame.setLocationRelativeTo(null);
+            checkCalendarTableButtonWindowFrame.show();
         }
     }
 
@@ -1230,7 +1250,7 @@ public class AddProductToCalendarDay {
             }
 
             checkDaysStatisticFilledTableButtonWindowFrame.add(scrollPane);
-            checkDaysStatisticFilledTableButtonWindowFrame.setSize(1100, 600);
+            checkDaysStatisticFilledTableButtonWindowFrame.setSize(Config.CHECK_DAYS_STATISTIC_FILLED_TABLE_BUTTON_WINDOW_FRAME_SIZE);
             checkDaysStatisticFilledTableButtonWindowFrame.setResizable(false);
             checkDaysStatisticFilledTableButtonWindowFrame.setLocationRelativeTo(null);
             checkDaysStatisticFilledTableButtonWindowFrame.show();
