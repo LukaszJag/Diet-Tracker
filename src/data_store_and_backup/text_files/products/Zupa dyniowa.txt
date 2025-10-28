@@ -1,0 +1,9 @@
+Name: Zupa dyniowa
+Brand: domowe
+Package has: 0.0
+Macro for: 100.0
+KCal: 99.0
+Protein: 1.0
+Fat: 3.0
+Carbs: 16.0
+Comment optional: Link: https://wszystkoojedzeniu.pl/zupa-dyniowa-kalorie-kcal/
