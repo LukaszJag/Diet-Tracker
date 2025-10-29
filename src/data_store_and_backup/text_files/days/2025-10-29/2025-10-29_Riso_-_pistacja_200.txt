@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2025-10-29',
+'Wednesday',
+'Breakfast',
+200.0,
+'Riso - pistacja',
+108.0,
+3.2,
+2.4,
+18.3,
+'2025-10-29 01:02:04',
+'none',
+216.0,
+36.6,
+4.8,
+6.4
+);
