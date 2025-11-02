@@ -110,7 +110,8 @@ public class CalendarMonthStatsView {
     //</editor-fold>
 
     JComboBox monthSelectComboBox = new JComboBox<>(new String[]{"April", "May", "June", "July", "August", "September", "October",
-            "November", "December", "January2025", "February2025", "March2025", "April2025", "May2025", "June2025", "July2025", "August2025", "September2025", "October2025"});
+            "November", "December", "January2025", "February2025", "March2025", "April2025", "May2025", "June2025", "July2025",
+            "August2025", "September2025", "October2025", "November2025"});
     JComboBox selectedDayProductsListComboBox = new JComboBox<String>();
 
     //</editor-fold>
@@ -188,7 +189,7 @@ public class CalendarMonthStatsView {
 
     //<editor-fold desc="Prepare Add Content - to Panels">
     private void prepareAndAddContentToMainPanel() {
-        setDaysButtonsMainPanel("October2025");
+        setDaysButtonsMainPanel("November2025");
     }
 
     private void prepareAndAddContentToNorthPanel() {
@@ -202,7 +203,7 @@ public class CalendarMonthStatsView {
         calendarMonthStatsViewPanelNorth.setLayout(northPanelGridLayout);
 
 
-        monthSelectComboBox.setSelectedItem("October2025");
+        monthSelectComboBox.setSelectedItem("November2025");
 
         selectedDaysCounterGoodDaysPanel = new JPanel();
         selectedDaysCounterBadDaysPanel = new JPanel();
@@ -446,6 +447,20 @@ public class CalendarMonthStatsView {
             }
         } else {
 
+            if (month.equals("November2025")) {
+                for (int i = 0; i < daysButtons.length; i++) {
+                    if (i >= 0 && i < 5) {
+                        daysButtons[i] = new JButton("null");
+                    } else if (i >= 35) {
+                        daysButtons[i] = new JButton("null");
+                    } else {
+                        daysButtons[i] = new JButton(String.valueOf(counter));
+                        daysButtons[i].setPreferredSize(Config.CALENDAR_MONTH_STATS_VIEW_BUTTONS_SIZE_DIMENSION);
+                        daysButtons[i].addActionListener(new DaysButtonsActionListener(daysButtons[i]));
+                        counter++;
+                    }
+                }
+            }
             if (month.equals("October2025")) {
                 for (int i = 0; i < daysButtons.length; i++) {
                     if (i >= 0 && i < 2) {
@@ -460,7 +475,6 @@ public class CalendarMonthStatsView {
                     }
                 }
             }
-
             if (month.equals("September2025")) {
                 for (int i = 0; i < daysButtons.length; i++) {
                     if (i >= 30) {
@@ -487,7 +501,6 @@ public class CalendarMonthStatsView {
                     }
                 }
             }
-
             if (month.equals("May2025")) {
                 for (int i = 0; i < daysButtons.length; i++) {
                     if (i >= 0 && i <= 2) {
@@ -502,7 +515,6 @@ public class CalendarMonthStatsView {
                     }
                 }
             }
-
             if (month.equals("August2025")) {
                 for (int i = 0; i < daysButtons.length; i++) {
                     if (i <= 3) {
@@ -821,6 +833,9 @@ public class CalendarMonthStatsView {
         if (month.equals("October2025")) {
             fullDate = "2025-10-";
         }
+        if (month.equals("November2025")) {
+            fullDate = "2025-11-";
+        }
 
         String[] allDayWhichNeedData = new String[amountOfMonthDays];
         String fullDateBuffor = fullDate;
@@ -885,6 +900,9 @@ public class CalendarMonthStatsView {
         }
         if (month.equals("October2025")) {
             fullDate = "2025-10-";
+        }
+        if (month.equals("November2025")) {
+            fullDate = "2025-11-";
         }
         return fullDate;
     }
@@ -981,6 +999,9 @@ public class CalendarMonthStatsView {
 
         if (monthString.equals("October2025")) {
             friendlySQLFormatMonthDate = "2025-" + "10-";
+        }
+        if (monthString.equals("November2025")) {
+            friendlySQLFormatMonthDate = "2025-" + "11-";
         }
 
         String fullDate = friendlySQLFormatMonthDate;
@@ -1259,6 +1280,9 @@ public class CalendarMonthStatsView {
             }
             if (month.equals("October2025")) {
                 fullDate = "2025-10-";
+            }
+            if (month.equals("November2025")) {
+                fullDate = "2025-11-";
             }
 
 
