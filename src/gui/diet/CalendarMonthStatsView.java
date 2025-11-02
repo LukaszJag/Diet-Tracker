@@ -19,6 +19,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import static tools.calendar_tools.MyDate.getNumberOfMonthInYear;
+
 
 public class CalendarMonthStatsView {
     //<editor-fold desc="Main - Calendar Month Stats View - components and variables">
@@ -402,16 +404,23 @@ public class CalendarMonthStatsView {
         Macro averageMacroForMonth = null;
 
         String yearAndMonthDateInSQLFormat = getDateFromComboBox();
-        int year = Integer.valueOf(yearAndMonthDateInSQLFormat.substring(0, 4));
+        int year = -1;
+        if (yearAndMonthDateInSQLFormat.contains("2025")){
+            year = 2025;
+        }
+
+        if (yearAndMonthDateInSQLFormat.contains("2024")){
+            year = 2024;
+        }
         int month;
         if (yearAndMonthDateInSQLFormat.charAt(5) == '0') {
             month = Integer.valueOf(yearAndMonthDateInSQLFormat.charAt(6) + "");
         } else {
             month = Integer.valueOf(yearAndMonthDateInSQLFormat.charAt(5) + "" + yearAndMonthDateInSQLFormat.charAt(6));
         }
-        averageMacroForMonth = SelectFromDaysStatistics.getAverageMacroForMonth(year, month);
+        averageMacroForMonth = SelectFromDaysStatistics.getAverageMacroForMonth(getYearFromComboBox(), getMonthFromComboBox());
 
-        MyDate.getAmountOfDaysInCurrentMonthOPassedMonth(year, month);
+        MyDate.getAmountOfDaysInCurrentMonthOPassedMonth(getYearFromComboBox(), getMonthFromComboBox());
 
         currentDayMacroValuesNorthPanelLabel.setFont(new Font("Dialog", Font.TRUETYPE_FONT, 10));
         currentDayMacroValuesNorthPanelLabel.setText(Macro.getShortMacroInformationMinimalFormat(averageMacroForMonth).replace("-", ""));
@@ -772,7 +781,9 @@ public class CalendarMonthStatsView {
         mainWindow.repaint();
     }
 
-    public void showMonthChart(String month) {
+    public void showMonthChart() {
+
+        String dateFromComboBox = monthSelectComboBox.getSelectedItem().toString();
 
         int counter = 0;
         for (int i = 0; i < daysButtons.length; i++) {
@@ -783,7 +794,7 @@ public class CalendarMonthStatsView {
         int amountOfMonthDays = counter;
         String[] daysNumbers = new String[amountOfMonthDays];
         float[] valuesKcal = new float[amountOfMonthDays];
-        String chartName = month + " stats";
+        String chartName = MyDate.getNameOfMonthFromNumber(getMonthFromComboBox()) + " stats";
 
         for (int i = 0; i < daysNumbers.length; i++) {
             daysNumbers[i] = String.valueOf((i + 1));
@@ -791,13 +802,13 @@ public class CalendarMonthStatsView {
 
         String fullDate = "";
 
-        if (month.contains("2025")){
+        if (dateFromComboBox.contains("2025")){
             fullDate = "2025";
         }
-        if (month.contains("2024")){
+        if (dateFromComboBox.contains("2024")){
             fullDate = "2024";
         }
-        fullDate = fullDate + "-" + MyDate.getNameOfMonthFromNumberSQLFormat(month) + "-";
+        fullDate = fullDate + "-" + MyDate.getNameOfMonthFromNumberSQLFormat(dateFromComboBox.replaceAll("[0-9]","")) + "-";
 
         String[] allDayWhichNeedData = new String[amountOfMonthDays];
         String fullDateBuffor = fullDate;
@@ -837,9 +848,28 @@ public class CalendarMonthStatsView {
             fullDate = "2024";
         }
 
-        fullDate = fullDate + "-" + MyDate.getNameOfMonthFromNumberSQLFormat(month) + "-";
+        fullDate = fullDate + "-" + MyDate.getNameOfMonthFromNumberSQLFormat(month.replaceAll("[0-9]","")) + "-";
 
         return fullDate;
+    }
+
+    private int getYearFromComboBox() {
+        int year = -1;
+        String dateFromComboBox = monthSelectComboBox.getSelectedItem().toString();
+        if (dateFromComboBox.contains("2025")){
+            year = 2025;
+        }
+        if (dateFromComboBox.contains("2024")){
+            year = 2024;
+        }
+
+        return year;
+    }
+
+    private int getMonthFromComboBox() {
+        String month = monthSelectComboBox.getSelectedItem().toString().replaceAll("[0-9]","");
+
+        return getNumberOfMonthInYear(month);
     }
 
     private void paintButtons() {
@@ -1148,7 +1178,7 @@ public class CalendarMonthStatsView {
                 fullDate = "2024";
             }
 
-            fullDate = fullDate + "-" + MyDate.getNameOfMonthFromNumberSQLFormat(month) + "-";
+            fullDate = fullDate + "-" + MyDate.getNameOfMonthFromNumberSQLFormat(month.replaceAll("[0-9]","")) + "-";
 
             if (button.getText().length() == 1) {
                 fullDate = fullDate + "0" + button.getText();
@@ -1228,7 +1258,7 @@ public class CalendarMonthStatsView {
     private class ShowChartButtonActionListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            showMonthChart(monthSelectComboBox.getSelectedItem().toString());
+            showMonthChart();
         }
     }
 
