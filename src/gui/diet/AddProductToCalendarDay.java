@@ -1013,7 +1013,6 @@ public class AddProductToCalendarDay {
         public void actionPerformed(ActionEvent e) {
             Config.CURRENT_DATABASE_TABLE_CALENDAR = "calendar_test";
             chosenCalendarTableLabel.setText("Current Table is: " + Config.CURRENT_DATABASE_TABLE_CALENDAR);
-            System.out.println();
         }
     }
 
@@ -1058,8 +1057,6 @@ public class AddProductToCalendarDay {
                 productInfoInString += "[" + i + "]: " + Config.SQL_COLUMNS_PRODUCT[i].replace("product_", "").replace("`", "")
                         + ":  " + productInfoArray[i] + "\n";
             }
-            System.out.println(productInfoInString);
-
             JOptionPane.showMessageDialog(null, "Full product info: " + productInfoInString);
         }
     }
