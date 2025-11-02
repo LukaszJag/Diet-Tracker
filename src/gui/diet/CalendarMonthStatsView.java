@@ -397,7 +397,6 @@ public class CalendarMonthStatsView {
     }
 
     //</editor-fold>
-
     private void setupAverageMacroLabel() {
 
         Macro averageMacroForMonth = null;
@@ -790,52 +789,15 @@ public class CalendarMonthStatsView {
             daysNumbers[i] = String.valueOf((i + 1));
         }
 
-        String fullDate = "2024-";
+        String fullDate = "";
 
+        if (month.contains("2025")){
+            fullDate = "2025";
+        }
+        if (month.contains("2024")){
+            fullDate = "2024";
+        }
         fullDate = fullDate + "-" + MyDate.getNameOfMonthFromNumberSQLFormat(month) + "-";
-
-        if (month.equals("January2025")) {
-            fullDate = "2025-01-";
-        }
-
-        if (month.equals("February2025")) {
-            fullDate = "2025-02-";
-        }
-
-        if (month.equals("March2025")) {
-            fullDate = "2025-03-";
-        }
-
-        if (month.equals("April2025")) {
-            fullDate = "2025-04-";
-        }
-
-        if (month.equals("May2025")) {
-            fullDate = "2025-05-";
-        }
-
-        if (month.equals("June2025")) {
-            fullDate = "2025-06-";
-        }
-
-        if (month.equals("July2025")) {
-            fullDate = "2025-07-";
-        }
-
-        if (month.equals("August2025")) {
-            fullDate = "2025-08-";
-        }
-
-        if (month.equals("September2025")) {
-            fullDate = "2025-09-";
-        }
-
-        if (month.equals("October2025")) {
-            fullDate = "2025-10-";
-        }
-        if (month.equals("November2025")) {
-            fullDate = "2025-11-";
-        }
 
         String[] allDayWhichNeedData = new String[amountOfMonthDays];
         String fullDateBuffor = fullDate;
@@ -866,44 +828,17 @@ public class CalendarMonthStatsView {
     }
 
     private String getDateFromComboBox() {
-        String fullDate = "2024-";
+        String fullDate = "";
         String month = monthSelectComboBox.getSelectedItem().toString();
+        if (month.contains("2025")){
+            fullDate = "2025";
+        }
+        if (month.contains("2024")){
+            fullDate = "2024";
+        }
 
         fullDate = fullDate + "-" + MyDate.getNameOfMonthFromNumberSQLFormat(month) + "-";
 
-        if (month.equals("January2025")) {
-            fullDate = "2025-01-";
-        }
-        if (month.equals("February2025")) {
-            fullDate = "2025-02-";
-        }
-        if (month.equals("March2025")) {
-            fullDate = "2025-03-";
-        }
-        if (month.equals("April2025")) {
-            fullDate = "2025-04-";
-        }
-        if (month.equals("May2025")) {
-            fullDate = "2025-05-";
-        }
-        if (month.equals("June2025")) {
-            fullDate = "2025-06-";
-        }
-        if (month.equals("July2025")) {
-            fullDate = "2025-07-";
-        }
-        if (month.equals("August2025")) {
-            fullDate = "2025-08-";
-        }
-        if (month.equals("September2025")) {
-            fullDate = "2025-09-";
-        }
-        if (month.equals("October2025")) {
-            fullDate = "2025-10-";
-        }
-        if (month.equals("November2025")) {
-            fullDate = "2025-11-";
-        }
         return fullDate;
     }
 
@@ -914,9 +849,7 @@ public class CalendarMonthStatsView {
         noDataDaysCounter = 0;
         comingDaysCounter = 0;
 
-
         String fullDate = getDateFromComboBox();
-
 
         for (int i = 0; i < daysButtons.length; i++) {
             if (!daysButtons[i].getText().equals("null")) {
@@ -958,53 +891,19 @@ public class CalendarMonthStatsView {
         }
     }
 
-    private Macro getAverageMacroForMonth(String monthString) {
-        String friendlySQLFormatMonthDate = "";
+    private Macro getAverageMacroForMonth(String month) {
+        String fullDate = "";
 
-        friendlySQLFormatMonthDate = "2024";
-
-        friendlySQLFormatMonthDate = friendlySQLFormatMonthDate + "-" + MyDate.getNameOfMonthFromNumberSQLFormat(monthString) + "-";
-
-        if (monthString.equals("January2025")) {
-            friendlySQLFormatMonthDate = "2025-" + "01-";
+        if (month.contains("2025")){
+            fullDate = "2025";
+        }
+        if (month.contains("2024")){
+            fullDate = "2024";
         }
 
-        if (monthString.equals("February2025")) {
-            friendlySQLFormatMonthDate = "2025-" + "02-";
-        }
+        fullDate = fullDate + "-" + MyDate.getNameOfMonthFromNumberSQLFormat(month) + "-";
 
-        if (monthString.equals("April2025")) {
-            friendlySQLFormatMonthDate = "2025-" + "04-";
-        }
-
-        if (monthString.equals("May2025")) {
-            friendlySQLFormatMonthDate = "2025-" + "05-";
-        }
-
-        if (monthString.equals("June2025")) {
-            friendlySQLFormatMonthDate = "2025-" + "06-";
-        }
-
-        if (monthString.equals("July2025")) {
-            friendlySQLFormatMonthDate = "2025-" + "07-";
-        }
-
-        if (monthString.equals("August2025")) {
-            friendlySQLFormatMonthDate = "2025-" + "08-";
-        }
-
-        if (monthString.equals("September2025")) {
-            friendlySQLFormatMonthDate = "2025-" + "09-";
-        }
-
-        if (monthString.equals("October2025")) {
-            friendlySQLFormatMonthDate = "2025-" + "10-";
-        }
-        if (monthString.equals("November2025")) {
-            friendlySQLFormatMonthDate = "2025-" + "11-";
-        }
-
-        String fullDate = friendlySQLFormatMonthDate;
+        String fullDateTMP = fullDate;
         Macro averageMacro = new Macro(0, 0, 0, 0);
         Macro dayMacro;
         int dayCounter = 0;
@@ -1013,7 +912,7 @@ public class CalendarMonthStatsView {
 
             if (daysButtons[i].getText() != "null") {
                 if (daysButtons[i].getText().length() == 1) {
-                    fullDate = friendlySQLFormatMonthDate + "0" + daysButtons[i].getText();
+                    fullDate = fullDateTMP + "0" + daysButtons[i].getText();
                 } else {
                     fullDate += daysButtons[i].getText();
                 }
@@ -1024,7 +923,7 @@ public class CalendarMonthStatsView {
                     dayCounter++;
                 }
 
-                fullDate = friendlySQLFormatMonthDate;
+                fullDate = fullDateTMP;
             }
         }
 
@@ -1239,52 +1138,17 @@ public class CalendarMonthStatsView {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            String fullDate = "2024-";
-
+            String fullDate = "";
             String month = monthSelectComboBox.getSelectedItem().toString();
 
+            if (month.contains("2025")){
+                fullDate = "2025";
+            }
+            if (month.contains("2024")){
+                fullDate = "2024";
+            }
+
             fullDate = fullDate + "-" + MyDate.getNameOfMonthFromNumberSQLFormat(month) + "-";
-
-
-            if (month.equals("January2025")) {
-                fullDate = "2025-01-";
-            }
-
-            if (month.equals("February2025")) {
-                fullDate = "2025-02-";
-            }
-
-            if (month.equals("March2025")) {
-                fullDate = "2025-03-";
-            }
-
-            if (month.equals("April2025")) {
-                fullDate = "2025-04-";
-            }
-            if (month.equals("May2025")) {
-                fullDate = "2025-05-";
-            }
-
-            if (month.equals("June2025")) {
-                fullDate = "2025-06-";
-            }
-
-            if (month == "July2025") {
-                fullDate = "2025-07-";
-            }
-            if (month.equals("August2025")) {
-                fullDate = "2025-08-";
-            }
-            if (month.equals("September2025")) {
-                fullDate = "2025-09-";
-            }
-            if (month.equals("October2025")) {
-                fullDate = "2025-10-";
-            }
-            if (month.equals("November2025")) {
-                fullDate = "2025-11-";
-            }
-
 
             if (button.getText().length() == 1) {
                 fullDate = fullDate + "0" + button.getText();
