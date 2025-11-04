@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2025-11-02',
+'Sunday',
+'Supper',
+55.0,
+'Quick Cao',
+370.0,
+4.5,
+2.1,
+80.0,
+'2025-11-04 05:53:21',
+'none',
+203.5,
+44.0,
+1.155,
+2.4750001
+);

@@ -1,0 +1,9 @@
+Name: Bajgiel z makiem - Carrefour
+Brand: Carrefour
+Package has: 80.0
+Macro for: 100.0
+KCal: 279.0
+Protein: 8.4
+Fat: 2.7
+Carbs: 54.0
+Comment optional: Link: https://www.carrefour.pl/piekarnia-ciastkarnia/bulki/wiejskie/bajgiel-z-makiem-80-g-h0

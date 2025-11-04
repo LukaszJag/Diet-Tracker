@@ -1,0 +1,9 @@
+Name: iTwist
+Brand: KFC
+Package has: 132.0
+Macro for: 100.0
+KCal: 247.0
+Protein: 8.6
+Fat: 11.6
+Carbs: 26.9
+Comment optional: Link: https://www.fitatu.com/catalog/pl/kfc-itwist-classic--67676651
