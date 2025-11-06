@@ -1,0 +1,9 @@
+Name: Pizza - Z kurczakiem - średnia - z serem na brzegach
+Brand: Pizza hut
+Package has: 566.0
+Macro for: 100.0
+KCal: 253.0
+Protein: 10.41
+Fat: 19.42
+Carbs: 9.09
+Comment optional: Link: https://www.fatsecret.co.in/calories-nutrition/pizza-hut/stuff-crust-pizza-chicken-seekh-kebab-(medium)/1-serving

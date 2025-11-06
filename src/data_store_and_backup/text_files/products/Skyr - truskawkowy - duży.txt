@@ -1,0 +1,9 @@
+Name: Skyr - truskawkowy - duży
+Brand: Kaufland
+Package has: 500.0
+Macro for: 100.0
+KCal: 75.0
+Protein: 9.3
+Fat: 0.2
+Carbs: 8.6
+Comment optional: Dane z opakowania

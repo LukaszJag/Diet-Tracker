@@ -1,0 +1,20 @@
+INSERT INTO `diet_tracker_schema`.product_table
+(`product_name`,
+`product_brand`,
+`product_package_has`,
+`product_macro_for`,
+`product_kcal`,
+`product_protein`,
+`product_fat`,
+`product_carbs`,
+`comment_optional`)
+Values
+('Pizza - Hawajska - średnia - z serem na brzegach',
+'Pizza hut',
+928.0,
+100.0,
+293.0,
+16.4,
+11.2,
+30.2,
+'Link: https://www.fatsecret.ca/calories-nutrition/pizza-hut/12-medium-hawaiian-stuffed-crust-pizza/1-slice?utm_source=chatgpt.com');

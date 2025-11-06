@@ -1,0 +1,9 @@
+Name: Pulpety w sosie pomidorowym
+Brand: Rolnik
+Package has: 500.0
+Macro for: 100.0
+KCal: 72.0
+Protein: 4.9
+Fat: 2.3
+Carbs: 7.3
+Comment optional: Dane z opakowania

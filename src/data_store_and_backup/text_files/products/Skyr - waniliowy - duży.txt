@@ -1,0 +1,9 @@
+Name: Skyr - waniliowy - duży
+Brand: Kaufland
+Package has: 500.0
+Macro for: 100.0
+KCal: 77.0
+Protein: 9.2
+Fat: 0.2
+Carbs: 9.2
+Comment optional: Dane z opakowania

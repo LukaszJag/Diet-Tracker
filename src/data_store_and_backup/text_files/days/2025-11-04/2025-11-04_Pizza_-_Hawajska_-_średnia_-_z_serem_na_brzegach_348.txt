@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2025-11-04',
+'Tuesday',
+'Supper',
+348.0,
+'Pizza - Hawajska - średnia - z serem na brzegach',
+293.0,
+16.4,
+11.2,
+30.2,
+'2025-11-06 05:10:43',
+'none',
+1019.64,
+105.096,
+38.975998,
+57.072
+);

@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2025-11-04',
+'Tuesday',
+'Supper',
+212.0,
+'Pizza - Z kurczakiem - średnia - z serem na brzegach',
+253.0,
+10.41,
+19.42,
+9.09,
+'2025-11-06 05:22:12',
+'none',
+536.36,
+19.2708,
+41.1704,
+22.069199
+);

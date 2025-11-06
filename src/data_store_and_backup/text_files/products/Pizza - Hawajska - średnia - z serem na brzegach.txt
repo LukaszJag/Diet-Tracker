@@ -1,0 +1,9 @@
+Name: Pizza - Hawajska - średnia - z serem na brzegach
+Brand: Pizza hut
+Package has: 928.0
+Macro for: 100.0
+KCal: 293.0
+Protein: 16.4
+Fat: 11.2
+Carbs: 30.2
+Comment optional: Link: https://www.fatsecret.ca/calories-nutrition/pizza-hut/12-medium-hawaiian-stuffed-crust-pizza/1-slice?utm_source=chatgpt.com

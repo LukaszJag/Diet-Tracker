@@ -1,0 +1,20 @@
+INSERT INTO `diet_tracker_schema`.product_table
+(`product_name`,
+`product_brand`,
+`product_package_has`,
+`product_macro_for`,
+`product_kcal`,
+`product_protein`,
+`product_fat`,
+`product_carbs`,
+`comment_optional`)
+Values
+('Pizza - Z kurczakiem - średnia - z serem na brzegach',
+'Pizza hut',
+566.0,
+100.0,
+253.0,
+10.41,
+19.42,
+9.09,
+'Link: https://www.fatsecret.co.in/calories-nutrition/pizza-hut/stuff-crust-pizza-chicken-seekh-kebab-(medium)/1-serving');
