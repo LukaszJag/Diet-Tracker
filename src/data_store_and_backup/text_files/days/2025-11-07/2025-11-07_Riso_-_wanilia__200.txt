@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2025-11-07',
+'Friday',
+'Second Breakfast',
+200.0,
+'Riso - wanilia ',
+103.0,
+3.3,
+2.5,
+16.8,
+'2025-11-07 02:22:27',
+'none',
+206.0,
+33.6,
+5.0,
+6.6
+);

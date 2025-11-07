@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2025-11-07',
+'Friday',
+'Breakfast',
+521.0,
+'Pierogi ruskie domowe',
+232.61,
+7.6,
+4.67,
+39.22,
+'2025-11-07 02:21:39',
+'none',
+1211.8981,
+204.33621,
+24.3307,
+39.596
+);
