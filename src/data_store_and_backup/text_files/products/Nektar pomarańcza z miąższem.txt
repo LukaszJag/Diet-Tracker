@@ -1,0 +1,9 @@
+Name: Nektar pomarańcza z miąższem
+Brand: Hortex
+Package has: 1000.0
+Macro for: 100.0
+KCal: 26.0
+Protein: 0.3
+Fat: 0.0
+Carbs: 6.0
+Comment optional: Link: https://leclerc.com.pl/hortex-nektar-pomarancza-z-miazszem

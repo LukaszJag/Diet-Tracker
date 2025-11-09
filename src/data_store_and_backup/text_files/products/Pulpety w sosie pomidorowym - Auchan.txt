@@ -1,0 +1,9 @@
+Name: Pulpety w sosie pomidorowym - Auchan
+Brand: Auchan
+Package has: 500.0
+Macro for: 100.0
+KCal: 87.0
+Protein: 4.4
+Fat: 2.8
+Carbs: 11.0
+Comment optional: Dane z opakowania

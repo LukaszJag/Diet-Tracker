@@ -1,0 +1,9 @@
+Name: Czekoladziak - ciastka z nadzieniem orzechowo kakaowym i kawałkami czekolady
+Brand: Bergen
+Package has: 135.0
+Macro for: 100.0
+KCal: 465.0
+Protein: 6.5
+Fat: 23.0
+Carbs: 58.0
+Comment optional: Dane z opakowania

@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2025-11-07',
+'Friday',
+'Supper',
+112.5,
+'Czekoladziak - ciastka z nadzieniem orzechowo kakaowym i kawałkami czekolady',
+465.0,
+6.5,
+23.0,
+58.0,
+'2025-11-09 02:16:09',
+'none',
+523.125,
+65.25,
+25.875,
+7.3125
+);
