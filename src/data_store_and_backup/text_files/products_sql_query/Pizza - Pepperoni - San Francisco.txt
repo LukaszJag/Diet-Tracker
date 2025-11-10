@@ -1,0 +1,20 @@
+INSERT INTO `diet_tracker_schema`.product_table
+(`product_name`,
+`product_brand`,
+`product_package_has`,
+`product_macro_for`,
+`product_kcal`,
+`product_protein`,
+`product_fat`,
+`product_carbs`,
+`comment_optional`)
+Values
+('Pizza - Pepperoni - San Francisco',
+'Pizza Hut',
+776.0,
+100.0,
+247.0,
+12.0,
+9.0,
+28.0,
+'Link: https://www.eatthismuch.com/calories/medium-hand-tossed-style-pizza-pepperoni-185747?utm_source=chatgpt.com&a=1.03093%3A0');

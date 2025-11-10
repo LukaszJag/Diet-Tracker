@@ -1,0 +1,9 @@
+Name: Pizza - Pepperoni - San Francisco
+Brand: Pizza Hut
+Package has: 776.0
+Macro for: 100.0
+KCal: 247.0
+Protein: 12.0
+Fat: 9.0
+Carbs: 28.0
+Comment optional: Link: https://www.eatthismuch.com/calories/medium-hand-tossed-style-pizza-pepperoni-185747?utm_source=chatgpt.com&a=1.03093%3A0

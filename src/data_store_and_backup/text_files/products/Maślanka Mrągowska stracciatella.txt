@@ -1,0 +1,9 @@
+Name: Maślanka Mrągowska stracciatella
+Brand: Mlekpol
+Package has: 1000.0
+Macro for: 100.0
+KCal: 76.0
+Protein: 3.2
+Fat: 1.7
+Carbs: 12.0
+Comment optional: Link: https://www.carrefour.pl/napoje/mleko-napoje-mleczne-i-roslinne/napoje-mleczne-kawowe/mlekpol-maslanka-mragowska-stracciatella-1-l
