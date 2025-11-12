@@ -1,0 +1,9 @@
+Name: Kefir naturalny 2%
+Brand: Pilos
+Package has: 400.0
+Macro for: 100.0
+KCal: 51.0
+Protein: 3.4
+Fat: 2.0
+Carbs: 4.8
+Comment optional: Dane z opakowania

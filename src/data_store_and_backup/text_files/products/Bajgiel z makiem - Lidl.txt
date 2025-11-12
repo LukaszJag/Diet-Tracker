@@ -1,0 +1,9 @@
+Name: Bajgiel z makiem - Lidl
+Brand: Lidl
+Package has: 80.0
+Macro for: 100.0
+KCal: 300.0
+Protein: 9.2
+Fat: 4.8
+Carbs: 53.5
+Comment optional: Link: https://www.lidl.pl/p/bajgiel-z-makiem/p10027136

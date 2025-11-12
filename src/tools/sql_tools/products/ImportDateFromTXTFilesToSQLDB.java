@@ -10,7 +10,7 @@ public class ImportDateFromTXTFilesToSQLDB {
 
     public static String[] getPureDateFromFileInArray(String[] fileInStringArray){
         // Hard strict max array size may cause error
-        int maxLinesForResult = 20;
+        int maxLinesForResult = 30;
         String tmpDataFromLine;
         String pureDataFromLine;
         int positionOfColon;
