@@ -71,7 +71,7 @@ public class FilesTools {
         int maxLinesInFile = 160;
         String[] fileByLinesInArray = new String[maxLinesInFile];
         int counter = 0;
-        int indexOfColon;
+        int indexOfColon = 0;
         String line;
         try {
             Scanner fileScanner = new Scanner(new File(fileNameWithExtension));

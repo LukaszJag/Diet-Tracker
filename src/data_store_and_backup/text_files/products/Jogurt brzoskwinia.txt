@@ -6,14 +6,4 @@ KCal: 100.0
 Protein: 3.5
 Fat: 2.6
 Carbs: 14.8
-Comment optional: 
-
-Name: Jogurt brzoskwinia
-Brand: Zott
-Package has: 400.0
-Macro for: 100.0
-KCal: 91.0
-Protein: 3.5
-Fat: 2.7
-Carbs: 12.2
-Comment optional: Link: https://www2.zott-dairy.com/pl/nasze-marki/marki/mm/jogobella-119/
+Comment optional:
