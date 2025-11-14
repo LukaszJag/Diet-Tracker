@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2025-11-13',
+'Thursday',
+'Dinner',
+400.0,
+'Jogurt Jogobella brzoskwinia',
+91.0,
+3.5,
+2.7,
+12.2,
+'2025-11-14 03:33:36',
+'none',
+364.0,
+48.8,
+10.8,
+14.0
+);

@@ -1,0 +1,20 @@
+INSERT INTO `diet_tracker_schema`.product_table
+(`product_name`,
+`product_brand`,
+`product_package_has`,
+`product_macro_for`,
+`product_kcal`,
+`product_protein`,
+`product_fat`,
+`product_carbs`,
+`comment_optional`)
+Values
+('Jogurt Jogobella truskawkowy',
+'Zott',
+400.0,
+100.0,
+90.0,
+3.5,
+2.7,
+12.0,
+'Link: https://www2.zott-dairy.com/pl/nasze-marki/marki/mm/jogobella-119/');

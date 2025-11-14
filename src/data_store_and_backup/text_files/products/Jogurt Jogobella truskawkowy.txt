@@ -1,0 +1,9 @@
+Name: Jogurt Jogobella truskawkowy
+Brand: Zott
+Package has: 400.0
+Macro for: 100.0
+KCal: 90.0
+Protein: 3.5
+Fat: 2.7
+Carbs: 12.0
+Comment optional: Link: https://www2.zott-dairy.com/pl/nasze-marki/marki/mm/jogobella-119/

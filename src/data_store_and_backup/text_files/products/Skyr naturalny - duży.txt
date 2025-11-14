@@ -1,0 +1,9 @@
+Name: Skyr naturalny - duży
+Brand: Mlekovita
+Package has: 500.0
+Macro for: 100.0
+KCal: 66.0
+Protein: 12.0
+Fat: 0.0
+Carbs: 4.5
+Comment optional: Dane z opakowania

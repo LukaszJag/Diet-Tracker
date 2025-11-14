@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2025-11-13',
+'Thursday',
+'Second Breakfast',
+109.0,
+'Chleb wieloziarnisty z dodatkiem naturalnego zakwasu żytniego',
+277.0,
+9.8,
+4.6,
+46.0,
+'2025-11-14 01:17:08',
+'none',
+301.93002,
+50.140003,
+5.014,
+10.682
+);

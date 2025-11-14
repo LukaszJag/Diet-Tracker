@@ -1,0 +1,9 @@
+Name: Kanapka trójkąt pasta jajeczna
+Brand: Tomcio Paluch
+Package has: 200.0
+Macro for: 100.0
+KCal: 264.0
+Protein: 14.0
+Fat: 19.0
+Carbs: 8.5
+Comment optional: Link: https://pl.openfoodfacts.org/product/8586020103768/pasta-jajeczna-por-jajko-gotowane-tomcio-paluch
