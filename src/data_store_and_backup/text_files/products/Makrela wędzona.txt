@@ -1,0 +1,9 @@
+Name: Makrela wędzona
+Brand: Ryby wędzone
+Package has: 0.0
+Macro for: 100.0
+KCal: 221.0
+Protein: 20.7
+Fat: 15.5
+Carbs: 0.0
+Comment optional: Link: https://www.tabele-kalorii.pl/kalorie,Makrela-wedzona.html

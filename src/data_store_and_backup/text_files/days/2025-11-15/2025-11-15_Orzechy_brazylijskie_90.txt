@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2025-11-15',
+'Saturday',
+'Breakfast',
+90.0,
+'Orzechy brazylijskie',
+656.0,
+14.0,
+66.0,
+4.0,
+'2025-11-16 01:12:51',
+'none',
+590.39996,
+3.6,
+59.399998,
+12.599999
+);

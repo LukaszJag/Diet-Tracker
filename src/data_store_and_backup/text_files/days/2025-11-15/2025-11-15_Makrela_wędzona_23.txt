@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2025-11-15',
+'Saturday',
+'Supper',
+23.0,
+'Makrela wędzona',
+221.0,
+20.7,
+15.5,
+0.0,
+'2025-11-16 01:18:20',
+'none',
+50.83,
+0.0,
+3.565,
+4.761
+);

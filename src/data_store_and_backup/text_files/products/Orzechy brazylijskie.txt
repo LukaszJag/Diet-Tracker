@@ -1,0 +1,9 @@
+Name: Orzechy brazylijskie
+Brand: Orzechy
+Package has: 0.0
+Macro for: 100.0
+KCal: 656.0
+Protein: 14.0
+Fat: 66.0
+Carbs: 4.0
+Comment optional: Link: https://www.tabele-kalorii.pl/kalorie,Orzechy-brazylijskie-Bakalland.html
