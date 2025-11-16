@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2025-11-16',
+'Sunday',
+'Dinner',
+500.0,
+'Klopsy w Kapuście',
+60.0,
+2.5,
+2.0,
+8.0,
+'2025-11-17 12:10:26',
+'none',
+300.0,
+40.0,
+10.0,
+12.5
+);
