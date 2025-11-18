@@ -18,3 +18,43 @@ Values
 8.8,
 7.3,
 '');
+INSERT INTO `diet_tracker_schema`.product_table
+(`product_name`,
+`product_brand`,
+`product_package_has`,
+`product_macro_for`,
+`product_kcal`,
+`product_protein`,
+`product_fat`,
+`product_carbs`,
+`comment_optional`)
+Values
+('Pulpety w sosie pomidorowym - Pudliszki',
+'Pudliszki',
+600.0,
+100.0,
+90.0,
+5.1,
+4.4,
+7.3,
+'Link: https://szybkihurt.pl/pulpety-w-sosie-pomidorowym-pudliszki-600-g.html');
+INSERT INTO `diet_tracker_schema`.product_table
+(`product_name`,
+`product_brand`,
+`product_package_has`,
+`product_macro_for`,
+`product_kcal`,
+`product_protein`,
+`product_fat`,
+`product_carbs`,
+`comment_optional`)
+Values
+('Pulpety w sosie pomidorowym - Pudliszki',
+'Pudliszki',
+600.0,
+100.0,
+90.0,
+5.1,
+4.4,
+7.3,
+'Link: https://szybkihurt.pl/pulpety-w-sosie-pomidorowym-pudliszki-600-g.html');

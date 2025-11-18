@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2025-11-18',
+'Tuesday',
+'Second Breakfast',
+1000.0,
+'Maślanka Mrągowska wieloowocowa z owocami leśnymi',
+78.0,
+3.2,
+1.5,
+13.0,
+'2025-11-18 06:11:12',
+'none',
+780.0,
+130.0,
+15.0,
+32.0
+);
