@@ -1,7 +1,10 @@
 package gui.diet;
 
 import configuration.Config;
+import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.data.category.DefaultCategoryDataset;
 import tools.calendar_tools.MyDate;
 import tools.charts_tools.DisplayChart;
 import tools.products_tools.Macro;
@@ -86,6 +89,7 @@ public class CalendarMonthStatsView {
     JButton differenceButton = new JButton("Difference");
     JButton emptyButton = new JButton("Empty");
     JButton showChartButton = new JButton("Show chart for selected month");
+    JButton showBarChartButton = new JButton("Show bar chart for selected month");
     //</editor-fold>
 
     //<editor-fold desc="GridLayouts">
@@ -268,6 +272,9 @@ public class CalendarMonthStatsView {
     private void prepareAndAddContentToSouthPanel() {
         showChartButton.addActionListener(new ShowChartButtonActionListener());
         calendarMonthStatsViewPanelSouth.add(showChartButton);
+
+        showBarChartButton.addActionListener(new ShowBarChartButtonActionListener());
+        calendarMonthStatsViewPanelSouth.add(showBarChartButton);
     }
 
     private void prepareAndAddContentToEastPanel() {
@@ -838,6 +845,71 @@ public class CalendarMonthStatsView {
         DisplayChart.showChart(jFreeChart);
     }
 
+    public void showMonthBarChart() {
+
+        String dateFromComboBox = monthSelectComboBox.getSelectedItem().toString();
+
+        int counter = 0;
+        for (int i = 0; i < daysButtons.length; i++) {
+            if (!daysButtons[i].getText().equals("null")) {
+                counter++;
+            }
+        }
+
+        int amountOfMonthDays = counter;
+        String[] daysNumbers = new String[amountOfMonthDays];
+
+        float[] valuesKcal = new float[amountOfMonthDays];
+        String chartName = MyDate.getNameOfMonthFromNumber(getMonthFromComboBox()) + " stats";
+
+        for (int i = 0; i < daysNumbers.length; i++) {
+            daysNumbers[i] = String.valueOf((i + 1));
+        }
+
+        String fullDate = "";
+
+        if (dateFromComboBox.contains("2025")){
+            fullDate = "2025";
+        }
+        if (dateFromComboBox.contains("2024")){
+            fullDate = "2024";
+        }
+        fullDate = fullDate + "-" + MyDate.getNameOfMonthFromNumberSQLFormat(dateFromComboBox.replaceAll("[0-9]","")) + "-";
+
+        String[] allDayWhichNeedData = new String[amountOfMonthDays];
+        String fullDateBuffor = fullDate;
+
+        for (int i = 0; i < amountOfMonthDays; i++) {
+
+
+            if (daysNumbers[i].length() == 1) {
+                fullDate = fullDate + "0" + daysNumbers[i];
+            }
+
+            if (daysNumbers[i].length() == 2) {
+                fullDate = fullDate + daysNumbers[i];
+            }
+
+            allDayWhichNeedData[i] = fullDate;
+            fullDate = fullDateBuffor;
+        }
+
+        DefaultCategoryDataset dataset = new DefaultCategoryDataset( );
+
+        for (int i = 0; i < amountOfMonthDays; i++) {
+
+            valuesKcal[i] = SelectFromDaysStatistics.getMacroFromDaysStatisticsByDate(allDayWhichNeedData[i]).getKcal();
+        }
+
+        for (int i = 0; i < 20; i++) {
+            dataset.addValue(valuesKcal[i], daysNumbers[i], daysNumbers[i]);
+        }
+
+        JFreeChart jFreeChart = ChartFactory.createBarChart(chartName, "Days", "Kcal",
+                dataset, PlotOrientation.VERTICAL , true, true, false);
+        DisplayChart.showChart(jFreeChart);
+    }
+
     private String getDateFromComboBox() {
         String fullDate = "";
         String month = monthSelectComboBox.getSelectedItem().toString();
@@ -1259,6 +1331,13 @@ public class CalendarMonthStatsView {
         @Override
         public void actionPerformed(ActionEvent e) {
             showMonthChart();
+        }
+    }
+
+    private class ShowBarChartButtonActionListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            showMonthBarChart();
         }
     }
 
