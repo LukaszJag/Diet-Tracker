@@ -1,0 +1,20 @@
+INSERT INTO `diet_tracker_schema`.product_table
+(`product_name`,
+`product_brand`,
+`product_package_has`,
+`product_macro_for`,
+`product_kcal`,
+`product_protein`,
+`product_fat`,
+`product_carbs`,
+`comment_optional`)
+Values
+('Knorr Fix spaghetti bolognese',
+'Knorr',
+41.0,
+100.0,
+141.0,
+8.1,
+3.8,
+18.0,
+'Dane dla 100 g przygotowanego dania, Link: https://www.carrefour.pl/artykuly-spozywcze/sosy-oleje-ocet/sosy-i-dressingi/knorr-fix-spaghetti-bolognese-41-g');

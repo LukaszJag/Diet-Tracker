@@ -1,0 +1,9 @@
+Name: Knorr Fix spaghetti bolognese
+Brand: Knorr
+Package has: 41.0
+Macro for: 100.0
+KCal: 141.0
+Protein: 8.1
+Fat: 3.8
+Carbs: 18.0
+Comment optional: Dane dla 100 g przygotowanego dania, Link: https://www.carrefour.pl/artykuly-spozywcze/sosy-oleje-ocet/sosy-i-dressingi/knorr-fix-spaghetti-bolognese-41-g
