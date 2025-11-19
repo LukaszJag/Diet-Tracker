@@ -901,8 +901,8 @@ public class CalendarMonthStatsView {
             valuesKcal[i] = SelectFromDaysStatistics.getMacroFromDaysStatisticsByDate(allDayWhichNeedData[i]).getKcal();
         }
 
-        for (int i = 0; i < 20; i++) {
-            dataset.addValue(valuesKcal[i], daysNumbers[i], daysNumbers[i]);
+        for (int i = 0; i < daysNumbers.length; i++) {
+            dataset.addValue(valuesKcal[i], daysNumbers[i], "kcal");
         }
 
         JFreeChart jFreeChart = ChartFactory.createBarChart(chartName, "Days", "Kcal",
