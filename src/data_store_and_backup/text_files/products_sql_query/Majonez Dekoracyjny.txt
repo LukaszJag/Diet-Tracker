@@ -1,0 +1,20 @@
+INSERT INTO `diet_tracker_schema`.product_table
+(`product_name`,
+`product_brand`,
+`product_package_has`,
+`product_macro_for`,
+`product_kcal`,
+`product_protein`,
+`product_fat`,
+`product_carbs`,
+`comment_optional`)
+Values
+('Majonez Dekoracyjny',
+'Winiary',
+400.0,
+100.0,
+704.0,
+1.5,
+76.3,
+2.9,
+'Link:https://www.winiary.pl/produkty/majonez-dekoracyjny-winiary-400-ml/');

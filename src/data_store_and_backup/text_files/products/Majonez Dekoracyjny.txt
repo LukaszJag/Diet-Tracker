@@ -1,0 +1,9 @@
+Name: Majonez Dekoracyjny
+Brand: Winiary
+Package has: 400.0
+Macro for: 100.0
+KCal: 704.0
+Protein: 1.5
+Fat: 76.3
+Carbs: 2.9
+Comment optional: Link:https://www.winiary.pl/produkty/majonez-dekoracyjny-winiary-400-ml/
