@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2025-11-22',
+'Saturday',
+'Snack 2',
+507.0,
+'Gulasz wieprzowy - domowy',
+248.98,
+14.6,
+20.69,
+1.67,
+'2025-11-23 12:09:57',
+'none',
+1262.3286,
+8.4669,
+104.89831,
+74.022
+);

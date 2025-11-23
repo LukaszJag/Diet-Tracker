@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2025-11-20',
+'Thursday',
+'Night snack',
+233.0,
+'Pierniczki domowe',
+361.0,
+5.5,
+14.63,
+49.26,
+'2025-11-23 11:54:11',
+'none',
+841.12994,
+114.775795,
+34.0879,
+12.815
+);

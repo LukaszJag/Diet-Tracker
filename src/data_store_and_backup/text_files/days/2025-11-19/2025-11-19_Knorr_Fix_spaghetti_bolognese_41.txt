@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2025-11-19',
+'Wednesday',
+'Dinner',
+41.0,
+'Knorr Fix spaghetti bolognese',
+141.0,
+8.1,
+3.8,
+18.0,
+'2025-11-23 11:46:15',
+'none',
+57.81,
+7.38,
+1.558,
+3.321
+);

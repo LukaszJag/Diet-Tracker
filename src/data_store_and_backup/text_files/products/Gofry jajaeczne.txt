@@ -1,0 +1,9 @@
+Name: Gofry jajaeczne
+Brand: Kaufland
+Package has: 250.0
+Macro for: 100.0
+KCal: 474.0
+Protein: 8.0
+Fat: 27.0
+Carbs: 50.0
+Comment optional: Dane z opakowania

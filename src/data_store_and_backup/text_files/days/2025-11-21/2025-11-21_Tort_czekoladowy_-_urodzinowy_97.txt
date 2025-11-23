@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2025-11-21',
+'Friday',
+'Breakfast',
+97.0,
+'Tort czekoladowy - urodzinowy',
+410.0,
+17.0,
+22.9,
+58.0,
+'2025-11-23 11:56:06',
+'none',
+397.7,
+56.260002,
+22.213,
+16.49
+);

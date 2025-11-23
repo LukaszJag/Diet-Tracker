@@ -1,0 +1,9 @@
+Name: Przekąska kurczak curry
+Brand: Biedronka
+Package has: 95.0
+Macro for: 100.0
+KCal: 243.0
+Protein: 8.91
+Fat: 7.97
+Carbs: 32.08
+Comment optional: Link: https://www.biedronka.pl/pl/pieczywo?page=skladniki

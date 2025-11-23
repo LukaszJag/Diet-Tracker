@@ -1,0 +1,9 @@
+Name:  Zapiekanka z pieczarkami, serem, ketchupem i szynką
+Brand: Biedronka
+Package has: 150.0
+Macro for: 100.0
+KCal: 287.0
+Protein: 10.19
+Fat: 14.6
+Carbs: 27.1
+Comment optional: Link: https://www.biedronka.pl/pl/pieczywo?page=skladniki
