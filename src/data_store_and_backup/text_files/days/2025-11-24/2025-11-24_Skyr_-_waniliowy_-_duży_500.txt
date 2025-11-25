@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2025-11-24',
+'Monday',
+'Supper',
+500.0,
+'Skyr - waniliowy - duży',
+77.0,
+9.2,
+0.2,
+9.2,
+'2025-11-25 04:13:46',
+'none',
+385.0,
+46.0,
+1.0,
+46.0
+);
