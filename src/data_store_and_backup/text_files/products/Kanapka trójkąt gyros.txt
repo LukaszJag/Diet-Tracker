@@ -1,0 +1,9 @@
+Name: Kanapka trójkąt gyros
+Brand: Tomcio Paluch
+Package has: 180.0
+Macro for: 100.0
+KCal: 235.0
+Protein: 10.0
+Fat: 11.0
+Carbs: 23.0
+Comment optional: Dane z opakowania

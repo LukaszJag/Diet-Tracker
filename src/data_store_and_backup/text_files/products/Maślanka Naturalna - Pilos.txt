@@ -1,0 +1,9 @@
+Name: Maślanka Naturalna - Pilos
+Brand: Pilos
+Package has: 1000.0
+Macro for: 100.0
+KCal: 50.0
+Protein: 3.8
+Fat: 1.5
+Carbs: 5.4
+Comment optional: Link: https://www.tabele-kalorii.pl/kalorie,Maslanka-Naturalna-Pilos.html
