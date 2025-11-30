@@ -1,31 +1,15 @@
 package gui.sport;
 
 import configuration.Config;
-import gui.diet.AddProductToCalendarDay;
-import gui.diet.CalendarMonthStatsView;
-import logs.Log;
-import runners_and_tests.run_update.RunnerFullUpdateDayStatistics;
-import tools.calendar_tools.DayInCalendar;
 import tools.calendar_tools.MyDate;
 import tools.products_tools.Macro;
-import tools.products_tools.Product;
-import tools.sql_tools.SQLSelect;
-import tools.sql_tools.calendar.InsertToCalendarDayTable;
 import tools.sql_tools.days_statistics.SelectFromDaysStatistics;
-import tools.text_files_tools.FilesTools;
-import tools.time_date_tools.DateTools;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
-import java.sql.SQLException;
 import java.text.Format;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.HashMap;
 import java.util.List;
 
 public class AddExercisesToLibraryGUI {
@@ -42,7 +26,8 @@ public class AddExercisesToLibraryGUI {
      type_of_measure
      weight_type
      */
-    //<editor-fold desc="Main - AddProductToCalendarDay - components and variables">
+
+    //<editor-fold desc="Main - AddExercisesToLibraryGUI - components and variables">
 
     //<editor-fold desc="Panels">
     JPanel addExercisesToLibraryPanelMain = new JPanel();
@@ -57,7 +42,7 @@ public class AddExercisesToLibraryGUI {
     //</editor-fold>
 
     //<editor-fold desc="Buttons">
-    JButton addProductToDayAcceptButton = new JButton("Accept");
+    JButton addExerciseAcceptButton = new JButton("Accept");
     JButton backToMainWindowButton = new JButton("Go to Start");
     JButton exitProgramProductWindowButton = new JButton("Exit application");
     JButton clearTextFieldsButton = new JButton("Clear");
@@ -65,15 +50,16 @@ public class AddExercisesToLibraryGUI {
     //</editor-fold>
 
     //<editor-fold desc="Labels">
-    JLabel exercise_idLabel = new JLabel("null");
-    JLabel exercise_nameLabel = new JLabel("null");
-    JLabel added_weightLabel = new JLabel("null");
-    JLabel body_partLabel = new JLabel("null");
-    JLabel commentLabel = new JLabel("null");
-    JLabel exercise_targetLabel = new JLabel("null");
-    JLabel instructionsLabel = new JLabel("null");
-    JLabel type_of_measureLabel = new JLabel("null");
-    JLabel weight_typeLabel = new JLabel("null");
+    JLabel exercise_idLabel = new JLabel("exercise_name");
+    JLabel exercise_nameLabel = new JLabel("exercise_target");
+    JLabel exercise_targetLabel = new JLabel("exercise_target");
+    JLabel instructionsLabel = new JLabel("instructions");
+    JLabel body_partLabel = new JLabel("body_part");
+    JLabel added_weightLabel = new JLabel("added_weight");
+    JLabel weight_typeLabel = new JLabel("weight_type");
+    JLabel commentLabel = new JLabel("comment");
+    JLabel type_of_measureLabel = new JLabel("type_of_measure");
+
     ArrayList<JLabel> allLabelsArrayList = new ArrayList<JLabel>(List.of(new JLabel[]{exercise_idLabel, exercise_nameLabel, added_weightLabel, body_partLabel,
             commentLabel, exercise_targetLabel, instructionsLabel, type_of_measureLabel, weight_typeLabel
     }));
@@ -83,13 +69,13 @@ public class AddExercisesToLibraryGUI {
     //<editor-fold desc="TextFields">
     JTextField exercise_idJTextField = new JTextField();
     JTextField exercise_nameJTextField = new JTextField();
-    JTextField added_weightJTextField = new JTextField();
-    JTextField body_partJTextField = new JTextField();
-    JTextField commentJTextField = new JTextField();
     JTextField exercise_targetJTextField = new JTextField();
     JTextField instructionsJTextField = new JTextField();
-    JTextField type_of_measureJTextField = new JTextField();
+    JTextField body_partJTextField = new JTextField();
+    JTextField added_weightJTextField = new JTextField();
     JTextField weight_typeJTextField = new JTextField();
+    JTextField commentJTextField = new JTextField();
+    JTextField type_of_measureJTextField = new JTextField();
 
     ArrayList<JTextField> allJTextFieldArrayList = new ArrayList<JTextField>(List.of(new JTextField[]{exercise_idJTextField, exercise_nameJTextField,
             added_weightJTextField, body_partJTextField,
@@ -117,7 +103,7 @@ public class AddExercisesToLibraryGUI {
 
     //<editor-fold desc="Layout">
     BoxLayout panelWestBoxLayout = new BoxLayout(addExercisesToLibraryPanelWest, BoxLayout.Y_AXIS);
-    GridLayout gridLayoutMainPanel = new GridLayout(15, 2, 10, 10);
+    GridLayout gridLayoutMainPanel = new GridLayout(11, 2, 10, 10);
     GridLayout checkDaysStatisticsDialogGridLayout = new GridLayout(34, 4, 0, 0);
     GridLayout panelWestGridLayout = new GridLayout(9, 1, 5, 10);
 
@@ -134,6 +120,10 @@ public class AddExercisesToLibraryGUI {
     //</editor-fold>
 
     //<editor-fold desc="Starting constructors and methods">
+
+    public static void main(String[] args) {
+        new AddExercisesToLibraryGUI();
+    }
 
     // Starting Constructor
     public AddExercisesToLibraryGUI() {
@@ -228,20 +218,55 @@ public class AddExercisesToLibraryGUI {
         //</editor-fold>
 
         //<editor-fold desc="Add Components to Panel - South">
-
+        addExercisesToLibraryPanelSouth.add(addExerciseAcceptButton);
         //</editor-fold>
 
         //<editor-fold desc="Add Components to Center Panel">
 
-        // 1 - row
-        // 2 - row
-        // 3 - row
-        // 4 - row
-        // 5 - row
-        // 6 - row
-        // 7 - row
-        // 8 - row
-        // 9 - row
+        // 1 - exercise_id
+        addExercisesToLibraryPanelMain.add(exercise_idLabel);
+        addExercisesToLibraryPanelMain.add(exercise_idJTextField);
+
+
+        // 2 - exercise_name
+        addExercisesToLibraryPanelMain.add(exercise_nameLabel);
+        addExercisesToLibraryPanelMain.add(exercise_nameJTextField);
+
+
+        // 3 - exercise_target
+        addExercisesToLibraryPanelMain.add(exercise_targetLabel);
+        addExercisesToLibraryPanelMain.add(exercise_targetJTextField);
+
+
+        // 4 - instructions
+        addExercisesToLibraryPanelMain.add(instructionsLabel);
+        addExercisesToLibraryPanelMain.add(instructionsJTextField);
+
+
+        // 5 - body_part
+        addExercisesToLibraryPanelMain.add(body_partLabel);
+        addExercisesToLibraryPanelMain.add(body_partJTextField);
+
+
+        // 6 - added_weight
+        addExercisesToLibraryPanelMain.add(added_weightLabel);
+        addExercisesToLibraryPanelMain.add(added_weightJTextField);
+
+
+        // 7 - weight_type
+        addExercisesToLibraryPanelMain.add(weight_typeLabel);
+        addExercisesToLibraryPanelMain.add(weight_typeJTextField);
+
+
+        // 8 - comment
+        addExercisesToLibraryPanelMain.add(commentLabel);
+        addExercisesToLibraryPanelMain.add(commentJTextField);
+
+
+        // 9 - type_of_measure
+        addExercisesToLibraryPanelMain.add(type_of_measureLabel);
+        addExercisesToLibraryPanelMain.add(type_of_measureJTextField);
+
 
         //</editor-fold>
     }
@@ -249,7 +274,6 @@ public class AddExercisesToLibraryGUI {
     //</editor-fold>
 
     //<editor-fold desc="Main Methods">
-
 
 
     //<editor-fold desc="Accept product to calendar table methods">
