@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2025-11-29',
+'Saturday',
+'After workout',
+234.0,
+'Cornellis Vanilla Maxi Max Ciastka Z Kremem Waniliowym Przekąska',
+480.0,
+4.0,
+23.0,
+63.0,
+'2025-11-30 06:36:01',
+'none',
+1123.2,
+147.42,
+53.82,
+9.36
+);
