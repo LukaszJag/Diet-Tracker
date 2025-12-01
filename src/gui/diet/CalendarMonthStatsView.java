@@ -117,7 +117,7 @@ public class CalendarMonthStatsView {
 
     JComboBox monthSelectComboBox = new JComboBox<>(new String[]{"April", "May", "June", "July", "August", "September", "October",
             "November", "December", "January2025", "February2025", "March2025", "April2025", "May2025", "June2025", "July2025",
-            "August2025", "September2025", "October2025", "November2025"});
+            "August2025", "September2025", "October2025", "November2025", "December2025"});
     JComboBox selectedDayProductsListComboBox = new JComboBox<String>();
 
     //</editor-fold>
@@ -195,7 +195,7 @@ public class CalendarMonthStatsView {
 
     //<editor-fold desc="Prepare Add Content - to Panels">
     private void prepareAndAddContentToMainPanel() {
-        setDaysButtonsMainPanel("November2025");
+        setDaysButtonsMainPanel("December2025");
     }
 
     private void prepareAndAddContentToNorthPanel() {
@@ -209,7 +209,7 @@ public class CalendarMonthStatsView {
         calendarMonthStatsViewPanelNorth.setLayout(northPanelGridLayout);
 
 
-        monthSelectComboBox.setSelectedItem("November2025");
+        monthSelectComboBox.setSelectedItem("December2025");
 
         selectedDaysCounterGoodDaysPanel = new JPanel();
         selectedDaysCounterBadDaysPanel = new JPanel();
@@ -461,7 +461,20 @@ public class CalendarMonthStatsView {
                 daysButtons[i].setPreferredSize(Config.CALENDAR_MONTH_STATS_VIEW_BUTTONS_SIZE_DIMENSION);
             }
         } else {
-
+            if (month.equals("December2025")) {
+                for (int i = 0; i < daysButtons.length; i++) {
+                    if (i < 0) {
+                        daysButtons[i] = new JButton("null");
+                    } else if (i >= 31) {
+                        daysButtons[i] = new JButton("null");
+                    } else {
+                        daysButtons[i] = new JButton(String.valueOf(counter));
+                        daysButtons[i].setPreferredSize(Config.CALENDAR_MONTH_STATS_VIEW_BUTTONS_SIZE_DIMENSION);
+                        daysButtons[i].addActionListener(new DaysButtonsActionListener(daysButtons[i]));
+                        counter++;
+                    }
+                }
+            }
             if (month.equals("November2025")) {
                 for (int i = 0; i < daysButtons.length; i++) {
                     if (i >= 0 && i < 5) {
