@@ -1,0 +1,9 @@
+Name: Kefir 1,5% - Mleczna Dolina
+Brand: Mleczna Dolina
+Package has: 400.0
+Macro for: 100.0
+KCal: 44.0
+Protein: 3.2
+Fat: 1.5
+Carbs: 4.5
+Comment optional: Link: https://www.tabele-kalorii.pl/kalorie,Kefir-1-5-Mleczna-Dolina.html

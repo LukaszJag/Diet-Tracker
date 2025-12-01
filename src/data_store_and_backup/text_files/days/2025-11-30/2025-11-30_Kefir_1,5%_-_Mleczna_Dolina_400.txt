@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2025-11-30',
+'Sunday',
+'Supper',
+400.0,
+'Kefir 1,5% - Mleczna Dolina',
+44.0,
+3.2,
+1.5,
+4.5,
+'2025-12-01 08:44:48',
+'none',
+176.0,
+18.0,
+6.0,
+12.8
+);
