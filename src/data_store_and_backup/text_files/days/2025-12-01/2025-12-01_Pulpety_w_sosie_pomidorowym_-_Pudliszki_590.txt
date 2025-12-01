@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2025-12-01',
+'Monday',
+'Dinner',
+590.0,
+'Pulpety w sosie pomidorowym - Pudliszki',
+90.0,
+5.1,
+4.4,
+7.3,
+'2025-12-01 09:09:57',
+'none',
+531.0,
+43.070004,
+25.960001,
+30.09
+);
