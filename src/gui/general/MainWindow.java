@@ -44,6 +44,7 @@ public class MainWindow extends JFrame {
     JButton calendarMonthStatsView = new JButton("Month stats view");
 
 
+
     JButton changeProductDataBase = new JButton("Change product table");
     JButton refreshDataBaseButton = new JButton("Refresh Data base");
     JButton refreshCalendarAndProductDataBaseButton = new JButton("Refresh CalendarAndProduct Data");
