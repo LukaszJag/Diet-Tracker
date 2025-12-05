@@ -1,0 +1,18 @@
+Name: McFlurry Lion z polewą truskawkową
+Brand: McDonald's
+Package has: 186.0
+Macro for: 100.0
+KCal: 187.0
+Protein: 3.3
+Fat: 4.6
+Carbs: 33.0
+Comment optional: Link: https://www.tabele-kalorii.pl/kalorie,McFlurry-Lion-z-polewa-truskawkowa-McDonald-s.html
+Name: McFlurry Lion z polewą truskawkową
+Brand: McDonalds
+Package has: 186.0
+Macro for: 100.0
+KCal: 187.0
+Protein: 3.3
+Fat: 4.6
+Carbs: 33.0
+Comment optional: Link: https://www.tabele-kalorii.pl/kalorie,McFlurry-Lion-z-polewa-truskawkowa-McDonald-s.html
