@@ -39,7 +39,7 @@ public class AddTrainingsGUI {
     //</editor-fold>
 
     //<editor-fold desc="Frame">
-    JFrame addTrainingsFrame = new JFrame("Add Exercises To Library");
+    JFrame addTrainingsFrame = new JFrame("AddTrainingsGUI");
     //</editor-fold>
 
     //<editor-fold desc="Buttons">

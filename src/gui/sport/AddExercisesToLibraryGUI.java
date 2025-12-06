@@ -7,6 +7,8 @@ import tools.sql_tools.days_statistics.SelectFromDaysStatistics;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -77,9 +79,18 @@ public class AddExercisesToLibraryGUI {
     JTextField commentJTextField = new JTextField();
     JTextField type_of_measureJTextField = new JTextField();
 
-    ArrayList<JTextField> allJTextFieldArrayList = new ArrayList<JTextField>(List.of(new JTextField[]{exercise_idJTextField, exercise_nameJTextField,
-            added_weightJTextField, body_partJTextField,
-            commentJTextField, exercise_targetJTextField, instructionsJTextField, type_of_measureJTextField, weight_typeJTextField}));
+    ArrayList<JTextField> allJTextFieldArrayList = new ArrayList<JTextField>(List.of(new JTextField[]{
+            // Data in order from top to bottom
+            exercise_idJTextField,
+            exercise_nameJTextField,
+            exercise_targetJTextField,
+            instructionsJTextField,
+            body_partJTextField,
+            added_weightJTextField,
+            weight_typeJTextField,
+            commentJTextField,
+            type_of_measureJTextField
+    }));
     //</editor-fold>
 
     //<editor-fold desc="ComboBox">
@@ -218,6 +229,7 @@ public class AddExercisesToLibraryGUI {
         //</editor-fold>
 
         //<editor-fold desc="Add Components to Panel - South">
+        addExerciseAcceptButton.addActionListener(new AddExerciseAcceptButtonActionListener());
         addExercisesToLibraryPanelSouth.add(addExerciseAcceptButton);
         //</editor-fold>
 
@@ -269,6 +281,19 @@ public class AddExercisesToLibraryGUI {
 
 
         //</editor-fold>
+    }
+
+    private void getDataFromGUI() {
+        for (int i = 0; i < allJTextFieldArrayList.size(); i++) {
+            System.out.println(i + " -> " + allJTextFieldArrayList.get(i).getText());
+        }
+    }
+
+    private class AddExerciseAcceptButtonActionListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            getDataFromGUI();
+        }
     }
 
     //</editor-fold>

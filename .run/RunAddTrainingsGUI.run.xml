@@ -1,0 +1,9 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="RunAddTrainingsGUI" type="Application" factoryName="Application" folderName="GUI - sport">
+    <option name="MAIN_CLASS_NAME" value="runners_and_tests.run_GUI.gym.RunAddTrainingsGUI" />
+    <module name="Diet-Tracker" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>

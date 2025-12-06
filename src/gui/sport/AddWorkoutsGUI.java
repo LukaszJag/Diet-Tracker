@@ -38,7 +38,7 @@ public class AddWorkoutsGUI {
     //</editor-fold>
 
     //<editor-fold desc="Frame">
-    JFrame addWorkoutsFrame = new JFrame("Add Exercises To Library");
+    JFrame addWorkoutsFrame = new JFrame("AddWorkoutsGUI");
     //</editor-fold>
 
     //<editor-fold desc="Buttons">

@@ -1,5 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="AddSingleProductWindow" type="Application" factoryName="Application" folderName="GUI">
+  <configuration default="false" name="AddSingleProductWindow" type="Application" factoryName="Application" folderName="GUI - diet">
     <option name="MAIN_CLASS_NAME" value="runners_and_tests.run_GUI.diet.AddSingleProductWindow" />
     <module name="Diet-Tracker" />
     <method v="2">
