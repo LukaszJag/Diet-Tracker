@@ -79,25 +79,15 @@ public class AddExercisesToLibraryGUI {
     JTextField commentJTextField = new JTextField();
     JTextField type_of_measureJTextField = new JTextField();
 
-    ArrayList<JTextField> allJTextFieldArrayList = new ArrayList<JTextField>(List.of(new JTextField[]{
-            // Data in order from top to bottom
-            exercise_idJTextField,
-            exercise_nameJTextField,
-            exercise_targetJTextField,
-            instructionsJTextField,
-            body_partJTextField,
-            added_weightJTextField,
-            weight_typeJTextField,
-            commentJTextField,
-            type_of_measureJTextField
-    }));
+
     //</editor-fold>
 
     //<editor-fold desc="ComboBox">
     // ComboBox
     JComboBox<String> bodyPartComboBox = new JComboBox<>(new String[]{"1", "2", "3", "4"});
 
-    JComboBox<String> typeOfMeasureComboBox = new JComboBox<>(new String[]{"11", "22", "33", "44"});
+    JComboBox<String> typeOfMeasureComboBox = new JComboBox<>(new String[]{
+            "none", "duration", "reps", "reps and weight", "distance", "distance and duration"});
     //</editor-fold>
 
     //<editor-fold desc="RadioButton">
@@ -126,6 +116,21 @@ public class AddExercisesToLibraryGUI {
 
     //<editor-fold desc="Tables">
     public JTable macroTable = new JTable(6, 2);
+    //</editor-fold>
+
+    //<editor-fold desc="JComponent">
+    ArrayList<Object> allJTextFieldArrayList = new ArrayList<Object>(List.of(new Object[]{
+            // Data in order from top to bottom
+            exercise_idJTextField,
+            exercise_nameJTextField,
+            exercise_targetJTextField,
+            instructionsJTextField,
+            body_partJTextField,
+            added_weightJTextField,
+            weight_typeJTextField,
+            commentJTextField,
+            typeOfMeasureComboBox
+    }));
     //</editor-fold>
 
     //</editor-fold>
@@ -277,15 +282,31 @@ public class AddExercisesToLibraryGUI {
 
         // 9 - type_of_measure
         addExercisesToLibraryPanelMain.add(type_of_measureLabel);
-        addExercisesToLibraryPanelMain.add(type_of_measureJTextField);
+        addExercisesToLibraryPanelMain.add(typeOfMeasureComboBox);
 
 
         //</editor-fold>
     }
 
     private void getDataFromGUI() {
+        String[] contentOfComponents = new String[allJTextFieldArrayList.size()];
         for (int i = 0; i < allJTextFieldArrayList.size(); i++) {
-            System.out.println(i + " -> " + allJTextFieldArrayList.get(i).getText());
+
+            if (allJTextFieldArrayList.get(i) instanceof JTextField) {
+                contentOfComponents[i] = ((JTextField) allJTextFieldArrayList.get(i)).getText();
+            }
+
+            if (allJTextFieldArrayList.get(i) instanceof JComboBox) {
+                contentOfComponents[i] = ((JComboBox) allJTextFieldArrayList.get(i)).getSelectedItem().toString();
+            }
+        }
+
+        for (int i = 0; i < contentOfComponents.length; i++) {
+            if (contentOfComponents[i].isEmpty()) {
+                System.out.println("empty");
+            } else {
+                System.out.println(contentOfComponents[i]);
+            }
         }
     }
 
