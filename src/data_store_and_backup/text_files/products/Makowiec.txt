@@ -1,0 +1,9 @@
+Name: Makowiec
+Brand: Słodka Kraina
+Package has: 450.0
+Macro for: 100.0
+KCal: 311.0
+Protein: 6.7
+Fat: 11.8
+Carbs: 44.8
+Comment optional: Link: https://www.tabele-kalorii.pl/kalorie,Makowiec-Slodka-Kraina.html

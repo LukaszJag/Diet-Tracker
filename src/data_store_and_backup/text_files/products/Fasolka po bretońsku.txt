@@ -1,0 +1,9 @@
+Name: Fasolka po bretońsku
+Brand: produkt ogólny
+Package has: 0.0
+Macro for: 100.0
+KCal: 138.77
+Protein: 7.44
+Fat: 7.95
+Carbs: 9.18
+Comment optional: Link: https://www.tabele-kalorii.pl/kalorie,Fasolka-po-bretonsku-Przepis-od-kasiaaa.html

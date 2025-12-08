@@ -9,12 +9,12 @@ INSERT INTO `diet_tracker_schema`.product_table
 `product_carbs`,
 `comment_optional`)
 Values
-('McFlurry Lion z polewą truskawkową',
-'McDonalds',
-186.0,
+('Fasolka po bretońsku',
+'produkt ogólny',
+0.0,
 100.0,
-187.0,
-3.3,
-4.6,
-33.0,
-'Link: https://www.tabele-kalorii.pl/kalorie,McFlurry-Lion-z-polewa-truskawkowa-McDonald-s.html');
+138.77,
+7.44,
+7.95,
+9.18,
+'Link: https://www.tabele-kalorii.pl/kalorie,Fasolka-po-bretonsku-Przepis-od-kasiaaa.html');
