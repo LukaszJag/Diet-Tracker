@@ -12,4 +12,17 @@ public class GetConnection {
                 "sword444");
         return connection;
     }
+
+    public static Connection getConnectionWithLocalHostWithoutTryCatch(){
+        Connection connection = null;
+        try {
+            connection = DriverManager.getConnection(
+                    "jdbc:mysql://localhost:3306/diet_tracker_schema",
+                    "root",
+                    "sword444");
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return connection;
+    }
 }
