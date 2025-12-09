@@ -4,11 +4,15 @@ import configuration.Config;
 import tools.calendar_tools.MyDate;
 import tools.products_tools.Macro;
 import tools.sql_tools.days_statistics.SelectFromDaysStatistics;
+import tools.sql_tools.general.GetConnection;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -52,8 +56,8 @@ public class AddExercisesToLibraryGUI {
     //</editor-fold>
 
     //<editor-fold desc="Labels">
-    JLabel exercise_idLabel = new JLabel("exercise_name");
-    JLabel exercise_nameLabel = new JLabel("exercise_target");
+    JLabel exercise_idLabel = new JLabel("exercise_id");
+    JLabel exercise_nameLabel = new JLabel("exercise_name");
     JLabel exercise_targetLabel = new JLabel("exercise_target");
     JLabel instructionsLabel = new JLabel("instructions");
     JLabel body_partLabel = new JLabel("body_part");
@@ -69,22 +73,22 @@ public class AddExercisesToLibraryGUI {
     //</editor-fold>
 
     //<editor-fold desc="TextFields">
-    JTextField exercise_idJTextField = new JTextField();
+    JTextField exercise_idJTextField = new JTextField("will be give by program");
     JTextField exercise_nameJTextField = new JTextField();
-    JTextField exercise_targetJTextField = new JTextField();
+
     JTextField instructionsJTextField = new JTextField();
-    JTextField body_partJTextField = new JTextField();
+
     JTextField added_weightJTextField = new JTextField();
     JTextField weight_typeJTextField = new JTextField();
     JTextField commentJTextField = new JTextField();
-    JTextField type_of_measureJTextField = new JTextField();
 
 
     //</editor-fold>
 
     //<editor-fold desc="ComboBox">
     // ComboBox
-    JComboBox<String> bodyPartComboBox = new JComboBox<>(new String[]{"1", "2", "3", "4"});
+    JComboBox<String> exercise_targetJComboBox = new JComboBox<>(new String[]{"none", "No specific", "Cardio", "Mobility", "Strength"});
+    JComboBox<String> bodyPartComboBox = new JComboBox<>(new String[]{"none", "Chest", "Back", "Biceps", "Triceps", "Legs"});
 
     JComboBox<String> typeOfMeasureComboBox = new JComboBox<>(new String[]{
             "none", "duration", "reps", "reps and weight", "distance", "distance and duration"});
@@ -123,9 +127,9 @@ public class AddExercisesToLibraryGUI {
             // Data in order from top to bottom
             exercise_idJTextField,
             exercise_nameJTextField,
-            exercise_targetJTextField,
+            exercise_targetJComboBox,
             instructionsJTextField,
-            body_partJTextField,
+            bodyPartComboBox,
             added_weightJTextField,
             weight_typeJTextField,
             commentJTextField,
@@ -252,7 +256,7 @@ public class AddExercisesToLibraryGUI {
 
         // 3 - exercise_target
         addExercisesToLibraryPanelMain.add(exercise_targetLabel);
-        addExercisesToLibraryPanelMain.add(exercise_targetJTextField);
+        addExercisesToLibraryPanelMain.add(exercise_targetJComboBox);
 
 
         // 4 - instructions
@@ -262,7 +266,7 @@ public class AddExercisesToLibraryGUI {
 
         // 5 - body_part
         addExercisesToLibraryPanelMain.add(body_partLabel);
-        addExercisesToLibraryPanelMain.add(body_partJTextField);
+        addExercisesToLibraryPanelMain.add(bodyPartComboBox);
 
 
         // 6 - added_weight
@@ -288,6 +292,11 @@ public class AddExercisesToLibraryGUI {
         //</editor-fold>
     }
 
+
+    //</editor-fold>
+
+    //<editor-fold desc="Data managing">
+
     private void getDataFromGUI() {
         String[] contentOfComponents = new String[allJTextFieldArrayList.size()];
         for (int i = 0; i < allJTextFieldArrayList.size(); i++) {
@@ -310,23 +319,28 @@ public class AddExercisesToLibraryGUI {
         }
     }
 
+    private String getNewIDForExercise() {
+        try {
+            Connection connection = GetConnection.getConnectionWithLocalHost();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        Statement statement = new Statement() {
+
+        return "-1";
+    }
+
+    //</editor-fold>
+
+
+    //<editor-fold desc="Action Listeners Classes">
     private class AddExerciseAcceptButtonActionListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
             getDataFromGUI();
         }
     }
-
-    //</editor-fold>
-
-    //<editor-fold desc="Main Methods">
-
-
-    //<editor-fold desc="Accept product to calendar table methods">
-
-    //</editor-fold>
-
-    //<editor-fold desc="Action Listeners Classes">
     //</editor-fold>
 
 
