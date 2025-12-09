@@ -7,6 +7,7 @@ import java.sql.*;
 import java.util.HashMap;
 
 public class SQLSelect {
+    //<editor-fold desc="Product Table SELECT">
     public static String[] getAllProductNamesFromProductTable() throws SQLException {
         ResultSet resultSet;
         Statement statement;
@@ -68,7 +69,6 @@ public class SQLSelect {
 
         return allProductnameBrandnameHashMap;
     }
-
 
     public static String getRowFromProductTableByProductNameGetString(String productName) throws SQLException {
         ResultSet resultSet;
@@ -207,6 +207,7 @@ public class SQLSelect {
 
         return allRowsArray;
     }
+    //</editor-fold>
 
     public static String[] getAllProductDataByNameFromCalendarTable(String productName) throws SQLException {
         // Hard code array length
@@ -242,4 +243,68 @@ public class SQLSelect {
 
         return allRowsArray;
     }
+
+    public static String[] getAllValuesInColumn(String tableName, int column) {
+        try {
+            ResultSet resultSet;
+            Statement statement;
+
+            String sql = "SELECT * FROM " + tableName;
+
+            int amountOfRows = 0;
+
+            Connection connection = GetConnection.getConnectionWithLocalHostWithoutTryCatch();
+
+            statement = connection.createStatement();
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery(sql);
+            amountOfRows = resultSet.getRow();
+
+            String[] columnValues = new String[amountOfRows];
+
+            int counter = 0;
+            while (resultSet.next()) {
+                columnValues[counter] = resultSet.getString(column);
+
+            }
+
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return null;
+    }
+
+    public static String[] getAllValuesInColumn(String tableName, String columnName) {
+        try {
+            ResultSet resultSet;
+            Statement statement;
+
+            String sql = "SELECT * FROM " + tableName;
+
+            int amountOfRows = 0;
+
+            Connection connection = GetConnection.getConnectionWithLocalHostWithoutTryCatch();
+
+            statement = connection.createStatement();
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery(sql);
+            amountOfRows = resultSet.getRow();
+
+            String[] columnValues = new String[amountOfRows];
+
+            int counter = 0;
+            while (resultSet.next()) {
+                columnValues[counter] = resultSet.getString(columnName);
+
+            }
+
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return null;
+    }
+
+
 }
