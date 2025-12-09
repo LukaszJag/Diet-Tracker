@@ -326,7 +326,7 @@ public class AddExercisesToLibraryGUI {
             throw new RuntimeException(e);
         }
 
-        Statement statement = new Statement() {
+
 
         return "-1";
     }
