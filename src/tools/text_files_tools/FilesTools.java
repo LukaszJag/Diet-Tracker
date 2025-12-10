@@ -6,6 +6,8 @@ import tools.products_tools.Product;
 import tools.sql_tools.calendar.InsertToCalendarDayTable;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Scanner;
 
 public class FilesTools {
@@ -335,6 +337,51 @@ public class FilesTools {
 
         return fileContent;
     }
+
+    public static String[] getTXTFileLineByLine(String path) {
+        String[] linesOfFile;
+        if (path == null) {
+            System.out.println("Path is null");
+            return null;
+        }
+
+        File file = new File(path);
+
+        if (!file.exists()) {
+            System.out.println("File doesn't exist");
+            return null;
+        }
+        FileReader fileReader;
+        long lineCount = -1;
+        try {
+            lineCount = Files.lines(Paths.get("data.text")).count();
+
+
+            linesOfFile = new String[((int) lineCount)];
+
+
+            fileReader = new FileReader(file);
+        } catch (FileNotFoundException e) {
+            throw new FileNotFoundException(e);
+        } catch (IOException e) {
+            throw new IOException(e);
+        }
+
+        BufferedReader bufferedReader = new BufferedReader(fileReader);
+
+        String line;
+        while (true) {
+            try {
+                if (!((line = bufferedReader.readLine()) != null)) break;
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            fileContent += line + "\n";
+        }
+
+        return fileContent;
+    }
+
 
     public static String readAndGetLineTXTFile(String path, int lineNumber) {
         String fileContent = "";
