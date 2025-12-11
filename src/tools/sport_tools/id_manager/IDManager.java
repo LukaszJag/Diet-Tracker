@@ -10,8 +10,8 @@ public class IDManager {
 
     }
 
-    public String getIDWithoutIDType(String path){
-
+    public String getIDWithoutIDType(String path) {
+        return null;
     }
 
     public String getTypeOfID(String inputRaw) {
