@@ -10,6 +10,8 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Scanner;
 
+import static java.io.FileDescriptor.in;
+
 public class FilesTools {
     public static void main(String[] args) {
 
@@ -276,7 +278,7 @@ public class FilesTools {
     }
 
 
-    //<editor-fold desc="Read or get">
+    //<editor-fold desc="Read files to get data">
     public static String[] getStringArrayForAllFilesInDirectory(String directory) {
         // Danger and possible problem cause because max amount of files is dynamic
         int maxAmountOfFiles = 600;
@@ -339,47 +341,24 @@ public class FilesTools {
     }
 
     public static String[] getTXTFileLineByLine(String path) {
-        String[] linesOfFile;
-        if (path == null) {
-            System.out.println("Path is null");
-            return null;
-        }
+        int amountOfLines = getAmountOfLinesInFile(path);
+        String[] linesOfFile = new String[amountOfLines];
+        BufferedReader bufferedReader = getBufferedReader(path);
 
-        File file = new File(path);
-
-        if (!file.exists()) {
-            System.out.println("File doesn't exist");
-            return null;
-        }
-        FileReader fileReader;
-        long lineCount = -1;
-        try {
-            lineCount = Files.lines(Paths.get("data.text")).count();
-
-
-            linesOfFile = new String[((int) lineCount)];
-
-
-            fileReader = new FileReader(file);
-        } catch (FileNotFoundException e) {
-            throw new FileNotFoundException(e);
-        } catch (IOException e) {
-            throw new IOException(e);
-        }
-
-        BufferedReader bufferedReader = new BufferedReader(fileReader);
-
+        int counter = 0;
         String line;
-        while (true) {
-            try {
-                if (!((line = bufferedReader.readLine()) != null)) break;
-            } catch (IOException e) {
-                throw new RuntimeException(e);
+
+        try {
+            while (((line = bufferedReader.readLine()) != null)) {
+                linesOfFile[counter] = line;
+                counter++;
             }
-            fileContent += line + "\n";
+            ;
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
 
-        return fileContent;
+        return linesOfFile;
     }
 
 
@@ -486,4 +465,65 @@ public class FilesTools {
         }
 
     }
+
+    //<editor-fold desc="Get amount of lines in file + Get File">
+    public static int getAmountOfLinesInFile(String path) {
+        int lines = 0;
+
+        try {
+            FileReader in;
+            BufferedReader br;
+            in = new FileReader(path);
+            br = new BufferedReader(in);
+
+            while ((br.readLine() != null)) {
+                lines++;
+            }
+
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        return lines;
+    }
+
+    public static File getFile(String path) {
+        if (path == null) {
+            System.out.println("Path is null");
+            return null;
+        }
+
+        File file = new File(path);
+
+        if (!file.exists()) {
+            System.out.println("File doesn't exist");
+            return null;
+        }
+
+        return file;
+    }
+
+    public static BufferedReader getBufferedReader(String path) {
+        try {
+            FileReader fileReader = new FileReader(path);
+            BufferedReader bufferedReader = new BufferedReader(fileReader);
+
+            return bufferedReader;
+
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+        /*
+    public static int getAmountOfLinesInFile(File file){
+        return -1;
+    }
+    */
+    //</editor-fold>
+
+
 }
