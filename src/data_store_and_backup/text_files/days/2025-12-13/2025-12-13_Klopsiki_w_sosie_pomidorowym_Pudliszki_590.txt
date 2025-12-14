@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2025-12-13',
+'Saturday',
+'Breakfast',
+590.0,
+'Klopsiki w sosie pomidorowym Pudliszki',
+127.0,
+5.4,
+6.9,
+10.0,
+'2025-12-14 01:34:59',
+'none',
+749.3,
+59.0,
+40.710003,
+31.86
+);
