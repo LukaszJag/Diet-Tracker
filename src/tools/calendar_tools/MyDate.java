@@ -2,12 +2,14 @@ package tools.calendar_tools;
 
 import configuration.Config;
 
+import java.io.IOException;
 import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Date;
 
 public class MyDate {
+    //<editor-fold desc="Get amount of - (...)">
     public static int getAmountOfDaysInMonth(String month) {
         if (month.equals("January")) {
             return 31;
@@ -46,6 +48,72 @@ public class MyDate {
             return 31;
         }
         return -1;
+    }
+
+    public static int getAmountOfDaysInMonthIfContainsItsName(String month){
+        int amountOfDays = -1;
+        int amountOfDetectedMonth = 0;
+        if (month.toLowerCase().contains("january")) {
+            amountOfDays = 31;
+            amountOfDetectedMonth++;
+        }
+        if (month.toLowerCase().contains("february")) {
+            amountOfDays = 28;
+            amountOfDetectedMonth++;
+        }
+        if (month.toLowerCase().contains("march")) {
+            amountOfDays = 31;
+            amountOfDetectedMonth++;
+        }
+        if (month.toLowerCase().contains("april")) {
+            amountOfDays = 30;
+            amountOfDetectedMonth++;
+        }
+        if (month.toLowerCase().contains("may")) {
+            amountOfDays = 31;
+            amountOfDetectedMonth++;
+        }
+        if (month.toLowerCase().contains("june")) {
+            amountOfDays = 30;
+            amountOfDetectedMonth++;
+        }
+        if (month.toLowerCase().contains("july")) {
+            amountOfDays = 31;
+            amountOfDetectedMonth++;
+        }
+        if (month.toLowerCase().contains("august")) {
+            amountOfDays = 31;
+            amountOfDetectedMonth++;
+        }
+        if (month.toLowerCase().contains("september")) {
+            amountOfDays = 30;
+            amountOfDetectedMonth++;
+        }
+        if (month.toLowerCase().contains("october")) {
+            amountOfDays = 31;
+            amountOfDetectedMonth++;
+        }
+        if (month.toLowerCase().contains("november")) {
+            amountOfDays = 30;
+            amountOfDetectedMonth++;
+        }
+        if (month.toLowerCase().contains("december")) {
+            amountOfDays = 31;
+            amountOfDetectedMonth++;
+        }
+
+            if (amountOfDays > 1){
+
+                System.out.println("Detected more then one month in input string");
+                // TO DO - 14.12.25
+                //throw new IOException("Detected more then one month in input string");
+            }
+
+
+        if (amountOfDays > 1){
+            System.out.println();
+        }
+        return amountOfDays;
     }
 
     public static int getAmountOfDaysInMonth(int month) {
@@ -88,6 +156,20 @@ public class MyDate {
         return -1;
     }
 
+    public static int getAmountOfDaysInCurrentMonthOPassedMonth(int year, int month) {
+        LocalDate date = LocalDate.now();
+
+        LocalDate passedDate = LocalDate.of(year, month, MyDate.getAmountOfDaysInMonth(month));
+
+        if (date.isAfter(passedDate)) {
+            return MyDate.getAmountOfDaysInMonth(month);
+        } else {
+            return date.getDayOfMonth();
+        }
+    }
+    //</editor-fold>
+
+    //<editor-fold desc="Get number of - (...)">
     public static int getNumberOfMonthInYear(String month) {
         if (month.equalsIgnoreCase("January")) {
             return 1;
@@ -128,6 +210,9 @@ public class MyDate {
         return -1;
     }
 
+    //</editor-fold>
+
+    //<editor-fold desc="Get name of - (...)">
     public static String getNameOfMonthFromNumber(int month) {
 
         if (month == 1) {
@@ -277,10 +362,6 @@ public class MyDate {
         return "-1";
     }
 
-    public static String getCurrentDayInSQLFormat() {
-        return new SimpleDateFormat("yyyy-MM-dd").format(Config.date);
-    }
-
     public static String getDayNameInPascalCase() {
         Format format = new SimpleDateFormat("EEEE");
         java.util.Date utilDateImport = new java.util.Date();
@@ -294,6 +375,14 @@ public class MyDate {
         String dayNameCurrentDateLowerCase = format.format(utilDateImport);
         return dayNameCurrentDateLowerCase.toLowerCase();
     }
+    //</editor-fold>
+
+
+    //<editor-fold desc="Get date in (...) format">
+    public static String getCurrentDayInSQLFormat() {
+        return new SimpleDateFormat("yyyy-MM-dd").format(Config.date);
+    }
+    //</editor-fold>
 
     public static boolean isYearAndMonthHasPassed(int year, int month, int day) {
         Date date = Config.date;
@@ -306,15 +395,5 @@ public class MyDate {
         }
     }
 
-    public static int getAmountOfDaysInCurrentMonthOPassedMonth(int year, int month){
-        LocalDate date = LocalDate.now();
 
-        LocalDate passedDate = LocalDate.of(year, month, MyDate.getAmountOfDaysInMonth(month));
-
-        if (date.isAfter(passedDate)) {
-            return MyDate.getAmountOfDaysInMonth(month);
-        } else {
-            return date.getDayOfMonth();
-        }
-    }
 }
