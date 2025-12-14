@@ -3,7 +3,11 @@ package gui.diet;
 import configuration.Config;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.chart.plot.ValueMarker;
+import org.jfree.chart.ui.RectangleAnchor;
+import org.jfree.chart.ui.TextAnchor;
 import org.jfree.data.category.DefaultCategoryDataset;
 import tools.calendar_tools.MyDate;
 import tools.charts_tools.DisplayChart;
@@ -412,11 +416,11 @@ public class CalendarMonthStatsView {
 
         String yearAndMonthDateInSQLFormat = getDateFromComboBox();
         int year = -1;
-        if (yearAndMonthDateInSQLFormat.contains("2025")){
+        if (yearAndMonthDateInSQLFormat.contains("2025")) {
             year = 2025;
         }
 
-        if (yearAndMonthDateInSQLFormat.contains("2024")){
+        if (yearAndMonthDateInSQLFormat.contains("2024")) {
             year = 2024;
         }
         int month;
@@ -822,13 +826,13 @@ public class CalendarMonthStatsView {
 
         String fullDate = "";
 
-        if (dateFromComboBox.contains("2025")){
+        if (dateFromComboBox.contains("2025")) {
             fullDate = "2025";
         }
-        if (dateFromComboBox.contains("2024")){
+        if (dateFromComboBox.contains("2024")) {
             fullDate = "2024";
         }
-        fullDate = fullDate + "-" + MyDate.getNameOfMonthFromNumberSQLFormat(dateFromComboBox.replaceAll("[0-9]","")) + "-";
+        fullDate = fullDate + "-" + MyDate.getNameOfMonthFromNumberSQLFormat(dateFromComboBox.replaceAll("[0-9]", "")) + "-";
 
         String[] allDayWhichNeedData = new String[amountOfMonthDays];
         String fullDateBuffor = fullDate;
@@ -879,15 +883,17 @@ public class CalendarMonthStatsView {
             daysNumbers[i] = String.valueOf((i + 1));
         }
 
+        // TO DO - 14.12.25
+        //int amountOfDays = MyDate.getamount()
         String fullDate = "";
 
-        if (dateFromComboBox.contains("2025")){
+        if (dateFromComboBox.contains("2025")) {
             fullDate = "2025";
         }
-        if (dateFromComboBox.contains("2024")){
+        if (dateFromComboBox.contains("2024")) {
             fullDate = "2024";
         }
-        fullDate = fullDate + "-" + MyDate.getNameOfMonthFromNumberSQLFormat(dateFromComboBox.replaceAll("[0-9]","")) + "-";
+        fullDate = fullDate + "-" + MyDate.getNameOfMonthFromNumberSQLFormat(dateFromComboBox.replaceAll("[0-9]", "")) + "-";
 
         String[] allDayWhichNeedData = new String[amountOfMonthDays];
         String fullDateBuffor = fullDate;
@@ -907,7 +913,7 @@ public class CalendarMonthStatsView {
             fullDate = fullDateBuffor;
         }
 
-        DefaultCategoryDataset dataset = new DefaultCategoryDataset( );
+        DefaultCategoryDataset dataset = new DefaultCategoryDataset();
 
         for (int i = 0; i < amountOfMonthDays; i++) {
 
@@ -917,23 +923,49 @@ public class CalendarMonthStatsView {
         for (int i = 0; i < daysNumbers.length; i++) {
             dataset.addValue(valuesKcal[i], daysNumbers[i], "kcal");
         }
+        JFreeChart jFreeChart = jFreeChart = ChartFactory.createBarChart(chartName, "Days", "Kcal",
+                dataset, PlotOrientation.VERTICAL, true, true, false);
 
-        JFreeChart jFreeChart = ChartFactory.createBarChart(chartName, "Days", "Kcal",
-                dataset, PlotOrientation.VERTICAL , true, true, false);
+        CategoryPlot categoryPlot = jFreeChart.getCategoryPlot();
+
+
+        ValueMarker marker = new ValueMarker(Config.BMRActual.getKcal());
+        marker.setPaint(Color.GREEN);
+        marker.setStroke(new BasicStroke(2.0f));
+
+        // optional label
+        marker.setLabel(String.valueOf(Config.BMRActual.getKcal()));
+        marker.setLabelAnchor(RectangleAnchor.TOP_LEFT);
+        marker.setLabelTextAnchor(TextAnchor.BOTTOM_LEFT);
+
+
+        ValueMarker yellowMarker = new ValueMarker(4500);
+        yellowMarker.setPaint(Color.YELLOW);
+        yellowMarker.setStroke(new BasicStroke(2.0f));
+
+        // optional label
+        yellowMarker.setLabel("4500");
+        yellowMarker.setLabelAnchor(RectangleAnchor.TOP_LEFT);
+        yellowMarker.setLabelTextAnchor(TextAnchor.BOTTOM_LEFT);
+
+        categoryPlot.addRangeMarker(marker);
+        categoryPlot.addRangeMarker(yellowMarker);
+
+
         DisplayChart.showChart(jFreeChart);
     }
 
     private String getDateFromComboBox() {
         String fullDate = "";
         String month = monthSelectComboBox.getSelectedItem().toString();
-        if (month.contains("2025")){
+        if (month.contains("2025")) {
             fullDate = "2025";
         }
-        if (month.contains("2024")){
+        if (month.contains("2024")) {
             fullDate = "2024";
         }
 
-        fullDate = fullDate + "-" + MyDate.getNameOfMonthFromNumberSQLFormat(month.replaceAll("[0-9]","")) + "-";
+        fullDate = fullDate + "-" + MyDate.getNameOfMonthFromNumberSQLFormat(month.replaceAll("[0-9]", "")) + "-";
 
         return fullDate;
     }
@@ -941,10 +973,10 @@ public class CalendarMonthStatsView {
     private int getYearFromComboBox() {
         int year = -1;
         String dateFromComboBox = monthSelectComboBox.getSelectedItem().toString();
-        if (dateFromComboBox.contains("2025")){
+        if (dateFromComboBox.contains("2025")) {
             year = 2025;
         }
-        if (dateFromComboBox.contains("2024")){
+        if (dateFromComboBox.contains("2024")) {
             year = 2024;
         }
 
@@ -952,7 +984,7 @@ public class CalendarMonthStatsView {
     }
 
     private int getMonthFromComboBox() {
-        String month = monthSelectComboBox.getSelectedItem().toString().replaceAll("[0-9]","");
+        String month = monthSelectComboBox.getSelectedItem().toString().replaceAll("[0-9]", "");
 
         return getNumberOfMonthInYear(month);
     }
@@ -1009,10 +1041,10 @@ public class CalendarMonthStatsView {
     private Macro getAverageMacroForMonth(String month) {
         String fullDate = "";
 
-        if (month.contains("2025")){
+        if (month.contains("2025")) {
             fullDate = "2025";
         }
-        if (month.contains("2024")){
+        if (month.contains("2024")) {
             fullDate = "2024";
         }
 
@@ -1256,14 +1288,14 @@ public class CalendarMonthStatsView {
             String fullDate = "";
             String month = monthSelectComboBox.getSelectedItem().toString();
 
-            if (month.contains("2025")){
+            if (month.contains("2025")) {
                 fullDate = "2025";
             }
-            if (month.contains("2024")){
+            if (month.contains("2024")) {
                 fullDate = "2024";
             }
 
-            fullDate = fullDate + "-" + MyDate.getNameOfMonthFromNumberSQLFormat(month.replaceAll("[0-9]","")) + "-";
+            fullDate = fullDate + "-" + MyDate.getNameOfMonthFromNumberSQLFormat(month.replaceAll("[0-9]", "")) + "-";
 
             if (button.getText().length() == 1) {
                 fullDate = fullDate + "0" + button.getText();
