@@ -2,7 +2,6 @@ package tools.calendar_tools;
 
 import configuration.Config;
 
-import java.io.IOException;
 import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -50,7 +49,7 @@ public class MyDate {
         return -1;
     }
 
-    public static int getAmountOfDaysInMonthIfContainsItsName(String month){
+    public static int getAmountOfDaysInMonthIfContainsItsName(String month) {
         int amountOfDays = -1;
         int amountOfDetectedMonth = 0;
         if (month.toLowerCase().contains("january")) {
@@ -102,15 +101,15 @@ public class MyDate {
             amountOfDetectedMonth++;
         }
 
-            if (amountOfDays > 1){
+        if (amountOfDays > 1) {
 
-                System.out.println("Detected more then one month in input string");
-                // TO DO - 14.12.25
-                //throw new IOException("Detected more then one month in input string");
-            }
+            System.out.println("Detected more then one month in input string");
+            // TO DO - 14.12.25
+            //throw new IOException("Detected more then one month in input string");
+        }
 
 
-        if (amountOfDays > 1){
+        if (amountOfDays > 1) {
             System.out.println();
         }
         return amountOfDays;
@@ -381,6 +380,27 @@ public class MyDate {
     //<editor-fold desc="Get date in (...) format">
     public static String getCurrentDayInSQLFormat() {
         return new SimpleDateFormat("yyyy-MM-dd").format(Config.date);
+    }
+
+    public static String[] getAllDaysInMonthAndYearSQLFriendlyFormat(int month, int year) {
+        String[] allDaysInSQLFormat = new String[getAmountOfDaysInMonth(month)];
+
+        String monthPart = "";
+        if (month < 10) {
+            monthPart = "0" + month;
+        } else {
+            monthPart = "" + month;
+        }
+
+        for (int i = 0; i < allDaysInSQLFormat.length; i++) {
+            if (i < 10) {
+                allDaysInSQLFormat[i] = "" + year + "-" + monthPart + "-" + "0" + (i + 1);
+            } else {
+                allDaysInSQLFormat[i] = "" + year + "-" + monthPart + "-" + (i + 1);
+            }
+        }
+
+        return allDaysInSQLFormat;
     }
     //</editor-fold>
 

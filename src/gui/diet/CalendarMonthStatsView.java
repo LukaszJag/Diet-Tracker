@@ -349,7 +349,7 @@ public class CalendarMonthStatsView {
 
     //</editor-fold>
 
-    //<editor-fold desc="get set Macro panel">
+    //<editor-fold desc="Get Set Macro panel">
     private JPanel getSetMacroPanelComponent(String panelTitleLabelText, float kcal, float protein, float fat, float carbs) {
         GridLayout gridLayout = new GridLayout(5, 1, 5, 5);
 
@@ -410,6 +410,8 @@ public class CalendarMonthStatsView {
     }
 
     //</editor-fold>
+
+    //<editor-fold desc="Set\Setup - methods">
     private void setupAverageMacroLabel() {
 
         Macro averageMacroForMonth = null;
@@ -804,7 +806,9 @@ public class CalendarMonthStatsView {
         mainWindow.validate();
         mainWindow.repaint();
     }
+    //</editor-fold>
 
+    //<editor-fold desc="Charts - methods">
     public void showMonthChart() {
 
         String dateFromComboBox = monthSelectComboBox.getSelectedItem().toString();
@@ -863,65 +867,22 @@ public class CalendarMonthStatsView {
     }
 
     public void showMonthBarChart() {
-
         String dateFromComboBox = monthSelectComboBox.getSelectedItem().toString();
 
-        int counter = 0;
-        for (int i = 0; i < daysButtons.length; i++) {
-            if (!daysButtons[i].getText().equals("null")) {
-                counter++;
-            }
-        }
-
-        int amountOfMonthDays = counter;
-        String[] daysNumbers = new String[amountOfMonthDays];
-
-        float[] valuesKcal = new float[amountOfMonthDays];
         String chartName = MyDate.getNameOfMonthFromNumber(getMonthFromComboBox()) + " stats";
-
-        for (int i = 0; i < daysNumbers.length; i++) {
-            daysNumbers[i] = String.valueOf((i + 1));
-        }
-
-        // TO DO - 14.12.25
-        //int amountOfDays = MyDate.getamount()
-        String fullDate = "";
-
-        if (dateFromComboBox.contains("2025")) {
-            fullDate = "2025";
-        }
-        if (dateFromComboBox.contains("2024")) {
-            fullDate = "2024";
-        }
-        fullDate = fullDate + "-" + MyDate.getNameOfMonthFromNumberSQLFormat(dateFromComboBox.replaceAll("[0-9]", "")) + "-";
-
-        String[] allDayWhichNeedData = new String[amountOfMonthDays];
-        String fullDateBuffor = fullDate;
-
-        for (int i = 0; i < amountOfMonthDays; i++) {
-
-
-            if (daysNumbers[i].length() == 1) {
-                fullDate = fullDate + "0" + daysNumbers[i];
-            }
-
-            if (daysNumbers[i].length() == 2) {
-                fullDate = fullDate + daysNumbers[i];
-            }
-
-            allDayWhichNeedData[i] = fullDate;
-            fullDate = fullDateBuffor;
-        }
-
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
 
-        for (int i = 0; i < amountOfMonthDays; i++) {
+        int amountOfMonthDays = MyDate.getAmountOfDaysInMonth(getMonthFromComboBox());
+        float[] valuesKcal = new float[amountOfMonthDays];
+        String[] daysNumbers = MyDate.getAllDaysInMonthAndYearSQLFriendlyFormat(getMonthFromComboBox(), getYearFromComboBox());
 
-            valuesKcal[i] = SelectFromDaysStatistics.getMacroFromDaysStatisticsByDate(allDayWhichNeedData[i]).getKcal();
+
+        for (int i = 0; i < amountOfMonthDays; i++) {
+            valuesKcal[i] = SelectFromDaysStatistics.getMacroFromDaysStatisticsByDate(daysNumbers[i]).getKcal();
         }
 
         for (int i = 0; i < daysNumbers.length; i++) {
-            dataset.addValue(valuesKcal[i], daysNumbers[i], "kcal");
+            dataset.addValue(valuesKcal[i], "" + (i + 1), "kcal");
         }
         JFreeChart jFreeChart = jFreeChart = ChartFactory.createBarChart(chartName, "Days", "Kcal",
                 dataset, PlotOrientation.VERTICAL, true, true, false);
@@ -947,14 +908,16 @@ public class CalendarMonthStatsView {
         yellowMarker.setLabel("4500");
         yellowMarker.setLabelAnchor(RectangleAnchor.TOP_LEFT);
         yellowMarker.setLabelTextAnchor(TextAnchor.BOTTOM_LEFT);
-
+        
         categoryPlot.addRangeMarker(marker);
         categoryPlot.addRangeMarker(yellowMarker);
 
 
         DisplayChart.showChart(jFreeChart);
     }
+    //</editor-fold>
 
+    //<editor-fold desc="Get data - methods">
     private String getDateFromComboBox() {
         String fullDate = "";
         String month = monthSelectComboBox.getSelectedItem().toString();
@@ -969,7 +932,6 @@ public class CalendarMonthStatsView {
 
         return fullDate;
     }
-
     private int getYearFromComboBox() {
         int year = -1;
         String dateFromComboBox = monthSelectComboBox.getSelectedItem().toString();
@@ -982,12 +944,57 @@ public class CalendarMonthStatsView {
 
         return year;
     }
-
     private int getMonthFromComboBox() {
         String month = monthSelectComboBox.getSelectedItem().toString().replaceAll("[0-9]", "");
 
         return getNumberOfMonthInYear(month);
     }
+    private Macro getAverageMacroForMonth(String month) {
+        String fullDate = "";
+
+        if (month.contains("2025")) {
+            fullDate = "2025";
+        }
+        if (month.contains("2024")) {
+            fullDate = "2024";
+        }
+
+        fullDate = fullDate + "-" + MyDate.getNameOfMonthFromNumberSQLFormat(month) + "-";
+
+        String fullDateTMP = fullDate;
+        Macro averageMacro = new Macro(0, 0, 0, 0);
+        Macro dayMacro;
+        int dayCounter = 0;
+
+        for (int i = 0; i < daysButtons.length; i++) {
+
+            if (daysButtons[i].getText() != "null") {
+                if (daysButtons[i].getText().length() == 1) {
+                    fullDate = fullDateTMP + "0" + daysButtons[i].getText();
+                } else {
+                    fullDate += daysButtons[i].getText();
+                }
+
+                if (dayMacroGoalStatus(fullDate) != 3 && dayMacroGoalStatus(fullDate) != 42) {
+                    dayMacro = SelectFromDaysStatistics.getMacroFromDaysStatisticsByDate(fullDate);
+                    averageMacro = Macro.sumOfTwoMacros(averageMacro, dayMacro);
+                    dayCounter++;
+                }
+
+                fullDate = fullDateTMP;
+            }
+        }
+
+        averageMacro.setKcal(averageMacro.getKcal() / dayCounter);
+        averageMacro.setProtein(averageMacro.getProtein() / dayCounter);
+        averageMacro.setFat(averageMacro.getFat() / dayCounter);
+        averageMacro.setCarbs(averageMacro.getCarbs() / dayCounter);
+
+        Macro.printAllValues(averageMacro);
+        return averageMacro;
+    }
+
+    //</editor-fold>
 
     private void paintButtons() {
 
@@ -1038,50 +1045,6 @@ public class CalendarMonthStatsView {
         }
     }
 
-    private Macro getAverageMacroForMonth(String month) {
-        String fullDate = "";
-
-        if (month.contains("2025")) {
-            fullDate = "2025";
-        }
-        if (month.contains("2024")) {
-            fullDate = "2024";
-        }
-
-        fullDate = fullDate + "-" + MyDate.getNameOfMonthFromNumberSQLFormat(month) + "-";
-
-        String fullDateTMP = fullDate;
-        Macro averageMacro = new Macro(0, 0, 0, 0);
-        Macro dayMacro;
-        int dayCounter = 0;
-
-        for (int i = 0; i < daysButtons.length; i++) {
-
-            if (daysButtons[i].getText() != "null") {
-                if (daysButtons[i].getText().length() == 1) {
-                    fullDate = fullDateTMP + "0" + daysButtons[i].getText();
-                } else {
-                    fullDate += daysButtons[i].getText();
-                }
-
-                if (dayMacroGoalStatus(fullDate) != 3 && dayMacroGoalStatus(fullDate) != 42) {
-                    dayMacro = SelectFromDaysStatistics.getMacroFromDaysStatisticsByDate(fullDate);
-                    averageMacro = Macro.sumOfTwoMacros(averageMacro, dayMacro);
-                    dayCounter++;
-                }
-
-                fullDate = fullDateTMP;
-            }
-        }
-
-        averageMacro.setKcal(averageMacro.getKcal() / dayCounter);
-        averageMacro.setProtein(averageMacro.getProtein() / dayCounter);
-        averageMacro.setFat(averageMacro.getFat() / dayCounter);
-        averageMacro.setCarbs(averageMacro.getCarbs() / dayCounter);
-
-        Macro.printAllValues(averageMacro);
-        return averageMacro;
-    }
 
     private int dayMacroGoalStatus(String fullDateSQLFriendly) {
         // int = 0 no data
