@@ -2,12 +2,15 @@ package gui.diet;
 
 import configuration.Config;
 import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.ValueMarker;
+import org.jfree.chart.renderer.category.BarRenderer;
 import org.jfree.chart.ui.RectangleAnchor;
 import org.jfree.chart.ui.TextAnchor;
+import org.jfree.data.category.CategoryDataset;
 import org.jfree.data.category.DefaultCategoryDataset;
 import tools.calendar_tools.MyDate;
 import tools.charts_tools.DisplayChart;
@@ -25,6 +28,8 @@ import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import static tools.calendar_tools.MyDate.getNumberOfMonthInYear;
 
@@ -867,11 +872,7 @@ public class CalendarMonthStatsView {
     }
 
     public void showMonthBarChart() {
-        String dateFromComboBox = monthSelectComboBox.getSelectedItem().toString();
-
-        String chartName = MyDate.getNameOfMonthFromNumber(getMonthFromComboBox()) + " stats";
-        DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-
+        //<editor-fold desc="Get Data for bar chart - kcal">
         int amountOfMonthDays = MyDate.getAmountOfDaysInMonth(getMonthFromComboBox());
         float[] valuesKcal = new float[amountOfMonthDays];
         String[] daysNumbers = MyDate.getAllDaysInMonthAndYearSQLFriendlyFormat(getMonthFromComboBox(), getYearFromComboBox());
@@ -880,38 +881,147 @@ public class CalendarMonthStatsView {
         for (int i = 0; i < amountOfMonthDays; i++) {
             valuesKcal[i] = SelectFromDaysStatistics.getMacroFromDaysStatisticsByDate(daysNumbers[i]).getKcal();
         }
+        //</editor-fold>
+
+        //<editor-fold desc="Setup chart fields">
+        String chartName = MyDate.getNameOfMonthFromNumber(getMonthFromComboBox()) + " stats";
+        DefaultCategoryDataset dataset = new DefaultCategoryDataset();
 
         for (int i = 0; i < daysNumbers.length; i++) {
             dataset.addValue(valuesKcal[i], "" + (i + 1), "kcal");
         }
-        JFreeChart jFreeChart = jFreeChart = ChartFactory.createBarChart(chartName, "Days", "Kcal",
-                dataset, PlotOrientation.VERTICAL, true, true, false);
+
+        JFreeChart jFreeChart = jFreeChart = ChartFactory.createBarChart(chartName, "Kcal", "Kcal",
+                dataset);
 
         CategoryPlot categoryPlot = jFreeChart.getCategoryPlot();
+        //</editor-fold>
+
+        //<editor-fold desc="Set float value and colors - Marker">
+        float greenMarker = Config.BMRActual.getKcal();
+        float yellowMarker = 4000;
+        float orangeMarker = 4500;
+        float redMarker = 5500;
+        float blackAverageMarker = 0;
+
+        int count = 0;
+        float sum = 0;
+        for (int i = 0; i < valuesKcal.length; i++) {
+            if (valuesKcal[i] > 0){
+                sum += valuesKcal[i];
+                count++;
+            }
+        }
+        blackAverageMarker = (sum / count);
 
 
-        ValueMarker marker = new ValueMarker(Config.BMRActual.getKcal());
-        marker.setPaint(Color.GREEN);
-        marker.setStroke(new BasicStroke(2.0f));
+        Color greenMarkerColor = new Color(43, 191, 36);
+        Color yellowMarkerColor = new Color(255, 229, 46);
+        Color orangeMarkerColor = new Color(214, 141, 23);
+        Color redMarkerColor = new Color(214, 23, 23);
+        Color blackAverageMarkerColor = new Color(0, 0, 0);
+        //</editor-fold>
 
-        // optional label
-        marker.setLabel(String.valueOf(Config.BMRActual.getKcal()));
-        marker.setLabelAnchor(RectangleAnchor.TOP_LEFT);
-        marker.setLabelTextAnchor(TextAnchor.BOTTOM_LEFT);
+        //<editor-fold desc="Add color of bars depend on value">
+        BarRenderer renderer = new BarRenderer() {
 
+            @Override
+            public Paint getItemPaint(int row, int column) {
+                CategoryDataset dataset = getPlot().getDataset();
+                Number value = dataset.getValue(row, column);
 
-        ValueMarker yellowMarker = new ValueMarker(4500);
-        yellowMarker.setPaint(Color.YELLOW);
-        yellowMarker.setStroke(new BasicStroke(2.0f));
+                if (value == null) {
+                    return Color.GRAY;
+                }
 
-        // optional label
-        yellowMarker.setLabel("4500");
-        yellowMarker.setLabelAnchor(RectangleAnchor.TOP_LEFT);
-        yellowMarker.setLabelTextAnchor(TextAnchor.BOTTOM_LEFT);
-        
-        categoryPlot.addRangeMarker(marker);
-        categoryPlot.addRangeMarker(yellowMarker);
+                double v = value.doubleValue();
 
+                if (v < greenMarker) {
+                    return Color.GREEN;
+                } else if (v >= greenMarker && v < yellowMarker) {
+                    return Color.YELLOW;
+                } else if (v >= orangeMarker && v < redMarker) {
+                    return Color.ORANGE;
+                } else {
+                    return Color.RED;
+                }
+            }
+        };
+        // Optional: flat colors (no gradient)
+        renderer.setBarPainter(new org.jfree.chart.renderer.category.StandardBarPainter());
+        renderer.setDrawBarOutline(false);
+
+        categoryPlot.setRenderer(renderer);
+        //</editor-fold>
+
+        //<editor-fold desc="Add marker to chart">
+
+        //<editor-fold desc="greenMarkerValueMarker">
+        ValueMarker greenMarkerValueMarker = new ValueMarker(greenMarker);
+        greenMarkerValueMarker.setPaint(greenMarkerColor);
+        greenMarkerValueMarker.setStroke(new
+                BasicStroke(2.0f));
+
+        greenMarkerValueMarker.setLabel(String.valueOf(Config.BMRActual.getKcal()));
+        greenMarkerValueMarker.setLabelAnchor(RectangleAnchor.TOP_LEFT);
+        greenMarkerValueMarker.setLabelTextAnchor(TextAnchor.BOTTOM_LEFT);
+        //</editor-fold>
+
+        //<editor-fold desc="yellowMarkerValueMarker">
+        ValueMarker yellowMarkerValueMarker = new ValueMarker(yellowMarker);
+        yellowMarkerValueMarker.setPaint(yellowMarkerColor);
+        yellowMarkerValueMarker.setStroke(new
+
+                BasicStroke(2.0f));
+
+        yellowMarkerValueMarker.setLabel(String.valueOf(yellowMarker));
+        yellowMarkerValueMarker.setLabelAnchor(RectangleAnchor.TOP_LEFT);
+        yellowMarkerValueMarker.setLabelTextAnchor(TextAnchor.BOTTOM_LEFT);
+        //</editor-fold>
+
+        //<editor-fold desc="orangeMarkerValueMarker">
+        ValueMarker orangeMarkerValueMarker = new ValueMarker(orangeMarker);
+        orangeMarkerValueMarker.setPaint(orangeMarkerColor);
+        orangeMarkerValueMarker.setStroke(new
+
+                BasicStroke(2.0f));
+
+        orangeMarkerValueMarker.setLabel(String.valueOf(orangeMarker));
+        orangeMarkerValueMarker.setLabelAnchor(RectangleAnchor.TOP_LEFT);
+        orangeMarkerValueMarker.setLabelTextAnchor(TextAnchor.BOTTOM_LEFT);
+        //</editor-fold>
+
+        //<editor-fold desc="redMarkerValueMarker">
+        ValueMarker redMarkerValueMarker = new ValueMarker(redMarker);
+        redMarkerValueMarker.setPaint(redMarkerColor);
+        redMarkerValueMarker.setStroke(new
+
+                BasicStroke(2.0f));
+
+        redMarkerValueMarker.setLabel(String.valueOf(redMarker));
+        redMarkerValueMarker.setLabelAnchor(RectangleAnchor.TOP_LEFT);
+        redMarkerValueMarker.setLabelTextAnchor(TextAnchor.BOTTOM_LEFT);
+
+        //<editor-fold desc="blackAverageMarkerValueMarker">
+        ValueMarker blackAverageMarkerValueMarker = new ValueMarker(blackAverageMarker);
+        blackAverageMarkerValueMarker.setPaint(blackAverageMarkerColor);
+        blackAverageMarkerValueMarker.setStroke(new
+
+                BasicStroke(2.0f));
+
+        blackAverageMarkerValueMarker.setLabel(String.valueOf(blackAverageMarker));
+        blackAverageMarkerValueMarker.setLabelAnchor(RectangleAnchor.TOP_LEFT);
+        blackAverageMarkerValueMarker.setLabelTextAnchor(TextAnchor.BOTTOM_LEFT);
+        //</editor-fold>
+
+        categoryPlot.addRangeMarker(greenMarkerValueMarker);
+        categoryPlot.addRangeMarker(yellowMarkerValueMarker);
+        categoryPlot.addRangeMarker(orangeMarkerValueMarker);
+        categoryPlot.addRangeMarker(redMarkerValueMarker);
+        categoryPlot.addRangeMarker(blackAverageMarkerValueMarker);
+        //</editor-fold>
+
+        //</editor-fold>
 
         DisplayChart.showChart(jFreeChart);
     }
@@ -932,6 +1042,7 @@ public class CalendarMonthStatsView {
 
         return fullDate;
     }
+
     private int getYearFromComboBox() {
         int year = -1;
         String dateFromComboBox = monthSelectComboBox.getSelectedItem().toString();
@@ -944,11 +1055,13 @@ public class CalendarMonthStatsView {
 
         return year;
     }
+
     private int getMonthFromComboBox() {
         String month = monthSelectComboBox.getSelectedItem().toString().replaceAll("[0-9]", "");
 
         return getNumberOfMonthInYear(month);
     }
+
     private Macro getAverageMacroForMonth(String month) {
         String fullDate = "";
 
@@ -1236,7 +1349,7 @@ public class CalendarMonthStatsView {
         mainWindow.repaint();
     }
 
-    //</editor-fold>
+//</editor-fold>
 
     //<editor-fold desc="Actions Listeners, Item Listeners">
     private class DaysButtonsActionListener implements ActionListener {
@@ -1350,5 +1463,5 @@ public class CalendarMonthStatsView {
     }
 
 
-    //</editor-fold>
+//</editor-fold>
 }
