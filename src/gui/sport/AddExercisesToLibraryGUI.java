@@ -3,16 +3,13 @@ package gui.sport;
 import configuration.Config;
 import tools.calendar_tools.MyDate;
 import tools.products_tools.Macro;
+import tools.sql_tools.SQLSelect;
 import tools.sql_tools.days_statistics.SelectFromDaysStatistics;
-import tools.sql_tools.general.GetConnection;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -320,15 +317,27 @@ public class AddExercisesToLibraryGUI {
     }
 
     private String getNewIDForExercise() {
-        try {
-            Connection connection = GetConnection.getConnectionWithLocalHost();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+            /* id examples (always 6 characters):
+            00001e
+            00022e
+            00123e
+
+             */
+            String idString = "";
+
+            // Get last id
+            // Create new next id
 
 
 
-        return "-1";
+            return idString;
+    }
+
+    private String[] getAllIDsInTable(){
+        // TO DO - 17.12
+        SQLSelect.getAllValuesInColumn("exercises_library_table_test", 0);
+
+        return null;
     }
 
     //</editor-fold>

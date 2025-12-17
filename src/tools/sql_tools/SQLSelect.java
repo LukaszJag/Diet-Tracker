@@ -245,6 +245,7 @@ public class SQLSelect {
     }
 
     public static String[] getAllValuesInColumn(String tableName, int column) {
+        String[] columnValues;
         try {
             ResultSet resultSet;
             Statement statement;
@@ -260,7 +261,7 @@ public class SQLSelect {
             resultSet = statement.executeQuery(sql);
             amountOfRows = resultSet.getRow();
 
-            String[] columnValues = new String[amountOfRows];
+            columnValues = new String[amountOfRows];
 
             int counter = 0;
             while (resultSet.next()) {
@@ -272,7 +273,7 @@ public class SQLSelect {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return null;
+        return columnValues;
     }
 
     public static String[] getAllValuesInColumn(String tableName, String columnName) {
