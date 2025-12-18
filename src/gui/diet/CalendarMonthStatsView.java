@@ -881,6 +881,10 @@ public class CalendarMonthStatsView {
         for (int i = 0; i < amountOfMonthDays; i++) {
             valuesKcal[i] = SelectFromDaysStatistics.getMacroFromDaysStatisticsByDate(daysNumbers[i]).getKcal();
         }
+
+        for (int i = 0; i < amountOfMonthDays; i++) {
+            System.out.println("[" + i + "]: " + valuesKcal[i]);
+        }
         //</editor-fold>
 
         //<editor-fold desc="Setup chart fields">
@@ -899,8 +903,8 @@ public class CalendarMonthStatsView {
 
         //<editor-fold desc="Set float value and colors - Marker">
         float greenMarker = Config.BMRActual.getKcal();
-        float yellowMarker = 4000;
-        float orangeMarker = 4500;
+        float yellowMarker = 4500;
+        float orangeMarker = 5000;
         float redMarker = 5500;
         float blackAverageMarker = 0;
 
@@ -940,7 +944,7 @@ public class CalendarMonthStatsView {
                     return Color.GREEN;
                 } else if (v >= greenMarker && v < yellowMarker) {
                     return Color.YELLOW;
-                } else if (v >= orangeMarker && v < redMarker) {
+                } else if (v >= yellowMarker && v < redMarker) {
                     return Color.ORANGE;
                 } else {
                     return Color.RED;
@@ -979,6 +983,7 @@ public class CalendarMonthStatsView {
         yellowMarkerValueMarker.setLabelTextAnchor(TextAnchor.BOTTOM_LEFT);
         //</editor-fold>
 
+        /*
         //<editor-fold desc="orangeMarkerValueMarker">
         ValueMarker orangeMarkerValueMarker = new ValueMarker(orangeMarker);
         orangeMarkerValueMarker.setPaint(orangeMarkerColor);
@@ -990,7 +995,7 @@ public class CalendarMonthStatsView {
         orangeMarkerValueMarker.setLabelAnchor(RectangleAnchor.TOP_LEFT);
         orangeMarkerValueMarker.setLabelTextAnchor(TextAnchor.BOTTOM_LEFT);
         //</editor-fold>
-
+*/
         //<editor-fold desc="redMarkerValueMarker">
         ValueMarker redMarkerValueMarker = new ValueMarker(redMarker);
         redMarkerValueMarker.setPaint(redMarkerColor);
@@ -1016,7 +1021,7 @@ public class CalendarMonthStatsView {
 
         categoryPlot.addRangeMarker(greenMarkerValueMarker);
         categoryPlot.addRangeMarker(yellowMarkerValueMarker);
-        categoryPlot.addRangeMarker(orangeMarkerValueMarker);
+        // categoryPlot.addRangeMarker(orangeMarkerValueMarker);
         categoryPlot.addRangeMarker(redMarkerValueMarker);
         categoryPlot.addRangeMarker(blackAverageMarkerValueMarker);
         //</editor-fold>
