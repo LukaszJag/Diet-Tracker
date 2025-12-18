@@ -13,6 +13,7 @@ import java.awt.event.ActionListener;
 import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class AddExercisesToLibraryGUI {
@@ -131,6 +132,19 @@ public class AddExercisesToLibraryGUI {
             weight_typeJTextField,
             commentJTextField,
             typeOfMeasureComboBox
+    }));
+
+    ArrayList<JLabel> allJLabelFieldArrayList = new ArrayList<JLabel>(List.of(new JLabel[]{
+            // Data in order from top to bottom
+            exercise_idLabel,
+            exercise_nameLabel,
+            exercise_targetLabel,
+            instructionsLabel,
+            body_partLabel,
+            added_weightLabel,
+            weight_typeLabel,
+            commentLabel,
+            type_of_measureLabel
     }));
     //</editor-fold>
 
@@ -294,7 +308,7 @@ public class AddExercisesToLibraryGUI {
 
     //<editor-fold desc="Data managing">
 
-    private void getDataFromGUI() {
+    private HashMap<String, String> getDataFromGUI() {
         String[] contentOfComponents = new String[allJTextFieldArrayList.size()];
         for (int i = 0; i < allJTextFieldArrayList.size(); i++) {
 
@@ -314,6 +328,17 @@ public class AddExercisesToLibraryGUI {
                 System.out.println(contentOfComponents[i]);
             }
         }
+
+        HashMap<String, String> resultHashMap = new HashMap<>();
+
+        // TO DO
+        // resultHashMap.
+
+        for (int i = 0; i < allJLabelFieldArrayList.size(); i++) {
+            resultHashMap.put(contentOfComponents[i], allJLabelFieldArrayList.get(i).getText());
+        }
+
+        return resultHashMap;
     }
 
     private String getNewIDForExercise() {
@@ -342,15 +367,19 @@ public class AddExercisesToLibraryGUI {
 
     //</editor-fold>
 
-
     //<editor-fold desc="Action Listeners Classes">
     private class AddExerciseAcceptButtonActionListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            getDataFromGUI();
+            HashMap<String, String> dataFromGUI = getDataFromGUI();
+
+            // TO DO
+            //System.out.println(InsertToTable.prepareSQLStatement("exercise", dataFromGUI));
+
+
+
         }
     }
     //</editor-fold>
-
 
 }
