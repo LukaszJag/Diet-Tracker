@@ -1,4 +1,4 @@
-INSERT INTO `diet_tracker_schema`.`product_table`
+INSERT INTO `test_Table_Name`
 (`column_1`,
 `column_2`,
 `column_3`,
