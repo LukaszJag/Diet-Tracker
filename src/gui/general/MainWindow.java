@@ -277,7 +277,6 @@ public class  MainWindow extends JFrame {
             StringSelection stringSelection = new StringSelection(gitHubCommentPattern);
             Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
             clipboard.setContents(stringSelection, null);
-
         }
     }
 }

@@ -48,25 +48,39 @@ public class AddProductToCalendarDay {
     //</editor-fold>
 
     //<editor-fold desc="Buttons">
-    JButton refreshDaysStatisticsDataBaseButton = new JButton("Refresh DaysStatistics Data");
+
+    //<editor-fold desc="South panel - buttons">
     JButton addProductToDayAcceptButton = new JButton("Accept");
-    JButton inputCurrentDayButton = new JButton("Input  current day");
-    JButton checkIfProductExistButton = new JButton("Check Product existing");
-    JButton fillTheExistingProductMacroButton = new JButton("Fill product");
-    JButton otherThenCurrentDateButton = new JButton("Other then current");
     JButton backToMainWindowButton = new JButton("Go to Start");
     JButton exitProgramProductWindowButton = new JButton("Exit application");
+    //</editor-fold>
+
+
+    //<editor-fold desc="West panel - buttons">
+    JButton inputCurrentDayButton = new JButton("Input  current day");
+    JButton checkCalendarTableButton = new JButton("Check calendar table");
+    JButton checkDaysStatisticFilledTableButton = new JButton("Check days statistic");
+    //</editor-fold>
+
+
+    //<editor-fold desc="East panel - buttons">
+    JButton checkIfProductExistButton = new JButton("Check Product existing");
+    JButton fillTheExistingProductMacroButton = new JButton("Fill product");
     JButton changeToCalendarMainTableButton = new JButton("Calendar Table");
     JButton changeToCalendarTestTableButton = new JButton("Calendar TEST Table");
     JButton clearTextFieldsButton = new JButton("Clear");
     JButton getProductFullInfo = new JButton("Get product full info");
     JButton showEnableShortCutsButton = new JButton("Shortcuts tips");
-    JButton checkCalendarTableButton = new JButton("Check calendar table");
-
-    JButton checkDaysStatisticFilledTableButton = new JButton("Check days statistic");
-
-    JButton productsCommentDisplayJButton = new JButton("Get comment");
     JButton calendarMonthStatsView = new JButton("Month stats view");
+    JButton refreshDaysStatisticsDataBaseButton = new JButton("Refresh DaysStatistics Data");
+    JButton editDaysStatisticsFileButton = new JButton("Edit days statistics");
+    //</editor-fold>
+
+
+    //<editor-fold desc="Main panel - buttons"">
+    JButton otherThenCurrentDateButton = new JButton("Other then current");
+    JButton productsCommentDisplayJButton = new JButton("Get comment");
+    //</editor-fold>
 
     //</editor-fold>
 
@@ -179,6 +193,14 @@ public class AddProductToCalendarDay {
     String[] columnsNamesFromDaysStatisticsToDisplayOnQuickView = {"day_date", "amount_of_points_from_notepad", "amount_of_filled_points_from_notepad", "kcal_consume", "protein_consume", "fat_consume", "carbs_consume", "day_name"};
     //</editor-fold>
 
+    //<editor-fold desc="Colors">
+    Color calendarMonthStatsViewButtonColor = new Color(90, 153, 39);
+    Color editDaysStatisticsUpperPanelColor = Color.BLACK;
+    Color editDaysStatisticsDownPanelColor = Color.gray;
+    Color editDaysStatisticsCenterPanelColor = Color.white;
+    Color editDaysStatisticsRightPanelColor = Color.BLUE;
+    Color editDaysStatisticsLeftPanelColor = new Color(46, 56, 68);
+    //</editor-fold>
     //</editor-fold>
 
     //<editor-fold desc="Starting constructors and methods">
@@ -280,7 +302,7 @@ public class AddProductToCalendarDay {
         JPanel middlePanelWest = new JPanel();
         JPanel bottomPanelWest = new JPanel();
 
-        upperPanelWest.setLayout(new GridLayout(4,2));
+        upperPanelWest.setLayout(new GridLayout(4, 2));
         middlePanelWest.setLayout(new BoxLayout(middlePanelWest, BoxLayout.Y_AXIS));
 
         upperPanelWest.setBackground(Color.BLACK);
@@ -311,7 +333,6 @@ public class AddProductToCalendarDay {
         chosenCalendarTableLabel = new JLabel("Current Table is: " + Config.CURRENT_DATABASE_TABLE_CALENDAR);
         chosenCalendarTableLabel.setForeground(Config.CHOSE_TABLE_TO_INSERT_DATA);
         chosenCalendarTableLabel.setFont(new Font(chosenCalendarTableLabel.getFont().getFontName(), chosenCalendarTableLabel.getFont().getStyle(), 11));
-
 
 
         checkCalendarTableButton.addActionListener(new CheckCalendarTableActionListener());
@@ -407,11 +428,14 @@ public class AddProductToCalendarDay {
         addProductToDayPanelEast.add(showEnableShortCutsButton);
 
         calendarMonthStatsView.addActionListener(new CalendarMonthStatsViewActionListener());
+        calendarMonthStatsView.setBackground(calendarMonthStatsViewButtonColor);
         addProductToDayPanelEast.add(calendarMonthStatsView);
 
         refreshDaysStatisticsDataBaseButton.addActionListener(new RefreshDaysStatisticsDataBaseButtonActionListener());
         addProductToDayPanelEast.add(refreshDaysStatisticsDataBaseButton);
 
+        editDaysStatisticsFileButton.addActionListener(new EditDaysStatisticsFileButtonActionListener());
+        addProductToDayPanelEast.add(editDaysStatisticsFileButton);
         //</editor-fold>
 
         //<editor-fold desc="Add Components to Panel - South">
@@ -1252,6 +1276,92 @@ public class AddProductToCalendarDay {
             checkDaysStatisticFilledTableButtonWindowFrame.setLocationRelativeTo(null);
             checkDaysStatisticFilledTableButtonWindowFrame.show();
         }
+    }
+
+    //<editor-fold desc="EditDaysStatisticsFileButtonActionListener - class and methods">
+    private class EditDaysStatisticsFileButtonActionListener implements ActionListener {
+        JFrame editDaysStatisticsDialogFrame = new JFrame("Edit Days Statistics File");
+        JTable editDaysStatisticsTable;
+
+        JPanel leftPanel = new JPanel();
+        JPanel rightPanel = new JPanel();
+        JPanel centerPanel = new JPanel();
+        JPanel upperPanel = new JPanel();
+        JPanel downPanel = new JPanel();
+
+        JLabel columPickerLabel = new JLabel("Column name(value)");
+        JLabel valuePickerLabel = new JLabel("Set value to:");
+
+        JTextField columPickerTextField = new JTextField(6);
+        JTextField valuePickerTextField = new JTextField(6);
+
+        JButton acceptButton = new JButton("Accept");
+        JButton exitButton = new JButton("Exit");
+
+        JComboBox<String> pickYearComboBox = new JComboBox<String>(new String[]{"2024", "2025"});
+        JComboBox<String> pickFileName = new JComboBox<String>();
+
+
+
+        private void setupFrame() {
+            editDaysStatisticsDialogFrame.setSize(600, 800);
+            editDaysStatisticsDialogFrame.setResizable(false);
+            editDaysStatisticsDialogFrame.setLocationRelativeTo(null);
+            editDaysStatisticsDialogFrame.setVisible(true);
+        }
+
+        private void setupPanels() {
+            editDaysStatisticsDialogFrame.add(upperPanel, BorderLayout.NORTH);
+            editDaysStatisticsDialogFrame.add(leftPanel, BorderLayout.WEST);
+            editDaysStatisticsDialogFrame.add(centerPanel, BorderLayout.CENTER);
+            editDaysStatisticsDialogFrame.add(rightPanel, BorderLayout.EAST);
+            editDaysStatisticsDialogFrame.add(downPanel, BorderLayout.SOUTH);
+
+
+            upperPanel.setBackground(editDaysStatisticsUpperPanelColor);
+            downPanel.setBackground(editDaysStatisticsDownPanelColor);
+            centerPanel.setBackground(editDaysStatisticsCenterPanelColor);
+            rightPanel.setBackground(editDaysStatisticsRightPanelColor);
+            leftPanel.setBackground(editDaysStatisticsLeftPanelColor);
+
+            upperPanel.setPreferredSize(new Dimension(addProductToDayFrame.getWidth(),50));
+            downPanel.setPreferredSize(new Dimension(addProductToDayFrame.getWidth(), 150));
+            centerPanel.setPreferredSize(new Dimension(400, 600));
+            rightPanel.setPreferredSize(new Dimension(100, 600));
+            leftPanel.setPreferredSize(new Dimension(100, 600));
+
+        }
+
+        private void prepareJTable() {
+            editDaysStatisticsTable = new JTable(31, 2);
+
+            for (int i = 0; i < 31; i++) {
+                editDaysStatisticsTable.setValueAt(String.valueOf(i), i, 0);
+            }
+        }
+
+        private void addComponentsToPanels(){
+            // TO DO
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+
+            prepareJTable();
+
+            editDaysStatisticsDialogFrame.setLayout(new BorderLayout());
+
+            setupPanels();
+
+            centerPanel.add(editDaysStatisticsTable);
+
+
+            setupFrame();
+
+
+        }
+        //</editor-fold>
+
     }
     //</editor-fold>
 
