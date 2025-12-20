@@ -13,7 +13,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
 
-public class MainWindow extends JFrame {
+
+import java.awt.datatransfer.StringSelection;
+import java.awt.Toolkit;
+import java.awt.datatransfer.Clipboard;
+
+
+public class  MainWindow extends JFrame {
     public MainWindow() {
         makeRunWindow();
     }
@@ -50,6 +56,8 @@ public class MainWindow extends JFrame {
     JButton refreshCalendarAndProductDataBaseButton = new JButton("Refresh CalendarAndProduct Data");
     JButton refreshDaysStatisticsDataBaseButton = new JButton("Refresh DaysStatistics Data");
     JButton closeApplicationButton = new JButton("Exit");
+
+    JButton copyGithubCommentToCopyClipboardButton = new JButton("Get GitHub pattern");
     //</editor-fold>
 
     public void makeRunWindow() {
@@ -137,6 +145,9 @@ public class MainWindow extends JFrame {
 
         closeApplicationButton.addActionListener(new CloseAplicationButtonActionListener());
         panelRight.add(closeApplicationButton);
+
+        copyGithubCommentToCopyClipboardButton.addActionListener(new CopyGithubCommentToCopyClipboardButtonActionListener());
+        panelRight.add(copyGithubCommentToCopyClipboardButton);
     }
 
     private void addLabels() {
@@ -254,4 +265,19 @@ public class MainWindow extends JFrame {
         }
     }
 
+    private class CopyGithubCommentToCopyClipboardButtonActionListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+
+            String gitHubCommentPattern  = "Add Data\n" +
+                    "Add days (part of ?.?) -> +0\n" +
+                    "Add products -> +0\n" +
+                    "Add data to - quick_fill_amount_of_point_in_notepad -> +0";
+
+            StringSelection stringSelection = new StringSelection(gitHubCommentPattern);
+            Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+            clipboard.setContents(stringSelection, null);
+
+        }
+    }
 }
