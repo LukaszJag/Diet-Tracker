@@ -37,7 +37,28 @@ import static tools.calendar_tools.MyDate.getNumberOfMonthInYear;
 public class CalendarMonthStatsView {
     //<editor-fold desc="Main - Calendar Month Stats View - components and variables">
 
+    //<editor-fold desc="Colors">
+    Color greenKcalLimitColor = new Color(43, 191, 36);
+    Color yellowKcalLimitColor = new Color(255, 229, 46);
+    Color orangeKcalLimitColor = Color.ORANGE;
+    Color redKcalLimitColor = new Color(214, 23, 23);
+    Color noDataForButtonColor = new Color(37, 150, 190);
+
+
+    Color greenMarkerColor = new Color(43, 191, 36);
+    Color yellowMarkerColor = new Color(255, 229, 46);
+    Color redMarkerColor = new Color(214, 23, 23);
+    Color blackAverageMarkerColor = new Color(0, 0, 0);
+    //</editor-fold>
+
     String currentDate = "????-??-??";
+
+    //<editor-fold desc="Kcal Limits - float">
+    float greenKcalLimit = Config.BMRActual.getKcal();
+    float yellowKcalLimit = 4500;
+    float redKcalLimit = 5500;
+    //</editor-fold>
+
     //<editor-fold desc="Global Counters">
     int goodDaysCounter;
 
@@ -124,10 +145,12 @@ public class CalendarMonthStatsView {
     JLabel selectedDateAverageMacroForMonthLabel = new JLabel("Selected date average macro for month: ");
     //</editor-fold>
 
+    //<editor-fold desc="Combo Boxes">
     JComboBox monthSelectComboBox = new JComboBox<>(new String[]{"April", "May", "June", "July", "August", "September", "October",
             "November", "December", "January2025", "February2025", "March2025", "April2025", "May2025", "June2025", "July2025",
             "August2025", "September2025", "October2025", "November2025", "December2025"});
     JComboBox selectedDayProductsListComboBox = new JComboBox<String>();
+    //</editor-fold>
 
     //</editor-fold>
 
@@ -904,26 +927,18 @@ public class CalendarMonthStatsView {
         //<editor-fold desc="Set float value and colors - Marker">
         float greenMarker = Config.BMRActual.getKcal();
         float yellowMarker = 4500;
-        float orangeMarker = 5000;
         float redMarker = 5500;
         float blackAverageMarker = 0;
 
         int count = 0;
         float sum = 0;
         for (int i = 0; i < valuesKcal.length; i++) {
-            if (valuesKcal[i] > 0){
+            if (valuesKcal[i] > 0) {
                 sum += valuesKcal[i];
                 count++;
             }
         }
         blackAverageMarker = (sum / count);
-
-
-        Color greenMarkerColor = new Color(43, 191, 36);
-        Color yellowMarkerColor = new Color(255, 229, 46);
-        Color orangeMarkerColor = new Color(214, 141, 23);
-        Color redMarkerColor = new Color(214, 23, 23);
-        Color blackAverageMarkerColor = new Color(0, 0, 0);
         //</editor-fold>
 
         //<editor-fold desc="Add color of bars depend on value">
@@ -940,11 +955,11 @@ public class CalendarMonthStatsView {
 
                 double v = value.doubleValue();
 
-                if (v < greenMarker) {
+                if (v < greenKcalLimit) {
                     return Color.GREEN;
-                } else if (v >= greenMarker && v < yellowMarker) {
+                } else if (v >= greenKcalLimit && v < yellowKcalLimit) {
                     return Color.YELLOW;
-                } else if (v >= yellowMarker && v < redMarker) {
+                } else if (v >= yellowKcalLimit && v < redKcalLimit) {
                     return Color.ORANGE;
                 } else {
                     return Color.RED;
@@ -974,28 +989,23 @@ public class CalendarMonthStatsView {
         //<editor-fold desc="yellowMarkerValueMarker">
         ValueMarker yellowMarkerValueMarker = new ValueMarker(yellowMarker);
         yellowMarkerValueMarker.setPaint(yellowMarkerColor);
-        yellowMarkerValueMarker.setStroke(new
-
-                BasicStroke(2.0f));
+        yellowMarkerValueMarker.setStroke(new BasicStroke(2.0f));
 
         yellowMarkerValueMarker.setLabel(String.valueOf(yellowMarker));
         yellowMarkerValueMarker.setLabelAnchor(RectangleAnchor.TOP_LEFT);
         yellowMarkerValueMarker.setLabelTextAnchor(TextAnchor.BOTTOM_LEFT);
         //</editor-fold>
 
-        /*
-        //<editor-fold desc="orangeMarkerValueMarker">
-        ValueMarker orangeMarkerValueMarker = new ValueMarker(orangeMarker);
-        orangeMarkerValueMarker.setPaint(orangeMarkerColor);
-        orangeMarkerValueMarker.setStroke(new
+        //<editor-fold desc="blackAverageMarkerValueMarker">
+        ValueMarker blackAverageMarkerValueMarker = new ValueMarker(blackAverageMarker);
+        blackAverageMarkerValueMarker.setPaint(blackAverageMarkerColor);
+        blackAverageMarkerValueMarker.setStroke(new BasicStroke(2.0f));
 
-                BasicStroke(2.0f));
-
-        orangeMarkerValueMarker.setLabel(String.valueOf(orangeMarker));
-        orangeMarkerValueMarker.setLabelAnchor(RectangleAnchor.TOP_LEFT);
-        orangeMarkerValueMarker.setLabelTextAnchor(TextAnchor.BOTTOM_LEFT);
+        blackAverageMarkerValueMarker.setLabel(String.valueOf(blackAverageMarker));
+        blackAverageMarkerValueMarker.setLabelAnchor(RectangleAnchor.TOP_LEFT);
+        blackAverageMarkerValueMarker.setLabelTextAnchor(TextAnchor.BOTTOM_LEFT);
         //</editor-fold>
-*/
+
         //<editor-fold desc="redMarkerValueMarker">
         ValueMarker redMarkerValueMarker = new ValueMarker(redMarker);
         redMarkerValueMarker.setPaint(redMarkerColor);
@@ -1007,17 +1017,6 @@ public class CalendarMonthStatsView {
         redMarkerValueMarker.setLabelAnchor(RectangleAnchor.TOP_LEFT);
         redMarkerValueMarker.setLabelTextAnchor(TextAnchor.BOTTOM_LEFT);
 
-        //<editor-fold desc="blackAverageMarkerValueMarker">
-        ValueMarker blackAverageMarkerValueMarker = new ValueMarker(blackAverageMarker);
-        blackAverageMarkerValueMarker.setPaint(blackAverageMarkerColor);
-        blackAverageMarkerValueMarker.setStroke(new
-
-                BasicStroke(2.0f));
-
-        blackAverageMarkerValueMarker.setLabel(String.valueOf(blackAverageMarker));
-        blackAverageMarkerValueMarker.setLabelAnchor(RectangleAnchor.TOP_LEFT);
-        blackAverageMarkerValueMarker.setLabelTextAnchor(TextAnchor.BOTTOM_LEFT);
-        //</editor-fold>
 
         categoryPlot.addRangeMarker(greenMarkerValueMarker);
         categoryPlot.addRangeMarker(yellowMarkerValueMarker);
@@ -1134,35 +1133,50 @@ public class CalendarMonthStatsView {
                     fullDate = fullDate + daysButtons[i].getText();
                 }
 
-
+                //<editor-fold desc="Get counter for days">
+                // Get counter for days
                 // Set tag and color
-                if (dayMacroGoalStatus(fullDate) == 0) {
-                    daysButtons[i].setBackground(noDataColorLabelAndButton);
+                int statusFoDays = dayMacroGoalStatus(fullDate);
+                if (statusFoDays == 0) {
                     noDataDaysCounter++;
                 }
 
-                if (dayMacroGoalStatus(fullDate) == 1) {
-                    daysButtons[i].setBackground(goodDayDataColorLabelAndButton);
+                if (statusFoDays == 1) {
                     goodDaysCounter++;
                 }
 
-                if (dayMacroGoalStatus(fullDate) == 2) {
-                    daysButtons[i].setBackground(badDayDataColorLabelAndButton);
+                if (statusFoDays == 2) {
                     badDaysCounter++;
                 }
 
-                if (dayMacroGoalStatus(fullDate) == 3) {
-                    daysButtons[i].setBackground(comingDaysDaysColorLabelAndButton);
+                if (statusFoDays == 3) {
                     comingDaysCounter++;
                 }
-                if (dayMacroGoalStatus(fullDate) == 42) {
-                    daysButtons[i].setBackground(spainHolidaysDaysColorLabelAndButton);
+
+                //<editor-fold desc="Set colors for buttons">
+                // Set tag and color
+                if (statusFoDays != 0 && statusFoDays != 3) {
+                    float kcalValueForDay = getDayMacro(fullDate).getKcal();
+                    if (kcalValueForDay < greenKcalLimit) {
+                        daysButtons[i].setBackground(greenKcalLimitColor);
+                    } else if (kcalValueForDay >= greenKcalLimit && kcalValueForDay < yellowKcalLimit) {
+                        daysButtons[i].setBackground(yellowKcalLimitColor);
+                    } else if (kcalValueForDay >= yellowKcalLimit && kcalValueForDay < redKcalLimit) {
+                        daysButtons[i].setBackground(orangeKcalLimitColor);
+                    } else {
+                        daysButtons[i].setBackground(redKcalLimitColor);
+                    }
+                } else {
+                    daysButtons[i].setBackground(noDataForButtonColor);
                 }
+
+                //</editor-fold>
+
+                //</editor-fold>
             }
             fullDate = getDateFromComboBox();
         }
     }
-
 
     private int dayMacroGoalStatus(String fullDateSQLFriendly) {
         // int = 0 no data
@@ -1208,16 +1222,20 @@ public class CalendarMonthStatsView {
 
         if (parameterDate.compareTo(curentDate) > 0) {
             dayStatus = 3;
-        } else if (dayMacro.getKcal() == -2) {
+        } else if (dayMacro.getKcal() <= 0) {
             dayStatus = 0;
         } else if (dayMacro.getKcal() < goalKcal) {
             dayStatus = 1;
         } else if (dayMacro.getKcal() > goalKcal) {
             dayStatus = 2;
         }
-
-
         return dayStatus;
+    }
+
+    private Macro getDayMacro(String fullDateSQLFriendly) {
+        Macro dayMacro = SelectFromDaysStatistics.getMacroFromDaysStatisticsByDate(fullDateSQLFriendly);
+
+        return dayMacro;
     }
 
     //<editor-fold desc="Refresh methods">
