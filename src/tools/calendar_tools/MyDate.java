@@ -155,17 +155,6 @@ public class MyDate {
         return -1;
     }
 
-    public static int getAmountOfDaysInCurrentMonthOPassedMonth(int year, int month) {
-        LocalDate date = LocalDate.now();
-
-        LocalDate passedDate = LocalDate.of(year, month, MyDate.getAmountOfDaysInMonth(month));
-
-        if (date.isAfter(passedDate)) {
-            return MyDate.getAmountOfDaysInMonth(month);
-        } else {
-            return date.getDayOfMonth();
-        }
-    }
     //</editor-fold>
 
     //<editor-fold desc="Get number of - (...)">
@@ -376,12 +365,7 @@ public class MyDate {
     }
     //</editor-fold>
 
-
     //<editor-fold desc="Get date in (...) format">
-    public static String getCurrentDayInSQLFormat() {
-        return new SimpleDateFormat("yyyy-MM-dd").format(Config.date);
-    }
-
     public static String[] getAllDaysInMonthAndYearSQLFriendlyFormat(int month, int year) {
         String[] allDaysInSQLFormat = new String[getAmountOfDaysInMonth(month)];
 
@@ -414,6 +398,51 @@ public class MyDate {
             return false;
         }
     }
+
+    //<editor-fold desc="Get data from current date ">
+    public static int getCurrentMonthNumber() {
+        return Integer.valueOf(new SimpleDateFormat("MM").format(Config.date));
+    }
+
+    public static String getCurrentMonthName() {
+        return new SimpleDateFormat("MMMM").format(Config.date);
+    }
+
+    public static int getCurrentYear() {
+        return Integer.valueOf(new SimpleDateFormat("yyyy").format(Config.date));
+    }
+    public static int getAmountOfDaysInCurrentMonthOPassedMonth(int year, int month) {
+        LocalDate date = LocalDate.now();
+
+        LocalDate passedDate = LocalDate.of(year, month, MyDate.getAmountOfDaysInMonth(month));
+
+        if (date.isAfter(passedDate)) {
+            return MyDate.getAmountOfDaysInMonth(month);
+        } else {
+            return date.getDayOfMonth();
+        }
+    }
+    public static String getCurrentDayInSQLFormat() {
+        return new SimpleDateFormat("yyyy-MM-dd").format(Config.date);
+    }
+
+    public static String[] getAllDaysForCurrentMonthInSQLFriendlyFormat() {
+        int monthInt = Integer.valueOf(new SimpleDateFormat("MM").format(Config.date));
+        String firstPartOfResult = new SimpleDateFormat("yyyy-MM").format(Config.date);
+
+        int amountOfDaysInCurrentMonth = getAmountOfDaysInMonth(monthInt);
+        String[] allDays = new String[amountOfDaysInCurrentMonth];
+
+        for (int i = 0; i < amountOfDaysInCurrentMonth; i++) {
+            if (i < 9) {
+                allDays[i] = firstPartOfResult + "-0" + (i + 1);
+            } else {
+                allDays[i] = firstPartOfResult + "-" + (i + 1);
+            }
+        }
+        return allDays;
+    }
+    //</editor-fold>
 
 
 }
