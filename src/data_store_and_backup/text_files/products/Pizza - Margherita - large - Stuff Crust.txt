@@ -1,0 +1,9 @@
+Name: Pizza - Margherita - large - Stuff Crust
+Brand: Pizza Hut
+Package has: 1050.0
+Macro for: 100.0
+KCal: 380.0
+Protein: 14.0
+Fat: 18.0
+Carbs: 39.0
+Comment optional: Link: https://chatgpt.com/share/69485116-4f74-8005-84c5-d7b67ce20ad4

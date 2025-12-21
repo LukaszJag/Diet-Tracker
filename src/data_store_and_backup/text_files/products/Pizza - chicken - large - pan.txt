@@ -1,0 +1,9 @@
+Name: Pizza - chicken - large - pan
+Brand: Pizza Hut
+Package has: 924.0
+Macro for: 100.0
+KCal: 300.0
+Protein: 10.0
+Fat: 13.0
+Carbs: 34.0
+Comment optional: https://www.fatsecret.co.in/calories-nutrition/pizza-hut/chicken-pepperoni-pizza-(large)/1-serving

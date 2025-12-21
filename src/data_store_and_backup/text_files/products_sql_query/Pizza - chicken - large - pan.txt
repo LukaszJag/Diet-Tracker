@@ -1,0 +1,20 @@
+INSERT INTO `diet_tracker_schema`.product_table
+(`product_name`,
+`product_brand`,
+`product_package_has`,
+`product_macro_for`,
+`product_kcal`,
+`product_protein`,
+`product_fat`,
+`product_carbs`,
+`comment_optional`)
+Values
+('Pizza - chicken - large - pan',
+'Pizza Hut',
+924.0,
+100.0,
+300.0,
+10.0,
+13.0,
+34.0,
+'https://www.fatsecret.co.in/calories-nutrition/pizza-hut/chicken-pepperoni-pizza-(large)/1-serving');

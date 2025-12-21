@@ -1,0 +1,20 @@
+INSERT INTO `diet_tracker_schema`.product_table
+(`product_name`,
+`product_brand`,
+`product_package_has`,
+`product_macro_for`,
+`product_kcal`,
+`product_protein`,
+`product_fat`,
+`product_carbs`,
+`comment_optional`)
+Values
+('Pizza - Margherita - large - pan',
+'Pizza Hut',
+1050.0,
+100.0,
+380.0,
+14.0,
+18.0,
+39.0,
+'Link: https://chatgpt.com/share/69485116-4f74-8005-84c5-d7b67ce20ad4');

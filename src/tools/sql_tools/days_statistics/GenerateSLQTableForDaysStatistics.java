@@ -196,7 +196,7 @@ public class GenerateSLQTableForDaysStatistics {
             dateDay = String.valueOf(numberOfDay);
         }
 
-        pointInOneDay = FilesTools.readAndGetLineTXTFile("src/data_store_and_backup/text_files/days_statistics_test/quick_fill_amount_of_point_in_notepad/" + txtFile, numberOfDay);
+        pointInOneDay = FilesTools.readAndGetLineTXTFile("src/data_store_and_backup/text_files/days_statistics_test/" + year + "/" + txtFile, numberOfDay);
         queryForExecute = "UPDATE `diet_tracker_schema`.`days_statistics_test`" +
                 "SET "
                 + "`amount_of_points_from_notepad`= " + pointInOneDay

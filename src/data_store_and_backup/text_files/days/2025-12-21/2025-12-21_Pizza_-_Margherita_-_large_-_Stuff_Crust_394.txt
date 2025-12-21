@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2025-12-21',
+'Sunday',
+'Snack 2',
+394.0,
+'Pizza - Margherita - large - Stuff Crust',
+380.0,
+14.0,
+18.0,
+39.0,
+'2025-12-21 08:59:47',
+'none',
+1497.2001,
+153.66,
+70.92,
+55.16
+);
