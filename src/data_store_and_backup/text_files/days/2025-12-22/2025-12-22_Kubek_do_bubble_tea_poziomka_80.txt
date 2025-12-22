@@ -15,19 +15,19 @@ INSERT INTO `diet_tracker_schema`.`calendar`
 `fat_consume`,
 `protein_consume`)
 Values
-('2025-12-21',
-'Sunday',
+('2025-12-22',
+'Monday',
 'Second Breakfast',
-300.0,
-'Jajko gotowane na twardo',
-155.0,
-12.5,
-10.6,
-1.1,
-'2025-12-21 08:31:08',
+80.0,
+'Kubek do bubble tea poziomka',
+86.7,
+0.1,
+0.1,
+19.9,
+'2025-12-22 02:38:04',
 'none',
-465.0,
-3.3000002,
-31.800001,
-37.5
+69.36,
+15.92,
+0.080000006,
+0.080000006
 );

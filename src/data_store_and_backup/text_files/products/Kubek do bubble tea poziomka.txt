@@ -1,0 +1,9 @@
+Name: Kubek do bubble tea poziomka
+Brand: Soti
+Package has: 80.0
+Macro for: 100.0
+KCal: 86.7
+Protein: 0.1
+Fat: 0.1
+Carbs: 19.9
+Comment optional: Link: https://www.dine4fit.pl/produkty/kubek-do-bubble-tea-poziomka-soti

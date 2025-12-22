@@ -15,19 +15,19 @@ INSERT INTO `diet_tracker_schema`.`calendar`
 `fat_consume`,
 `protein_consume`)
 Values
-('2025-12-21',
-'Sunday',
-'Second Breakfast',
-300.0,
-'Jajko gotowane na twardo',
-155.0,
-12.5,
-10.6,
-1.1,
-'2025-12-22 02:19:55',
+('2025-12-22',
+'Monday',
+'Breakfast',
+247.0,
+'Cornellis Vanilla Maxi Max Ciastka Z Kremem Waniliowym Przekąska',
+480.0,
+4.0,
+23.0,
+63.0,
+'2025-12-22 02:26:49',
 'none',
-465.0,
-3.3000002,
-31.800001,
-37.5
+1185.6,
+155.61,
+56.81,
+9.88
 );
