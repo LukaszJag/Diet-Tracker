@@ -51,7 +51,7 @@ public class RunnerFullUpdateDayStatistics {
         }
     }
 
-    public static void runFullUpdateForAllOneMonthInDayStatistics(int numberOfDay, int numberOfMonth, int year) {
+    public static void runFullUpdateForOneMonthInDayStatistics(int numberOfDay, int numberOfMonth, int year) {
         String nameOfMonth = MyDate.getNameOfMonthFromNumber(numberOfMonth);
 
         System.out.println("Start: full update - table days_statistics_test -\t" + nameOfMonth + " - - " + year);

@@ -164,7 +164,6 @@ public class GenerateSLQTableForDaysStatistics {
                     + "`amount_of_points_from_notepad`= " + pointInOneDay
                     + " WHERE day_date = '" + year + "-" + numberOfMonthInYear + "-" + dateDay + "';";
 
-
             if (pointInOneDay.equals("")) {
                 return;
             }
