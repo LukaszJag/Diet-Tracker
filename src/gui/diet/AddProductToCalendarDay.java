@@ -9,6 +9,7 @@ import tools.products_tools.Macro;
 import tools.products_tools.Product;
 import tools.sql_tools.SQLSelect;
 import tools.sql_tools.calendar.InsertToCalendarDayTable;
+import tools.sql_tools.days_statistics.GenerateSLQTableForDaysStatistics;
 import tools.sql_tools.days_statistics.SelectFromDaysStatistics;
 import tools.sql_tools.general.GetConnection;
 import tools.text_files_tools.FilesTools;
@@ -24,9 +25,7 @@ import java.sql.Statement;
 import java.text.Format;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.HashMap;
+import java.util.*;
 
 public class AddProductToCalendarDay {
 
@@ -55,13 +54,11 @@ public class AddProductToCalendarDay {
     JButton exitProgramProductWindowButton = new JButton("Exit application");
     //</editor-fold>
 
-
     //<editor-fold desc="West panel - buttons">
     JButton inputCurrentDayButton = new JButton("Input  current day");
     JButton checkCalendarTableButton = new JButton("Check calendar table");
     JButton checkDaysStatisticFilledTableButton = new JButton("Check days statistic");
     //</editor-fold>
-
 
     //<editor-fold desc="East panel - buttons">
     JButton checkIfProductExistButton = new JButton("Check Product existing");
@@ -75,7 +72,6 @@ public class AddProductToCalendarDay {
     JButton refreshDaysStatisticsDataBaseButton = new JButton("Refresh DaysStatistics Data");
     JButton editDaysStatisticsFileButton = new JButton("Edit current statistics");
     //</editor-fold>
-
 
     //<editor-fold desc="Main panel - buttons"">
     JButton otherThenCurrentDateButton = new JButton("Other then current");
@@ -190,7 +186,7 @@ public class AddProductToCalendarDay {
 
     //<editor-fold desc="Strings and String arrays">
     String[] columnsNamesToDisplayOnQuickView = {"index", "day_date", "day_name", "product_name", "amount_of_product", "kcal_consume", "carbs_consume", "fat_consume", "protein_consume", "meal_name"};
-    String[] columnsNamesFromDaysStatisticsToDisplayOnQuickView = {"day_date", "amount_of_points_from_notepad", "amount_of_filled_points_from_notepad", "kcal_consume", "protein_consume", "fat_consume", "carbs_consume", "day_name"};
+    String[] columnsNamesFromDaysStatisticsToDisplayOnQuickView = {"index", "day_date", "amount_of_points_from_notepad", "amount_of_filled_points_from_notepad", "kcal_consume", "protein_consume", "fat_consume", "carbs_consume"};
     //</editor-fold>
 
     //<editor-fold desc="Colors">
@@ -623,7 +619,7 @@ public class AddProductToCalendarDay {
         }
 
         numberOfDayInt = Integer.parseInt(numberOfDay);
-        RunnerFullUpdateDayStatistics.runFullUpdateForAllOneMonthInDayStatistics(numberOfDayInt, monthInNumberInt, yearInNumber);
+        RunnerFullUpdateDayStatistics.runFullUpdateForOneMonthInDayStatistics(numberOfDayInt, monthInNumberInt, yearInNumber);
         //</editor-fold>
 
         JOptionPane.showMessageDialog(null, "Product has been added. Date: " +
@@ -761,6 +757,7 @@ public class AddProductToCalendarDay {
 
     //<editor-fold desc="Action Listeners Classes">
 
+    //<editor-fold desc="addProductToDay - Panel North - Buttons ActionListener">
     private class AddProductToDayAcceptButtonListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -768,48 +765,153 @@ public class AddProductToCalendarDay {
         }
 
     }
-
-    private class CheckIfProductExistButtonActionListener implements ActionListener {
-
+    private class BackToMainWindowButtonActionListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            String[] resultOfCheckIfProductExist;
-            boolean isExist = false;
+            addProductToDayFrame.setState(Frame.ICONIFIED);
+        }
+    }
+    private static class ExitApplicationButtonActionListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            System.exit(0);
+        }
+    }
+    //</editor-fold>
+
+    //<editor-fold desc="addProductToDay - Panel West - Buttons ActionListener">
+    private class InputCurrentDayButtonActionListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            addProductToDayDisplaySelectedFDateNameDayLabel.setText(MyDate.getDayNameInPascalCase());
+            addProductToDayDisplaySelectedFDateDayLabel.setText(MyDate.getCurrentDayInSQLFormat());
+        }
+    }
+    private class CheckCalendarTableActionListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            JFrame checkCalendarTableButtonWindowFrame = new JFrame("Calendar Table");
+
+            DefaultTableModel model = new DefaultTableModel();
+
+            for (int i = 0; i < columnsNamesToDisplayOnQuickView.length; i++) {
+                model.addColumn(columnsNamesToDisplayOnQuickView[i]);
+            }
+
+            JTable table = new JTable(model);
+
+            table.setModel(model);
+
+            table.getColumnModel().getColumn(0).setMaxWidth(50);
+
+            int minWidthForProductNameColumn = 300;
+            table.getColumnModel().getColumn(3).setMinWidth(minWidthForProductNameColumn);
+
+            //amount of product
+            int maxWidthForAmountOfProductColumn = 300;
+            table.getColumnModel().getColumn(4).setMaxWidth(maxWidthForAmountOfProductColumn);
+
+            //<editor-fold desc="Macro Columns">
+            int maxWidthForMacroColumns = 250;
+            table.getColumnModel().getColumn(5).setMaxWidth(maxWidthForMacroColumns);
+            table.getColumnModel().getColumn(6).setMaxWidth(maxWidthForMacroColumns);
+            table.getColumnModel().getColumn(7).setMaxWidth(maxWidthForMacroColumns);
+            table.getColumnModel().getColumn(8).setMaxWidth(maxWidthForMacroColumns);
+            //</editor-fold>
+
+
+            JScrollPane scrollPane = new JScrollPane(table);
+            String date = checkCalendarTableDateTextField.getText();
+            Connection connection;
+            String sql = "SELECT `day_date`, `day_name`, `product_name`, `amount_of_product`,  " +
+                    "`kcal_consume`, `carbs_consume`, `fat_consume`, `protein_consume`, `meal_name` " +
+                    "FROM calendar WHERE day_date=\"" +
+                    date +
+                    "\";";
             try {
-                resultOfCheckIfProductExist = SQLSelect.getRowFromProductTableByProductNameGetArray(productNameTextField.getText());
+                connection = GetConnection.getConnectionWithLocalHost();
+                Statement statement = connection.createStatement();
+                ResultSet resultSet = statement.executeQuery(sql);
+                int counter = 1;
+                while (resultSet.next()) {
+                    String day_date = resultSet.getString(1);
+                    String day_name = resultSet.getString(2);
+                    String product_name = resultSet.getString(3);
+                    String amount_of_product = resultSet.getString(4);
+                    String kcal_consume = resultSet.getString(5);
+                    String carbs_consume = resultSet.getString(6);
+                    String fat_consume = resultSet.getString(7);
+                    String protein_consume = resultSet.getString(8);
+                    String meal_name = resultSet.getString(9);
+
+                    model.addRow(new Object[]{counter, day_date, day_name, product_name, amount_of_product, kcal_consume, carbs_consume, fat_consume, protein_consume, meal_name});
+                    counter++;
+                }
             } catch (SQLException ex) {
                 throw new RuntimeException(ex);
             }
 
-            for (String pos : resultOfCheckIfProductExist) {
-                if (pos != null) {
-                    isExist = true;
-                    break;
-                }
-            }
-
-            if (isExist) {
-                String productData = "Product name:    " + resultOfCheckIfProductExist[0] + "\nKcal:    " + resultOfCheckIfProductExist[4]
-                        + "\nProtein:    " + resultOfCheckIfProductExist[5] + "\nFat:    " + resultOfCheckIfProductExist[6] + "\nCarbs:    " + resultOfCheckIfProductExist[7];
-                JOptionPane.showMessageDialog(null, "Product data:\n " + productData);
-            } else {
-                JOptionPane.showMessageDialog(null, "Product doesn't exist");
-            }
+            checkCalendarTableButtonWindowFrame.add(scrollPane);
+            checkCalendarTableButtonWindowFrame.setSize(Config.CHECK_CALENDAR_TABLE_BUTTON_WINDOW_FRAME_SIZE);
+            checkCalendarTableButtonWindowFrame.setResizable(false);
+            checkCalendarTableButtonWindowFrame.setLocationRelativeTo(null);
+            checkCalendarTableButtonWindowFrame.show();
         }
     }
-
-    private class FillTheExistingProductMacroButtonListener implements ActionListener {
+    private class CheckDaysStatisticFilledTableActionListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            if (isProductExist() == true) {
-                JOptionPane.showMessageDialog(null, "Product data has been filled");
-            } else {
-                JOptionPane.showMessageDialog(null, "Product doesn't exist");
+            JFrame checkDaysStatisticFilledTableButtonWindowFrame = new JFrame("Days Statistics");
+
+            DefaultTableModel model = new DefaultTableModel();
+
+            for (int i = 0; i < columnsNamesFromDaysStatisticsToDisplayOnQuickView.length; i++) {
+                model.addColumn(columnsNamesFromDaysStatisticsToDisplayOnQuickView[i]);
             }
 
+            JTable table = new JTable(model);
+            table.setModel(model);
+            JScrollPane scrollPane = new JScrollPane(table);
+            String date = checkDaysStatisticsTableDateTextField.getText();
+            Connection connection;
+            String sql = "SELECT `day_date`, `amount_of_points_from_notepad`, " +
+                    "`amount_of_filled_points_from_notepad`, `kcal_consume`, " +
+                    "`protein_consume`, `fat_consume`, `carbs_consume`, `day_name`" +
+                    "FROM days_statistics_test WHERE day_date LIKE\"" +
+                    date +
+                    "\";";
+            try {
+                connection = GetConnection.getConnectionWithLocalHost();
+                Statement statement = connection.createStatement();
+                ResultSet resultSet = statement.executeQuery(sql);
+                int counter = 1;
+                while (resultSet.next()) {
+                    String day_date = resultSet.getString(1);
+                    String day_name = resultSet.getString(2);
+                    String product_name = resultSet.getString(3);
+                    String amount_of_product = resultSet.getString(4);
+                    String kcal_consume = resultSet.getString(5);
+                    String carbs_consume = resultSet.getString(6);
+                    String fat_consume = resultSet.getString(7);
+                    String protein_consume = resultSet.getString(8);
+
+                    model.addRow(new Object[]{counter, day_date, day_name, product_name, amount_of_product, kcal_consume, carbs_consume, fat_consume, protein_consume});
+                    counter++;
+                }
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            }
+
+            checkDaysStatisticFilledTableButtonWindowFrame.add(scrollPane);
+            checkDaysStatisticFilledTableButtonWindowFrame.setSize(Config.CHECK_DAYS_STATISTIC_FILLED_TABLE_BUTTON_WINDOW_FRAME_SIZE);
+            checkDaysStatisticFilledTableButtonWindowFrame.setResizable(false);
+            checkDaysStatisticFilledTableButtonWindowFrame.setLocationRelativeTo(null);
+            checkDaysStatisticFilledTableButtonWindowFrame.show();
         }
     }
+    //</editor-fold>
 
+    //<editor-fold desc="addProductToDay - Panel Main - Buttons ActionListener">
     private class OtherThenCurrentDateButtonListener implements ActionListener {
 
         public OtherThenCurrentDateButtonListener() {
@@ -1009,21 +1111,60 @@ public class AddProductToCalendarDay {
 
 
     }
-
-    private class BackToMainWindowButtonActionListener implements ActionListener {
+    private class ProductsCommentDisplayJButtonActionListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            addProductToDayFrame.setState(Frame.ICONIFIED);
+            String productsComment;
+            try {
+                productsComment = SQLSelect.getRowFromProductTableByProductNameGetArray(productNameTextField.getText())[8];
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            }
+            JOptionPane.showMessageDialog(null, "Product's comment: " + productsComment);
         }
     }
+    //</editor-fold>
 
-    private static class ExitApplicationButtonActionListener implements ActionListener {
+    //<editor-fold desc="addProductToDay - Panel East - Buttons ActionListener">
+    private class CheckIfProductExistButtonActionListener implements ActionListener {
+
         @Override
         public void actionPerformed(ActionEvent e) {
-            System.exit(0);
+            String[] resultOfCheckIfProductExist;
+            boolean isExist = false;
+            try {
+                resultOfCheckIfProductExist = SQLSelect.getRowFromProductTableByProductNameGetArray(productNameTextField.getText());
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            }
+
+            for (String pos : resultOfCheckIfProductExist) {
+                if (pos != null) {
+                    isExist = true;
+                    break;
+                }
+            }
+
+            if (isExist) {
+                String productData = "Product name:    " + resultOfCheckIfProductExist[0] + "\nKcal:    " + resultOfCheckIfProductExist[4]
+                        + "\nProtein:    " + resultOfCheckIfProductExist[5] + "\nFat:    " + resultOfCheckIfProductExist[6] + "\nCarbs:    " + resultOfCheckIfProductExist[7];
+                JOptionPane.showMessageDialog(null, "Product data:\n " + productData);
+            } else {
+                JOptionPane.showMessageDialog(null, "Product doesn't exist");
+            }
         }
     }
+    private class FillTheExistingProductMacroButtonListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            if (isProductExist() == true) {
+                JOptionPane.showMessageDialog(null, "Product data has been filled");
+            } else {
+                JOptionPane.showMessageDialog(null, "Product doesn't exist");
+            }
 
+        }
+    }
     private class ChangeCalendarTableButtonListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -1031,7 +1172,6 @@ public class AddProductToCalendarDay {
             chosenCalendarTableLabel.setText("Current Table is: " + Config.CURRENT_DATABASE_TABLE_CALENDAR);
         }
     }
-
     private class ChangeCalendarTableToCalendarTestButtonListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -1039,7 +1179,6 @@ public class AddProductToCalendarDay {
             chosenCalendarTableLabel.setText("Current Table is: " + Config.CURRENT_DATABASE_TABLE_CALENDAR);
         }
     }
-
     private class ClearTextFieldsButtonActionListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -1058,15 +1197,6 @@ public class AddProductToCalendarDay {
             commentOptionalTextField.setText("");
         }
     }
-
-    private class InputCurrentDayButtonActionListener implements ActionListener {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            addProductToDayDisplaySelectedFDateNameDayLabel.setText(MyDate.getDayNameInPascalCase());
-            addProductToDayDisplaySelectedFDateDayLabel.setText(MyDate.getCurrentDayInSQLFormat());
-        }
-    }
-
     private class GetProductFullInfoActionListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -1084,105 +1214,6 @@ public class AddProductToCalendarDay {
             JOptionPane.showMessageDialog(null, "Full product info: " + productInfoInString);
         }
     }
-
-    private class RefreshDaysStatisticsDataBaseButtonActionListener implements ActionListener {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            try {
-                RunnerFullUpdateDayStatistics.runFullUpdateForAllMonthInDayStatistics();
-            } catch (SQLException ex) {
-                throw new RuntimeException(ex);
-            }
-
-            JOptionPane.showMessageDialog(null, "Day Statistics is update");
-        }
-    }
-
-    private class CheckCalendarTableActionListener implements ActionListener {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            JFrame checkCalendarTableButtonWindowFrame = new JFrame("Calendar Table");
-
-            DefaultTableModel model = new DefaultTableModel();
-
-            for (int i = 0; i < columnsNamesToDisplayOnQuickView.length; i++) {
-                model.addColumn(columnsNamesToDisplayOnQuickView[i]);
-            }
-
-            JTable table = new JTable(model);
-
-            table.setModel(model);
-
-            table.getColumnModel().getColumn(0).setMaxWidth(50);
-
-            int minWidthForProductNameColumn = 300;
-            table.getColumnModel().getColumn(3).setMinWidth(minWidthForProductNameColumn);
-
-            //amount of product
-            int maxWidthForAmountOfProductColumn = 300;
-            table.getColumnModel().getColumn(4).setMaxWidth(maxWidthForAmountOfProductColumn);
-
-            //<editor-fold desc="Macro Columns">
-            int maxWidthForMacroColumns = 250;
-            table.getColumnModel().getColumn(5).setMaxWidth(maxWidthForMacroColumns);
-            table.getColumnModel().getColumn(6).setMaxWidth(maxWidthForMacroColumns);
-            table.getColumnModel().getColumn(7).setMaxWidth(maxWidthForMacroColumns);
-            table.getColumnModel().getColumn(8).setMaxWidth(maxWidthForMacroColumns);
-            //</editor-fold>
-
-
-            JScrollPane scrollPane = new JScrollPane(table);
-            String date = checkCalendarTableDateTextField.getText();
-            Connection connection;
-            String sql = "SELECT `day_date`, `day_name`, `product_name`, `amount_of_product`,  " +
-                    "`kcal_consume`, `carbs_consume`, `fat_consume`, `protein_consume`, `meal_name` " +
-                    "FROM calendar WHERE day_date=\"" +
-                    date +
-                    "\";";
-            try {
-                connection = GetConnection.getConnectionWithLocalHost();
-                Statement statement = connection.createStatement();
-                ResultSet resultSet = statement.executeQuery(sql);
-                int counter = 1;
-                while (resultSet.next()) {
-                    String day_date = resultSet.getString(1);
-                    String day_name = resultSet.getString(2);
-                    String product_name = resultSet.getString(3);
-                    String amount_of_product = resultSet.getString(4);
-                    String kcal_consume = resultSet.getString(5);
-                    String carbs_consume = resultSet.getString(6);
-                    String fat_consume = resultSet.getString(7);
-                    String protein_consume = resultSet.getString(8);
-                    String meal_name = resultSet.getString(9);
-
-                    model.addRow(new Object[]{counter, day_date, day_name, product_name, amount_of_product, kcal_consume, carbs_consume, fat_consume, protein_consume, meal_name});
-                    counter++;
-                }
-            } catch (SQLException ex) {
-                throw new RuntimeException(ex);
-            }
-
-            checkCalendarTableButtonWindowFrame.add(scrollPane);
-            checkCalendarTableButtonWindowFrame.setSize(Config.CHECK_CALENDAR_TABLE_BUTTON_WINDOW_FRAME_SIZE);
-            checkCalendarTableButtonWindowFrame.setResizable(false);
-            checkCalendarTableButtonWindowFrame.setLocationRelativeTo(null);
-            checkCalendarTableButtonWindowFrame.show();
-        }
-    }
-
-    private class ProductsCommentDisplayJButtonActionListener implements ActionListener {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            String productsComment;
-            try {
-                productsComment = SQLSelect.getRowFromProductTableByProductNameGetArray(productNameTextField.getText())[8];
-            } catch (SQLException ex) {
-                throw new RuntimeException(ex);
-            }
-            JOptionPane.showMessageDialog(null, "Product's comment: " + productsComment);
-        }
-    }
-
     private class ShowEnableShortCutsButtonActionListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -1218,63 +1249,22 @@ public class AddProductToCalendarDay {
 
         }
     }
-
     private class CalendarMonthStatsViewActionListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
             new CalendarMonthStatsView();
         }
     }
-
-    private class CheckDaysStatisticFilledTableActionListener implements ActionListener {
+    private class RefreshDaysStatisticsDataBaseButtonActionListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            JFrame checkDaysStatisticFilledTableButtonWindowFrame = new JFrame("Days Statistics");
-
-            DefaultTableModel model = new DefaultTableModel();
-
-            for (int i = 0; i < columnsNamesFromDaysStatisticsToDisplayOnQuickView.length; i++) {
-                model.addColumn(columnsNamesFromDaysStatisticsToDisplayOnQuickView[i]);
-            }
-
-            JTable table = new JTable(model);
-            table.setModel(model);
-            JScrollPane scrollPane = new JScrollPane(table);
-            String date = checkDaysStatisticsTableDateTextField.getText();
-            Connection connection;
-            String sql = "SELECT `day_date`, `amount_of_points_from_notepad`, " +
-                    "`amount_of_filled_points_from_notepad`, `kcal_consume`, " +
-                    "`protein_consume`, `fat_consume`, `carbs_consume`, `day_name`" +
-                    "FROM days_statistics_test WHERE day_date LIKE\"" +
-                    date +
-                    "\";";
             try {
-                connection = GetConnection.getConnectionWithLocalHost();
-                Statement statement = connection.createStatement();
-                ResultSet resultSet = statement.executeQuery(sql);
-                int counter = 1;
-                while (resultSet.next()) {
-                    String day_date = resultSet.getString(1);
-                    String day_name = resultSet.getString(2);
-                    String product_name = resultSet.getString(3);
-                    String amount_of_product = resultSet.getString(4);
-                    String kcal_consume = resultSet.getString(5);
-                    String carbs_consume = resultSet.getString(6);
-                    String fat_consume = resultSet.getString(7);
-                    String protein_consume = resultSet.getString(8);
-
-                    model.addRow(new Object[]{counter, day_date, day_name, product_name, amount_of_product, kcal_consume, carbs_consume, fat_consume, protein_consume});
-                    counter++;
-                }
+                RunnerFullUpdateDayStatistics.runFullUpdateForAllMonthInDayStatistics();
             } catch (SQLException ex) {
                 throw new RuntimeException(ex);
             }
 
-            checkDaysStatisticFilledTableButtonWindowFrame.add(scrollPane);
-            checkDaysStatisticFilledTableButtonWindowFrame.setSize(Config.CHECK_DAYS_STATISTIC_FILLED_TABLE_BUTTON_WINDOW_FRAME_SIZE);
-            checkDaysStatisticFilledTableButtonWindowFrame.setResizable(false);
-            checkDaysStatisticFilledTableButtonWindowFrame.setLocationRelativeTo(null);
-            checkDaysStatisticFilledTableButtonWindowFrame.show();
+            JOptionPane.showMessageDialog(null, "Day Statistics is update");
         }
     }
 
@@ -1285,6 +1275,8 @@ public class AddProductToCalendarDay {
         JTable editDaysStatisticsTable;
         String pathToFile;
         String[] dataToSave;
+
+        LinkedHashMap<String, String> tableValues = new LinkedHashMap<>();
 
         //<editor-fold desc="Tables">
         JPanel leftPanel = new JPanel();
@@ -1327,8 +1319,15 @@ public class AddProductToCalendarDay {
             saveButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     getDataFromTable();
+                    saveTableValuesToFile();
                 }
 
+            });
+
+            exitButton.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    editDaysStatisticsDialogFrame.hide();
+                }
             });
 
         }
@@ -1398,24 +1397,35 @@ public class AddProductToCalendarDay {
                     + year + "/" + txtFile;
         }
 
-        private void getDataFromTable(){
+        private void getDataFromTable() {
             int amountOfRows = editDaysStatisticsTable.getRowCount();
             dataToSave = new String[amountOfRows];
+
+            String key;
+            String value;
+
             for (int i = 0; i < amountOfRows; i++) {
-                String value =  String.valueOf(editDaysStatisticsTable.getValueAt(i, 1));
-                System.out.println("[" + i + "]: " + value );
+                key = String.valueOf(editDaysStatisticsTable.getValueAt(i, 0));
+                value = String.valueOf(editDaysStatisticsTable.getValueAt(i, 1));
+                tableValues.put(key, value);
                 dataToSave[i] = value;
             }
         }
 
-        // TO DO
         private void saveTableValuesToFile() {
+            String contentToFile = "";
 
+            for (Map.Entry<String, String> mapElement : tableValues.entrySet()) {
+                contentToFile += mapElement.getValue() + "\n";
+            }
+
+            //TO DO
+            System.out.println("here here 1");
+            FilesTools.writeToFileOverwriteAllFile("src/data_store_and_backup/text_files/days_statistics_test/2025/december_2025.txt", contentToFile);
+            System.out.println("here here 2");
+            GenerateSLQTableForDaysStatistics.generateWholeMonthAndFillAmountOfPointsFromNotepad("december", 2025);
+            System.out.println("here here 3");
         }
-
-
-
-
 
 
         private void showFrameWindow() {
@@ -1428,6 +1438,7 @@ public class AddProductToCalendarDay {
         }
 
     }
+    //</editor-fold>
     //</editor-fold>
 
 
