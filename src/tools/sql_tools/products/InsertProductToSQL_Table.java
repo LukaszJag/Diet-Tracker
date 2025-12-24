@@ -2,7 +2,7 @@ package tools.sql_tools.products;
 
 import configuration.Config;
 import tools.products_tools.Product;
-import tools.sql_tools.general.GetConnection;
+import tools.sql_tools.general.get.GetConnection;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

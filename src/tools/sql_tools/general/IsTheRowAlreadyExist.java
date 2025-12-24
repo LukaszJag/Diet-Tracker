@@ -1,9 +1,8 @@
 package tools.sql_tools.general;
 
-import com.mysql.cj.protocol.Resultset;
+import tools.sql_tools.general.get.GetResultSet;
 
 import java.sql.*;
-import java.text.ParseException;
 
 public class IsTheRowAlreadyExist {
     public static boolean isTheDayAlreadyExist(String tableName, String columnName, String dataInStringToCheckFormatSQLFriendly) {

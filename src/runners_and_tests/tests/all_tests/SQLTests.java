@@ -4,7 +4,6 @@ import tools.sql_tools.CheckIfRowExist;
 import tools.sql_tools.SQLSelect;
 import tools.sql_tools.calendar.SelectFromCalendar;
 import tools.sql_tools.days_statistics.SelectFromDaysStatistics;
-import tools.sql_tools.general.GetResultSet;
 
 import java.sql.SQLException;
 

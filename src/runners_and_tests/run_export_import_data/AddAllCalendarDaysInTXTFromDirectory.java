@@ -1,7 +1,7 @@
 package runners_and_tests.run_export_import_data;
 
 import tools.sql_tools.CheckIfRowExist;
-import tools.sql_tools.general.RunQuery;
+import tools.sql_tools.general.run.RunQuery;
 import tools.text_files_tools.FilesTools;
 
 import java.sql.SQLException;

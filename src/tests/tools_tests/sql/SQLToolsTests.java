@@ -2,7 +2,7 @@ package tests.tools_tests.sql;
 
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import tools.sql_tools.general.InsertToTable;
+import tools.sql_tools.general.insert.InsertToTable;
 import tools.text_files_tools.FilesTools;
 
 import java.util.HashMap;
@@ -35,5 +35,9 @@ public class SQLToolsTests {
 
     }
 
+    @Nested
+    class SelectGeneralSQLTools{
+
+    }
 
 }

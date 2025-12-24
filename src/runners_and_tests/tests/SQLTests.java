@@ -2,7 +2,7 @@ package runners_and_tests.tests;
 
 import configuration.Config;
 import tools.sql_tools.SQLSelect;
-import tools.sql_tools.general.GetConnection;
+import tools.sql_tools.general.get.GetConnection;
 
 import java.sql.Connection;
 import java.sql.ResultSet;

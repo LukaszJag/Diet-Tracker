@@ -1,6 +1,6 @@
 package tools.sql_tools.calendar;
 
-import tools.sql_tools.general.RunQuery;
+import tools.sql_tools.general.run.RunQuery;
 import tools.text_files_tools.FilesTools;
 
 import java.io.File;

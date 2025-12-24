@@ -1,7 +1,7 @@
 package sql_queries.csv_tools;
 
 
-import tools.sql_tools.general.GetConnection;
+import tools.sql_tools.general.get.GetConnection;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;

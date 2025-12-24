@@ -11,7 +11,7 @@ import tools.sql_tools.SQLSelect;
 import tools.sql_tools.calendar.InsertToCalendarDayTable;
 import tools.sql_tools.days_statistics.GenerateSLQTableForDaysStatistics;
 import tools.sql_tools.days_statistics.SelectFromDaysStatistics;
-import tools.sql_tools.general.GetConnection;
+import tools.sql_tools.general.get.GetConnection;
 import tools.text_files_tools.FilesTools;
 
 import javax.swing.*;
@@ -1419,12 +1419,8 @@ public class AddProductToCalendarDay {
                 contentToFile += mapElement.getValue() + "\n";
             }
 
-            //TO DO
-            System.out.println("here here 1");
             FilesTools.writeToFileOverwriteAllFile("src/data_store_and_backup/text_files/days_statistics_test/2025/december_2025.txt", contentToFile);
-            System.out.println("here here 2");
             GenerateSLQTableForDaysStatistics.generateWholeMonthAndFillAmountOfPointsFromNotepad("december", 2025);
-            System.out.println("here here 3");
         }
 
 

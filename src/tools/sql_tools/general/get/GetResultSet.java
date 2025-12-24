@@ -1,4 +1,4 @@
-package tools.sql_tools.general;
+package tools.sql_tools.general.get;
 
 import java.sql.Connection;
 import java.sql.ResultSet;

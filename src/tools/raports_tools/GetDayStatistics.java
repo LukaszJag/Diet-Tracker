@@ -1,7 +1,7 @@
 package tools.raports_tools;
 
 import configuration.Config;
-import tools.sql_tools.general.GetConnection;
+import tools.sql_tools.general.get.GetConnection;
 
 import java.sql.Connection;
 import java.sql.ResultSet;

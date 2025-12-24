@@ -2,7 +2,7 @@ package tools.sql_tools.calendar;
 
 import tools.calendar_tools.DayInCalendar;
 import configuration.Config;
-import tools.sql_tools.general.GetConnection;
+import tools.sql_tools.general.get.GetConnection;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

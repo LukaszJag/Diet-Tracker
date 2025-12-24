@@ -1,6 +1,6 @@
 package tools.sql_tools;
 
-import tools.sql_tools.general.GetConnection;
+import tools.sql_tools.general.get.GetConnection;
 
 import java.sql.Connection;
 import java.sql.ResultSet;

@@ -1,4 +1,6 @@
-package tools.sql_tools.general;
+package tools.sql_tools.general.run;
+
+import tools.sql_tools.general.get.GetConnection;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

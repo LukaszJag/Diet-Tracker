@@ -1,6 +1,6 @@
 package tools.sql_tools.products;
 
-import tools.sql_tools.general.GetResultSet;
+import tools.sql_tools.general.get.GetResultSet;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

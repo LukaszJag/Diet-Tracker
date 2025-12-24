@@ -1,7 +1,7 @@
 package tools.sql_tools.days_statistics;
 
 import tools.calendar_tools.MyDate;
-import tools.sql_tools.general.RunQuery;
+import tools.sql_tools.general.run.RunQuery;
 
 import java.sql.SQLException;
 

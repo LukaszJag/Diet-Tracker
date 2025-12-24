@@ -1,5 +1,7 @@
 package tools.sql_tools.general;
 
+import tools.sql_tools.general.get.GetResultSet;
+
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
