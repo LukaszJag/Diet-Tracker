@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2025-12-24',
+'Wednesday',
+'Supper',
+77.0,
+'Łosoś pieczony z cytryną',
+279.0,
+24.0,
+19.0,
+3.0,
+'2025-12-25 02:00:46',
+'none',
+214.83,
+2.31,
+14.629999,
+18.48
+);

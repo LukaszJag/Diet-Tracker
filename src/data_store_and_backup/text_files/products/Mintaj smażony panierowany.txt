@@ -1,0 +1,9 @@
+Name: Mintaj smażony panierowany
+Brand: domowe
+Package has: 0.0
+Macro for: 100.0
+KCal: 172.0
+Protein: 11.5
+Fat: 8.32
+Carbs: 12.8
+Comment optional: Link: https://www.tabele-kalorii.pl/kalorie,Mintaj-smazony-panierowany.html

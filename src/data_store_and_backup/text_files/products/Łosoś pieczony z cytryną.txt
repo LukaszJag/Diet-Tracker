@@ -1,0 +1,9 @@
+Name: Łosoś pieczony z cytryną
+Brand: przepis
+Package has: 0.0
+Macro for: 100.0
+KCal: 279.0
+Protein: 24.0
+Fat: 19.0
+Carbs: 3.0
+Comment optional: Link: https://aniagotuje.pl/przepis/losos-pieczony-w-cytrusach-i-miodzie
