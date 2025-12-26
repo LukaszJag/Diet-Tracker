@@ -40,11 +40,12 @@ public class SQLToolsTests {
 
     @Nested
     class SelectGeneralSQLTools{
-@Test
+        // TO DO
+        @Test
         public void selectOneProductFromProductTable(){
     LinkedHashMap<String, String> functionOutput = Select.selectAllDataFromTable("product_table", "product_name", "=", "Arbuz");
-    LinkedHashMap<String, String> expected = new LinkedHashMap<>()
-    Assertions.assertTrue(functionOutput.entrySet().equals());
+    LinkedHashMap<String, String> expected = new LinkedHashMap<>();
+    Assertions.assertTrue(functionOutput.entrySet().equals(null));
 }
     }
 

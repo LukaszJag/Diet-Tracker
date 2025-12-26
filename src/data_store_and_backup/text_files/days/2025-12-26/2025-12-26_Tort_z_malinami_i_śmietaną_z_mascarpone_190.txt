@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2025-12-26',
+'Friday',
+'Snack 2',
+190.0,
+'Tort z malinami i śmietaną z mascarpone',
+261.87,
+3.96,
+15.2,
+26.75,
+'2025-12-26 11:06:27',
+'none',
+497.55298,
+50.825,
+28.88,
+7.524
+);

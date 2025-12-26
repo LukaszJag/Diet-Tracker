@@ -1,0 +1,9 @@
+Name: Mountain Dew
+Brand: Mountain Dew
+Package has: 0.0
+Macro for: 100.0
+KCal: 52.0
+Protein: 0.0
+Fat: 0.0
+Carbs: 13.0
+Comment optional: Link: https://www.carrefour.pl/napoje/napoje-gazowane-i-niegazowane/lemoniada-oranzada-toniki/mountain-dew-napoj-gazowany-500-ml

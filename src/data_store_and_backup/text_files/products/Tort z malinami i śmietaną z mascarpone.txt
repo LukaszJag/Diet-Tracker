@@ -1,0 +1,9 @@
+Name: Tort z malinami i śmietaną z mascarpone
+Brand: Przepis
+Package has: 0.0
+Macro for: 100.0
+KCal: 261.87
+Protein: 3.96
+Fat: 15.2
+Carbs: 26.75
+Comment optional: Link: https://www.tabele-kalorii.pl/kalorie,Tort-z-malinami-i-smietana-z-mascarpone-Przepis-od-olan.html

@@ -1,0 +1,20 @@
+INSERT INTO `diet_tracker_schema`.product_table
+(`product_name`,
+`product_brand`,
+`product_package_has`,
+`product_macro_for`,
+`product_kcal`,
+`product_protein`,
+`product_fat`,
+`product_carbs`,
+`comment_optional`)
+Values
+('Tort z malinami i śmietaną z mascarpone',
+'Przepis',
+0.0,
+100.0,
+261.87,
+3.96,
+15.2,
+26.75,
+'Link: https://www.tabele-kalorii.pl/kalorie,Tort-z-malinami-i-smietana-z-mascarpone-Przepis-od-olan.html');

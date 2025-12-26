@@ -1,0 +1,20 @@
+INSERT INTO `diet_tracker_schema`.product_table
+(`product_name`,
+`product_brand`,
+`product_package_has`,
+`product_macro_for`,
+`product_kcal`,
+`product_protein`,
+`product_fat`,
+`product_carbs`,
+`comment_optional`)
+Values
+('Mountain Dew',
+'Mountain Dew',
+0.0,
+100.0,
+52.0,
+0.0,
+0.0,
+13.0,
+'Link: https://www.carrefour.pl/napoje/napoje-gazowane-i-niegazowane/lemoniada-oranzada-toniki/mountain-dew-napoj-gazowany-500-ml');
