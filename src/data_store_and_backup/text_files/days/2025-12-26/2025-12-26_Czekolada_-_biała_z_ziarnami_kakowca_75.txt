@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2025-12-26',
+'Friday',
+'Supper',
+75.0,
+'Czekolada - biała z ziarnami kakowca',
+605.0,
+7.25,
+43.43,
+44.0,
+'2025-12-27 05:05:16',
+'none',
+453.75,
+33.0,
+32.572502,
+5.4375
+);

@@ -1,0 +1,9 @@
+Name: Czekolada - biała z ziarnami kakowca
+Brand: Prawdziwe kakao złoto majów z manufaktury Michała  Depty
+Package has: 75.0
+Macro for: 100.0
+KCal: 605.0
+Protein: 7.25
+Fat: 43.43
+Carbs: 44.0
+Comment optional: Dane z opakowania
