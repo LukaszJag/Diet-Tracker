@@ -56,6 +56,8 @@ public class AddProductToCalendarDay {
 
     //<editor-fold desc="West panel - buttons">
     JButton inputCurrentDayButton = new JButton("Input  current day");
+    JButton setNextDayButton = new JButton("+");
+    JButton setPreviousButton = new JButton("-");
     JButton checkCalendarTableButton = new JButton("Check calendar table");
     JButton checkDaysStatisticFilledTableButton = new JButton("Check days statistic");
     //</editor-fold>
@@ -250,6 +252,7 @@ public class AddProductToCalendarDay {
         addProductToDayPanelMain.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
         addProductToDayPanelMain.setLayout(gridLayoutMainPanel);
 
+        //addProductToDayPanelWest.setLayout();
 
         addProductToDayPanelWest.setLayout(panelWestGridLayout);
 
@@ -291,83 +294,93 @@ public class AddProductToCalendarDay {
         //</editor-fold>
 
         //<editor-fold desc="Add Components to Panel - West">
-        // Add Buttons
 
-
+        //<editor-fold desc="Setup inner panels">
         JPanel upperPanelWest = new JPanel();
         JPanel middlePanelWest = new JPanel();
         JPanel bottomPanelWest = new JPanel();
+        JPanel upperSecondPanel = new JPanel();
 
-        upperPanelWest.setLayout(new GridLayout(4, 2));
+        upperPanelWest.setLayout(new GridLayout(4, 4));
+        upperSecondPanel.setLayout(new BoxLayout(upperSecondPanel, BoxLayout.Y_AXIS));
         middlePanelWest.setLayout(new BoxLayout(middlePanelWest, BoxLayout.Y_AXIS));
 
-        upperPanelWest.setBackground(Color.BLACK);
+        upperSecondPanel.setBackground(Color.black);
+        upperPanelWest.setBackground(Color.ORANGE);
         middlePanelWest.setBackground(Color.BLACK);
         bottomPanelWest.setBackground(Color.BLACK);
+        //</editor-fold>
 
+
+        //<editor-fold desc="Upper - inner panel components setup">
+
+        // inputCurrentDayButton:
         inputCurrentDayButton.setPreferredSize(new Dimension(200, 10));
-
         inputCurrentDayButton.setAlignmentX(Component.LEFT_ALIGNMENT);
-
-
         inputCurrentDayButton.addActionListener(new InputCurrentDayButtonActionListener());
 
+        // addProductToDayDisplaySelectedDay:
         addProductToDayDisplaySelectedDay.setAlignmentX(Component.LEFT_ALIGNMENT);
         addProductToDayDisplaySelectedDay.setForeground(Config.addProductToDayCurrentDateLabelColor);
 
-
+        // addProductToDayDisplaySelectedFDateDayLabel:
         addProductToDayDisplaySelectedFDateDayLabel.setForeground(Config.addProductToDayCurrentDateLabelColor);
         addProductToDayDisplaySelectedFDateDayLabel.setText(new SimpleDateFormat("yyyy-MM-dd").format(Config.date));
 
-        setUpMacroTable();
-
+        // addProductToDayDisplaySelectedFDateNameDayLabel:
         addProductToDayDisplaySelectedFDateNameDayLabel.setForeground(Config.addProductToDayCurrentDateLabelColor);
-
         addProductToDayDisplaySelectedFDateNameDayLabel.setText(dayNameCurrentDateOnStartWindow);
 
-
+        // chosenCalendarTableLabel
         chosenCalendarTableLabel = new JLabel("Current Table is: " + Config.CURRENT_DATABASE_TABLE_CALENDAR);
         chosenCalendarTableLabel.setForeground(Config.CHOSE_TABLE_TO_INSERT_DATA);
         chosenCalendarTableLabel.setFont(new Font(chosenCalendarTableLabel.getFont().getFontName(), chosenCalendarTableLabel.getFont().getStyle(), 11));
+        //</editor-fold>
 
+        setUpMacroTable();
 
+        //<editor-fold desc="Mid - inner panel components setup">
+
+        // check - Calendar table
         checkCalendarTableButton.addActionListener(new CheckCalendarTableActionListener());
-
 
         checkCalendarTableDateTextField.setMaximumSize(new Dimension(100, 30));
         checkCalendarTableDateTextField.setText(addProductToDayDisplaySelectedFDateDayLabel.getText());
 
 
+        // check - Days Statistic table
         checkDaysStatisticFilledTableButton.addActionListener(new CheckDaysStatisticFilledTableActionListener());
-
 
         String dateForCheckDaysDStatisticsTable = addProductToDayDisplaySelectedFDateDayLabel.getText().substring(0, 5) + "12%";
         checkDaysStatisticsTableDateTextField.setText(dateForCheckDaysDStatisticsTable);
 
         checkDaysStatisticsTableDateTextField.setMaximumSize(new Dimension(100, 30));
 
-
+        // day Macro Table
         dayMacroTextArea.setPreferredSize(new Dimension(200, 500));
         dayMacroTextArea.setText(Macro.getShortMacroInformationPrettyFormat(curretDayMacro));
 
         macroTable.setMinimumSize(new Dimension(200, 150));
 
-
         BMRTitleJLabel.setForeground(Color.GREEN);
+        // Calendar Table
+
 
         setupBMRTable();
 
         howMuchMacroLeftJLabel.setForeground(Color.GREEN);
 
         setupHowMuchMacroLeftTable();
-
+        //</editor-fold>
 
         upperPanelWest.add(inputCurrentDayButton);
         upperPanelWest.add(chosenCalendarTableLabel);
 
-        JPanel upperSecondPanel = new JPanel();
-        upperSecondPanel.setLayout(new BoxLayout(upperSecondPanel, BoxLayout.Y_AXIS));
-        upperSecondPanel.setBackground(Color.black);
+        // TO DO
+        upperPanelWest.add(setPreviousButton);
+        upperPanelWest.add(setNextDayButton);
+
+
 
 
         upperSecondPanel.add(addProductToDayDisplaySelectedDay);
@@ -391,7 +404,7 @@ public class AddProductToCalendarDay {
 
         addProductToDayPanelWest.add(upperPanelWest);
         addProductToDayPanelWest.add(middlePanelWest);
-        //addProductToDayPanelWest.add(bottomPanelWest);
+        addProductToDayPanelWest.add(bottomPanelWest);
 
         //</editor-fold>
 
@@ -765,12 +778,14 @@ public class AddProductToCalendarDay {
         }
 
     }
+
     private class BackToMainWindowButtonActionListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
             addProductToDayFrame.setState(Frame.ICONIFIED);
         }
     }
+
     private static class ExitApplicationButtonActionListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -787,6 +802,7 @@ public class AddProductToCalendarDay {
             addProductToDayDisplaySelectedFDateDayLabel.setText(MyDate.getCurrentDayInSQLFormat());
         }
     }
+
     private class CheckCalendarTableActionListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -858,6 +874,7 @@ public class AddProductToCalendarDay {
             checkCalendarTableButtonWindowFrame.show();
         }
     }
+
     private class CheckDaysStatisticFilledTableActionListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -1111,6 +1128,7 @@ public class AddProductToCalendarDay {
 
 
     }
+
     private class ProductsCommentDisplayJButtonActionListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -1154,6 +1172,7 @@ public class AddProductToCalendarDay {
             }
         }
     }
+
     private class FillTheExistingProductMacroButtonListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -1165,6 +1184,7 @@ public class AddProductToCalendarDay {
 
         }
     }
+
     private class ChangeCalendarTableButtonListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -1172,6 +1192,7 @@ public class AddProductToCalendarDay {
             chosenCalendarTableLabel.setText("Current Table is: " + Config.CURRENT_DATABASE_TABLE_CALENDAR);
         }
     }
+
     private class ChangeCalendarTableToCalendarTestButtonListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -1179,6 +1200,7 @@ public class AddProductToCalendarDay {
             chosenCalendarTableLabel.setText("Current Table is: " + Config.CURRENT_DATABASE_TABLE_CALENDAR);
         }
     }
+
     private class ClearTextFieldsButtonActionListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -1197,6 +1219,7 @@ public class AddProductToCalendarDay {
             commentOptionalTextField.setText("");
         }
     }
+
     private class GetProductFullInfoActionListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -1214,6 +1237,7 @@ public class AddProductToCalendarDay {
             JOptionPane.showMessageDialog(null, "Full product info: " + productInfoInString);
         }
     }
+
     private class ShowEnableShortCutsButtonActionListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -1249,12 +1273,14 @@ public class AddProductToCalendarDay {
 
         }
     }
+
     private class CalendarMonthStatsViewActionListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
             new CalendarMonthStatsView();
         }
     }
+
     private class RefreshDaysStatisticsDataBaseButtonActionListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
