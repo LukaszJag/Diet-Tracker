@@ -197,7 +197,7 @@ public class AddProductToCalendarDay {
     Color editDaysStatisticsRightPanelColor = Color.BLUE;
     Color editDaysStatisticsLeftPanelColor = new Color(46, 56, 68);
 
-    Color centerPanelBackgroudColor = new Color(135,219, 255);
+    Color centerPanelBackgroudColor = new Color(135, 219, 255);
     //</editor-fold>
     //</editor-fold>
 
@@ -376,6 +376,10 @@ public class AddProductToCalendarDay {
         //<editor-fold desc="Add components to - upper panel west">
         upperPanelWest.add(inputCurrentDayButton);
         upperPanelWest.add(chosenCalendarTableLabel);
+
+        setNextDayButton.addActionListener(new SetNextButtonActionListener());
+        setPreviousButton.addActionListener(new SetPreviousButtonActionListener());
+
         upperPanelWest.add(setPreviousButton);
         upperPanelWest.add(setNextDayButton);
 
@@ -939,6 +943,22 @@ public class AddProductToCalendarDay {
             checkDaysStatisticFilledTableButtonWindowFrame.setResizable(false);
             checkDaysStatisticFilledTableButtonWindowFrame.setLocationRelativeTo(null);
             checkDaysStatisticFilledTableButtonWindowFrame.show();
+        }
+    }
+
+    private class SetNextButtonActionListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            String currentSetDate = addProductToDayDisplaySelectedFDateDayLabel.getText();
+            addProductToDayDisplaySelectedFDateDayLabel.setText(MyDate.getNextDayDateSQLFriendlyFormat(currentSetDate));
+        }
+    }
+
+    private class SetPreviousButtonActionListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            String currentSetDate = addProductToDayDisplaySelectedFDateDayLabel.getText();
+            addProductToDayDisplaySelectedFDateDayLabel.setText(MyDate.getPreviousDayDateSQLFriendlyFormat(currentSetDate));
         }
     }
     //</editor-fold>
