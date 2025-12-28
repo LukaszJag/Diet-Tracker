@@ -425,7 +425,6 @@ public class MyDate {
     public static String getCurrentDayInSQLFormat() {
         return new SimpleDateFormat("yyyy-MM-dd").format(Config.date);
     }
-
     public static String[] getAllDaysForCurrentMonthInSQLFriendlyFormat() {
         int monthInt = Integer.valueOf(new SimpleDateFormat("MM").format(Config.date));
         String firstPartOfResult = new SimpleDateFormat("yyyy-MM").format(Config.date);
@@ -441,6 +440,21 @@ public class MyDate {
             }
         }
         return allDays;
+    }
+    public static String getCurrentDayNameOfDayCapitalizationCase(){
+        Format format = new SimpleDateFormat("EEEE");
+        java.util.Date utilDateImport = new java.util.Date();
+        String dayName = format.format(utilDateImport);
+
+        return dayName;
+    }
+
+    public static String getCurrentDayNameOfDayLowerCase(){
+        Format format = new SimpleDateFormat("EEEE");
+        java.util.Date utilDateImport = new java.util.Date();
+        String dayName = format.format(utilDateImport);
+
+        return dayName.toLowerCase();
     }
     //</editor-fold>
 
