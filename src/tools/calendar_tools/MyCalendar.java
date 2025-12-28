@@ -3,7 +3,7 @@ package tools.calendar_tools;
 import configuration.Config;
 import tools.products_tools.Product;
 
-public class Calendar {
+public class MyCalendar {
 
     public static void addNewRowToCalendar(String dayDate, String dayName, float amountOfProduct, Product product){
         int argumentsPassed = 0;
