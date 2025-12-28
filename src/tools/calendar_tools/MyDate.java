@@ -3,8 +3,10 @@ package tools.calendar_tools;
 import configuration.Config;
 
 import java.text.Format;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.util.Calendar;
 import java.util.Date;
 
 public class MyDate {
@@ -386,6 +388,39 @@ public class MyDate {
 
         return allDaysInSQLFormat;
     }
+
+    public static String getNextDayDateSQLFriendlyFormat(String dateSQLForamt) {
+        String dt = dateSQLForamt;  // Start date
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Calendar c = Calendar.getInstance();
+        try {
+            c.setTime(sdf.parse(dt));
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
+        c.add(Calendar.DATE, 1);  // number of days to add
+        dt = sdf.format(c.getTime());
+        return dt;
+    }
+
+    // TO DO
+    public static String getNextDayDateSQLFriendlyFormat(int day, int month, int year) {
+        return null;
+    }
+
+    public static String getPreviousDayDateSQLFriendlyFormat(String dateSQLForamt) {
+        String dt = dateSQLForamt;  // Start date
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Calendar c = Calendar.getInstance();
+        try {
+            c.setTime(sdf.parse(dt));
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
+        c.add(Calendar.DATE, -1);  // number of days to add
+        dt = sdf.format(c.getTime());
+        return dt;
+    }
     //</editor-fold>
 
     public static boolean isYearAndMonthHasPassed(int year, int month, int day) {
@@ -411,6 +446,7 @@ public class MyDate {
     public static int getCurrentYear() {
         return Integer.valueOf(new SimpleDateFormat("yyyy").format(Config.date));
     }
+
     public static int getAmountOfDaysInCurrentMonthOPassedMonth(int year, int month) {
         LocalDate date = LocalDate.now();
 
@@ -422,9 +458,11 @@ public class MyDate {
             return date.getDayOfMonth();
         }
     }
+
     public static String getCurrentDayInSQLFormat() {
         return new SimpleDateFormat("yyyy-MM-dd").format(Config.date);
     }
+
     public static String[] getAllDaysForCurrentMonthInSQLFriendlyFormat() {
         int monthInt = Integer.valueOf(new SimpleDateFormat("MM").format(Config.date));
         String firstPartOfResult = new SimpleDateFormat("yyyy-MM").format(Config.date);
@@ -441,7 +479,8 @@ public class MyDate {
         }
         return allDays;
     }
-    public static String getCurrentDayNameOfDayCapitalizationCase(){
+
+    public static String getCurrentDayNameOfDayCapitalizationCase() {
         Format format = new SimpleDateFormat("EEEE");
         java.util.Date utilDateImport = new java.util.Date();
         String dayName = format.format(utilDateImport);
@@ -449,7 +488,7 @@ public class MyDate {
         return dayName;
     }
 
-    public static String getCurrentDayNameOfDayLowerCase(){
+    public static String getCurrentDayNameOfDayLowerCase() {
         Format format = new SimpleDateFormat("EEEE");
         java.util.Date utilDateImport = new java.util.Date();
         String dayName = format.format(utilDateImport);

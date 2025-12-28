@@ -9,6 +9,8 @@ import tools.calendar_tools.MyDate;
 import java.text.Format;
 import java.text.SimpleDateFormat;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 public class MyDateTests {
 
     @Nested
@@ -26,14 +28,51 @@ public class MyDateTests {
 
         @Test
         public void getCurrentDayNameOfDayCapitalizationCaseTest() {
-            Assertions.assertEquals("Sunday", MyDate.getCurrentDayNameOfDayCapitalizationCase());
+            assertEquals("Sunday", MyDate.getCurrentDayNameOfDayCapitalizationCase());
         }
 
         @Test
         public void getCurrentDayNameOfDayLowerCaseTest() {
-            Assertions.assertEquals("sunday", MyDate.getCurrentDayNameOfDayLowerCase());
+            assertEquals("sunday", MyDate.getCurrentDayNameOfDayLowerCase());
         }
 
-    }
+        @Nested
+        class GetNextDay {
+            @Test
+            public void getNextDayDateSQLFriendlyFormatTest1() {
+                assertEquals("2025-12-28",
+                        MyDate.getNextDayDateSQLFriendlyFormat("2025-12-27"));
+            }
 
+            @Test
+            public void getNextDayDateSQLFriendlyFormatTest2() {
+                assertEquals("2025-12-01",
+                        MyDate.getNextDayDateSQLFriendlyFormat("2025-11-30"));
+            }
+
+            @Test
+            public void getNextDayDateSQLFriendlyFormatTest3() {
+                assertEquals("2026-01-01",
+                        MyDate.getNextDayDateSQLFriendlyFormat("2025-12-31"));
+            }
+
+            @Test
+            public void getPreviousDayDateSQLFriendlyFormatTest1() {
+                assertEquals("2025-12-26",
+                        MyDate.getPreviousDayDateSQLFriendlyFormat("2025-12-27"));
+            }
+
+            @Test
+            public void getPreviousDayDateSQLFriendlyFormatTest2() {
+                assertEquals("2025-11-29",
+                        MyDate.getPreviousDayDateSQLFriendlyFormat("2025-11-30"));
+            }
+
+            @Test
+            public void getPreviousDayDateSQLFriendlyFormatTest3() {
+                assertEquals("2025-12-31",
+                        MyDate.getPreviousDayDateSQLFriendlyFormat("2026-01-01"));
+            }
+        }
+    }
 }
