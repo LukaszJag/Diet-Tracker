@@ -60,6 +60,9 @@ public class AddProductToCalendarDay {
     JButton setPreviousButton = new JButton("-");
     JButton checkCalendarTableButton = new JButton("Check calendar table");
     JButton checkDaysStatisticFilledTableButton = new JButton("Check days statistic");
+
+    JButton middlePanelWestPlusDayForDaysStatisticButton = new JButton("+");
+    JButton middlePanelWestMinusDayForDaysStatisticButton = new JButton("-");
     //</editor-fold>
 
     //<editor-fold desc="East panel - buttons">
@@ -296,6 +299,8 @@ public class AddProductToCalendarDay {
 
         //<editor-fold desc="Setup inner panels ->  upperPanelWest, middlePanelWest, tables panels">
         JPanel upperPanelWest = new JPanel();
+
+
         JPanel middlePanelWest = new JPanel();
 
         JPanel macroTablePanel = new JPanel();
@@ -303,7 +308,7 @@ public class AddProductToCalendarDay {
         JPanel howMuchMacroLeftPanel = new JPanel();
 
         upperPanelWest.setLayout(new GridLayout(4, 4));
-        middlePanelWest.setLayout(new GridLayout(2, 2));
+        middlePanelWest.setLayout(new GridLayout(2, 3));
 
         macroTablePanel.setLayout(new GridLayout(1, 1));
         BMRTablePanel.setLayout(new GridLayout(1, 1));
@@ -392,8 +397,18 @@ public class AddProductToCalendarDay {
         //<editor-fold desc="Add components to - middle panel west">
         middlePanelWest.add(checkCalendarTableButton);
         middlePanelWest.add(checkCalendarTableDateTextField);
+
+        middlePanelWestPlusDayForDaysStatisticButton.addActionListener(new MiddlePanelWestPlusDayForDaysStatisticButtonActionListener());
+        middlePanelWest.add(middlePanelWestPlusDayForDaysStatisticButton);
+
+
         middlePanelWest.add(checkDaysStatisticFilledTableButton);
         middlePanelWest.add(checkDaysStatisticsTableDateTextField);
+
+        middlePanelWestMinusDayForDaysStatisticButton.addActionListener(new MiddlePanelWestMinusDayForDaysStatisticButtonActionListener());
+        middlePanelWest.add(middlePanelWestMinusDayForDaysStatisticButton);
+
+
         //</editor-fold>
 
         //<editor-fold desc="Add components to - tables panels">
@@ -959,6 +974,22 @@ public class AddProductToCalendarDay {
         public void actionPerformed(ActionEvent e) {
             String currentSetDate = addProductToDayDisplaySelectedFDateDayLabel.getText();
             addProductToDayDisplaySelectedFDateDayLabel.setText(MyDate.getPreviousDayDateSQLFriendlyFormat(currentSetDate));
+        }
+    }
+
+    private class MiddlePanelWestPlusDayForDaysStatisticButtonActionListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            String oldDate = checkCalendarTableDateTextField.getText();
+            checkCalendarTableDateTextField.setText(MyDate.getNextDayDateSQLFriendlyFormat(oldDate));
+        }
+    }
+
+    private class MiddlePanelWestMinusDayForDaysStatisticButtonActionListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            String oldDate = checkCalendarTableDateTextField.getText();
+            checkCalendarTableDateTextField.setText(MyDate.getPreviousDayDateSQLFriendlyFormat(oldDate));
         }
     }
     //</editor-fold>
