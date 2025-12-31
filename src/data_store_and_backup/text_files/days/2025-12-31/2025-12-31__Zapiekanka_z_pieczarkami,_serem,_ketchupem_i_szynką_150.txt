@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2025-12-31',
+'Thursday',
+'Second Breakfast',
+150.0,
+' Zapiekanka z pieczarkami, serem, ketchupem i szynką',
+287.0,
+10.19,
+14.6,
+27.1,
+'2026-01-01 12:48:49',
+'none',
+430.5,
+40.65,
+21.900002,
+15.285
+);

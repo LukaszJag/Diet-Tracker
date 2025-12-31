@@ -1,0 +1,9 @@
+Name: Sernik wiedeński
+Brand: domowe
+Package has: 0.0
+Macro for: 100.0
+KCal: 254.0
+Protein: 11.6
+Fat: 12.4
+Carbs: 23.9
+Comment optional: Link: https://www.tabele-kalorii.pl/kalorie,Sernik-wiedenski.html
