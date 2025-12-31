@@ -148,7 +148,7 @@ public class CalendarMonthStatsView {
     //<editor-fold desc="Combo Boxes">
     JComboBox monthSelectComboBox = new JComboBox<>(new String[]{"April", "May", "June", "July", "August", "September", "October",
             "November", "December", "January2025", "February2025", "March2025", "April2025", "May2025", "June2025", "July2025",
-            "August2025", "September2025", "October2025", "November2025", "December2025"});
+            "August2025", "September2025", "October2025", "November2025", "December2025", "January2026"});
     JComboBox selectedDayProductsListComboBox = new JComboBox<String>();
     //</editor-fold>
 
@@ -227,7 +227,7 @@ public class CalendarMonthStatsView {
 
     //<editor-fold desc="Prepare Add Content - to Panels">
     private void prepareAndAddContentToMainPanel() {
-        setDaysButtonsMainPanel("December2025");
+        setDaysButtonsMainPanel("January2026");
     }
 
     private void prepareAndAddContentToNorthPanel() {
@@ -241,7 +241,7 @@ public class CalendarMonthStatsView {
         calendarMonthStatsViewPanelNorth.setLayout(northPanelGridLayout);
 
 
-        monthSelectComboBox.setSelectedItem("December2025");
+        monthSelectComboBox.setSelectedItem("January2026");
 
         selectedDaysCounterGoodDaysPanel = new JPanel();
         selectedDaysCounterBadDaysPanel = new JPanel();
@@ -453,6 +453,11 @@ public class CalendarMonthStatsView {
         if (yearAndMonthDateInSQLFormat.contains("2024")) {
             year = 2024;
         }
+
+        if (yearAndMonthDateInSQLFormat.contains("2026")) {
+            year = 2026;
+        }
+
         int month;
         if (yearAndMonthDateInSQLFormat.charAt(5) == '0') {
             month = Integer.valueOf(yearAndMonthDateInSQLFormat.charAt(6) + "");
@@ -495,6 +500,21 @@ public class CalendarMonthStatsView {
                 daysButtons[i].setPreferredSize(Config.CALENDAR_MONTH_STATS_VIEW_BUTTONS_SIZE_DIMENSION);
             }
         } else {
+            if (month.equals("January2026")) {
+                for (int i = 0; i < daysButtons.length; i++) {
+                    if (i < 3) {
+                        daysButtons[i] = new JButton("null");
+                    } else if (i >= 34) {
+                        daysButtons[i] = new JButton("null");
+                    } else {
+                        daysButtons[i] = new JButton(String.valueOf(counter));
+                        daysButtons[i].setPreferredSize(Config.CALENDAR_MONTH_STATS_VIEW_BUTTONS_SIZE_DIMENSION);
+                        daysButtons[i].addActionListener(new DaysButtonsActionListener(daysButtons[i]));
+                        counter++;
+                    }
+                }
+            }
+
             if (month.equals("December2025")) {
                 for (int i = 0; i < daysButtons.length; i++) {
                     if (i < 0) {
@@ -1035,6 +1055,9 @@ public class CalendarMonthStatsView {
     private String getDateFromComboBox() {
         String fullDate = "";
         String month = monthSelectComboBox.getSelectedItem().toString();
+        if (month.contains("2026")) {
+            fullDate = "2026";
+        }
         if (month.contains("2025")) {
             fullDate = "2025";
         }
@@ -1050,6 +1073,9 @@ public class CalendarMonthStatsView {
     private int getYearFromComboBox() {
         int year = -1;
         String dateFromComboBox = monthSelectComboBox.getSelectedItem().toString();
+        if (dateFromComboBox.contains("2026")) {
+            year = 2026;
+        }
         if (dateFromComboBox.contains("2025")) {
             year = 2025;
         }
@@ -1069,6 +1095,9 @@ public class CalendarMonthStatsView {
     private Macro getAverageMacroForMonth(String month) {
         String fullDate = "";
 
+        if (month.contains("2026")) {
+            fullDate = "2026";
+        }
         if (month.contains("2025")) {
             fullDate = "2025";
         }
