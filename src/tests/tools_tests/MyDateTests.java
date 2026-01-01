@@ -29,7 +29,7 @@ public class MyDateTests {
     public void getNumberOfMonthInYearIfStringContainsItsNameTest_5(){
         assertEquals(-1, getAmountOfDaysInMonthIfContainsItsName(""));
     }
-    // TO DO - 14.12.25
+    // TODO - 14.12.25
 /*
     @Test
     public void getNumberOfMonthInYearIfStringContainsItsNameTest_6(){

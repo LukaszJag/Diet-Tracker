@@ -106,7 +106,7 @@ public class MyDate {
         if (amountOfDays > 1) {
 
             System.out.println("Detected more then one month in input string");
-            // TO DO - 14.12.25
+            // TODO - 14.12.25
             //throw new IOException("Detected more then one month in input string");
         }
 
@@ -208,7 +208,6 @@ public class MyDate {
         if (month == 1) {
             return "January";
         }
-
         if (month == 2) {
             return "February";
         }
@@ -220,7 +219,6 @@ public class MyDate {
         if (month == 4) {
             return "April";
         }
-
 
         if (month == 5) {
             return "May";
@@ -352,6 +350,69 @@ public class MyDate {
         return "-1";
     }
 
+    // TODO
+    public static int getNameOfMonthContainsInString(String fullStringContainsMonth) {
+        int counterMonthsInText = 0;
+        int monthNumber = -2;
+        if (fullStringContainsMonth.toLowerCase().contains("january")) {
+            monthNumber = 1;
+            counterMonthsInText++;
+        }
+        if (fullStringContainsMonth.toLowerCase().contains("february")) {
+            monthNumber = 2;
+            counterMonthsInText++;
+        }
+        if (fullStringContainsMonth.toLowerCase().contains("march")) {
+            monthNumber = 3;
+            counterMonthsInText++;
+        }
+        if (fullStringContainsMonth.toLowerCase().contains("april")) {
+            monthNumber = 4;
+            counterMonthsInText++;
+        }
+        if (fullStringContainsMonth.toLowerCase().contains("may")) {
+            monthNumber = 5;
+            counterMonthsInText++;
+        }
+        if (fullStringContainsMonth.toLowerCase().contains("june")) {
+            monthNumber = 6;
+            counterMonthsInText++;
+        }
+        if (fullStringContainsMonth.toLowerCase().contains("july")) {
+            monthNumber = 7;
+            counterMonthsInText++;
+        }
+        if (fullStringContainsMonth.toLowerCase().contains("august")) {
+            monthNumber = 8;
+            counterMonthsInText++;
+        }
+        if (fullStringContainsMonth.toLowerCase().contains("september")) {
+            monthNumber = 9;
+            counterMonthsInText++;
+        }
+        if (fullStringContainsMonth.toLowerCase().contains("october")) {
+            monthNumber = 10;
+            counterMonthsInText++;
+        }
+        if (fullStringContainsMonth.toLowerCase().contains("november")) {
+            monthNumber = 11;
+            counterMonthsInText++;
+        }
+        if (fullStringContainsMonth.toLowerCase().contains("december")) {
+            monthNumber = 12;
+            counterMonthsInText++;
+        }
+
+        // TODO
+        if (counterMonthsInText > 1) {
+            return -100;
+        } else if (counterMonthsInText == 1) {
+            return monthNumber;
+        } else {
+            return -1;
+        }
+    }
+
     public static String getDayNameInPascalCase() {
         Format format = new SimpleDateFormat("EEEE");
         java.util.Date utilDateImport = new java.util.Date();
@@ -403,7 +464,7 @@ public class MyDate {
         return dt;
     }
 
-    // TO DO
+    // TODO
     public static String getNextDayDateSQLFriendlyFormat(int day, int month, int year) {
         return null;
     }

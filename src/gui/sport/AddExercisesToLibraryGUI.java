@@ -331,7 +331,7 @@ public class AddExercisesToLibraryGUI {
 
         HashMap<String, String> resultHashMap = new HashMap<>();
 
-        // TO DO
+        // TODO
         // resultHashMap.
 
         for (int i = 0; i < allJLabelFieldArrayList.size(); i++) {
@@ -359,7 +359,7 @@ public class AddExercisesToLibraryGUI {
     }
 
     private String[] getAllIDsInTable(){
-        // TO DO - 17.12
+        // TODO - 17.12
         SQLSelect.getAllValuesInColumn("exercises_library_table_test", 0);
 
         return null;
@@ -373,7 +373,7 @@ public class AddExercisesToLibraryGUI {
         public void actionPerformed(ActionEvent e) {
             HashMap<String, String> dataFromGUI = getDataFromGUI();
 
-            // TO DO
+            // TODO
             //System.out.println(InsertToTable.prepareSQLStatement("exercise", dataFromGUI));
 
 

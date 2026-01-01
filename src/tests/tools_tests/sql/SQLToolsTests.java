@@ -32,7 +32,7 @@ public class SQLToolsTests {
         }
     }
 
-    // TO DO
+    // TODO
     @Nested
     class DaysStatisticsTools{
 
@@ -40,7 +40,7 @@ public class SQLToolsTests {
 
     @Nested
     class SelectGeneralSQLTools{
-        // TO DO
+        // TODO
         @Test
         public void selectOneProductFromProductTable(){
     LinkedHashMap<String, String> functionOutput = Select.selectAllDataFromTable("product_table", "product_name", "=", "Arbuz");

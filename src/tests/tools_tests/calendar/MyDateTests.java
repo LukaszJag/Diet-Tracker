@@ -26,6 +26,41 @@ public class MyDateTests {
             String dayName = format.format(utilDateImport);
         }
 
+        @Nested
+        class GetNameOfMethods{
+            @Nested
+            class GetNameOfMonthContainsInString{
+                @Test
+                public void noMonthDetected(){
+                    assertEquals(-1, MyDate.getNameOfMonthContainsInString("testest-100#@"));
+                }
+                @Test
+                public void oneMonthDetected(){
+                    assertEquals(5, MyDate.getNameOfMonthContainsInString("text14MaYtest"));
+                }
+                @Test
+                public void firstInTextMonthDetected(){
+                    assertEquals(4, MyDate.getNameOfMonthContainsInString("apriltext14test"));
+                }
+                @Test
+                public void lastInTextMonthDetected(){
+                    assertEquals(4, MyDate.getNameOfMonthContainsInString("text14testapril"));
+                }
+                @Test
+                public void twoMonthDetected(){
+                    assertEquals(4, MyDate.getNameOfMonthContainsInString("apriltext14testmay"));
+                }
+
+                @Test
+                public void threeMonthDetected(){
+                    assertEquals(4, MyDate.getNameOfMonthContainsInString("apriltext14testmay"));
+                }
+            }
+
+        }
+        @Nested
+        class GetDataToCurrentDate {
+
         @Test
         public void getCurrentDayNameOfDayCapitalizationCaseTest() {
             assertEquals("Sunday", MyDate.getCurrentDayNameOfDayCapitalizationCase());
@@ -35,7 +70,7 @@ public class MyDateTests {
         public void getCurrentDayNameOfDayLowerCaseTest() {
             assertEquals("sunday", MyDate.getCurrentDayNameOfDayLowerCase());
         }
-
+    }
         @Nested
         class GetNextDay {
             @Test

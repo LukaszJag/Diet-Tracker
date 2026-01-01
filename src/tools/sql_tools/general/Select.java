@@ -3,7 +3,7 @@ package tools.sql_tools.general;
 import java.util.LinkedHashMap;
 
 public class Select {
-    // TO DO
+    // TODO
     public static LinkedHashMap<String, String> selectAllDataFromTable(String tableName, String key, String operator, String value){
 /*
 example:

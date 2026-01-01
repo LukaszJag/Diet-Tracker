@@ -681,7 +681,7 @@ public class AddProductToCalendarDay {
     }
 
     public DayInCalendar getDayInCalendarFromDataInGUI(Product productFromGUI, Macro consumedMacro) {
-        //TO DO
+        // TODO
         //<editor-fold desc="Getting direct from TextFields: Macro, day ">
 
 

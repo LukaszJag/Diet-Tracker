@@ -42,6 +42,7 @@ public class CalendarMonthStatsView {
     Color yellowKcalLimitColor = new Color(255, 229, 46);
     Color orangeKcalLimitColor = Color.ORANGE;
     Color redKcalLimitColor = new Color(214, 23, 23);
+
     Color noDataForButtonColor = new Color(37, 150, 190);
 
 
@@ -49,8 +50,18 @@ public class CalendarMonthStatsView {
     Color yellowMarkerColor = new Color(255, 229, 46);
     Color redMarkerColor = new Color(214, 23, 23);
     Color blackAverageMarkerColor = new Color(0, 0, 0);
-    //</editor-fold>
 
+    Color currentDayMacroTitleNorthPanelLabelColor = new Color(15, 50, 90);
+    Color currentDayMacroValuesNorthPanelLabelColor = new Color(39, 192, 50);
+
+    Color noDataColorLabelAndButton = new Color(169, 78, 188);
+    Color goodDayDataColorLabelAndButton = new Color(73, 176, 76);
+    Color badDayDataColorLabelAndButton = new Color(176, 73, 73);
+    Color comingDaysDaysColorLabelAndButton = new Color(65, 119, 201);
+    Color northPanelStaticLabelsColor = new Color(58, 123, 125);
+    Color currentDayDateNorthPanelLabelColor = new Color(0, 255, 171);
+    Color selectedDateAverageMacroForMonthLabelColor = new Color(238, 154, 28);
+    //</editor-fold>
     String currentDate = "????-??-??";
 
     //<editor-fold desc="Kcal Limits - float">
@@ -69,33 +80,10 @@ public class CalendarMonthStatsView {
     int comingDaysCounter;
     //</editor-fold>
 
-    //<editor-fold desc="Global Colors">
-
-    Color selectedMonthStatsGoodDaysDaysPanelColor = new Color(0, 255, 94);
-    Color selectedMonthStatsBadDaysDaysPanelColor = new Color(230, 47, 194);
-    Color selectedMonthStatsNoDataDaysDaysPanelColor = new Color(100, 100, 100);
-
-
-    Color currentDayMacroTitleNorthPanelLabelColor = new Color(15, 50, 90);
-    Color currentDayMacroValuesNorthPanelLabelColor = new Color(39, 192, 50);
-
-    Color noDataColorLabelAndButton = new Color(169, 78, 188);
-    Color goodDayDataColorLabelAndButton = new Color(73, 176, 76);
-    Color badDayDataColorLabelAndButton = new Color(176, 73, 73);
-    Color comingDaysDaysColorLabelAndButton = new Color(65, 119, 201);
-    Color spainHolidaysDaysColorLabelAndButton = new Color(255, 196, 0);
-
-    Color northPanelStaticLabelsColor = new Color(58, 123, 125);
-    Color currentDayDateNorthPanelLabelColor = new Color(0, 255, 171);
-    Color selectedDateAverageMacroForMonthLabelColor = new Color(238, 154, 28);
-    //Color currentDayMacroTitleNorthPanelLabelColor = new Color(20,60,105);
-
-    //</editor-fold>
-
+    //<editor-fold desc="Swing components">
     //<editor-fold desc="Frames">
     JFrame mainWindow = new JFrame("Calendar month stats view");
     //</editor-fold>
-
     //<editor-fold desc="Panels">
     JPanel calendarMonthStatsViewPanelMain = new JPanel();
     JPanel calendarMonthStatsViewPanelNorth = new JPanel();
@@ -111,7 +99,6 @@ public class CalendarMonthStatsView {
     JPanel selectedMonthStatsNorthsPanel;
 
     //</editor-fold>
-
     //<editor-fold desc="Buttons">
     JButton[] daysButtons;
     JButton[] listOfTheProductButtons = new JButton[24];
@@ -129,7 +116,6 @@ public class CalendarMonthStatsView {
     GridLayout eastPanelGridLayout = new GridLayout(3, 1, 5, 5);
     GridLayout westPanelGridLayout = new GridLayout(6, 1, 5, 5);
     //</editor-fold>
-
     //<editor-fold desc="Labels">
 
     JLabel currentDayDateNorthPanelLabel = new JLabel("Current date: ????-??-??");
@@ -144,22 +130,20 @@ public class CalendarMonthStatsView {
 
     JLabel selectedDateAverageMacroForMonthLabel = new JLabel("Selected date average macro for month: ");
     //</editor-fold>
-
     //<editor-fold desc="Combo Boxes">
     JComboBox monthSelectComboBox = new JComboBox<>(new String[]{"April", "May", "June", "July", "August", "September", "October",
             "November", "December", "January2025", "February2025", "March2025", "April2025", "May2025", "June2025", "July2025",
             "August2025", "September2025", "October2025", "November2025", "December2025", "January2026"});
     JComboBox selectedDayProductsListComboBox = new JComboBox<String>();
     //</editor-fold>
+    //</editor-fold>
 
     //</editor-fold>
 
-    //<editor-fold desc="Constructor">
+    //<editor-fold desc="Constructor and start method">
     public CalendarMonthStatsView() {
         startWindow();
     }
-    //</editor-fold>
-
     public void startWindow() {
         setMainWindowSizeAndLayout();
         setPanels();
@@ -169,13 +153,34 @@ public class CalendarMonthStatsView {
         paintButtons();
         refreshMacroAndAllComponentForNorthPanel();
     }
+    //</editor-fold>
 
+    //<editor-fold desc="Frame and panels methods">
+    //<editor-fold desc="Setup frame">
     private void setMainWindowSizeAndLayout() {
         // Set window size
         mainWindow.setSize(Config.CALENDAR_MONTH_STATS_VIEW_WINDOWS_WIDTH, Config.CALENDAR_MONTH_STATS_VIEW_WINDOWS_HEIGHT);
         mainWindow.setLayout(new BorderLayout());
     }
+    private void addPanelsToFrame() {
+        // Add Panels to Frame
+        mainWindow.add(calendarMonthStatsViewPanelNorth, BorderLayout.NORTH);
+        mainWindow.add(calendarMonthStatsViewPanelWest, BorderLayout.WEST);
+        mainWindow.add(calendarMonthStatsViewPanelMain, BorderLayout.CENTER);
+        mainWindow.add(calendarMonthStatsViewPanelEast, BorderLayout.EAST);
+        mainWindow.add(calendarMonthStatsViewPanelSouth, BorderLayout.SOUTH);
 
+    }
+    private void finishSetUpFrame() {
+        mainWindow.setResizable(false);
+        mainWindow.setLocationRelativeTo(null);
+        mainWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        mainWindow.setVisible(true);
+        mainWindow.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+    }
+    //</editor-fold>
+
+    //<editor-fold desc="Prepare Add Content - to Panels">
     private void setPanels() {
         //Set Layout
         calendarMonthStatsViewPanelMain.setBorder(BorderFactory.createEmptyBorder(7, 5, 5, 5));
@@ -196,8 +201,8 @@ public class CalendarMonthStatsView {
         calendarMonthStatsViewPanelSouth.setPreferredSize(new Dimension(Config.CALENDAR_MONTH_STATS_VIEW_PANELS_SOUTH_SIZE, Config.CALENDAR_MONTH_STATS_VIEW_PANELS_SOUTH_SIZE));
     }
 
+    //<editor-fold desc="addComponentsToPanels">
     private void addComponentsToPanels() {
-
         prepareAndAddContentToMainPanel();
         prepareAndAddContentToNorthPanel();
         prepareAndAddContentToWestPanel();
@@ -205,31 +210,9 @@ public class CalendarMonthStatsView {
         prepareAndAddContentToSouthPanel();
 
     }
-
-    private void addPanelsToFrame() {
-        // Add Panels to Frame
-        mainWindow.add(calendarMonthStatsViewPanelNorth, BorderLayout.NORTH);
-        mainWindow.add(calendarMonthStatsViewPanelWest, BorderLayout.WEST);
-        mainWindow.add(calendarMonthStatsViewPanelMain, BorderLayout.CENTER);
-        mainWindow.add(calendarMonthStatsViewPanelEast, BorderLayout.EAST);
-        mainWindow.add(calendarMonthStatsViewPanelSouth, BorderLayout.SOUTH);
-
-    }
-
-    private void finishSetUpFrame() {
-        mainWindow.setResizable(false);
-        mainWindow.setLocationRelativeTo(null);
-        mainWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        mainWindow.setVisible(true);
-        mainWindow.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-    }
-    //</editor-fold>
-
-    //<editor-fold desc="Prepare Add Content - to Panels">
     private void prepareAndAddContentToMainPanel() {
         setDaysButtonsMainPanel("January2026");
     }
-
     private void prepareAndAddContentToNorthPanel() {
 
         String pattern = "yyyy-MM-dd";
@@ -335,6 +318,7 @@ public class CalendarMonthStatsView {
         calendarMonthStatsViewPanelWest.add(macroPanelForWestPanel);
 
     }
+    //</editor-fold>
 
     //<editor-fold desc="Side help methods - for prepare Panels">
 
@@ -372,8 +356,6 @@ public class CalendarMonthStatsView {
         selectedMonthStatsNoDataDaysLabel = new JLabel("No data: " + noDataDaysCounter);
         selectedMonthStatsComingDaysDaysLabel = new JLabel("Coming days: " + comingDaysCounter);
     }
-
-    //</editor-fold>
 
     //</editor-fold>
 
@@ -438,43 +420,375 @@ public class CalendarMonthStatsView {
     }
 
     //</editor-fold>
+    //</editor-fold>
+    //</editor-fold>
 
-    //<editor-fold desc="Set\Setup - methods">
-    private void setupAverageMacroLabel() {
+    //<editor-fold desc="Charts - methods">
+    public void showMonthChart() {
 
-        Macro averageMacroForMonth = null;
+        String dateFromComboBox = monthSelectComboBox.getSelectedItem().toString();
 
-        String yearAndMonthDateInSQLFormat = getDateFromComboBox();
-        int year = -1;
-        if (yearAndMonthDateInSQLFormat.contains("2025")) {
-            year = 2025;
+        int counter = 0;
+        for (int i = 0; i < daysButtons.length; i++) {
+            if (!daysButtons[i].getText().equals("null")) {
+                counter++;
+            }
+        }
+        int amountOfMonthDays = counter;
+        String[] daysNumbers = new String[amountOfMonthDays];
+        float[] valuesKcal = new float[amountOfMonthDays];
+        String chartName = MyDate.getNameOfMonthFromNumber(getMonthFromComboBox()) + " stats";
+
+        for (int i = 0; i < daysNumbers.length; i++) {
+            daysNumbers[i] = String.valueOf((i + 1));
         }
 
-        if (yearAndMonthDateInSQLFormat.contains("2024")) {
+        String fullDate = "";
+
+        if (dateFromComboBox.contains("2025")) {
+            fullDate = "2025";
+        }
+        if (dateFromComboBox.contains("2024")) {
+            fullDate = "2024";
+        }
+        fullDate = fullDate + "-" + MyDate.getNameOfMonthFromNumberSQLFormat(dateFromComboBox.replaceAll("[0-9]", "")) + "-";
+
+        String[] allDayWhichNeedData = new String[amountOfMonthDays];
+        String fullDateBuffor = fullDate;
+
+        for (int i = 0; i < amountOfMonthDays; i++) {
+
+
+            if (daysNumbers[i].length() == 1) {
+                fullDate = fullDate + "0" + daysNumbers[i];
+            }
+
+            if (daysNumbers[i].length() == 2) {
+                fullDate = fullDate + daysNumbers[i];
+            }
+
+            allDayWhichNeedData[i] = fullDate;
+            fullDate = fullDateBuffor;
+        }
+
+        for (int i = 0; i < amountOfMonthDays; i++) {
+
+            valuesKcal[i] = SelectFromDaysStatistics.getMacroFromDaysStatisticsByDate(allDayWhichNeedData[i]).getKcal();
+        }
+
+        JFreeChart jFreeChart = DisplayChart.createChartPanel(chartName, "Days", "Kcal",
+                valuesKcal, "Kcal", daysNumbers);
+        DisplayChart.showChart(jFreeChart);
+    }
+
+    public void showMonthBarChart() {
+        //<editor-fold desc="Get Data for bar chart - kcal">
+        int amountOfMonthDays = MyDate.getAmountOfDaysInMonth(getMonthFromComboBox());
+        float[] valuesKcal = new float[amountOfMonthDays];
+        String[] daysNumbers = MyDate.getAllDaysInMonthAndYearSQLFriendlyFormat(getMonthFromComboBox(), getYearFromComboBox());
+
+
+        for (int i = 0; i < amountOfMonthDays; i++) {
+            valuesKcal[i] = SelectFromDaysStatistics.getMacroFromDaysStatisticsByDate(daysNumbers[i]).getKcal();
+        }
+
+        for (int i = 0; i < amountOfMonthDays; i++) {
+            System.out.println("[" + i + "]: " + valuesKcal[i]);
+        }
+        //</editor-fold>
+
+        //<editor-fold desc="Setup chart fields">
+        String chartName = MyDate.getNameOfMonthFromNumber(getMonthFromComboBox()) + " stats";
+        DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+
+        for (int i = 0; i < daysNumbers.length; i++) {
+            dataset.addValue(valuesKcal[i], "" + (i + 1), "kcal");
+        }
+
+        JFreeChart jFreeChart = jFreeChart = ChartFactory.createBarChart(chartName, "Kcal", "Kcal",
+                dataset);
+
+        CategoryPlot categoryPlot = jFreeChart.getCategoryPlot();
+        //</editor-fold>
+
+        //<editor-fold desc="Set float value and colors - Marker">
+        float greenMarker = Config.BMRActual.getKcal();
+        float yellowMarker = 4500;
+        float redMarker = 5500;
+        float blackAverageMarker = 0;
+
+        int count = 0;
+        float sum = 0;
+        for (int i = 0; i < valuesKcal.length; i++) {
+            if (valuesKcal[i] > 0) {
+                sum += valuesKcal[i];
+                count++;
+            }
+        }
+        blackAverageMarker = (sum / count);
+        //</editor-fold>
+
+        //<editor-fold desc="Add color of bars depend on value">
+        BarRenderer renderer = new BarRenderer() {
+
+            @Override
+            public Paint getItemPaint(int row, int column) {
+                CategoryDataset dataset = getPlot().getDataset();
+                Number value = dataset.getValue(row, column);
+
+                if (value == null) {
+                    return Color.GRAY;
+                }
+
+                double v = value.doubleValue();
+
+                if (v < greenKcalLimit) {
+                    return Color.GREEN;
+                } else if (v >= greenKcalLimit && v < yellowKcalLimit) {
+                    return Color.YELLOW;
+                } else if (v >= yellowKcalLimit && v < redKcalLimit) {
+                    return Color.ORANGE;
+                } else {
+                    return Color.RED;
+                }
+            }
+        };
+        // Optional: flat colors (no gradient)
+        renderer.setBarPainter(new org.jfree.chart.renderer.category.StandardBarPainter());
+        renderer.setDrawBarOutline(false);
+
+        categoryPlot.setRenderer(renderer);
+        //</editor-fold>
+
+        //<editor-fold desc="Add marker to chart">
+
+        //<editor-fold desc="greenMarkerValueMarker">
+        ValueMarker greenMarkerValueMarker = new ValueMarker(greenMarker);
+        greenMarkerValueMarker.setPaint(greenMarkerColor);
+        greenMarkerValueMarker.setStroke(new
+                BasicStroke(2.0f));
+
+        greenMarkerValueMarker.setLabel(String.valueOf(Config.BMRActual.getKcal()));
+        greenMarkerValueMarker.setLabelAnchor(RectangleAnchor.TOP_LEFT);
+        greenMarkerValueMarker.setLabelTextAnchor(TextAnchor.BOTTOM_LEFT);
+        //</editor-fold>
+
+        //<editor-fold desc="yellowMarkerValueMarker">
+        ValueMarker yellowMarkerValueMarker = new ValueMarker(yellowMarker);
+        yellowMarkerValueMarker.setPaint(yellowMarkerColor);
+        yellowMarkerValueMarker.setStroke(new BasicStroke(2.0f));
+
+        yellowMarkerValueMarker.setLabel(String.valueOf(yellowMarker));
+        yellowMarkerValueMarker.setLabelAnchor(RectangleAnchor.TOP_LEFT);
+        yellowMarkerValueMarker.setLabelTextAnchor(TextAnchor.BOTTOM_LEFT);
+        //</editor-fold>
+
+        //<editor-fold desc="blackAverageMarkerValueMarker">
+        ValueMarker blackAverageMarkerValueMarker = new ValueMarker(blackAverageMarker);
+        blackAverageMarkerValueMarker.setPaint(blackAverageMarkerColor);
+        blackAverageMarkerValueMarker.setStroke(new BasicStroke(2.0f));
+
+        blackAverageMarkerValueMarker.setLabel(String.valueOf(blackAverageMarker));
+        blackAverageMarkerValueMarker.setLabelAnchor(RectangleAnchor.TOP_LEFT);
+        blackAverageMarkerValueMarker.setLabelTextAnchor(TextAnchor.BOTTOM_LEFT);
+        //</editor-fold>
+
+        //<editor-fold desc="redMarkerValueMarker">
+        ValueMarker redMarkerValueMarker = new ValueMarker(redMarker);
+        redMarkerValueMarker.setPaint(redMarkerColor);
+        redMarkerValueMarker.setStroke(new
+
+                BasicStroke(2.0f));
+
+        redMarkerValueMarker.setLabel(String.valueOf(redMarker));
+        redMarkerValueMarker.setLabelAnchor(RectangleAnchor.TOP_LEFT);
+        redMarkerValueMarker.setLabelTextAnchor(TextAnchor.BOTTOM_LEFT);
+
+
+        categoryPlot.addRangeMarker(greenMarkerValueMarker);
+        categoryPlot.addRangeMarker(yellowMarkerValueMarker);
+        // categoryPlot.addRangeMarker(orangeMarkerValueMarker);
+        categoryPlot.addRangeMarker(redMarkerValueMarker);
+        categoryPlot.addRangeMarker(blackAverageMarkerValueMarker);
+        //</editor-fold>
+
+        //</editor-fold>
+
+        DisplayChart.showChart(jFreeChart);
+    }
+    //</editor-fold>
+
+    //<editor-fold desc="Get data - methods">
+    //<editor-fold desc="Get data from - combo box">
+    private String getDateFromComboBox() {
+        String fullDate = "";
+        String month = monthSelectComboBox.getSelectedItem().toString();
+        if (month.contains("2026")) {
+            fullDate = "2026";
+        }
+        if (month.contains("2025")) {
+            fullDate = "2025";
+        }
+        if (month.contains("2024")) {
+            fullDate = "2024";
+        }
+
+        fullDate = fullDate + "-" + MyDate.getNameOfMonthFromNumberSQLFormat(month.replaceAll("[0-9]", "")) + "-";
+
+        return fullDate;
+    }
+    private int getYearFromComboBox() {
+        int year = -1;
+        String dateFromComboBox = monthSelectComboBox.getSelectedItem().toString();
+        if (dateFromComboBox.contains("2026")) {
+            year = 2026;
+        }
+        if (dateFromComboBox.contains("2025")) {
+            year = 2025;
+        }
+        if (dateFromComboBox.contains("2024")) {
             year = 2024;
         }
 
-        if (yearAndMonthDateInSQLFormat.contains("2026")) {
-            year = 2026;
+        return year;
+    }
+    private int getMonthFromComboBox() {
+        String month = monthSelectComboBox.getSelectedItem().toString().replaceAll("[0-9]", "");
+
+        return getNumberOfMonthInYear(month);
+    }
+    //</editor-fold>
+
+    //<editor-fold desc="Get Macro data">
+    private Macro getAverageMacroForMonth(String month) {
+        String fullDate = "";
+
+        if (month.contains("2026")) {
+            fullDate = "2026";
+        }
+        if (month.contains("2025")) {
+            fullDate = "2025";
+        }
+        if (month.contains("2024")) {
+            fullDate = "2024";
         }
 
-        int month;
-        if (yearAndMonthDateInSQLFormat.charAt(5) == '0') {
-            month = Integer.valueOf(yearAndMonthDateInSQLFormat.charAt(6) + "");
-        } else {
-            month = Integer.valueOf(yearAndMonthDateInSQLFormat.charAt(5) + "" + yearAndMonthDateInSQLFormat.charAt(6));
-        }
-        averageMacroForMonth = SelectFromDaysStatistics.getAverageMacroForMonth(getYearFromComboBox(), getMonthFromComboBox());
+        fullDate = fullDate + "-" + MyDate.getNameOfMonthFromNumberSQLFormat(month) + "-";
 
-        MyDate.getAmountOfDaysInCurrentMonthOPassedMonth(getYearFromComboBox(), getMonthFromComboBox());
+        String fullDateTMP = fullDate;
+        Macro averageMacro = new Macro(0, 0, 0, 0);
+        Macro dayMacro;
+        int dayCounter = 0;
+
+        for (int i = 0; i < daysButtons.length; i++) {
+
+            if (daysButtons[i].getText() != "null") {
+                if (daysButtons[i].getText().length() == 1) {
+                    fullDate = fullDateTMP + "0" + daysButtons[i].getText();
+                } else {
+                    fullDate += daysButtons[i].getText();
+                }
+
+                if (dayMacroGoalStatus(fullDate) != 3 && dayMacroGoalStatus(fullDate) != 42) {
+                    dayMacro = SelectFromDaysStatistics.getMacroFromDaysStatisticsByDate(fullDate);
+                    averageMacro = Macro.sumOfTwoMacros(averageMacro, dayMacro);
+                    dayCounter++;
+                }
+
+                fullDate = fullDateTMP;
+            }
+        }
+
+        averageMacro.setKcal(averageMacro.getKcal() / dayCounter);
+        averageMacro.setProtein(averageMacro.getProtein() / dayCounter);
+        averageMacro.setFat(averageMacro.getFat() / dayCounter);
+        averageMacro.setCarbs(averageMacro.getCarbs() / dayCounter);
+
+        Macro.printAllValues(averageMacro);
+        return averageMacro;
+    }
+    private int dayMacroGoalStatus(String fullDateSQLFriendly) {
+        // int = 0 no data
+        // int = 1 pass goal
+        // int = 2 break goal
+        // int = 3 coming days
+        // int = 42 Spain Holiday
+        int dayStatus = -1;
+
+        // hard code - macro goal - may cause problem - to refactor
+        float goalKcal = Config.BMRActual.getKcal();
+
+        // Set holidays buttons - June
+        for (int i = 22; i <= 30; i++) {
+            String holidaysDate = "2024-06-" + String.valueOf(i);
+            if (fullDateSQLFriendly.equals(holidaysDate)) {
+                dayStatus = 42;
+                return dayStatus;
+            }
+        }
+        // Set holidays buttons - July
+        for (int i = 1; i <= 6; i++) {
+            String holidaysDate = "2024-07-0" + String.valueOf(i);
+            if (fullDateSQLFriendly.equals(holidaysDate)) {
+                dayStatus = 42;
+                return dayStatus;
+            }
+        }
+        Macro dayMacro = SelectFromDaysStatistics.getMacroFromDaysStatisticsByDate(fullDateSQLFriendly);
+
+        String currentDateString = DateTools.getCurrentDateSQLFriendlyFormat();
+
+        Date curentDate;
+        Date parameterDate;
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+        try {
+            curentDate = dateFormat.parse(currentDateString);
+            parameterDate = dateFormat.parse(fullDateSQLFriendly);
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
+
+        if (parameterDate.compareTo(curentDate) > 0) {
+            dayStatus = 3;
+        } else if (dayMacro.getKcal() <= 0) {
+            dayStatus = 0;
+        } else if (dayMacro.getKcal() < goalKcal) {
+            dayStatus = 1;
+        } else if (dayMacro.getKcal() > goalKcal) {
+            dayStatus = 2;
+        }
+        return dayStatus;
+    }
+    private Macro getDayMacro(String fullDateSQLFriendly) {
+        Macro dayMacro = SelectFromDaysStatistics.getMacroFromDaysStatisticsByDate(fullDateSQLFriendly);
+
+        return dayMacro;
+    }
+    //</editor-fold>
+
+    //</editor-fold>
+
+    private void setupAverageMacroLabel() {
+
+        Macro averageMacroForMonth = SelectFromDaysStatistics.getAverageMacroForMonth(getYearFromComboBox(), getMonthFromComboBox());
 
         currentDayMacroValuesNorthPanelLabel.setFont(new Font("Dialog", Font.TRUETYPE_FONT, 10));
         currentDayMacroValuesNorthPanelLabel.setText(Macro.getShortMacroInformationMinimalFormat(averageMacroForMonth).replace("-", ""));
     }
 
-    private void setDaysButtonsMainPanel(String month) {
-        calendarMonthStatsViewPanelMain.removeAll();
+    // TODO
+    private void setDaysButtonsMainPanel() {
+        //int amountOfDaysInMonth = monthSelectComboBox.getSelectedItem().toString();
+        daysButtons = new JButton[42];
+        mainPanelGridLayout = new GridLayout(6, 7, 10, 10);
+    }
 
+
+    private void setDaysButtonsMainPanel(String month) {
+        setDaysButtonsMainPanel();
+
+        calendarMonthStatsViewPanelMain.removeAll();
 
         if (month.equals("September")) {
             daysButtons = new JButton[42];
@@ -854,294 +1168,6 @@ public class CalendarMonthStatsView {
         mainWindow.validate();
         mainWindow.repaint();
     }
-    //</editor-fold>
-
-    //<editor-fold desc="Charts - methods">
-    public void showMonthChart() {
-
-        String dateFromComboBox = monthSelectComboBox.getSelectedItem().toString();
-
-        int counter = 0;
-        for (int i = 0; i < daysButtons.length; i++) {
-            if (!daysButtons[i].getText().equals("null")) {
-                counter++;
-            }
-        }
-        int amountOfMonthDays = counter;
-        String[] daysNumbers = new String[amountOfMonthDays];
-        float[] valuesKcal = new float[amountOfMonthDays];
-        String chartName = MyDate.getNameOfMonthFromNumber(getMonthFromComboBox()) + " stats";
-
-        for (int i = 0; i < daysNumbers.length; i++) {
-            daysNumbers[i] = String.valueOf((i + 1));
-        }
-
-        String fullDate = "";
-
-        if (dateFromComboBox.contains("2025")) {
-            fullDate = "2025";
-        }
-        if (dateFromComboBox.contains("2024")) {
-            fullDate = "2024";
-        }
-        fullDate = fullDate + "-" + MyDate.getNameOfMonthFromNumberSQLFormat(dateFromComboBox.replaceAll("[0-9]", "")) + "-";
-
-        String[] allDayWhichNeedData = new String[amountOfMonthDays];
-        String fullDateBuffor = fullDate;
-
-        for (int i = 0; i < amountOfMonthDays; i++) {
-
-
-            if (daysNumbers[i].length() == 1) {
-                fullDate = fullDate + "0" + daysNumbers[i];
-            }
-
-            if (daysNumbers[i].length() == 2) {
-                fullDate = fullDate + daysNumbers[i];
-            }
-
-            allDayWhichNeedData[i] = fullDate;
-            fullDate = fullDateBuffor;
-        }
-
-        for (int i = 0; i < amountOfMonthDays; i++) {
-
-            valuesKcal[i] = SelectFromDaysStatistics.getMacroFromDaysStatisticsByDate(allDayWhichNeedData[i]).getKcal();
-        }
-
-        JFreeChart jFreeChart = DisplayChart.createChartPanel(chartName, "Days", "Kcal",
-                valuesKcal, "Kcal", daysNumbers);
-        DisplayChart.showChart(jFreeChart);
-    }
-
-    public void showMonthBarChart() {
-        //<editor-fold desc="Get Data for bar chart - kcal">
-        int amountOfMonthDays = MyDate.getAmountOfDaysInMonth(getMonthFromComboBox());
-        float[] valuesKcal = new float[amountOfMonthDays];
-        String[] daysNumbers = MyDate.getAllDaysInMonthAndYearSQLFriendlyFormat(getMonthFromComboBox(), getYearFromComboBox());
-
-
-        for (int i = 0; i < amountOfMonthDays; i++) {
-            valuesKcal[i] = SelectFromDaysStatistics.getMacroFromDaysStatisticsByDate(daysNumbers[i]).getKcal();
-        }
-
-        for (int i = 0; i < amountOfMonthDays; i++) {
-            System.out.println("[" + i + "]: " + valuesKcal[i]);
-        }
-        //</editor-fold>
-
-        //<editor-fold desc="Setup chart fields">
-        String chartName = MyDate.getNameOfMonthFromNumber(getMonthFromComboBox()) + " stats";
-        DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-
-        for (int i = 0; i < daysNumbers.length; i++) {
-            dataset.addValue(valuesKcal[i], "" + (i + 1), "kcal");
-        }
-
-        JFreeChart jFreeChart = jFreeChart = ChartFactory.createBarChart(chartName, "Kcal", "Kcal",
-                dataset);
-
-        CategoryPlot categoryPlot = jFreeChart.getCategoryPlot();
-        //</editor-fold>
-
-        //<editor-fold desc="Set float value and colors - Marker">
-        float greenMarker = Config.BMRActual.getKcal();
-        float yellowMarker = 4500;
-        float redMarker = 5500;
-        float blackAverageMarker = 0;
-
-        int count = 0;
-        float sum = 0;
-        for (int i = 0; i < valuesKcal.length; i++) {
-            if (valuesKcal[i] > 0) {
-                sum += valuesKcal[i];
-                count++;
-            }
-        }
-        blackAverageMarker = (sum / count);
-        //</editor-fold>
-
-        //<editor-fold desc="Add color of bars depend on value">
-        BarRenderer renderer = new BarRenderer() {
-
-            @Override
-            public Paint getItemPaint(int row, int column) {
-                CategoryDataset dataset = getPlot().getDataset();
-                Number value = dataset.getValue(row, column);
-
-                if (value == null) {
-                    return Color.GRAY;
-                }
-
-                double v = value.doubleValue();
-
-                if (v < greenKcalLimit) {
-                    return Color.GREEN;
-                } else if (v >= greenKcalLimit && v < yellowKcalLimit) {
-                    return Color.YELLOW;
-                } else if (v >= yellowKcalLimit && v < redKcalLimit) {
-                    return Color.ORANGE;
-                } else {
-                    return Color.RED;
-                }
-            }
-        };
-        // Optional: flat colors (no gradient)
-        renderer.setBarPainter(new org.jfree.chart.renderer.category.StandardBarPainter());
-        renderer.setDrawBarOutline(false);
-
-        categoryPlot.setRenderer(renderer);
-        //</editor-fold>
-
-        //<editor-fold desc="Add marker to chart">
-
-        //<editor-fold desc="greenMarkerValueMarker">
-        ValueMarker greenMarkerValueMarker = new ValueMarker(greenMarker);
-        greenMarkerValueMarker.setPaint(greenMarkerColor);
-        greenMarkerValueMarker.setStroke(new
-                BasicStroke(2.0f));
-
-        greenMarkerValueMarker.setLabel(String.valueOf(Config.BMRActual.getKcal()));
-        greenMarkerValueMarker.setLabelAnchor(RectangleAnchor.TOP_LEFT);
-        greenMarkerValueMarker.setLabelTextAnchor(TextAnchor.BOTTOM_LEFT);
-        //</editor-fold>
-
-        //<editor-fold desc="yellowMarkerValueMarker">
-        ValueMarker yellowMarkerValueMarker = new ValueMarker(yellowMarker);
-        yellowMarkerValueMarker.setPaint(yellowMarkerColor);
-        yellowMarkerValueMarker.setStroke(new BasicStroke(2.0f));
-
-        yellowMarkerValueMarker.setLabel(String.valueOf(yellowMarker));
-        yellowMarkerValueMarker.setLabelAnchor(RectangleAnchor.TOP_LEFT);
-        yellowMarkerValueMarker.setLabelTextAnchor(TextAnchor.BOTTOM_LEFT);
-        //</editor-fold>
-
-        //<editor-fold desc="blackAverageMarkerValueMarker">
-        ValueMarker blackAverageMarkerValueMarker = new ValueMarker(blackAverageMarker);
-        blackAverageMarkerValueMarker.setPaint(blackAverageMarkerColor);
-        blackAverageMarkerValueMarker.setStroke(new BasicStroke(2.0f));
-
-        blackAverageMarkerValueMarker.setLabel(String.valueOf(blackAverageMarker));
-        blackAverageMarkerValueMarker.setLabelAnchor(RectangleAnchor.TOP_LEFT);
-        blackAverageMarkerValueMarker.setLabelTextAnchor(TextAnchor.BOTTOM_LEFT);
-        //</editor-fold>
-
-        //<editor-fold desc="redMarkerValueMarker">
-        ValueMarker redMarkerValueMarker = new ValueMarker(redMarker);
-        redMarkerValueMarker.setPaint(redMarkerColor);
-        redMarkerValueMarker.setStroke(new
-
-                BasicStroke(2.0f));
-
-        redMarkerValueMarker.setLabel(String.valueOf(redMarker));
-        redMarkerValueMarker.setLabelAnchor(RectangleAnchor.TOP_LEFT);
-        redMarkerValueMarker.setLabelTextAnchor(TextAnchor.BOTTOM_LEFT);
-
-
-        categoryPlot.addRangeMarker(greenMarkerValueMarker);
-        categoryPlot.addRangeMarker(yellowMarkerValueMarker);
-        // categoryPlot.addRangeMarker(orangeMarkerValueMarker);
-        categoryPlot.addRangeMarker(redMarkerValueMarker);
-        categoryPlot.addRangeMarker(blackAverageMarkerValueMarker);
-        //</editor-fold>
-
-        //</editor-fold>
-
-        DisplayChart.showChart(jFreeChart);
-    }
-    //</editor-fold>
-
-    //<editor-fold desc="Get data - methods">
-    private String getDateFromComboBox() {
-        String fullDate = "";
-        String month = monthSelectComboBox.getSelectedItem().toString();
-        if (month.contains("2026")) {
-            fullDate = "2026";
-        }
-        if (month.contains("2025")) {
-            fullDate = "2025";
-        }
-        if (month.contains("2024")) {
-            fullDate = "2024";
-        }
-
-        fullDate = fullDate + "-" + MyDate.getNameOfMonthFromNumberSQLFormat(month.replaceAll("[0-9]", "")) + "-";
-
-        return fullDate;
-    }
-
-    private int getYearFromComboBox() {
-        int year = -1;
-        String dateFromComboBox = monthSelectComboBox.getSelectedItem().toString();
-        if (dateFromComboBox.contains("2026")) {
-            year = 2026;
-        }
-        if (dateFromComboBox.contains("2025")) {
-            year = 2025;
-        }
-        if (dateFromComboBox.contains("2024")) {
-            year = 2024;
-        }
-
-        return year;
-    }
-
-    private int getMonthFromComboBox() {
-        String month = monthSelectComboBox.getSelectedItem().toString().replaceAll("[0-9]", "");
-
-        return getNumberOfMonthInYear(month);
-    }
-
-    private Macro getAverageMacroForMonth(String month) {
-        String fullDate = "";
-
-        if (month.contains("2026")) {
-            fullDate = "2026";
-        }
-        if (month.contains("2025")) {
-            fullDate = "2025";
-        }
-        if (month.contains("2024")) {
-            fullDate = "2024";
-        }
-
-        fullDate = fullDate + "-" + MyDate.getNameOfMonthFromNumberSQLFormat(month) + "-";
-
-        String fullDateTMP = fullDate;
-        Macro averageMacro = new Macro(0, 0, 0, 0);
-        Macro dayMacro;
-        int dayCounter = 0;
-
-        for (int i = 0; i < daysButtons.length; i++) {
-
-            if (daysButtons[i].getText() != "null") {
-                if (daysButtons[i].getText().length() == 1) {
-                    fullDate = fullDateTMP + "0" + daysButtons[i].getText();
-                } else {
-                    fullDate += daysButtons[i].getText();
-                }
-
-                if (dayMacroGoalStatus(fullDate) != 3 && dayMacroGoalStatus(fullDate) != 42) {
-                    dayMacro = SelectFromDaysStatistics.getMacroFromDaysStatisticsByDate(fullDate);
-                    averageMacro = Macro.sumOfTwoMacros(averageMacro, dayMacro);
-                    dayCounter++;
-                }
-
-                fullDate = fullDateTMP;
-            }
-        }
-
-        averageMacro.setKcal(averageMacro.getKcal() / dayCounter);
-        averageMacro.setProtein(averageMacro.getProtein() / dayCounter);
-        averageMacro.setFat(averageMacro.getFat() / dayCounter);
-        averageMacro.setCarbs(averageMacro.getCarbs() / dayCounter);
-
-        Macro.printAllValues(averageMacro);
-        return averageMacro;
-    }
-
-    //</editor-fold>
-
     private void paintButtons() {
 
         goodDaysCounter = 0;
@@ -1207,65 +1233,8 @@ public class CalendarMonthStatsView {
         }
     }
 
-    private int dayMacroGoalStatus(String fullDateSQLFriendly) {
-        // int = 0 no data
-        // int = 1 pass goal
-        // int = 2 break goal
-        // int = 3 coming days
-        // int = 42 Spain Holiday
-        int dayStatus = -1;
 
-        // hard code - macro goal - may cause problem - to refactor
-        float goalKcal = Config.BMRActual.getKcal();
 
-        // Set holidays buttons - June
-        for (int i = 22; i <= 30; i++) {
-            String holidaysDate = "2024-06-" + String.valueOf(i);
-            if (fullDateSQLFriendly.equals(holidaysDate)) {
-                dayStatus = 42;
-                return dayStatus;
-            }
-        }
-        // Set holidays buttons - July
-        for (int i = 1; i <= 6; i++) {
-            String holidaysDate = "2024-07-0" + String.valueOf(i);
-            if (fullDateSQLFriendly.equals(holidaysDate)) {
-                dayStatus = 42;
-                return dayStatus;
-            }
-        }
-        Macro dayMacro = SelectFromDaysStatistics.getMacroFromDaysStatisticsByDate(fullDateSQLFriendly);
-
-        String currentDateString = DateTools.getCurrentDateSQLFriendlyFormat();
-
-        Date curentDate;
-        Date parameterDate;
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-
-        try {
-            curentDate = dateFormat.parse(currentDateString);
-            parameterDate = dateFormat.parse(fullDateSQLFriendly);
-        } catch (ParseException e) {
-            throw new RuntimeException(e);
-        }
-
-        if (parameterDate.compareTo(curentDate) > 0) {
-            dayStatus = 3;
-        } else if (dayMacro.getKcal() <= 0) {
-            dayStatus = 0;
-        } else if (dayMacro.getKcal() < goalKcal) {
-            dayStatus = 1;
-        } else if (dayMacro.getKcal() > goalKcal) {
-            dayStatus = 2;
-        }
-        return dayStatus;
-    }
-
-    private Macro getDayMacro(String fullDateSQLFriendly) {
-        Macro dayMacro = SelectFromDaysStatistics.getMacroFromDaysStatisticsByDate(fullDateSQLFriendly);
-
-        return dayMacro;
-    }
 
     //<editor-fold desc="Refresh methods">
     private void refreshMacroAndAllComponentForSelectedDayMacro(String panelTitleLabelText, Macro macro) {
