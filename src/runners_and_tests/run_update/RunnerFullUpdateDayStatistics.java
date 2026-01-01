@@ -10,6 +10,7 @@ public class RunnerFullUpdateDayStatistics {
 
     static String[] monthsFrom2024 = {"May", "June", "July", "August", "September", "October", "November", "December"};
     static String[] monthsFrom2025 = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
+    static String[] monthsFrom2026 = {"January"};
 
     public static void main(String[] args) throws SQLException {
         runFullUpdateForAllMonthInDayStatistics();
@@ -49,6 +50,16 @@ public class RunnerFullUpdateDayStatistics {
 
             System.out.println("Finish: full update - table days_statistics_test -\t" + monthsFrom2025[i] + " - - " + 2025);
         }
+
+        for (int i = 0; i < monthsFrom2026.length; i++) {
+            System.out.println("Start: full update - table days_statistics_test -\t" + monthsFrom2026[i] + " - - " + 2026);
+
+            GenerateSLQTableForDaysStatistics.generateWholeMonthAndFillAmountOfPointsFromNotepad(monthsFrom2026[i], 2026);
+            UpdateDaysStatisticsFilledData.updateWholeMonthMacroSum(monthsFrom2026[i], 2026);
+            UpdateDaysStatisticsFilledData.updateAmountOfFilledPointsFromNotepad(monthsFrom2026[i], 2026);
+
+            System.out.println("Finish: full update - table days_statistics_test -\t" + monthsFrom2026[i] + " - - " + 2026);
+        }
     }
 
     public static void runFullUpdateForOneMonthInDayStatistics(int numberOfDay, int numberOfMonth, int year) {
@@ -56,10 +67,10 @@ public class RunnerFullUpdateDayStatistics {
 
         System.out.println("Start: full update - table days_statistics_test -\t" + nameOfMonth + " - - " + year);
 
-        GenerateSLQTableForDaysStatistics.generateWholeMonthAndFillAmountOfPointsFromNotepad(numberOfDay, nameOfMonth, 2025);
+        GenerateSLQTableForDaysStatistics.generateWholeMonthAndFillAmountOfPointsFromNotepad(numberOfDay, nameOfMonth, year);
         try {
-            UpdateDaysStatisticsFilledData.updateWholeMonthMacroSum(numberOfDay, nameOfMonth, 2025);
-            UpdateDaysStatisticsFilledData.updateAmountOfFilledPointsFromNotepad(numberOfDay, nameOfMonth, 2025);
+            UpdateDaysStatisticsFilledData.updateWholeMonthMacroSum(numberOfDay, nameOfMonth, year);
+            UpdateDaysStatisticsFilledData.updateAmountOfFilledPointsFromNotepad(numberOfDay, nameOfMonth, year);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

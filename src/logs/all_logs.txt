@@ -5495,3 +5495,4 @@
 5495:-:2026-01-01:-:ADD PRODUCT TO PRODUCT TABLE BY GUI:-:product_table:-:Ogórek kiszony:-::-:kcal: 11.0--protein: 0.33--fat: 0.2--carbs: 1.06:-:0:-:100:-:
 5496:-:2026-01-01:-:ADD PRODUCT TO CALENDAR TABLE BY GUI:-:calendar:-:2026-01-01:-:Thursday:-:Ogórek kiszony:-:102.0:-:kcal: 11.0--protein: 0.33--fat: 0.2--carbs: 1.06:-:Dinner:-:None:-:kcal: 11.219999--protein: 0.3366--fat: 0.204--carbs: 1.0811999:-:
 5497:-:2026-01-01:-:ADD PRODUCT TO CALENDAR TABLE BY GUI:-:calendar:-:2026-01-01:-:Thursday:-:Sernik wiedeński:-:216.0:-:kcal: 254.0--protein: 11.6--fat: 12.4--carbs: 23.9:-:Dinner:-:None:-:kcal: 548.64--protein: 25.056002--fat: 26.784--carbs: 51.624:-:
+5498:-:2026-01-01:-:ADD PRODUCT TO CALENDAR TABLE BY GUI:-:calendar:-:2026-01-02:-:Thursday:-:Arbuz:-:222.0:-:kcal: 30.0--protein: 0.61--fat: 0.15--carbs: 7.15:-:Snack 1:-:None:-:kcal: 66.6--protein: 1.3542--fat: 0.333--carbs: 15.873:-:
