@@ -1,0 +1,9 @@
+Name: Ogórek kiszony
+Brand: 
+Package has: 0.0
+Macro for: 100.0
+KCal: 11.0
+Protein: 0.33
+Fat: 0.2
+Carbs: 1.06
+Comment optional: Link: https://www.tabele-kalorii.pl/kalorie,Ogorek-kiszony.html

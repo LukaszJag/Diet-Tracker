@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2026-01-01',
+'Thursday',
+'Second Breakfast',
+328.0,
+'Kotlet mielony',
+280.0,
+13.0,
+20.4,
+11.5,
+'2026-01-01 05:41:45',
+'none',
+918.39996,
+37.72,
+66.911995,
+42.64
+);
