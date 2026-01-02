@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2026-01-02',
+'Friday',
+'Snack 2',
+68.0,
+'Mintaj smażony panierowany',
+172.0,
+11.5,
+8.32,
+12.8,
+'2026-01-02 06:14:39',
+'none',
+116.96,
+8.704,
+5.6576,
+7.82
+);
