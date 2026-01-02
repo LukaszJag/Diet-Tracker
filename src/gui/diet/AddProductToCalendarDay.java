@@ -1367,6 +1367,8 @@ public class AddProductToCalendarDay {
         JTable editDaysStatisticsTable;
         String pathToFile;
         String[] dataToSave;
+        int year;
+        String nameOfCurrentMonth;
 
         LinkedHashMap<String, String> tableValues = new LinkedHashMap<>();
 
@@ -1480,8 +1482,8 @@ public class AddProductToCalendarDay {
         //</editor-fold>
 
         private void getDataForTable() {
-            int year = MyDate.getCurrentYear();
-            String nameOfCurrentMonth = MyDate.getCurrentMonthName();
+            year = MyDate.getCurrentYear();
+            nameOfCurrentMonth = MyDate.getCurrentMonthName();
 
             String txtFile = nameOfCurrentMonth.toLowerCase() + "_" + year + ".txt";
 
@@ -1511,8 +1513,8 @@ public class AddProductToCalendarDay {
                 contentToFile += mapElement.getValue() + "\n";
             }
 
-            FilesTools.writeToFileOverwriteAllFile("src/data_store_and_backup/text_files/days_statistics_test/2025/december_2025.txt", contentToFile);
-            GenerateSLQTableForDaysStatistics.generateWholeMonthAndFillAmountOfPointsFromNotepad("december", 2025);
+            FilesTools.writeToFileOverwriteAllFile(pathToFile, contentToFile);
+            GenerateSLQTableForDaysStatistics.generateWholeMonthAndFillAmountOfPointsFromNotepad(nameOfCurrentMonth, year);
         }
 
 
