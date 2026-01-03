@@ -1,5 +1,6 @@
 package gui.diet;
 
+import com.mysql.cj.conf.ConnectionUrlParser;
 import configuration.Config;
 import logs.Log;
 import runners_and_tests.run_update.RunnerFullUpdateDayStatistics;
@@ -11,6 +12,7 @@ import tools.sql_tools.SQLSelect;
 import tools.sql_tools.calendar.InsertToCalendarDayTable;
 import tools.sql_tools.days_statistics.GenerateSLQTableForDaysStatistics;
 import tools.sql_tools.days_statistics.SelectFromDaysStatistics;
+import tools.sql_tools.general.Select;
 import tools.sql_tools.general.get.GetConnection;
 import tools.text_files_tools.FilesTools;
 
@@ -1372,7 +1374,7 @@ public class AddProductToCalendarDay {
 
         LinkedHashMap<String, String> tableValues = new LinkedHashMap<>();
 
-        //<editor-fold desc="Tables">
+        //<editor-fold desc="Panels">
         JPanel leftPanel = new JPanel();
         JPanel rightPanel = new JPanel();
         JPanel centerPanel = new JPanel();
@@ -1461,14 +1463,22 @@ public class AddProductToCalendarDay {
         private void prepareJTable() {
             int amountOfDays = MyDate.getAmountOfDaysInMonth(MyDate.getCurrentMonthNumber());
 
-            editDaysStatisticsTable = new JTable(amountOfDays, 2);
+            editDaysStatisticsTable = new JTable(amountOfDays, 3);
 
             String pointInOneDay = "";
+            String amountOfProductInSQLTable = "";
+
+            // TODO hard coded value "2026-01%" - need to set general value
+            LinkedHashMap<String, String> amountOfProductInSQLTableLinkedHashMap = Select.selectAllDataFromTable(
+                    "days_statistics_test", "day_date", "amount_of_filled_points_from_notepad", "day_date", "LIKE", "2026-01%");
 
             for (int i = 0; i < amountOfDays; i++) {
                 pointInOneDay = FilesTools.readAndGetLineTXTFile(pathToFile, (i + 1));
+
+                // TODO make it shorter -> MyDate.getAllDaysForCurrentMonthInSQLFriendlyFormat()[i] AND amountOfProductInSQLTableLinkedHashMap.get(MyDate.getAllDaysForCurrentMonthInSQLFriendlyFormat()[i])
                 editDaysStatisticsTable.setValueAt(MyDate.getAllDaysForCurrentMonthInSQLFriendlyFormat()[i], i, 0);
                 editDaysStatisticsTable.setValueAt(Integer.valueOf(pointInOneDay), i, 1);
+                editDaysStatisticsTable.setValueAt(amountOfProductInSQLTableLinkedHashMap.get(MyDate.getAllDaysForCurrentMonthInSQLFriendlyFormat()[i]), i, 2);
             }
 
         }
