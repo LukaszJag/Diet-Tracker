@@ -2,10 +2,9 @@ package gui.diet;
 
 import configuration.Config;
 import org.jfree.chart.ChartFactory;
-import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
+import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.plot.CategoryPlot;
-import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.ValueMarker;
 import org.jfree.chart.renderer.category.BarRenderer;
 import org.jfree.chart.ui.RectangleAnchor;
@@ -28,8 +27,6 @@ import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
 import static tools.calendar_tools.MyDate.getNumberOfMonthInYear;
 
@@ -492,9 +489,6 @@ public class CalendarMonthStatsView {
             valuesKcal[i] = SelectFromDaysStatistics.getMacroFromDaysStatisticsByDate(daysNumbers[i]).getKcal();
         }
 
-        for (int i = 0; i < amountOfMonthDays; i++) {
-            System.out.println("[" + i + "]: " + valuesKcal[i]);
-        }
         //</editor-fold>
 
         //<editor-fold desc="Setup chart fields">
@@ -505,7 +499,7 @@ public class CalendarMonthStatsView {
             dataset.addValue(valuesKcal[i], "" + (i + 1), "kcal");
         }
 
-        JFreeChart jFreeChart = jFreeChart = ChartFactory.createBarChart(chartName, "Kcal", "Kcal",
+        JFreeChart jFreeChart = ChartFactory.createBarChart(chartName, "Kcal", "Kcal",
                 dataset);
 
         CategoryPlot categoryPlot = jFreeChart.getCategoryPlot();
@@ -613,6 +607,14 @@ public class CalendarMonthStatsView {
         //</editor-fold>
 
         //</editor-fold>
+
+
+        //<editor-fold desc="Set Range of displayed Y-Axis">
+        NumberAxis rangeAxis = (NumberAxis)categoryPlot.getRangeAxis();
+        rangeAxis.setRange(0,8000);
+        //</editor-fold>
+
+
 
         DisplayChart.showChart(jFreeChart);
     }

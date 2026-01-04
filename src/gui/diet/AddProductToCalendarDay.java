@@ -1,6 +1,5 @@
 package gui.diet;
 
-import com.mysql.cj.conf.ConnectionUrlParser;
 import configuration.Config;
 import logs.Log;
 import runners_and_tests.run_update.RunnerFullUpdateDayStatistics;
@@ -622,6 +621,7 @@ public class AddProductToCalendarDay {
         try {
             amountOfProductInGrams = Float.valueOf(amountOfProductTextField.getText());
         } catch (Exception ex) {
+            // TODO change to display message by try catch
             System.out.println("Error: Cannot parse data from amountOfProductTextField[String]->[Float]");
         }
 
@@ -1168,13 +1168,10 @@ public class AddProductToCalendarDay {
             private boolean checkIfDateIsCorrect() {
                 String dateToCheck = otherDataTextField.getText();
                 if (dateToCheck.length() != 10) {
-                    System.out.println("Too long: " + dateToCheck.length());
                     return false;
                 } else if (!((dateToCheck.charAt(4) == '-') && (dateToCheck.charAt(7) == '-'))) {
-                    System.out.println("Problems with: -");
                     return false;
                 } else {
-                    System.out.println("Good date");
                     return true;
                 }
             }
@@ -1729,10 +1726,8 @@ public class AddProductToCalendarDay {
                 if (allProductAndBrandHashMap.get(key).toLowerCase().contains(brandToSearch.toLowerCase())) {
                     resultArray[counter] = key;
                     counter++;
-                    System.out.println("Good");
                 }
             }
-            System.out.println("HashMap size: " + allProductAndBrandHashMap.size());
 
             return resultArray;
         }
