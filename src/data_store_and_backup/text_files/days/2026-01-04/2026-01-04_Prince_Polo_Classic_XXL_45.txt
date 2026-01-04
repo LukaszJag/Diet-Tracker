@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2026-01-04',
+'Sunday',
+'Snack 2',
+45.0,
+'Prince Polo Classic XXL',
+530.0,
+5.4,
+29.5,
+58.0,
+'2026-01-04 06:49:20',
+'none',
+238.5,
+26.099998,
+13.275,
+2.43
+);
