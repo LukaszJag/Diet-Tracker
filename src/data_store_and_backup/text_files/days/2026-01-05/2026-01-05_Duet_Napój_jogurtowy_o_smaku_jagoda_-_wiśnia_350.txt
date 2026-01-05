@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2026-01-05',
+'Monday',
+'Second Breakfast',
+350.0,
+'Duet Napój jogurtowy o smaku jagoda - wiśnia',
+67.0,
+1.7,
+0.8,
+13.3,
+'2026-01-05 01:55:48',
+'none',
+234.5,
+46.55,
+2.8,
+5.9500003
+);

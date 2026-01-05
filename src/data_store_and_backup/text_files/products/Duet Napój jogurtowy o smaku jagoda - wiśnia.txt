@@ -1,0 +1,9 @@
+Name: Duet Napój jogurtowy o smaku jagoda - wiśnia
+Brand: Jovi
+Package has: 350.0
+Macro for: 100.0
+KCal: 67.0
+Protein: 1.7
+Fat: 0.8
+Carbs: 13.3
+Comment optional: Link: https://www.tabele-kalorii.pl/kalorie,Jogurt-pitny-Duet-jagoda-wisnia-Jovi.html

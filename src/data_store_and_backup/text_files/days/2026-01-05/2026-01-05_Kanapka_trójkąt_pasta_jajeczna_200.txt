@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2026-01-05',
+'Monday',
+'Second Breakfast',
+200.0,
+'Kanapka trójkąt pasta jajeczna',
+264.0,
+14.0,
+19.0,
+8.5,
+'2026-01-05 01:51:08',
+'none',
+528.0,
+17.0,
+38.0,
+28.0
+);
