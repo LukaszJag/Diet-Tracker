@@ -1,0 +1,9 @@
+Name: Grejpfrut
+Brand: owoc
+Package has: 0.0
+Macro for: 100.0
+KCal: 30.0
+Protein: 0.69
+Fat: 0.1
+Carbs: 7.31
+Comment optional: Link: https://www.tabele-kalorii.pl/kalorie,Grejpfrut.html

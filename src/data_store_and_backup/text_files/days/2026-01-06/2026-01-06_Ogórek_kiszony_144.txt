@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2026-01-06',
+'Tuesday',
+'Dinner',
+144.0,
+'Ogórek kiszony',
+11.0,
+0.33,
+0.2,
+1.06,
+'2026-01-06 11:51:26',
+'none',
+15.84,
+1.5264,
+0.28800002,
+0.47520003
+);
