@@ -1388,6 +1388,7 @@ public class AddProductToCalendarDay {
         //<editor-fold desc="Buttons">
         JButton saveButton = new JButton("Save");
         JButton exitButton = new JButton("Exit");
+        JButton refreshButton = new JButton("Refresh");
         //</editor-fold>
 
         //<editor-fold desc="Combo Boxes">
@@ -1425,6 +1426,12 @@ public class AddProductToCalendarDay {
                 }
             });
 
+            refreshButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    updateTable();
+                }
+            });
         }
         private void setupFrame() {
             editDaysStatisticsDialogFrame.setSize(600, 800);
@@ -1460,6 +1467,7 @@ public class AddProductToCalendarDay {
 
             downPanel.add(saveButton);
             downPanel.add(exitButton);
+            downPanel.add(refreshButton);
         }
         //</editor-fold>
 
@@ -1480,12 +1488,22 @@ public class AddProductToCalendarDay {
             String key;
             String value;
 
+            tableValues.clear();
             for (int i = 0; i < amountOfRows; i++) {
                 key = String.valueOf(editDaysStatisticsTable.getValueAt(i, 0));
                 value = String.valueOf(editDaysStatisticsTable.getValueAt(i, 1));
                 tableValues.put(key, value);
                 dataToSave[i] = value;
             }
+
+            int counter = 0;
+            for (Map.Entry<String, String> mapElement : tableValues.entrySet()) {
+                System.out.println("[" + counter + "]: " + mapElement.getValue());
+                counter++;
+            }
+
+            System.out.println();
+            System.out.println();
         }
         private void saveTableValuesToFile() {
             String contentToFile = "";
@@ -1493,6 +1511,7 @@ public class AddProductToCalendarDay {
             for (Map.Entry<String, String> mapElement : tableValues.entrySet()) {
                 contentToFile += mapElement.getValue() + "\n";
             }
+            // System.out.println(contentToFile);
 
             FilesTools.writeToFileOverwriteAllFile(pathToFile, contentToFile);
             GenerateSLQTableForDaysStatistics.generateWholeMonthAndFillAmountOfPointsFromNotepad(nameOfCurrentMonth, year);
@@ -1519,12 +1538,30 @@ public class AddProductToCalendarDay {
                 editDaysStatisticsTable.setValueAt(amountOfProductInSQLTableLinkedHashMap.get(MyDate.getAllDaysForCurrentMonthInSQLFriendlyFormat()[i]), i, 2);
             }
 
+            for (int i = 0; i < amountOfProductInSQLTableLinkedHashMap.size(); i++) {
+                System.out.println("[" + i + "]: \t" + amountOfProductInSQLTableLinkedHashMap.get(MyDate.getAllDaysForCurrentMonthInSQLFriendlyFormat()[i]));
+            }
+            centerPanel.add(new Button("1"));
+
+            editDaysStatisticsTable.revalidate();
+            editDaysStatisticsTable.validate();
+            editDaysStatisticsTable.repaint();
+
+
+            centerPanel.revalidate();
+            centerPanel.validate();
+            centerPanel.repaint();
+
+            editDaysStatisticsDialogFrame.revalidate();
+            editDaysStatisticsDialogFrame.validate();
+            editDaysStatisticsDialogFrame.repaint();
         }
         //</editor-fold>
 
         private void showFrameWindow() {
             editDaysStatisticsDialogFrame.show();
-            updateTable();        }
+            //updateTable();
+        }
         @Override
         public void actionPerformed(ActionEvent e) {
             showFrameWindow();
