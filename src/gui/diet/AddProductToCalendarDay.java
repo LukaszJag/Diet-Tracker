@@ -1371,6 +1371,7 @@ public class AddProductToCalendarDay {
 
         LinkedHashMap<String, String> tableValues = new LinkedHashMap<>();
 
+
         //<editor-fold desc="Panels">
         JPanel leftPanel = new JPanel();
         JPanel rightPanel = new JPanel();
@@ -1399,10 +1400,11 @@ public class AddProductToCalendarDay {
             setFrameWindow();
         }
 
+        //<editor-fold desc="Prepare and setup GUI components">
         private void setFrameWindow() {
             getDataForTable();
 
-            prepareJTable();
+            updateTable();
             setupPanels();
 
             addComponentsToPanels();
@@ -1424,15 +1426,12 @@ public class AddProductToCalendarDay {
             });
 
         }
-
-        //<editor-fold desc="Prepare and setup GUI components">
         private void setupFrame() {
             editDaysStatisticsDialogFrame.setSize(600, 800);
             editDaysStatisticsDialogFrame.setResizable(false);
             editDaysStatisticsDialogFrame.setLocationRelativeTo(null);
 
         }
-
         private void setupPanels() {
             editDaysStatisticsDialogFrame.setLayout(new BorderLayout());
 
@@ -1456,8 +1455,50 @@ public class AddProductToCalendarDay {
             leftPanel.setPreferredSize(new Dimension(100, 600));
 
         }
+        private void addComponentsToPanels() {
+            centerPanel.add(editDaysStatisticsTable);
 
-        private void prepareJTable() {
+            downPanel.add(saveButton);
+            downPanel.add(exitButton);
+        }
+        //</editor-fold>
+
+        //<editor-fold desc="table methods">
+        private void getDataForTable() {
+            year = MyDate.getCurrentYear();
+            nameOfCurrentMonth = MyDate.getCurrentMonthName();
+
+            String txtFile = nameOfCurrentMonth.toLowerCase() + "_" + year + ".txt";
+
+            pathToFile = "src/data_store_and_backup/text_files/days_statistics_test/"
+                    + year + "/" + txtFile;
+        }
+        private void getDataFromTable() {
+            int amountOfRows = editDaysStatisticsTable.getRowCount();
+            dataToSave = new String[amountOfRows];
+
+            String key;
+            String value;
+
+            for (int i = 0; i < amountOfRows; i++) {
+                key = String.valueOf(editDaysStatisticsTable.getValueAt(i, 0));
+                value = String.valueOf(editDaysStatisticsTable.getValueAt(i, 1));
+                tableValues.put(key, value);
+                dataToSave[i] = value;
+            }
+        }
+        private void saveTableValuesToFile() {
+            String contentToFile = "";
+
+            for (Map.Entry<String, String> mapElement : tableValues.entrySet()) {
+                contentToFile += mapElement.getValue() + "\n";
+            }
+
+            FilesTools.writeToFileOverwriteAllFile(pathToFile, contentToFile);
+            GenerateSLQTableForDaysStatistics.generateWholeMonthAndFillAmountOfPointsFromNotepad(nameOfCurrentMonth, year);
+        }
+
+        private void updateTable() {
             int amountOfDays = MyDate.getAmountOfDaysInMonth(MyDate.getCurrentMonthNumber());
 
             editDaysStatisticsTable = new JTable(amountOfDays, 3);
@@ -1479,56 +1520,11 @@ public class AddProductToCalendarDay {
             }
 
         }
-
-        private void addComponentsToPanels() {
-            centerPanel.add(editDaysStatisticsTable);
-
-            downPanel.add(saveButton);
-            downPanel.add(exitButton);
-        }
         //</editor-fold>
-
-        private void getDataForTable() {
-            year = MyDate.getCurrentYear();
-            nameOfCurrentMonth = MyDate.getCurrentMonthName();
-
-            String txtFile = nameOfCurrentMonth.toLowerCase() + "_" + year + ".txt";
-
-            pathToFile = "src/data_store_and_backup/text_files/days_statistics_test/"
-                    + year + "/" + txtFile;
-        }
-
-        private void getDataFromTable() {
-            int amountOfRows = editDaysStatisticsTable.getRowCount();
-            dataToSave = new String[amountOfRows];
-
-            String key;
-            String value;
-
-            for (int i = 0; i < amountOfRows; i++) {
-                key = String.valueOf(editDaysStatisticsTable.getValueAt(i, 0));
-                value = String.valueOf(editDaysStatisticsTable.getValueAt(i, 1));
-                tableValues.put(key, value);
-                dataToSave[i] = value;
-            }
-        }
-
-        private void saveTableValuesToFile() {
-            String contentToFile = "";
-
-            for (Map.Entry<String, String> mapElement : tableValues.entrySet()) {
-                contentToFile += mapElement.getValue() + "\n";
-            }
-
-            FilesTools.writeToFileOverwriteAllFile(pathToFile, contentToFile);
-            GenerateSLQTableForDaysStatistics.generateWholeMonthAndFillAmountOfPointsFromNotepad(nameOfCurrentMonth, year);
-        }
-
 
         private void showFrameWindow() {
             editDaysStatisticsDialogFrame.show();
-        }
-
+            updateTable();        }
         @Override
         public void actionPerformed(ActionEvent e) {
             showFrameWindow();
