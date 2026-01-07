@@ -1368,9 +1368,7 @@ public class AddProductToCalendarDay {
         String[] dataToSave;
         int year;
         String nameOfCurrentMonth;
-
         LinkedHashMap<String, String> tableValues = new LinkedHashMap<>();
-
 
         //<editor-fold desc="Panels">
         JPanel leftPanel = new JPanel();
@@ -1442,7 +1440,7 @@ public class AddProductToCalendarDay {
             editDaysStatisticsDialogFrame.add(rightPanel, BorderLayout.EAST);
             editDaysStatisticsDialogFrame.add(downPanel, BorderLayout.SOUTH);
 
-            editDaysStatisticsDialogFrame.setSize(450, 650);
+            editDaysStatisticsDialogFrame.setSize(500, 650);
             editDaysStatisticsDialogFrame.setResizable(false);
             editDaysStatisticsDialogFrame.setLocationRelativeTo(null);
         }
@@ -1484,13 +1482,13 @@ public class AddProductToCalendarDay {
         }
 
         private void getDataFromTable() {
-            dataToSave = new String[editDaysStatisticsTable.getRowCount()];
+            dataToSave = new String[editDaysStatisticsTable.getRowCount() - 1];
 
             String key;
             String value;
 
             tableValues.clear();
-            for (int i = 0; i < dataToSave.length; i++) {
+            for (int i = 1; i < dataToSave.length; i++) {
                 key = String.valueOf(editDaysStatisticsTable.getValueAt(i, 0));
                 value = String.valueOf(editDaysStatisticsTable.getValueAt(i, 1));
                 tableValues.put(key, value);
@@ -1509,7 +1507,7 @@ public class AddProductToCalendarDay {
         }
 
         private void updateTable() {
-            int amountOfDays = MyDate.getAmountOfDaysInMonth(MyDate.getCurrentMonthNumber());
+            int amountOfDays = MyDate.getAmountOfDaysInMonth(MyDate.getCurrentMonthNumber()) + 1;
             editDaysStatisticsTable = new JTable(amountOfDays, 3);
 
             centerPanel.removeAll();
@@ -1521,13 +1519,17 @@ public class AddProductToCalendarDay {
                     "LIKE", "2026-01%");
 
             String pointInOneDay = "";
-            for (int i = 0; i < amountOfDays; i++) {
-                pointInOneDay = FilesTools.readAndGetLineTXTFile(pathToFile, (i + 1));
+
+            editDaysStatisticsTable.setValueAt("Date",0,0);
+            editDaysStatisticsTable.setValueAt("All points for day",0,1);
+            editDaysStatisticsTable.setValueAt("Points from database",0,2);
+            for (int i = 1; i < amountOfDays; i++) {
+                pointInOneDay = FilesTools.readAndGetLineTXTFile(pathToFile, (i));
 
                 // TODO make it shorter -> MyDate.getAllDaysForCurrentMonthInSQLFriendlyFormat()[i] AND amountOfProductInSQLTableLinkedHashMap.get(MyDate.getAllDaysForCurrentMonthInSQLFriendlyFormat()[i])
-                editDaysStatisticsTable.setValueAt(MyDate.getAllDaysForCurrentMonthInSQLFriendlyFormat()[i], i, 0);
+                editDaysStatisticsTable.setValueAt(MyDate.getAllDaysForCurrentMonthInSQLFriendlyFormat()[i-1], i, 0);
                 editDaysStatisticsTable.setValueAt(Integer.valueOf(pointInOneDay), i, 1);
-                editDaysStatisticsTable.setValueAt(amountOfProductInSQLTableLinkedHashMap.get(MyDate.getAllDaysForCurrentMonthInSQLFriendlyFormat()[i]), i, 2);
+                editDaysStatisticsTable.setValueAt(amountOfProductInSQLTableLinkedHashMap.get(MyDate.getAllDaysForCurrentMonthInSQLFriendlyFormat()[i-1]), i, 2);
             }
         }
         //</editor-fold>
