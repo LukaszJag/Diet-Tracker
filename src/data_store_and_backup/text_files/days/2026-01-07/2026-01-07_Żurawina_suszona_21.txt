@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2026-01-07',
+'Wednesday',
+'Supper',
+21.0,
+'Żurawina suszona',
+342.0,
+0.3,
+0.5,
+84.0,
+'2026-01-07 11:01:31',
+'none',
+71.82,
+17.64,
+0.105,
+0.063
+);

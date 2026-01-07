@@ -1,0 +1,18 @@
+Name: Łakotki Wafle waniliowe
+Brand: San
+Package has: 146.0
+Macro for: 100.0
+KCal: 523.0
+Protein: 7.4
+Fat: 27.0
+Carbs: 61.0
+Comment optional: Link: https://www.frisco.pl/pid,132177/n,san-lakotki-wafle-waniliowe/stn,product
+Name: Łakotki Wafle waniliowe
+Brand: San
+Package has: 146.0
+Macro for: 100.0
+KCal: 523.0
+Protein: 7.4
+Fat: 27.0
+Carbs: 61.0
+Comment optional: Link: https://www.frisco.pl/pid,132177/n,san-lakotki-wafle-waniliowe/stn,product

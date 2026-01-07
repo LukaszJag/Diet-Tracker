@@ -1,0 +1,40 @@
+INSERT INTO `diet_tracker_schema`.product_table
+(`product_name`,
+`product_brand`,
+`product_package_has`,
+`product_macro_for`,
+`product_kcal`,
+`product_protein`,
+`product_fat`,
+`product_carbs`,
+`comment_optional`)
+Values
+('Łakotki Wafle waniliowe',
+'San',
+146.0,
+100.0,
+523.0,
+7.4,
+27.0,
+61.0,
+'Link: https://www.frisco.pl/pid,132177/n,san-lakotki-wafle-waniliowe/stn,product');
+INSERT INTO `diet_tracker_schema`.product_table
+(`product_name`,
+`product_brand`,
+`product_package_has`,
+`product_macro_for`,
+`product_kcal`,
+`product_protein`,
+`product_fat`,
+`product_carbs`,
+`comment_optional`)
+Values
+('Łakotki Wafle waniliowe',
+'San',
+146.0,
+100.0,
+523.0,
+7.4,
+27.0,
+61.0,
+'Link: https://www.frisco.pl/pid,132177/n,san-lakotki-wafle-waniliowe/stn,product');
