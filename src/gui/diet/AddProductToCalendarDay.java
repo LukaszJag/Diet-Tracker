@@ -197,7 +197,7 @@ public class AddProductToCalendarDay {
     Color calendarMonthStatsViewButtonColor = new Color(90, 153, 39);
     Color editDaysStatisticsUpperPanelColor = Color.BLACK;
     Color editDaysStatisticsDownPanelColor = Color.gray;
-    Color editDaysStatisticsCenterPanelColor = Color.white;
+    Color editDaysStatisticsCenterPanelColor = new Color(135, 219, 255);
     Color editDaysStatisticsRightPanelColor = Color.BLUE;
     Color editDaysStatisticsLeftPanelColor = new Color(46, 56, 68);
 
@@ -1394,30 +1394,31 @@ public class AddProductToCalendarDay {
         //<editor-fold desc="Combo Boxes">
         JComboBox<String> pickYearComboBox = new JComboBox<String>(new String[]{"2024", "2025"});
         JComboBox<String> pickFileName = new JComboBox<String>();
-        //</editor-fold>
-        //</editor-fold>
 
+        //</editor-fold>
+        //</editor-fold>
         public EditDaysStatisticsFileButtonActionListener() {
             setFrameWindow();
         }
 
-        //<editor-fold desc="Prepare and setup GUI components">
+        //<editor-fold desc="Prepare and setup GUI components - Frame + Panels + Buttons">
         private void setFrameWindow() {
-            getDataForTable();
-
+            setDataForTable();
             updateTable();
+
+            setButtonsActionListener();
+
             setupPanels();
-
             addComponentsToPanels();
-
             setupFrame();
+        }
 
+        private void setButtonsActionListener() {
             saveButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     getDataFromTable();
                     saveTableValuesToFile();
                 }
-
             });
 
             exitButton.addActionListener(new ActionListener() {
@@ -1433,21 +1434,21 @@ public class AddProductToCalendarDay {
                 }
             });
         }
+
         private void setupFrame() {
-            editDaysStatisticsDialogFrame.setSize(600, 800);
-            editDaysStatisticsDialogFrame.setResizable(false);
-            editDaysStatisticsDialogFrame.setLocationRelativeTo(null);
-
-        }
-        private void setupPanels() {
-            editDaysStatisticsDialogFrame.setLayout(new BorderLayout());
-
             editDaysStatisticsDialogFrame.add(upperPanel, BorderLayout.NORTH);
             editDaysStatisticsDialogFrame.add(leftPanel, BorderLayout.WEST);
             editDaysStatisticsDialogFrame.add(centerPanel, BorderLayout.CENTER);
             editDaysStatisticsDialogFrame.add(rightPanel, BorderLayout.EAST);
             editDaysStatisticsDialogFrame.add(downPanel, BorderLayout.SOUTH);
 
+            editDaysStatisticsDialogFrame.setSize(450, 650);
+            editDaysStatisticsDialogFrame.setResizable(false);
+            editDaysStatisticsDialogFrame.setLocationRelativeTo(null);
+        }
+
+        private void setupPanels() {
+            editDaysStatisticsDialogFrame.setLayout(new BorderLayout());
 
             upperPanel.setBackground(editDaysStatisticsUpperPanelColor);
             downPanel.setBackground(editDaysStatisticsDownPanelColor);
@@ -1455,13 +1456,15 @@ public class AddProductToCalendarDay {
             rightPanel.setBackground(editDaysStatisticsRightPanelColor);
             leftPanel.setBackground(editDaysStatisticsLeftPanelColor);
 
-            upperPanel.setPreferredSize(new Dimension(addProductToDayFrame.getWidth(), 50));
-            downPanel.setPreferredSize(new Dimension(addProductToDayFrame.getWidth(), 150));
-            centerPanel.setPreferredSize(new Dimension(400, 600));
-            rightPanel.setPreferredSize(new Dimension(100, 600));
-            leftPanel.setPreferredSize(new Dimension(100, 600));
+            centerPanel.setLayout(new GridLayout());
 
+            upperPanel.setPreferredSize(new Dimension(addProductToDayFrame.getWidth(), 30));
+            downPanel.setPreferredSize(new Dimension(addProductToDayFrame.getWidth(), 50));
+            centerPanel.setPreferredSize(new Dimension(400, 600));
+            rightPanel.setPreferredSize(new Dimension(50, 600));
+            leftPanel.setPreferredSize(new Dimension(50, 600));
         }
+
         private void addComponentsToPanels() {
             centerPanel.add(editDaysStatisticsTable);
 
@@ -1471,47 +1474,35 @@ public class AddProductToCalendarDay {
         }
         //</editor-fold>
 
-        //<editor-fold desc="table methods">
-        private void getDataForTable() {
+        //<editor-fold desc="Table setup">
+        private void setDataForTable() {
             year = MyDate.getCurrentYear();
             nameOfCurrentMonth = MyDate.getCurrentMonthName();
 
-            String txtFile = nameOfCurrentMonth.toLowerCase() + "_" + year + ".txt";
-
-            pathToFile = "src/data_store_and_backup/text_files/days_statistics_test/"
-                    + year + "/" + txtFile;
+            pathToFile = "src/data_store_and_backup/text_files/days_statistics_test/" +
+                    year + "/" + nameOfCurrentMonth.toLowerCase() + "_" + year + ".txt";
         }
+
         private void getDataFromTable() {
-            int amountOfRows = editDaysStatisticsTable.getRowCount();
-            dataToSave = new String[amountOfRows];
+            dataToSave = new String[editDaysStatisticsTable.getRowCount()];
 
             String key;
             String value;
 
             tableValues.clear();
-            for (int i = 0; i < amountOfRows; i++) {
+            for (int i = 0; i < dataToSave.length; i++) {
                 key = String.valueOf(editDaysStatisticsTable.getValueAt(i, 0));
                 value = String.valueOf(editDaysStatisticsTable.getValueAt(i, 1));
                 tableValues.put(key, value);
                 dataToSave[i] = value;
             }
-
-            int counter = 0;
-            for (Map.Entry<String, String> mapElement : tableValues.entrySet()) {
-                System.out.println("[" + counter + "]: " + mapElement.getValue());
-                counter++;
-            }
-
-            System.out.println();
-            System.out.println();
         }
+
         private void saveTableValuesToFile() {
             String contentToFile = "";
-
             for (Map.Entry<String, String> mapElement : tableValues.entrySet()) {
                 contentToFile += mapElement.getValue() + "\n";
             }
-            // System.out.println(contentToFile);
 
             FilesTools.writeToFileOverwriteAllFile(pathToFile, contentToFile);
             GenerateSLQTableForDaysStatistics.generateWholeMonthAndFillAmountOfPointsFromNotepad(nameOfCurrentMonth, year);
@@ -1519,16 +1510,17 @@ public class AddProductToCalendarDay {
 
         private void updateTable() {
             int amountOfDays = MyDate.getAmountOfDaysInMonth(MyDate.getCurrentMonthNumber());
-
             editDaysStatisticsTable = new JTable(amountOfDays, 3);
 
-            String pointInOneDay = "";
-            String amountOfProductInSQLTable = "";
+            centerPanel.removeAll();
+            centerPanel.add(editDaysStatisticsTable);
 
             // TODO hard coded value "2026-01%" - need to set general value
             LinkedHashMap<String, String> amountOfProductInSQLTableLinkedHashMap = Select.selectAllDataFromTable(
-                    "days_statistics_test", "day_date", "amount_of_filled_points_from_notepad", "day_date", "LIKE", "2026-01%");
+                    "days_statistics_test", "day_date", "amount_of_filled_points_from_notepad", "day_date",
+                    "LIKE", "2026-01%");
 
+            String pointInOneDay = "";
             for (int i = 0; i < amountOfDays; i++) {
                 pointInOneDay = FilesTools.readAndGetLineTXTFile(pathToFile, (i + 1));
 
@@ -1537,31 +1529,14 @@ public class AddProductToCalendarDay {
                 editDaysStatisticsTable.setValueAt(Integer.valueOf(pointInOneDay), i, 1);
                 editDaysStatisticsTable.setValueAt(amountOfProductInSQLTableLinkedHashMap.get(MyDate.getAllDaysForCurrentMonthInSQLFriendlyFormat()[i]), i, 2);
             }
-
-            for (int i = 0; i < amountOfProductInSQLTableLinkedHashMap.size(); i++) {
-                System.out.println("[" + i + "]: \t" + amountOfProductInSQLTableLinkedHashMap.get(MyDate.getAllDaysForCurrentMonthInSQLFriendlyFormat()[i]));
-            }
-            centerPanel.add(new Button("1"));
-
-            editDaysStatisticsTable.revalidate();
-            editDaysStatisticsTable.validate();
-            editDaysStatisticsTable.repaint();
-
-
-            centerPanel.revalidate();
-            centerPanel.validate();
-            centerPanel.repaint();
-
-            editDaysStatisticsDialogFrame.revalidate();
-            editDaysStatisticsDialogFrame.validate();
-            editDaysStatisticsDialogFrame.repaint();
         }
         //</editor-fold>
 
         private void showFrameWindow() {
+            updateTable();
             editDaysStatisticsDialogFrame.show();
-            //updateTable();
         }
+
         @Override
         public void actionPerformed(ActionEvent e) {
             showFrameWindow();
