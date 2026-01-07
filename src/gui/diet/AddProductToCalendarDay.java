@@ -1488,11 +1488,11 @@ public class AddProductToCalendarDay {
             String value;
 
             tableValues.clear();
-            for (int i = 1; i < dataToSave.length; i++) {
+            for (int i = 1; i < dataToSave.length + 1; i++) {
                 key = String.valueOf(editDaysStatisticsTable.getValueAt(i, 0));
                 value = String.valueOf(editDaysStatisticsTable.getValueAt(i, 1));
                 tableValues.put(key, value);
-                dataToSave[i] = value;
+                dataToSave[i-1] = value;
             }
         }
 
@@ -1501,6 +1501,8 @@ public class AddProductToCalendarDay {
             for (Map.Entry<String, String> mapElement : tableValues.entrySet()) {
                 contentToFile += mapElement.getValue() + "\n";
             }
+
+            contentToFile = contentToFile.substring(0, contentToFile.length() - 1);
 
             FilesTools.writeToFileOverwriteAllFile(pathToFile, contentToFile);
             GenerateSLQTableForDaysStatistics.generateWholeMonthAndFillAmountOfPointsFromNotepad(nameOfCurrentMonth, year);
