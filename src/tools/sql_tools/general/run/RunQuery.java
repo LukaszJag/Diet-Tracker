@@ -1,5 +1,6 @@
 package tools.sql_tools.general.run;
 
+import configuration.Config;
 import tools.sql_tools.general.get.GetConnection;
 
 import java.sql.Connection;
@@ -21,7 +22,7 @@ public class RunQuery {
             preparedStatement = connection.prepareStatement(SQLStatement);
             preparedStatement.execute(SQLStatement);
         } catch (SQLException e) {
-            System.out.println("SQL Exception in: RunQuery.runQuery()\n" + SQLStatement + "\n\n");
+            System.out.println(Config.ANSI_RED + "SQL Exception in: RunQuery.runQuery()" + Config.ANSI_RESET);
         } finally {
             if (preparedStatement != null) {
                 try {
