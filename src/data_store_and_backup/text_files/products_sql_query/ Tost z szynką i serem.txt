@@ -1,0 +1,20 @@
+INSERT INTO `diet_tracker_schema`.product_table
+(`product_name`,
+`product_brand`,
+`product_package_has`,
+`product_macro_for`,
+`product_kcal`,
+`product_protein`,
+`product_fat`,
+`product_carbs`,
+`comment_optional`)
+Values
+(' Tost z szynką i serem',
+'Biedronka',
+120.0,
+100.0,
+259.0,
+9.2,
+9.4,
+33.4,
+'Link: https://www.biedronka.pl/pl/pieczywo?page=skladniki');

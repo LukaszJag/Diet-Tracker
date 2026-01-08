@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2026-01-08',
+'Thursday',
+'Breakfast',
+255.0,
+' Croissant z nadzieniem orzechowo-kakaowym',
+410.0,
+7.0,
+21.0,
+47.0,
+'2026-01-08 04:26:24',
+'none',
+1045.5,
+119.85,
+53.55,
+17.85
+);

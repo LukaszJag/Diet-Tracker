@@ -1,0 +1,9 @@
+Name:  Croissant z nadzieniem orzechowo-kakaowym
+Brand: Biedronka
+Package has: 85.0
+Macro for: 100.0
+KCal: 410.0
+Protein: 7.0
+Fat: 21.0
+Carbs: 47.0
+Comment optional: Link: https://www.biedronka.pl/pl/pieczywo?page=skladniki

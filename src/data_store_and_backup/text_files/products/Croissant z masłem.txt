@@ -1,0 +1,9 @@
+Name: Croissant z masłem
+Brand: Biedronka
+Package has: 55.0
+Macro for: 100.0
+KCal: 347.0
+Protein: 6.0
+Fat: 18.0
+Carbs: 38.0
+Comment optional: Link: https://www.tabele-kalorii.pl/kalorie,Croissant-z-maslem-Biedronka.html

@@ -1,0 +1,9 @@
+Name:  Tost z szynką i serem
+Brand: Biedronka
+Package has: 120.0
+Macro for: 100.0
+KCal: 259.0
+Protein: 9.2
+Fat: 9.4
+Carbs: 33.4
+Comment optional: Link: https://www.biedronka.pl/pl/pieczywo?page=skladniki
