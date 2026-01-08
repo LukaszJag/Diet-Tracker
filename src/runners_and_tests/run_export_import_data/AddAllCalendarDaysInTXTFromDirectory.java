@@ -5,12 +5,13 @@ import tools.sql_tools.general.run.RunQuery;
 import tools.text_files_tools.FilesTools;
 
 import java.sql.SQLException;
+import java.util.concurrent.TimeUnit;
 
 public class AddAllCalendarDaysInTXTFromDirectory {
     public static void main(String[] args) throws SQLException {
         String[] allFilesPath = getPathsOfFiles();
         // May cause Error : hard code length
-        int arraysLength =  6000;
+        int arraysLength = 6000;
         String[] productThatExist = new String[arraysLength];
         int counterExistArray = 0;
         int counterNotExistArray = 0;
@@ -19,6 +20,9 @@ public class AddAllCalendarDaysInTXTFromDirectory {
         int amountOfNotExistRows = 0;
 
 
+        long start = System.nanoTime();
+        //System.out.println(time.toString());
+        int counter = 0;
         for (int i = 0; i < allFilesPath.length; i++) {
             if (checkIfProductExist(allFilesPath[i])) {
                 productThatExist[counterExistArray] = allFilesPath[i];
@@ -29,23 +33,11 @@ public class AddAllCalendarDaysInTXTFromDirectory {
                 counterNotExistArray++;
                 amountOfNotExistRows++;
             }
+            counter++;
+            if (counter % 500 ==0){
+                System.out.println("Refrashed row in calendar table: " + counter + "\t" + (TimeUnit.NANOSECONDS.toSeconds(System.nanoTime() - start)));
+            }
         }
-
-        //<editor-fold desc="Print - result">
-        System.out.println("PRODUCT THAT EXIST IN TABLE:");
-        for (int i = 0; i < counterExistArray; i++) {
-            System.out.println(productThatExist[i]);
-        }
-        System.out.println();
-        System.out.println();
-
-        System.out.println("PRODUCT THAT NOT EXIST IN TABLE:");
-        for (int i = 0; i < counterNotExistArray; i++) {
-            System.out.println(productThatNotExist[i]);
-        }
-        System.out.println();
-        System.out.println();
-        //</editor-fold>
 
         String query;
         for (int i = 0; i < counterNotExistArray; i++) {
