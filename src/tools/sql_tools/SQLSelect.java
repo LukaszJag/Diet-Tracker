@@ -12,7 +12,7 @@ public class SQLSelect {
         ResultSet resultSet;
         Statement statement;
 
-        String[] productsArray = new String[500];
+        String[] productsArray = new String[600];
 
         String sql = "SELECT product_name FROM diet_tracker_schema.product_table";
 
