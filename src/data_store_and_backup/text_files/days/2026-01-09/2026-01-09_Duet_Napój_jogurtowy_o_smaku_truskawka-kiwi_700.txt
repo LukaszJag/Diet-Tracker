@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2026-01-09',
+'Saturday',
+'Supper',
+700.0,
+'Duet Napój jogurtowy o smaku truskawka-kiwi',
+56.0,
+1.7,
+0.8,
+10.5,
+'2026-01-10 10:32:57',
+'none',
+392.0,
+73.5,
+5.6,
+11.900001
+);

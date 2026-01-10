@@ -1,0 +1,9 @@
+Name: Krokiety z pieczarkami i mozzarellą
+Brand: Auchan
+Package has: 400.0
+Macro for: 100.0
+KCal: 191.0
+Protein: 6.0
+Fat: 7.8
+Carbs: 23.0
+Comment optional: Dane z opakowania
