@@ -14,6 +14,7 @@ import org.jfree.data.category.CategoryDataset;
 import org.jfree.data.category.DefaultCategoryDataset;
 import tools.calendar_tools.MyDate;
 import tools.charts_tools.DisplayChart;
+import tools.debug_tools.Debug;
 import tools.products_tools.Macro;
 import tools.sql_tools.calendar.SelectFromCalendar;
 import tools.sql_tools.days_statistics.SelectFromDaysStatistics;
@@ -1189,82 +1190,62 @@ public class CalendarMonthStatsView {
 //</editor-fold>
 
     private class ChartsClass {
-        JMenuBar menuBar = new JMenuBar();
-        JMenu menu = new JMenu("Month");
+        String[] daysNumbers;
+        float[] valuesKcal;
+        String chartName;
+        int monthToDisplay = MyDate.getCurrentMonthNumber();
+        int yearToDisplay = 2026;
 
+        JMenuBar menuBar;
+        JMenu menu;
+        JFrame chartFrame;
+        ChartPanel chartPanel;
         //<editor-fold desc="Charts - methods">
-        public void showMonthChart() {
-
-            String dateFromComboBox = monthSelectComboBox.getSelectedItem().toString();
-
-            int counter = 0;
-            for (int i = 0; i < daysButtons.length; i++) {
-                if (!daysButtons[i].getText().equals("null")) {
-                    counter++;
-                }
-            }
-            int amountOfMonthDays = counter;
-            String[] daysNumbers = new String[amountOfMonthDays];
-            float[] valuesKcal = new float[amountOfMonthDays];
+        public void prepareDataForCharts(int previousNextOrCurrentMonth){
             String chartName = MyDate.getNameOfMonthFromNumber(getMonthFromComboBox()) + " stats";
 
-            for (int i = 0; i < daysNumbers.length; i++) {
-                daysNumbers[i] = String.valueOf((i + 1));
-            }
+            if (previousNextOrCurrentMonth == 0){
 
-            String fullDate = "";
-
-            if (dateFromComboBox.contains("2025")) {
-                fullDate = "2025";
-            }
-            if (dateFromComboBox.contains("2024")) {
-                fullDate = "2024";
-            }
-            fullDate = fullDate + "-" + MyDate.getNameOfMonthFromNumberSQLFormat(dateFromComboBox.replaceAll("[0-9]", "")) + "-";
-
-            String[] allDayWhichNeedData = new String[amountOfMonthDays];
-            String fullDateBuffor = fullDate;
-
-            for (int i = 0; i < amountOfMonthDays; i++) {
-
-
-                if (daysNumbers[i].length() == 1) {
-                    fullDate = fullDate + "0" + daysNumbers[i];
+            }else if(monthToDisplay == 1){
+                monthToDisplay++;
+                if (monthToDisplay > 12){
+                    monthToDisplay = 1;
+                    yearToDisplay++;
                 }
-
-                if (daysNumbers[i].length() == 2) {
-                    fullDate = fullDate + daysNumbers[i];
+            }else if (monthToDisplay == -1){
+                monthToDisplay--;
+                if (monthToDisplay < 1){
+                    System.out.println("Here");
+                    monthToDisplay = 12;
+                    yearToDisplay--;
                 }
-
-                allDayWhichNeedData[i] = fullDate;
-                fullDate = fullDateBuffor;
+            }else{
+                Debug.printRedSystemPrintln(("Wrong number of previousNextOrCurrentMonth: " + previousNextOrCurrentMonth));
             }
 
-            for (int i = 0; i < amountOfMonthDays; i++) {
+            valuesKcal = new float[MyDate.getAmountOfDaysInMonth(monthToDisplay)];
 
-                valuesKcal[i] = SelectFromDaysStatistics.getMacroFromDaysStatisticsByDate(allDayWhichNeedData[i]).getKcal();
+            daysNumbers = MyDate.getAllDaysInMonthAndYearSQLFriendlyFormat(monthToDisplay, yearToDisplay);
+
+            Debug.printYellowSystemPrintln((monthToDisplay + " " + yearToDisplay));
+
+            for (int i = 0; i < valuesKcal.length; i++) {
+                valuesKcal[i] = SelectFromDaysStatistics.getMacroFromDaysStatisticsByDate(daysNumbers[i]).getKcal();
             }
+        }
+
+        public void showMonthChart() {
+            prepareDataForCharts(0);
 
             JFreeChart jFreeChart = DisplayChart.createChartPanel(chartName, "Days", "Kcal",
                     valuesKcal, "Kcal", daysNumbers);
             DisplayChart.showChart(jFreeChart);
         }
 
-        public void showMonthBarChart() {
-            //<editor-fold desc="Get Data for bar chart - kcal">
-            int amountOfMonthDays = MyDate.getAmountOfDaysInMonth(getMonthFromComboBox());
-            float[] valuesKcal = new float[amountOfMonthDays];
-            String[] daysNumbers = MyDate.getAllDaysInMonthAndYearSQLFriendlyFormat(getMonthFromComboBox(), getYearFromComboBox());
-
-
-            for (int i = 0; i < amountOfMonthDays; i++) {
-                valuesKcal[i] = SelectFromDaysStatistics.getMacroFromDaysStatisticsByDate(daysNumbers[i]).getKcal();
-            }
-
-            //</editor-fold>
-
+        public void showMonthBarChart(int previousNextOrCurrentMonth) {
+            prepareDataForCharts(previousNextOrCurrentMonth);
             //<editor-fold desc="Setup chart fields">
-            String chartName = MyDate.getNameOfMonthFromNumber(getMonthFromComboBox()) + " stats";
+
             DefaultCategoryDataset dataset = new DefaultCategoryDataset();
 
             for (int i = 0; i < daysNumbers.length; i++) {
@@ -1380,19 +1361,31 @@ public class CalendarMonthStatsView {
 
             //</editor-fold>
 
-
             //<editor-fold desc="Set Range of displayed Y-Axis">
             NumberAxis rangeAxis = (NumberAxis) categoryPlot.getRangeAxis();
             rangeAxis.setRange(0, 8000);
             //</editor-fold>
 
-            displayCharBar();
         }
 
-        private void displayCharBar() {
-            JFrame chartFrame = new JFrame();
+        public void clearAllData(){
+            SwingUtilities.updateComponentTreeUI(chartFrame);
 
-            ChartPanel chartPanel = new ChartPanel(jFreeChart);
+            chartFrame.remove(chartPanel);
+
+            chartFrame.invalidate();
+            chartFrame.validate();
+            chartFrame.repaint();
+        }
+
+        private void displayCharBar(int previousNextOrCurrentMonth) {
+
+            showMonthBarChart(previousNextOrCurrentMonth);
+            menuBar = new JMenuBar();
+            menu = new JMenu("Month");
+            chartFrame = new JFrame();
+
+            chartPanel = new ChartPanel(jFreeChart);
 
             menuBar.add(previousMonthButton);
             menuBar.add(nextMonthButton);
@@ -1400,6 +1393,7 @@ public class CalendarMonthStatsView {
 
             chartFrame.setJMenuBar(menuBar);
 
+            chartFrame.setFocusable(true);
             chartFrame.add(chartPanel);
 
             chartFrame.addKeyListener(new TestFrameKeyListener());
@@ -1408,6 +1402,27 @@ public class CalendarMonthStatsView {
             chartFrame.setVisible(true);
             chartFrame.setResizable(false);
             chartFrame.setLocationRelativeTo(null);
+        }
+        public void updateJFrameForCharBar(int previousNextOrCurrentMonth){
+            showMonthBarChart(-1);
+            clearAllData();
+            chartFrame = new JFrame();
+            menuBar.add(previousMonthButton);
+
+
+            chartPanel = new ChartPanel(jFreeChart);
+
+
+            menuBar.add(nextMonthButton);
+            menuBar.add(currentMonthButton);
+
+            chartFrame.setJMenuBar(menuBar);
+
+            chartFrame.setFocusable(true);
+            chartFrame.add(chartPanel);
+
+            chartFrame.revalidate();
+            chartFrame.repaint();
         }
 
 
@@ -1524,7 +1539,7 @@ public class CalendarMonthStatsView {
     private class ShowBarChartButtonActionListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            chartsClass.showMonthBarChart();
+            chartsClass.displayCharBar(0);
         }
     }
 
@@ -1548,11 +1563,18 @@ public class CalendarMonthStatsView {
 
             if (e.getKeyCode() == KeyEvent.VK_LEFT) {
                 System.out.println("Left pressed");
+                chartsClass.updateJFrameForCharBar(-1);
             }
 
             if (e.getKeyCode() == KeyEvent.VK_DOWN){
                 System.out.println("Down pressed");
             }
+
+            if (e.getKeyCode() == KeyEvent.VK_H){
+                System.out.println("H pressed");
+            }
+
+
         }
     }
 
