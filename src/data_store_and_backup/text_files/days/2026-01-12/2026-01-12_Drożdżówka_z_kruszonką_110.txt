@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2026-01-12',
+'Monday',
+'Snack 2',
+110.0,
+'Drożdżówka z kruszonką',
+370.0,
+7.4,
+12.0,
+57.0,
+'2026-01-12 05:23:00',
+'none',
+407.0,
+62.7,
+13.200001,
+8.14
+);
