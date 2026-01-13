@@ -1,6 +1,5 @@
 package tests.tools_tests.calendar;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -8,6 +7,8 @@ import tools.calendar_tools.MyDate;
 
 import java.text.Format;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -107,6 +108,21 @@ public class MyDateTests {
             public void getPreviousDayDateSQLFriendlyFormatTest3() {
                 assertEquals("2025-12-31",
                         MyDate.getPreviousDayDateSQLFriendlyFormat("2026-01-01"));
+            }
+        }
+        @Nested
+        class GeneralTimeAndDateOperations{
+            @Test
+            public void getPreviousMonth(){
+                Date dt = new Date();
+                Calendar c = Calendar.getInstance();
+                c.setTime(dt);
+                c.add(Calendar.MONTH, -1);
+                dt = c.getTime();
+                String pattern = "yyyy";
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+                String date = simpleDateFormat.format(dt);
+                System.out.println(date);
             }
         }
     }

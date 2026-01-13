@@ -26,6 +26,7 @@ import java.awt.event.*;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 import static tools.calendar_tools.MyDate.getNumberOfMonthInYear;
@@ -1199,29 +1200,46 @@ public class CalendarMonthStatsView {
         JMenuBar menuBar;
         JMenu menu;
         JFrame chartFrame;
+        JLabel dateLabel;
         ChartPanel chartPanel;
+        int monthIntervalForChart;
+
+        ChartsClass() {
+            monthIntervalForChart = 0;
+            dateLabel = new JLabel("" +
+                    MyDate.getCurrentMonthNumber() + "-" + MyDate.getCurrentMonthNumber());
+        }
+
         //<editor-fold desc="Charts - methods">
-        public void prepareDataForCharts(int previousNextOrCurrentMonth){
+        public void prepareDataForCharts(int previousNextOrCurrentMonth) {
             String chartName = MyDate.getNameOfMonthFromNumber(getMonthFromComboBox()) + " stats";
 
-            if (previousNextOrCurrentMonth == 0){
+            monthIntervalForChart += previousNextOrCurrentMonth;
 
-            }else if(monthToDisplay == 1){
-                monthToDisplay++;
-                if (monthToDisplay > 12){
-                    monthToDisplay = 1;
-                    yearToDisplay++;
-                }
-            }else if (monthToDisplay == -1){
-                monthToDisplay--;
-                if (monthToDisplay < 1){
-                    System.out.println("Here");
-                    monthToDisplay = 12;
-                    yearToDisplay--;
-                }
-            }else{
-                Debug.printRedSystemPrintln(("Wrong number of previousNextOrCurrentMonth: " + previousNextOrCurrentMonth));
+            Date dt = new Date();
+            Calendar c = Calendar.getInstance();
+            c.setTime(dt);
+            c.add(Calendar.MONTH, monthIntervalForChart);
+            dt = c.getTime();
+
+            String pattern = "yyyy";
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+            String dateYear = simpleDateFormat.format(dt);
+
+            String pattern2 = "MM";
+            SimpleDateFormat simpleDateFormat2 = new SimpleDateFormat(pattern2);
+            String dateMonth = simpleDateFormat2.format(dt);
+
+            yearToDisplay = Integer.valueOf(dateYear);
+
+            if (dateMonth.charAt(0) == '0') {
+                monthToDisplay = Integer.valueOf(dateMonth.substring(1, 2));
+            } else {
+
+                monthToDisplay = Integer.valueOf(dateMonth);
             }
+
+            dateLabel = new JLabel("" + dateMonth + "-" + dateYear);
 
             valuesKcal = new float[MyDate.getAmountOfDaysInMonth(monthToDisplay)];
 
@@ -1237,13 +1255,13 @@ public class CalendarMonthStatsView {
         public void showMonthChart() {
             prepareDataForCharts(0);
 
-            JFreeChart jFreeChart = DisplayChart.createChartPanel(chartName, "Days", "Kcal",
+            chartName = monthToDisplay + "-" + yearToDisplay;
+            jFreeChart = DisplayChart.createChartPanel(chartName, "Days", "Kcal",
                     valuesKcal, "Kcal", daysNumbers);
             DisplayChart.showChart(jFreeChart);
         }
 
-        public void showMonthBarChart(int previousNextOrCurrentMonth) {
-            prepareDataForCharts(previousNextOrCurrentMonth);
+        public void showMonthBarChart() {
             //<editor-fold desc="Setup chart fields">
 
             DefaultCategoryDataset dataset = new DefaultCategoryDataset();
@@ -1368,19 +1386,20 @@ public class CalendarMonthStatsView {
 
         }
 
-        public void clearAllData(){
+        public void clearAllData() {
             SwingUtilities.updateComponentTreeUI(chartFrame);
 
             chartFrame.remove(chartPanel);
+            chartFrame.remove(dateLabel);
 
             chartFrame.invalidate();
             chartFrame.validate();
             chartFrame.repaint();
         }
 
-        private void displayCharBar(int previousNextOrCurrentMonth) {
-
-            showMonthBarChart(previousNextOrCurrentMonth);
+        private void displayCharBar() {
+            prepareDataForCharts(monthIntervalForChart);
+            showMonthBarChart();
             menuBar = new JMenuBar();
             menu = new JMenu("Month");
             chartFrame = new JFrame();
@@ -1390,6 +1409,7 @@ public class CalendarMonthStatsView {
             menuBar.add(previousMonthButton);
             menuBar.add(nextMonthButton);
             menuBar.add(currentMonthButton);
+            menuBar.add(dateLabel);
 
             chartFrame.setJMenuBar(menuBar);
 
@@ -1403,23 +1423,28 @@ public class CalendarMonthStatsView {
             chartFrame.setResizable(false);
             chartFrame.setLocationRelativeTo(null);
         }
-        public void updateJFrameForCharBar(int previousNextOrCurrentMonth){
-            showMonthBarChart(-1);
+
+        public void updateJFrameForCharBar(int previousNextOrCurrentMonth) {
             clearAllData();
-            chartFrame = new JFrame();
+            prepareDataForCharts(previousNextOrCurrentMonth);
+            showMonthBarChart();
+
             menuBar.add(previousMonthButton);
-
-
-            chartPanel = new ChartPanel(jFreeChart);
-
-
             menuBar.add(nextMonthButton);
             menuBar.add(currentMonthButton);
+            menuBar.add(dateLabel);
 
             chartFrame.setJMenuBar(menuBar);
 
+            chartPanel = new ChartPanel(jFreeChart);
+
             chartFrame.setFocusable(true);
             chartFrame.add(chartPanel);
+
+            chartFrame.setSize(new Dimension(900, 700));
+            chartFrame.setVisible(true);
+            chartFrame.setResizable(false);
+            chartFrame.setLocationRelativeTo(null);
 
             chartFrame.revalidate();
             chartFrame.repaint();
@@ -1529,6 +1554,7 @@ public class CalendarMonthStatsView {
         }
     }
 
+    //<editor-fold desc="Charts Action Listeners">
     private class ShowChartButtonActionListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -1536,10 +1562,11 @@ public class CalendarMonthStatsView {
         }
     }
 
+    //<editor-fold desc="Bar chart Action Listeners">
     private class ShowBarChartButtonActionListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            chartsClass.displayCharBar(0);
+            chartsClass.displayCharBar();
         }
     }
 
@@ -1559,6 +1586,7 @@ public class CalendarMonthStatsView {
         public void keyReleased(KeyEvent e) {
             if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
                 System.out.println("Right pressed");
+                chartsClass.updateJFrameForCharBar(1);
             }
 
             if (e.getKeyCode() == KeyEvent.VK_LEFT) {
@@ -1566,16 +1594,18 @@ public class CalendarMonthStatsView {
                 chartsClass.updateJFrameForCharBar(-1);
             }
 
-            if (e.getKeyCode() == KeyEvent.VK_DOWN){
+            if (e.getKeyCode() == KeyEvent.VK_DOWN) {
                 System.out.println("Down pressed");
             }
 
-            if (e.getKeyCode() == KeyEvent.VK_H){
+            if (e.getKeyCode() == KeyEvent.VK_H) {
                 System.out.println("H pressed");
             }
 
 
         }
     }
+    //</editor-fold>
+    //</editor-fold>
 
 }
