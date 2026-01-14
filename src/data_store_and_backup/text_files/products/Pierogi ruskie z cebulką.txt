@@ -1,0 +1,9 @@
+Name: Pierogi ruskie z cebulką
+Brand: Nasze Smaki
+Package has: 320.0
+Macro for: 100.0
+KCal: 175.0
+Protein: 6.1
+Fat: 4.6
+Carbs: 26.0
+Comment optional: Link: https://www.tabele-kalorii.pl/kalorie,Pierogi-ruskie-z-cebulka-Nasze-Smaki.html

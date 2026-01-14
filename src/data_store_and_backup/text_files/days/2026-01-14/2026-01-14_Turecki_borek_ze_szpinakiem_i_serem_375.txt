@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2026-01-14',
+'Wednesday',
+'Breakfast',
+375.0,
+'Turecki borek ze szpinakiem i serem',
+287.0,
+6.2,
+16.0,
+28.0,
+'2026-01-14 09:44:32',
+'none',
+1076.25,
+105.0,
+60.0,
+23.25
+);
