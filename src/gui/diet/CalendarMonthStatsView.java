@@ -1191,18 +1191,24 @@ public class CalendarMonthStatsView {
 //</editor-fold>
 
     private class ChartsClass {
+        //<editor-fold desc="Global variables">
         String[] daysNumbers;
         float[] valuesKcal;
         String chartName;
         int monthToDisplay = MyDate.getCurrentMonthNumber();
         int yearToDisplay = 2026;
+        int monthIntervalForChart;
+        ChartPanel chartPanel;
+        //</editor-fold>
 
+        //<editor-fold desc="Swing components">
         JMenuBar menuBar;
         JMenu menu;
         JFrame chartFrame;
         JLabel dateLabel;
-        ChartPanel chartPanel;
-        int monthIntervalForChart;
+        //</editor-fold>
+
+
 
         ChartsClass() {
             monthIntervalForChart = 0;
@@ -1391,6 +1397,8 @@ public class CalendarMonthStatsView {
 
             chartFrame.remove(chartPanel);
             chartFrame.remove(dateLabel);
+
+            menuBar.removeAll();
 
             chartFrame.invalidate();
             chartFrame.validate();
