@@ -1,0 +1,9 @@
+Name: Spaghetti Carbonara z serem - Szam Amm
+Brand: Szam Amm
+Package has: 400.0
+Macro for: 100.0
+KCal: 138.0
+Protein: 6.3
+Fat: 5.0
+Carbs: 16.0
+Comment optional: Dane z opakowania

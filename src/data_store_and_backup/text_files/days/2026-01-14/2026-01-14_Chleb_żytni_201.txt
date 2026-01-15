@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2026-01-14',
+'Thursday',
+'Night snack',
+201.0,
+'Chleb żytni',
+262.0,
+8.8,
+9.1,
+33.0,
+'2026-01-15 09:19:39',
+'none',
+526.62,
+66.33,
+18.291,
+17.688
+);

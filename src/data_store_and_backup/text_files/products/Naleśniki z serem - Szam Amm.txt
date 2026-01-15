@@ -1,0 +1,9 @@
+Name: Naleśniki z serem - Szam Amm
+Brand: Szam Amm
+Package has: 300.0
+Macro for: 100.0
+KCal: 159.0
+Protein: 8.0
+Fat: 2.2
+Carbs: 26.0
+Comment optional: Dane z opakowania

@@ -1,0 +1,9 @@
+Name: Kanapka trójkąt - Szynka & Jajko
+Brand: Tomcio Paluch
+Package has: 200.0
+Macro for: 100.0
+KCal: 222.0
+Protein: 9.5
+Fat: 11.0
+Carbs: 22.0
+Comment optional: Dane z opakowania
