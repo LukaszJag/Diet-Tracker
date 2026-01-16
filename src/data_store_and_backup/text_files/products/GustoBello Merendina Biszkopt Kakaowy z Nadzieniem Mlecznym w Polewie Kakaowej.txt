@@ -1,0 +1,9 @@
+Name: GustoBello Merendina Biszkopt Kakaowy z Nadzieniem Mlecznym w Polewie Kakaowej
+Brand: GustoBello
+Package has: 350.0
+Macro for: 100.0
+KCal: 428.0
+Protein: 5.3
+Fat: 20.0
+Carbs: 56.0
+Comment optional: Link: https://www.fitatu.com/catalog/pl/gustobello-merendina-biszkopt-kakaowy-z-nadzieniem-mlecznym-w-polewie-kakaowej--103815033

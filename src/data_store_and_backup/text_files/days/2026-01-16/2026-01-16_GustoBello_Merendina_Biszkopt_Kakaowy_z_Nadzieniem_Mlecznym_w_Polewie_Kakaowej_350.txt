@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2026-01-16',
+'Friday',
+'Breakfast',
+350.0,
+'GustoBello Merendina Biszkopt Kakaowy z Nadzieniem Mlecznym w Polewie Kakaowej',
+428.0,
+5.3,
+20.0,
+56.0,
+'2026-01-16 01:46:33',
+'none',
+1498.0,
+196.0,
+70.0,
+18.550001
+);
