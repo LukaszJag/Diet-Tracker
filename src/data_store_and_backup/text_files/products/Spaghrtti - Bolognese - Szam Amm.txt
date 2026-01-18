@@ -1,0 +1,9 @@
+Name: Spaghrtti - Bolognese - Szam Amm
+Brand: Szam Amm
+Package has: 400.0
+Macro for: 100.0
+KCal: 132.0
+Protein: 5.6
+Fat: 4.0
+Carbs: 17.0
+Comment optional: Dane z opakowania
