@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2026-01-18',
+'Sunday',
+'Snack 2',
+70.0,
+'Lody rożek - Snickers',
+347.1,
+18.8,
+40.8,
+5.0,
+'2026-01-18 10:16:08',
+'none',
+242.97,
+3.5,
+28.56,
+13.159999
+);

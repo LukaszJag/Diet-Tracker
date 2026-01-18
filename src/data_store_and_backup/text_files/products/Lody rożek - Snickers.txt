@@ -1,0 +1,9 @@
+Name: Lody rożek - Snickers
+Brand: Snickers
+Package has: 70.0
+Macro for: 100.0
+KCal: 347.1
+Protein: 18.8
+Fat: 40.8
+Carbs: 5.0
+Comment optional: Dane z opakowania
