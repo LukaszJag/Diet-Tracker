@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2026-01-19',
+'Monday',
+'Dinner',
+74.0,
+'Lody Rożek truskawkowy',
+266.0,
+2.6,
+12.0,
+37.0,
+'2026-01-19 04:55:37',
+'none',
+196.84,
+27.380001,
+8.88,
+1.9239999
+);
