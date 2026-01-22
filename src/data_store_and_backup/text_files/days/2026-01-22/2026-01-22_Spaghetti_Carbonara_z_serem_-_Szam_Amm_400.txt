@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2026-01-22',
+'Thursday',
+'Dinner',
+400.0,
+'Spaghetti Carbonara z serem - Szam Amm',
+138.0,
+6.3,
+5.0,
+16.0,
+'2026-01-22 07:43:43',
+'none',
+552.0,
+64.0,
+20.0,
+25.2
+);
