@@ -1,0 +1,9 @@
+Name: Lody - Big Milk Fruit
+Brand: Algida
+Package has: 77.0
+Macro for: 100.0
+KCal: 127.0
+Protein: 1.4
+Fat: 2.2
+Carbs: 24.0
+Comment optional: Dane z opakowania

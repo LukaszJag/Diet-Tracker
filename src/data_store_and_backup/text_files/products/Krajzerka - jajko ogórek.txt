@@ -1,0 +1,9 @@
+Name: Krajzerka - jajko ogórek
+Brand: Tomcio Paluch
+Package has: 120.0
+Macro for: 100.0
+KCal: 244.0
+Protein: 8.3
+Fat: 11.0
+Carbs: 27.0
+Comment optional: Dane z opakowania
