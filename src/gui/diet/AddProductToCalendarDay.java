@@ -905,7 +905,7 @@ public class AddProductToCalendarDay {
 
             checkCalendarTableButtonWindowFrame.add(scrollPane);
             checkCalendarTableButtonWindowFrame.setSize(Config.CHECK_CALENDAR_TABLE_BUTTON_WINDOW_FRAME_SIZE);
-            checkCalendarTableButtonWindowFrame.setResizable(false);
+            checkCalendarTableButtonWindowFrame.setResizable(true);
             checkCalendarTableButtonWindowFrame.setLocationRelativeTo(null);
             checkCalendarTableButtonWindowFrame.show();
         }
