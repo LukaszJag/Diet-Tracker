@@ -148,6 +148,16 @@ public class CalendarMonthStatsView {
     public CalendarMonthStatsView() {
         startWindow();
     }
+    public CalendarMonthStatsView(boolean onlySetupVariables){
+        if (onlySetupVariables){
+            setMainWindowSizeAndLayout();
+            setPanels();
+            addComponentsToPanels();
+            addPanelsToFrame();
+            paintButtons();
+            refreshMacroAndAllComponentForNorthPanel();
+        }
+    }
 
     public void startWindow() {
         setMainWindowSizeAndLayout();
@@ -1190,7 +1200,10 @@ public class CalendarMonthStatsView {
 
 //</editor-fold>
 
-    private class ChartsClass {
+    public void showChartBarTestTest(){
+        (new ChartsClass()).displayCharBar();
+    }
+    public class ChartsClass {
         //<editor-fold desc="Global variables">
         String[] daysNumbers;
         float[] valuesKcal;
@@ -1207,8 +1220,6 @@ public class CalendarMonthStatsView {
         JFrame chartFrame;
         JLabel dateLabel;
         //</editor-fold>
-
-
 
         ChartsClass() {
             monthIntervalForChart = 0;

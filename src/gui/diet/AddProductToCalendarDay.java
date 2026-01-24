@@ -77,6 +77,7 @@ public class AddProductToCalendarDay {
     JButton calendarMonthStatsView = new JButton("Month stats view");
     JButton refreshDaysStatisticsDataBaseButton = new JButton("Refresh DaysStatistics Data");
     JButton editDaysStatisticsFileButton = new JButton("Edit current statistics");
+    JButton showBatChartForMonthButton = new JButton("Show barchart");
     //</editor-fold>
 
     //<editor-fold desc="Main panel - buttons"">
@@ -469,6 +470,9 @@ public class AddProductToCalendarDay {
 
         editDaysStatisticsFileButton.addActionListener(new EditDaysStatisticsFileButtonActionListener());
         addProductToDayPanelEast.add(editDaysStatisticsFileButton);
+
+        showBatChartForMonthButton.addActionListener(new ShowBatChartForMonthButtonActionListener());
+        addProductToDayPanelEast.add(showBatChartForMonthButton);
         //</editor-fold>
     }
 
@@ -1492,7 +1496,7 @@ public class AddProductToCalendarDay {
                 key = String.valueOf(editDaysStatisticsTable.getValueAt(i, 0));
                 value = String.valueOf(editDaysStatisticsTable.getValueAt(i, 1));
                 tableValues.put(key, value);
-                dataToSave[i-1] = value;
+                dataToSave[i - 1] = value;
             }
         }
 
@@ -1522,16 +1526,16 @@ public class AddProductToCalendarDay {
 
             String pointInOneDay = "";
 
-            editDaysStatisticsTable.setValueAt("Date",0,0);
-            editDaysStatisticsTable.setValueAt("All points for day",0,1);
-            editDaysStatisticsTable.setValueAt("Points from database",0,2);
+            editDaysStatisticsTable.setValueAt("Date", 0, 0);
+            editDaysStatisticsTable.setValueAt("All points for day", 0, 1);
+            editDaysStatisticsTable.setValueAt("Points from database", 0, 2);
             for (int i = 1; i < amountOfDays; i++) {
                 pointInOneDay = FilesTools.readAndGetLineTXTFile(pathToFile, (i));
 
                 // TODO make it shorter -> MyDate.getAllDaysForCurrentMonthInSQLFriendlyFormat()[i] AND amountOfProductInSQLTableLinkedHashMap.get(MyDate.getAllDaysForCurrentMonthInSQLFriendlyFormat()[i])
-                editDaysStatisticsTable.setValueAt(MyDate.getAllDaysForCurrentMonthInSQLFriendlyFormat()[i-1], i, 0);
+                editDaysStatisticsTable.setValueAt(MyDate.getAllDaysForCurrentMonthInSQLFriendlyFormat()[i - 1], i, 0);
                 editDaysStatisticsTable.setValueAt(Integer.valueOf(pointInOneDay), i, 1);
-                editDaysStatisticsTable.setValueAt(amountOfProductInSQLTableLinkedHashMap.get(MyDate.getAllDaysForCurrentMonthInSQLFriendlyFormat()[i-1]), i, 2);
+                editDaysStatisticsTable.setValueAt(amountOfProductInSQLTableLinkedHashMap.get(MyDate.getAllDaysForCurrentMonthInSQLFriendlyFormat()[i - 1]), i, 2);
             }
         }
         //</editor-fold>
@@ -1759,6 +1763,22 @@ public class AddProductToCalendarDay {
             }
 
             return resultArray;
+        }
+    }
+
+    private class ShowBatChartForMonthButtonActionListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+
+            CalendarMonthStatsView chartsClass = new CalendarMonthStatsView(true);
+            chartsClass.showChartBarTestTest();
+
+            /*chartsClass.show
+            CalendarMonthStatsView.ChartsClass chartsClass1 = chartsClass.new ChartsClass();
+            chartsClass1.showMonthBarChart();
+
+
+             */
         }
     }
 
