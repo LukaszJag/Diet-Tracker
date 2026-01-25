@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2026-01-24',
+'Sunday',
+'Supper',
+171.0,
+'Ciastka American Cookies - K Classic',
+497.0,
+6.3,
+26.0,
+57.0,
+'2026-01-25 06:01:03',
+'none',
+849.87,
+97.47,
+44.46,
+10.773001
+);

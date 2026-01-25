@@ -1,0 +1,9 @@
+Name: Ciastka Hit o smaku waniliowym
+Brand: Bahlsen
+Package has: 220.0
+Macro for: 100.0
+KCal: 507.0
+Protein: 5.8
+Fat: 25.0
+Carbs: 64.0
+Comment optional: Link: https://www.tabele-kalorii.pl/kalorie,Ciastka-Hit-o-smaku-waniliowym-Bahlsen.html

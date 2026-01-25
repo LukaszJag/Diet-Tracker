@@ -1,0 +1,9 @@
+Name: Ciastka American Cookies - K Classic
+Brand: Kaufland
+Package has: 150.0
+Macro for: 100.0
+KCal: 497.0
+Protein: 6.3
+Fat: 26.0
+Carbs: 57.0
+Comment optional: Dane z opakowania
