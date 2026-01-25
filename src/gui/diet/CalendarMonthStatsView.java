@@ -148,8 +148,9 @@ public class CalendarMonthStatsView {
     public CalendarMonthStatsView() {
         startWindow();
     }
-    public CalendarMonthStatsView(boolean onlySetupVariables){
-        if (onlySetupVariables){
+
+    public CalendarMonthStatsView(boolean onlySetupVariables) {
+        if (onlySetupVariables) {
             setMainWindowSizeAndLayout();
             setPanels();
             addComponentsToPanels();
@@ -1200,9 +1201,10 @@ public class CalendarMonthStatsView {
 
 //</editor-fold>
 
-    public void showChartBarTestTest(){
+    public void showChartBarTestTest() {
         (new ChartsClass()).displayCharBar();
     }
+
     public class ChartsClass {
         //<editor-fold desc="Global variables">
         String[] daysNumbers;
@@ -1278,13 +1280,23 @@ public class CalendarMonthStatsView {
             DisplayChart.showChart(jFreeChart);
         }
 
-        public void showMonthBarChart() {
+        public void prepareMonthBarChart() {
             //<editor-fold desc="Setup chart fields">
 
             DefaultCategoryDataset dataset = new DefaultCategoryDataset();
 
+            String[] dayInSQLFormat = new String[MyDate.getAmountOfDaysInMonth(monthToDisplay)];
+            for (int i = 0; i < dayInSQLFormat.length; i++) {
+                if ((i + 1) >= 10) {
+                    dayInSQLFormat[i] = yearToDisplay + "-" + MyDate.getNameOfMonthFromNumberSQLFormat(monthToDisplay) + "-" + (i + 1);
+                } else {
+                    dayInSQLFormat[i] = yearToDisplay + "-" + MyDate.getNameOfMonthFromNumberSQLFormat(monthToDisplay) + "-" + "0" + (i + 1);
+                }
+            }
+
             for (int i = 0; i < daysNumbers.length; i++) {
-                dataset.addValue(valuesKcal[i], "" + (i + 1), "kcal");
+
+                dataset.addValue(valuesKcal[i], ("" + (i + 1) + "-" +  SelectFromDaysStatistics.getMacroFromDaysStatisticsByDate(dayInSQLFormat[i]).getKcal()), "kcal");
             }
 
             jFreeChart = ChartFactory.createBarChart(chartName, "Kcal", "Kcal",
@@ -1398,7 +1410,7 @@ public class CalendarMonthStatsView {
 
             //<editor-fold desc="Set Range of displayed Y-Axis">
             NumberAxis rangeAxis = (NumberAxis) categoryPlot.getRangeAxis();
-            rangeAxis.setRange(0, 8000);
+            rangeAxis.setRange(0, 11000);
             //</editor-fold>
 
         }
@@ -1418,7 +1430,7 @@ public class CalendarMonthStatsView {
 
         private void displayCharBar() {
             prepareDataForCharts(monthIntervalForChart);
-            showMonthBarChart();
+            prepareMonthBarChart();
             menuBar = new JMenuBar();
             menu = new JMenu("Month");
             chartFrame = new JFrame();
@@ -1437,7 +1449,7 @@ public class CalendarMonthStatsView {
 
             chartFrame.addKeyListener(new TestFrameKeyListener());
 
-            chartFrame.setSize(new Dimension(900, 700));
+            chartFrame.setSize(new Dimension(1000, 900));
             chartFrame.setVisible(true);
             chartFrame.setResizable(false);
             chartFrame.setLocationRelativeTo(null);
@@ -1446,7 +1458,7 @@ public class CalendarMonthStatsView {
         public void updateJFrameForCharBar(int previousNextOrCurrentMonth) {
             clearAllData();
             prepareDataForCharts(previousNextOrCurrentMonth);
-            showMonthBarChart();
+            prepareMonthBarChart();
 
             menuBar.add(previousMonthButton);
             menuBar.add(nextMonthButton);
