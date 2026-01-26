@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2026-01-25',
+'Monday',
+'Supper',
+51.0,
+'Ciastka Hit o smaku waniliowym',
+507.0,
+5.8,
+25.0,
+64.0,
+'2026-01-26 03:30:21',
+'none',
+258.57,
+32.64,
+12.75,
+2.958
+);

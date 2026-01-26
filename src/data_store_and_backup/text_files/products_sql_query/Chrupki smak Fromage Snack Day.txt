@@ -1,0 +1,20 @@
+INSERT INTO `diet_tracker_schema`.product_table
+(`product_name`,
+`product_brand`,
+`product_package_has`,
+`product_macro_for`,
+`product_kcal`,
+`product_protein`,
+`product_fat`,
+`product_carbs`,
+`comment_optional`)
+Values
+('Chrupki smak Fromage Snack Day',
+'Lidl',
+110.0,
+100.0,
+535.0,
+2.9,
+32.0,
+58.0,
+'Link: https://www.dine4fit.pl/produkty/chrupki-smak-fromage-snack-day');

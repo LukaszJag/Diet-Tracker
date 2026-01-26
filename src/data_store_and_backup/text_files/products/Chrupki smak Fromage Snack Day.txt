@@ -1,0 +1,9 @@
+Name: Chrupki smak Fromage Snack Day
+Brand: Lidl
+Package has: 110.0
+Macro for: 100.0
+KCal: 535.0
+Protein: 2.9
+Fat: 32.0
+Carbs: 58.0
+Comment optional: Link: https://www.dine4fit.pl/produkty/chrupki-smak-fromage-snack-day

@@ -1,0 +1,9 @@
+Name: Kruche Ciastka z kawałkami czekolady Sondey
+Brand: Sondey
+Package has: 225.0
+Macro for: 100.0
+KCal: 493.0
+Protein: 7.0
+Fat: 25.0
+Carbs: 58.0
+Comment optional: Link: https://www.dine4fit.pl/produkty/kruche-ciastka-z-kawalkami-czekolady-sondey
