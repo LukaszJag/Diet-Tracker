@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2026-01-27',
+'Tuesday',
+'Dinner',
+189.0,
+'Bułka - delicja serowa',
+325.0,
+13.5,
+6.93,
+52.0,
+'2026-01-27 08:08:00',
+'none',
+614.25,
+98.28,
+13.097699,
+25.515
+);
