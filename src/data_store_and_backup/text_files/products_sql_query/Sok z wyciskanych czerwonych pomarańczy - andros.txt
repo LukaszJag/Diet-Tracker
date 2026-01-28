@@ -1,0 +1,20 @@
+INSERT INTO `diet_tracker_schema`.product_table
+(`product_name`,
+`product_brand`,
+`product_package_has`,
+`product_macro_for`,
+`product_kcal`,
+`product_protein`,
+`product_fat`,
+`product_carbs`,
+`comment_optional`)
+Values
+('Sok z wyciskanych czerwonych pomarańczy - andros',
+'Andros',
+1000.0,
+100.0,
+43.0,
+0.5,
+0.0,
+10.0,
+'Link: https://zakupy.auchan.pl/products/sok-z-czerwonych-pomara%C5%84czy-andros-1-l/00638473?srsltid=AfmBOooDT2pz-6vlXOP38SzoeFUJMG6CfCWOE9-Unhx3hOBdLGRbkl95');
