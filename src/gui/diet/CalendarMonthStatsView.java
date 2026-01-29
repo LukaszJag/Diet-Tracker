@@ -18,12 +18,17 @@ import tools.debug_tools.Debug;
 import tools.products_tools.Macro;
 import tools.sql_tools.calendar.SelectFromCalendar;
 import tools.sql_tools.days_statistics.SelectFromDaysStatistics;
+import tools.sql_tools.general.get.GetConnection;
 import tools.time_date_tools.DateTools;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.*;
+import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -56,7 +61,7 @@ public class CalendarMonthStatsView {
     Color goodDayDataColorLabelAndButton = new Color(73, 176, 76);
     Color badDayDataColorLabelAndButton = new Color(176, 73, 73);
     Color comingDaysDaysColorLabelAndButton = new Color(65, 119, 201);
-    Color northPanelStaticLabelsColor = new Color(58, 123, 125);
+    Color northPanelStaticLabelsColor = Color.BLACK;
     Color currentDayDateNorthPanelLabelColor = new Color(0, 255, 171);
     Color selectedDateAverageMacroForMonthLabelColor = new Color(238, 154, 28);
     //</editor-fold>
@@ -111,6 +116,13 @@ public class CalendarMonthStatsView {
     JButton currentMonthButton = new JButton("Current");
     JButton nextMonthButton = new JButton("Next");
 
+    JButton middlePanelWestPlusDayForDaysStatisticButton = new JButton("+");
+    JButton middlePanelWestMinusDayForDaysStatisticButton = new JButton("-");
+    JButton setNextDayButton = new JButton("+");
+    JButton setPreviousButton = new JButton("-");
+    JButton checkCalendarTableButton = new JButton("Check calendar table");
+    JButton checkDaysStatisticFilledTableButton = new JButton("Check days statistic");
+
     //</editor-fold>
 
     //<editor-fold desc="GridLayouts">
@@ -118,7 +130,7 @@ public class CalendarMonthStatsView {
     GridLayout northPanelGridLayout = new GridLayout(2, 3, 5, 5);
     GridLayout northSelectedMonthStatsPanelGridLayout = new GridLayout(2, 2, 5, 5);
     GridLayout eastPanelGridLayout = new GridLayout(3, 1, 5, 5);
-    GridLayout westPanelGridLayout = new GridLayout(6, 1, 5, 5);
+    GridLayout westPanelGridLayout = new GridLayout(4, 1, 5, 5);
     //</editor-fold>
     //<editor-fold desc="Labels">
 
@@ -140,9 +152,17 @@ public class CalendarMonthStatsView {
             "August2025", "September2025", "October2025", "November2025", "December2025", "January2026"});
     JComboBox selectedDayProductsListComboBox = new JComboBox<String>();
     //</editor-fold>
-    //</editor-fold>
+    //<editor-fold desc="TextFields">
+    JTextField checkCalendarTableDateTextField = new JTextField();
+    JTextField checkDaysStatisticsTableDateTextField = new JTextField();
 
     //</editor-fold>
+    //</editor-fold>
+    //</editor-fold>
+
+    String[] columnsNamesToDisplayOnQuickView = {"index", "day_date", "day_name", "product_name", "amount_of_product", "kcal_consume", "carbs_consume", "fat_consume", "protein_consume", "meal_name"};
+    String[] columnsNamesFromDaysStatisticsToDisplayOnQuickView = {"index", "day_date", "amount_of_points_from_notepad", "amount_of_filled_points_from_notepad", "kcal_consume", "protein_consume", "fat_consume", "carbs_consume"};
+
 
     //<editor-fold desc="Constructor and start method">
     public CalendarMonthStatsView() {
@@ -211,17 +231,18 @@ public class CalendarMonthStatsView {
         calendarMonthStatsViewPanelWest.setBackground(Color.DARK_GRAY);
         calendarMonthStatsViewPanelMain.setBackground(Color.BLUE);
 
+        // TODO - make variables set in Config.java or in this class
         // Set preferred size of panel
-    //    calendarMonthStatsViewPanelNorth.setPreferredSize(new Dimension(Config.CALENDAR_MONTH_STATS_VIEW_PANELS_NORTH_SIZE, Config.CALENDAR_MONTH_STATS_VIEW_PANELS_NORTH_SIZE));
+        //    calendarMonthStatsViewPanelNorth.setPreferredSize(new Dimension(Config.CALENDAR_MONTH_STATS_VIEW_PANELS_NORTH_SIZE, Config.CALENDAR_MONTH_STATS_VIEW_PANELS_NORTH_SIZE));
 //        calendarMonthStatsViewPanelEast.setPreferredSize(new Dimension(Config.CALENDAR_MONTH_STATS_VIEW_PANELS_WEST_EAST_SIZE, Config.CALENDAR_MONTH_STATS_VIEW_PANELS_WEST_EAST_SIZE));
 //        calendarMonthStatsViewPanelMain.setPreferredSize(new Dimension(Config.CALENDAR_MONTH_STATS_VIEW_PANELS_CENTER, Config.CALENDAR_MONTH_STATS_VIEW_PANELS_CENTER));
 //        calendarMonthStatsViewPanelWest.setPreferredSize(new Dimension(Config.CALENDAR_MONTH_STATS_VIEW_PANELS_WEST_EAST_SIZE, Config.CALENDAR_MONTH_STATS_VIEW_PANELS_WEST_EAST_SIZE));
-  //      calendarMonthStatsViewPanelSouth.setPreferredSize(new Dimension(Config.CALENDAR_MONTH_STATS_VIEW_PANELS_SOUTH_SIZE, Config.CALENDAR_MONTH_STATS_VIEW_PANELS_SOUTH_SIZE));
+        //      calendarMonthStatsViewPanelSouth.setPreferredSize(new Dimension(Config.CALENDAR_MONTH_STATS_VIEW_PANELS_SOUTH_SIZE, Config.CALENDAR_MONTH_STATS_VIEW_PANELS_SOUTH_SIZE));
 
         calendarMonthStatsViewPanelWest.setPreferredSize(new Dimension(350, 200));
         calendarMonthStatsViewPanelEast.setPreferredSize(new Dimension(350, 200));
 
-        calendarMonthStatsViewPanelMain.setMaximumSize(new Dimension(200,100));
+        calendarMonthStatsViewPanelMain.setMaximumSize(new Dimension(200, 100));
 
         calendarMonthStatsViewPanelNorth.setPreferredSize(new Dimension(1200, 200));
         calendarMonthStatsViewPanelSouth.setPreferredSize(new Dimension(1200, 100));
@@ -346,6 +367,30 @@ public class CalendarMonthStatsView {
 
         calendarMonthStatsViewPanelWest.add(macroPanelForWestPanel);
 
+        JPanel checkSQLTablePanel = new JPanel();
+        GridLayout checkSQLTablePanelGridLayout = new GridLayout(2, 3);
+        checkSQLTablePanel.setLayout(checkSQLTablePanelGridLayout);
+
+        checkCalendarTableButton.addActionListener(new CheckCalendarTableActionListener());
+        checkSQLTablePanel.add(checkCalendarTableButton);
+
+        checkCalendarTableDateTextField.setText(MyDate.getCurrentDayInSQLFormat());
+        checkSQLTablePanel.add(checkCalendarTableDateTextField);
+
+        setNextDayButton.addActionListener(new SetNextButtonActionListener());
+        checkSQLTablePanel.add(setNextDayButton);
+
+
+        checkDaysStatisticFilledTableButton.addActionListener(new CheckDaysStatisticFilledTableActionListener());
+        checkSQLTablePanel.add(checkDaysStatisticFilledTableButton);
+
+        checkDaysStatisticsTableDateTextField.setText(MyDate.getCurrentYearAndMonthInSQLFormat());
+        checkSQLTablePanel.add(checkDaysStatisticsTableDateTextField);
+
+        setPreviousButton.addActionListener(new SetPreviousButtonActionListener());
+        checkSQLTablePanel.add(setPreviousButton);
+
+        calendarMonthStatsViewPanelWest.add(checkSQLTablePanel);
     }
     //</editor-fold>
 
@@ -612,7 +657,8 @@ public class CalendarMonthStatsView {
 
         Macro averageMacroForMonth = SelectFromDaysStatistics.getAverageMacroForMonth(getYearFromComboBox(), getMonthFromComboBox());
 
-        currentDayMacroValuesNorthPanelLabel.setFont(new Font("Dialog", Font.TRUETYPE_FONT, 10));
+        currentDayMacroValuesNorthPanelLabel.setFont(new Font("Dialog", Font.BOLD, 14));
+        currentDayMacroValuesNorthPanelLabel.setForeground(Color.BLACK);
         currentDayMacroValuesNorthPanelLabel.setText(Macro.getShortMacroInformationMinimalFormat(averageMacroForMonth).replace("-", ""));
     }
 
@@ -1305,7 +1351,7 @@ public class CalendarMonthStatsView {
 
             for (int i = 0; i < daysNumbers.length; i++) {
 
-                dataset.addValue(valuesKcal[i], ("" + (i + 1) + "-" +  SelectFromDaysStatistics.getMacroFromDaysStatisticsByDate(dayInSQLFormat[i]).getKcal()), "kcal");
+                dataset.addValue(valuesKcal[i], ("" + (i + 1) + "-" + SelectFromDaysStatistics.getMacroFromDaysStatisticsByDate(dayInSQLFormat[i]).getKcal()), "kcal");
             }
 
             jFreeChart = ChartFactory.createBarChart(chartName, "Kcal", "Kcal",
@@ -1591,6 +1637,146 @@ public class CalendarMonthStatsView {
                 Macro macro = new Macro(kcal, protein, fat, carbs);
                 refreshWestPanel(macro, productName);
             }
+        }
+    }
+
+    private class CheckCalendarTableActionListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            JFrame checkCalendarTableButtonWindowFrame = new JFrame("Calendar Table");
+
+            DefaultTableModel model = new DefaultTableModel();
+
+            for (int i = 0; i < columnsNamesToDisplayOnQuickView.length; i++) {
+                model.addColumn(columnsNamesToDisplayOnQuickView[i]);
+            }
+
+            JTable table = new JTable(model);
+
+            table.setModel(model);
+
+            table.getColumnModel().getColumn(0).setMaxWidth(50);
+
+            int minWidthForProductNameColumn = 300;
+            table.getColumnModel().getColumn(3).setMinWidth(minWidthForProductNameColumn);
+
+            //amount of product
+            int maxWidthForAmountOfProductColumn = 300;
+            table.getColumnModel().getColumn(4).setMaxWidth(maxWidthForAmountOfProductColumn);
+
+            //<editor-fold desc="Macro Columns">
+            int maxWidthForMacroColumns = 250;
+            table.getColumnModel().getColumn(5).setMaxWidth(maxWidthForMacroColumns);
+            table.getColumnModel().getColumn(6).setMaxWidth(maxWidthForMacroColumns);
+            table.getColumnModel().getColumn(7).setMaxWidth(maxWidthForMacroColumns);
+            table.getColumnModel().getColumn(8).setMaxWidth(maxWidthForMacroColumns);
+            //</editor-fold>
+
+
+            JScrollPane scrollPane = new JScrollPane(table);
+            String date = checkCalendarTableDateTextField.getText();
+            Connection connection;
+            String sql = "SELECT `day_date`, `day_name`, `product_name`, `amount_of_product`,  " +
+                    "`kcal_consume`, `carbs_consume`, `fat_consume`, `protein_consume`, `meal_name` " +
+                    "FROM calendar WHERE day_date=\"" +
+                    date +
+                    "\";";
+            try {
+                connection = GetConnection.getConnectionWithLocalHost();
+                Statement statement = connection.createStatement();
+                ResultSet resultSet = statement.executeQuery(sql);
+                int counter = 1;
+                while (resultSet.next()) {
+                    String day_date = resultSet.getString(1);
+                    String day_name = resultSet.getString(2);
+                    String product_name = resultSet.getString(3);
+                    String amount_of_product = resultSet.getString(4);
+                    String kcal_consume = resultSet.getString(5);
+                    String carbs_consume = resultSet.getString(6);
+                    String fat_consume = resultSet.getString(7);
+                    String protein_consume = resultSet.getString(8);
+                    String meal_name = resultSet.getString(9);
+
+                    model.addRow(new Object[]{counter, day_date, day_name, product_name, amount_of_product, kcal_consume, carbs_consume, fat_consume, protein_consume, meal_name});
+                    counter++;
+                }
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            }
+
+            checkCalendarTableButtonWindowFrame.add(scrollPane);
+            checkCalendarTableButtonWindowFrame.setSize(Config.CHECK_CALENDAR_TABLE_BUTTON_WINDOW_FRAME_SIZE);
+            checkCalendarTableButtonWindowFrame.setResizable(true);
+            checkCalendarTableButtonWindowFrame.setLocationRelativeTo(null);
+            checkCalendarTableButtonWindowFrame.show();
+        }
+    }
+
+    private class CheckDaysStatisticFilledTableActionListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            JFrame checkDaysStatisticFilledTableButtonWindowFrame = new JFrame("Days Statistics");
+
+            DefaultTableModel model = new DefaultTableModel();
+
+            for (int i = 0; i < columnsNamesFromDaysStatisticsToDisplayOnQuickView.length; i++) {
+                model.addColumn(columnsNamesFromDaysStatisticsToDisplayOnQuickView[i]);
+            }
+
+            JTable table = new JTable(model);
+            table.setModel(model);
+            JScrollPane scrollPane = new JScrollPane(table);
+            String date = checkDaysStatisticsTableDateTextField.getText();
+            Connection connection;
+            String sql = "SELECT `day_date`, `amount_of_points_from_notepad`, " +
+                    "`amount_of_filled_points_from_notepad`, `kcal_consume`, " +
+                    "`protein_consume`, `fat_consume`, `carbs_consume`, `day_name`" +
+                    "FROM days_statistics_test WHERE day_date LIKE\"" +
+                    date +
+                    "\";";
+            try {
+                connection = GetConnection.getConnectionWithLocalHost();
+                Statement statement = connection.createStatement();
+                ResultSet resultSet = statement.executeQuery(sql);
+                int counter = 1;
+                while (resultSet.next()) {
+                    String day_date = resultSet.getString(1);
+                    String day_name = resultSet.getString(2);
+                    String product_name = resultSet.getString(3);
+                    String amount_of_product = resultSet.getString(4);
+                    String kcal_consume = resultSet.getString(5);
+                    String carbs_consume = resultSet.getString(6);
+                    String fat_consume = resultSet.getString(7);
+                    String protein_consume = resultSet.getString(8);
+
+                    model.addRow(new Object[]{counter, day_date, day_name, product_name, amount_of_product, kcal_consume, carbs_consume, fat_consume, protein_consume});
+                    counter++;
+                }
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            }
+
+            checkDaysStatisticFilledTableButtonWindowFrame.add(scrollPane);
+            checkDaysStatisticFilledTableButtonWindowFrame.setSize(Config.CHECK_DAYS_STATISTIC_FILLED_TABLE_BUTTON_WINDOW_FRAME_SIZE);
+            checkDaysStatisticFilledTableButtonWindowFrame.setResizable(false);
+            checkDaysStatisticFilledTableButtonWindowFrame.setLocationRelativeTo(null);
+            checkDaysStatisticFilledTableButtonWindowFrame.show();
+        }
+    }
+
+    private class SetNextButtonActionListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            String currentSetDate = checkCalendarTableDateTextField.getText();
+            checkCalendarTableDateTextField.setText(MyDate.getNextDayDateSQLFriendlyFormat(currentSetDate));
+        }
+    }
+
+    private class SetPreviousButtonActionListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            String currentSetDate = checkCalendarTableDateTextField.getText();
+            checkCalendarTableDateTextField.setText(MyDate.getPreviousDayDateSQLFriendlyFormat(currentSetDate));
         }
     }
 

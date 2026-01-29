@@ -463,12 +463,6 @@ public class MyDate {
         dt = sdf.format(c.getTime());
         return dt;
     }
-
-    // TODO
-    public static String getNextDayDateSQLFriendlyFormat(int day, int month, int year) {
-        return null;
-    }
-
     public static String getPreviousDayDateSQLFriendlyFormat(String dateSQLForamt) {
         String dt = dateSQLForamt;  // Start date
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -482,6 +476,12 @@ public class MyDate {
         dt = sdf.format(c.getTime());
         return dt;
     }
+
+    // TODO
+    public static String getNextDayDateSQLFriendlyFormat(int day, int month, int year) {
+        return null;
+    }
+
     //</editor-fold>
 
     public static boolean isYearAndMonthHasPassed(int year, int month, int day) {
@@ -523,7 +523,11 @@ public class MyDate {
     public static String getCurrentDayInSQLFormat() {
         return new SimpleDateFormat("yyyy-MM-dd").format(Config.date);
     }
-
+    public static String getCurrentYearAndMonthInSQLFormat() {
+        String result = new SimpleDateFormat("yyyy-MM").format(Config.date);
+        result += "%";
+        return result;
+    }
     public static String[] getAllDaysForCurrentMonthInSQLFriendlyFormat() {
         int monthInt = Integer.valueOf(new SimpleDateFormat("MM").format(Config.date));
         String firstPartOfResult = new SimpleDateFormat("yyyy-MM").format(Config.date);
