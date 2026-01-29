@@ -88,8 +88,8 @@ public class Config {
     //</editor-fold>
 
     //<editor-fold desc="Calendar Month Stats View - GUI">
-    public static final int CALENDAR_MONTH_STATS_VIEW_WINDOWS_WIDTH = 900;
-    public static final int CALENDAR_MONTH_STATS_VIEW_WINDOWS_HEIGHT = 600;
+    public static final int CALENDAR_MONTH_STATS_VIEW_WINDOWS_WIDTH = 1200;
+    public static final int CALENDAR_MONTH_STATS_VIEW_WINDOWS_HEIGHT = 800;
     public static final int CALENDAR_MONTH_STATS_VIEW_PANELS_NORTH_SIZE = 100;
     public static final int CALENDAR_MONTH_STATS_VIEW_PANELS_CENTER = 60;
     public static final int CALENDAR_MONTH_STATS_VIEW_PANELS_WEST_EAST_SIZE = 200;
