@@ -65,16 +65,11 @@ public class CalendarMonthStatsView {
     Color currentDayDateNorthPanelLabelColor = new Color(0, 255, 171);
     Color selectedDateAverageMacroForMonthLabelColor = new Color(238, 154, 28);
     //</editor-fold>
-    ChartsClass chartsClass = new ChartsClass();
-    JFreeChart jFreeChart;
-    String currentDate = "????-??-??";
-
     //<editor-fold desc="Kcal Limits - float">
     float greenKcalLimit = Config.BMRActual.getKcal();
     float yellowKcalLimit = 4500;
     float redKcalLimit = 5500;
     //</editor-fold>
-
     //<editor-fold desc="Global Counters">
     int goodDaysCounter;
 
@@ -84,7 +79,6 @@ public class CalendarMonthStatsView {
 
     int comingDaysCounter;
     //</editor-fold>
-
     //<editor-fold desc="Swing components">
     //<editor-fold desc="Frames">
     JFrame mainWindow = new JFrame("Calendar month stats view");
@@ -158,15 +152,16 @@ public class CalendarMonthStatsView {
 
     //</editor-fold>
     //</editor-fold>
-    //</editor-fold>
 
+    ChartsClass chartsClass = new ChartsClass();
+    JFreeChart jFreeChart;
+    String currentDate = "????-??-??";
     String[] columnsNamesToDisplayOnQuickView = {"index", "day_date", "day_name", "product_name", "amount_of_product", "kcal_consume", "carbs_consume", "fat_consume", "protein_consume", "meal_name"};
     String[] columnsNamesFromDaysStatisticsToDisplayOnQuickView = {"index", "day_date", "amount_of_points_from_notepad", "amount_of_filled_points_from_notepad", "kcal_consume", "protein_consume", "fat_consume", "carbs_consume"};
-
+    //</editor-fold>
 
     //<editor-fold desc="Constructor and start method">
     public CalendarMonthStatsView() {
-        startWindow();
     }
 
     public CalendarMonthStatsView(boolean onlySetupVariables) {
@@ -218,7 +213,7 @@ public class CalendarMonthStatsView {
     }
     //</editor-fold>
 
-    //<editor-fold desc="Prepare Add Content - to Panels">
+    //<editor-fold desc="Panels - methods">
     private void setPanels() {
         //Set Layout
         calendarMonthStatsViewPanelMain.setBorder(BorderFactory.createEmptyBorder(7, 5, 5, 5));
@@ -248,7 +243,6 @@ public class CalendarMonthStatsView {
         calendarMonthStatsViewPanelSouth.setPreferredSize(new Dimension(1200, 100));
 
     }
-
     //<editor-fold desc="addComponentsToPanels">
     private void addComponentsToPanels() {
         prepareAndAddContentToMainPanel();
@@ -395,264 +389,19 @@ public class CalendarMonthStatsView {
     //</editor-fold>
 
     //<editor-fold desc="Side help methods - for prepare Panels">
-
-    private void refreshCountersForDays() {
-        int goodDaysCounterTMP = 0;
-        int badDaysCounterTMP = 0;
-        int noDataDaysCounterTMP = 0;
-        int comingDaysCounterTMP = 0;
-
-        for (int i = 0; i < daysButtons.length; i++) {
-            if (daysButtons[i].getBackground() == noDataColorLabelAndButton) {
-                noDataDaysCounterTMP++;
-            }
-            if (daysButtons[i].getBackground() == goodDayDataColorLabelAndButton) {
-                goodDaysCounterTMP++;
-            }
-            if (daysButtons[i].getBackground() == badDayDataColorLabelAndButton) {
-                badDaysCounterTMP++;
-            }
-            if (daysButtons[i].getBackground() == comingDaysDaysColorLabelAndButton) {
-                comingDaysCounterTMP++;
-            }
-        }
-
-        this.goodDaysCounter = goodDaysCounterTMP;
-        this.badDaysCounter = badDaysCounterTMP;
-        this.noDataDaysCounter = noDataDaysCounterTMP;
-        this.comingDaysCounter = comingDaysCounterTMP;
-
-    }
-
     private void prepareSelectedCounterDaysPanels() {
         selectedMonthStatsGoodDaysDaysLabel = new JLabel("Good days: " + goodDaysCounter);
         selectedMonthStatsBadDaysDaysLabel = new JLabel("Bad days: " + badDaysCounter);
         selectedMonthStatsNoDataDaysLabel = new JLabel("No data: " + noDataDaysCounter);
         selectedMonthStatsComingDaysDaysLabel = new JLabel("Coming days: " + comingDaysCounter);
     }
-
-    //</editor-fold>
-
-    //<editor-fold desc="Get Set Macro panel">
-    private JPanel getSetMacroPanelComponent(String panelTitleLabelText, float kcal, float protein, float fat, float carbs) {
-        GridLayout gridLayout = new GridLayout(5, 1, 5, 5);
-
-        JPanel macroPanel = new JPanel();
-        macroPanel.setLayout(gridLayout);
-
-        JLabel titleLabel = new JLabel(panelTitleLabelText);
-
-        JLabel kcalLabel = new JLabel("Kcal: " + kcal);
-
-        JLabel proteinLabel = new JLabel("Protein: " + protein);
-
-        JLabel fatLabel = new JLabel("Fat: " + fat);
-
-        JLabel carbsLabel = new JLabel("Carbs: " + carbs);
-
-        macroPanel.add(titleLabel);
-
-        macroPanel.add(kcalLabel);
-
-        macroPanel.add(proteinLabel);
-
-        macroPanel.add(fatLabel);
-        macroPanel.add(carbsLabel);
-
-        return macroPanel;
-    }
-
-    private JPanel getSetMiniMacroPanelComponent(String panelTitleLabelText, float kcal, float protein, float fat, float carbs) {
-        GridLayout gridLayout = new GridLayout(3, 2, 5, 5);
-
-        JPanel macroPanel = new JPanel();
-        macroPanel.setLayout(gridLayout);
-
-        JLabel titleLabel = new JLabel(panelTitleLabelText);
-        JLabel emptyLabel = new JLabel("");
-
-        JLabel kcalLabel = new JLabel("Kcal: " + kcal);
-
-        JLabel proteinLabel = new JLabel("Protein: " + protein);
-
-        JLabel fatLabel = new JLabel("Fat: " + fat);
-
-        JLabel carbsLabel = new JLabel("Carbs: " + carbs);
-
-        macroPanel.add(titleLabel);
-
-        macroPanel.add(emptyLabel);
-
-        macroPanel.add(kcalLabel);
-
-        macroPanel.add(proteinLabel);
-
-        macroPanel.add(fatLabel);
-        macroPanel.add(carbsLabel);
-
-        return macroPanel;
-    }
-
     //</editor-fold>
     //</editor-fold>
     //</editor-fold>
 
+    //<editor-fold desc="Setup - panels components">
 
-    //<editor-fold desc="Get data - methods">
-    //<editor-fold desc="Get data from - combo box">
-    private String getDateFromComboBox() {
-        String fullDate = "";
-        String month = monthSelectComboBox.getSelectedItem().toString();
-        if (month.contains("2026")) {
-            fullDate = "2026";
-        }
-        if (month.contains("2025")) {
-            fullDate = "2025";
-        }
-        if (month.contains("2024")) {
-            fullDate = "2024";
-        }
-
-        fullDate = fullDate + "-" + MyDate.getNameOfMonthFromNumberSQLFormat(month.replaceAll("[0-9]", "")) + "-";
-
-        return fullDate;
-    }
-
-    private int getYearFromComboBox() {
-        int year = -1;
-        String dateFromComboBox = monthSelectComboBox.getSelectedItem().toString();
-        if (dateFromComboBox.contains("2026")) {
-            year = 2026;
-        }
-        if (dateFromComboBox.contains("2025")) {
-            year = 2025;
-        }
-        if (dateFromComboBox.contains("2024")) {
-            year = 2024;
-        }
-
-        return year;
-    }
-
-    private int getMonthFromComboBox() {
-        String month = monthSelectComboBox.getSelectedItem().toString().replaceAll("[0-9]", "");
-
-        return getNumberOfMonthInYear(month);
-    }
-    //</editor-fold>
-
-    //<editor-fold desc="Get Macro data">
-    private Macro getAverageMacroForMonth(String month) {
-        String fullDate = "";
-
-        if (month.contains("2026")) {
-            fullDate = "2026";
-        }
-        if (month.contains("2025")) {
-            fullDate = "2025";
-        }
-        if (month.contains("2024")) {
-            fullDate = "2024";
-        }
-
-        fullDate = fullDate + "-" + MyDate.getNameOfMonthFromNumberSQLFormat(month) + "-";
-
-        String fullDateTMP = fullDate;
-        Macro averageMacro = new Macro(0, 0, 0, 0);
-        Macro dayMacro;
-        int dayCounter = 0;
-
-        for (int i = 0; i < daysButtons.length; i++) {
-
-            if (daysButtons[i].getText() != "null") {
-                if (daysButtons[i].getText().length() == 1) {
-                    fullDate = fullDateTMP + "0" + daysButtons[i].getText();
-                } else {
-                    fullDate += daysButtons[i].getText();
-                }
-
-                if (dayMacroGoalStatus(fullDate) != 3 && dayMacroGoalStatus(fullDate) != 42) {
-                    dayMacro = SelectFromDaysStatistics.getMacroFromDaysStatisticsByDate(fullDate);
-                    averageMacro = Macro.sumOfTwoMacros(averageMacro, dayMacro);
-                    dayCounter++;
-                }
-
-                fullDate = fullDateTMP;
-            }
-        }
-
-        averageMacro.setKcal(averageMacro.getKcal() / dayCounter);
-        averageMacro.setProtein(averageMacro.getProtein() / dayCounter);
-        averageMacro.setFat(averageMacro.getFat() / dayCounter);
-        averageMacro.setCarbs(averageMacro.getCarbs() / dayCounter);
-
-        Macro.printAllValues(averageMacro);
-        return averageMacro;
-    }
-
-    private int dayMacroGoalStatus(String fullDateSQLFriendly) {
-        // int = 0 no data
-        // int = 1 pass goal
-        // int = 2 break goal
-        // int = 3 coming days
-        // int = 42 Spain Holiday
-        int dayStatus = -1;
-
-        // hard code - macro goal - may cause problem - to refactor
-        float goalKcal = Config.BMRActual.getKcal();
-
-        // Set holidays buttons - June
-        for (int i = 22; i <= 30; i++) {
-            String holidaysDate = "2024-06-" + String.valueOf(i);
-            if (fullDateSQLFriendly.equals(holidaysDate)) {
-                dayStatus = 42;
-                return dayStatus;
-            }
-        }
-        // Set holidays buttons - July
-        for (int i = 1; i <= 6; i++) {
-            String holidaysDate = "2024-07-0" + String.valueOf(i);
-            if (fullDateSQLFriendly.equals(holidaysDate)) {
-                dayStatus = 42;
-                return dayStatus;
-            }
-        }
-        Macro dayMacro = SelectFromDaysStatistics.getMacroFromDaysStatisticsByDate(fullDateSQLFriendly);
-
-        String currentDateString = DateTools.getCurrentDateSQLFriendlyFormat();
-
-        Date curentDate;
-        Date parameterDate;
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-
-        try {
-            curentDate = dateFormat.parse(currentDateString);
-            parameterDate = dateFormat.parse(fullDateSQLFriendly);
-        } catch (ParseException e) {
-            throw new RuntimeException(e);
-        }
-
-        if (parameterDate.compareTo(curentDate) > 0) {
-            dayStatus = 3;
-        } else if (dayMacro.getKcal() <= 0) {
-            dayStatus = 0;
-        } else if (dayMacro.getKcal() < goalKcal) {
-            dayStatus = 1;
-        } else if (dayMacro.getKcal() > goalKcal) {
-            dayStatus = 2;
-        }
-        return dayStatus;
-    }
-
-    private Macro getDayMacro(String fullDateSQLFriendly) {
-        Macro dayMacro = SelectFromDaysStatistics.getMacroFromDaysStatisticsByDate(fullDateSQLFriendly);
-
-        return dayMacro;
-    }
-    //</editor-fold>
-
-    //</editor-fold>
-
+    //<editor-fold desc="Setup - North panel - components">
     private void setupAverageMacroLabel() {
 
         Macro averageMacroForMonth = SelectFromDaysStatistics.getAverageMacroForMonth(getYearFromComboBox(), getMonthFromComboBox());
@@ -661,14 +410,14 @@ public class CalendarMonthStatsView {
         currentDayMacroValuesNorthPanelLabel.setForeground(Color.BLACK);
         currentDayMacroValuesNorthPanelLabel.setText(Macro.getShortMacroInformationMinimalFormat(averageMacroForMonth).replace("-", ""));
     }
+    //</editor-fold>
 
-    // TODO
+    //<editor-fold desc="Setup - Main panel - components">
     private void setDaysButtonsMainPanel() {
         //int amountOfDaysInMonth = monthSelectComboBox.getSelectedItem().toString();
         daysButtons = new JButton[42];
         mainPanelGridLayout = new GridLayout(6, 7, 10, 10);
     }
-
 
     private void setDaysButtonsMainPanel(String month) {
         setDaysButtonsMainPanel();
@@ -1118,8 +867,226 @@ public class CalendarMonthStatsView {
             fullDate = getDateFromComboBox();
         }
     }
+    //</editor-fold>
 
+    //<editor-fold desc="General">
+    private JPanel getSetMacroPanelComponent(String panelTitleLabelText, float kcal, float protein, float fat, float carbs) {
+        GridLayout gridLayout = new GridLayout(5, 1, 5, 5);
 
+        JPanel macroPanel = new JPanel();
+        macroPanel.setLayout(gridLayout);
+
+        JLabel titleLabel = new JLabel(panelTitleLabelText);
+
+        JLabel kcalLabel = new JLabel("Kcal: " + kcal);
+
+        JLabel proteinLabel = new JLabel("Protein: " + protein);
+
+        JLabel fatLabel = new JLabel("Fat: " + fat);
+
+        JLabel carbsLabel = new JLabel("Carbs: " + carbs);
+
+        macroPanel.add(titleLabel);
+
+        macroPanel.add(kcalLabel);
+
+        macroPanel.add(proteinLabel);
+
+        macroPanel.add(fatLabel);
+        macroPanel.add(carbsLabel);
+
+        return macroPanel;
+    }
+
+    private JPanel getSetMiniMacroPanelComponent(String panelTitleLabelText, float kcal, float protein, float fat, float carbs) {
+        GridLayout gridLayout = new GridLayout(3, 2, 5, 5);
+
+        JPanel macroPanel = new JPanel();
+        macroPanel.setLayout(gridLayout);
+
+        JLabel titleLabel = new JLabel(panelTitleLabelText);
+        JLabel emptyLabel = new JLabel("");
+
+        JLabel kcalLabel = new JLabel("Kcal: " + kcal);
+
+        JLabel proteinLabel = new JLabel("Protein: " + protein);
+
+        JLabel fatLabel = new JLabel("Fat: " + fat);
+
+        JLabel carbsLabel = new JLabel("Carbs: " + carbs);
+
+        macroPanel.add(titleLabel);
+
+        macroPanel.add(emptyLabel);
+
+        macroPanel.add(kcalLabel);
+
+        macroPanel.add(proteinLabel);
+
+        macroPanel.add(fatLabel);
+        macroPanel.add(carbsLabel);
+
+        return macroPanel;
+    }
+    //</editor-fold>
+
+    //</editor-fold>
+
+    //<editor-fold desc="Get data - methods">
+    //<editor-fold desc="Get data from - combo box">
+    private String getDateFromComboBox() {
+        String fullDate = "";
+        String month = monthSelectComboBox.getSelectedItem().toString();
+        if (month.contains("2026")) {
+            fullDate = "2026";
+        }
+        if (month.contains("2025")) {
+            fullDate = "2025";
+        }
+        if (month.contains("2024")) {
+            fullDate = "2024";
+        }
+
+        fullDate = fullDate + "-" + MyDate.getNameOfMonthFromNumberSQLFormat(month.replaceAll("[0-9]", "")) + "-";
+
+        return fullDate;
+    }
+
+    private int getYearFromComboBox() {
+        int year = -1;
+        String dateFromComboBox = monthSelectComboBox.getSelectedItem().toString();
+        if (dateFromComboBox.contains("2026")) {
+            year = 2026;
+        }
+        if (dateFromComboBox.contains("2025")) {
+            year = 2025;
+        }
+        if (dateFromComboBox.contains("2024")) {
+            year = 2024;
+        }
+
+        return year;
+    }
+
+    private int getMonthFromComboBox() {
+        String month = monthSelectComboBox.getSelectedItem().toString().replaceAll("[0-9]", "");
+
+        return getNumberOfMonthInYear(month);
+    }
+    //</editor-fold>
+
+    //<editor-fold desc="Get Macro data">
+    private Macro getAverageMacroForMonth(String month) {
+        String fullDate = "";
+
+        if (month.contains("2026")) {
+            fullDate = "2026";
+        }
+        if (month.contains("2025")) {
+            fullDate = "2025";
+        }
+        if (month.contains("2024")) {
+            fullDate = "2024";
+        }
+
+        fullDate = fullDate + "-" + MyDate.getNameOfMonthFromNumberSQLFormat(month) + "-";
+
+        String fullDateTMP = fullDate;
+        Macro averageMacro = new Macro(0, 0, 0, 0);
+        Macro dayMacro;
+        int dayCounter = 0;
+
+        for (int i = 0; i < daysButtons.length; i++) {
+
+            if (daysButtons[i].getText() != "null") {
+                if (daysButtons[i].getText().length() == 1) {
+                    fullDate = fullDateTMP + "0" + daysButtons[i].getText();
+                } else {
+                    fullDate += daysButtons[i].getText();
+                }
+
+                if (dayMacroGoalStatus(fullDate) != 3 && dayMacroGoalStatus(fullDate) != 42) {
+                    dayMacro = SelectFromDaysStatistics.getMacroFromDaysStatisticsByDate(fullDate);
+                    averageMacro = Macro.sumOfTwoMacros(averageMacro, dayMacro);
+                    dayCounter++;
+                }
+
+                fullDate = fullDateTMP;
+            }
+        }
+
+        averageMacro.setKcal(averageMacro.getKcal() / dayCounter);
+        averageMacro.setProtein(averageMacro.getProtein() / dayCounter);
+        averageMacro.setFat(averageMacro.getFat() / dayCounter);
+        averageMacro.setCarbs(averageMacro.getCarbs() / dayCounter);
+
+        Macro.printAllValues(averageMacro);
+        return averageMacro;
+    }
+
+    private int dayMacroGoalStatus(String fullDateSQLFriendly) {
+        // int = 0 no data
+        // int = 1 pass goal
+        // int = 2 break goal
+        // int = 3 coming days
+        // int = 42 Spain Holiday
+        int dayStatus = -1;
+
+        // hard code - macro goal - may cause problem - to refactor
+        float goalKcal = Config.BMRActual.getKcal();
+
+        // Set holidays buttons - June
+        for (int i = 22; i <= 30; i++) {
+            String holidaysDate = "2024-06-" + String.valueOf(i);
+            if (fullDateSQLFriendly.equals(holidaysDate)) {
+                dayStatus = 42;
+                return dayStatus;
+            }
+        }
+        // Set holidays buttons - July
+        for (int i = 1; i <= 6; i++) {
+            String holidaysDate = "2024-07-0" + String.valueOf(i);
+            if (fullDateSQLFriendly.equals(holidaysDate)) {
+                dayStatus = 42;
+                return dayStatus;
+            }
+        }
+        Macro dayMacro = SelectFromDaysStatistics.getMacroFromDaysStatisticsByDate(fullDateSQLFriendly);
+
+        String currentDateString = DateTools.getCurrentDateSQLFriendlyFormat();
+
+        Date curentDate;
+        Date parameterDate;
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+        try {
+            curentDate = dateFormat.parse(currentDateString);
+            parameterDate = dateFormat.parse(fullDateSQLFriendly);
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
+
+        if (parameterDate.compareTo(curentDate) > 0) {
+            dayStatus = 3;
+        } else if (dayMacro.getKcal() <= 0) {
+            dayStatus = 0;
+        } else if (dayMacro.getKcal() < goalKcal) {
+            dayStatus = 1;
+        } else if (dayMacro.getKcal() > goalKcal) {
+            dayStatus = 2;
+        }
+        return dayStatus;
+    }
+
+    private Macro getDayMacro(String fullDateSQLFriendly) {
+        Macro dayMacro = SelectFromDaysStatistics.getMacroFromDaysStatisticsByDate(fullDateSQLFriendly);
+
+        return dayMacro;
+    }
+    //</editor-fold>
+
+    //</editor-fold>
+    
     //<editor-fold desc="Refresh methods">
     private void refreshMacroAndAllComponentForSelectedDayMacro(String panelTitleLabelText, Macro macro) {
         calendarMonthStatsViewPanelEast.removeAll();
@@ -1147,7 +1114,6 @@ public class CalendarMonthStatsView {
         mainWindow.validate();
         mainWindow.repaint();
     }
-
     private void refreshWestPanel(Macro macro, String amountOfProduct) {
         calendarMonthStatsViewPanelWest.removeAll();
 
@@ -1170,7 +1136,6 @@ public class CalendarMonthStatsView {
         mainWindow.repaint();
 
     }
-
     private void refreshAverageMacroPanelForNorthPanel(Macro averageMacro) {
         calendarMonthStatsViewPanelNorth.removeAll();
 
@@ -1189,7 +1154,6 @@ public class CalendarMonthStatsView {
         mainWindow.validate();
         mainWindow.repaint();
     }
-
     private void refreshMacroAndAllComponentForNorthPanel() {
         calendarMonthStatsViewPanelNorth.removeAll();
 
@@ -1235,7 +1199,6 @@ public class CalendarMonthStatsView {
         mainWindow.validate();
         mainWindow.repaint();
     }
-
     public void refreshComboBox(JComboBox newComboBox) {
         calendarMonthStatsViewPanelWest.removeAll();
         calendarMonthStatsViewPanelWest.setLayout(westPanelGridLayout);
@@ -1253,13 +1216,338 @@ public class CalendarMonthStatsView {
         mainWindow.validate();
         mainWindow.repaint();
     }
+    private void refreshCountersForDays() {
+        int goodDaysCounterTMP = 0;
+        int badDaysCounterTMP = 0;
+        int noDataDaysCounterTMP = 0;
+        int comingDaysCounterTMP = 0;
+
+        for (int i = 0; i < daysButtons.length; i++) {
+            if (daysButtons[i].getBackground() == noDataColorLabelAndButton) {
+                noDataDaysCounterTMP++;
+            }
+            if (daysButtons[i].getBackground() == goodDayDataColorLabelAndButton) {
+                goodDaysCounterTMP++;
+            }
+            if (daysButtons[i].getBackground() == badDayDataColorLabelAndButton) {
+                badDaysCounterTMP++;
+            }
+            if (daysButtons[i].getBackground() == comingDaysDaysColorLabelAndButton) {
+                comingDaysCounterTMP++;
+            }
+        }
+
+        this.goodDaysCounter = goodDaysCounterTMP;
+        this.badDaysCounter = badDaysCounterTMP;
+        this.noDataDaysCounter = noDataDaysCounterTMP;
+        this.comingDaysCounter = comingDaysCounterTMP;
+
+    }
 
 //</editor-fold>
 
-    public void showChartBarTestTest() {
-        (new ChartsClass()).displayCharBar();
+    //<editor-fold desc="Actions Listeners, Item Listeners">
+
+    //<editor-fold desc="calendarMonthStatsView - Panel Main - ActionListeners">
+    private class DaysButtonsActionListener implements ActionListener {
+        JButton button;
+
+        public DaysButtonsActionListener(JButton button) {
+            this.button = button;
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            String fullDate = "";
+            String month = monthSelectComboBox.getSelectedItem().toString();
+
+            if (month.contains("2025")) {
+                fullDate = "2025";
+            }
+            if (month.contains("2024")) {
+                fullDate = "2024";
+            }
+
+            fullDate = fullDate + "-" + MyDate.getNameOfMonthFromNumberSQLFormat(month.replaceAll("[0-9]", "")) + "-";
+
+            if (button.getText().length() == 1) {
+                fullDate = fullDate + "0" + button.getText();
+            }
+
+            if (button.getText().length() == 2) {
+                fullDate = fullDate + button.getText();
+            }
+
+            Macro macroToPrintInGUI;
+
+            macroToPrintInGUI = SelectFromDaysStatistics.getMacroFromDaysStatisticsByDate(fullDate);
+            String panelTitleLabelText = "Macro - Selected day: " + fullDate;
+            refreshMacroAndAllComponentForSelectedDayMacro(panelTitleLabelText, macroToPrintInGUI);
+
+
+            String[][] productArrayForComboBox;
+            try {
+                productArrayForComboBox = SelectFromCalendar.selectAllDataFromCalendarTableForDay(fullDate);
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            }
+            String[] listToComboBox = new String[productArrayForComboBox.length];
+
+            for (int i = 0; i < listToComboBox.length; i++) {
+                listToComboBox[i] = productArrayForComboBox[i][2];
+            }
+
+            JComboBox newComboBox = selectedDayProductsListComboBox = new JComboBox<>(listToComboBox);
+            refreshComboBox(newComboBox);
+
+            currentDate = fullDate;
+        }
+    }
+    //</editor-fold>
+
+    //<editor-fold desc="calendarMonthStatsView - Panel North - ActionListeners">
+    private class MonthComboBoxItemListener implements java.awt.event.ItemListener {
+        @Override
+        public void itemStateChanged(ItemEvent event) {
+            if (event.getStateChange() == ItemEvent.SELECTED) {
+                String itemString = event.getItem().toString();
+                setDaysButtonsMainPanel(itemString);
+                paintButtons();
+                refreshMacroAndAllComponentForNorthPanel();
+                refreshAverageMacroPanelForNorthPanel(getAverageMacroForMonth(itemString));
+            }
+        }
+    }
+    //</editor-fold>
+
+    //<editor-fold desc="calendarMonthStatsView - Panel West - ActionListeners">
+    private class SelectedDayProductsListComboBoxItemListener implements java.awt.event.ItemListener {
+        @Override
+        public void itemStateChanged(ItemEvent event) {
+            if (event.getStateChange() == ItemEvent.SELECTED) {
+
+
+                String productName;
+                productName = selectedDayProductsListComboBox.getSelectedItem().toString();
+                String[] rowData;
+
+                try {
+                    rowData = SelectFromCalendar.selectAllFromCalendarTableForDateAndProductName(productName, currentDate);
+                } catch (SQLException ex) {
+                    throw new RuntimeException(ex);
+                }
+
+                float kcal = Float.valueOf(rowData[10]);
+                float protein = Float.valueOf(rowData[11]);
+                float fat = Float.valueOf(rowData[12]);
+                float carbs = Float.valueOf(rowData[13]);
+
+
+                Macro macro = new Macro(kcal, protein, fat, carbs);
+                refreshWestPanel(macro, productName);
+            }
+        }
+    }
+    private class SetNextButtonActionListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            String currentSetDate = checkCalendarTableDateTextField.getText();
+            checkCalendarTableDateTextField.setText(MyDate.getNextDayDateSQLFriendlyFormat(currentSetDate));
+        }
+    }
+    private class SetPreviousButtonActionListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            String currentSetDate = checkCalendarTableDateTextField.getText();
+            checkCalendarTableDateTextField.setText(MyDate.getPreviousDayDateSQLFriendlyFormat(currentSetDate));
+        }
+    }
+    private class CheckCalendarTableActionListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            JFrame checkCalendarTableButtonWindowFrame = new JFrame("Calendar Table");
+
+            DefaultTableModel model = new DefaultTableModel();
+
+            for (int i = 0; i < columnsNamesToDisplayOnQuickView.length; i++) {
+                model.addColumn(columnsNamesToDisplayOnQuickView[i]);
+            }
+
+            JTable table = new JTable(model);
+
+            table.setModel(model);
+
+            table.getColumnModel().getColumn(0).setMaxWidth(50);
+
+            int minWidthForProductNameColumn = 300;
+            table.getColumnModel().getColumn(3).setMinWidth(minWidthForProductNameColumn);
+
+            //amount of product
+            int maxWidthForAmountOfProductColumn = 300;
+            table.getColumnModel().getColumn(4).setMaxWidth(maxWidthForAmountOfProductColumn);
+
+            //<editor-fold desc="Macro Columns">
+            int maxWidthForMacroColumns = 250;
+            table.getColumnModel().getColumn(5).setMaxWidth(maxWidthForMacroColumns);
+            table.getColumnModel().getColumn(6).setMaxWidth(maxWidthForMacroColumns);
+            table.getColumnModel().getColumn(7).setMaxWidth(maxWidthForMacroColumns);
+            table.getColumnModel().getColumn(8).setMaxWidth(maxWidthForMacroColumns);
+            //</editor-fold>
+
+
+            JScrollPane scrollPane = new JScrollPane(table);
+            String date = checkCalendarTableDateTextField.getText();
+            Connection connection;
+            String sql = "SELECT `day_date`, `day_name`, `product_name`, `amount_of_product`,  " +
+                    "`kcal_consume`, `carbs_consume`, `fat_consume`, `protein_consume`, `meal_name` " +
+                    "FROM calendar WHERE day_date=\"" +
+                    date +
+                    "\";";
+            try {
+                connection = GetConnection.getConnectionWithLocalHost();
+                Statement statement = connection.createStatement();
+                ResultSet resultSet = statement.executeQuery(sql);
+                int counter = 1;
+                while (resultSet.next()) {
+                    String day_date = resultSet.getString(1);
+                    String day_name = resultSet.getString(2);
+                    String product_name = resultSet.getString(3);
+                    String amount_of_product = resultSet.getString(4);
+                    String kcal_consume = resultSet.getString(5);
+                    String carbs_consume = resultSet.getString(6);
+                    String fat_consume = resultSet.getString(7);
+                    String protein_consume = resultSet.getString(8);
+                    String meal_name = resultSet.getString(9);
+
+                    model.addRow(new Object[]{counter, day_date, day_name, product_name, amount_of_product, kcal_consume, carbs_consume, fat_consume, protein_consume, meal_name});
+                    counter++;
+                }
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            }
+
+            checkCalendarTableButtonWindowFrame.add(scrollPane);
+            checkCalendarTableButtonWindowFrame.setSize(Config.CHECK_CALENDAR_TABLE_BUTTON_WINDOW_FRAME_SIZE);
+            checkCalendarTableButtonWindowFrame.setResizable(true);
+            checkCalendarTableButtonWindowFrame.setLocationRelativeTo(null);
+            checkCalendarTableButtonWindowFrame.show();
+        }
+    }
+    private class CheckDaysStatisticFilledTableActionListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            JFrame checkDaysStatisticFilledTableButtonWindowFrame = new JFrame("Days Statistics");
+
+            DefaultTableModel model = new DefaultTableModel();
+
+            for (int i = 0; i < columnsNamesFromDaysStatisticsToDisplayOnQuickView.length; i++) {
+                model.addColumn(columnsNamesFromDaysStatisticsToDisplayOnQuickView[i]);
+            }
+
+            JTable table = new JTable(model);
+            table.setModel(model);
+            JScrollPane scrollPane = new JScrollPane(table);
+            String date = checkDaysStatisticsTableDateTextField.getText();
+            Connection connection;
+            String sql = "SELECT `day_date`, `amount_of_points_from_notepad`, " +
+                    "`amount_of_filled_points_from_notepad`, `kcal_consume`, " +
+                    "`protein_consume`, `fat_consume`, `carbs_consume`, `day_name`" +
+                    "FROM days_statistics_test WHERE day_date LIKE\"" +
+                    date +
+                    "\";";
+            try {
+                connection = GetConnection.getConnectionWithLocalHost();
+                Statement statement = connection.createStatement();
+                ResultSet resultSet = statement.executeQuery(sql);
+                int counter = 1;
+                while (resultSet.next()) {
+                    String day_date = resultSet.getString(1);
+                    String day_name = resultSet.getString(2);
+                    String product_name = resultSet.getString(3);
+                    String amount_of_product = resultSet.getString(4);
+                    String kcal_consume = resultSet.getString(5);
+                    String carbs_consume = resultSet.getString(6);
+                    String fat_consume = resultSet.getString(7);
+                    String protein_consume = resultSet.getString(8);
+
+                    model.addRow(new Object[]{counter, day_date, day_name, product_name, amount_of_product, kcal_consume, carbs_consume, fat_consume, protein_consume});
+                    counter++;
+                }
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            }
+
+            checkDaysStatisticFilledTableButtonWindowFrame.add(scrollPane);
+            checkDaysStatisticFilledTableButtonWindowFrame.setSize(Config.CHECK_DAYS_STATISTIC_FILLED_TABLE_BUTTON_WINDOW_FRAME_SIZE);
+            checkDaysStatisticFilledTableButtonWindowFrame.setResizable(false);
+            checkDaysStatisticFilledTableButtonWindowFrame.setLocationRelativeTo(null);
+            checkDaysStatisticFilledTableButtonWindowFrame.show();
+        }
+    }
+    //</editor-fold>
+
+    //<editor-fold desc="calendarMonthStatsView - Panel East - ActionListeners">
+    //empty
+    //</editor-fold>
+
+    //<editor-fold desc="calendarMonthStatsView - Panel South - ActionListeners">
+    private class ShowChartButtonActionListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            chartsClass.showMonthChart();
+        }
+    }
+    private class ShowBarChartButtonActionListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            chartsClass.displayCharBar();
+        }
     }
 
+    //</editor-fold>
+
+
+    //<editor-fold desc="Charts window Action Listeners">
+    private class TestFrameKeyListener implements KeyListener {
+        @Override
+        public void keyTyped(KeyEvent e) {
+
+        }
+
+        @Override
+        public void keyPressed(KeyEvent e) {
+
+        }
+
+        @Override
+        public void keyReleased(KeyEvent e) {
+            if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+                System.out.println("Right pressed");
+                chartsClass.updateJFrameForCharBar(1);
+            }
+
+            if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+                System.out.println("Left pressed");
+                chartsClass.updateJFrameForCharBar(-1);
+            }
+
+            if (e.getKeyCode() == KeyEvent.VK_DOWN) {
+                System.out.println("Down pressed");
+            }
+
+            if (e.getKeyCode() == KeyEvent.VK_H) {
+                System.out.println("H pressed");
+            }
+
+
+        }
+    }
+
+    //</editor-fold>
+
+    //</editor-fold>
+
+    //<editor-fold desc="inner classes">
     public class ChartsClass {
         //<editor-fold desc="Global variables">
         String[] daysNumbers;
@@ -1483,7 +1771,7 @@ public class CalendarMonthStatsView {
             chartFrame.repaint();
         }
 
-        private void displayCharBar() {
+        public void displayCharBar() {
             prepareDataForCharts(monthIntervalForChart);
             prepareMonthBarChart();
             menuBar = new JMenuBar();
@@ -1542,296 +1830,5 @@ public class CalendarMonthStatsView {
         }
         //</editor-fold>
     }
-
-    //<editor-fold desc="Actions Listeners, Item Listeners">
-    private class DaysButtonsActionListener implements ActionListener {
-        JButton button;
-
-        public DaysButtonsActionListener(JButton button) {
-            this.button = button;
-        }
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            String fullDate = "";
-            String month = monthSelectComboBox.getSelectedItem().toString();
-
-            if (month.contains("2025")) {
-                fullDate = "2025";
-            }
-            if (month.contains("2024")) {
-                fullDate = "2024";
-            }
-
-            fullDate = fullDate + "-" + MyDate.getNameOfMonthFromNumberSQLFormat(month.replaceAll("[0-9]", "")) + "-";
-
-            if (button.getText().length() == 1) {
-                fullDate = fullDate + "0" + button.getText();
-            }
-
-            if (button.getText().length() == 2) {
-                fullDate = fullDate + button.getText();
-            }
-
-            Macro macroToPrintInGUI;
-
-            macroToPrintInGUI = SelectFromDaysStatistics.getMacroFromDaysStatisticsByDate(fullDate);
-            String panelTitleLabelText = "Macro - Selected day: " + fullDate;
-            refreshMacroAndAllComponentForSelectedDayMacro(panelTitleLabelText, macroToPrintInGUI);
-
-
-            String[][] productArrayForComboBox;
-            try {
-                productArrayForComboBox = SelectFromCalendar.selectAllDataFromCalendarTableForDay(fullDate);
-            } catch (SQLException ex) {
-                throw new RuntimeException(ex);
-            }
-            String[] listToComboBox = new String[productArrayForComboBox.length];
-
-            for (int i = 0; i < listToComboBox.length; i++) {
-                listToComboBox[i] = productArrayForComboBox[i][2];
-            }
-
-            JComboBox newComboBox = selectedDayProductsListComboBox = new JComboBox<>(listToComboBox);
-            refreshComboBox(newComboBox);
-
-            currentDate = fullDate;
-        }
-    }
-
-    private class MonthComboBoxItemListener implements java.awt.event.ItemListener {
-        @Override
-        public void itemStateChanged(ItemEvent event) {
-            if (event.getStateChange() == ItemEvent.SELECTED) {
-                String itemString = event.getItem().toString();
-                setDaysButtonsMainPanel(itemString);
-                paintButtons();
-                refreshMacroAndAllComponentForNorthPanel();
-                refreshAverageMacroPanelForNorthPanel(getAverageMacroForMonth(itemString));
-            }
-        }
-    }
-
-    private class SelectedDayProductsListComboBoxItemListener implements java.awt.event.ItemListener {
-        @Override
-        public void itemStateChanged(ItemEvent event) {
-            if (event.getStateChange() == ItemEvent.SELECTED) {
-
-
-                String productName;
-                productName = selectedDayProductsListComboBox.getSelectedItem().toString();
-                String[] rowData;
-
-                try {
-                    rowData = SelectFromCalendar.selectAllFromCalendarTableForDateAndProductName(productName, currentDate);
-                } catch (SQLException ex) {
-                    throw new RuntimeException(ex);
-                }
-
-                float kcal = Float.valueOf(rowData[10]);
-                float protein = Float.valueOf(rowData[11]);
-                float fat = Float.valueOf(rowData[12]);
-                float carbs = Float.valueOf(rowData[13]);
-
-
-                Macro macro = new Macro(kcal, protein, fat, carbs);
-                refreshWestPanel(macro, productName);
-            }
-        }
-    }
-
-    private class CheckCalendarTableActionListener implements ActionListener {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            JFrame checkCalendarTableButtonWindowFrame = new JFrame("Calendar Table");
-
-            DefaultTableModel model = new DefaultTableModel();
-
-            for (int i = 0; i < columnsNamesToDisplayOnQuickView.length; i++) {
-                model.addColumn(columnsNamesToDisplayOnQuickView[i]);
-            }
-
-            JTable table = new JTable(model);
-
-            table.setModel(model);
-
-            table.getColumnModel().getColumn(0).setMaxWidth(50);
-
-            int minWidthForProductNameColumn = 300;
-            table.getColumnModel().getColumn(3).setMinWidth(minWidthForProductNameColumn);
-
-            //amount of product
-            int maxWidthForAmountOfProductColumn = 300;
-            table.getColumnModel().getColumn(4).setMaxWidth(maxWidthForAmountOfProductColumn);
-
-            //<editor-fold desc="Macro Columns">
-            int maxWidthForMacroColumns = 250;
-            table.getColumnModel().getColumn(5).setMaxWidth(maxWidthForMacroColumns);
-            table.getColumnModel().getColumn(6).setMaxWidth(maxWidthForMacroColumns);
-            table.getColumnModel().getColumn(7).setMaxWidth(maxWidthForMacroColumns);
-            table.getColumnModel().getColumn(8).setMaxWidth(maxWidthForMacroColumns);
-            //</editor-fold>
-
-
-            JScrollPane scrollPane = new JScrollPane(table);
-            String date = checkCalendarTableDateTextField.getText();
-            Connection connection;
-            String sql = "SELECT `day_date`, `day_name`, `product_name`, `amount_of_product`,  " +
-                    "`kcal_consume`, `carbs_consume`, `fat_consume`, `protein_consume`, `meal_name` " +
-                    "FROM calendar WHERE day_date=\"" +
-                    date +
-                    "\";";
-            try {
-                connection = GetConnection.getConnectionWithLocalHost();
-                Statement statement = connection.createStatement();
-                ResultSet resultSet = statement.executeQuery(sql);
-                int counter = 1;
-                while (resultSet.next()) {
-                    String day_date = resultSet.getString(1);
-                    String day_name = resultSet.getString(2);
-                    String product_name = resultSet.getString(3);
-                    String amount_of_product = resultSet.getString(4);
-                    String kcal_consume = resultSet.getString(5);
-                    String carbs_consume = resultSet.getString(6);
-                    String fat_consume = resultSet.getString(7);
-                    String protein_consume = resultSet.getString(8);
-                    String meal_name = resultSet.getString(9);
-
-                    model.addRow(new Object[]{counter, day_date, day_name, product_name, amount_of_product, kcal_consume, carbs_consume, fat_consume, protein_consume, meal_name});
-                    counter++;
-                }
-            } catch (SQLException ex) {
-                throw new RuntimeException(ex);
-            }
-
-            checkCalendarTableButtonWindowFrame.add(scrollPane);
-            checkCalendarTableButtonWindowFrame.setSize(Config.CHECK_CALENDAR_TABLE_BUTTON_WINDOW_FRAME_SIZE);
-            checkCalendarTableButtonWindowFrame.setResizable(true);
-            checkCalendarTableButtonWindowFrame.setLocationRelativeTo(null);
-            checkCalendarTableButtonWindowFrame.show();
-        }
-    }
-
-    private class CheckDaysStatisticFilledTableActionListener implements ActionListener {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            JFrame checkDaysStatisticFilledTableButtonWindowFrame = new JFrame("Days Statistics");
-
-            DefaultTableModel model = new DefaultTableModel();
-
-            for (int i = 0; i < columnsNamesFromDaysStatisticsToDisplayOnQuickView.length; i++) {
-                model.addColumn(columnsNamesFromDaysStatisticsToDisplayOnQuickView[i]);
-            }
-
-            JTable table = new JTable(model);
-            table.setModel(model);
-            JScrollPane scrollPane = new JScrollPane(table);
-            String date = checkDaysStatisticsTableDateTextField.getText();
-            Connection connection;
-            String sql = "SELECT `day_date`, `amount_of_points_from_notepad`, " +
-                    "`amount_of_filled_points_from_notepad`, `kcal_consume`, " +
-                    "`protein_consume`, `fat_consume`, `carbs_consume`, `day_name`" +
-                    "FROM days_statistics_test WHERE day_date LIKE\"" +
-                    date +
-                    "\";";
-            try {
-                connection = GetConnection.getConnectionWithLocalHost();
-                Statement statement = connection.createStatement();
-                ResultSet resultSet = statement.executeQuery(sql);
-                int counter = 1;
-                while (resultSet.next()) {
-                    String day_date = resultSet.getString(1);
-                    String day_name = resultSet.getString(2);
-                    String product_name = resultSet.getString(3);
-                    String amount_of_product = resultSet.getString(4);
-                    String kcal_consume = resultSet.getString(5);
-                    String carbs_consume = resultSet.getString(6);
-                    String fat_consume = resultSet.getString(7);
-                    String protein_consume = resultSet.getString(8);
-
-                    model.addRow(new Object[]{counter, day_date, day_name, product_name, amount_of_product, kcal_consume, carbs_consume, fat_consume, protein_consume});
-                    counter++;
-                }
-            } catch (SQLException ex) {
-                throw new RuntimeException(ex);
-            }
-
-            checkDaysStatisticFilledTableButtonWindowFrame.add(scrollPane);
-            checkDaysStatisticFilledTableButtonWindowFrame.setSize(Config.CHECK_DAYS_STATISTIC_FILLED_TABLE_BUTTON_WINDOW_FRAME_SIZE);
-            checkDaysStatisticFilledTableButtonWindowFrame.setResizable(false);
-            checkDaysStatisticFilledTableButtonWindowFrame.setLocationRelativeTo(null);
-            checkDaysStatisticFilledTableButtonWindowFrame.show();
-        }
-    }
-
-    private class SetNextButtonActionListener implements ActionListener {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            String currentSetDate = checkCalendarTableDateTextField.getText();
-            checkCalendarTableDateTextField.setText(MyDate.getNextDayDateSQLFriendlyFormat(currentSetDate));
-        }
-    }
-
-    private class SetPreviousButtonActionListener implements ActionListener {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            String currentSetDate = checkCalendarTableDateTextField.getText();
-            checkCalendarTableDateTextField.setText(MyDate.getPreviousDayDateSQLFriendlyFormat(currentSetDate));
-        }
-    }
-
-    //<editor-fold desc="Charts Action Listeners">
-    private class ShowChartButtonActionListener implements ActionListener {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            chartsClass.showMonthChart();
-        }
-    }
-
-    //<editor-fold desc="Bar chart Action Listeners">
-    private class ShowBarChartButtonActionListener implements ActionListener {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            chartsClass.displayCharBar();
-        }
-    }
-
     //</editor-fold>
-    private class TestFrameKeyListener implements KeyListener {
-        @Override
-        public void keyTyped(KeyEvent e) {
-
-        }
-
-        @Override
-        public void keyPressed(KeyEvent e) {
-
-        }
-
-        @Override
-        public void keyReleased(KeyEvent e) {
-            if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-                System.out.println("Right pressed");
-                chartsClass.updateJFrameForCharBar(1);
-            }
-
-            if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-                System.out.println("Left pressed");
-                chartsClass.updateJFrameForCharBar(-1);
-            }
-
-            if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-                System.out.println("Down pressed");
-            }
-
-            if (e.getKeyCode() == KeyEvent.VK_H) {
-                System.out.println("H pressed");
-            }
-
-
-        }
-    }
-    //</editor-fold>
-    //</editor-fold>
-
 }

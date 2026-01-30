@@ -212,7 +212,7 @@ public class  MainWindow extends JFrame {
     private class calendarMonthStatsViewActionListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            new CalendarMonthStatsView();
+            new CalendarMonthStatsView().startWindow();
         }
     }
 

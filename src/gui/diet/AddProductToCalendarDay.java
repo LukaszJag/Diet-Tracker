@@ -1346,7 +1346,7 @@ public class AddProductToCalendarDay {
     private class CalendarMonthStatsViewActionListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            new CalendarMonthStatsView();
+            new CalendarMonthStatsView().startWindow();
         }
     }
 
@@ -1770,8 +1770,9 @@ public class AddProductToCalendarDay {
         @Override
         public void actionPerformed(ActionEvent e) {
 
-            CalendarMonthStatsView chartsClass = new CalendarMonthStatsView(true);
-            chartsClass.showChartBarTestTest();
+            CalendarMonthStatsView calendarMonthStatsView = new CalendarMonthStatsView();
+            CalendarMonthStatsView.ChartsClass chartsClass = calendarMonthStatsView.new ChartsClass();
+            chartsClass.displayCharBar();
 
             /*chartsClass.show
             CalendarMonthStatsView.ChartsClass chartsClass1 = chartsClass.new ChartsClass();

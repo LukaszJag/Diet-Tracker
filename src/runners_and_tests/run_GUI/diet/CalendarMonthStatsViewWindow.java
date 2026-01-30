@@ -4,6 +4,6 @@ import gui.diet.CalendarMonthStatsView;
 
 public class CalendarMonthStatsViewWindow {
     public static void main(String[] args) {
-        CalendarMonthStatsView calendarMonthStatsView = new CalendarMonthStatsView();
+        new CalendarMonthStatsView().startWindow();
     }
 }
