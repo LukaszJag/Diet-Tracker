@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2026-01-31',
+'Saturday',
+'Dinner',
+518.0,
+'Parówki wędzone z kurcząt',
+232.0,
+12.2,
+18.8,
+2.4,
+'2026-01-31 10:53:30',
+'none',
+1201.76,
+12.432,
+97.383995,
+63.195995
+);

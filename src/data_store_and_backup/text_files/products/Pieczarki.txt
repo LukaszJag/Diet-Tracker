@@ -1,0 +1,9 @@
+Name: Pieczarki
+Brand: Grzyby
+Package has: 0.0
+Macro for: 100.0
+KCal: 16.0
+Protein: 2.7
+Fat: 0.35
+Carbs: 0.45
+Comment optional: Link: https://www.tabele-kalorii.pl/kalorie,Pieczarki.html
