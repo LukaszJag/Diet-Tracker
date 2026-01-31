@@ -127,6 +127,7 @@ public class  MainWindow extends JFrame {
         panelLeft.add(calculateBMR);
 
         calendarMonthStatsView.addActionListener(new calendarMonthStatsViewActionListener());
+        calendarMonthStatsView.setBackground(Color.GREEN);
         panelLeft.add(calendarMonthStatsView);
 
 
