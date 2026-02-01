@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2026-02-01',
+'Sunday',
+'Breakfast',
+157.0,
+'Markizy HIT o smaku czekoladowym',
+492.0,
+6.1,
+23.9,
+63.2,
+'2026-02-01 04:37:09',
+'none',
+772.44,
+99.22401,
+37.523,
+9.577001
+);

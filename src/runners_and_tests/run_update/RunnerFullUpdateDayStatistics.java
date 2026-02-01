@@ -10,7 +10,7 @@ public class RunnerFullUpdateDayStatistics {
 
     static String[] monthsFrom2024 = {"May", "June", "July", "August", "September", "October", "November", "December"};
     static String[] monthsFrom2025 = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
-    static String[] monthsFrom2026 = {"January"};
+    static String[] monthsFrom2026 = {"January", "February"};
 
     public static void main(String[] args) throws SQLException {
         runFullUpdateForAllMonthInDayStatistics();

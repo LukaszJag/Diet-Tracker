@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2026-02-01',
+'Sunday',
+'Dinner',
+47.0,
+'Brokuły gotowane',
+24.0,
+2.7,
+0.4,
+2.4,
+'2026-02-01 04:40:09',
+'none',
+11.28,
+1.128,
+0.18800001,
+1.269
+);

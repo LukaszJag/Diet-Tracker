@@ -1,0 +1,9 @@
+Name: Markizy HIT o smaku czekoladowym
+Brand: Bahlsen
+Package has: 250.0
+Macro for: 100.0
+KCal: 492.0
+Protein: 6.1
+Fat: 23.9
+Carbs: 63.2
+Comment optional: Link: https://www.tabele-kalorii.pl/kalorie,Markizy-HIT-o-smaku-czekoladowym-Bahlsen.html
