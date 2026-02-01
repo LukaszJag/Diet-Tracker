@@ -1552,6 +1552,24 @@ public class AddProductToCalendarDay {
 
     }
     //</editor-fold>
+
+    private class ShowBatChartForMonthButtonActionListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+
+            CalendarMonthStatsView calendarMonthStatsView = new CalendarMonthStatsView();
+            CalendarMonthStatsView.ChartsClass chartsClass = calendarMonthStatsView.new ChartsClass();
+            chartsClass.displayCharBar();
+
+            /*chartsClass.show
+            CalendarMonthStatsView.ChartsClass chartsClass1 = chartsClass.new ChartsClass();
+            chartsClass1.showMonthBarChart();
+
+
+             */
+        }
+    }
+
     //</editor-fold>
 
 
@@ -1763,23 +1781,6 @@ public class AddProductToCalendarDay {
             }
 
             return resultArray;
-        }
-    }
-
-    private class ShowBatChartForMonthButtonActionListener implements ActionListener {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-
-            CalendarMonthStatsView calendarMonthStatsView = new CalendarMonthStatsView();
-            CalendarMonthStatsView.ChartsClass chartsClass = calendarMonthStatsView.new ChartsClass();
-            chartsClass.displayCharBar();
-
-            /*chartsClass.show
-            CalendarMonthStatsView.ChartsClass chartsClass1 = chartsClass.new ChartsClass();
-            chartsClass1.showMonthBarChart();
-
-
-             */
         }
     }
 
