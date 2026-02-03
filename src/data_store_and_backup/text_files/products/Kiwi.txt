@@ -1,0 +1,9 @@
+Name: Kiwi
+Brand: owoce
+Package has: 0.0
+Macro for: 100.0
+KCal: 60.0
+Protein: 1.14
+Fat: 0.52
+Carbs: 11.66
+Comment optional: Link: https://www.tabele-kalorii.pl/kalorie,Kiwi.html
