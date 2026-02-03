@@ -1840,8 +1840,39 @@ public class CalendarMonthStatsView {
         }
 
 
-        private void addActionListenerToButtons() {
+        private class TestFrameKeyListener implements KeyListener {
+            @Override
+            public void keyTyped(KeyEvent e) {
 
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+                    System.out.println("Right pressed");
+                    chartsClass.updateJFrameForCharBar(1);
+                }
+
+                if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+                    System.out.println("Left pressed");
+                    chartsClass.updateJFrameForCharBar(-1);
+                }
+
+                if (e.getKeyCode() == KeyEvent.VK_DOWN) {
+                    System.out.println("Down pressed");
+                }
+
+                if (e.getKeyCode() == KeyEvent.VK_H) {
+                    System.out.println("H pressed");
+                }
+
+
+            }
         }
         //</editor-fold>
     }
