@@ -106,6 +106,7 @@ public class CalendarMonthStatsView {
     JButton emptyButton = new JButton("Empty");
     JButton showChartButton = new JButton("Show chart for selected month");
     JButton showBarChartButton = new JButton("Show bar chart for selected month");
+
     JButton previousMonthButton = new JButton("Previous");
     JButton currentMonthButton = new JButton("Current");
     JButton nextMonthButton = new JButton("Next");
