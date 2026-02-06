@@ -1,6 +1,6 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="SQLTests" type="Application" factoryName="Application" folderName="Tests">
-    <option name="MAIN_CLASS_NAME" value="runners_and_tests.tests.all_tests.SQLTests" />
+    <option name="MAIN_CLASS_NAME" value="tests.all_tests.SQLTests" />
     <module name="Diet-Tracker" />
     <method v="2">
       <option name="Make" enabled="true" />

@@ -1415,7 +1415,7 @@ public class AddProductToCalendarDay {
             setupFrame();
         }
 
-        private void setButtonsActionListener() {   
+        private void setButtonsActionListener() {
             saveButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     getDataFromTable();

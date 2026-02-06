@@ -1,4 +1,4 @@
-package runners_and_tests.tests;
+package tests;
 
 import configuration.Config;
 import tools.sql_tools.SQLSelect;

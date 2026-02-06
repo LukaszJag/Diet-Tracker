@@ -1,4 +1,4 @@
-package runners_and_tests.tests;
+package tests;
 
 import tools.text_files_tools.DirectoryTools;
 import tools.text_files_tools.FilesTools;

@@ -1,4 +1,4 @@
-package runners_and_tests.tests.test_tools.get_simple_data_to_test;
+package tests.test_tools.get_simple_data_to_test;
 
 import tools.products_tools.Macro;
 import tools.products_tools.Product;

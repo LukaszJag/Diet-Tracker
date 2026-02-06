@@ -1,6 +1,6 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="QuickTest" type="Application" factoryName="Application" folderName="Tests">
-    <option name="MAIN_CLASS_NAME" value="runners_and_tests.tests.QuickTests" />
+    <option name="MAIN_CLASS_NAME" value="tests.QuickTests" />
     <module name="Diet-Tracker" />
     <method v="2">
       <option name="Make" enabled="true" />
