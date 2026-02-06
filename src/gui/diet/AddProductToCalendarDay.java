@@ -1415,7 +1415,7 @@ public class AddProductToCalendarDay {
             setupFrame();
         }
 
-        private void setButtonsActionListener() {
+        private void setButtonsActionListener() {   
             saveButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     getDataFromTable();
@@ -1432,7 +1432,11 @@ public class AddProductToCalendarDay {
             refreshButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    updateTable();
+                    try {
+                        RunnerFullUpdateDayStatistics.runFullUpdateForAllMonthInDayStatistics();
+                    } catch (SQLException ex) {
+                        throw new RuntimeException(ex);
+                    }
                 }
             });
         }
