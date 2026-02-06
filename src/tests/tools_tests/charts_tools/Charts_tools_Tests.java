@@ -1,4 +1,4 @@
-package tests.test_tools.charts_tools;
+package tests.tools_tests.charts_tools;
 
 import org.junit.jupiter.api.Test;
 import tools.charts_tools.ChartsDiet;

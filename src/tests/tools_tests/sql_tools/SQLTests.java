@@ -1,4 +1,4 @@
-package tests;
+package tests.tools_tests.sql_tools;
 
 import configuration.Config;
 import tools.sql_tools.SQLSelect;

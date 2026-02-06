@@ -1,11 +1,11 @@
-package tests.tools_tests;
+package tests.tools_tests.calendar_tools;
 
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static tools.calendar_tools.MyDate.getAmountOfDaysInMonthIfContainsItsName;
 
-public class MyDateTests {
+public class MyDateTests2 {
     @Test
     public void getNumberOfMonthInYearIfStringContainsItsNameTest_1(){
         assertEquals(31, getAmountOfDaysInMonthIfContainsItsName("214e12january2121"));

@@ -1,4 +1,4 @@
-package tests.all_tests;
+package tests.java_core_my_tests;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

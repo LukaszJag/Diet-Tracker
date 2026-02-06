@@ -1,4 +1,4 @@
-package tests.tools_tests.sql;
+package tests.tools_tests.sql_tools;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Nested;

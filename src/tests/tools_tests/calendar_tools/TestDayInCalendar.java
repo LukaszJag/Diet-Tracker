@@ -1,7 +1,7 @@
-package tests;
+package tests.tools_tests.calendar_tools;
 
-import tests.test_tools.get_simple_data_to_test.DayInCalendarFactoryToMakeTest;
-import tests.test_tools.get_simple_data_to_test.ProductFactoryToMakeTests;
+import tests.tools_tests.calendar_tools.DayInCalendarFactoryToMakeTest;
+import tests.tools_tests.products_tools.ProductFactoryToMakeTests;
 import tools.calendar_tools.DayInCalendar;
 import tools.sql_tools.calendar.InsertToCalendarDayTable;
 import tools.sql_tools.SearchForKey;

@@ -1,4 +1,4 @@
-package tests.tools_tests.calendar;
+package tests.tools_tests.calendar_tools;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;

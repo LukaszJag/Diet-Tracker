@@ -1,4 +1,4 @@
-package tests.tools_tests;
+package tests.tools_tests.text_files_tools;
 
 import org.junit.jupiter.api.Test;
 import tools.text_files_tools.FilesTools;

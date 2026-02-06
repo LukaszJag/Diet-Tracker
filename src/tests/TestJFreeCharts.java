@@ -6,7 +6,7 @@ import org.jfree.chart.JFreeChart;
 import org.jfree.data.category.DefaultCategoryDataset;
 import javax.swing.*;
 
-public class TestCharts {
+public class TestJFreeCharts {
     public static void main(String[] args) {
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
         dataset.addValue(200, "Sales", "January");

@@ -1,4 +1,4 @@
-package tests.all_tests;
+package tools.sql_tools;
 
 import tools.sql_tools.CheckIfRowExist;
 import tools.sql_tools.SQLSelect;

@@ -1,4 +1,4 @@
-package tests.all_tests;
+package tools.text_files_tools;
 
 import tools.text_files_tools.DirectoryTools;
 
