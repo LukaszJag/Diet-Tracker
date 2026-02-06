@@ -67,7 +67,7 @@ public class ChartsDiet {
     //<editor-fold desc="Charts - methods">
     public void prepareDataForCharts() {
         chartName = MyDate.getNameOfMonthFromNumber(monthToDisplay)+ " stats";
-        
+
         dateLabel = new JLabel("" + monthToDisplay + "-" + yearToDisplay);
 
         valuesKcal = new float[MyDate.getAmountOfDaysInMonth(monthToDisplay)];
@@ -265,7 +265,7 @@ public class ChartsDiet {
 
         chartFrame.setSize(new Dimension(1000, 900));
         chartFrame.setVisible(true);
-        chartFrame.setResizable(false);
+        chartFrame.setResizable(true);
         chartFrame.setLocationRelativeTo(null);
     }
 
@@ -286,9 +286,9 @@ public class ChartsDiet {
         chartFrame.setFocusable(true);
         chartFrame.add(chartPanel);
 
-        chartFrame.setSize(new Dimension(900, 700));
+        chartFrame.setSize(new Dimension(1000, 900));
         chartFrame.setVisible(true);
-        chartFrame.setResizable(false);
+        chartFrame.setResizable(true);
         chartFrame.setLocationRelativeTo(null);
 
         chartFrame.revalidate();
