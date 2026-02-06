@@ -5,6 +5,7 @@ import logs.Log;
 import runners_and_tests.run_update.RunnerFullUpdateDayStatistics;
 import tools.calendar_tools.DayInCalendar;
 import tools.calendar_tools.MyDate;
+import tools.charts_tools.ChartsDiet;
 import tools.products_tools.Macro;
 import tools.products_tools.Product;
 import tools.sql_tools.SQLSelect;
@@ -471,7 +472,7 @@ public class AddProductToCalendarDay {
         editDaysStatisticsFileButton.addActionListener(new EditDaysStatisticsFileButtonActionListener());
         addProductToDayPanelEast.add(editDaysStatisticsFileButton);
 
-        showBatChartForMonthButton.addActionListener(new ShowBatChartForMonthButtonActionListener());
+        showBatChartForMonthButton.addActionListener(new ShowBarChartForMonthButtonActionListener());
         addProductToDayPanelEast.add(showBatChartForMonthButton);
         //</editor-fold>
     }
@@ -1557,20 +1558,11 @@ public class AddProductToCalendarDay {
     }
     //</editor-fold>
 
-    private class ShowBatChartForMonthButtonActionListener implements ActionListener {
+    private class ShowBarChartForMonthButtonActionListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
 
-            CalendarMonthStatsView calendarMonthStatsView = new CalendarMonthStatsView();
-            CalendarMonthStatsView.ChartsClass chartsClass = calendarMonthStatsView.new ChartsClass();
-            chartsClass.displayCharBar();
-
-            /*chartsClass.show
-            CalendarMonthStatsView.ChartsClass chartsClass1 = chartsClass.new ChartsClass();
-            chartsClass1.showMonthBarChart();
-
-
-             */
+            new ChartsDiet().displayCharBar();
         }
     }
 

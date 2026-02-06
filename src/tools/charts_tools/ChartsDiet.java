@@ -32,6 +32,7 @@ public class ChartsDiet {
     float[] valuesKcal;
 
     int monthToDisplay = MyDate.getCurrentMonthNumber();
+
     int yearToDisplay = MyDate.getCurrentYear();
     int monthIntervalForChart = 0;
 
@@ -62,46 +63,16 @@ public class ChartsDiet {
     Color blackAverageMarkerColor = new Color(0, 0, 0);
     //</editor-fold>
 
-    public ChartsDiet(){
-        prepareDataForCharts();
-        prepareMonthBarChart();
-        displayCharBar();
-    }
 
     //<editor-fold desc="Charts - methods">
     public void prepareDataForCharts() {
-        String chartName = MyDate.getNameOfMonthFromNumber(monthToDisplay)+ " stats";
-
-        Date dt = new Date();
-        Calendar c = Calendar.getInstance();
-        c.setTime(dt);
-        c.add(Calendar.MONTH, monthIntervalForChart);
-        dt = c.getTime();
-
-        String pattern = "yyyy";
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
-        String dateYear = simpleDateFormat.format(dt);
-
-        String pattern2 = "MM";
-        SimpleDateFormat simpleDateFormat2 = new SimpleDateFormat(pattern2);
-        String dateMonth = simpleDateFormat2.format(dt);
-
-        yearToDisplay = Integer.valueOf(dateYear);
-
-        if (dateMonth.charAt(0) == '0') {
-            monthToDisplay = Integer.valueOf(dateMonth.substring(1, 2));
-        } else {
-
-            monthToDisplay = Integer.valueOf(dateMonth);
-        }
-
-        dateLabel = new JLabel("" + dateMonth + "-" + dateYear);
+        chartName = MyDate.getNameOfMonthFromNumber(monthToDisplay)+ " stats";
+        
+        dateLabel = new JLabel("" + monthToDisplay + "-" + yearToDisplay);
 
         valuesKcal = new float[MyDate.getAmountOfDaysInMonth(monthToDisplay)];
 
         daysNumbers = MyDate.getAllDaysInMonthAndYearSQLFriendlyFormat(monthToDisplay, yearToDisplay);
-
-        Debug.printYellowSystemPrintln((monthToDisplay + " " + yearToDisplay));
 
         for (int i = 0; i < valuesKcal.length; i++) {
             valuesKcal[i] = SelectFromDaysStatistics.getMacroFromDaysStatisticsByDate(daysNumbers[i]).getKcal();
@@ -298,7 +269,7 @@ public class ChartsDiet {
         chartFrame.setLocationRelativeTo(null);
     }
 
-    public void updateJFrameForCharBar(int previousNextOrCurrentMonth) {
+    public void updateJFrameForCharBar() {
         clearAllData();
         prepareDataForCharts();
         prepareMonthBarChart();
@@ -339,13 +310,22 @@ public class ChartsDiet {
         @Override
         public void keyReleased(KeyEvent e) {
             if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-                System.out.println("Right pressed");
-                updateJFrameForCharBar(1);
+                String date = MyDate.getNextDateFromMontAndYearSQLFriendlyFormat(getMonthToDisplay(), getYearToDisplay());
+
+
+                setYearToDisplay(MyDate.getYearFromSQLFriendlyFormatDateToInt(date));
+                setMonthToDisplay(MyDate.getMonthFromSQLFriendlyFormatDateToInt(date));
+
+                updateJFrameForCharBar();
             }
 
             if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-                System.out.println("Left pressed");
-                updateJFrameForCharBar(-1);
+                String date = MyDate.getPreviousDateFromMontAndYearSQLFriendlyFormat(getMonthToDisplay(), getYearToDisplay());
+
+                setYearToDisplay(MyDate.getYearFromSQLFriendlyFormatDateToInt(date));
+                setMonthToDisplay(MyDate.getMonthFromSQLFriendlyFormatDateToInt(date));
+
+                updateJFrameForCharBar();
             }
 
             if (e.getKeyCode() == KeyEvent.VK_DOWN) {
@@ -359,5 +339,22 @@ public class ChartsDiet {
 
         }
     }
+
+    public int getMonthToDisplay() {
+        return monthToDisplay;
+    }
+
+    public void setMonthToDisplay(int monthToDisplay) {
+        this.monthToDisplay = monthToDisplay;
+    }
+
+    public int getYearToDisplay() {
+        return yearToDisplay;
+    }
+
+    public void setYearToDisplay(int yearToDisplay) {
+        this.yearToDisplay = yearToDisplay;
+    }
+
     //</editor-fold>
 }

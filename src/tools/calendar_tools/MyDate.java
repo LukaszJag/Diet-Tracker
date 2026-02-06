@@ -450,8 +450,8 @@ public class MyDate {
         return allDaysInSQLFormat;
     }
 
-    public static String getNextDayDateSQLFriendlyFormat(String dateSQLForamt) {
-        String dt = dateSQLForamt;  // Start date
+    public static String getNextDayDateSQLFriendlyFormat(String dateSQLFormat) {
+        String dt = dateSQLFormat;  // Start date
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Calendar c = Calendar.getInstance();
         try {
@@ -463,8 +463,8 @@ public class MyDate {
         dt = sdf.format(c.getTime());
         return dt;
     }
-    public static String getPreviousDayDateSQLFriendlyFormat(String dateSQLForamt) {
-        String dt = dateSQLForamt;  // Start date
+    public static String getPreviousDayDateSQLFriendlyFormat(String dateSQLFormat) {
+        String dt = dateSQLFormat;  // Start date
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Calendar c = Calendar.getInstance();
         try {
@@ -478,12 +478,93 @@ public class MyDate {
     }
 
     // TODO
-    public static String getNextDayDateSQLFriendlyFormat(int day, int month, int year) {
-        return null;
+    public static String getNextDateFromMontAndYearSQLFriendlyFormat(String monthInNumber, String year){
+        String dt = year + "-" + monthInNumber;  // Start date
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM");
+        Calendar c = Calendar.getInstance();
+        try {
+            c.setTime(sdf.parse(dt));
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
+        c.add(Calendar.MONTH, 1);  // number of months to add
+        dt = sdf.format(c.getTime());
+        return dt;
     }
 
+    public static String getNextDateFromMontAndYearSQLFriendlyFormat(int month, int year){
+        String monthInNumber = "";
+        if (month < 10){
+            monthInNumber += "0" + month;
+        }else {
+            monthInNumber = month + "";
+        }
+
+        String dt = year + "-" + monthInNumber;  // Start date
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM");
+        Calendar c = Calendar.getInstance();
+        try {
+            c.setTime(sdf.parse(dt));
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
+        c.add(Calendar.MONTH, 1);  // number of months to add
+        dt = sdf.format(c.getTime());
+        return dt;
+    }
+
+    public static String getPreviousDateFromMontAndYearSQLFriendlyFormat(String monthInNumber, String year){
+        String dt = year + "-" + monthInNumber;  // Start date
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM");
+        Calendar c = Calendar.getInstance();
+        try {
+            c.setTime(sdf.parse(dt));
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
+        c.add(Calendar.DATE, -1);  // number of months to add
+        dt = sdf.format(c.getTime());
+        return dt;
+    }
+
+    public static String getPreviousDateFromMontAndYearSQLFriendlyFormat(int month, int year){
+        String monthInNumber = "";
+        if (month < 10){
+            monthInNumber += "0" + month;
+        }else {
+            monthInNumber = month + "";
+        }
+
+        String dt = year + "-" + monthInNumber;  // Start date
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM");
+        Calendar c = Calendar.getInstance();
+        try {
+            c.setTime(sdf.parse(dt));
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
+        c.add(Calendar.DATE, -1);  // number of months to add
+        dt = sdf.format(c.getTime());
+        return dt;
+    }
     //</editor-fold>
 
+    //GetDateFrom
+    public static String getYearFromSQLFriendlyFormatDate(String date){
+        return date.substring(0,4);
+    }
+
+    public static int getYearFromSQLFriendlyFormatDateToInt(String date){
+        return Integer.valueOf(date.substring(0,4));
+    }
+
+    public static String getMonthFromSQLFriendlyFormatDate(String date){
+        return date.substring(5,7);
+    }
+
+    public static int getMonthFromSQLFriendlyFormatDateToInt(String date){
+        return Integer.valueOf(date.substring(5,7));
+    }
     public static boolean isYearAndMonthHasPassed(int year, int month, int day) {
         Date date = Config.date;
         Date passedDate = new Date(year, month, day);
