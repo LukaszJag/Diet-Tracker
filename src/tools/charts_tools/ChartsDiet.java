@@ -63,7 +63,6 @@ public class ChartsDiet {
     Color blackAverageMarkerColor = new Color(0, 0, 0);
     //</editor-fold>
 
-
     //<editor-fold desc="Charts - methods">
     public void prepareDataForCharts() {
         chartName = MyDate.getNameOfMonthFromNumber(monthToDisplay)+ " stats";
