@@ -2,8 +2,8 @@ package tools.sql_tools.days_statistics;
 
 import tools.calendar_tools.MyDate;
 import tools.products_tools.Macro;
-import tools.sql_tools.general.get.GetResultSet;
 import tools.sql_tools.general.SumTable;
+import tools.sql_tools.general.get.GetResultSet;
 
 import java.sql.ResultSet;
 import java.util.Hashtable;
@@ -140,6 +140,8 @@ public class SelectFromDaysStatistics {
 
 
             int amountOfDays = MyDate.getAmountOfDaysInCurrentMonthOPassedMonth(year, month);
+
+
 
             Macro averageMacro = new Macro(
                     sumMacro.getKcal(),
