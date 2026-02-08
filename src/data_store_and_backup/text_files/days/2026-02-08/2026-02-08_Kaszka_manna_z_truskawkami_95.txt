@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2026-02-08',
+'Sunday',
+'Second Breakfast',
+95.0,
+'Kaszka manna z truskawkami',
+362.0,
+12.0,
+1.5,
+72.0,
+'2026-02-08 03:08:27',
+'none',
+343.9,
+68.4,
+1.425,
+11.4
+);
