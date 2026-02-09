@@ -1562,7 +1562,7 @@ public class AddProductToCalendarDay {
         @Override
         public void actionPerformed(ActionEvent e) {
 
-            new ChartsDiet().displayCharBar();
+            new ChartsDiet().displayChartBar();
         }
     }
 

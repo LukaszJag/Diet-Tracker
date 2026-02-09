@@ -4,6 +4,6 @@ import tools.charts_tools.ChartsDiet;
 
 public class RunChartsDietTests {
     public static void main(String[] args) {
-        new ChartsDiet().displayCharBar();
+        new ChartsDiet().displayChartBar();
     }
 }

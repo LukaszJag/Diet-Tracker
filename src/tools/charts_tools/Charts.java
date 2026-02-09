@@ -3,11 +3,20 @@ package tools.charts_tools;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.data.category.DefaultCategoryDataset;
+import tests.tools_tests.sql_tools.days_statistics.SQLDaysStatisticsTests;
 import tools.calendar_tools.MyDate;
+import tools.sql_tools.days_statistics.SelectFromDaysStatistics;
 
 import javax.swing.*;
+import java.awt.*;
 
 public class Charts {
+    public static void main(String[] args) {
+        Charts obj = new Charts();
+        Charts.ChartForMonthsKcalCompare obj2 = obj.new ChartForMonthsKcalCompare();
+       obj2.prepareDataForChart();
+    }
+
     //<editor-fold desc="Global variables">
     String[] daysNumbers;
     String chartName;
@@ -33,6 +42,8 @@ public class Charts {
             "03-2026"
     };
 
+    String[] monthsKcal;
+
     int yearToDisplay = MyDate.getCurrentYear();
     int monthIntervalForChart = 0;
 
@@ -56,8 +67,28 @@ public class Charts {
 
     class ChartForMonthsKcalCompare {
 
-        public void prepareDataForChart() {
+        public void prepareSwingComponents(){
+            chartFrame.setSize(new Dimension(1000,800));
+            chartFrame.setResizable(true);
+            chartFrame.setLocationRelativeTo(null);
+            chartFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         }
+
+        public void prepareDataForChart() {
+
+            monthsKcal = new String[monthsToDisplayInSQLFriendlyFormat.length];
+
+            int year, month;
+            for (int i = 0; i < monthsKcal.length; i++) {
+                year = Integer.valueOf(monthsToDisplayInSQLFriendlyFormat[i].substring(3));
+                month = Integer.valueOf(monthsToDisplayInSQLFriendlyFormat[i].substring(0,2));
+
+                monthsKcal[i] = String.valueOf(SelectFromDaysStatistics.getAverageMacroForMonth(year, month).getKcal());
+                System.out.println(year + ":" + month + "\t" + monthsKcal[i]);
+            }
+
+        }
+
 
         public void getMonthAverageMacro(){
 

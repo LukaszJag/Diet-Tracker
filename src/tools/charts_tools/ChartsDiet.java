@@ -13,16 +13,12 @@ import org.jfree.chart.ui.TextAnchor;
 import org.jfree.data.category.CategoryDataset;
 import org.jfree.data.category.DefaultCategoryDataset;
 import tools.calendar_tools.MyDate;
-import tools.debug_tools.Debug;
 import tools.sql_tools.days_statistics.SelectFromDaysStatistics;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
 
 public class ChartsDiet {
     //<editor-fold desc="Global variables">
@@ -64,29 +60,8 @@ public class ChartsDiet {
     //</editor-fold>
 
     //<editor-fold desc="Charts - methods">
-    public void prepareDataForCharts() {
-        chartName = MyDate.getNameOfMonthFromNumber(monthToDisplay)+ " stats";
 
-        dateLabel = new JLabel("" + monthToDisplay + "-" + yearToDisplay);
-
-        valuesKcal = new float[MyDate.getAmountOfDaysInMonth(monthToDisplay)];
-
-        daysNumbers = MyDate.getAllDaysInMonthAndYearSQLFriendlyFormat(monthToDisplay, yearToDisplay);
-
-        for (int i = 0; i < valuesKcal.length; i++) {
-            valuesKcal[i] = SelectFromDaysStatistics.getMacroFromDaysStatisticsByDate(daysNumbers[i]).getKcal();
-        }
-    }
-
-    public void showMonthChart() {
-        prepareDataForCharts();
-
-        chartName = monthToDisplay + "-" + yearToDisplay;
-        jFreeChart = DisplayChart.createChartPanel(chartName, "Days", "Kcal",
-                valuesKcal, "Kcal", daysNumbers);
-        DisplayChart.showChart(jFreeChart);
-    }
-
+    //<editor-fold desc="Prepare, clear - data">
     public void prepareMonthBarChart() {
         //<editor-fold desc="Kcal Limits - float">
         float greenKcalLimit = Config.BMRActual.getKcal();
@@ -227,7 +202,19 @@ public class ChartsDiet {
         //</editor-fold>
 
     }
+    public void prepareDataForCharts() {
+        chartName = MyDate.getNameOfMonthFromNumber(monthToDisplay)+ " stats";
 
+        dateLabel = new JLabel("" + monthToDisplay + "-" + yearToDisplay);
+
+        valuesKcal = new float[MyDate.getAmountOfDaysInMonth(monthToDisplay)];
+
+        daysNumbers = MyDate.getAllDaysInMonthAndYearSQLFriendlyFormat(monthToDisplay, yearToDisplay);
+
+        for (int i = 0; i < valuesKcal.length; i++) {
+            valuesKcal[i] = SelectFromDaysStatistics.getMacroFromDaysStatisticsByDate(daysNumbers[i]).getKcal();
+        }
+    }
     public void clearAllData() {
         SwingUtilities.updateComponentTreeUI(chartFrame);
 
@@ -240,8 +227,10 @@ public class ChartsDiet {
         chartFrame.validate();
         chartFrame.repaint();
     }
+    //</editor-fold>
 
-    public void displayCharBar() {
+    //<editor-fold desc="display - BarChart, LineChart">
+    public void displayChartBar() {
         prepareDataForCharts();
         prepareMonthBarChart();
         menuBar = new JMenuBar();
@@ -267,6 +256,15 @@ public class ChartsDiet {
         chartFrame.setResizable(true);
         chartFrame.setLocationRelativeTo(null);
     }
+    public void displayLineChart() {
+        prepareDataForCharts();
+
+        chartName = monthToDisplay + "-" + yearToDisplay;
+        jFreeChart = DisplayChart.createChartPanel(chartName, "Days", "Kcal",
+                valuesKcal, "Kcal", daysNumbers);
+        DisplayChart.showChart(jFreeChart);
+    }
+    //</editor-fold>
 
     public void updateJFrameForCharBar() {
         clearAllData();
@@ -294,7 +292,27 @@ public class ChartsDiet {
         chartFrame.repaint();
     }
 
+    //<editor-fold desc="Getters, Setters">
+    public int getMonthToDisplay() {
+        return monthToDisplay;
+    }
 
+    public void setMonthToDisplay(int monthToDisplay) {
+        this.monthToDisplay = monthToDisplay;
+    }
+
+    public int getYearToDisplay() {
+        return yearToDisplay;
+    }
+
+    public void setYearToDisplay(int yearToDisplay) {
+        this.yearToDisplay = yearToDisplay;
+    }
+    //</editor-fold>
+
+    //</editor-fold>
+
+    //<editor-fold desc="KeyListener">
     private class TestFrameKeyListener implements KeyListener {
         @Override
         public void keyTyped(KeyEvent e) {
@@ -338,22 +356,5 @@ public class ChartsDiet {
 
         }
     }
-
-    public int getMonthToDisplay() {
-        return monthToDisplay;
-    }
-
-    public void setMonthToDisplay(int monthToDisplay) {
-        this.monthToDisplay = monthToDisplay;
-    }
-
-    public int getYearToDisplay() {
-        return yearToDisplay;
-    }
-
-    public void setYearToDisplay(int yearToDisplay) {
-        this.yearToDisplay = yearToDisplay;
-    }
-
     //</editor-fold>
 }
