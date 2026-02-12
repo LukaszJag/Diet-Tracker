@@ -1,0 +1,9 @@
+Name: Kulka Rafaello
+Brand: Raffaello
+Package has: 10.0
+Macro for: 100.0
+KCal: 627.0
+Protein: 7.4
+Fat: 48.3
+Carbs: 38.6
+Comment optional: Link: https://www.frisco.pl/pid,619/n,raffaello-praliny-kokosowe/stn,product
