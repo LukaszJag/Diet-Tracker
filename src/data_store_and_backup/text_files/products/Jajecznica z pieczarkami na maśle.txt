@@ -1,0 +1,9 @@
+Name: Jajecznica z pieczarkami na maśle
+Brand: domowe
+Package has: 0.0
+Macro for: 100.0
+KCal: 101.61
+Protein: 7.06
+Fat: 7.94
+Carbs: 0.26
+Comment optional: Link: https://www.tabele-kalorii.pl/kalorie,Jajecznica-z-pieczarkami-na-masle-Przepis-od-pollyanna.html
