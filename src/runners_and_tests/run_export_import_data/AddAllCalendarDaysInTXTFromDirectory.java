@@ -11,7 +11,7 @@ public class AddAllCalendarDaysInTXTFromDirectory {
     public static void main(String[] args) throws SQLException {
         String[] allFilesPath = getPathsOfFiles();
         // May cause Error : hard code length
-        int arraysLength = 6000;
+        int arraysLength = 7000;
         String[] productThatExist = new String[arraysLength];
         int counterExistArray = 0;
         int counterNotExistArray = 0;
