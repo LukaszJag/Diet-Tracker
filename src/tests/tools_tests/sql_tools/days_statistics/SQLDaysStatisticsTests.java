@@ -18,5 +18,8 @@ public class SQLDaysStatisticsTests {
         }
     }
 
-
+    @Test
+    public void getAverageMacroForMonth_2_2025() {
+        System.out.println(String.valueOf(SelectFromDaysStatistics.getAverageMacroForMonth(2026, 2).getKcal()));
+    }
 }
