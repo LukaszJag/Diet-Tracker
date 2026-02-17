@@ -1,0 +1,9 @@
+Name: Słodka Kraina Pączek z cukrem pudrem
+Brand: Biedronka
+Package has: 80.0
+Macro for: 100.0
+KCal: 348.0
+Protein: 6.08
+Fat: 13.8
+Carbs: 50.54
+Comment optional: Link: https://www.tabele-kalorii.pl/kalorie,Paczek-z-marmolada-i-pudrem-Biedronka.html

@@ -1,0 +1,9 @@
+Name: Kabanosy Exclusive paluszki 100% z szynki
+Brand: Tarczyński
+Package has: 80.0
+Macro for: 100.0
+KCal: 354.0
+Protein: 23.0
+Fat: 25.0
+Carbs: 17.5
+Comment optional: Link: https://leclerc.com.pl/tarczynski-kabanosy-exclusive-paluszki-100-z-szynki

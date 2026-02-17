@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2026-02-16',
+'Tuesday',
+'Snack 2',
+100.0,
+'Rogal drożdżowy z makiem',
+307.0,
+9.5,
+5.5,
+54.0,
+'2026-02-17 09:11:17',
+'none',
+307.0,
+54.0,
+5.5,
+9.5
+);

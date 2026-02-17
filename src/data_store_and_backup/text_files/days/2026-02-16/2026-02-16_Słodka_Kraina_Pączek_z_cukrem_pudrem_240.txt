@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2026-02-16',
+'Tuesday',
+'Supper',
+240.0,
+'Słodka Kraina Pączek z cukrem pudrem',
+348.0,
+6.08,
+13.8,
+50.54,
+'2026-02-17 09:22:48',
+'none',
+835.2,
+121.296005,
+33.120003,
+14.592
+);

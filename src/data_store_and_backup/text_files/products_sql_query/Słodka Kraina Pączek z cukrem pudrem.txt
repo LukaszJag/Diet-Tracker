@@ -1,0 +1,20 @@
+INSERT INTO `diet_tracker_schema`.product_table
+(`product_name`,
+`product_brand`,
+`product_package_has`,
+`product_macro_for`,
+`product_kcal`,
+`product_protein`,
+`product_fat`,
+`product_carbs`,
+`comment_optional`)
+Values
+('Słodka Kraina Pączek z cukrem pudrem',
+'Biedronka',
+80.0,
+100.0,
+348.0,
+6.08,
+13.8,
+50.54,
+'Link: https://www.tabele-kalorii.pl/kalorie,Paczek-z-marmolada-i-pudrem-Biedronka.html');
