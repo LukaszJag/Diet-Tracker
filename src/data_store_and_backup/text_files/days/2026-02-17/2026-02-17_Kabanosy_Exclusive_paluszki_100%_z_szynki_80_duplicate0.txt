@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2026-02-17',
+'Wednesday',
+'Snack 2',
+80.0,
+'Kabanosy Exclusive paluszki 100% z szynki',
+354.0,
+23.0,
+25.0,
+17.5,
+'2026-02-18 07:06:49',
+'none',
+283.2,
+14.0,
+20.0,
+18.4
+);

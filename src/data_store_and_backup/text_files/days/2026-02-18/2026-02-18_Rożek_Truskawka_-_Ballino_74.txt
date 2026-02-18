@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2026-02-18',
+'Wednesday',
+'Second Breakfast',
+74.0,
+'Rożek Truskawka - Ballino',
+231.0,
+2.8,
+7.0,
+38.6,
+'2026-02-18 07:15:43',
+'none',
+170.94,
+28.564,
+5.1800003,
+2.072
+);
