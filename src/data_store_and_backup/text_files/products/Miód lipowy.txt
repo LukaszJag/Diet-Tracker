@@ -1,0 +1,9 @@
+Name: Miód lipowy
+Brand: Mazurskie Miody
+Package has: 0.0
+Macro for: 100.0
+KCal: 368.0
+Protein: 0.4
+Fat: 0.0
+Carbs: 80.0
+Comment optional: Link: https://www.tabele-kalorii.pl/kalorie,Miod-lipowy-Mazurskie-Miody.html

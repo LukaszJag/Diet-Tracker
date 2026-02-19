@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2026-02-19',
+'Thursday',
+'Second Breakfast',
+119.0,
+'Miód lipowy',
+368.0,
+0.4,
+0.0,
+80.0,
+'2026-02-19 11:00:52',
+'none',
+437.92,
+95.200005,
+0.0,
+0.47600004
+);
