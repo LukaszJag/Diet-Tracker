@@ -8,7 +8,15 @@ import java.sql.SQLException;
 import java.util.concurrent.TimeUnit;
 
 public class AddAllCalendarDaysInTXTFromDirectory {
-    public static void main(String[] args) throws SQLException {
+    CheckIfRowExist checkIfRowExist;
+    public static void main(String[] args){
+
+        AddAllCalendarDaysInTXTFromDirectory addAllCalendarDaysInTXTFromDirectory = new AddAllCalendarDaysInTXTFromDirectory();
+        addAllCalendarDaysInTXTFromDirectory.main_method();
+    }
+
+    public void main_method(){
+        checkIfRowExist = new CheckIfRowExist();
         String[] allFilesPath = getPathsOfFiles();
         // May cause Error : hard code length
         int arraysLength = 7000;
@@ -24,7 +32,7 @@ public class AddAllCalendarDaysInTXTFromDirectory {
         //System.out.println(time.toString());
         int counter = 0;
         for (int i = 0; i < allFilesPath.length; i++) {
-            if (checkIfProductExist(allFilesPath[i])) {
+            if (checkIfProductExist2(allFilesPath[i])) {
                 productThatExist[counterExistArray] = allFilesPath[i];
                 counterExistArray++;
                 amountOfExistRows++;
@@ -42,14 +50,17 @@ public class AddAllCalendarDaysInTXTFromDirectory {
         String query;
         for (int i = 0; i < counterNotExistArray; i++) {
             query = FilesTools.readTXTFile(productThatNotExist[i]);
-            RunQuery.runQuery(query);
+            try {
+                RunQuery.runQuery(query);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
         }
 
         System.out.println("All rows amount: " + allFilesPath.length);
         System.out.println("Row that EXIST: " + amountOfExistRows);
         System.out.println("Row that NOT EXIST: " + amountOfNotExistRows);
     }
-
 
     public static String[] getPathsOfFiles() {
         int amountOfFiles = 0;
@@ -68,12 +79,66 @@ public class AddAllCalendarDaysInTXTFromDirectory {
         return result;
     }
 
-    public static boolean checkIfProductExist(String fullSQLQueryTXTFile) {
+    public boolean checkIfProductExist2(String fullSQLQueryTXTFile) {
         boolean result;
 
+        // TO DO change name of this variable below
+        String[] tmp_test = FilesTools.readAndGetLineTXTFile(fullSQLQueryTXTFile);
+
+
+        String dayDate = tmp_test[17];
+        String productName = tmp_test[21];
+        String amountOfProduct = tmp_test[20];
+
+        /*
         String dayDate = FilesTools.readAndGetLineTXTFile(fullSQLQueryTXTFile, 18);
         String productName = FilesTools.readAndGetLineTXTFile(fullSQLQueryTXTFile, 22);
         String amountOfProduct = FilesTools.readAndGetLineTXTFile(fullSQLQueryTXTFile, 21);
+        */
+
+        //String optionalTime = FilesTools.readAndGetLineTXTFile(fullSQLQueryTXTFile, 27);
+
+        dayDate = dayDate.replace("(", "");
+        dayDate = dayDate.replace("'", "");
+        dayDate = dayDate.replace(",", "");
+
+        productName = productName.replace("'", "");
+        productName = productName.substring(0, productName.length() - 1);
+
+        amountOfProduct = amountOfProduct.replace(",", "");
+
+        //optionalTime = optionalTime.replace(",","");
+        //optionalTime = optionalTime.replace("'", "");
+
+        try {
+            result = checkIfRowExist.isCalendarRowExistInProductTable_local_variables(dayDate,productName, amountOfProduct);
+            //, optionalTime);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return result;
+    }
+
+
+
+
+    public static boolean checkIfProductExist(String fullSQLQueryTXTFile) {
+        boolean result;
+
+        // TO DO change name of this variable below
+        String[] tmp_test = FilesTools.readAndGetLineTXTFile(fullSQLQueryTXTFile);
+
+
+        String dayDate = tmp_test[17];
+        String productName = tmp_test[21];
+        String amountOfProduct = tmp_test[20];
+
+        /*
+        String dayDate = FilesTools.readAndGetLineTXTFile(fullSQLQueryTXTFile, 18);
+        String productName = FilesTools.readAndGetLineTXTFile(fullSQLQueryTXTFile, 22);
+        String amountOfProduct = FilesTools.readAndGetLineTXTFile(fullSQLQueryTXTFile, 21);
+        */
+
         //String optionalTime = FilesTools.readAndGetLineTXTFile(fullSQLQueryTXTFile, 27);
 
         dayDate = dayDate.replace("(", "");

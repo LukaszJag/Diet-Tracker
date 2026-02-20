@@ -5,6 +5,7 @@ import tools.sql_tools.days_statistics.GenerateSLQTableForDaysStatistics;
 import tools.sql_tools.days_statistics.UpdateDaysStatisticsFilledData;
 
 import java.sql.SQLException;
+import java.util.concurrent.TimeUnit;
 
 public class RunnerFullUpdateDayStatistics {
 
@@ -28,7 +29,7 @@ public class RunnerFullUpdateDayStatistics {
 
 
     public static void runFullUpdateForAllMonthInDayStatistics() throws SQLException {
-
+        long start = System.nanoTime();
         for (int i = 0; i < monthsFrom2024.length; i++) {
             System.out.println("Start: full update - table days_statistics_test -\t" + monthsFrom2024[i] + " - - " + 2024);
 
@@ -39,8 +40,10 @@ public class RunnerFullUpdateDayStatistics {
             UpdateDaysStatisticsFilledData.updateAmountOfFilledPointsFromNotepad(monthsFrom2024[i], 2024);
 
             System.out.println("Finish: full update - table days_statistics_test -\t" + monthsFrom2024[i] + " - - " + 2024);
+
         }
 
+        System.out.println("Refrashed 2024: " + "\t" + (TimeUnit.NANOSECONDS.toSeconds(System.nanoTime() - start)));
         for (int i = 0; i < monthsFrom2025.length; i++) {
             System.out.println("Start: full update - table days_statistics_test -\t" + monthsFrom2025[i] + " - - " + 2025);
 
@@ -50,6 +53,8 @@ public class RunnerFullUpdateDayStatistics {
 
             System.out.println("Finish: full update - table days_statistics_test -\t" + monthsFrom2025[i] + " - - " + 2025);
         }
+
+        System.out.println("Refrashed 2025: " + "\t" + (TimeUnit.NANOSECONDS.toSeconds(System.nanoTime() - start)));
 
         for (int i = 0; i < monthsFrom2026.length; i++) {
             System.out.println("Start: full update - table days_statistics_test -\t" + monthsFrom2026[i] + " - - " + 2026);

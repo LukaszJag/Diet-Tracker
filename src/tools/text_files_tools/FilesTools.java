@@ -199,6 +199,7 @@ public class FilesTools {
             }
         }
     }
+
     public static void writeProductSQLToFile(String lineToWriteToFile, String fileName) throws IOException {
         String fullPath = Config.DESTINATION_FOR_SQL_TEXT_FILE_PRODUCTS + fileName + ".txt";
         BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(fullPath, true));
@@ -206,6 +207,7 @@ public class FilesTools {
         bufferedWriter.append("\n");
         bufferedWriter.close();
     }
+
     public static void writeProductToFile(String lineToWriteToFile, String fileName) throws IOException {
         String fullPath = Config.DESTINATION_FOR_TEXT_FILE_PRODUCTS + fileName + ".txt";
         BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(fullPath, true));
@@ -213,6 +215,7 @@ public class FilesTools {
         bufferedWriter.append("\n");
         bufferedWriter.close();
     }
+
     public static void writeToFileOverwriteAllFile(String fullPathWithExtension, String newContent) {
         BufferedWriter bufferedWriter = null;
         try {
@@ -223,6 +226,7 @@ public class FilesTools {
             throw new RuntimeException(e);
         }
     }
+
     public static void writeToFileAtEndOFFile(String fullPathWithExtension, String newContent) {
         BufferedWriter bufferedWriter = null;
         try {
@@ -380,6 +384,36 @@ public class FilesTools {
             if (counter == lineNumber) {
                 fileContent += line;
             }
+        }
+
+        return fileContent;
+    }
+
+    public static String[] readAndGetLineTXTFile(String path) {
+        String[] fileContent = new String[40];
+        File file = new File(path);
+        FileReader fileReader;
+        int counter = 0;
+
+        try {
+            fileReader = new FileReader(file);
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+
+        BufferedReader bufferedReader = new BufferedReader(fileReader);
+
+        String line;
+        while (true) {
+
+            try {
+                if (!((line = bufferedReader.readLine()) != null)) break;
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+
+            fileContent[counter] = line;
+            counter++;
         }
 
         return fileContent;
