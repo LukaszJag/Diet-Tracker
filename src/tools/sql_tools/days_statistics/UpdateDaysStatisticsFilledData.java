@@ -60,7 +60,7 @@ public class UpdateDaysStatisticsFilledData {
         dayDate = dayDateBuffor;
     }
 
-    public static void updateAmountOfFilledPointsFromNotepad(String month, int year) throws SQLException {
+    public static void  updateAmountOfFilledPointsFromNotepad(String month, int year) throws SQLException {
         int monthInt = MyDate.getNumberOfMonthInYear(month);
         String dayDate = year + "-";
 
