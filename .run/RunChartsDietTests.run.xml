@@ -1,9 +1,0 @@
-<component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="RunChartsDietTests" type="Application" factoryName="Application" folderName="Tests">
-    <option name="MAIN_CLASS_NAME" value="tests.tools_tests.charts_tools.RunChartsDietTests" />
-    <module name="Diet-Tracker" />
-    <method v="2">
-      <option name="Make" enabled="true" />
-    </method>
-  </configuration>
-</component>
