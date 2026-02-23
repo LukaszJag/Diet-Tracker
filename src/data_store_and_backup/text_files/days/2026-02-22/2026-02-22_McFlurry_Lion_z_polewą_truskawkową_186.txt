@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2026-02-22',
+'Monday',
+'Supper',
+186.0,
+'McFlurry Lion z polewą truskawkową',
+187.0,
+3.3,
+4.6,
+33.0,
+'2026-02-23 07:25:41',
+'none',
+347.82,
+61.38,
+8.556,
+6.138
+);
