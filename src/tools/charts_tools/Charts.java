@@ -12,7 +12,6 @@ import org.jfree.chart.ui.RectangleAnchor;
 import org.jfree.chart.ui.TextAnchor;
 import org.jfree.data.category.CategoryDataset;
 import org.jfree.data.category.DefaultCategoryDataset;
-import tests.tools_tests.sql_tools.days_statistics.SQLDaysStatisticsTests;
 import tools.calendar_tools.MyDate;
 import tools.sql_tools.days_statistics.SelectFromDaysStatistics;
 
@@ -478,4 +477,18 @@ public class Charts {
         //</editor-fold>
     }
 
+    public class DailyMacroChart{
+        //TODO hard coded length may cause error
+        String[] namesOfProducts = new String[24];
+        String dayDateInSQLFriendlyFormat = "0000-00-00";
+        /*
+        Get data for chart
+         */
+
+        public String[] getDaysProductName(){
+
+            return null;
+        }
+
+    }
 }
