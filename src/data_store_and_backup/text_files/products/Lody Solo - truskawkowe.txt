@@ -1,0 +1,9 @@
+Name: Lody Solo - truskawkowe
+Brand: Koral
+Package has: 115.0
+Macro for: 100.0
+KCal: 121.0
+Protein: 0.1
+Fat: 0.1
+Carbs: 30.0
+Comment optional: Link: https://www.tabele-kalorii.pl/kalorie,Lody-Solo-Koral.html

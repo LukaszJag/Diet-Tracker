@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2026-02-25',
+'Thursday',
+'Dinner',
+95.0,
+'Przekąska kurczak curry',
+243.0,
+8.91,
+7.97,
+32.08,
+'2026-02-26 03:55:48',
+'none',
+230.84999,
+30.476002,
+7.5715,
+8.464499
+);

@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2026-02-24',
+'Thursday',
+'Supper',
+469.0,
+'Udo z kurczaka ze skórą - gotowane',
+136.0,
+15.0,
+9.0,
+0.0,
+'2026-02-26 03:46:05',
+'none',
+637.84,
+0.0,
+42.21,
+70.35
+);
