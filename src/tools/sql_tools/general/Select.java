@@ -1,13 +1,13 @@
 package tools.sql_tools.general;
 
 import com.mysql.cj.conf.ConnectionUrlParser;
-import tools.sql_tools.general.get.GetConnection;
 import tools.sql_tools.general.get.GetResultSet;
 
-import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
-import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 
 public class Select {
@@ -105,6 +105,45 @@ SELECT * from table WHERE key != value ??? -> !=
 how to handle this upper examples
  */
 
+    }
+
+    public static ArrayList<ArrayList<HashMap<String, String>>> selectAllDataFromQuery(String SQLQuery){
+        //<editor-fold desc="Values">
+        ResultSet resultSet;
+        ResultSetMetaData resultSetMetaData;
+
+        ArrayList<String> columnsNames;
+        //</editor-fold>
+
+        resultSet = GetResultSet.getResultSetFromSQL(SQLQuery);
+
+        int amountOfColumns = GetResultSet.getAmountColumnsInResultSet(resultSet);
+
+        HashMap<String, String> valuesAndKeysOfRow = new HashMap<>();
+
+        ArrayList<ArrayList<HashMap<String, String>>> rows = new ArrayList<ArrayList<HashMap<String, String>>>();
+
+        ArrayList<HashMap<String, String>> row = new ArrayList<HashMap<String, String>>();
+
+        int counter = 0;
+        int rowNumber = 0;
+        while(GetResultSet.isResultSetHasNext(resultSet)){
+            for (int i = 1; i < amountOfColumns; i++) {
+                valuesAndKeysOfRow.put(GetResultSet.getColumnName(resultSet, i), GetResultSet.getValueOfString(resultSet, i));
+            }
+            row.add(0, valuesAndKeysOfRow);
+            valuesAndKeysOfRow.clear();
+            counter++;
+
+            rows.add(rowNumber, row);
+
+            row.clear();
+            rowNumber++;
+        }
+
+        rows.add(0, row);
+
+        return rows;
     }
 
 }

@@ -13,12 +13,14 @@ import org.jfree.chart.ui.TextAnchor;
 import org.jfree.data.category.CategoryDataset;
 import org.jfree.data.category.DefaultCategoryDataset;
 import tools.calendar_tools.MyDate;
+import tools.products_tools.Product;
 import tools.sql_tools.days_statistics.SelectFromDaysStatistics;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.ArrayList;
 
 public class Charts {
     public static void main(String[] args) {
@@ -478,16 +480,15 @@ public class Charts {
     }
 
     public class DailyMacroChart{
-        //TODO hard coded length may cause error
-        String[] namesOfProducts = new String[24];
+
+        ArrayList<Product.ProductInCalendar> namesOfProducts;
         String dayDateInSQLFriendlyFormat = "0000-00-00";
-        /*
-        Get data for chart
-         */
 
-        public String[] getDaysProductName(){
 
-            return null;
+
+        public void getDaysProductsData(){
+            String SQLQuery = "SELECT * FROM calendar WHERE day_date=\"2026-02-27\";";
+
         }
 
     }
