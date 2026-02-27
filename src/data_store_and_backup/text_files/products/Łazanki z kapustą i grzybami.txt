@@ -1,0 +1,9 @@
+Name: Łazanki z kapustą i grzybami
+Brand: produkt ogólny
+Package has: 0.0
+Macro for: 100.0
+KCal: 129.0
+Protein: 3.5
+Fat: 3.5
+Carbs: 20.7
+Comment optional: Link: http://www.ilewazy.pl/porcja-lazanek-z-kapusta-i-grzybami
