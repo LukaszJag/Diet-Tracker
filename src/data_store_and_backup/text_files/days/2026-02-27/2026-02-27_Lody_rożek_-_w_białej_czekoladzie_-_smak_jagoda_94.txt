@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2026-02-27',
+'Saturday',
+'Supper',
+94.0,
+'Lody rożek - w białej czekoladzie - smak jagoda',
+292.0,
+3.5,
+12.0,
+43.0,
+'2026-02-28 06:54:58',
+'none',
+274.48,
+40.42,
+11.28,
+3.29
+);

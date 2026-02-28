@@ -1,0 +1,9 @@
+Name: Lody rożek - w białej czekoladzie - smak truskawka
+Brand: Marletto
+Package has: 94.0
+Macro for: 100.0
+KCal: 279.0
+Protein: 3.7
+Fat: 13.0
+Carbs: 37.0
+Comment optional: Dane z opakowania

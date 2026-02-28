@@ -1,0 +1,20 @@
+INSERT INTO `diet_tracker_schema`.product_table
+(`product_name`,
+`product_brand`,
+`product_package_has`,
+`product_macro_for`,
+`product_kcal`,
+`product_protein`,
+`product_fat`,
+`product_carbs`,
+`comment_optional`)
+Values
+('Lody rożek - w białej czekoladzie - smak jagoda',
+'Marletto',
+94.0,
+100.0,
+292.0,
+3.5,
+12.0,
+43.0,
+'Dane z opakowania');
