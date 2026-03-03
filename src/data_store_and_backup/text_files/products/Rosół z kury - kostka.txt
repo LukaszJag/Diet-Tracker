@@ -1,0 +1,9 @@
+Name: Rosół z kury - kostka
+Brand: Knorr
+Package has: 10.0
+Macro for: 100.0
+KCal: 6.0
+Protein: 0.5
+Fat: 0.5
+Carbs: 0.5
+Comment optional: Link: https://www.frisco.pl/pid,132668/n,knorr-rosol-z-kury-(6-kostek)/stn,product
