@@ -144,7 +144,7 @@ public class CalendarMonthStatsView {
     //<editor-fold desc="Combo Boxes">
     JComboBox monthSelectComboBox = new JComboBox<>(new String[]{"April", "May", "June", "July", "August", "September", "October",
             "November", "December", "January2025", "February2025", "March2025", "April2025", "May2025", "June2025", "July2025",
-            "August2025", "September2025", "October2025", "November2025", "December2025", "January2026", "February2026"});
+            "August2025", "September2025", "October2025", "November2025", "December2025", "January2026", "February2026", "March2026"});
     JComboBox selectedDayProductsListComboBox = new JComboBox<String>();
     //</editor-fold>
     //<editor-fold desc="TextFields">
@@ -244,6 +244,7 @@ public class CalendarMonthStatsView {
         calendarMonthStatsViewPanelSouth.setPreferredSize(new Dimension(1200, 100));
 
     }
+
     //<editor-fold desc="addComponentsToPanels">
     private void addComponentsToPanels() {
         prepareAndAddContentToMainPanel();
@@ -255,7 +256,7 @@ public class CalendarMonthStatsView {
     }
 
     private void prepareAndAddContentToMainPanel() {
-        setDaysButtonsMainPanel("February2026");
+        setDaysButtonsMainPanel("March2026");
     }
 
     private void prepareAndAddContentToNorthPanel() {
@@ -269,7 +270,7 @@ public class CalendarMonthStatsView {
         calendarMonthStatsViewPanelNorth.setLayout(northPanelGridLayout);
 
 
-        monthSelectComboBox.setSelectedItem("February2026");
+        monthSelectComboBox.setSelectedItem("March2026");
 
         selectedDaysCounterGoodDaysPanel = new JPanel();
         selectedDaysCounterBadDaysPanel = new JPanel();
@@ -437,6 +438,9 @@ public class CalendarMonthStatsView {
         } else if (month.equals("June2025")) {
             daysButtons = new JButton[42];
             mainPanelGridLayout = new GridLayout(6, 7, 10, 10);
+        } else if (month.equals("March2026")) {
+            daysButtons = new JButton[42];
+            mainPanelGridLayout = new GridLayout(6, 7, 10, 10);
         } else {
             daysButtons = new JButton[35];
             mainPanelGridLayout = new GridLayout(5, 7, 10, 10);
@@ -449,6 +453,21 @@ public class CalendarMonthStatsView {
                 daysButtons[i].setPreferredSize(Config.CALENDAR_MONTH_STATS_VIEW_BUTTONS_SIZE_DIMENSION);
             }
         } else {
+            if (month.equals("March2026")) {
+                for (int i = 0; i < daysButtons.length; i++) {
+                    if (i < 6) {
+                        daysButtons[i] = new JButton("null");
+                    } else if (i >= 37) {
+                        daysButtons[i] = new JButton("null");
+                    } else {
+                        daysButtons[i] = new JButton(String.valueOf(counter));
+                        daysButtons[i].setPreferredSize(Config.CALENDAR_MONTH_STATS_VIEW_BUTTONS_SIZE_DIMENSION);
+                        daysButtons[i].addActionListener(new DaysButtonsActionListener(daysButtons[i]));
+                        counter++;
+                    }
+                }
+            }
+
             if (month.equals("February2026")) {
                 for (int i = 0; i < daysButtons.length; i++) {
                     if (i < 6) {
@@ -1102,7 +1121,7 @@ public class CalendarMonthStatsView {
     //</editor-fold>
 
     //</editor-fold>
-    
+
     //<editor-fold desc="Refresh methods">
     private void refreshMacroAndAllComponentForSelectedDayMacro(String panelTitleLabelText, Macro macro) {
         calendarMonthStatsViewPanelEast.removeAll();
@@ -1130,6 +1149,7 @@ public class CalendarMonthStatsView {
         mainWindow.validate();
         mainWindow.repaint();
     }
+
     private void refreshWestPanel(Macro macro, String amountOfProduct) {
         calendarMonthStatsViewPanelWest.removeAll();
 
@@ -1152,6 +1172,7 @@ public class CalendarMonthStatsView {
         mainWindow.repaint();
 
     }
+
     private void refreshAverageMacroPanelForNorthPanel(Macro averageMacro) {
         calendarMonthStatsViewPanelNorth.removeAll();
 
@@ -1170,6 +1191,7 @@ public class CalendarMonthStatsView {
         mainWindow.validate();
         mainWindow.repaint();
     }
+
     private void refreshMacroAndAllComponentForNorthPanel() {
         calendarMonthStatsViewPanelNorth.removeAll();
 
@@ -1215,6 +1237,7 @@ public class CalendarMonthStatsView {
         mainWindow.validate();
         mainWindow.repaint();
     }
+
     public void refreshComboBox(JComboBox newComboBox) {
         calendarMonthStatsViewPanelWest.removeAll();
         calendarMonthStatsViewPanelWest.setLayout(westPanelGridLayout);
@@ -1232,6 +1255,7 @@ public class CalendarMonthStatsView {
         mainWindow.validate();
         mainWindow.repaint();
     }
+
     private void refreshCountersForDays() {
         int goodDaysCounterTMP = 0;
         int badDaysCounterTMP = 0;
@@ -1364,6 +1388,7 @@ public class CalendarMonthStatsView {
             }
         }
     }
+
     private class SetNextButtonActionListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -1371,6 +1396,7 @@ public class CalendarMonthStatsView {
             checkCalendarTableDateTextField.setText(MyDate.getNextDayDateSQLFriendlyFormat(currentSetDate));
         }
     }
+
     private class SetPreviousButtonActionListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -1378,6 +1404,7 @@ public class CalendarMonthStatsView {
             checkCalendarTableDateTextField.setText(MyDate.getPreviousDayDateSQLFriendlyFormat(currentSetDate));
         }
     }
+
     private class CheckCalendarTableActionListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -1449,6 +1476,7 @@ public class CalendarMonthStatsView {
             checkCalendarTableButtonWindowFrame.show();
         }
     }
+
     private class CheckDaysStatisticFilledTableActionListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -1513,6 +1541,7 @@ public class CalendarMonthStatsView {
             chartsClass.showMonthChart();
         }
     }
+
     private class ShowBarChartButtonActionListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
