@@ -1,0 +1,20 @@
+INSERT INTO `diet_tracker_schema`.product_table
+(`product_name`,
+`product_brand`,
+`product_package_has`,
+`product_macro_for`,
+`product_kcal`,
+`product_protein`,
+`product_fat`,
+`product_carbs`,
+`comment_optional`)
+Values
+('Sałatka pikantna z makrelą',
+'Dega',
+130.0,
+100.0,
+160.0,
+5.2,
+11.0,
+9.2,
+'Link: https://www.tabele-kalorii.pl/kalorie,Salatka-pikantna-z-makrela-Dega.html');

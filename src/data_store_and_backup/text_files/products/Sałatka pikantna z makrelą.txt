@@ -1,0 +1,9 @@
+Name: Sałatka pikantna z makrelą
+Brand: Dega
+Package has: 130.0
+Macro for: 100.0
+KCal: 160.0
+Protein: 5.2
+Fat: 11.0
+Carbs: 9.2
+Comment optional: Link: https://www.tabele-kalorii.pl/kalorie,Salatka-pikantna-z-makrela-Dega.html
