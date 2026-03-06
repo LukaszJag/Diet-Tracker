@@ -119,25 +119,25 @@ how to handle this upper examples
 
         int amountOfColumns = GetResultSet.getAmountColumnsInResultSet(resultSet);
 
-        HashMap<String, String> valuesAndKeysOfRow = new HashMap<>();
-
         ArrayList<ArrayList<HashMap<String, String>>> rows = new ArrayList<ArrayList<HashMap<String, String>>>();
 
         ArrayList<HashMap<String, String>> row = new ArrayList<HashMap<String, String>>();
 
+        HashMap<String, String> valuesAndKeysOfRow = new HashMap<>();
+
+
+
         int counter = 0;
         int rowNumber = 0;
+
         while(GetResultSet.isResultSetHasNext(resultSet)){
             for (int i = 1; i < amountOfColumns; i++) {
                 valuesAndKeysOfRow.put(GetResultSet.getColumnName(resultSet, i), GetResultSet.getValueOfString(resultSet, i));
             }
-            row.add(0, valuesAndKeysOfRow);
+            row.add(counter, valuesAndKeysOfRow);
             valuesAndKeysOfRow.clear();
             counter++;
 
-            rows.add(rowNumber, row);
-
-            row.clear();
             rowNumber++;
         }
 
@@ -146,4 +146,43 @@ how to handle this upper examples
         return rows;
     }
 
+    public static ArrayList<HashMap<String, String>> selectAllDataFromQuery2(String SQLQuery){
+        //<editor-fold desc="Values">
+        ResultSet resultSet;
+        ResultSetMetaData resultSetMetaData;
+
+        ArrayList<String> columnsNames;
+        //</editor-fold>
+
+        resultSet = GetResultSet.getResultSetFromSQL(SQLQuery);
+
+        int amountOfColumns = GetResultSet.getAmountColumnsInResultSet(resultSet);
+
+        ArrayList<HashMap<String, String>> rows = new ArrayList<HashMap<String, String>>();
+
+        HashMap<String, String> valuesAndKeysOfRow = new HashMap<>();
+
+
+
+        int counter = 0;
+        int rowNumber = 0;
+
+        while(GetResultSet.isResultSetHasNext(resultSet)){
+            for (int i = 1; i < amountOfColumns; i++) {
+                System.out.println(GetResultSet.getColumnName(resultSet, i));
+                System.out.println(GetResultSet.getValueOfString(resultSet, i));
+                valuesAndKeysOfRow.put(GetResultSet.getColumnName(resultSet, i), GetResultSet.getValueOfString(resultSet, i));
+            }
+            rows.add(counter, valuesAndKeysOfRow);
+            System.out.println(valuesAndKeysOfRow);
+            System.out.println("TEST -" + counter);
+            valuesAndKeysOfRow.clear();
+            counter++;
+
+            rowNumber++;
+        }
+
+
+        return rows;
+    }
 }

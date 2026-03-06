@@ -481,13 +481,17 @@ public class Charts {
 
     public class DailyMacroChart{
 
-        ArrayList<Product.ProductInCalendar> namesOfProducts;
+        ArrayList<Product.ProductInCalendar> dataOfProductsInDay;
         String dayDateInSQLFriendlyFormat = "0000-00-00";
 
+        public DailyMacroChart(){}
 
+        public DailyMacroChart(String dayDateInSQLFriendlyFormat){
+            this.dayDateInSQLFriendlyFormat = dayDateInSQLFriendlyFormat;
+        }
 
         public void getDaysProductsData(){
-            String SQLQuery = "SELECT * FROM calendar WHERE day_date=\"2026-02-27\";";
+            String SQLQuery = "SELECT * FROM calendar WHERE day_date=\"2026-03-05\";";
 
         }
 
