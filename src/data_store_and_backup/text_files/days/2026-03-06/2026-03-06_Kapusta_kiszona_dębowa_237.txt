@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2026-03-06',
+'Friday',
+'Snack 2',
+237.0,
+'Kapusta kiszona dębowa',
+20.0,
+0.9,
+0.0,
+1.4,
+'2026-03-06 03:38:46',
+'none',
+47.399998,
+3.3179998,
+0.0,
+2.133
+);

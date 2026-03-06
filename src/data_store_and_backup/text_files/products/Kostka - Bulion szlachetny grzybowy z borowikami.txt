@@ -1,0 +1,9 @@
+Name: Kostka - Bulion szlachetny grzybowy z borowikami
+Brand: Knorr
+Package has: 10.0
+Macro for: 100.0
+KCal: 5.0
+Protein: 0.5
+Fat: 0.5
+Carbs: 0.5
+Comment optional: Link: https://www.tabele-kalorii.pl/kalorie,Bulion-grzybowy-na-borowikach-lesnych-Knorr.html
