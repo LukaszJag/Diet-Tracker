@@ -1,17 +1,17 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="RunAllSportGUI" type="Application" factoryName="Application" folderName="GUI - sport">
-    <option name="MAIN_CLASS_NAME" value="runners_and_tests.run_GUI.gym.RunAllSportGUI" />
+    <option name="MAIN_CLASS_NAME" value="runners.run_GUI.gym.RunAllSportGUI" />
     <module name="Diet-Tracker" />
     <method v="2">
       <option name="Make" enabled="true" />
     </method>
   </configuration>
   <configuration default="false" name="RunAllSportGUI" type="Application" factoryName="Application" folderName="GUI - sport" nameIsGenerated="true">
-    <option name="MAIN_CLASS_NAME" value="runners_and_tests.run_GUI.gym.RunAllSportGUI" />
+    <option name="MAIN_CLASS_NAME" value="runners.run_GUI.gym.RunAllSportGUI" />
     <module name="Diet-Tracker" />
     <extension name="coverage">
       <pattern>
-        <option name="PATTERN" value="runners_and_tests.run_GUI.gym.*" />
+        <option name="PATTERN" value="runners.run_GUI.gym.*" />
         <option name="ENABLED" value="true" />
       </pattern>
     </extension>

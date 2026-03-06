@@ -1,6 +1,6 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="GenerateWholeMonthJuly2025" type="Application" factoryName="Application" folderName="Run Generator">
-    <option name="MAIN_CLASS_NAME" value="runners_and_tests.run_data_generator.year_2025.RunnerGenerateWholeMonthJuly2025" />
+    <option name="MAIN_CLASS_NAME" value="runners.run_data_generator.year_2025.RunnerGenerateWholeMonthJuly2025" />
     <module name="Diet-Tracker" />
     <method v="2">
       <option name="Make" enabled="true" />

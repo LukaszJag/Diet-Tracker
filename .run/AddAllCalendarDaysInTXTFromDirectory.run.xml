@@ -1,6 +1,6 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="AddAllCalendarDaysInTXTFromDirectory" type="Application" factoryName="Application" folderName="Export import data">
-    <option name="MAIN_CLASS_NAME" value="runners_and_tests.run_export_import_data.AddAllCalendarDaysInTXTFromDirectory" />
+    <option name="MAIN_CLASS_NAME" value="runners.run_export_import_data.AddAllCalendarDaysInTXTFromDirectory" />
     <module name="Diet-Tracker" />
     <method v="2">
       <option name="Make" enabled="true" />

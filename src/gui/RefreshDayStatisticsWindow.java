@@ -1,6 +1,6 @@
 package gui;
 
-import runners_and_tests.run_update.RunnerFullUpdateDayStatistics;
+import runners.run_update.RunnerFullUpdateDayStatistics;
 
 import javax.swing.*;
 import java.awt.*;

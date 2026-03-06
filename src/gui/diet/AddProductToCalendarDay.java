@@ -2,7 +2,7 @@ package gui.diet;
 
 import configuration.Config;
 import logs.Log;
-import runners_and_tests.run_update.RunnerFullUpdateDayStatistics;
+import runners.run_update.RunnerFullUpdateDayStatistics;
 import tools.calendar_tools.DayInCalendar;
 import tools.calendar_tools.MyDate;
 import tools.charts_tools.ChartsDiet;

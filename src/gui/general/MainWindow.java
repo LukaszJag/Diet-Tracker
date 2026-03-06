@@ -4,8 +4,8 @@ import configuration.Config;
 import gui.diet.AddProductToCalendarDay;
 import gui.diet.AddSingleProductWindow;
 import gui.diet.CalendarMonthStatsView;
-import runners_and_tests.run_update.RunnerFullUpdateDayStatistics;
-import runners_and_tests.run_update.UpdateProductAndCalendarTableFull;
+import runners.run_update.RunnerFullUpdateDayStatistics;
+import runners.run_update.UpdateProductAndCalendarTableFull;
 
 import javax.swing.*;
 import java.awt.*;

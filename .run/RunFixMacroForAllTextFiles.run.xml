@@ -1,6 +1,6 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="RunFixMacroForAllTextFiles" type="Application" factoryName="Application" folderName="Fixers">
-    <option name="MAIN_CLASS_NAME" value="runners_and_tests.run_update.RunFixMacroForAllTextFiles" />
+    <option name="MAIN_CLASS_NAME" value="runners.run_update.RunFixMacroForAllTextFiles" />
     <module name="Diet-Tracker" />
     <method v="2">
       <option name="Make" enabled="true" />
