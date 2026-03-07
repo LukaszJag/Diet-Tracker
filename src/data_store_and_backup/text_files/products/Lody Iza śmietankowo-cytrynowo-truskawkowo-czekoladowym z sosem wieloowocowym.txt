@@ -1,0 +1,9 @@
+Name: Lody Iza śmietankowo-cytrynowo-truskawkowo-czekoladowym z sosem wieloowocowym
+Brand: Koral
+Package has: 127.0
+Macro for: 100.0
+KCal: 189.0
+Protein: 2.3
+Fat: 8.0
+Carbs: 27.0
+Comment optional: Dane z opakowania
