@@ -1,0 +1,15 @@
+#?
+2026-03-06
+    Trening na boisku:  18:17 - 19:05 [48']
+    Localization: Boisko - Estadio Pola - Wrocław
+
+        Koszykówka 18:17 - 18:40 [23']
+            Od zera do 21 - 18:17 - 18:40 [23']
+                1. czas - 10' -> 18:17 - 18:27 [10']
+                2. czas - 11' -> 18:29 - 18:40 [11']
+
+        Piłkanożna 18:48 - 19:05 [17']
+            Freestyle - żonglerki 18:48 - 19:05 [17']
+                    1. czas -  17' -> 18:48 - 19:05 [17']
+                        -> max żonglerek 20 <= - 28, 29, 28
+
