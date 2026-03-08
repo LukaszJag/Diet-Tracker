@@ -1,0 +1,9 @@
+Name: Karkówka z grilla
+Brand: domowe
+Package has: 0.0
+Macro for: 100.0
+KCal: 389.0
+Protein: 23.0
+Fat: 33.0
+Carbs: 0.0
+Comment optional: Link: http://www.ilewazy.pl/porcja-grillowanej-karkowki
