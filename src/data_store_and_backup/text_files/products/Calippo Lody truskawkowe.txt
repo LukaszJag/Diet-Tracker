@@ -1,0 +1,9 @@
+Name: Calippo Lody truskawkowe
+Brand: Algida
+Package has: 105.0
+Macro for: 100.0
+KCal: 89.0
+Protein: 0.5
+Fat: 0.5
+Carbs: 22.0
+Comment optional: Link: https://emmamarket.pl/lody/14330-calippo-lody-truskawkowe-105-ml.html

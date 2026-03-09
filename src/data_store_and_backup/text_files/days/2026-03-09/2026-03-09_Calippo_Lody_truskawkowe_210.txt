@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2026-03-09',
+'Monday',
+'Snack 2',
+210.0,
+'Calippo Lody truskawkowe',
+89.0,
+0.5,
+0.5,
+22.0,
+'2026-03-09 11:05:52',
+'none',
+186.9,
+46.199997,
+1.05,
+1.05
+);
