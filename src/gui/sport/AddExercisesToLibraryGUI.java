@@ -3,8 +3,8 @@ package gui.sport;
 import configuration.Config;
 import tools.calendar_tools.MyDate;
 import tools.products_tools.Macro;
-import tools.sql_tools.SQLSelect;
 import tools.sql_tools.days_statistics.SelectFromDaysStatistics;
+import tools.sql_tools.general.Select;
 
 import javax.swing.*;
 import java.awt.*;
@@ -360,7 +360,7 @@ public class AddExercisesToLibraryGUI {
 
     private String[] getAllIDsInTable(){
         // TODO - 17.12
-        SQLSelect.getAllValuesInColumn("exercises_library_table_test", 0);
+        Select.getAllValuesInColumn("exercises_library_table_test", 0);
 
         return null;
     }

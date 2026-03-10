@@ -1,7 +1,7 @@
 package tools.sql_tools.calendar;
 
 import tools.products_tools.Macro;
-import tools.sql_tools.SQLSelect;
+import tools.sql_tools.general.Select;
 import tools.text_files_tools.DirectoryTools;
 import tools.text_files_tools.FilesTools;
 
@@ -151,7 +151,7 @@ public class ChangeCalendarTextFiles {
         String[] productDataFromSQL;
         Macro resultMacro = new Macro(-1,-1,-1,-1);
         try {
-            productDataFromSQL = SQLSelect.getRowFromProductTableByProductNameGetArray(productName);
+            productDataFromSQL = Select.getRowFromProductTableByProductNameGetArray(productName);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

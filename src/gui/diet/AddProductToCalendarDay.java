@@ -8,7 +8,6 @@ import tools.calendar_tools.MyDate;
 import tools.charts_tools.ChartsDiet;
 import tools.products_tools.Macro;
 import tools.products_tools.Product;
-import tools.sql_tools.SQLSelect;
 import tools.sql_tools.calendar.InsertToCalendarDayTable;
 import tools.sql_tools.days_statistics.GenerateSLQTableForDaysStatistics;
 import tools.sql_tools.days_statistics.SelectFromDaysStatistics;
@@ -568,7 +567,7 @@ public class AddProductToCalendarDay {
         String[] resultOfCheckIfProductExist;
         boolean isExist = false;
         try {
-            resultOfCheckIfProductExist = SQLSelect.getRowFromProductTableByProductNameGetArray(productNameTextField.getText());
+            resultOfCheckIfProductExist = Select.getRowFromProductTableByProductNameGetArray(productNameTextField.getText());
         } catch (SQLException ex) {
             throw new RuntimeException(ex);
         }
@@ -1204,7 +1203,7 @@ public class AddProductToCalendarDay {
         public void actionPerformed(ActionEvent e) {
             String productsComment;
             try {
-                productsComment = SQLSelect.getRowFromProductTableByProductNameGetArray(productNameTextField.getText())[8];
+                productsComment = Select.getRowFromProductTableByProductNameGetArray(productNameTextField.getText())[8];
             } catch (SQLException ex) {
                 throw new RuntimeException(ex);
             }
@@ -1221,7 +1220,7 @@ public class AddProductToCalendarDay {
             String[] resultOfCheckIfProductExist;
             boolean isExist = false;
             try {
-                resultOfCheckIfProductExist = SQLSelect.getRowFromProductTableByProductNameGetArray(productNameTextField.getText());
+                resultOfCheckIfProductExist = Select.getRowFromProductTableByProductNameGetArray(productNameTextField.getText());
             } catch (SQLException ex) {
                 throw new RuntimeException(ex);
             }
@@ -1295,7 +1294,7 @@ public class AddProductToCalendarDay {
         public void actionPerformed(ActionEvent e) {
             String[] productInfoArray;
             try {
-                productInfoArray = SQLSelect.getRowFromProductTableByProductNameGetArray(productNameTextField.getText());
+                productInfoArray = Select.getRowFromProductTableByProductNameGetArray(productNameTextField.getText());
             } catch (SQLException ex) {
                 throw new RuntimeException(ex);
             }
@@ -1669,7 +1668,7 @@ public class AddProductToCalendarDay {
             String[] resultArray = new String[600];
 
             try {
-                allProductArray = SQLSelect.getAllProductNamesFromProductTable();
+                allProductArray = Select.getAllProductNamesFromProductTable();
             } catch (SQLException ex) {
                 throw new RuntimeException(ex);
             }
@@ -1749,7 +1748,7 @@ public class AddProductToCalendarDay {
             HashMap<String, String> allProductAndBrandHashMap;
             String[] resultArray = new String[500];
 
-            allProductAndBrandHashMap = SQLSelect.getAllProductAndBrandNamesFromProductTable();
+            allProductAndBrandHashMap = Select.getAllProductAndBrandNamesFromProductTable();
 
             int counter = 0;
             for (String key : allProductAndBrandHashMap.keySet()) {
@@ -1766,7 +1765,7 @@ public class AddProductToCalendarDay {
             HashMap<String, String> allProductAndBrandHashMap;
             String[] resultArray = new String[500];
 
-            allProductAndBrandHashMap = SQLSelect.getAllProductAndBrandNamesFromProductTable();
+            allProductAndBrandHashMap = Select.getAllProductAndBrandNamesFromProductTable();
 
             int counter = 0;
             for (String key : allProductAndBrandHashMap.keySet()) {

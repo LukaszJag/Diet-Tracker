@@ -4,8 +4,8 @@ import tests.tools_tests.calendar_tools.DayInCalendarFactoryToMakeTest;
 import tests.tools_tests.products_tools.ProductFactoryToMakeTests;
 import tools.calendar_tools.DayInCalendar;
 import tools.products_tools.Product;
-import tools.sql_tools.SQLSelect;
 import tools.sql_tools.calendar.InsertToCalendarDayTable;
+import tools.sql_tools.general.Select;
 import tools.sql_tools.general.insert.InsertToTable;
 import tools.sql_tools.general.IsTheRowAlreadyExist;
 import tools.sql_tools.general.run.RunQuery;
@@ -154,9 +154,9 @@ public class QuickTests {
 
     //getRowFromProductTableByProductNameGetArrayTest
     public static void test7() throws SQLException {
-        SQLSelect.getRowFromProductTableByProductNameGetArray("Burak");
-        SQLSelect.getRowFromProductTableByProductNameGetArray("Jogurt kiwi");
-        SQLSelect.getRowFromProductTableByProductNameGetArray("Rower");
+        Select.getRowFromProductTableByProductNameGetArray("Burak");
+        Select.getRowFromProductTableByProductNameGetArray("Jogurt kiwi");
+        Select.getRowFromProductTableByProductNameGetArray("Rower");
     }
 
     // print all data from DayInCalendarObject

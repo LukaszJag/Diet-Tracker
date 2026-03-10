@@ -1,4 +1,4 @@
-package tools.sql_tools;
+package tools.sql_tools.general;
 
 import configuration.Config;
 

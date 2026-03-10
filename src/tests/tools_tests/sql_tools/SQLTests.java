@@ -1,7 +1,7 @@
 package tests.tools_tests.sql_tools;
 
 import configuration.Config;
-import tools.sql_tools.SQLSelect;
+import tools.sql_tools.general.Select;
 import tools.sql_tools.general.get.GetConnection;
 
 import java.sql.Connection;
@@ -20,7 +20,7 @@ public class SQLTests {
 
     private static void test2() {
         System.out.println("Start test SQLSelect.java -> getAllProductAndBrandNamesFromProductTable");
-        HashMap<String, String> hashMap = SQLSelect.getAllProductAndBrandNamesFromProductTable();
+        HashMap<String, String> hashMap = Select.getAllProductAndBrandNamesFromProductTable();
 
         Set<Map.Entry<String, String>> set = hashMap.entrySet();
 
