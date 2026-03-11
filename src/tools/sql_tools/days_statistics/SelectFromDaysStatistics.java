@@ -2,7 +2,7 @@ package tools.sql_tools.days_statistics;
 
 import tools.calendar_tools.MyDate;
 import tools.products_tools.Macro;
-import tools.sql_tools.general.SumTable;
+import tools.sql_tools.general.statements.SumTable;
 import tools.sql_tools.general.get.GetResultSet;
 
 import java.sql.ResultSet;

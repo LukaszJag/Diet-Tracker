@@ -3,8 +3,8 @@ package tests.tools_tests.sql_tools;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import tools.sql_tools.general.Select;
-import tools.sql_tools.general.insert.InsertToTable;
+import tools.sql_tools.general.statements.Select;
+import tools.sql_tools.general.statements.InsertToTable;
 import tools.text_files_tools.FilesTools;
 
 import java.util.ArrayList;

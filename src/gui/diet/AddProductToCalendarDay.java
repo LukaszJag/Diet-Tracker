@@ -11,7 +11,7 @@ import tools.products_tools.Product;
 import tools.sql_tools.calendar.InsertToCalendarDayTable;
 import tools.sql_tools.days_statistics.GenerateSLQTableForDaysStatistics;
 import tools.sql_tools.days_statistics.SelectFromDaysStatistics;
-import tools.sql_tools.general.Select;
+import tools.sql_tools.general.statements.Select;
 import tools.sql_tools.general.get.GetConnection;
 import tools.text_files_tools.FilesTools;
 

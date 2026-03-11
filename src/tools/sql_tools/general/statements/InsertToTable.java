@@ -1,4 +1,4 @@
-package tools.sql_tools.general.insert;
+package tools.sql_tools.general.statements;
 
 import java.util.*;
 

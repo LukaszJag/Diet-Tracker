@@ -1,4 +1,4 @@
-package tools.sql_tools.general;
+package tools.sql_tools.general.statements;
 
 import tools.sql_tools.general.get.GetConnection;
 

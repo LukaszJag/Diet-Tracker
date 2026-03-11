@@ -4,7 +4,7 @@ import configuration.Config;
 import tools.calendar_tools.MyDate;
 import tools.products_tools.Macro;
 import tools.sql_tools.days_statistics.SelectFromDaysStatistics;
-import tools.sql_tools.general.Select;
+import tools.sql_tools.general.statements.Select;
 
 import javax.swing.*;
 import java.awt.*;

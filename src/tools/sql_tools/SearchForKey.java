@@ -1,6 +1,6 @@
 package tools.sql_tools;
 
-import tools.sql_tools.general.QueryMaker;
+import tools.sql_tools.general.statements.QueryMaker;
 import tools.sql_tools.general.run.RunQuery;
 
 import java.sql.SQLException;

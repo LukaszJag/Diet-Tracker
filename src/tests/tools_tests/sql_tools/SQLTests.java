@@ -1,7 +1,7 @@
 package tests.tools_tests.sql_tools;
 
 import configuration.Config;
-import tools.sql_tools.general.Select;
+import tools.sql_tools.general.statements.Select;
 import tools.sql_tools.general.get.GetConnection;
 
 import java.sql.Connection;

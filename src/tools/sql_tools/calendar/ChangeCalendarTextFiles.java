@@ -1,7 +1,7 @@
 package tools.sql_tools.calendar;
 
 import tools.products_tools.Macro;
-import tools.sql_tools.general.Select;
+import tools.sql_tools.general.statements.Select;
 import tools.text_files_tools.DirectoryTools;
 import tools.text_files_tools.FilesTools;
 

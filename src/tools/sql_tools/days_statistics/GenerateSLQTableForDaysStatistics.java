@@ -3,7 +3,7 @@ package tools.sql_tools.days_statistics;
 import configuration.Config;
 import tools.calendar_tools.MyDate;
 import tools.sql_tools.general.get.GetConnection;
-import tools.sql_tools.general.IsTheRowAlreadyExist;
+import tools.sql_tools.general.statements.IsTheRowAlreadyExist;
 import tools.text_files_tools.FilesTools;
 
 import java.sql.Connection;
