@@ -10,6 +10,7 @@ public class Table {
     ArrayList<RowInTable> rows;
     String SQLQuery;
 
+    //<editor-fold desc="Constructors">
     public Table(){}
     // TODO - no code, add code
     public Table(String tableName, String SQLQuery) {
@@ -18,15 +19,21 @@ public class Table {
 
     public Table(String SQLQuery) {
         this.SQLQuery = SQLQuery;
-        System.out.println("body");
+        getAllRowFromQuery(SQLQuery);
     }
+    //</editor-fold>
+
+    // TODO - no code, add code
 
     public void getAllRowFromQuery(String SQLQuery) {
         rows = Select.selectAllRowsDataFromQuery(SQLQuery);
     }
-
-    // TODO - no code, add code
     public void printTable(){
-
+        for (int i = 0; i < rows.size(); i++) {
+            System.out.println("Row: " + i);
+            rows.get(i).printAlLValuesAndKey();
+            System.out.println();
+            System.out.println();
+        }
     }
 }

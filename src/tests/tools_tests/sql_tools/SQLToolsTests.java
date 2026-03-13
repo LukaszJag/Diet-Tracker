@@ -215,6 +215,7 @@ public class SQLToolsTests {
             @Test
             public void setQueryForTest_1(){
                 Table table = new Table(QueryForTest_1);
+                table.printTable();
             }
         }
     }

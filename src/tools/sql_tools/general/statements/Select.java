@@ -223,9 +223,18 @@ how to handle this upper examples
         int amountOfRows = GetAmountOfRows.getAmountOfRows(SQLQuery);
         //</editor-fold>
 
+        String  key = GetResultSet.getColumnName(resultSet,1);
+        System.out.println("key: " + key);
+        System.out.println("END");
+
+
         for (int i = 0; i < amountOfRows; i++) {
             for (int j = 1; j < amountOfColumns; j++) {
-                row.putKeyAndValueToRow(GetResultSet.getColumnName(resultSet, j), GetResultSet.getValueOfString(resultSet, i));
+               // GetResultSet.nextFromResultSet(resultSet);
+                System.out.println("j: [" + j + "]: " +GetResultSet.getColumnName(resultSet, j));
+                String value = GetResultSet.getValueOfString(resultSet, j);
+                row.putKeyAndValueToRow(GetResultSet.getColumnName(resultSet, j), value);
+                //GetResultSet.nextFromResultSet(resultSet);
             }
             rowsInTable.add(row);
             row = new RowInTable();

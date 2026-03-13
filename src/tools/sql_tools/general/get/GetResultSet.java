@@ -181,20 +181,29 @@ public class GetResultSet {
     public static String getColumnName(ResultSet resultSet, int index){
         ResultSetMetaData resultSetMetaData = GetResultSet.getResultSetMetaData(resultSet);
         try {
-            return resultSetMetaData.getColumnName(index);
+            return resultSetMetaData.getColumnLabel(index);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public static String getValueOfString(ResultSet resultSet, int index){
+    public static String getValueOfString(ResultSet resultSetParam, int index){
         try {
-            return resultSet.getString(index);
+            resultSetParam.next();
+            return resultSetParam.getString(index);
         } catch (SQLException e) {
+            System.out.println("index: " + index);
             throw new RuntimeException(e);
         }
     }
 
+    public static void nextFromResultSet(ResultSet resultSet){
+        try {
+            resultSet.next();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
     //<editor-fold desc="Getters and Setters">
     public Connection getConnection() {
         return connection;
