@@ -8,6 +8,7 @@ import tools.sql_tools.general.RowInTable;
 import tools.sql_tools.general.statements.Select;
 import tools.sql_tools.general.statements.InsertToTable;
 import tools.text_files_tools.FilesTools;
+import tools.sql_tools.Table;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -49,6 +50,7 @@ public class SQLToolsTests {
                     LinkedHashMap<String, String> expected = new LinkedHashMap<>();
                     Assertions.assertTrue(functionOutput.entrySet().equals(null));
                 }
+
                 @Test
                 public void selectAllDataFromQueryTests_1() {
                     String dateInSQLFriendlyFormat = "2026-05-05";
@@ -71,6 +73,7 @@ public class SQLToolsTests {
                     System.out.println(dataFromTable.get(0).size());
 //                System.out.println(dataFromTable.get(0).get(0).get("product_name"));
                 }
+
                 @Test
                 public void selectAllDataFromQueryTests_2() {
                     String dateInSQLFriendlyFormat = "2026-05-05";
@@ -93,15 +96,75 @@ public class SQLToolsTests {
                     System.out.println(dataFromTable.get(0).size());
 //                System.out.println(dataFromTable.get(0).get(0).get("product_name"));
                 }
+
+                @Test
+                public void selectAllDataFromQueryCukier_2026_03_11() {
+                    String dateInSQLFriendlyFormat = "2026-03-11";
+                    String productNameCukier = "Cukier";
+                    String SQLQuery = "" +
+                            "SELECT " +
+                            "* " +
+                            "FROM " +
+                            "calendar " +
+                            "WHERE " +
+                            "day_date" +
+                            "=" +
+                            "\"" +
+                            dateInSQLFriendlyFormat +
+                            "\"" +
+                            " AND " +
+                            "product_name " +
+                            " = " +
+                            "\"" +
+                            productNameCukier +
+                            "\"" +
+                            ";";
+
+                    HashMap<String, String> dataFromTable = Select.selectOneRowDataFromQuery(SQLQuery);
+
+                    System.out.println(dataFromTable.size());
+                    System.out.println();
+                    System.out.println(dataFromTable.toString());
+                }
             }
         }
 
         @Nested
-        class TableAndRow{
+        class RowTests {
             RowInTable food;
             RowInTable cars;
+            RowInTable calendar_2026_03_11_Cukier;
+
             @BeforeEach
-            public void populatePlants(){
+            public void populateCalendarCukier_2026_03_11() {
+                String dateInSQLFriendlyFormat = "2026-03-11";
+                String productNameCukier = "Cukier";
+                String SQLQuery = "" +
+                        "SELECT " +
+                        "* " +
+                        "FROM " +
+                        "calendar " +
+                        "WHERE " +
+                        "day_date" +
+                        "=" +
+                        "\"" +
+                        dateInSQLFriendlyFormat +
+                        "\"" +
+                        " AND " +
+                        "product_name " +
+                        " = " +
+                        "\"" +
+                        productNameCukier +
+                        "\"" +
+                        ";";
+
+                HashMap<String, String> dataFromTable = Select.selectOneRowDataFromQuery(SQLQuery);
+                calendar_2026_03_11_Cukier = new RowInTable(dataFromTable);
+            }
+
+
+            //@BeforeEach
+            public void populatePlants() {
                 food = new RowInTable();
                 food.putKeyAndValueToRow("fruit", "apple");
                 food.putKeyAndValueToRow("fruit", "banana");
@@ -113,8 +176,8 @@ public class SQLToolsTests {
 
             }
 
-            @BeforeEach
-            public void populateCars(){
+            //@BeforeEach
+            public void populateCars() {
                 cars = new RowInTable();
                 cars.putKeyAndValueToRow("German", "BMW");
                 cars.putKeyAndValueToRow("German", "Porche");
@@ -123,23 +186,37 @@ public class SQLToolsTests {
             }
 
             @Test
-            public void rowGetKey(){
+            public void rowGetKey() {
                 System.out.println(food.getKey("carrot"));
                 System.out.println(food.getKey("banana"));
             }
 
             @Test
-            public void multipleKeyFromOneValue(){
+            public void multipleKeyFromOneValue() {
                 System.out.println(food.getKey("milk"));
             }
 
             @Test
-            public void getAllKeys(){
+            public void getAllKeys() {
                 System.out.println(food.getAllKeys());
             }
 
+            @Test
+            public void getAllValuesAndKeyFromCalendarRow(){
+                calendar_2026_03_11_Cukier.printAlLValuesAndKey();
+            }
         }
 
+        @Nested
+        class TableTests{
+
+            String QueryForTest_1 = "SELECT * FROM calendar WHERE day_date=\"2026-03-11\"";
+
+            @Test
+            public void setQueryForTest_1(){
+                Table table = new Table(QueryForTest_1);
+            }
+        }
     }
     @Nested
     class DaysStatisticsTools {

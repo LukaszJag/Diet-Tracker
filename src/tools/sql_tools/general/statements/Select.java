@@ -2,8 +2,10 @@ package tools.sql_tools.general.statements;
 
 import com.mysql.cj.conf.ConnectionUrlParser;
 import configuration.Config;
+import tools.sql_tools.general.RowInTable;
 import tools.sql_tools.general.get.GetConnection;
 import tools.sql_tools.general.get.GetResultSet;
+import tools.sql_tools.general.get_check_data.GetAmountOfRows;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -33,7 +35,7 @@ how to handle this upper examples
         String sqlStatement = "SELECT " +
                 selectedColumn1 + " , " + selectedColumn2 +
                 " FROM " + tableName +
-                " WHERE "+
+                " WHERE " +
                 " " + key +
                 " " + operator +
                 " " + "\"" + value + "\"" + ";";
@@ -57,7 +59,7 @@ how to handle this upper examples
             throw new RuntimeException(e);
         }
 
-        return resultPair =new ConnectionUrlParser.Pair<>(left, right);
+        return resultPair = new ConnectionUrlParser.Pair<>(left, right);
         /*
 example:
 SELECT * from table WHERE key = value ??? -> =
@@ -76,7 +78,7 @@ how to handle this upper examples
         String sqlStatement = "SELECT " +
                 selectedColumn1 + " , " + selectedColumn2 +
                 " FROM " + tableName +
-                " WHERE "+
+                " WHERE " +
                 " " + key +
                 " " + operator +
                 " " + "\"" + value + "\"" + ";";
@@ -107,7 +109,7 @@ how to handle this upper examples
 
     }
 
-    public static ArrayList<ArrayList<HashMap<String, String>>> selectAllDataFromQuery(String SQLQuery){
+    public static ArrayList<ArrayList<HashMap<String, String>>> selectAllDataFromQuery(String SQLQuery) {
         //<editor-fold desc="Values">
         ResultSet resultSet;
         ResultSetMetaData resultSetMetaData;
@@ -126,11 +128,10 @@ how to handle this upper examples
         HashMap<String, String> valuesAndKeysOfRow = new HashMap<>();
 
 
-
         int counter = 0;
         int rowNumber = 0;
 
-        while(GetResultSet.isResultSetHasNext(resultSet)){
+        while (GetResultSet.isResultSetHasNext(resultSet)) {
             for (int i = 1; i < amountOfColumns; i++) {
                 valuesAndKeysOfRow.put(GetResultSet.getColumnName(resultSet, i), GetResultSet.getValueOfString(resultSet, i));
             }
@@ -146,7 +147,7 @@ how to handle this upper examples
         return rows;
     }
 
-    public static ArrayList<HashMap<String, String>> selectAllDataFromQuery2(String SQLQuery){
+    public static ArrayList<HashMap<String, String>> selectAllDataFromQuery2(String SQLQuery) {
         //<editor-fold desc="Values">
         ResultSet resultSet;
         ResultSetMetaData resultSetMetaData;
@@ -163,11 +164,10 @@ how to handle this upper examples
         HashMap<String, String> valuesAndKeysOfRow = new HashMap<>();
 
 
-
         int counter = 0;
         int rowNumber = 0;
 
-        while(GetResultSet.isResultSetHasNext(resultSet)){
+        while (GetResultSet.isResultSetHasNext(resultSet)) {
             for (int i = 1; i < amountOfColumns; i++) {
                 System.out.println(GetResultSet.getColumnName(resultSet, i));
                 System.out.println(GetResultSet.getValueOfString(resultSet, i));
@@ -181,11 +181,58 @@ how to handle this upper examples
 
             rowNumber++;
         }
-
-
         return rows;
     }
 
+    public static HashMap<String, String> selectOneRowDataFromQuery(String SQLQuery) {
+        //<editor-fold desc="Values">
+        ResultSet resultSet;
+        ResultSetMetaData resultSetMetaData;
+
+        ArrayList<String> columnsNames;
+        //</editor-fold>
+
+        resultSet = GetResultSet.getResultSetFromSQL(SQLQuery);
+
+        int amountOfColumns = GetResultSet.getAmountColumnsInResultSet(resultSet);
+
+        HashMap<String, String> rows = new HashMap<>();
+
+        int counter = 0;
+        int rowNumber = 0;
+
+        while (GetResultSet.isResultSetHasNext(resultSet)) {
+            for (int i = 1; i < amountOfColumns; i++) {
+                rows.put(GetResultSet.getColumnName(resultSet, i), GetResultSet.getValueOfString(resultSet, i));
+            }
+            counter++;
+
+            rowNumber++;
+        }
+        return rows;
+    }
+
+    public static ArrayList<RowInTable> selectAllRowsDataFromQuery(String SQLQuery) {
+        //<editor-fold desc="Values">
+        ResultSet resultSet = GetResultSet.getResultSetFromSQL(SQLQuery);
+
+        ArrayList<RowInTable> rowsInTable = new ArrayList<>();
+        RowInTable row = new RowInTable();
+
+        int amountOfColumns = GetResultSet.getAmountColumnsInResultSet(resultSet);
+        int amountOfRows = GetAmountOfRows.getAmountOfRows(SQLQuery);
+        //</editor-fold>
+
+        for (int i = 0; i < amountOfRows; i++) {
+            for (int j = 1; j < amountOfColumns; j++) {
+                row.putKeyAndValueToRow(GetResultSet.getColumnName(resultSet, j), GetResultSet.getValueOfString(resultSet, i));
+            }
+            rowsInTable.add(row);
+            row = new RowInTable();
+        }
+
+        return rowsInTable;
+    }
 
     // OLD Methods
     public static String[] getAllProductNamesFromProductTable() throws SQLException {

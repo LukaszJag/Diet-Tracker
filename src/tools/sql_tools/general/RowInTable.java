@@ -10,6 +10,10 @@ public class RowInTable {
         this.fields = new HashMap<>();
     }
 
+    public RowInTable(HashMap<String, String> fields) {
+        setFields(fields);
+    }
+
     public void putKeyAndValueToRow(String key, String value) {
         fields.put(key, value);
     }
@@ -80,12 +84,28 @@ public class RowInTable {
         }
         return firstKey;
     }
+
     public ArrayList<String> getAllKeys() {
         Set setOfKeys = fields.keySet();
         return new ArrayList<String>(setOfKeys);
     }
 
-    public ArrayList<String> getAllValues(){
+    public ArrayList<String> getAllValues() {
         return new ArrayList<>(fields.values());
     }
+
+    public void printAlLValuesAndKey(){
+        for (String i : fields.keySet()) {
+            System.out.println("key: " + i + " value: " + fields.get(i));
+        }
+    }
+    //<editor-fold desc="Getters and Setters">
+    public static HashMap<String, String> getFields() {
+        return fields;
+    }
+
+    public static void setFields(HashMap<String, String> fields) {
+        RowInTable.fields = fields;
+    }
+    //</editor-fold>
 }

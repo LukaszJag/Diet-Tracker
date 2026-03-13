@@ -7,7 +7,7 @@ import tools.products_tools.Product;
 import tools.sql_tools.calendar.InsertToCalendarDayTable;
 import tools.sql_tools.general.statements.Select;
 import tools.sql_tools.general.statements.InsertToTable;
-import tools.sql_tools.general.statements.IsTheRowAlreadyExist;
+import tools.sql_tools.general.get_check_data.IsTheRowAlreadyExist;
 import tools.sql_tools.general.run.RunQuery;
 import tools.sql_tools.general.statements.SumTable;
 import tools.sql_tools.products.ImportDateFromTXTFilesToSQLDB;

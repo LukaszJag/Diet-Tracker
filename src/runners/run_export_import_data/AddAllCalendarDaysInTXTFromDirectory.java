@@ -1,6 +1,6 @@
 package runners.run_export_import_data;
 
-import tools.sql_tools.general.statements.CheckIfRowExist;
+import tools.sql_tools.general.get_check_data.CheckIfRowExist;
 import tools.sql_tools.general.run.RunQuery;
 import tools.text_files_tools.FilesTools;
 
