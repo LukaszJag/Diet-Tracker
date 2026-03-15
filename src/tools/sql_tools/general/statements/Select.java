@@ -215,6 +215,7 @@ how to handle this upper examples
     public static ArrayList<RowInTable> selectAllRowsDataFromQuery(String SQLQuery) {
         //<editor-fold desc="Values">
         ResultSet resultSet = GetResultSet.getResultSetFromSQL(SQLQuery);
+        ResultSetMetaData rsmd = GetResultSet.getResultSetMetaData(resultSet);
 
         ArrayList<RowInTable> rowsInTable = new ArrayList<>();
         RowInTable row = new RowInTable();
@@ -222,6 +223,12 @@ how to handle this upper examples
         int amountOfColumns = GetResultSet.getAmountColumnsInResultSet(resultSet);
         int amountOfRows = GetAmountOfRows.getAmountOfRows(SQLQuery);
         //</editor-fold>
+
+        try {
+            System.out.println(rsmd.getColumnName(1));
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
 
         String  key = GetResultSet.getColumnName(resultSet,1);
         System.out.println("key: " + key);
@@ -231,9 +238,13 @@ how to handle this upper examples
         for (int i = 0; i < amountOfRows; i++) {
             for (int j = 1; j < amountOfColumns; j++) {
                // GetResultSet.nextFromResultSet(resultSet);
-                System.out.println("j: [" + j + "]: " +GetResultSet.getColumnName(resultSet, j));
+                //System.out.println("j: [" + j + "]: " + GetResultSet.getColumnName(resultSet, j));
                 String value = GetResultSet.getValueOfString(resultSet, j);
-                row.putKeyAndValueToRow(GetResultSet.getColumnName(resultSet, j), value);
+                try {
+                    row.putKeyAndValueToRow(rsmd.getColumnName(j), value);
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
                 //GetResultSet.nextFromResultSet(resultSet);
             }
             rowsInTable.add(row);

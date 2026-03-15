@@ -1,7 +1,6 @@
 package tools.sql_tools;
 
 import tools.sql_tools.general.RowInTable;
-import tools.sql_tools.general.get_check_data.GetAmountOfRows;
 import tools.sql_tools.general.statements.Select;
 
 import java.util.ArrayList;
@@ -28,6 +27,7 @@ public class Table {
     public void getAllRowFromQuery(String SQLQuery) {
         rows = Select.selectAllRowsDataFromQuery(SQLQuery);
     }
+
     public void printTable(){
         for (int i = 0; i < rows.size(); i++) {
             System.out.println("Row: " + i);
