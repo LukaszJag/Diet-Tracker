@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2026-03-14',
+'Sunday',
+'Breakfast',
+48.0,
+'Kaktus Lody wodne o smaku cytrynowym i sorbet truskawkowy',
+132.0,
+0.5,
+3.4,
+25.0,
+'2026-03-15 03:57:17',
+'none',
+63.359997,
+12.0,
+1.632,
+0.24
+);

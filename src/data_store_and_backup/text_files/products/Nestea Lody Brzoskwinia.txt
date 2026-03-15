@@ -1,0 +1,9 @@
+Name: Nestea Lody Brzoskwinia
+Brand: Nestle
+Package has: 100.0
+Macro for: 100.0
+KCal: 89.0
+Protein: 0.49
+Fat: 0.49
+Carbs: 22.0
+Comment optional: Link: https://delio.com.pl/products/A0014895-lody-nestea-peach

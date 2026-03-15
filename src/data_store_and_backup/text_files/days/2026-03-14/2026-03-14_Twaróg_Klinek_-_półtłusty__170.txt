@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2026-03-14',
+'Sunday',
+'Second Breakfast',
+170.0,
+'Twaróg Klinek - półtłusty ',
+111.0,
+16.0,
+3.5,
+3.8,
+'2026-03-15 03:52:14',
+'none',
+188.70001,
+6.46,
+5.9500003,
+27.2
+);

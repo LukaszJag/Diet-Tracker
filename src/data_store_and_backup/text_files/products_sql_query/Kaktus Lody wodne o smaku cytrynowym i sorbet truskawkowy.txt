@@ -1,0 +1,20 @@
+INSERT INTO `diet_tracker_schema`.product_table
+(`product_name`,
+`product_brand`,
+`product_package_has`,
+`product_macro_for`,
+`product_kcal`,
+`product_protein`,
+`product_fat`,
+`product_carbs`,
+`comment_optional`)
+Values
+('Kaktus Lody wodne o smaku cytrynowym i sorbet truskawkowy',
+'Nestle',
+48.0,
+100.0,
+132.0,
+0.5,
+3.4,
+25.0,
+'Link: https://torimpex.pl/produkt/kaktus-lody-wodne-o-smaku-cytrynowym-i-sorbet-truskawkowy-45-ml/');

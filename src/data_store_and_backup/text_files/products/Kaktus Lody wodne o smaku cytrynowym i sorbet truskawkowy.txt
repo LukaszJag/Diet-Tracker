@@ -1,0 +1,9 @@
+Name: Kaktus Lody wodne o smaku cytrynowym i sorbet truskawkowy
+Brand: Nestle
+Package has: 48.0
+Macro for: 100.0
+KCal: 132.0
+Protein: 0.5
+Fat: 3.4
+Carbs: 25.0
+Comment optional: Link: https://torimpex.pl/produkt/kaktus-lody-wodne-o-smaku-cytrynowym-i-sorbet-truskawkowy-45-ml/

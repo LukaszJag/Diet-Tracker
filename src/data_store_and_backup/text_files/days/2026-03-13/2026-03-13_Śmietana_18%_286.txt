@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2026-03-13',
+'Sunday',
+'Supper',
+286.0,
+'Śmietana 18%',
+186.0,
+2.5,
+18.0,
+3.6,
+'2026-03-15 03:46:46',
+'none',
+531.95996,
+10.296,
+51.48,
+7.1499996
+);

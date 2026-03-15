@@ -1,0 +1,20 @@
+INSERT INTO `diet_tracker_schema`.product_table
+(`product_name`,
+`product_brand`,
+`product_package_has`,
+`product_macro_for`,
+`product_kcal`,
+`product_protein`,
+`product_fat`,
+`product_carbs`,
+`comment_optional`)
+Values
+('Nestea Lody Brzoskwinia',
+'Nestle',
+100.0,
+100.0,
+89.0,
+0.49,
+0.49,
+22.0,
+'Link: https://delio.com.pl/products/A0014895-lody-nestea-peach');
