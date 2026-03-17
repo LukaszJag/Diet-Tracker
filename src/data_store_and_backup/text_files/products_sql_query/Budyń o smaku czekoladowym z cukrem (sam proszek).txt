@@ -1,0 +1,20 @@
+INSERT INTO `diet_tracker_schema`.product_table
+(`product_name`,
+`product_brand`,
+`product_package_has`,
+`product_macro_for`,
+`product_kcal`,
+`product_protein`,
+`product_fat`,
+`product_carbs`,
+`comment_optional`)
+Values
+('Budyń o smaku czekoladowym z cukrem (sam proszek)',
+'Winiary',
+63.0,
+100.0,
+365.0,
+3.17,
+1.26,
+86.5,
+'Link: https://www.tabele-kalorii.pl/kalorie,Budyn-o-smaku-czekoladowym-z-cukrem-sam-proszek-Winiary.html');

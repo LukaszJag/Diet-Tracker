@@ -8,7 +8,7 @@ import tools.sql_tools.general.RowInTable;
 import tools.sql_tools.general.statements.Select;
 import tools.sql_tools.general.statements.InsertToTable;
 import tools.text_files_tools.FilesTools;
-import tools.sql_tools.Table;
+import tools.sql_tools.general.Table;
 
 import java.util.ArrayList;
 import java.util.HashMap;

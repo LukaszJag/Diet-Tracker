@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2026-03-16',
+'Tuesday',
+'Snack 2',
+200.0,
+'Nestea Lody Brzoskwinia',
+89.0,
+0.49,
+0.49,
+22.0,
+'2026-03-17 05:17:16',
+'none',
+178.0,
+44.0,
+0.98,
+0.98
+);

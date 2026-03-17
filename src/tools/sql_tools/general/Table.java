@@ -1,4 +1,4 @@
-package tools.sql_tools;
+package tools.sql_tools.general;
 
 import tools.sql_tools.general.RowInTable;
 import tools.sql_tools.general.statements.Select;

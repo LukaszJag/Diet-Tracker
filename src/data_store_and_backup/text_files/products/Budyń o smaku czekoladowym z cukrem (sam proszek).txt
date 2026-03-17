@@ -1,0 +1,9 @@
+Name: Budyń o smaku czekoladowym z cukrem (sam proszek)
+Brand: Winiary
+Package has: 63.0
+Macro for: 100.0
+KCal: 365.0
+Protein: 3.17
+Fat: 1.26
+Carbs: 86.5
+Comment optional: Link: https://www.tabele-kalorii.pl/kalorie,Budyn-o-smaku-czekoladowym-z-cukrem-sam-proszek-Winiary.html
