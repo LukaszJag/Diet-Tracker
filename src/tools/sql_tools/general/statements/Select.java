@@ -3,6 +3,7 @@ package tools.sql_tools.general.statements;
 import com.mysql.cj.conf.ConnectionUrlParser;
 import configuration.Config;
 import tools.sql_tools.general.RowInTable;
+import tools.sql_tools.general.Table;
 import tools.sql_tools.general.get.GetConnection;
 import tools.sql_tools.general.get.GetResultSet;
 import tools.sql_tools.general.get_check_data.GetAmountOfRows;
@@ -215,42 +216,33 @@ how to handle this upper examples
     public static ArrayList<RowInTable> selectAllRowsDataFromQuery(String SQLQuery) {
         //<editor-fold desc="Values">
         ResultSet resultSet = GetResultSet.getResultSetFromSQL(SQLQuery);
-        ResultSetMetaData rsmd = GetResultSet.getResultSetMetaData(resultSet);
-
-        ArrayList<RowInTable> rowsInTable = new ArrayList<>();
-        RowInTable row = new RowInTable();
+        ResultSetMetaData resultSetMetaData = GetResultSet.getResultSetMetaData(resultSet);
 
         int amountOfColumns = GetResultSet.getAmountColumnsInResultSet(resultSet);
         int amountOfRows = GetAmountOfRows.getAmountOfRows(SQLQuery);
+
+        Table table = new Table();
+        ArrayList<RowInTable> rowsInTable = new ArrayList<>();
+        RowInTable[] rows = new RowInTable[amountOfRows];
+
         //</editor-fold>
 
-        try {
-            System.out.println(rsmd.getColumnName(1));
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-
-        String  key = GetResultSet.getColumnName(resultSet,1);
-        System.out.println("key: " + key);
-        System.out.println("END");
-
-
         for (int i = 0; i < amountOfRows; i++) {
-            for (int j = 1; j < amountOfColumns; j++) {
-               // GetResultSet.nextFromResultSet(resultSet);
-                //System.out.println("j: [" + j + "]: " + GetResultSet.getColumnName(resultSet, j));
-                String value = GetResultSet.getValueOfString(resultSet, j);
-                try {
-                    row.putKeyAndValueToRow(rsmd.getColumnName(j), value);
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
-                }
-                //GetResultSet.nextFromResultSet(resultSet);
-            }
-            rowsInTable.add(row);
-            row = new RowInTable();
-        }
+            rows[i] = new RowInTable();
+            GetResultSet.isResultSetHasNext(resultSet);
+            for (int j = 1; j < amountOfColumns - 1; j++) {
 
+
+                String value = null;
+                value = GetResultSet.getValueOfString(resultSet, j);
+                rows[i].putKeyAndValueToRow(GetResultSet.getColumnName(resultSet, j), value);
+
+
+            }
+
+            table.putRowToTable(rows[i]);
+        }
+        table.printTable();
         return rowsInTable;
     }
 

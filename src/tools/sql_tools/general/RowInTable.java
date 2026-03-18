@@ -18,6 +18,7 @@ public class RowInTable {
         fields.put(key, value);
     }
 
+    //<editor-fold desc="Get methods">
     public int getSizeOfRow() {
         return fields.size();
     }
@@ -93,14 +94,21 @@ public class RowInTable {
     public ArrayList<String> getAllValues() {
         return new ArrayList<>(fields.values());
     }
+    //</editor-fold>
 
     public void printAlLValuesAndKey(){
         for (String i : fields.keySet()) {
             System.out.println("key: " + i + " value: " + fields.get(i));
         }
     }
+
+    public static void printAlLValuesAndKey(RowInTable rowInTable){
+        for (String i : rowInTable.getFields().keySet()) {
+            System.out.println("key: " + i + " value: " + fields.get(i));
+        }
+    }
     //<editor-fold desc="Getters and Setters">
-    public static HashMap<String, String> getFields() {
+    public HashMap<String, String> getFields() {
         return fields;
     }
 

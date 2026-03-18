@@ -25,6 +25,7 @@ public class GetResultSet {
     }
 
 
+    //<editor-fold desc="Get methods">
     public static ResultSet getResultSetFromSQL(String SQLStatement) {
         Connection connection;
         ResultSet resultSet;
@@ -66,13 +67,66 @@ public class GetResultSet {
         }
     }
 
-    public static boolean resultSetNextReturnValue(ResultSet resultSet) {
+    public static ResultSetMetaData getResultSetMetaData(ResultSet resultSet) {
+        ResultSetMetaData resultSetMetaData;
+
         try {
-            return resultSet.next();
+            resultSetMetaData = resultSet.getMetaData();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return resultSetMetaData;
+
+    }
+
+    public static int getAmountColumnsInResultSet(ResultSet resultSet) {
+        ResultSetMetaData resultSetMetaData = GetResultSet.getResultSetMetaData(resultSet);
+        int count;
+        try {
+            count = resultSetMetaData.getColumnCount();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return count;
+    }
+
+    public static ArrayList<String> getAllColumnLabels(ResultSet resultSet) {
+        ResultSetMetaData resultSetMetaData = GetResultSet.getResultSetMetaData(resultSet);
+
+        ArrayList<String> columnsNames = null;
+        int amountOfColumns = GetResultSet.getAmountColumnsInResultSet(resultSet);
+
+        for (int i = 0; i < amountOfColumns; i++) {
+            try {
+                columnsNames.add(resultSetMetaData.getColumnLabel(i));
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return columnsNames;
+    }
+
+    public static String getColumnName(ResultSet resultSet, int index) {
+        ResultSetMetaData resultSetMetaData = GetResultSet.getResultSetMetaData(resultSet);
+        try {
+            return resultSetMetaData.getColumnLabel(index);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
+
+    public static String getValueOfString(ResultSet resultSetParam, int index) {
+        try {
+            return resultSetParam.getString(index);
+        } catch (SQLException e) {
+            System.out.println("index: " + index);
+            throw new RuntimeException(e);
+        }
+    }
+
+    //</editor-fold>
+
 
     public void closeResultSet(ResultSet resultSet) {
         try {
@@ -82,7 +136,6 @@ public class GetResultSet {
 
 
     }
-
     public void closeAllVariables() {
         try {
             if (this.resultSet != null) this.resultSet.close();
@@ -103,7 +156,6 @@ public class GetResultSet {
     }
 
     public void checkGetResultSetStatus() {
-
 
         try {
             if (this.connection == null) {
@@ -130,47 +182,14 @@ public class GetResultSet {
         }
     }
 
-    public static ResultSetMetaData getResultSetMetaData(ResultSet resultSet){
-        ResultSetMetaData resultSetMetaData;
-
+    public static boolean isResultSetHasNext(ResultSet resultSet) {
         try {
-            resultSetMetaData = resultSet.getMetaData();
+            return resultSet.next();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
-        return resultSetMetaData;
-
     }
-
-    public static int getAmountColumnsInResultSet(ResultSet resultSet){
-        ResultSetMetaData resultSetMetaData = GetResultSet.getResultSetMetaData(resultSet);
-        int count;
-        try {
-            count = resultSetMetaData.getColumnCount();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        return count;
-    }
-
-    public static ArrayList<String> getAllColumnLabels(ResultSet resultSet){
-        ResultSetMetaData resultSetMetaData = GetResultSet.getResultSetMetaData(resultSet);
-
-        ArrayList<String> columnsNames = null;
-        int amountOfColumns = GetResultSet.getAmountColumnsInResultSet(resultSet);
-
-        for (int i = 0; i < amountOfColumns; i++) {
-            try {
-                columnsNames.add(resultSetMetaData.getColumnLabel(i));
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-        }
-    return columnsNames;
-    }
-
-    public static boolean isResultSetHasNext(ResultSet resultSet){
+    public static boolean resultSetNextReturnValue(ResultSet resultSet) {
         try {
             return resultSet.next();
         } catch (SQLException e) {
@@ -178,32 +197,14 @@ public class GetResultSet {
         }
     }
 
-    public static String getColumnName(ResultSet resultSet, int index){
-        ResultSetMetaData resultSetMetaData = GetResultSet.getResultSetMetaData(resultSet);
+    public static boolean nextFromResultSet(ResultSet resultSet) {
         try {
-            return resultSetMetaData.getColumnLabel(index);
+            return resultSet.next();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public static String getValueOfString(ResultSet resultSetParam, int index){
-        try {
-            resultSetParam.next();
-            return resultSetParam.getString(index);
-        } catch (SQLException e) {
-            System.out.println("index: " + index);
-            throw new RuntimeException(e);
-        }
-    }
-
-    public static void nextFromResultSet(ResultSet resultSet){
-        try {
-            resultSet.next();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
     //<editor-fold desc="Getters and Setters">
     public Connection getConnection() {
         return connection;
