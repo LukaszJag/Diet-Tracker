@@ -15,6 +15,8 @@ import org.jfree.data.category.DefaultCategoryDataset;
 import tools.calendar_tools.MyDate;
 import tools.products_tools.Product;
 import tools.sql_tools.days_statistics.SelectFromDaysStatistics;
+import tools.sql_tools.general.RowInTable;
+import tools.sql_tools.general.Table;
 
 import javax.swing.*;
 import java.awt.*;
@@ -53,6 +55,35 @@ public class Charts {
             "02-2026",
             "03-2026"
     };
+
+    String[] mealsToDisplay = {
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11",
+            "12",
+            "13",
+            "14",
+            "15",
+            "16",
+            "17",
+            "18",
+            "19",
+            "20",
+            "21",
+            "22",
+            "23",
+            "24"
+    };
+
+    RowInTable[] mealsRowSQL = new RowInTable[24];
     //</editor-fold>
 
     //<editor-fold desc="Numeric values - variables">
@@ -67,7 +98,6 @@ public class Charts {
     JFreeChart jFreeChart;
     DefaultCategoryDataset dataset;
     //</editor-fold>
-
 
     //<editor-fold desc="Swing components">
     JFrame chartFrame;
@@ -126,7 +156,6 @@ public class Charts {
 
         }
 
-
         public void prepareDataForMonthAverageMacro() {
             monthsKcal = new String[monthsToDisplayInSQLFriendlyFormat.length];
 
@@ -140,7 +169,7 @@ public class Charts {
         }
     }
 
-    public class ChartsDiet{
+    public class ChartsDiet {
         //<editor-fold desc="Global variables">
         String[] daysNumbers;
         String chartName;
@@ -322,8 +351,9 @@ public class Charts {
             //</editor-fold>
 
         }
+
         public void prepareDataForCharts() {
-            chartName = MyDate.getNameOfMonthFromNumber(monthToDisplay)+ " stats";
+            chartName = MyDate.getNameOfMonthFromNumber(monthToDisplay) + " stats";
 
             dateLabel = new JLabel("" + monthToDisplay + "-" + yearToDisplay);
 
@@ -335,6 +365,7 @@ public class Charts {
                 valuesKcal[i] = SelectFromDaysStatistics.getMacroFromDaysStatisticsByDate(daysNumbers[i]).getKcal();
             }
         }
+
         public void clearAllData() {
             SwingUtilities.updateComponentTreeUI(chartFrame);
 
@@ -376,6 +407,7 @@ public class Charts {
             chartFrame.setResizable(true);
             chartFrame.setLocationRelativeTo(null);
         }
+
         public void displayLineChart() {
             prepareDataForCharts();
 
@@ -479,21 +511,103 @@ public class Charts {
         //</editor-fold>
     }
 
-    public class DailyMacroChart{
+    public class DailyMacroChart {
 
+        //<editor-fold desc="Variables">
         ArrayList<Product.ProductInCalendar> dataOfProductsInDay;
-        String dayDateInSQLFriendlyFormat = "0000-00-00";
+        String dayDateInSQLFriendlyFormat = "2026-03-11";
+        Table table = new Table();
+        String SQLQuery = "";
+        int mealsAmountToDisplay = 24;
+        //</editor-fold>
 
-        public DailyMacroChart(){}
 
-        public DailyMacroChart(String dayDateInSQLFriendlyFormat){
+        //<editor-fold desc="Constructors">
+        public DailyMacroChart() {
+        }
+
+        public DailyMacroChart(String dayDateInSQLFriendlyFormat) {
             this.dayDateInSQLFriendlyFormat = dayDateInSQLFriendlyFormat;
         }
+        //</editor-fold>
 
-        public void getDaysProductsData(){
-            String SQLQuery = "SELECT * FROM calendar WHERE day_date=\"2026-03-05\";";
+
+        public void setDayDateInSQLFriendlyFormat(String dateInSQLFriendlyFormat) {
+            this.dayDateInSQLFriendlyFormat = dateInSQLFriendlyFormat;
+        }
+
+        public void setSQLQuery() {
+            this.SQLQuery = "SELECT * FROM calendar WHERE day_date=\"" +
+                    dayDateInSQLFriendlyFormat +
+                    "\";";
+        }
+
+        public void displayBarChart() {
+            System.out.println("displayBarChart - DailyMacroChart");
+            prepareDataForBarChart();
+            chartPanel = new ChartPanel(jFreeChart);
+            chartFrame.add(chartPanel);
+            chartFrame.setVisible(true);
+        }
+
+        public void prepareDataForBarChart() {
+            prepareSwingComponents();
+            //prepareDataForMonthAverageMacro();
+            getMealDataFromSQLTable();
+            prepareJFreeChart();
+            prepareDataForChart();
+        }
+
+        public void prepareSwingComponents() {
+            chartFrame = new JFrame("DailyMacroChart");
+            chartFrame.setSize(new Dimension(1000, 800));
+            chartFrame.setResizable(true);
+            chartFrame.setLocationRelativeTo(null);
+            chartFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        }
+
+        private void getMealDataFromSQLTable() {
+            table.getAllRowFromQuery(SQLQuery);
+        }
+
+
+
+        /*
+                public void prepareDataForMonthAverageMacro() {
+                    monthsKcal = new String[monthsToDisplayInSQLFriendlyFormat.length];
+
+                    int year, month;
+                    for (int i = 0; i < monthsKcal.length; i++) {
+                        year = Integer.valueOf(monthsToDisplayInSQLFriendlyFormat[i].substring(3));
+                        month = Integer.valueOf(monthsToDisplayInSQLFriendlyFormat[i].substring(0, 2));
+
+                        monthsKcal[i] = String.valueOf(SelectFromDaysStatistics.getAverageMacroForMonth(year, month).getKcal());
+                    }
+                }
+                */
+        public void prepareJFreeChart() {
+            dataset = new DefaultCategoryDataset();
+
+            for (int i = 0; i < mealsAmountToDisplay; i++) {
+                if (table.getRows().size() < i) {
+                    dataset.addValue(
+                            Double.valueOf(table.getRowInTable(i).getValue("kcal"))
+                            , ("" + i), "kcal");
+                }else {
+                    dataset.addValue(0, (" " + i), "kcal");
+                }
+            }
+
+            jFreeChart = ChartFactory.createBarChart(chartName, "kcal", "Kcal",
+                    dataset);
 
         }
+
+        public void prepareDataForChart() {
+
+
+        }
+
 
     }
 }

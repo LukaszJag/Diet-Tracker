@@ -23,7 +23,7 @@ public class RowInTable {
         return fields.size();
     }
 
-    public static String getValue(String key) {
+    public String getValue(String key) {
         try {
             fields.get(key);
         } catch (Exception e) {
@@ -107,6 +107,7 @@ public class RowInTable {
             System.out.println("key: " + i + " value: " + fields.get(i));
         }
     }
+
     //<editor-fold desc="Getters and Setters">
     public HashMap<String, String> getFields() {
         return fields;

@@ -26,4 +26,12 @@ public class Charts_tools_Tests {
 
         chartForMonthsKcalCompare.displayBarChart();
     }
+
+    @Test
+    public void displayMacroChartForDay(){
+        Charts charts = new Charts();
+        Charts.DailyMacroChart dailyMacroChart = charts.new DailyMacroChart();
+
+    }
+
 }
