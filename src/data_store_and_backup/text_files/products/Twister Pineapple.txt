@@ -1,0 +1,9 @@
+Name: Twister Pineapple
+Brand: Algida
+Package has: 71.0
+Macro for: 100.0
+KCal: 96.0
+Protein: 0.5
+Fat: 0.5
+Carbs: 22.0
+Comment optional: Link: https://leclercdrive.lublin.pl/twister-pineapple-lody-80-ml

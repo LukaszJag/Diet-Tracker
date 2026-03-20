@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2026-03-20',
+'Friday',
+'Second Breakfast',
+104.0,
+'Wiejskie filety śledzione z cebulką',
+195.0,
+9.9,
+12.7,
+10.0,
+'2026-03-20 03:10:48',
+'none',
+202.79999,
+10.4,
+13.207999,
+10.296
+);
