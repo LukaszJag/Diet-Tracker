@@ -6,39 +6,60 @@ import java.util.ArrayList;
 
 public class Table {
 
-
+    String tableName;
     ArrayList<RowInTable> rows;
     String SQLQuery;
 
     //<editor-fold desc="Constructors">
-    public Table(){
+    public Table() {
+        this.tableName = "not set";
         this.rows = new ArrayList<RowInTable>();
+        // default SQL Query
+        this.SQLQuery = "SELECT * FROM calendar WHERE day_date=\"2026-03-11\"";
+        getAllRowFromQuery();
+
     }
 
     // TODO - no code, add code to constructor -> public Table(String tableName, String SQLQuery)
-    public Table(String tableName, String SQLQuery) {
-
-    }
-
     public Table(String SQLQuery) {
+        this.rows = new ArrayList<RowInTable>();
         this.SQLQuery = SQLQuery;
-        getAllRowFromQuery(SQLQuery);
+        getAllRowFromQuery();
     }
+
+    public Table(String tableName, String SQLQuery) {
+        this.rows = new ArrayList<RowInTable>();
+        getAllRowFromQuery();
+    }
+
+
+
     //</editor-fold>
 
     //<editor-fold desc="Put methods">
-    public void putRowToTable(RowInTable rowToInsert){
+    public void putRowToTable(RowInTable rowToInsert) {
         this.rows.add(rowToInsert);
     }
     //</editor-fold>
 
     //<editor-fold desc="Get methods">
-    public void getAllRowFromQuery(String SQLQuery) {
-        rows = Select.selectAllRowsDataFromQuery(SQLQuery);
+
+    public void getAllRowFromQuery() {
+        if (SQLQuery == null) {
+            System.out.println("SQLQuery is null");
+        }
+        if (SQLQuery.isBlank()) {
+            System.out.println("SQLQuery is Blank");
+        }
+        if (SQLQuery.isEmpty()) {
+            System.out.println("SQLQuery is Empty");
+        }
+
+        setRows(Select.selectAllRowsDataFromQuery(this.SQLQuery));
     }
 
-    public RowInTable getRowInTable(int index){
-        if(rows.size() < index){
+    public RowInTable getRowInTable(int index) {
+        if (rows.size() < index) {
             System.out.println("index: Out of bond");
             return null;
         }
@@ -47,14 +68,26 @@ public class Table {
     //</editor-fold>
 
     //<editor-fold desc="Print methods">
-    public void printTable(){
+    public void printTable() {
         for (int i = 0; i < rows.size(); i++) {
-            System.out.println("Row in Table: " + i);
             rows.get(i).printAlLValuesAndKey(rows.get(i));
-            System.out.println();
-            System.out.println();
         }
     }
+
+    public void printSizeOfRows() {
+        System.out.println("Size of rows: " + rows.size());
+    }
+
+    public void printSQLQuery() {
+        System.out.println("SQLQuery: " + SQLQuery);
+    }
+
+    public void printTableName() {
+        System.out.println("Table name: " + tableName);
+    }
+
+
+//    public void pe
     //</editor-fold>
 
     //<editor-fold desc="Getters and Setters">
@@ -73,6 +106,22 @@ public class Table {
     public void setSQLQuery(String SQLQuery) {
         this.SQLQuery = SQLQuery;
     }
+
+    public String getTableName() {
+        return tableName;
+    }
+
+    public void setTableName(String tableName) {
+        this.tableName = tableName;
+    }
     //</editor-fold>
 
+    @Override
+    public String toString() {
+        return "Table{" +
+                "tableName='" + tableName + '\'' +
+                ", rows=" + rows +
+                ", SQLQuery='" + SQLQuery + '\'' +
+                '}';
+    }
 }

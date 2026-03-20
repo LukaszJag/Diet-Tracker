@@ -33,9 +33,19 @@ public class GetResultSet {
 
         try {
             connection = GetConnection.getConnectionWithLocalHost();
-            statementSQL = connection.createStatement();
-            resultSet = statementSQL.executeQuery(SQLStatement);
 
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        try {
+            statementSQL = connection.createStatement();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        try {
+            resultSet = statementSQL.executeQuery(SQLStatement);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

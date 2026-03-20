@@ -16,6 +16,8 @@ import java.util.LinkedHashMap;
 public class Select {
     // TODO clean up code
     // TODO only selectAllDataFromTable AND selectOneRowDataFromTable - method is finish - finish rest of methods
+
+    //<editor-fold desc="Select All Data From Query">
     public static LinkedHashMap<String, String> selectAllDataFromTable(String tableName, String key, String operator, String value) {
         String sqlStatement = "SELECT";
 /*
@@ -27,49 +29,6 @@ SELECT * from table WHERE key != value ??? -> !=
 how to handle this upper examples
  */
         return null;
-    }
-
-    public static ConnectionUrlParser.Pair<String, String> selectOneRowDataFromTable(String tableName, String selectedColumn1, String selectedColumn2,
-                                                                                     String key, String operator, String value) {
-        ConnectionUrlParser.Pair<String, String> resultPair;
-
-        String sqlStatement = "SELECT " +
-                selectedColumn1 + " , " + selectedColumn2 +
-                " FROM " + tableName +
-                " WHERE " +
-                " " + key +
-                " " + operator +
-                " " + "\"" + value + "\"" + ";";
-
-
-        ResultSet resultSet;
-        GetResultSet getResultSet = new GetResultSet();
-        resultSet = getResultSet.getResultSetFromSQL(sqlStatement);
-
-        String left = "";
-        String right = "";
-
-        try {
-            if (resultSet.next()) {
-                left = resultSet.getString(1);
-
-                right = resultSet.getString(2);
-
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-
-        return resultPair = new ConnectionUrlParser.Pair<>(left, right);
-        /*
-example:
-SELECT * from table WHERE key = value ??? -> =
-SELECT * from table WHERE key LIKE value ??? -> LIKE
-SELECT * from table WHERE key != value ??? -> !=
-
-how to handle this upper examples
- */
-
     }
 
     public static LinkedHashMap<String, String> selectAllDataFromTable(String tableName, String selectedColumn1, String selectedColumn2,
@@ -170,13 +129,9 @@ how to handle this upper examples
 
         while (GetResultSet.isResultSetHasNext(resultSet)) {
             for (int i = 1; i < amountOfColumns; i++) {
-                System.out.println(GetResultSet.getColumnName(resultSet, i));
-                System.out.println(GetResultSet.getValueOfString(resultSet, i));
                 valuesAndKeysOfRow.put(GetResultSet.getColumnName(resultSet, i), GetResultSet.getValueOfString(resultSet, i));
             }
             rows.add(counter, valuesAndKeysOfRow);
-            System.out.println(valuesAndKeysOfRow);
-            System.out.println("TEST -" + counter);
             valuesAndKeysOfRow.clear();
             counter++;
 
@@ -184,7 +139,9 @@ how to handle this upper examples
         }
         return rows;
     }
+    //</editor-fold>
 
+    //<editor-fold desc="Rows in SQL table - method">
     public static HashMap<String, String> selectOneRowDataFromQuery(String SQLQuery) {
         //<editor-fold desc="Values">
         ResultSet resultSet;
@@ -242,11 +199,142 @@ how to handle this upper examples
 
             table.putRowToTable(rows[i]);
         }
-        table.printTable();
         return rowsInTable;
     }
 
-    // OLD Methods
+    public static ConnectionUrlParser.Pair<String, String> selectOneRowDataFromTable(String tableName, String selectedColumn1, String selectedColumn2,
+                                                                                     String key, String operator, String value) {
+        ConnectionUrlParser.Pair<String, String> resultPair;
+
+        String sqlStatement = "SELECT " +
+                selectedColumn1 + " , " + selectedColumn2 +
+                " FROM " + tableName +
+                " WHERE " +
+                " " + key +
+                " " + operator +
+                " " + "\"" + value + "\"" + ";";
+
+
+        ResultSet resultSet;
+        GetResultSet getResultSet = new GetResultSet();
+        resultSet = getResultSet.getResultSetFromSQL(sqlStatement);
+
+        String left = "";
+        String right = "";
+
+        try {
+            if (resultSet.next()) {
+                left = resultSet.getString(1);
+
+                right = resultSet.getString(2);
+
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return resultPair = new ConnectionUrlParser.Pair<>(left, right);
+        /*
+example:
+SELECT * from table WHERE key = value ??? -> =
+SELECT * from table WHERE key LIKE value ??? -> LIKE
+SELECT * from table WHERE key != value ??? -> !=
+
+how to handle this upper examples
+ */
+
+    }
+    //</editor-fold>
+
+    //<editor-fold desc="Columns in SQL table - method">
+    public static String[] getAllValuesInColumn(String tableName, int column) {
+        String[] columnValues;
+        try {
+            ResultSet resultSet;
+            Statement statement;
+
+            String sql = "SELECT * FROM " + tableName;
+
+            int amountOfRows = 0;
+
+            Connection connection = GetConnection.getConnectionWithLocalHostWithoutTryCatch();
+
+            statement = connection.createStatement();
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery(sql);
+            amountOfRows = resultSet.getRow();
+
+            columnValues = new String[amountOfRows];
+
+            int counter = 0;
+            while (resultSet.next()) {
+                columnValues[counter] = resultSet.getString(column);
+
+            }
+
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return columnValues;
+    }
+
+    public static String[] getAllValuesInColumn(String tableName, String columnName) {
+        try {
+            ResultSet resultSet;
+            Statement statement;
+
+            String sql = "SELECT * FROM " + tableName;
+
+            int amountOfRows = 0;
+
+            Connection connection = GetConnection.getConnectionWithLocalHostWithoutTryCatch();
+
+            statement = connection.createStatement();
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery(sql);
+            amountOfRows = resultSet.getRow();
+
+            String[] columnValues = new String[amountOfRows];
+
+            int counter = 0;
+            while (resultSet.next()) {
+                columnValues[counter] = resultSet.getString(columnName);
+
+            }
+
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return null;
+    }
+    //</editor-fold>
+
+    //<editor-fold desc="Product related methods">
+    public static String[] getRowFromProductTableByProductNameGetArray(String productName) throws SQLException {
+        ResultSet resultSet;
+        Statement statement;
+
+        String sql = "SELECT * FROM diet_tracker_schema.product_table WHERE product_name=\"" + productName + "\";";
+        String[] result = new String[Config.SQL_COLUMNS_PRODUCT.length];
+
+        Connection connection = GetConnection.getConnectionWithLocalHost();
+        statement = connection.createStatement();
+        resultSet = statement.executeQuery(sql);
+
+        while (resultSet.next()) {
+            for (int i = 0; i < Config.SQL_COLUMNS_PRODUCT.length; i++) {
+                result[i] = resultSet.getString(Config.SQL_COLUMNS_PRODUCT[i].replace("`", ""));
+            }
+        }
+        connection.close();
+        resultSet.close();
+        statement.close();
+
+        return result;
+    }
+
     public static String[] getAllProductNamesFromProductTable() throws SQLException {
         ResultSet resultSet;
         Statement statement;
@@ -329,7 +417,6 @@ how to handle this upper examples
 
         return result;
     }
-
 
     public static String getRowFromProductTableByProductNameWithColumnName(String productName) throws SQLException {
         ResultSet resultSet;
@@ -424,7 +511,6 @@ how to handle this upper examples
 
         return allRowsArray;
     }
-    //</editor-fold>
 
     public static String[] getAllProductDataByNameFromCalendarTable(String productName) throws SQLException {
         // Hard code array length
@@ -460,90 +546,6 @@ how to handle this upper examples
 
         return allRowsArray;
     }
+    //</editor-fold>
 
-    public static String[] getAllValuesInColumn(String tableName, int column) {
-        String[] columnValues;
-        try {
-            ResultSet resultSet;
-            Statement statement;
-
-            String sql = "SELECT * FROM " + tableName;
-
-            int amountOfRows = 0;
-
-            Connection connection = GetConnection.getConnectionWithLocalHostWithoutTryCatch();
-
-            statement = connection.createStatement();
-            statement = connection.createStatement();
-            resultSet = statement.executeQuery(sql);
-            amountOfRows = resultSet.getRow();
-
-            columnValues = new String[amountOfRows];
-
-            int counter = 0;
-            while (resultSet.next()) {
-                columnValues[counter] = resultSet.getString(column);
-
-            }
-
-
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        return columnValues;
-    }
-
-    public static String[] getAllValuesInColumn(String tableName, String columnName) {
-        try {
-            ResultSet resultSet;
-            Statement statement;
-
-            String sql = "SELECT * FROM " + tableName;
-
-            int amountOfRows = 0;
-
-            Connection connection = GetConnection.getConnectionWithLocalHostWithoutTryCatch();
-
-            statement = connection.createStatement();
-            statement = connection.createStatement();
-            resultSet = statement.executeQuery(sql);
-            amountOfRows = resultSet.getRow();
-
-            String[] columnValues = new String[amountOfRows];
-
-            int counter = 0;
-            while (resultSet.next()) {
-                columnValues[counter] = resultSet.getString(columnName);
-
-            }
-
-
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        return null;
-    }
-
-    public static String[] getRowFromProductTableByProductNameGetArray(String productName) throws SQLException {
-        ResultSet resultSet;
-        Statement statement;
-
-        String sql = "SELECT * FROM diet_tracker_schema.product_table WHERE product_name=\"" + productName + "\";";
-        String[] result = new String[Config.SQL_COLUMNS_PRODUCT.length];
-
-        Connection connection = GetConnection.getConnectionWithLocalHost();
-        statement = connection.createStatement();
-        resultSet = statement.executeQuery(sql);
-
-        while (resultSet.next()) {
-            for (int i = 0; i < Config.SQL_COLUMNS_PRODUCT.length; i++) {
-                result[i] = resultSet.getString(Config.SQL_COLUMNS_PRODUCT[i].replace("`", ""));
-            }
-        }
-        connection.close();
-        resultSet.close();
-        statement.close();
-
-        return result;
-    }
 }

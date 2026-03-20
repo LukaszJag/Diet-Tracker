@@ -521,7 +521,6 @@ public class Charts {
         int mealsAmountToDisplay = 24;
         //</editor-fold>
 
-
         //<editor-fold desc="Constructors">
         public DailyMacroChart() {
         }
@@ -530,7 +529,6 @@ public class Charts {
             this.dayDateInSQLFriendlyFormat = dayDateInSQLFriendlyFormat;
         }
         //</editor-fold>
-
 
         public void setDayDateInSQLFriendlyFormat(String dateInSQLFriendlyFormat) {
             this.dayDateInSQLFriendlyFormat = dateInSQLFriendlyFormat;
@@ -553,6 +551,7 @@ public class Charts {
         public void prepareDataForBarChart() {
             prepareSwingComponents();
             //prepareDataForMonthAverageMacro();
+            setSQLQuery();
             getMealDataFromSQLTable();
             prepareJFreeChart();
             prepareDataForChart();
@@ -567,7 +566,7 @@ public class Charts {
         }
 
         private void getMealDataFromSQLTable() {
-            table.getAllRowFromQuery(SQLQuery);
+            table.getAllRowFromQuery();
         }
 
 
@@ -590,6 +589,8 @@ public class Charts {
 
             for (int i = 0; i < mealsAmountToDisplay; i++) {
                 if (table.getRows().size() < i) {
+                    System.out.println("size: " + table.getRows().size());
+                    System.out.println("i: ["+ i + "]");
                     dataset.addValue(
                             Double.valueOf(table.getRowInTable(i).getValue("kcal"))
                             , ("" + i), "kcal");

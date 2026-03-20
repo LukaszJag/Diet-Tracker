@@ -39,12 +39,10 @@ public class RowInTable {
         int counter = 0;
         for (Map.Entry<String, ?> entry : fields.entrySet()) {
             String value2 = (String) entry.getValue();
-            System.out.println(counter + ": " + value2);
             counter++;
 
             if (value2.equals(value)) {
                 String key = entry.getKey();
-                System.out.println(counter + ": " + key);
                 if (firstKey == null) {
                     firstKey = entry.getKey();
                 } else {
@@ -66,12 +64,10 @@ public class RowInTable {
         int counter = 0;
         for (Map.Entry<String, ?> entry : fields.entrySet()) {
             String value2 = (String) entry.getValue();
-            System.out.println(counter + ": " + value2);
             counter++;
 
             if (value2.equals(value)) {
                 String key = entry.getKey();
-                System.out.println(counter + ": " + key);
                 if (firstKey == null) {
                     firstKey = entry.getKey();
                 } else {
