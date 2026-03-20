@@ -37,4 +37,28 @@
             Od zera do 21 z Kubą 19:34 - 19:57 [23']
             21:19 dla Kuby
 
+#id ??
+2026-03-11
+    Trening na boisku: 19:16 - 19:57 [41']
+    Localization: Boisko - koło akademików - pl. Grunwaldzki
+
+        Koszykówka 19:16 - 19:57 [41']
+            Od zera do 21 z Kubą 19:16 - 19:33 [17']
+            21:20 dla mnie
+
+            Od zera do 21 z Kubą 19:34 - 19:57 [23']
+            21:19 dla Kuby
+
+#id ??
+2026-03-19
+    Trening na boisku: 17:54 - 18:22 [28']
+    Localization: Boisko - koło akademików - pl. Grunwaldzki
+
+        Koszykówka 17:54 - 18:22 [28']
+            Od zera do 21 z Kubą 17:54 - 18:14 [20']
+            21:17 dla mnie
+
+            1 vs 1 - 18:15 - 18:22 [7']
+            zasady dodatkowe: żeby oddać rzut ja musze wyjść za linie 2 punktów
+            4:1 dla Kuby
 
