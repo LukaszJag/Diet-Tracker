@@ -1,0 +1,20 @@
+INSERT INTO `diet_tracker_schema`.product_table
+(`product_name`,
+`product_brand`,
+`product_package_has`,
+`product_macro_for`,
+`product_kcal`,
+`product_protein`,
+`product_fat`,
+`product_carbs`,
+`comment_optional`)
+Values
+('Budyń z cukrem smak truskawkowy',
+'Winiary',
+60.0,
+100.0,
+220.4,
+0.86,
+0.08,
+53.84,
+'Link: https://www.carrefour.pl/artykuly-spozywcze/do-wypiekow-i-deserow/budynie-i-kisiele/winiary-budyn-z-cukrem-smak-truskawkowy-60-g');

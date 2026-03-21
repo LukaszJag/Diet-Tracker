@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2026-03-20',
+'Saturday',
+'Snack 2',
+120.0,
+'Budyń z cukrem smak truskawkowy',
+220.4,
+0.86,
+0.08,
+53.84,
+'2026-03-21 11:57:59',
+'none',
+264.48,
+64.608,
+0.096,
+1.0320001
+);

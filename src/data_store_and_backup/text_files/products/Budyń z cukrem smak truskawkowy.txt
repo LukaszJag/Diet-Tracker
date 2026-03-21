@@ -1,0 +1,9 @@
+Name: Budyń z cukrem smak truskawkowy
+Brand: Winiary
+Package has: 60.0
+Macro for: 100.0
+KCal: 220.4
+Protein: 0.86
+Fat: 0.08
+Carbs: 53.84
+Comment optional: Link: https://www.carrefour.pl/artykuly-spozywcze/do-wypiekow-i-deserow/budynie-i-kisiele/winiary-budyn-z-cukrem-smak-truskawkowy-60-g
