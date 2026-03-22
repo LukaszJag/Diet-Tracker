@@ -184,8 +184,9 @@ how to handle this upper examples
 
         //</editor-fold>
 
+        RowInTable rowInTabletmp;
         for (int i = 0; i < amountOfRows; i++) {
-            rows[i] = new RowInTable();
+            rowInTabletmp = new RowInTable();
             GetResultSet.isResultSetHasNext(resultSet);
             for (int j = 1; j < amountOfColumns - 1; j++) {
 
@@ -194,11 +195,11 @@ how to handle this upper examples
                 value = GetResultSet.getValueOfString(resultSet, j);
                 rows[i].putKeyAndValueToRow(GetResultSet.getColumnName(resultSet, j), value);
 
-
             }
-
-            table.putRowToTable(rows[i]);
+            table.putRowToTable(rowInTabletmp);
         }
+        table.printTable();
+        rowsInTable = table.getRows();
         return rowsInTable;
     }
 

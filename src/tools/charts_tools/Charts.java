@@ -567,8 +567,10 @@ public class Charts {
 
         private void getMealDataFromSQLTable() {
             table.getAllRowFromQuery();
+            System.out.println();
+            System.out.println("Size: " + table.getRows().size());
+            System.out.println();
         }
-
 
 
         /*
@@ -587,15 +589,19 @@ public class Charts {
         public void prepareJFreeChart() {
             dataset = new DefaultCategoryDataset();
 
+            //table.printTable();
             for (int i = 0; i < mealsAmountToDisplay; i++) {
-                if (table.getRows().size() < i) {
-                    System.out.println("size: " + table.getRows().size());
-                    System.out.println("i: ["+ i + "]");
+                System.out.println("Double: " + Double.valueOf(table.getRowInTable(i).getValue("kcal")));
+//                if (table.getRowInTable(i) == null || table == null) {
+//                    System.out.println("null value on i: " + i );
+//                } else
+                    if (table.getRows().size() < i) {
+                    //System.out.println("size: " + table.getRows().size());
+                    //System.out.println("i: [" + i + "]");
+                    System.out.println("Double: " + Double.valueOf(table.getRowInTable(i).getValue("kcal")));
                     dataset.addValue(
                             Double.valueOf(table.getRowInTable(i).getValue("kcal"))
                             , ("" + i), "kcal");
-                }else {
-                    dataset.addValue(0, (" " + i), "kcal");
                 }
             }
 

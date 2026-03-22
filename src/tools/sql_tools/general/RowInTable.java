@@ -24,12 +24,11 @@ public class RowInTable {
     }
 
     public String getValue(String key) {
-        try {
-            fields.get(key);
-        } catch (Exception e) {
 
-        }
-        return "-1";
+        //System.out.println(fields.get(key));
+        return fields.get(key);
+
+
     }
 
     public String getKey(Object value) {
@@ -92,15 +91,15 @@ public class RowInTable {
     }
     //</editor-fold>
 
-    public void printAlLValuesAndKey(){
+    public void printAlLValuesAndKey() {
         for (String i : fields.keySet()) {
             System.out.println("key: " + i + " value: " + fields.get(i));
         }
     }
 
-    public static void printAlLValuesAndKey(RowInTable rowInTable){
+    public static void printAlLValuesAndKey(RowInTable rowInTable) {
         for (String i : rowInTable.getFields().keySet()) {
-            System.out.println("key: " + i + " value: " + fields.get(i));
+            System.out.println("key:<" + i + "> value: <" + fields.get(i) + ">");
         }
     }
 

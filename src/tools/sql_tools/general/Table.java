@@ -6,17 +6,17 @@ import java.util.ArrayList;
 
 public class Table {
 
-    String tableName;
-    ArrayList<RowInTable> rows;
-    String SQLQuery;
+    String tableName = "not set";;
+    ArrayList<RowInTable> rows = new ArrayList<RowInTable>();
+    String SQLQuery = "SELECT * FROM calendar WHERE day_date=\"2026-03-11\"";
 
     //<editor-fold desc="Constructors">
     public Table() {
-        this.tableName = "not set";
-        this.rows = new ArrayList<RowInTable>();
-        // default SQL Query
-        this.SQLQuery = "SELECT * FROM calendar WHERE day_date=\"2026-03-11\"";
-        getAllRowFromQuery();
+//        this.tableName = "not set";
+//        this.rows = new ArrayList<RowInTable>();
+//        // default SQL Query
+//        this.SQLQuery = "SELECT * FROM calendar WHERE day_date=\"2026-03-11\"";
+//        getAllRowFromQuery();
 
     }
 
@@ -31,7 +31,6 @@ public class Table {
         this.rows = new ArrayList<RowInTable>();
         getAllRowFromQuery();
     }
-
 
 
     //</editor-fold>
@@ -59,18 +58,32 @@ public class Table {
     }
 
     public RowInTable getRowInTable(int index) {
-        if (rows.size() < index) {
-            System.out.println("index: Out of bond");
+        if (rows.size() <= index) {
+            System.out.println("getRowInTable(int index -> index: Out of bond: " + index);
             return null;
         }
-        return getRowInTable(index);
+
+        if (rows == null){
+            System.out.println("rows is null");
+            return null;
+        }
+
+        if (rows.isEmpty()){
+            System.out.println("rows is empty");
+            return null;
+        }
+
+        return rows.get(index);
     }
     //</editor-fold>
 
     //<editor-fold desc="Print methods">
     public void printTable() {
         for (int i = 0; i < rows.size(); i++) {
+            System.out.println("Row:" + i);
             rows.get(i).printAlLValuesAndKey(rows.get(i));
+            System.out.println();
+            System.out.println();
         }
     }
 
