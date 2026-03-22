@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2026-03-22',
+'Sunday',
+'Snack 2',
+246.0,
+'Spaghetti bolognese - domowe',
+172.14,
+9.77,
+9.02,
+13.1,
+'2026-03-22 09:05:22',
+'none',
+423.46442,
+32.226,
+22.189201,
+24.0342
+);
