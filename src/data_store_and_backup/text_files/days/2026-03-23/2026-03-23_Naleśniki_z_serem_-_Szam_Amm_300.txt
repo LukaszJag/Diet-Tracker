@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2026-03-23',
+'Monday',
+'Snack 2',
+300.0,
+'Naleśniki z serem - Szam Amm',
+159.0,
+8.0,
+2.2,
+26.0,
+'2026-03-23 11:08:42',
+'none',
+477.0,
+78.0,
+6.6000004,
+24.0
+);
