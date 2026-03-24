@@ -54,7 +54,7 @@ public class Table {
             System.out.println("SQLQuery is Empty");
         }
 
-        setRows(Select.selectAllRowsDataFromQuery(this.SQLQuery));
+        setRows(Select.allRowsDataFromQuery(this.SQLQuery));
     }
 
     public RowInTable getRowInTable(int index) {

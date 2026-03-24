@@ -43,89 +43,94 @@ public class SQLToolsTests {
         class SelectTests {
             @Nested
             class SelectGeneralSQLTools {
-                // TODO
-                @Test
-                public void selectOneProductFromProductTable() {
-                    LinkedHashMap<String, String> functionOutput = Select.selectAllDataFromTable("product_table", "product_name", "=", "Arbuz");
-                    LinkedHashMap<String, String> expected = new LinkedHashMap<>();
-                    Assertions.assertTrue(functionOutput.entrySet().equals(null));
+
+                @Nested
+                class SelectAllDataFromTable {
+                    public void selectAllDataFromTable() {
+                        LinkedHashMap<String, String> functionOutput = Select.selectAllDataFromTable("product_table", "product_name", "=", "Arbuz");
+                        LinkedHashMap<String, String> expected = new LinkedHashMap<>();
+                        Assertions.assertTrue(functionOutput.entrySet().equals(null));
+                    }
                 }
 
-                @Test
-                public void selectAllDataFromQueryTests_1() {
-                    String dateInSQLFriendlyFormat = "2026-05-05";
-                    String SQLQuery = "" +
-                            "SELECT " +
-                            "* " +
-                            "FROM " +
-                            "calendar " +
-                            "WHERE " +
-                            "day_date" +
-                            "=" +
-                            "\"" +
-                            dateInSQLFriendlyFormat +
-                            "\"" +
-                            ";";
+                @Nested
+                class SelectAllDataFromQueryMethods {
+                    @Test
+                    public void selectAllDataFromQueryTests_1() {
+                        String dateInSQLFriendlyFormat = "2026-05-05";
+                        String SQLQuery = "" +
+                                "SELECT " +
+                                "* " +
+                                "FROM " +
+                                "calendar " +
+                                "WHERE " +
+                                "day_date" +
+                                "=" +
+                                "\"" +
+                                dateInSQLFriendlyFormat +
+                                "\"" +
+                                ";";
 
-                    ArrayList<ArrayList<HashMap<String, String>>> dataFromTable = Select.selectAllDataFromQuery(SQLQuery);
+                        ArrayList<ArrayList<HashMap<String, String>>> dataFromTable = Select.selectAllDataFromQuery(SQLQuery);
 
-                    System.out.println(dataFromTable.size());
-                    System.out.println(dataFromTable.get(0).size());
+                        System.out.println(dataFromTable.size());
+                        System.out.println(dataFromTable.get(0).size());
 //                System.out.println(dataFromTable.get(0).get(0).get("product_name"));
-                }
+                    }
 
-                @Test
-                public void selectAllDataFromQueryTests_2() {
-                    String dateInSQLFriendlyFormat = "2026-05-05";
-                    String SQLQuery = "" +
-                            "SELECT " +
-                            "* " +
-                            "FROM " +
-                            "calendar " +
-                            "WHERE " +
-                            "day_date" +
-                            "=" +
-                            "\"" +
-                            dateInSQLFriendlyFormat +
-                            "\"" +
-                            ";";
+                    @Test
+                    public void selectAllDataFromQueryTests_2() {
+                        String dateInSQLFriendlyFormat = "2026-05-05";
+                        String SQLQuery = "" +
+                                "SELECT " +
+                                "* " +
+                                "FROM " +
+                                "calendar " +
+                                "WHERE " +
+                                "day_date" +
+                                "=" +
+                                "\"" +
+                                dateInSQLFriendlyFormat +
+                                "\"" +
+                                ";";
 
-                    ArrayList<HashMap<String, String>> dataFromTable = Select.selectAllDataFromQuery2(SQLQuery);
+                        ArrayList<HashMap<String, String>> dataFromTable = Select.selectAllDataFromQuery2(SQLQuery);
 
-                    System.out.println(dataFromTable.size());
-                    System.out.println(dataFromTable.get(0).size());
+                        System.out.println(dataFromTable.size());
+                        System.out.println(dataFromTable.get(0).size());
 //                System.out.println(dataFromTable.get(0).get(0).get("product_name"));
+                    }
                 }
 
-                @Test
-                public void selectAllDataFromQueryCukier_2026_03_11() {
-                    String dateInSQLFriendlyFormat = "2026-03-11";
-                    String productNameCukier = "Cukier";
-                    String SQLQuery = "" +
-                            "SELECT " +
-                            "* " +
-                            "FROM " +
-                            "calendar " +
-                            "WHERE " +
-                            "day_date" +
-                            "=" +
-                            "\"" +
-                            dateInSQLFriendlyFormat +
-                            "\"" +
-                            " AND " +
-                            "product_name " +
-                            " = " +
-                            "\"" +
-                            productNameCukier +
-                            "\"" +
-                            ";";
+                @Nested
+                class SelectOneRowDataFromQueryMethod{
+                    String SQLQuerySelectOnlyCukierFromDay = "SELECT * FROM calendar WHERE day_date=\"2026-03-11\" AND product_name = \"cukier\";";
 
-                    HashMap<String, String> dataFromTable = Select.selectOneRowDataFromQuery(SQLQuery);
+                    @Test
+                    public void selectAllDataFromQueryCukier_2026_03_11() {
 
-                    System.out.println(dataFromTable.size());
-                    System.out.println();
-                    System.out.println(dataFromTable.toString());
+                        HashMap<String, String> dataFromTable = Select.selectOneRowDataFromQuery(SQLQuerySelectOnlyCukierFromDay);
+
+                        System.out.println(dataFromTable.size());
+                        System.out.println();
+                        System.out.println(dataFromTable.toString());
+                    }
                 }
+
+                @Nested
+                class SelectAllRowsDataFromQueryMethod {
+                    String SQLQuerySelectWholeDay = "SELECT * FROM calendar WHERE day_date=\"2026-03-11\"";
+
+                    @Test
+                    public void selectAllRowsDataFromQuery_1(){
+                        ArrayList<RowInTable> rowInTableArrayList = Select.allRowsDataFromQuery(SQLQuerySelectWholeDay);
+
+                        for (int i = 0; i < rowInTableArrayList.size(); i++) {
+                            rowInTableArrayList.get(i).printAlLValuesAndKey();
+                        }
+                    }
+                }
+
             }
         }
 
@@ -202,23 +207,24 @@ public class SQLToolsTests {
             }
 
             @Test
-            public void getAllValuesAndKeyFromCalendarRow(){
+            public void getAllValuesAndKeyFromCalendarRow() {
                 calendar_2026_03_11_Cukier.printAlLValuesAndKey();
             }
         }
 
         @Nested
-        class TableTests{
+        class TableTests {
 
             String QueryForTest_1 = "SELECT * FROM calendar WHERE day_date=\"2026-03-11\"";
 
             @Test
-            public void setQueryForTest_1(){
+            public void setQueryForTest_1() {
                 Table table = new Table(QueryForTest_1);
                 table.printTable();
             }
         }
     }
+
     @Nested
     class DaysStatisticsTools {
 

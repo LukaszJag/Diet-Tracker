@@ -170,7 +170,7 @@ how to handle this upper examples
         return rows;
     }
 
-    public static ArrayList<RowInTable> selectAllRowsDataFromQuery(String SQLQuery) {
+    public static ArrayList<RowInTable> allRowsDataFromQuery(String SQLQuery) {
         //<editor-fold desc="Values">
         ResultSet resultSet = GetResultSet.getResultSetFromSQL(SQLQuery);
         ResultSetMetaData resultSetMetaData = GetResultSet.getResultSetMetaData(resultSet);
