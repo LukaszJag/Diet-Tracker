@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2026-03-24',
+'Tuesday',
+'Breakfast',
+161.0,
+'Hit Markizy o smaku truskawkowym',
+502.0,
+5.7,
+24.0,
+65.0,
+'2026-03-24 08:55:53',
+'none',
+808.22003,
+104.65,
+38.64,
+9.177
+);
