@@ -1,0 +1,9 @@
+Name: Danio Serek z kawałkami czekolady
+Brand: Danone
+Package has: 200.0
+Macro for: 100.0
+KCal: 113.0
+Protein: 6.1
+Fat: 4.6
+Carbs: 11.8
+Comment optional: Link: https://www.carrefour.pl/mleko-nabial-jaja/jogurt-kefir-maslanka-serki-homogenizowane/serki-homogenizowane/danio-serek-z-kawalkami-czekolady-200-g
