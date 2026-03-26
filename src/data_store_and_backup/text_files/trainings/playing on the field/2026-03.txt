@@ -75,3 +75,29 @@
             Od zera do 21 z Kubą 16:30 - 17:04 [34']
             21:19 dla Kuby
 
+
+#id ??
+2026-03-21
+    Trening na boisku: 17:19 - 18:18 [59']
+    Localization: Boisko do siatkowki - Benedyktyńska
+
+        Siatkówka 17:19 - 17:41 [22']
+            Odbijanie z Kubą 17:19 - 17:41 [22']
+                -> max odbić 30 <= 40
+
+        Koszykówka 17:45 - 18:04 [19']
+
+            Od zera do 5 - mały kosz - Ja vs Kuba 17:45 - 17:48 [3']
+                5:2 dla Kuby
+
+            Od zera do 21 z Kubą 17:49 - 18:04 [15']
+            21:16 dla mnie
+
+        Siatkówka 18:04 - 18:17 [13']
+            Odbijanie z Kubą 18:04 - 18:17 [13']
+                -> max odbić 30 <= x
+
+       Koszykówka 18:22 - 18:28 [6']
+            Od zera do 21 - 18:22 - 18:28 [6']
+                1. czas - 6' -> 18:22 - 18:28 [6']
+
