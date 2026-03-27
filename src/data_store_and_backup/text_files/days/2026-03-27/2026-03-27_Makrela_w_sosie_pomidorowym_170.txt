@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2026-03-27',
+'Friday',
+'Dinner',
+170.0,
+'Makrela w sosie pomidorowym',
+90.0,
+11.9,
+2.3,
+5.5,
+'2026-03-27 06:07:28',
+'none',
+153.0,
+9.35,
+3.91,
+20.23
+);
