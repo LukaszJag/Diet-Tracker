@@ -101,3 +101,31 @@
             Od zera do 21 - 18:22 - 18:28 [6']
                 1. czas - 6' -> 18:22 - 18:28 [6']
 
+
+
+#id ??
+2026-03-28
+    Trening na boisku: 15:21 - 16:01 [40']
+    Localization: Boisko do siatkowki - Benedyktyńska
+
+        Siatkówka: 15:21 - 15:47 [23']
+            Odbijanie z Kubą 15:21 - 15:42 [21']
+                -> max odbić 30 <= 35
+
+            1 v 1 do 12 pkt przez siatkę pole 20 stóp x 12stóp - 15:42 - 15:47 [5']
+            Dodatkowe zasady:
+                - ja muszę serwować
+                - ja nie mogę przebijać po jednym odbiciu
+                - Kuba może serwować ale też rzucać zamiast tego
+            12:8 dla Kuby
+
+        Koszykówka 15:48 - 16:01 [13']
+
+            Od zera do 21 z Kubą - 15:48 - 16:01 [13']
+            21:20 dla Kuby
+
+
+
+
+
+
