@@ -1,6 +1,0 @@
-Select ---> public static ArrayList<RowInTable> selectAllRowsDataFromQuery(String SQLQuery)
-Table ---> public void getAllRowFromQuery(String SQLQuery
-GetAmountOfRows ---> public static int getAmountOfRows(String SQLQuery)
-
-
-

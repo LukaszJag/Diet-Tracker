@@ -1,0 +1,8 @@
+Issues to add on github website:
+
+    -> Zmienić konsekwencje wprowadzania bez konkretnego posiłku(None) - obecnie przez nieuwage można wprowadzić taki produkt klikając enter
+
+    -> Dodać możliwoć dodania produktu będać w product comment wciskając CTRL
+
+
+

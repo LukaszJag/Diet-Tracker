@@ -1,0 +1,7 @@
+Add chart for days in month for better  analysis and view:
+
+    - made of products eaten that day
+
+    - have own macro
+
+    - have meals
