@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2026-03-30',
+'Wednesday',
+'Dinner',
+400.0,
+'Kebab z kurczaka z saszetką sosu czosnkowego',
+171.0,
+15.0,
+11.0,
+2.6,
+'2026-04-01 03:16:56',
+'none',
+684.0,
+10.4,
+44.0,
+60.0
+);

@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2026-03-30',
+'Monday',
+'Dinner',
+120.0,
+' Tost z szynką i serem',
+259.0,
+9.2,
+9.4,
+33.4,
+'2026-03-30 09:56:48',
+'none',
+310.80002,
+40.08,
+11.28,
+11.04
+);

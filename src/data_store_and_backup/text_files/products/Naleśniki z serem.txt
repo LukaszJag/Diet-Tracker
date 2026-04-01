@@ -1,0 +1,9 @@
+Name: Naleśniki z serem
+Brand: Carrefour
+Package has: 400.0
+Macro for: 100.0
+KCal: 155.0
+Protein: 7.1
+Fat: 2.2
+Carbs: 26.0
+Comment optional: Link: https://www.carrefour.pl/dania-gotowe-i-przystawki/dania-gotowe-i-przystawki-7v/krokiety-i-nalesniki/carrefour-classic-nalesniki-z-serem-400-g

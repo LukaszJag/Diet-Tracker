@@ -357,7 +357,7 @@ public class AddProductToCalendarDay {
 
         // check - Days Statistic table
         checkDaysStatisticFilledTableButton.addActionListener(new CheckDaysStatisticFilledTableActionListener());
-        String dateForCheckDaysDStatisticsTable = addProductToDayDisplaySelectedFDateDayLabel.getText().substring(0, 5) + "03%";
+        String dateForCheckDaysDStatisticsTable = addProductToDayDisplaySelectedFDateDayLabel.getText().substring(0, 5) + "04%";
         checkDaysStatisticsTableDateTextField.setText(dateForCheckDaysDStatisticsTable);
         checkDaysStatisticsTableDateTextField.setMaximumSize(new Dimension(100, 30));
         //</editor-fold>

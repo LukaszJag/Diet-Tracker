@@ -1,0 +1,9 @@
+Name: Kebab z kurczaka z saszetką sosu czosnkowego
+Brand: Morliny
+Package has: 400.0
+Macro for: 100.0
+KCal: 171.0
+Protein: 15.0
+Fat: 11.0
+Carbs: 2.6
+Comment optional: Link: https://leclercdrive.lublin.pl/morrli
