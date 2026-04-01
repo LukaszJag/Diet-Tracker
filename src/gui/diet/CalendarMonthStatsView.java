@@ -144,7 +144,7 @@ public class CalendarMonthStatsView {
     //<editor-fold desc="Combo Boxes">
     JComboBox monthSelectComboBox = new JComboBox<>(new String[]{"April", "May", "June", "July", "August", "September", "October",
             "November", "December", "January2025", "February2025", "March2025", "April2025", "May2025", "June2025", "July2025",
-            "August2025", "September2025", "October2025", "November2025", "December2025", "January2026", "February2026", "March2026"});
+            "August2025", "September2025", "October2025", "November2025", "December2025", "January2026", "February2026", "March2026", "April2026"});
     JComboBox selectedDayProductsListComboBox = new JComboBox<String>();
     //</editor-fold>
     //<editor-fold desc="TextFields">
@@ -256,7 +256,7 @@ public class CalendarMonthStatsView {
     }
 
     private void prepareAndAddContentToMainPanel() {
-        setDaysButtonsMainPanel("March2026");
+        setDaysButtonsMainPanel("April2026");
     }
 
     private void prepareAndAddContentToNorthPanel() {
@@ -270,7 +270,7 @@ public class CalendarMonthStatsView {
         calendarMonthStatsViewPanelNorth.setLayout(northPanelGridLayout);
 
 
-        monthSelectComboBox.setSelectedItem("March2026");
+        monthSelectComboBox.setSelectedItem("April2026");
 
         selectedDaysCounterGoodDaysPanel = new JPanel();
         selectedDaysCounterBadDaysPanel = new JPanel();
@@ -453,6 +453,20 @@ public class CalendarMonthStatsView {
                 daysButtons[i].setPreferredSize(Config.CALENDAR_MONTH_STATS_VIEW_BUTTONS_SIZE_DIMENSION);
             }
         } else {
+            if (month.equals("April2026")) {
+                for (int i = 0; i < daysButtons.length; i++) {
+                    if (i < 2) {
+                        daysButtons[i] = new JButton("null");
+                    } else if (i >= 32) {
+                        daysButtons[i] = new JButton("null");
+                    } else {
+                        daysButtons[i] = new JButton(String.valueOf(counter));
+                        daysButtons[i].setPreferredSize(Config.CALENDAR_MONTH_STATS_VIEW_BUTTONS_SIZE_DIMENSION);
+                        daysButtons[i].addActionListener(new DaysButtonsActionListener(daysButtons[i]));
+                        counter++;
+                    }
+                }
+            }
             if (month.equals("March2026")) {
                 for (int i = 0; i < daysButtons.length; i++) {
                     if (i < 6) {
