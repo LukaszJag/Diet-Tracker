@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2026-04-01',
+'Wednesday',
+'Supper',
+159.0,
+'Twaróg Klinek - chudy',
+85.0,
+16.0,
+0.3,
+4.5,
+'2026-04-01 11:14:49',
+'none',
+135.15001,
+7.155,
+0.47700003,
+25.44
+);
