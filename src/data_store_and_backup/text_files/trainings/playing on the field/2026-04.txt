@@ -1,0 +1,20 @@
+#id ??
+2026-04-01
+    Trening na boisku: 19:25 - 20:16 [51']
+    Localization: Boisko do siatkowki - Benedyktyńska
+
+        Siatkówka: 19:25 - 19:46 [ 21']
+            Odbijanie z Kubą 19:25 - 19:46 [ 21']
+                -> max odbić 30 <= 30
+
+        Koszykówka 19:47 - 20:09 [22']
+
+            Od zera do 21 z Kubą - 19:47 - 20:09 [22']
+            21:20 dla mnie
+
+        Siatkówka: 20:10 - 20:16 [6']
+            Odbijanie z Kubą 20:10 - 20:16 [6']
+                -> max odbić 30 <= x
+
+
+
