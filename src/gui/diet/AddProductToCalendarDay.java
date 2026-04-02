@@ -1526,7 +1526,7 @@ public class AddProductToCalendarDay {
             // TODO hard coded value "2026-01%" - need to set general value
             LinkedHashMap<String, String> amountOfProductInSQLTableLinkedHashMap = Select.selectAllDataFromTable(
                     "days_statistics_test", "day_date", "amount_of_filled_points_from_notepad", "day_date",
-                    "LIKE", "2026-03%");
+                    "LIKE", "2026-04%");
 
             String pointInOneDay = "";
 
