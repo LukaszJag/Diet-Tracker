@@ -11,8 +11,8 @@ import tools.products_tools.Product;
 import tools.sql_tools.calendar.InsertToCalendarDayTable;
 import tools.sql_tools.days_statistics.GenerateSLQTableForDaysStatistics;
 import tools.sql_tools.days_statistics.SelectFromDaysStatistics;
-import tools.sql_tools.general.statements.Select;
 import tools.sql_tools.general.get.GetConnection;
+import tools.sql_tools.general.statements.Select;
 import tools.text_files_tools.FilesTools;
 
 import javax.swing.*;
@@ -190,6 +190,9 @@ public class AddProductToCalendarDay {
 
     //<editor-fold desc="Strings and String arrays">
     String[] columnsNamesToDisplayOnQuickView = {"index", "day_date", "day_name", "product_name", "amount_of_product", "kcal_consume", "carbs_consume", "fat_consume", "protein_consume", "meal_name"};
+    String[] columnsNamesToDisplayOnShortQuickView = {"index", "day_date", "product_name", "amount_of_product", "kcal_consume", "meal_name"};
+
+
     String[] columnsNamesFromDaysStatisticsToDisplayOnQuickView = {"index", "day_date", "amount_of_points_from_notepad", "amount_of_filled_points_from_notepad", "kcal_consume", "protein_consume", "fat_consume", "carbs_consume"};
     String dayNameCurrentDateOnStartWindow = MyDate.getCurrentDayNameOfDayCapitalizationCase();
     //</editor-fold>
@@ -844,20 +847,79 @@ public class AddProductToCalendarDay {
     }
 
     private class CheckCalendarTableActionListener implements ActionListener {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            JFrame checkCalendarTableButtonWindowFrame = new JFrame("Calendar Table");
+        //<editor-fold desc="Variables">
+        JFrame checkCalendarTableButtonWindowFrame;
+        DefaultTableModel model;
+        JTable table;
+        JScrollPane scrollPane;
+        JMenuBar menuBar;
 
-            DefaultTableModel model = new DefaultTableModel();
+        JMenu jmFilter;
+        JRadioButtonMenuItem fullView;
+        JRadioButtonMenuItem shortView;
+        ButtonGroup viewGroup;
 
+
+        //</editor-fold>
+
+
+        public void setupFrame() {
+            checkCalendarTableButtonWindowFrame = new JFrame("Calendar Table");
+
+
+            jmFilter = new JMenu("Filter");
+            fullView = new JRadioButtonMenuItem("Full");
+            shortView = new JRadioButtonMenuItem("Short");
+            viewGroup = new ButtonGroup();
+
+            shortView.setSelected(false);
+            shortView.addActionListener(new ShortViewActionListener());
+
+            viewGroup.add(fullView);
+            viewGroup.add(shortView);
+
+            jmFilter.add(fullView);
+            jmFilter.add(shortView);
+
+            menuBar.add(fullView);
+            menuBar.add(shortView);
+            shortView.setAccelerator(
+                    KeyStroke.getKeyStroke(KeyEvent.VK_S,
+                            InputEvent.CTRL_DOWN_MASK));
+
+            fullView.setAccelerator(
+                    KeyStroke.getKeyStroke(KeyEvent.VK_F,
+                            InputEvent.CTRL_DOWN_MASK));
+
+            menuBar.add(jmFilter);
+
+
+            checkCalendarTableButtonWindowFrame.setJMenuBar(menuBar);
+
+            //<editor-fold desc="Finish setup frame">
+            checkCalendarTableButtonWindowFrame.add(scrollPane);
+
+            checkCalendarTableButtonWindowFrame.setSize(Config.CHECK_CALENDAR_TABLE_BUTTON_WINDOW_FRAME_SIZE);
+            checkCalendarTableButtonWindowFrame.setResizable(true);
+            checkCalendarTableButtonWindowFrame.setLocationRelativeTo(null);
+            checkCalendarTableButtonWindowFrame.show();
+        }
+
+        public void prepareTable() {
+            model = new DefaultTableModel();
+            table = new JTable(model);
+            scrollPane = new JScrollPane(table);
+            menuBar = new JMenuBar();
+        }
+
+        public void prepareData() {
             for (int i = 0; i < columnsNamesToDisplayOnQuickView.length; i++) {
                 model.addColumn(columnsNamesToDisplayOnQuickView[i]);
             }
 
-            JTable table = new JTable(model);
-
             table.setModel(model);
 
+            //<editor-fold desc="Set width of columns">
             table.getColumnModel().getColumn(0).setMaxWidth(50);
 
             int minWidthForProductNameColumn = 300;
@@ -867,6 +929,7 @@ public class AddProductToCalendarDay {
             int maxWidthForAmountOfProductColumn = 300;
             table.getColumnModel().getColumn(4).setMaxWidth(maxWidthForAmountOfProductColumn);
 
+
             //<editor-fold desc="Macro Columns">
             int maxWidthForMacroColumns = 250;
             table.getColumnModel().getColumn(5).setMaxWidth(maxWidthForMacroColumns);
@@ -874,9 +937,9 @@ public class AddProductToCalendarDay {
             table.getColumnModel().getColumn(7).setMaxWidth(maxWidthForMacroColumns);
             table.getColumnModel().getColumn(8).setMaxWidth(maxWidthForMacroColumns);
             //</editor-fold>
+            //</editor-fold>
 
-
-            JScrollPane scrollPane = new JScrollPane(table);
+            //<editor-fold desc="Fill table with data">
             String date = checkCalendarTableDateTextField.getText();
             Connection connection;
             String sql = "SELECT `day_date`, `day_name`, `product_name`, `amount_of_product`,  " +
@@ -903,15 +966,86 @@ public class AddProductToCalendarDay {
                     model.addRow(new Object[]{counter, day_date, day_name, product_name, amount_of_product, kcal_consume, carbs_consume, fat_consume, protein_consume, meal_name});
                     counter++;
                 }
+                resultSet.close();
+                connection.close();
+                statement.close();
             } catch (SQLException ex) {
                 throw new RuntimeException(ex);
             }
+            //</editor-fold>
 
-            checkCalendarTableButtonWindowFrame.add(scrollPane);
-            checkCalendarTableButtonWindowFrame.setSize(Config.CHECK_CALENDAR_TABLE_BUTTON_WINDOW_FRAME_SIZE);
-            checkCalendarTableButtonWindowFrame.setResizable(true);
-            checkCalendarTableButtonWindowFrame.setLocationRelativeTo(null);
-            checkCalendarTableButtonWindowFrame.show();
+
+            //</editor-fold>
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            prepareTable();
+            prepareData();
+            setupFrame();
+        }
+
+        private class ShortViewActionListener implements ActionListener {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (shortView.isSelected()) {
+
+                    model = new DefaultTableModel();
+                    model.setColumnCount(0);
+                    if (model.getRowCount() > 0) {
+                        for (int i = model.getRowCount() - 1; i > -1; i--) {
+                            model.removeRow(i);
+                        }
+                    }
+
+                    for (int i = 0; i < columnsNamesToDisplayOnShortQuickView.length; i++) {
+                        model.addColumn(columnsNamesToDisplayOnShortQuickView[i]);
+                    }
+
+                    String date = checkCalendarTableDateTextField.getText();
+                    Connection connection;
+                    String sql = "SELECT `day_date`,  `product_name`, `amount_of_product`,  " +
+                            "`kcal_consume`, `meal_name` " +
+                            "FROM calendar WHERE day_date=\"" +
+                            date +
+                            "\";";
+                    try {
+                        connection = GetConnection.getConnectionWithLocalHost();
+                        Statement statement = connection.createStatement();
+                        ResultSet resultSet = statement.executeQuery(sql);
+                        int counter = 1;
+                        while (resultSet.next()) {
+                            /*
+                            String day_date = resultSet.getString("day_date");
+                            String product_name = resultSet.getString("product_name");
+                            String amount_of_product = resultSet.getString("amount_of_product");
+                            String kcal_consume = resultSet.getString("kcal_consume");
+                            String meal_name = resultSet.getString("meal_name");
+*/
+                            String day_date = resultSet.getString(1);
+                            String product_name = resultSet.getString(2);
+                            String amount_of_product = resultSet.getString(3);
+                            String kcal_consume = resultSet.getString(4);
+                            String meal_name = resultSet.getString(5);
+                            //String meal_name = "meal_tmp";
+
+                            model.addRow(new Object[]{counter, day_date, product_name, amount_of_product, kcal_consume, meal_name});
+                            System.out.println(counter + " product: " + product_name);
+                            counter++;
+                        }
+
+                    } catch (SQLException ex) {
+                        throw new RuntimeException(ex);
+                    }
+                    JTable table = new JTable(model);
+                    JScrollPane scrollPane = new JScrollPane(table);
+                    checkCalendarTableButtonWindowFrame.add(scrollPane);
+                    checkCalendarTableButtonWindowFrame.invalidate();
+                    checkCalendarTableButtonWindowFrame.validate();
+                    checkCalendarTableButtonWindowFrame.repaint();
+                    System.out.println("done");
+                }
+            }
         }
     }
 
