@@ -1,0 +1,9 @@
+Name: Skyr wanilia
+Brand: Fruvita
+Package has: 400.0
+Macro for: 100.0
+KCal: 92.0
+Protein: 10.2
+Fat: 0.5
+Carbs: 12.1
+Comment optional: Dane z opakowania
