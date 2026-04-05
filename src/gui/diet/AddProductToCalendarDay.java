@@ -1106,6 +1106,9 @@ public class AddProductToCalendarDay {
         public void actionPerformed(ActionEvent e) {
             String currentSetDate = addProductToDayDisplaySelectedFDateDayLabel.getText();
             addProductToDayDisplaySelectedFDateDayLabel.setText(MyDate.getNextDayDateSQLFriendlyFormat(currentSetDate));
+
+            String currentSetDateDayName = addProductToDayDisplaySelectedFDateNameDayLabel.getText();
+            addProductToDayDisplaySelectedFDateNameDayLabel.setText(MyDate.getNextDayDateName(currentSetDateDayName));
         }
     }
 
@@ -1114,6 +1117,10 @@ public class AddProductToCalendarDay {
         public void actionPerformed(ActionEvent e) {
             String currentSetDate = addProductToDayDisplaySelectedFDateDayLabel.getText();
             addProductToDayDisplaySelectedFDateDayLabel.setText(MyDate.getPreviousDayDateSQLFriendlyFormat(currentSetDate));
+
+            String currentSetDateDayName = addProductToDayDisplaySelectedFDateNameDayLabel.getText();
+            addProductToDayDisplaySelectedFDateNameDayLabel.setText(MyDate.getPreviousDayDateName(currentSetDateDayName));
+
         }
     }
 

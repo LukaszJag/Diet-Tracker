@@ -463,6 +463,35 @@ public class MyDate {
         dt = sdf.format(c.getTime());
         return dt;
     }
+
+    public static String getNextDayDateName(String dayName) {
+        String dt = dayName;  // Start date
+        SimpleDateFormat sdf = new SimpleDateFormat("EEEE");
+        Calendar c = Calendar.getInstance();
+        try {
+            c.setTime(sdf.parse(dt));
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
+        c.add(Calendar.DAY_OF_WEEK, 1);  // number of days to add
+        dt = sdf.format(c.getTime());
+        return dt;
+    }
+
+    public static String getPreviousDayDateName(String dayName) {
+        String dt = dayName;  // Start date
+        SimpleDateFormat sdf = new SimpleDateFormat("EEEE");
+        Calendar c = Calendar.getInstance();
+        try {
+            c.setTime(sdf.parse(dt));
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
+        c.add(Calendar.DAY_OF_WEEK, -1);  // number of days to add
+        dt = sdf.format(c.getTime());
+        return dt;
+    }
+
     public static String getPreviousDayDateSQLFriendlyFormat(String dateSQLFormat) {
         String dt = dateSQLFormat;  // Start date
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");

@@ -123,6 +123,21 @@ public class MyDateTests2 {
         }
     }
 
+    @Nested
+    class GetNameOf{
+        @Test
+        public void getNextDay(){
+            String result = MyDate.getNextDayDateName("Monday");
+                assertEquals("Tuesday", result);
+        }
+
+        @Test
+        public void getNextDay2(){
+            String result = MyDate.getNextDayDateName("Sunday");
+            assertEquals("Monday", result);
+        }
+    }
+
 
     // TODO - 14.12.25
 /*
