@@ -859,6 +859,9 @@ public class AddProductToCalendarDay {
         JRadioButtonMenuItem shortView;
         ButtonGroup viewGroup;
 
+        DefaultTableModel model2 = new DefaultTableModel();
+        JTable table2 = new JTable(model2);
+        JScrollPane scrollPane2 = new JScrollPane(table2);
 
         //</editor-fold>
 
@@ -874,6 +877,8 @@ public class AddProductToCalendarDay {
 
             shortView.setSelected(false);
             shortView.addActionListener(new ShortViewActionListener());
+
+            fullView.addActionListener(new FullViewActionListener());
 
             viewGroup.add(fullView);
             viewGroup.add(shortView);
@@ -989,17 +994,16 @@ public class AddProductToCalendarDay {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (shortView.isSelected()) {
-
-                    model = new DefaultTableModel();
-                    model.setColumnCount(0);
-                    if (model.getRowCount() > 0) {
-                        for (int i = model.getRowCount() - 1; i > -1; i--) {
-                            model.removeRow(i);
+                    System.out.println("short view is selected");
+                    model2.setColumnCount(0);
+                    if (model2.getRowCount() > 0) {
+                        for (int i = model2.getRowCount() - 1; i > -1; i--) {
+                            model2.removeRow(i);
                         }
                     }
 
                     for (int i = 0; i < columnsNamesToDisplayOnShortQuickView.length; i++) {
-                        model.addColumn(columnsNamesToDisplayOnShortQuickView[i]);
+                        model2.addColumn(columnsNamesToDisplayOnShortQuickView[i]);
                     }
 
                     String date = checkCalendarTableDateTextField.getText();
@@ -1029,21 +1033,43 @@ public class AddProductToCalendarDay {
                             String meal_name = resultSet.getString(5);
                             //String meal_name = "meal_tmp";
 
-                            model.addRow(new Object[]{counter, day_date, product_name, amount_of_product, kcal_consume, meal_name});
-                            System.out.println(counter + " product: " + product_name);
+                            model2.addRow(new Object[]{counter, day_date, product_name, amount_of_product, kcal_consume, meal_name});
                             counter++;
                         }
 
                     } catch (SQLException ex) {
                         throw new RuntimeException(ex);
                     }
-                    JTable table = new JTable(model);
-                    JScrollPane scrollPane = new JScrollPane(table);
-                    checkCalendarTableButtonWindowFrame.add(scrollPane);
-                    checkCalendarTableButtonWindowFrame.invalidate();
-                    checkCalendarTableButtonWindowFrame.validate();
+
+                    table2.getColumnModel().getColumn(0).setMaxWidth(40);
+                    table2.getColumnModel().getColumn(1).setMaxWidth(100);
+                    table2.getColumnModel().getColumn(2).setMinWidth(400);
+                    table2.getColumnModel().getColumn(2).setMaxWidth(600);
+                    table2.getColumnModel().getColumn(3).setMaxWidth(100);
+                    table2.getColumnModel().getColumn(4).setMaxWidth(100);
+                    checkCalendarTableButtonWindowFrame.remove(scrollPane);
+                   //checkCalendarTableButtonWindowFrame.removeAll();
+
+                    checkCalendarTableButtonWindowFrame.add(scrollPane2);
+                    checkCalendarTableButtonWindowFrame.revalidate();
+                    //checkCalendarTableButtonWindowFrame.validate();
                     checkCalendarTableButtonWindowFrame.repaint();
                     System.out.println("done");
+                }
+            }
+        }
+
+        private class FullViewActionListener implements ActionListener {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(fullView.isSelected()){
+                    checkCalendarTableButtonWindowFrame.remove(scrollPane2);
+                    //checkCalendarTableButtonWindowFrame.removeAll();
+
+                    checkCalendarTableButtonWindowFrame.add(scrollPane);
+                    checkCalendarTableButtonWindowFrame.revalidate();
+                    //checkCalendarTableButtonWindowFrame.validate();
+                    checkCalendarTableButtonWindowFrame.repaint();
                 }
             }
         }
