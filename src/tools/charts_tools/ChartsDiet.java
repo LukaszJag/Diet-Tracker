@@ -1,6 +1,7 @@
 package tools.charts_tools;
 
 import configuration.Config;
+import gui.diet.AddProductToCalendarDay;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
@@ -255,6 +256,8 @@ public class ChartsDiet {
         chartFrame.setVisible(true);
         chartFrame.setResizable(true);
         chartFrame.setLocationRelativeTo(null);
+
+        chartFrame.addKeyListener(new AddProductToCalendarDay(true). new CloseWindowKeyListener(chartFrame));
     }
     public void displayLineChart() {
         prepareDataForCharts();

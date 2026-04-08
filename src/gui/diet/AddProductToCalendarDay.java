@@ -216,6 +216,14 @@ public class AddProductToCalendarDay {
         startAddProductToDayWindow();
     }
 
+    public AddProductToCalendarDay(boolean emptyInstance){
+        if (emptyInstance){
+
+        }else {
+            startAddProductToDayWindow();
+        }
+    }
+
     private void startAddProductToDayWindow() {
         setFrame();
         setPanels();
@@ -848,7 +856,8 @@ public class AddProductToCalendarDay {
 
     private class CheckCalendarTableActionListener implements ActionListener {
         //<editor-fold desc="Variables">
-        JFrame checkCalendarTableButtonWindowFrame;
+        JFrame checkCalendarTableButtonWindowFrame = new JFrame("Calendar Table");
+        ;
         DefaultTableModel model;
         JTable table;
         JScrollPane scrollPane;
@@ -867,8 +876,8 @@ public class AddProductToCalendarDay {
 
 
         public void setupFrame() {
-            checkCalendarTableButtonWindowFrame = new JFrame("Calendar Table");
 
+            checkCalendarTableButtonWindowFrame.addKeyListener(new CloseWindowKeyListener(checkCalendarTableButtonWindowFrame));
 
             jmFilter = new JMenu("Filter");
             fullView = new JRadioButtonMenuItem("Full");
@@ -1048,7 +1057,7 @@ public class AddProductToCalendarDay {
                     table2.getColumnModel().getColumn(3).setMaxWidth(100);
                     table2.getColumnModel().getColumn(4).setMaxWidth(100);
                     checkCalendarTableButtonWindowFrame.remove(scrollPane);
-                   //checkCalendarTableButtonWindowFrame.removeAll();
+                    //checkCalendarTableButtonWindowFrame.removeAll();
 
                     checkCalendarTableButtonWindowFrame.add(scrollPane2);
                     checkCalendarTableButtonWindowFrame.revalidate();
@@ -1062,7 +1071,7 @@ public class AddProductToCalendarDay {
         private class FullViewActionListener implements ActionListener {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(fullView.isSelected()){
+                if (fullView.isSelected()) {
                     checkCalendarTableButtonWindowFrame.remove(scrollPane2);
                     //checkCalendarTableButtonWindowFrame.removeAll();
 
@@ -1073,12 +1082,15 @@ public class AddProductToCalendarDay {
                 }
             }
         }
+
     }
 
     private class CheckDaysStatisticFilledTableActionListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
             JFrame checkDaysStatisticFilledTableButtonWindowFrame = new JFrame("Days Statistics");
+
+            checkDaysStatisticFilledTableButtonWindowFrame.addKeyListener(new CloseWindowKeyListener(checkDaysStatisticFilledTableButtonWindowFrame));
 
             DefaultTableModel model = new DefaultTableModel();
 
@@ -1609,6 +1621,7 @@ public class AddProductToCalendarDay {
         }
 
         private void setupFrame() {
+            editDaysStatisticsDialogFrame.addKeyListener(new CloseWindowKeyListener(editDaysStatisticsDialogFrame));
             editDaysStatisticsDialogFrame.add(upperPanel, BorderLayout.NORTH);
             editDaysStatisticsDialogFrame.add(leftPanel, BorderLayout.WEST);
             editDaysStatisticsDialogFrame.add(centerPanel, BorderLayout.CENTER);
@@ -1946,7 +1959,36 @@ public class AddProductToCalendarDay {
         }
     }
 
+    public class CloseWindowKeyListener implements KeyListener {
+        public JFrame toClose;
+
+        public CloseWindowKeyListener(JFrame frameToClose){
+            frameToClose.setFocusable(true);
+            frameToClose.requestFocus();
+            this.toClose = frameToClose;
+        }
+
+        @Override
+        public void keyTyped(KeyEvent e) {
+
+        }
+
+        @Override
+        public void keyPressed(KeyEvent e) {
+        }
+
+        @Override
+        public void keyReleased(KeyEvent e) {
+            if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+                System.out.println("esc pressed");
+                toClose.dispose();
+
+            }
+        }
+    }
+
     //</editor-fold>
+
 }
 
 
