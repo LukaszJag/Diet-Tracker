@@ -1,6 +1,6 @@
 package tools.sql_tools.general.statements;
 
-import com.mysql.cj.conf.ConnectionUrlParser;
+import  com.mysql.cj.conf.ConnectionUrlParser;
 import configuration.Config;
 import tools.sql_tools.general.RowInTable;
 import tools.sql_tools.general.Table;
