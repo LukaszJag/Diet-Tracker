@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2026-04-09',
+'Thursday',
+'Second Breakfast',
+103.0,
+'Płatki - Miodo Kółka',
+395.0,
+9.9,
+4.5,
+76.0,
+'2026-04-09 01:29:51',
+'none',
+406.84998,
+78.28,
+4.6349998,
+10.197
+);
