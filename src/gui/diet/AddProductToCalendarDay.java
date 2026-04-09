@@ -887,6 +887,7 @@ public class AddProductToCalendarDay {
             shortView.setSelected(false);
             shortView.addActionListener(new ShortViewActionListener());
 
+            fullView.setSelected(false);
             fullView.addActionListener(new FullViewActionListener());
 
             viewGroup.add(fullView);
