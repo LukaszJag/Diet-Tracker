@@ -191,7 +191,7 @@ public class SQLToolsTests {
             }
 
             @Test
-            public void rowGetKey() {
+            public void rowGetKeyFromFood() {
                 System.out.println(food.getKey("carrot"));
                 System.out.println(food.getKey("banana"));
             }
@@ -216,6 +216,13 @@ public class SQLToolsTests {
         class TableTests {
 
             String QueryForTest_1 = "SELECT * FROM calendar WHERE day_date=\"2026-03-11\"";
+            String QueryForTest_Cukier = "SELECT * FROM calendar WHERE day_date = \"2026-03-11\" AND product_name  = \"Cukier\";";
+
+            @Test
+            public void setQueryForTest_Cukier(){
+                Table table = new Table(QueryForTest_Cukier);
+                table.printTable();
+            }
 
             @Test
             public void setQueryForTest_1() {

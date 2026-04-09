@@ -7,11 +7,12 @@ import java.util.ArrayList;
 public class Table {
 
     String tableName = "not set";;
-    ArrayList<RowInTable> rows = new ArrayList<RowInTable>();
-    String SQLQuery = "SELECT * FROM calendar WHERE day_date=\"2026-03-11\"";
+    ArrayList<RowInTable> rows;
+    String SQLQuery;
 
     //<editor-fold desc="Constructors">
     public Table() {
+        this.rows = new ArrayList<>();
 //        this.tableName = "not set";
 //        this.rows = new ArrayList<RowInTable>();
 //        // default SQL Query
@@ -22,14 +23,13 @@ public class Table {
 
     // TODO - no code, add code to constructor -> public Table(String tableName, String SQLQuery)
     public Table(String SQLQuery) {
-        this.rows = new ArrayList<RowInTable>();
         this.SQLQuery = SQLQuery;
-        getAllRowFromQuery();
+        getAllRowFromClassQuery();
     }
 
     public Table(String tableName, String SQLQuery) {
         this.rows = new ArrayList<RowInTable>();
-        getAllRowFromQuery();
+        getAllRowFromClassQuery();
     }
 
 
@@ -38,12 +38,15 @@ public class Table {
     //<editor-fold desc="Put methods">
     public void putRowToTable(RowInTable rowToInsert) {
         this.rows.add(rowToInsert);
+        rowToInsert.printAlLValuesAndKey();
+        System.out.println();
+        System.out.println();
     }
     //</editor-fold>
 
     //<editor-fold desc="Get methods">
 
-    public void getAllRowFromQuery() {
+    public void getAllRowFromClassQuery() {
         if (SQLQuery == null) {
             System.out.println("SQLQuery is null");
         }

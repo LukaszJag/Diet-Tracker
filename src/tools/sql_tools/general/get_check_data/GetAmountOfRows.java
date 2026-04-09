@@ -9,6 +9,6 @@ public class GetAmountOfRows {
 
     public static int getAmountOfRows(String SQLQuery){
         ResultSet resultSet = GetResultSet.getResultSetFromSQL(SQLQuery);
-        return GetResultSet.getAmountColumnsInResultSet(resultSet);
+        return GetResultSet.getAmountRosInResultSet (resultSet);
     }
 }

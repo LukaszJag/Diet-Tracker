@@ -101,6 +101,23 @@ public class GetResultSet {
         return count;
     }
 
+    public static int getAmountRosInResultSet(ResultSet resultSet) {
+        int rows = 0;
+
+        while(true){
+            try {
+                if (!resultSet.next()) break;
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            rows++;
+        }
+
+
+        return rows;
+    }
+
+
     public static ArrayList<String> getAllColumnLabels(ResultSet resultSet) {
         ResultSetMetaData resultSetMetaData = GetResultSet.getResultSetMetaData(resultSet);
 

@@ -30,7 +30,7 @@ public class Charts_tools_Tests {
     @Test
     public void displayMacroChartForDay(){
         Charts charts = new Charts();
-        Charts.DailyMacroChart dailyMacroChart = charts.new DailyMacroChart();
+        Charts.DailyMacroChart dailyMacroChart = charts.new DailyMacroChart("2026-04-08");
         dailyMacroChart.displayBarChart();
 
     }

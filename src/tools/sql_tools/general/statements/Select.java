@@ -179,27 +179,37 @@ how to handle this upper examples
         int amountOfRows = GetAmountOfRows.getAmountOfRows(SQLQuery);
 
         Table table = new Table();
-        ArrayList<RowInTable> rowsInTable = new ArrayList<>();
+        ArrayList<RowInTable> rowsInTable = new ArrayList<RowInTable>();
         RowInTable[] rows = new RowInTable[amountOfRows];
+
+        for (int i = 0; i < amountOfRows; i++) {
+            rows[i] = new RowInTable();
+        }
 
         //</editor-fold>
 
         RowInTable rowInTabletmp;
         for (int i = 0; i < amountOfRows; i++) {
             rowInTabletmp = new RowInTable();
-            GetResultSet.isResultSetHasNext(resultSet);
+            try {
+                resultSet.next();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
             for (int j = 1; j < amountOfColumns - 1; j++) {
-
 
                 String value = null;
                 value = GetResultSet.getValueOfString(resultSet, j);
+                //System.out.println(value);
                 rows[i].putKeyAndValueToRow(GetResultSet.getColumnName(resultSet, j), value);
 
             }
+            //rowInTabletmp.printAlLValuesAndKey();
             table.putRowToTable(rowInTabletmp);
         }
+        System.out.println("\n\n\nTable: ");
         table.printTable();
-        rowsInTable = table.getRows();
+        //rowsInTable = table.getRows();
         return rowsInTable;
     }
 

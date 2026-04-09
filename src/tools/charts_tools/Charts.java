@@ -13,6 +13,7 @@ import org.jfree.chart.ui.TextAnchor;
 import org.jfree.data.category.CategoryDataset;
 import org.jfree.data.category.DefaultCategoryDataset;
 import tools.calendar_tools.MyDate;
+import tools.debug_tools.Debug;
 import tools.products_tools.Product;
 import tools.sql_tools.days_statistics.SelectFromDaysStatistics;
 import tools.sql_tools.general.RowInTable;
@@ -515,8 +516,8 @@ public class Charts {
 
         //<editor-fold desc="Variables">
         ArrayList<Product.ProductInCalendar> dataOfProductsInDay;
-        String dayDateInSQLFriendlyFormat = "2026-03-11";
-        Table table = new Table();
+        String dayDateInSQLFriendlyFormat;
+        Table table; // = new Table();
         String SQLQuery = "";
         int mealsAmountToDisplay = 24;
         //</editor-fold>
@@ -527,6 +528,9 @@ public class Charts {
 
         public DailyMacroChart(String dayDateInSQLFriendlyFormat) {
             this.dayDateInSQLFriendlyFormat = dayDateInSQLFriendlyFormat;
+            setSQLQuery();
+            this.table = new Table(SQLQuery);
+            Debug.printRedSystemPrintln(SQLQuery);
         }
         //</editor-fold>
 
@@ -566,7 +570,7 @@ public class Charts {
         }
 
         private void getMealDataFromSQLTable() {
-            table.getAllRowFromQuery();
+            table.getAllRowFromClassQuery();
             System.out.println();
             System.out.println("Size: " + table.getRows().size());
             System.out.println();
@@ -591,7 +595,7 @@ public class Charts {
 
             //table.printTable();
             for (int i = 0; i < mealsAmountToDisplay; i++) {
-                System.out.println("Double: " + Double.valueOf(table.getRowInTable(i).getValue("kcal")));
+                System.out.println("Double: " + Double.valueOf(table.getRowInTable(i).getValue("kcal_consume")));
 //                if (table.getRowInTable(i) == null || table == null) {
 //                    System.out.println("null value on i: " + i );
 //                } else
