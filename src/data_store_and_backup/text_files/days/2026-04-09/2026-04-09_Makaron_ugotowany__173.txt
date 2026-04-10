@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2026-04-09',
+'Thursday',
+'Supper',
+173.0,
+'Makaron ugotowany ',
+114.0,
+4.2,
+0.8,
+23.3,
+'2026-04-10 10:32:32',
+'none',
+197.22,
+40.309,
+1.3840001,
+7.266
+);
