@@ -1,0 +1,9 @@
+Name: Cynamonka
+Brand: Biedronka
+Package has: 80.0
+Macro for: 100.0
+KCal: 297.0
+Protein: 7.5
+Fat: 6.5
+Carbs: 51.0
+Comment optional: Link: https://www.fatsecret.pl/kalorie-warto%C5%9Bci%C2%A0od%C5%BCywcze/biedronka/cynamonka/100g

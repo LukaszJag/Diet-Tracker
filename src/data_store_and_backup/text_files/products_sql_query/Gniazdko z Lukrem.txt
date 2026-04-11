@@ -1,0 +1,20 @@
+INSERT INTO `diet_tracker_schema`.product_table
+(`product_name`,
+`product_brand`,
+`product_package_has`,
+`product_macro_for`,
+`product_kcal`,
+`product_protein`,
+`product_fat`,
+`product_carbs`,
+`comment_optional`)
+Values
+('Gniazdko z Lukrem',
+'Biedronka',
+30.0,
+100.0,
+412.0,
+3.1,
+18.3,
+59.5,
+'Link: https://www.fatsecret.pl/kalorie-warto%C5%9Bci%C2%A0od%C5%BCywcze/biedronka/gniazdko-z-lukrem/100g');
