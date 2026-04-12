@@ -856,8 +856,8 @@ public class AddProductToCalendarDay {
 
     private class CheckCalendarTableActionListener implements ActionListener {
         //<editor-fold desc="Variables">
-        JFrame checkCalendarTableButtonWindowFrame = new JFrame("Calendar Table");
-        ;
+        JFrame checkCalendarTableButtonWindowFrame;
+
         DefaultTableModel model;
         JTable table;
         JScrollPane scrollPane;
@@ -877,6 +877,7 @@ public class AddProductToCalendarDay {
 
         public void setupFrame() {
 
+            checkCalendarTableButtonWindowFrame = new JFrame("Calendar Table");
             checkCalendarTableButtonWindowFrame.addKeyListener(new CloseWindowKeyListener(checkCalendarTableButtonWindowFrame));
 
             jmFilter = new JMenu("Filter");
