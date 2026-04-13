@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2026-04-13',
+'Monday',
+'Second Breakfast',
+47.0,
+'Sos czosnkowy',
+334.0,
+1.0,
+32.0,
+8.6,
+'2026-04-13 11:57:20',
+'none',
+156.98,
+4.0420003,
+15.04,
+0.47
+);
