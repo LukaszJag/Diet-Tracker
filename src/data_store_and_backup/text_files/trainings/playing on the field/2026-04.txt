@@ -66,6 +66,18 @@
             zasady dodatkowe: żeby oddać rzut ja musze wyjść za linie 2 punktów
             6:2 dla Kuby
 
+#id ??
+2026-04-12
+    Trening na boisku: 16:26 - 17:11 [44']
+    Localization: Boisko - koło szkoły przy wroclavi
 
+        Koszykówka 16:26 - 16:44 [18']
+
+            Od zera do 21 z Kubą - 16:26 - 16:44 [18']
+            21:11 dla mnie
+
+        Siatkówka: 16:44 - 17:11 [27']
+            Odbijanie z Kubą 16:44 - 17:11 [27']
+                -> max odbić 30 <= x
 
 
