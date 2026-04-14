@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2026-04-14',
+'Tuesday',
+'Dinner',
+221.0,
+'Marchewki z groszkiem',
+38.0,
+2.2,
+0.0,
+8.5,
+'2026-04-14 06:55:36',
+'none',
+83.98,
+18.785,
+0.0,
+4.862
+);
