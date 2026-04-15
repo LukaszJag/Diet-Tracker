@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2026-04-15',
+'Wednesday',
+'Supper',
+1000.0,
+'Nektar - czarna porzeczka',
+21.0,
+0.1,
+0.0,
+5.2,
+'2026-04-15 08:42:06',
+'none',
+210.0,
+52.0,
+0.0,
+1.0
+);
