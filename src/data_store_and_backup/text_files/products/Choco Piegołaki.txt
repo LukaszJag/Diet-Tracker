@@ -1,0 +1,9 @@
+Name: Choco Piegołaki
+Brand: Lubella
+Package has: 500.0
+Macro for: 100.0
+KCal: 380.0
+Protein: 8.0
+Fat: 2.2
+Carbs: 80.0
+Comment optional: Link: https://lubella.pl/produkt/choco-piegolaki-500g/

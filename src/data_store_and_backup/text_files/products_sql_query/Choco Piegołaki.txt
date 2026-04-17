@@ -1,0 +1,20 @@
+INSERT INTO `diet_tracker_schema`.product_table
+(`product_name`,
+`product_brand`,
+`product_package_has`,
+`product_macro_for`,
+`product_kcal`,
+`product_protein`,
+`product_fat`,
+`product_carbs`,
+`comment_optional`)
+Values
+('Choco Piegołaki',
+'Lubella',
+500.0,
+100.0,
+380.0,
+8.0,
+2.2,
+80.0,
+'Link: https://lubella.pl/produkt/choco-piegolaki-500g/');
