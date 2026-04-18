@@ -64,7 +64,6 @@ public class FilesTools {
     }
     //</editor-fold>
 
-
     //<editor-fold desc="Convert file - convertFileToStringArray, convertAndPrintFileInStringArray">
     public static String[] convertFileToStringArraySeparatedByColon(String fileNameWithExtension) {
         // This int value may cause problem because max amount of lines in file is dynamic
@@ -150,7 +149,6 @@ public class FilesTools {
         }
     }
     //</editor-fold>
-
 
     //<editor-fold desc="Write data - writeToFileOverwriteAllFile, writeSQLStatementForDayInCalendarToTXTFile, writeProductSQLToFile, writeProductToFile">
     public static void writeSQLStatementForDayInCalendarToTXTFile(String fileName, DayInCalendar dayInCalendar) throws IOException {
@@ -240,7 +238,6 @@ public class FilesTools {
     }
     //</editor-fold>
 
-
     public static void addDayStringToTextFile(String fileName, String inputSting) throws IOException {
         BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(Config.DESTINATION_FOR_TEXT_FILE_DAYS + fileName + ".txt", true));
         bufferedWriter.append(inputSting);
@@ -272,7 +269,6 @@ public class FilesTools {
         }
         System.out.println("Counter: " + counter);
     }
-
 
     //<editor-fold desc="Read files to get data">
     public static String[] getStringArrayForAllFilesInDirectory(String directory) {
@@ -550,6 +546,4 @@ public class FilesTools {
     }
     */
     //</editor-fold>
-
-
 }

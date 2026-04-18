@@ -20,6 +20,10 @@ import java.awt.datatransfer.Clipboard;
 
 
 public class  MainWindow extends JFrame {
+    public static void main(String[] args) {
+        System.out.println("\nRun Diet Tracker...");
+        new MainWindow();
+    }
     public MainWindow() {
         makeRunWindow();
     }

@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2026-04-17',
+'Friday',
+'Dinner',
+650.0,
+'Kalafior gotowany',
+22.0,
+2.4,
+0.0,
+5.0,
+'2026-04-18 06:14:49',
+'none',
+143.0,
+32.5,
+0.0,
+15.6
+);

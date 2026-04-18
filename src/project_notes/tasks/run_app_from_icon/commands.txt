@@ -1,0 +1,15 @@
+Path to mysql-connector-j-8.3.0:
+
+C:\Programming-tools\Java\libraries\mysql-connector-j-8.3.0\mysql-connector-j-8.3.0.jar
+
+
+PS C:\Users\lukas>
+
+& "C:\Programming-tools\Java\21\bin\java.exe" -cp "F:\Linux-Windows-Files\1-learning\Programming\Java\1. Projects\Diet_Tracker\Diet-Tracker\out\production\Diet-Tracker;C:\Programming-tools\Java\libraries\mysql-connector-j-8.3.0\mysql-connector-j-8.3.0.jar" gui.general.MainWindow
+
+
+C:\Programming-tools\Java\21\bin\java.exe -cp "F:\Linux-Windows-Files\1-learning\Programming\Java\1. Projects\Diet_Tracker\Diet-Tracker\out\production\Diet-Tracker;C:\Programming-tools\Java\libraries\mysql-connector-j-8.3.0\mysql-connector-j-8.3.0.jar" gui.general.MainWindow
+
+
+"C:\Programming-tools\Java\21\bin\javaw.exe" -cp "F:\Linux-Windows-Files\1-learning\Programming\Java\1. Projects\Diet_Tracker\Diet-Tracker\out\production\Diet-Tracker;C:\Programming-tools\Java\libraries\mysql-connector-j-8.3.0\mysql-connector-j-8.3.0.jar" gui.general.MainWindow
+

@@ -1,0 +1,9 @@
+Name: Lody o smaku śmietankowym w polewie
+Brand: Kanka
+Package has: 55.0
+Macro for: 100.0
+KCal: 297.0
+Protein: 3.0
+Fat: 21.0
+Carbs: 23.0
+Comment optional: Dane z opakowania

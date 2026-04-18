@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2026-04-17',
+'Friday',
+'Dinner',
+55.0,
+'Lody o smaku śmietankowym w polewie',
+297.0,
+3.0,
+21.0,
+23.0,
+'2026-04-18 06:24:39',
+'none',
+163.35,
+12.650001,
+11.55,
+1.6500001
+);

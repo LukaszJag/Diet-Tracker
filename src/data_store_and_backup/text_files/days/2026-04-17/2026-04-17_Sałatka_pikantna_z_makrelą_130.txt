@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2026-04-17',
+'Friday',
+'Night snack',
+130.0,
+'Sałatka pikantna z makrelą',
+160.0,
+5.2,
+11.0,
+9.2,
+'2026-04-18 06:18:49',
+'none',
+208.0,
+11.959999,
+14.299999,
+6.7599993
+);

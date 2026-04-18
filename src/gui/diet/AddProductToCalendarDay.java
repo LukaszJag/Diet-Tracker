@@ -1667,8 +1667,11 @@ public class AddProductToCalendarDay {
             year = MyDate.getCurrentYear();
             nameOfCurrentMonth = MyDate.getCurrentMonthName();
 
-            pathToFile = "src/data_store_and_backup/text_files/days_statistics_test/" +
+            pathToFile = "F:\\Linux-Windows-Files\\1-learning\\Programming\\Java\\1. Projects\\Diet_Tracker\\Diet-Tracker\\src" + "/data_store_and_backup/text_files/days_statistics_test/" +
                     year + "/" + nameOfCurrentMonth.toLowerCase() + "_" + year + ".txt";
+
+            //pathToFile = "src/data_store_and_backup/text_files/days_statistics_test/" + year + "/" + nameOfCurrentMonth.toLowerCase() + "_" + year + ".txt";
+
         }
 
         private void getDataFromTable() {
