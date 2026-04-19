@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2026-04-18',
+'Saturday',
+'Supper',
+276.0,
+'Śledź smażony',
+222.0,
+14.73,
+14.63,
+7.98,
+'2026-04-19 11:11:19',
+'none',
+612.72,
+22.0248,
+40.3788,
+40.6548
+);
