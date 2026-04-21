@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2026-04-21',
+'Tuesday',
+'Snack 2',
+800.0,
+'Jogurt Jogobella truskawkowy',
+90.0,
+3.5,
+2.7,
+12.0,
+'2026-04-21 08:09:00',
+'none',
+720.0,
+96.0,
+21.6,
+28.0
+);
