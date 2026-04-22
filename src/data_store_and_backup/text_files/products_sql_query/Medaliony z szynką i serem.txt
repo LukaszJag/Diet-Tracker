@@ -1,0 +1,20 @@
+INSERT INTO `diet_tracker_schema`.product_table
+(`product_name`,
+`product_brand`,
+`product_package_has`,
+`product_macro_for`,
+`product_kcal`,
+`product_protein`,
+`product_fat`,
+`product_carbs`,
+`comment_optional`)
+Values
+('Medaliony z szynką i serem',
+'SuperDrob',
+250.0,
+100.0,
+214.0,
+10.7,
+11.0,
+18.8,
+'Dane z opakowania');

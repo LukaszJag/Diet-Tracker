@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2026-04-22',
+'Wednesday',
+'Second Breakfast',
+161.0,
+'Choco Muszelki',
+380.0,
+8.5,
+3.7,
+75.0,
+'2026-04-22 12:52:19',
+'none',
+611.8,
+120.75,
+5.9570003,
+13.685
+);

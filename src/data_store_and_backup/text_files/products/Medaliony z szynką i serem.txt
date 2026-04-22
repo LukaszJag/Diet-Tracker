@@ -1,0 +1,9 @@
+Name: Medaliony z szynką i serem
+Brand: SuperDrob
+Package has: 250.0
+Macro for: 100.0
+KCal: 214.0
+Protein: 10.7
+Fat: 11.0
+Carbs: 18.8
+Comment optional: Dane z opakowania
