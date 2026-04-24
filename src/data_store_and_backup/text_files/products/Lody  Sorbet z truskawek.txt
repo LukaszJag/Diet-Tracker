@@ -1,0 +1,9 @@
+Name: Lody  Sorbet z truskawek
+Brand: Grycan
+Package has: 340.0
+Macro for: 100.0
+KCal: 113.0
+Protein: 0.4
+Fat: 0.2
+Carbs: 26.7
+Comment optional: Link: https://sklep.grycan.pl/Lody-GRYCAN-Sorbet-z-truskawek-500ml-WARSZAWA-p221
