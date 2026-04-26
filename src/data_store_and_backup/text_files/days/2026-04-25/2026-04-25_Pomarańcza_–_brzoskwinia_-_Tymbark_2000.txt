@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2026-04-25',
+'Saturday',
+'Supper',
+2000.0,
+'Pomarańcza – brzoskwinia - Tymbark',
+18.0,
+0.0,
+0.0,
+4.3,
+'2026-04-26 05:10:08',
+'none',
+360.0,
+86.0,
+0.0,
+0.0
+);

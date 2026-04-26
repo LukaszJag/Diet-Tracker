@@ -1,0 +1,9 @@
+Name: Napój wiśnia – jabłko - Tymbark
+Brand: Tymbark
+Package has: 2000.0
+Macro for: 100.0
+KCal: 19.0
+Protein: 0.0
+Fat: 0.0
+Carbs: 4.5
+Comment optional: Link: https://tymbark.com/produkt/wisnia-jablko/

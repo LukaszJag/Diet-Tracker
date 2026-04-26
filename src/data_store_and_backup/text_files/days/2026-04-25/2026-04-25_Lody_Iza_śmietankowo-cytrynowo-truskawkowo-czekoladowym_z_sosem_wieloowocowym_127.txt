@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2026-04-25',
+'Saturday',
+'Snack 2',
+127.0,
+'Lody Iza śmietankowo-cytrynowo-truskawkowo-czekoladowym z sosem wieloowocowym',
+189.0,
+2.3,
+8.0,
+27.0,
+'2026-04-26 05:07:46',
+'none',
+240.03,
+34.29,
+10.16,
+2.921
+);
