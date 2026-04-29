@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2026-04-29',
+'Wednesday',
+'Breakfast',
+320.0,
+'Mięso mielone z szynki smażone',
+179.1,
+27.0,
+7.78,
+0.25,
+'2026-04-29 03:36:40',
+'none',
+573.12006,
+0.8,
+24.896002,
+86.4
+);
