@@ -19,7 +19,7 @@ public class AddAllCalendarDaysInTXTFromDirectory {
         checkIfRowExist = new CheckIfRowExist();
         String[] allFilesPath = getPathsOfFiles();
         // May cause Error : hard code length
-        int arraysLength = 7000;
+        int arraysLength = 8000;
         String[] productThatExist = new String[arraysLength];
         int counterExistArray = 0;
         int counterNotExistArray = 0;
