@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2026-05-01',
+'Friday',
+'Dinner',
+161.0,
+'Jajecznica z pieczarkami na maśle',
+101.61,
+7.06,
+7.94,
+0.26,
+'2026-05-01 03:50:55',
+'none',
+163.5921,
+0.4186,
+12.783401,
+11.3666
+);
