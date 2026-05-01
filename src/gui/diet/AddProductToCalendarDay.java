@@ -368,7 +368,7 @@ public class AddProductToCalendarDay {
 
         // check - Days Statistic table
         checkDaysStatisticFilledTableButton.addActionListener(new CheckDaysStatisticFilledTableActionListener());
-        String dateForCheckDaysDStatisticsTable = addProductToDayDisplaySelectedFDateDayLabel.getText().substring(0, 5) + "04%";
+        String dateForCheckDaysDStatisticsTable = addProductToDayDisplaySelectedFDateDayLabel.getText().substring(0, 5) + "05%";
         checkDaysStatisticsTableDateTextField.setText(dateForCheckDaysDStatisticsTable);
         checkDaysStatisticsTableDateTextField.setMaximumSize(new Dimension(100, 30));
         //</editor-fold>
@@ -1711,7 +1711,7 @@ public class AddProductToCalendarDay {
             // TODO hard coded value "2026-01%" - need to set general value
             LinkedHashMap<String, String> amountOfProductInSQLTableLinkedHashMap = Select.selectAllDataFromTable(
                     "days_statistics_test", "day_date", "amount_of_filled_points_from_notepad", "day_date",
-                    "LIKE", "2026-04%");
+                    "LIKE", "2026-05%");
 
             String pointInOneDay = "";
 
