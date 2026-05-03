@@ -1,0 +1,20 @@
+INSERT INTO `diet_tracker_schema`.product_table
+(`product_name`,
+`product_brand`,
+`product_package_has`,
+`product_macro_for`,
+`product_kcal`,
+`product_protein`,
+`product_fat`,
+`product_carbs`,
+`comment_optional`)
+Values
+('Orzeszki ziemne w chrupiącej panierce prażone NicNac',
+'Lorenz',
+125.0,
+100.0,
+533.0,
+15.0,
+36.0,
+34.0,
+'Link: https://zakupy.auchan.pl/products/orzeszki-ziemne-w-chrupi%C4%85cej-panierce-pra%C5%BCone-nicnac-125-g/00266676');

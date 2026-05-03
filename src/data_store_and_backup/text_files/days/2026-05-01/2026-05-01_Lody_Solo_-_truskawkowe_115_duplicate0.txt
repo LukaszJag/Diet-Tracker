@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2026-05-01',
+'Friday',
+'Supper',
+115.0,
+'Lody Solo - truskawkowe',
+121.0,
+0.1,
+0.1,
+30.0,
+'2026-05-03 09:30:33',
+'none',
+139.15,
+34.5,
+0.115,
+0.115
+);

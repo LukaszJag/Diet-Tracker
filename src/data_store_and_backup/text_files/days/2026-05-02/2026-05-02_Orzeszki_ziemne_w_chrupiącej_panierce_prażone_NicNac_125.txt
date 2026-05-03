@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2026-05-02',
+'Saturday',
+'Snack 2',
+125.0,
+'Orzeszki ziemne w chrupiącej panierce prażone NicNac',
+533.0,
+15.0,
+36.0,
+34.0,
+'2026-05-03 09:44:52',
+'none',
+666.25,
+42.5,
+45.0,
+18.75
+);
