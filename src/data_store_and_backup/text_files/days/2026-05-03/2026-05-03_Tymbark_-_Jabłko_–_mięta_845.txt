@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2026-05-03',
+'Sunday',
+'Dinner',
+845.0,
+'Tymbark - Jabłko – mięta',
+19.0,
+0.0,
+0.0,
+4.5,
+'2026-05-04 11:54:47',
+'none',
+160.55,
+38.024998,
+0.0,
+0.0
+);
