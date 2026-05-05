@@ -1617,7 +1617,7 @@ public class AddProductToCalendarDay {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     try {
-                        RunnerFullUpdateDayStatistics.runFullUpdateForAllMonthInDayStatistics();
+                        RunnerFullUpdateDayStatistics.updateMonth(nameOfCurrentMonth, year);
                     } catch (SQLException ex) {
                         throw new RuntimeException(ex);
                     }

@@ -19,7 +19,8 @@ public class RunnerFullUpdateDayStatistics {
 
     public static void updateMonth(String month, int year) throws SQLException {
         System.out.println("Start: full update - table days_statistics_test -\t" + month + " - - " + year);
-
+        System.out.println(month);
+        System.out.println(year);
         GenerateSLQTableForDaysStatistics.generateWholeMonthAndFillAmountOfPointsFromNotepad(month, year);
         UpdateDaysStatisticsFilledData.updateWholeMonthMacroSum(month, year);
         UpdateDaysStatisticsFilledData.updateAmountOfFilledPointsFromNotepad(month, year);
