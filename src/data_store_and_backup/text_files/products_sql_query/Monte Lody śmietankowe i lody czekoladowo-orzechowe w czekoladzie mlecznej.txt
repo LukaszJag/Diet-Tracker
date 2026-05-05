@@ -1,0 +1,20 @@
+INSERT INTO `diet_tracker_schema`.product_table
+(`product_name`,
+`product_brand`,
+`product_package_has`,
+`product_macro_for`,
+`product_kcal`,
+`product_protein`,
+`product_fat`,
+`product_carbs`,
+`comment_optional`)
+Values
+('Monte Lody śmietankowe i lody czekoladowo-orzechowe w czekoladzie mlecznej',
+'Zott',
+68.0,
+100.0,
+336.0,
+4.2,
+22.3,
+29.0,
+'Link: https://torimpex.pl/produkt/zott-monte-lody-smietankowe-i-lody-czekoladowo-orzechowe-w-czekoladzie-mlecznej-110-ml/');

@@ -1,0 +1,9 @@
+Name: Monte Lody śmietankowe i lody czekoladowo-orzechowe w czekoladzie mlecznej
+Brand: Zott
+Package has: 68.0
+Macro for: 100.0
+KCal: 336.0
+Protein: 4.2
+Fat: 22.3
+Carbs: 29.0
+Comment optional: Link: https://torimpex.pl/produkt/zott-monte-lody-smietankowe-i-lody-czekoladowo-orzechowe-w-czekoladzie-mlecznej-110-ml/
