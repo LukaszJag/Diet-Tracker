@@ -23,10 +23,12 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.text.Format;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class AddProductToCalendarDay {
 
@@ -505,9 +507,9 @@ public class AddProductToCalendarDay {
         //<editor-fold desc="Add Components to Center Panel">
 
         // 1 - row
-        addProductToDayPanelMain.add(dateLabel);
-        addProductToDayPanelMain.add(otherThenCurrentDateButton);
-        otherThenCurrentDateButton.addActionListener(new OtherThenCurrentDateButtonListener());
+        //addProductToDayPanelMain.add(dateLabel);
+        //addProductToDayPanelMain.add(otherThenCurrentDateButton);
+        //otherThenCurrentDateButton.addActionListener(new OtherThenCurrentDateButtonListener());
 
         // 2 - row
         addProductToDayPanelMain.add(dayMealNameLabel);
@@ -772,6 +774,21 @@ public class AddProductToCalendarDay {
         macroTable.setValueAt(macroToDisplay.getCarbs(), 5, 1);
     }
 
+    public void setUpMacroTable(String selectedDayInSQLFormat) {
+        Macro macroToDisplay = SelectFromDaysStatistics.getMacroFromDaysStatisticsByDate(selectedDayInSQLFormat);
+        macroTable.setValueAt("Points from notepad", 0, 0);
+        macroTable.setValueAt(SelectFromDaysStatistics.getAmountOfPointsFromNotepad(selectedDayInSQLFormat), 0, 1);
+        macroTable.setValueAt("Filled points", 1, 0);
+        macroTable.setValueAt(SelectFromDaysStatistics.getAmountOfFilledPointsFromNotepad(selectedDayInSQLFormat), 1, 1);
+        macroTable.setValueAt("kcal_consume", 2, 0);
+        macroTable.setValueAt(macroToDisplay.getKcal(), 2, 1);
+        macroTable.setValueAt("protein_consume", 3, 0);
+        macroTable.setValueAt(macroToDisplay.getProtein(), 3, 1);
+        macroTable.setValueAt("fat_consume", 4, 0);
+        macroTable.setValueAt(macroToDisplay.getFat(), 4, 1);
+        macroTable.setValueAt("carbs_consume", 5, 0);
+        macroTable.setValueAt(macroToDisplay.getCarbs(), 5, 1);
+    }
     private void setupBMRTable() {
         BMRTable.setFont(macrosTablesFont);
         BMRTable.setValueAt("BMR_kcal", 0, 0);
@@ -796,22 +813,6 @@ public class AddProductToCalendarDay {
         howMuchMacroLeftTable.setValueAt(Config.BMRActual.getProtein() - macroToDisplay.getProtein(), 1, 1);
         howMuchMacroLeftTable.setValueAt(Config.BMRActual.getFat() - macroToDisplay.getFat(), 2, 1);
         howMuchMacroLeftTable.setValueAt(Config.BMRActual.getCarbs() - macroToDisplay.getCarbs(), 3, 1);
-    }
-
-    public void setUpMacroTable(String selectedDayInSQLFormat) {
-        Macro macroToDisplay = SelectFromDaysStatistics.getMacroFromDaysStatisticsByDate(selectedDayInSQLFormat);
-        macroTable.setValueAt("amount_of_points_from_notepad", 0, 0);
-        macroTable.setValueAt(SelectFromDaysStatistics.getAmountOfPointsFromNotepad(selectedDayInSQLFormat), 0, 1);
-        macroTable.setValueAt("amount_of_filled_points_from_notepad", 1, 0);
-        macroTable.setValueAt(SelectFromDaysStatistics.getAmountOfFilledPointsFromNotepad(selectedDayInSQLFormat), 1, 1);
-        macroTable.setValueAt("kcal_consume", 2, 0);
-        macroTable.setValueAt(macroToDisplay.getKcal(), 2, 1);
-        macroTable.setValueAt("protein_consume", 3, 0);
-        macroTable.setValueAt(macroToDisplay.getProtein(), 3, 1);
-        macroTable.setValueAt("fat_consume", 4, 0);
-        macroTable.setValueAt(macroToDisplay.getFat(), 4, 1);
-        macroTable.setValueAt("carbs_consume", 5, 0);
-        macroTable.setValueAt(macroToDisplay.getCarbs(), 5, 1);
     }
 
     //</editor-fold>
@@ -1160,7 +1161,6 @@ public class AddProductToCalendarDay {
 
             String currentSetDateDayName = addProductToDayDisplaySelectedFDateNameDayLabel.getText();
             addProductToDayDisplaySelectedFDateNameDayLabel.setText(MyDate.getPreviousDayDateName(currentSetDateDayName));
-
         }
     }
 
@@ -1169,6 +1169,7 @@ public class AddProductToCalendarDay {
         public void actionPerformed(ActionEvent e) {
             String oldDate = checkCalendarTableDateTextField.getText();
             checkCalendarTableDateTextField.setText(MyDate.getNextDayDateSQLFriendlyFormat(oldDate));
+            setUpMacroTable(checkCalendarTableDateTextField.getText());
         }
     }
 
@@ -1177,12 +1178,13 @@ public class AddProductToCalendarDay {
         public void actionPerformed(ActionEvent e) {
             String oldDate = checkCalendarTableDateTextField.getText();
             checkCalendarTableDateTextField.setText(MyDate.getPreviousDayDateSQLFriendlyFormat(oldDate));
+            setUpMacroTable(checkCalendarTableDateTextField.getText());
         }
     }
     //</editor-fold>
 
     //<editor-fold desc="addProductToDay - Panel Main - Buttons ActionListener">
-    private class OtherThenCurrentDateButtonListener implements ActionListener {
+    /*private class OtherThenCurrentDateButtonListener implements ActionListener {
 
         public OtherThenCurrentDateButtonListener() {
             setDialogWindow();
@@ -1378,6 +1380,7 @@ public class AddProductToCalendarDay {
 
 
     }
+*/
 
     private class ProductsCommentDisplayJButtonActionListener implements ActionListener {
         @Override
