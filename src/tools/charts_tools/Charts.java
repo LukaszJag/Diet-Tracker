@@ -514,10 +514,10 @@ public class Charts {
 
     public class DailyMacroChart {
 
-        //<editor-fold desc="Variables">
+        //<editor-fold desc="DailyMacroChart - Variables">
         ArrayList<Product.ProductInCalendar> dataOfProductsInDay;
         String dayDateInSQLFriendlyFormat;
-        Table table; // = new Table();
+        Table table = new Table();
         String SQLQuery = "";
         int mealsAmountToDisplay = 24;
         //</editor-fold>
@@ -528,97 +528,64 @@ public class Charts {
 
         public DailyMacroChart(String dayDateInSQLFriendlyFormat) {
             this.dayDateInSQLFriendlyFormat = dayDateInSQLFriendlyFormat;
-            setSQLQuery();
+            setupSQLQuery();
             this.table = new Table(SQLQuery);
             Debug.printRedSystemPrintln(SQLQuery);
         }
         //</editor-fold>
 
-        public void setDayDateInSQLFriendlyFormat(String dateInSQLFriendlyFormat) {
-            this.dayDateInSQLFriendlyFormat = dateInSQLFriendlyFormat;
-        }
-
-        public void setSQLQuery() {
-            this.SQLQuery = "SELECT * FROM calendar WHERE day_date=\"" +
-                    dayDateInSQLFriendlyFormat +
-                    "\";";
-        }
-
-        public void displayBarChart() {
-            System.out.println("displayBarChart - DailyMacroChart");
-            prepareDataForBarChart();
-            chartPanel = new ChartPanel(jFreeChart);
-            chartFrame.add(chartPanel);
-            chartFrame.setVisible(true);
-        }
-
-        public void prepareDataForBarChart() {
-            prepareSwingComponents();
+        //<editor-fold desc="prepareDataForBarChart">
+        public void runSetupData() {
+            setupSwingComponents();
             //prepareDataForMonthAverageMacro();
-            setSQLQuery();
+            setupSQLQuery();
             getMealDataFromSQLTable();
-            prepareJFreeChart();
-            prepareDataForChart();
+            setupJFreeChart();
+            setupDataForChart();
         }
 
-        public void prepareSwingComponents() {
+        public void setupSwingComponents() {
             chartFrame = new JFrame("DailyMacroChart");
             chartFrame.setSize(new Dimension(1000, 800));
             chartFrame.setResizable(true);
             chartFrame.setLocationRelativeTo(null);
             chartFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         }
+        public void setupSQLQuery() {
+            this.SQLQuery = "SELECT * FROM calendar WHERE day_date=\"" +
+                    MyDate.getCurrentDayInSQLFormat() +
+                    "\";";
+            table.setSQLQuery(SQLQuery);
 
+        }
         private void getMealDataFromSQLTable() {
             table.getAllRowFromClassQuery();
-            System.out.println();
-            System.out.println("Size: " + table.getRows().size());
-            System.out.println();
         }
-
-
-        /*
-                public void prepareDataForMonthAverageMacro() {
-                    monthsKcal = new String[monthsToDisplayInSQLFriendlyFormat.length];
-
-                    int year, month;
-                    for (int i = 0; i < monthsKcal.length; i++) {
-                        year = Integer.valueOf(monthsToDisplayInSQLFriendlyFormat[i].substring(3));
-                        month = Integer.valueOf(monthsToDisplayInSQLFriendlyFormat[i].substring(0, 2));
-
-                        monthsKcal[i] = String.valueOf(SelectFromDaysStatistics.getAverageMacroForMonth(year, month).getKcal());
-                    }
-                }
-                */
-        public void prepareJFreeChart() {
+        public void setupJFreeChart() {
             dataset = new DefaultCategoryDataset();
 
-            //table.printTable();
-            for (int i = 0; i < mealsAmountToDisplay; i++) {
-                System.out.println("Double: " + Double.valueOf(table.getRowInTable(i).getValue("kcal_consume")));
-//                if (table.getRowInTable(i) == null || table == null) {
-//                    System.out.println("null value on i: " + i );
-//                } else
-                    if (table.getRows().size() < i) {
-                    //System.out.println("size: " + table.getRows().size());
-                    //System.out.println("i: [" + i + "]");
-                    System.out.println("Double: " + Double.valueOf(table.getRowInTable(i).getValue("kcal")));
-                    dataset.addValue(
-                            Double.valueOf(table.getRowInTable(i).getValue("kcal"))
-                            , ("" + i), "kcal");
-                }
-            }
-
+            System.out.println(table.getAmountOfRowsInTable());
             jFreeChart = ChartFactory.createBarChart(chartName, "kcal", "Kcal",
                     dataset);
 
         }
-
-        public void prepareDataForChart() {
+        public void setupDataForChart() {
 
 
         }
 
+        //</editor-fold>
 
+        public void setDayDateInSQLFriendlyFormat(String dateInSQLFriendlyFormat) {
+            this.dayDateInSQLFriendlyFormat = dateInSQLFriendlyFormat;
+        }
+
+        public void displayBarChart() {
+            System.out.println("displayBarChart - DailyMacroChart");
+            runSetupData();
+            chartPanel = new ChartPanel(jFreeChart);
+            chartFrame.add(chartPanel);
+            chartFrame.setVisible(true);
+        }
     }
 }

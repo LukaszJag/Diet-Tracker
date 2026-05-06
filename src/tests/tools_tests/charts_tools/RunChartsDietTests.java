@@ -13,12 +13,8 @@ public class RunChartsDietTests {
     }
 
     public static void displayMacroChartForDay(){
-        System.out.println("-1");
         Charts charts = new Charts();
-        System.out.println("0");
         Charts.DailyMacroChart dailyMacroChart = charts.new DailyMacroChart();
-        System.out.println("1");
         dailyMacroChart.displayBarChart();
-        System.out.println("2");
     }
 }

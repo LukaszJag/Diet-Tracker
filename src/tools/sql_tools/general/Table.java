@@ -38,13 +38,23 @@ public class Table {
     //<editor-fold desc="Put methods">
     public void putRowToTable(RowInTable rowToInsert) {
         this.rows.add(rowToInsert);
-        rowToInsert.printAlLValuesAndKey();
-        System.out.println();
-        System.out.println();
+    }
+
+    public void putRowToTable(RowInTable rowToInsert, boolean printEveryRow) {
+        this.rows.add(rowToInsert);
+        if (printEveryRow) {
+            rowToInsert.printAlLValuesAndKey();
+            System.out.println();
+            System.out.println();
+        }
     }
     //</editor-fold>
 
     //<editor-fold desc="Get methods">
+
+    public int getAmountOfRowsInTable(){
+        return rows.size();
+    }
 
     public void getAllRowFromClassQuery() {
         if (SQLQuery == null) {
