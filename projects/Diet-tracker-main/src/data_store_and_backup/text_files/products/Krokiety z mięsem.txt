@@ -1,0 +1,9 @@
+Name: Krokiety z mięsem
+Brand: Virtu
+Package has: 400.0
+Macro for: 100.0
+KCal: 241.0
+Protein: 9.7
+Fat: 13.0
+Carbs: 21.0
+Comment optional: Link: https://leclerc.com.pl/virtu-krokiety-z-miesem
