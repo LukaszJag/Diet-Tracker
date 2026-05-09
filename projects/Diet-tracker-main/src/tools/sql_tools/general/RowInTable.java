@@ -1,22 +1,40 @@
 package tools.sql_tools.general;
 
+import tools.debug_tools.Debug;
+
 import java.util.*;
 
 public class RowInTable {
 
-    private static HashMap<String, String> fields;
+    private static HashMap<String, String> fields = new HashMap<>();
 
+    //<editor-fold desc="Constructors">
     public RowInTable() {
-        this.fields = new HashMap<>();
+
     }
 
     public RowInTable(HashMap<String, String> fields) {
         setFields(fields);
     }
+    //</editor-fold>
 
     public void putKeyAndValueToRow(String key, String value) {
         fields.put(key, value);
     }
+
+    //<editor-fold desc="Print methods">
+    public void printAlLValuesAndKey() {
+        for (String key : fields.keySet()) {
+            Debug.printKeyAndValue(key, fields.get(key), 6);
+        }
+    }
+
+    public static void printAlLValuesAndKey(RowInTable rowInTable) {
+        for (String i : rowInTable.getFields().keySet()) {
+            System.out.println("key:<" + i + "> value: <" + fields.get(i) + ">");
+        }
+    }
+    //</editor-fold>
 
     //<editor-fold desc="Get methods">
     public int getSizeOfRow() {
@@ -90,18 +108,6 @@ public class RowInTable {
         return new ArrayList<>(fields.values());
     }
     //</editor-fold>
-
-    public void printAlLValuesAndKey() {
-        for (String i : fields.keySet()) {
-            System.out.println("key: " + i + " value: " + fields.get(i));
-        }
-    }
-
-    public static void printAlLValuesAndKey(RowInTable rowInTable) {
-        for (String i : rowInTable.getFields().keySet()) {
-            System.out.println("key:<" + i + "> value: <" + fields.get(i) + ">");
-        }
-    }
 
     //<editor-fold desc="Getters and Setters">
     public HashMap<String, String> getFields() {

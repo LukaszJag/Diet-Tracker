@@ -1,14 +1,13 @@
 package tests.tools_tests.sql_tools;
 
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import tools.sql_tools.general.RowInTable;
-import tools.sql_tools.general.statements.Select;
-import tools.sql_tools.general.statements.InsertToTable;
-import tools.text_files_tools.FilesTools;
 import tools.sql_tools.general.Table;
+import tools.sql_tools.general.statements.InsertToTable;
+import tools.sql_tools.general.statements.Select;
+import tools.text_files_tools.FilesTools;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -136,40 +135,50 @@ public class SQLToolsTests {
 
         @Nested
         class RowTests {
+
+            String SQLQueryToTest = "SELECT * FROM calendar WHERE day_date=\"2026-04-05\";";
+
+
+
+//            RowInTable calendar_2026_03_11_Cukier;
+//            @BeforeEach
+//            public void populateCalendarCukier_2026_03_11() {
+//                String dateInSQLFriendlyFormat = "2026-03-11";
+//                String productNameCukier = "Cukier";
+//                String SQLQuery = "" +
+//                        "SELECT " +
+//                        "* " +
+//                        "FROM " +
+//                        "calendar " +
+//                        "WHERE " +
+//                        "day_date" +
+//                        "=" +
+//                        "\"" +
+//                        dateInSQLFriendlyFormat +
+//                        "\"" +
+//                        " AND " +
+//                        "product_name " +
+//                        " = " +
+//                        "\"" +
+//                        productNameCukier +
+//                        "\"" +
+//                        ";";
+//
+//                HashMap<String, String> dataFromTable = Select.selectOneRowDataFromQuery(SQLQuery);
+//                calendar_2026_03_11_Cukier = new RowInTable(dataFromTable);
+//            }
+//
+//            @Test
+//            public void getAllValuesAndKeyFromCalendarRow() {
+//                calendar_2026_03_11_Cukier.printAlLValuesAndKey();
+//            }
+
+            //<editor-fold desc="Abstract database tests">
             RowInTable food;
             RowInTable cars;
-            RowInTable calendar_2026_03_11_Cukier;
-
-            @BeforeEach
-            public void populateCalendarCukier_2026_03_11() {
-                String dateInSQLFriendlyFormat = "2026-03-11";
-                String productNameCukier = "Cukier";
-                String SQLQuery = "" +
-                        "SELECT " +
-                        "* " +
-                        "FROM " +
-                        "calendar " +
-                        "WHERE " +
-                        "day_date" +
-                        "=" +
-                        "\"" +
-                        dateInSQLFriendlyFormat +
-                        "\"" +
-                        " AND " +
-                        "product_name " +
-                        " = " +
-                        "\"" +
-                        productNameCukier +
-                        "\"" +
-                        ";";
-
-                HashMap<String, String> dataFromTable = Select.selectOneRowDataFromQuery(SQLQuery);
-                calendar_2026_03_11_Cukier = new RowInTable(dataFromTable);
-            }
-
 
             //@BeforeEach
-            public void populatePlants() {
+            public void populateFood() {
                 food = new RowInTable();
                 food.putKeyAndValueToRow("fruit", "apple");
                 food.putKeyAndValueToRow("fruit", "banana");
@@ -203,13 +212,13 @@ public class SQLToolsTests {
 
             @Test
             public void getAllKeys() {
+                populateFood();
+                food.printAlLValuesAndKey();
+                System.out.println();
                 System.out.println(food.getAllKeys());
             }
+            //</editor-fold>
 
-            @Test
-            public void getAllValuesAndKeyFromCalendarRow() {
-                calendar_2026_03_11_Cukier.printAlLValuesAndKey();
-            }
         }
 
         @Nested
