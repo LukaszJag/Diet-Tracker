@@ -1,17 +1,31 @@
 Przygotować plan redukcji:
--> wyliczyć zero kaloryczne
--> zaplanować treningi w tygodniu(oczekiwane minimum i plan całkowity)
--> ustalić deficyt kaloryczny
--> zważyć się i policzyć tablie
--> wprowadzić tabele z zeszytu do libre calc
--> ustalić i zaplanować spadek wagi
+    -> zaplanować treningi w tygodniu(oczekiwane minimum i plan całkowity)
+    -> ustalić deficyt kaloryczny
+    -> ustalić i zaplanować spadek wagi
+    done-> wyliczyć zero kaloryczne
+    done-> zważyć się i policzyć tablie
+    done-> wprowadzić tabele z zeszytu do libre calc
 
--> przygotować posiłki:
-- -> dania
-- -> przepisy
-- -> co jeść w posiłkach: br, 2br, din, 2snk, su, aw, ns
-- -> przygotować koła ratunkowe na impulsywny głód
-- -> co można pić(co warto a co można)
+    -> przygotować posiłki:
+        - -> dania
+        - -> przepisy
+        - -> co jeść w posiłkach: br, 2br, din, 2snk, su, aw, ns
+        - -> przygotować koła ratunkowe na impulsywny głód
+        - -> co można pić(co warto a co można)
 
--> ustalić co musi być w lodówce i co dobrze by było
+    -> ustalić co musi być w lodówce i co dobrze by było
+    -> przygotować plany treningowe - lekkie do powrotu
+        -> push
+        -> pull
+        -> legs
+        -> basen
+        -> rower
+        -> bieganie/chodzenie
+        -> boisko
+
+Diet-tracker tasks:
+    -> przygotuj wykres do posiłków i produktów + macro do nich w ciągu dnia by ustalić gdzie kalorie się kumulują
+    -> dodać co jest w lodówce jako część projektu by kontolować co mogę przygotować do jedzenia a czego mi brakuje
+    -> wrócić do dadawanie treningów przez GUI
+
 
