@@ -1,0 +1,9 @@
+Name: Kanapka trójkąt Cezar
+Brand: Tomcio Paluch
+Package has: 205.0
+Macro for: 100.0
+KCal: 258.0
+Protein: 13.0
+Fat: 1.0
+Carbs: 24.0
+Comment optional: Link: https://delio.com.pl/products/A0005642-kanapka-tomcio-paluch-trjkt-cezar
