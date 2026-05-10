@@ -1,12 +1,13 @@
 package tools.sql_tools.general.statements;
 
-import  com.mysql.cj.conf.ConnectionUrlParser;
+import com.mysql.cj.conf.ConnectionUrlParser;
 import configuration.Config;
+import tools.debug_tools.Debug;
 import tools.sql_tools.general.RowInTable;
 import tools.sql_tools.general.Table;
 import tools.sql_tools.general.get.GetConnection;
 import tools.sql_tools.general.get.GetResultSet;
-import tools.sql_tools.general.get_check_data.GetAmountOfRows;
+import tools.sql_tools.general.get_check_data.GetAmountOfColumnsRows;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -142,75 +143,53 @@ how to handle this upper examples
     //</editor-fold>
 
     //<editor-fold desc="Rows in SQL table - method">
-    public static HashMap<String, String> selectOneRowDataFromQuery(String SQLQuery) {
-        //<editor-fold desc="Values">
-        ResultSet resultSet;
-        ResultSetMetaData resultSetMetaData;
+    public static Table getDataToTable(String SQLQuery) {
+        Table table = new Table();
 
-        ArrayList<String> columnsNames;
-        //</editor-fold>
+        int amountOfRows = GetAmountOfColumnsRows.getAmountOfRows(SQLQuery);
+        // debug line --> Debug.printYellowSystemPrintln("Data check amount in rows: " + amountOfRows);
 
-        resultSet = GetResultSet.getResultSetFromSQL(SQLQuery);
-
-        int amountOfColumns = GetResultSet.getAmountColumnsInResultSet(resultSet);
-
-        HashMap<String, String> rows = new HashMap<>();
-
-        int counter = 0;
-        int rowNumber = 0;
-
-        while (GetResultSet.isResultSetHasNext(resultSet)) {
-            for (int i = 1; i < amountOfColumns; i++) {
-                rows.put(GetResultSet.getColumnName(resultSet, i), GetResultSet.getValueOfString(resultSet, i));
-            }
-            counter++;
-
-            rowNumber++;
-        }
-        return rows;
-    }
-
-    public static ArrayList<RowInTable> allRowsDataFromQuery(String SQLQuery) {
-        //<editor-fold desc="Values">
         ResultSet resultSet = GetResultSet.getResultSetFromSQL(SQLQuery);
         ResultSetMetaData resultSetMetaData = GetResultSet.getResultSetMetaData(resultSet);
+        int amountOfColumn = GetAmountOfColumnsRows.getAmountOfColumns(SQLQuery);
 
-        int amountOfColumns = GetResultSet.getAmountColumnsInResultSet(resultSet);
-        int amountOfRows = GetAmountOfRows.getAmountOfRows(SQLQuery);
+        int rowCounter = 0;
+        RowInTable tmpRowInTable;
 
-        Table table = new Table();
-        ArrayList<RowInTable> rowsInTable = new ArrayList<RowInTable>();
-        RowInTable[] rows = new RowInTable[amountOfRows];
+        ArrayList<RowInTable> rowInTables = new ArrayList<>();
+        int globalCounter = 0;
+        try {
+            while (resultSet.next()) {
+                 tmpRowInTable = new RowInTable();
+                // debug line --
+                rowInTables.add(new RowInTable());
+                Debug.printRedSystemPrintln("Start: " + globalCounter);
+                for (int i = 1; i < amountOfColumn + 1; i++) {
+                    String columnLabel = resultSetMetaData.getColumnLabel(i);
+                    // debug line -->System.out.println(columnLabel);
+                    rowInTables.get(globalCounter).putKeyAndValueToRow(columnLabel, resultSet.getString(i));
+                }
 
-        for (int i = 0; i < amountOfRows; i++) {
-            rows[i] = new RowInTable();
-        }
+               // rowInTables.add(tmpRowInTable);
+                //tmpRowInTable.printAlLValuesAndKey();
+                Debug.printRedSystemPrintln("End: " + globalCounter);
+                Debug.printYellowSystemPrintln("Save data to table" + globalCounter);
+                //table.putRowToTable(tmpRowInTable);
+                Debug.printRedSystemPrintln("Save data to table" + globalCounter);
 
-        //</editor-fold>
 
-        RowInTable rowInTabletmp;
-        for (int i = 0; i < amountOfRows; i++) {
-            rowInTabletmp = new RowInTable();
-            try {
-                resultSet.next();
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
+                rowCounter++;
             }
-            for (int j = 1; j < amountOfColumns - 1; j++) {
-
-                String value = null;
-                value = GetResultSet.getValueOfString(resultSet, j);
-                //System.out.println(value);
-                rows[i].putKeyAndValueToRow(GetResultSet.getColumnName(resultSet, j), value);
-
-            }
-            //rowInTabletmp.printAlLValuesAndKey();
-            table.putRowToTable(rowInTabletmp);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
-        System.out.println("\n\n\nTable: ");
-        table.printTable();
-        //rowsInTable = table.getRows();
-        return rowsInTable;
+        System.out.println("print array list");
+        for (int i = 0; i < rowInTables.size(); i++) {
+            Debug.printRedSystemPrintln("Rows array: " + i);
+            rowInTables.get(i).printAlLValuesAndKey();
+        }
+        table.setRows(rowInTables);
+        return table;
     }
 
     public static ConnectionUrlParser.Pair<String, String> selectOneRowDataFromTable(String tableName, String selectedColumn1, String selectedColumn2,
@@ -255,7 +234,7 @@ how to handle this upper examples
  */
 
     }
-    //</editor-fold>
+//</editor-fold>
 
     //<editor-fold desc="Columns in SQL table - method">
     public static String[] getAllValuesInColumn(String tableName, int column) {
@@ -320,7 +299,7 @@ how to handle this upper examples
         }
         return null;
     }
-    //</editor-fold>
+//</editor-fold>
 
     //<editor-fold desc="Product related methods">
     public static String[] getRowFromProductTableByProductNameGetArray(String productName) throws SQLException {
@@ -557,6 +536,6 @@ how to handle this upper examples
 
         return allRowsArray;
     }
-    //</editor-fold>
+//</editor-fold>
 
 }

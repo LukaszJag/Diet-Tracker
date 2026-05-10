@@ -1,6 +1,6 @@
 package tools.sql_tools.general;
 
-import tools.sql_tools.general.statements.Select;
+import tools.debug_tools.Debug;
 
 import java.util.ArrayList;
 
@@ -13,12 +13,6 @@ public class Table {
     //<editor-fold desc="Constructors">
     public Table() {
         this.rows = new ArrayList<>();
-//        this.tableName = "not set";
-//        this.rows = new ArrayList<RowInTable>();
-//        // default SQL Query
-//        this.SQLQuery = "SELECT * FROM calendar WHERE day_date=\"2026-03-11\"";
-//        getAllRowFromQuery();
-
     }
 
     // TODO - no code, add code to constructor -> public Table(String tableName, String SQLQuery)
@@ -37,7 +31,7 @@ public class Table {
 
     //<editor-fold desc="Put methods">
     public void putRowToTable(RowInTable rowToInsert) {
-        this.rows.add(rowToInsert);
+        rows.add(rowToInsert);
     }
 
     public void putRowToTable(RowInTable rowToInsert, boolean printEveryRow) {
@@ -46,6 +40,13 @@ public class Table {
             rowToInsert.printAlLValuesAndKey();
             System.out.println();
             System.out.println();
+        }
+    }
+
+    public void printAllRowsInTable(){
+        for (int i = 0; i < rows.size(); i++) {
+            Debug.printYellowSystemPrintln("Row: " + i);
+            rows.get(i).printAlLValuesAndKey();
         }
     }
     //</editor-fold>
@@ -67,7 +68,6 @@ public class Table {
             System.out.println("SQLQuery is Empty");
         }
 
-        setRows(Select.allRowsDataFromQuery(this.SQLQuery));
     }
 
     public RowInTable getRowInTable(int index) {

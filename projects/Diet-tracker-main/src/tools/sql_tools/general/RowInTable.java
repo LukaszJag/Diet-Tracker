@@ -6,7 +6,7 @@ import java.util.*;
 
 public class RowInTable {
 
-    private static HashMap<String, String> fields = new HashMap<>();
+    public static HashMap<String, String> fields = new HashMap<>();
 
     //<editor-fold desc="Constructors">
     public RowInTable() {

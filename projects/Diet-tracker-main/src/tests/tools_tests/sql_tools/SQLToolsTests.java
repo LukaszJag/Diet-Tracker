@@ -3,6 +3,7 @@ package tests.tools_tests.sql_tools;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import tools.debug_tools.Debug;
 import tools.sql_tools.general.RowInTable;
 import tools.sql_tools.general.Table;
 import tools.sql_tools.general.statements.InsertToTable;
@@ -101,81 +102,14 @@ public class SQLToolsTests {
                     }
                 }
 
-                @Nested
-                class SelectOneRowDataFromQueryMethod{
-                    String SQLQuerySelectOnlyCukierFromDay = "SELECT * FROM calendar WHERE day_date=\"2026-03-11\" AND product_name = \"cukier\";";
-
-                    @Test
-                    public void selectAllDataFromQueryCukier_2026_03_11() {
-
-                        HashMap<String, String> dataFromTable = Select.selectOneRowDataFromQuery(SQLQuerySelectOnlyCukierFromDay);
-
-                        System.out.println(dataFromTable.size());
-                        System.out.println();
-                        System.out.println(dataFromTable.toString());
-                    }
-                }
-
-                @Nested
-                class SelectAllRowsDataFromQueryMethod {
-                    String SQLQuerySelectWholeDay = "SELECT * FROM calendar WHERE day_date=\"2026-03-11\"";
-
-                    @Test
-                    public void selectAllRowsDataFromQuery_1(){
-                        ArrayList<RowInTable> rowInTableArrayList = Select.allRowsDataFromQuery(SQLQuerySelectWholeDay);
-
-                        for (int i = 0; i < rowInTableArrayList.size(); i++) {
-                            rowInTableArrayList.get(i).printAlLValuesAndKey();
-                        }
-                    }
-                }
-
             }
         }
 
         @Nested
         class RowTests {
 
-            String SQLQueryToTest = "SELECT * FROM calendar WHERE day_date=\"2026-04-05\";";
-
-
-
-//            RowInTable calendar_2026_03_11_Cukier;
-//            @BeforeEach
-//            public void populateCalendarCukier_2026_03_11() {
-//                String dateInSQLFriendlyFormat = "2026-03-11";
-//                String productNameCukier = "Cukier";
-//                String SQLQuery = "" +
-//                        "SELECT " +
-//                        "* " +
-//                        "FROM " +
-//                        "calendar " +
-//                        "WHERE " +
-//                        "day_date" +
-//                        "=" +
-//                        "\"" +
-//                        dateInSQLFriendlyFormat +
-//                        "\"" +
-//                        " AND " +
-//                        "product_name " +
-//                        " = " +
-//                        "\"" +
-//                        productNameCukier +
-//                        "\"" +
-//                        ";";
-//
-//                HashMap<String, String> dataFromTable = Select.selectOneRowDataFromQuery(SQLQuery);
-//                calendar_2026_03_11_Cukier = new RowInTable(dataFromTable);
-//            }
-//
-//            @Test
-//            public void getAllValuesAndKeyFromCalendarRow() {
-//                calendar_2026_03_11_Cukier.printAlLValuesAndKey();
-//            }
-
-            //<editor-fold desc="Abstract database tests">
+            //<editor-fold desc="Abstract - food database tests">
             RowInTable food;
-            RowInTable cars;
 
             //@BeforeEach
             public void populateFood() {
@@ -188,15 +122,6 @@ public class SQLToolsTests {
                 food.putKeyAndValueToRow("dairy", "milk");
                 food.putKeyAndValueToRow("drink", "water");
 
-            }
-
-            //@BeforeEach
-            public void populateCars() {
-                cars = new RowInTable();
-                cars.putKeyAndValueToRow("German", "BMW");
-                cars.putKeyAndValueToRow("German", "Porche");
-                cars.putKeyAndValueToRow("Japanese", "Nissan");
-                cars.putKeyAndValueToRow("USA", "Dodge");
             }
 
             @Test
@@ -219,16 +144,57 @@ public class SQLToolsTests {
             }
             //</editor-fold>
 
+            //<editor-fold desc="Abstract - car database tests">
+            RowInTable cars;
+
+            //@BeforeEach
+            public void populateCars() {
+                cars = new RowInTable();
+                cars.putKeyAndValueToRow("German", "BMW");
+                cars.putKeyAndValueToRow("German", "Porche");
+                cars.putKeyAndValueToRow("Japanese", "Nissan");
+                cars.putKeyAndValueToRow("USA", "Dodge");
+            }
+
+            @Test
+            public void getAllCars() {
+                populateCars();
+                cars.printAlLValuesAndKey();
+            }
+            //</editor-fold>
+
+
         }
 
         @Nested
         class TableTests {
+            String SQLQueryFromCalendar = "SELECT * FROM calendar WHERE day_date=\"2026-04-05\";";
+
+            @Test
+            public void getDataFromSQLQueryCalendar() {
+                Table table = Select.getDataToTable(SQLQueryFromCalendar);
+                int tableSize = table.getRows().size();
+                System.out.println("Table size: " + tableSize);
+
+                for (int i = 0; i < tableSize; i++) {
+                    Debug.printYellowSystemPrintln("Row number: " + i);
+                   /* if (table.getRows().get(2).getFields().equals(table.getRows().get(4).getFields())) {
+                        System.out.println("same");
+                    }
+
+                    */
+                    System.out.println(table.getRows().get(i).getFields().get("product_name"));
+
+
+                }
+            }
+
 
             String QueryForTest_1 = "SELECT * FROM calendar WHERE day_date=\"2026-03-11\"";
             String QueryForTest_Cukier = "SELECT * FROM calendar WHERE day_date = \"2026-03-11\" AND product_name  = \"Cukier\";";
 
             @Test
-            public void setQueryForTest_Cukier(){
+            public void setQueryForTest_Cukier() {
                 Table table = new Table(QueryForTest_Cukier);
                 table.printTable();
             }
