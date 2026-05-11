@@ -178,11 +178,6 @@ public class SQLToolsTests {
 
                 for (int i = 0; i < tableSize; i++) {
                     Debug.printYellowSystemPrintln("Row number: " + i);
-                   /* if (table.getRows().get(2).getFields().equals(table.getRows().get(4).getFields())) {
-                        System.out.println("same");
-                    }
-
-                    */
                     System.out.println(table.getRows().get(i).getFields().get("product_name"));
 
 

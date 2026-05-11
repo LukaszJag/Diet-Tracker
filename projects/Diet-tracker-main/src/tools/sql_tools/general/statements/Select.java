@@ -2,7 +2,6 @@ package tools.sql_tools.general.statements;
 
 import com.mysql.cj.conf.ConnectionUrlParser;
 import configuration.Config;
-import tools.debug_tools.Debug;
 import tools.sql_tools.general.RowInTable;
 import tools.sql_tools.general.Table;
 import tools.sql_tools.general.get.GetConnection;
@@ -147,13 +146,11 @@ how to handle this upper examples
         Table table = new Table();
 
         int amountOfRows = GetAmountOfColumnsRows.getAmountOfRows(SQLQuery);
-        // debug line --> Debug.printYellowSystemPrintln("Data check amount in rows: " + amountOfRows);
 
         ResultSet resultSet = GetResultSet.getResultSetFromSQL(SQLQuery);
         ResultSetMetaData resultSetMetaData = GetResultSet.getResultSetMetaData(resultSet);
         int amountOfColumn = GetAmountOfColumnsRows.getAmountOfColumns(SQLQuery);
 
-        int rowCounter = 0;
         RowInTable tmpRowInTable;
 
         ArrayList<RowInTable> rowInTables = new ArrayList<>();
@@ -161,33 +158,19 @@ how to handle this upper examples
         try {
             while (resultSet.next()) {
                  tmpRowInTable = new RowInTable();
-                // debug line --
-                rowInTables.add(new RowInTable());
-                Debug.printRedSystemPrintln("Start: " + globalCounter);
+
                 for (int i = 1; i < amountOfColumn + 1; i++) {
                     String columnLabel = resultSetMetaData.getColumnLabel(i);
-                    // debug line -->System.out.println(columnLabel);
-                    rowInTables.get(globalCounter).putKeyAndValueToRow(columnLabel, resultSet.getString(i));
+                    tmpRowInTable.putKeyAndValueToRow(columnLabel, resultSet.getString(i));
+
                 }
-
-               // rowInTables.add(tmpRowInTable);
-                //tmpRowInTable.printAlLValuesAndKey();
-                Debug.printRedSystemPrintln("End: " + globalCounter);
-                Debug.printYellowSystemPrintln("Save data to table" + globalCounter);
-                //table.putRowToTable(tmpRowInTable);
-                Debug.printRedSystemPrintln("Save data to table" + globalCounter);
-
-
-                rowCounter++;
+                rowInTables.add(globalCounter, tmpRowInTable);
+                globalCounter++;
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        System.out.println("print array list");
-        for (int i = 0; i < rowInTables.size(); i++) {
-            Debug.printRedSystemPrintln("Rows array: " + i);
-            rowInTables.get(i).printAlLValuesAndKey();
-        }
+
         table.setRows(rowInTables);
         return table;
     }

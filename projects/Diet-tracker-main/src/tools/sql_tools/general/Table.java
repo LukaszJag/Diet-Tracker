@@ -94,7 +94,7 @@ public class Table {
     public void printTable() {
         for (int i = 0; i < rows.size(); i++) {
             System.out.println("Row:" + i);
-            rows.get(i).printAlLValuesAndKey(rows.get(i));
+            rows.get(i).printAlLValuesAndKey();
             System.out.println();
             System.out.println();
         }

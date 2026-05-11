@@ -6,7 +6,9 @@ import java.util.*;
 
 public class RowInTable {
 
-    public static HashMap<String, String> fields = new HashMap<>();
+
+
+    public HashMap<String, String> fields = new HashMap<>();
 
     //<editor-fold desc="Constructors">
     public RowInTable() {
@@ -14,7 +16,7 @@ public class RowInTable {
     }
 
     public RowInTable(HashMap<String, String> fields) {
-        setFields(fields);
+        this.fields = fields;
     }
     //</editor-fold>
 
@@ -26,12 +28,6 @@ public class RowInTable {
     public void printAlLValuesAndKey() {
         for (String key : fields.keySet()) {
             Debug.printKeyAndValue(key, fields.get(key), 6);
-        }
-    }
-
-    public static void printAlLValuesAndKey(RowInTable rowInTable) {
-        for (String i : rowInTable.getFields().keySet()) {
-            System.out.println("key:<" + i + "> value: <" + fields.get(i) + ">");
         }
     }
     //</editor-fold>
@@ -114,8 +110,8 @@ public class RowInTable {
         return fields;
     }
 
-    public static void setFields(HashMap<String, String> fields) {
-        RowInTable.fields = fields;
+    public void setFields(HashMap<String, String> fields) {
+        this.fields = fields;
     }
     //</editor-fold>
 }
