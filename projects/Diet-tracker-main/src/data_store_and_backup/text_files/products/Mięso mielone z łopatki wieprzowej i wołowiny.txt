@@ -1,0 +1,9 @@
+Name: Mięso mielone z łopatki wieprzowej i wołowiny
+Brand: Kraina Mięs
+Package has: 400.0
+Macro for: 100.0
+KCal: 200.0
+Protein: 19.0
+Fat: 14.0
+Carbs: 0.5
+Comment optional: Link: https://pl.openfoodfacts.org/product/5903282202719/mi%C4%99so-mielone-z-%C5%82opatki-wieprzowej-i-wo%C5%82owiny-kraina-mi%C4%99s

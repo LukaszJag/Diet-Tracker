@@ -1,0 +1,20 @@
+INSERT INTO `diet_tracker_schema`.product_table
+(`product_name`,
+`product_brand`,
+`product_package_has`,
+`product_macro_for`,
+`product_kcal`,
+`product_protein`,
+`product_fat`,
+`product_carbs`,
+`comment_optional`)
+Values
+('Mięso mielone z łopatki wieprzowej i wołowiny',
+'Kraina Mięs',
+400.0,
+100.0,
+200.0,
+19.0,
+14.0,
+0.5,
+'Link: https://pl.openfoodfacts.org/product/5903282202719/mi%C4%99so-mielone-z-%C5%82opatki-wieprzowej-i-wo%C5%82owiny-kraina-mi%C4%99s');
