@@ -69,7 +69,7 @@ public class CalendarMonthStatsView {
     float greenKcalLimit = Config.BMRActual.getKcal();
     float yellowKcalLimit = 4500;
     float redKcalLimit = 5500;
-    //</editor-fold>
+    //</editor-fold>-
     //<editor-fold desc="Global Counters">
     int goodDaysCounter;
 
@@ -118,6 +118,8 @@ public class CalendarMonthStatsView {
     JButton checkCalendarTableButton = new JButton("Check calendar table");
     JButton checkDaysStatisticFilledTableButton = new JButton("Check days statistic");
 
+    JButton testChartDietButton = new JButton("Test Chart Diet");
+
     //</editor-fold>
 
     //<editor-fold desc="GridLayouts">
@@ -150,6 +152,8 @@ public class CalendarMonthStatsView {
     //<editor-fold desc="TextFields">
     JTextField checkCalendarTableDateTextField = new JTextField();
     JTextField checkDaysStatisticsTableDateTextField = new JTextField();
+
+    JTextField testCharDateTextField = new JTextField("13-05-2026");
 
     //</editor-fold>
     //</editor-fold>
@@ -336,6 +340,11 @@ public class CalendarMonthStatsView {
 
         showBarChartButton.addActionListener(new ShowBarChartButtonActionListener());
         calendarMonthStatsViewPanelSouth.add(showBarChartButton);
+
+        testChartDietButton.addActionListener(new TestChartDietButtonActionListener());
+        calendarMonthStatsViewPanelSouth.add(testChartDietButton);
+
+        calendarMonthStatsViewPanelSouth.add(testCharDateTextField);
     }
 
     private void prepareAndAddContentToEastPanel() {
@@ -1577,6 +1586,77 @@ public class CalendarMonthStatsView {
         }
     }
 
+    private class TestChartDietButtonActionListener implements ActionListener {
+        JFrame chartJFrame;
+        JFreeChart jFreeChart;
+        JFreeChart jFreeChart;
+
+        //<editor-fold desc="Panels">
+        JPanel chartDietMainPanel = new JPanel();
+        JPanel chartDietPanelNorth = new JPanel();
+        JPanel chartDietPanelWest = new JPanel();
+        JPanel chartDietPanelEast = new JPanel();
+        JPanel chartDietPanelSouth = new JPanel();
+        //</editor-fold>
+
+        //<editor-fold desc="Buttons">
+        JButton acceptButton;
+        JButton backToMainWindowButton;
+        JButton exitProgramProductWindowButton = new JButton();
+        JButton goToNextDayButton;
+        JButton goToPreviousDayButton;
+        //</editor-fold>
+
+        public void initSwingComponents() {
+            chartJFrame = new JFrame("Chart Window");
+
+            //<editor-fold desc="Panels">
+            chartDietMainPanel = new JPanel();
+            chartDietPanelNorth = new JPanel();
+            chartDietPanelWest = new JPanel();
+            chartDietPanelEast = new JPanel();
+            chartDietPanelSouth = new JPanel();
+            //</editor-fold>
+
+            //<editor-fold desc="Buttons">
+            acceptButton = new JButton();
+            backToMainWindowButton = new JButton("Back");
+            exitProgramProductWindowButton = new JButton("Exit");
+            goToNextDayButton = new JButton("Next Day");
+            goToPreviousDayButton = new JButton("Previous Day");
+            //</editor-fold>
+        }
+
+
+        public void setupFrame() {
+
+            chartJFrame.setSize(800, 400);
+            chartJFrame.setLayout(new BorderLayout());
+            chartJFrame.setResizable(false);
+            chartJFrame.setLocationRelativeTo(null);
+            chartJFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            chartJFrame.setVisible(true);
+            chartJFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        }
+
+        public void addComponentsToPanels(){
+            chartDietMainPanel.add(jFreeChart);
+
+            chartDietPanelSouth.add(backToMainWindowButton);
+            chartDietPanelSouth.add(exitProgramProductWindowButton);
+            chartDietPanelSouth.add(goToNextDayButton);
+            chartDietPanelSouth.add(goToPreviousDayButton);
+        }
+
+        public void addComponentsToFrame(){
+
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+
+        }
+    }
     //</editor-fold>
 
 
@@ -1934,5 +2014,6 @@ public class CalendarMonthStatsView {
         }
         //</editor-fold>
     }
+
     //</editor-fold>
 }
