@@ -1,0 +1,9 @@
+Name: Pierogi ruskie z biedronki
+Brand: Nasze smaki
+Package has: 400.0
+Macro for: 100.0
+KCal: 164.0
+Protein: 5.7
+Fat: 4.1
+Carbs: 25.0
+Comment optional: Link: https://zakupy.biedronka.pl/nasze-smaki-nasze-smaki-pierogi-ruskie-400-g-0000003835.html

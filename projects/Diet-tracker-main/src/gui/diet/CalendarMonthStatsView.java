@@ -1589,7 +1589,7 @@ public class CalendarMonthStatsView {
     private class TestChartDietButtonActionListener implements ActionListener {
         JFrame chartJFrame;
         JFreeChart jFreeChart;
-        JFreeChart jFreeChart;
+        ChartPanel chartPanel;
 
         //<editor-fold desc="Panels">
         JPanel chartDietMainPanel = new JPanel();
@@ -1640,7 +1640,7 @@ public class CalendarMonthStatsView {
         }
 
         public void addComponentsToPanels(){
-            chartDietMainPanel.add(jFreeChart);
+            chartDietMainPanel.add(chartPanel);
 
             chartDietPanelSouth.add(backToMainWindowButton);
             chartDietPanelSouth.add(exitProgramProductWindowButton);

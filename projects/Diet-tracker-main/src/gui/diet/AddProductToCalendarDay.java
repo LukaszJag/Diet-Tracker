@@ -1550,7 +1550,7 @@ public class AddProductToCalendarDay {
     //<editor-fold desc="EditDaysStatisticsFileButtonActionListener - class and methods">
     private class EditDaysStatisticsFileButtonActionListener implements ActionListener {
         //<editor-fold desc="Global variables">
-            JFrame editDaysStatisticsDialogFrame = new JFrame("Edit Days Statistics File");
+        JFrame editDaysStatisticsDialogFrame = new JFrame("Edit Days Statistics File");
         JTable editDaysStatisticsTable;
         String pathToFile;
         String[] dataToSave;

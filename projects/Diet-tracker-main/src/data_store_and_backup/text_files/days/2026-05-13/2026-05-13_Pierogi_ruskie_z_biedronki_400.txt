@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2026-05-13',
+'Wednesday',
+'After workout',
+400.0,
+'Pierogi ruskie z biedronki',
+164.0,
+5.7,
+4.1,
+25.0,
+'2026-05-14 03:07:50',
+'none',
+656.0,
+100.0,
+16.4,
+22.8
+);
