@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2026-05-15',
+'Friday',
+'Snack 2',
+8.0,
+'Syrop klonowy',
+268.0,
+0.0,
+0.0,
+67.0,
+'2026-05-16 02:33:16',
+'none',
+21.439999,
+5.3599997,
+0.0,
+0.0
+);
