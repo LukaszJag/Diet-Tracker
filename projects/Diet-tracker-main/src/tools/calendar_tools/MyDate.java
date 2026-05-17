@@ -2,6 +2,7 @@ package tools.calendar_tools;
 
 import configuration.Config;
 
+import java.text.DateFormat;
 import java.text.Format;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -507,7 +508,7 @@ public class MyDate {
     }
 
     // TODO
-    public static String getNextDateFromMontAndYearSQLFriendlyFormat(String monthInNumber, String year){
+    public static String getNextDateFromMontAndYearSQLFriendlyFormat(String monthInNumber, String year) {
         String dt = year + "-" + monthInNumber;  // Start date
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM");
         Calendar c = Calendar.getInstance();
@@ -521,11 +522,11 @@ public class MyDate {
         return dt;
     }
 
-    public static String getNextDateFromMontAndYearSQLFriendlyFormat(int month, int year){
+    public static String getNextDateFromMontAndYearSQLFriendlyFormat(int month, int year) {
         String monthInNumber = "";
-        if (month < 10){
+        if (month < 10) {
             monthInNumber += "0" + month;
-        }else {
+        } else {
             monthInNumber = month + "";
         }
 
@@ -542,7 +543,7 @@ public class MyDate {
         return dt;
     }
 
-    public static String getPreviousDateFromMontAndYearSQLFriendlyFormat(String monthInNumber, String year){
+    public static String getPreviousDateFromMontAndYearSQLFriendlyFormat(String monthInNumber, String year) {
         String dt = year + "-" + monthInNumber;  // Start date
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM");
         Calendar c = Calendar.getInstance();
@@ -556,11 +557,11 @@ public class MyDate {
         return dt;
     }
 
-    public static String getPreviousDateFromMontAndYearSQLFriendlyFormat(int month, int year){
+    public static String getPreviousDateFromMontAndYearSQLFriendlyFormat(int month, int year) {
         String monthInNumber = "";
-        if (month < 10){
+        if (month < 10) {
             monthInNumber += "0" + month;
-        }else {
+        } else {
             monthInNumber = month + "";
         }
 
@@ -579,21 +580,22 @@ public class MyDate {
     //</editor-fold>
 
     //GetDateFrom
-    public static String getYearFromSQLFriendlyFormatDate(String date){
-        return date.substring(0,4);
+    public static String getYearFromSQLFriendlyFormatDate(String date) {
+        return date.substring(0, 4);
     }
 
-    public static int getYearFromSQLFriendlyFormatDateToInt(String date){
-        return Integer.valueOf(date.substring(0,4));
+    public static int getYearFromSQLFriendlyFormatDateToInt(String date) {
+        return Integer.valueOf(date.substring(0, 4));
     }
 
-    public static String getMonthFromSQLFriendlyFormatDate(String date){
-        return date.substring(5,7);
+    public static String getMonthFromSQLFriendlyFormatDate(String date) {
+        return date.substring(5, 7);
     }
 
-    public static int getMonthFromSQLFriendlyFormatDateToInt(String date){
-        return Integer.valueOf(date.substring(5,7));
+    public static int getMonthFromSQLFriendlyFormatDateToInt(String date) {
+        return Integer.valueOf(date.substring(5, 7));
     }
+
     public static boolean isYearAndMonthHasPassed(int year, int month, int day) {
         Date date = Config.date;
         Date passedDate = new Date(year, month, day);
@@ -633,11 +635,13 @@ public class MyDate {
     public static String getCurrentDayInSQLFormat() {
         return new SimpleDateFormat("yyyy-MM-dd").format(Config.date);
     }
+
     public static String getCurrentYearAndMonthInSQLFormat() {
         String result = new SimpleDateFormat("yyyy-MM").format(Config.date);
         result += "%";
         return result;
     }
+
     public static String[] getAllDaysForCurrentMonthInSQLFriendlyFormat() {
         int monthInt = Integer.valueOf(new SimpleDateFormat("MM").format(Config.date));
         String firstPartOfResult = new SimpleDateFormat("yyyy-MM").format(Config.date);
@@ -672,5 +676,24 @@ public class MyDate {
     }
     //</editor-fold>
 
+    //<editor-fold desc="Check data correctness">
+    public static boolean checkSQLFormat(String date) {
+        String DATE_FORMAT = "yyyy-MM-dd";
 
+        if (!date.matches("[1-9]\\d{3}-\\d{2}-\\d{2}")) {
+            return false;
+        }
+
+        try {
+            DateFormat df = new SimpleDateFormat(DATE_FORMAT);
+            df.setLenient(false);
+            df.parse(date);
+            System.out.println(date);
+            return true;
+        } catch (ParseException e) {
+            return false;
+        }
+
+    }
+    //</editor-fold>
 }
