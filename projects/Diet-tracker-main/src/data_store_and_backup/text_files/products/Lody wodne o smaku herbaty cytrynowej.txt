@@ -1,0 +1,9 @@
+Name: Lody wodne o smaku herbaty cytrynowej
+Brand: Nestea
+Package has: 100.0
+Macro for: 100.0
+KCal: 92.0
+Protein: 0.5
+Fat: 0.5
+Carbs: 23.0
+Comment optional: Link: https://www.carrefour.pl/mrozonki/lody/nestea-lody-wodne-o-smaku-herbaty-cytrynowej-99-ml

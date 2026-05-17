@@ -1,0 +1,9 @@
+Name: Ogórki kiszone
+Brand: Krakus
+Package has: 860.0
+Macro for: 100.0
+KCal: 8.0
+Protein: 0.5
+Fat: 0.5
+Carbs: 1.4
+Comment optional: Link: https://www.carrefour.pl/artykuly-spozywcze/przetwory-warzywne-i-owocowe/ogorki-i-grzyby/krakus-ogorki-kiszone-860-g
