@@ -5,7 +5,7 @@ import logs.Log;
 import runners.run_update.RunnerFullUpdateDayStatistics;
 import tools.calendar_tools.DayInCalendar;
 import tools.calendar_tools.MyDate;
-import tools.charts_tools.ChartsDiet;
+import tools.charts_tools.charts_type.ChartForMonthsKcalCompare;
 import tools.products_tools.Macro;
 import tools.products_tools.Product;
 import tools.sql_tools.calendar.InsertToCalendarDayTable;
@@ -1750,7 +1750,7 @@ public class AddProductToCalendarDay {
         @Override
         public void actionPerformed(ActionEvent e) {
 
-            new ChartsDiet().displayChartBar();
+            new ChartForMonthsKcalCompare().displayChartBar();
         }
     }
 

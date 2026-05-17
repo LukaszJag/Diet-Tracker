@@ -1,4 +1,4 @@
-package tools.charts_tools;
+package tools.charts_tools.charts_type;
 
 import configuration.Config;
 import gui.diet.AddProductToCalendarDay;
@@ -14,6 +14,7 @@ import org.jfree.chart.ui.TextAnchor;
 import org.jfree.data.category.CategoryDataset;
 import org.jfree.data.category.DefaultCategoryDataset;
 import tools.calendar_tools.MyDate;
+import tools.charts_tools.DisplayChart;
 import tools.sql_tools.days_statistics.SelectFromDaysStatistics;
 
 import javax.swing.*;
@@ -21,7 +22,7 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-public class ChartsDiet {
+public class ChartForMonthsKcalCompare {
     //<editor-fold desc="Global variables">
     String[] daysNumbers;
     String chartName;
@@ -31,7 +32,6 @@ public class ChartsDiet {
     int monthToDisplay = MyDate.getCurrentMonthNumber();
 
     int yearToDisplay = MyDate.getCurrentYear();
-    int monthIntervalForChart = 0;
 
     ChartPanel chartPanel;
     JFreeChart jFreeChart;
@@ -263,9 +263,10 @@ public class ChartsDiet {
         prepareDataForCharts();
 
         chartName = monthToDisplay + "-" + yearToDisplay;
-        jFreeChart = DisplayChart.createChartPanel(chartName, "Days", "Kcal",
+        jFreeChart = DisplayChart.createAreaChartPanel(chartName, "Days", "Kcal",
                 valuesKcal, "Kcal", daysNumbers);
-        DisplayChart.showChart(jFreeChart);
+
+        new DisplayChart().showChart(jFreeChart);
     }
     //</editor-fold>
 
@@ -360,4 +361,25 @@ public class ChartsDiet {
         }
     }
     //</editor-fold>
+
+
+    //<editor-fold desc="OLD METHODS FROM PREVIOUS CLASS">
+    public void runSetupData() {
+        //setupSwingComponents();
+        //prepareDataForMonthAverageMacro();
+        //setupSQLQuery();
+        //getMealDataFromSQLTable();
+        //setupJFreeChart();
+        //setupDataForChart();
+    }
+
+    public void displayBarChart() {
+        System.out.println("displayBarChart - DailyMacroChart");
+        runSetupData();
+        chartPanel = new ChartPanel(jFreeChart);
+        chartFrame.add(chartPanel);
+        chartFrame.setVisible(true);
+    }
+    //</editor-fold>
+
 }

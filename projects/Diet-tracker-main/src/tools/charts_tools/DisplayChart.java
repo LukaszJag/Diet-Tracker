@@ -3,29 +3,40 @@ package tools.charts_tools;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
-import org.jfree.chart.annotations.XYLineAnnotation;
-import org.jfree.chart.plot.CategoryMarker;
 import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.ValueMarker;
-import org.jfree.chart.plot.XYPlot;
 import org.jfree.data.category.DefaultCategoryDataset;
-import org.jfree.data.xy.XYDataset;
 
 import javax.swing.*;
 import java.awt.*;
 
 public class DisplayChart {
-    public static void showChart(JFreeChart chart){
-        ChartPanel chartPanel = new ChartPanel(chart);
-        JFrame frame = new JFrame();
+    //<editor-fold desc="Global variables">
+    ChartPanel chartPanel;
+    JFrame frame = new JFrame();
+    //</editor-fold>
+
+    //<editor-fold desc="showChart methods">
+    public  void showChart(JFreeChart jFreeChart){
+        setupAndShowFrame(jFreeChart);
         frame.setSize(1000, 700);
+    }
+
+    public  void showChart(JFreeChart jFreeChart, int width, int height){
+        setupAndShowFrame(jFreeChart);
+        frame.setSize(width, height);
+    }
+    //</editor-fold>
+
+    public void setupAndShowFrame(JFreeChart jFreeChart){
+        ChartPanel chartPanel = new ChartPanel(jFreeChart);
         frame.setContentPane(chartPanel);
         frame.setLocationRelativeTo(null);
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.setVisible(true);
     }
 
-    public static JFreeChart createChartPanel(String chartName, String categoryAxisLabel, String valueAxisLabel, float[] values, String rowKey, String[] columnsKeys){
+    public static JFreeChart createAreaChartPanel(String chartName, String categoryAxisLabel, String valueAxisLabel, float[] values, String rowKey, String[] columnsKeys){
         if (values.length != columnsKeys.length){
             System.out.println("Invalid data arrays have different sizes");
             return null;
@@ -55,7 +66,7 @@ public class DisplayChart {
         return chart;
     }
 
-    public static JFreeChart createAreaChartPanel(String chartName, String categoryAxisLabel, String valueAxisLabel, float[] values, String rowKey, String[] columnsKeys){
+    public static JFreeChart createLineChartPanel(String chartName, String categoryAxisLabel, String valueAxisLabel, float[] values, String rowKey, String[] columnsKeys){
         if (values.length != columnsKeys.length){
             System.out.println("Invalid data arrays have different sizes");
             return null;
@@ -76,4 +87,3 @@ public class DisplayChart {
         return chart;
     }
 }
-

@@ -1771,9 +1771,10 @@ public class CalendarMonthStatsView {
             prepareDataForCharts(0);
 
             chartName = monthToDisplay + "-" + yearToDisplay;
-            jFreeChart = DisplayChart.createChartPanel(chartName, "Days", "Kcal",
+            jFreeChart = DisplayChart.createAreaChartPanel(chartName, "Days", "Kcal",
                     valuesKcal, "Kcal", daysNumbers);
-            DisplayChart.showChart(jFreeChart);
+            DisplayChart displayChart = new DisplayChart();
+            displayChart.showChart(jFreeChart);
         }
 
         public void prepareMonthBarChart() {
