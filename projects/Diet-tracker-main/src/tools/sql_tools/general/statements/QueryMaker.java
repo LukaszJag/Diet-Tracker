@@ -1,6 +1,8 @@
 package tools.sql_tools.general.statements;
 
 import configuration.Config;
+import tools.calendar_tools.MyDate;
+import tools.debug_tools.Debug;
 
 public class QueryMaker {
 
@@ -61,5 +63,13 @@ public class QueryMaker {
 
         System.out.println("makeSearchByOneKeySQLStatement made this SQL Statement:\n\n" + sqlStatement + "\n");
         return sqlStatement;
+    }
+
+    public static String selectCalendarQueryWithDay(String dayInSQLFormat){
+        if(MyDate.checkSQLFormat(dayInSQLFormat)==false){
+            Debug.printRedSystemPrintln("ERROR: Wrong date");
+            return "-1";
+        }
+        return "SELECT * FROM calendar WHERE day_date=" + "\"" + dayInSQLFormat + "\"" + ";";
     }
 }
