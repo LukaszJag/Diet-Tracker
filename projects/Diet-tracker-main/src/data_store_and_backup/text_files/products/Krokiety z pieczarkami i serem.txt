@@ -1,0 +1,9 @@
+Name: Krokiety z pieczarkami i serem
+Brand: Virtu
+Package has: 1000.0
+Macro for: 100.0
+KCal: 186.0
+Protein: 6.2
+Fat: 8.0
+Carbs: 22.0
+Comment optional: Link: https://zakupy.auchan.pl/products/krokiety-z-pieczarkami-i-serem-virtu-1-kg/00975234?srsltid=AfmBOoorFVqZnRj_TqVY5O9uBjb3JGUHw3lEByBB5DhevdKhXtkFVTib

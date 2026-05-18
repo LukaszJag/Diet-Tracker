@@ -1,0 +1,20 @@
+INSERT INTO `diet_tracker_schema`.product_table
+(`product_name`,
+`product_brand`,
+`product_package_has`,
+`product_macro_for`,
+`product_kcal`,
+`product_protein`,
+`product_fat`,
+`product_carbs`,
+`comment_optional`)
+Values
+('Krokiety z pieczarkami i serem',
+'Virtu',
+1000.0,
+100.0,
+186.0,
+6.2,
+8.0,
+22.0,
+'Link: https://zakupy.auchan.pl/products/krokiety-z-pieczarkami-i-serem-virtu-1-kg/00975234?srsltid=AfmBOoorFVqZnRj_TqVY5O9uBjb3JGUHw3lEByBB5DhevdKhXtkFVTib');
