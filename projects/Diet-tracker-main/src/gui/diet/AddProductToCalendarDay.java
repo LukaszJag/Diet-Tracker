@@ -1838,6 +1838,7 @@ public class AddProductToCalendarDay {
         }
 
         public void selectNextItemInComboBox() {
+            //<editor-fold desc="Set productSuggestionNameComboBox text"">
             int productIndex = productSuggestionNameComboBox.getSelectedIndex();
             int comboBoxItemCount = productSuggestionNameComboBox.getItemCount();
 
@@ -1849,6 +1850,17 @@ public class AddProductToCalendarDay {
             } else {
                 productSuggestionNameComboBox.setSelectedIndex(0);
             }
+            //</editor-fold>
+
+            //<editor-fold desc="Set brandTextField text">
+            String[] resultOfCheckIfProductExist;
+            try {
+                resultOfCheckIfProductExist = Select.getRowFromProductTableByProductNameGetArray(productSuggestionNameComboBox.getSelectedItem().toString());
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            }
+            brandTextField.setText(resultOfCheckIfProductExist[1]);
+            //</editor-fold>
 
         }
 
