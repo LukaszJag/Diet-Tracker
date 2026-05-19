@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2026-05-19',
+'Tuesday',
+'Second Breakfast',
+257.0,
+'Krokiety z pieczarkami i serem',
+186.0,
+6.2,
+8.0,
+22.0,
+'2026-05-19 01:38:11',
+'none',
+478.02,
+56.539997,
+20.56,
+15.933999
+);

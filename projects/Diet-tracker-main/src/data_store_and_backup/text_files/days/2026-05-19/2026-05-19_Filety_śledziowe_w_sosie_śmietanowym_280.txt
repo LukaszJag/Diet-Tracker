@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2026-05-19',
+'Tuesday',
+'Breakfast',
+280.0,
+'Filety śledziowe w sosie śmietanowym',
+310.0,
+5.2,
+28.0,
+9.4,
+'2026-05-19 01:37:54',
+'none',
+868.0,
+26.319998,
+78.4,
+14.559999
+);
