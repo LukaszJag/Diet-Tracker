@@ -1,0 +1,9 @@
+Name: Pierogi z serem
+Brand: Auchan
+Package has: 400.0
+Macro for: 100.0
+KCal: 164.0
+Protein: 6.8
+Fat: 1.7
+Carbs: 31.0
+Comment optional: Link: https://zakupy.auchan.pl/products/pierogi-z-serem-auchan-400-g/00766593?srsltid=AfmBOopw-rp_DzMa8pBLJpL7W7Hg3NTBBKwnp9n0Hk95Oa35ICasIq3f

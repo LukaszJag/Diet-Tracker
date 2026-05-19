@@ -1,0 +1,20 @@
+INSERT INTO `diet_tracker_schema`.product_table
+(`product_name`,
+`product_brand`,
+`product_package_has`,
+`product_macro_for`,
+`product_kcal`,
+`product_protein`,
+`product_fat`,
+`product_carbs`,
+`comment_optional`)
+Values
+('Pierogi z serem',
+'Auchan',
+400.0,
+100.0,
+164.0,
+6.8,
+1.7,
+31.0,
+'Link: https://zakupy.auchan.pl/products/pierogi-z-serem-auchan-400-g/00766593?srsltid=AfmBOopw-rp_DzMa8pBLJpL7W7Hg3NTBBKwnp9n0Hk95Oa35ICasIq3f');
