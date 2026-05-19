@@ -11,7 +11,19 @@
         Siatkówka: 23:01 - 23:08 [7']
             Odbijanie z Kubą 23:01 - 23:08 [7']
 
+#?
+2026-05-19
+    Trening na boisku:  14:31 - 15:18 [47']
+    Localization: Boisko - koło akademików - pl. Grunwaldzki
 
+        Koszykówka 14:31 - 14:47 [16']
+            Od zera do 21 - 14:31 - 14:47 [16']
+                1. czas - 10' -> 14:31 - 14:47 [16']
+
+        Piłkanożna 14:52 - 15:18 [26']
+            Freestyle - żonglerki 14:52 - 15:18 [26']
+                    1. czas -  17' -> 14:52 - 15:18 [26']
+                        -> max żonglerek 20 <= - 33, 20, 23, 23, 22
 
 
 
