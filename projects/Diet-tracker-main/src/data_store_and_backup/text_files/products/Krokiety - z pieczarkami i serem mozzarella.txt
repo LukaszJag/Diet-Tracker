@@ -1,0 +1,9 @@
+Name: Krokiety - z pieczarkami i serem mozzarella
+Brand: U Jędrusia
+Package has: 400.0
+Macro for: 100.0
+KCal: 213.0
+Protein: 7.7
+Fat: 8.1
+Carbs: 26.3
+Comment optional: Link: https://ujedrusia.pl/produkt/krokiety-z-pieczarkami-i-serem-mozzarella
