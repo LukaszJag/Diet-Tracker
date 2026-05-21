@@ -11,9 +11,34 @@ import javax.swing.*;
 import java.awt.*;
 
 public class DisplayChart {
-    //<editor-fold desc="Global variables">
+
     ChartPanel chartPanel;
+
+    //<editor-fold desc="Swing components">
+    //<editor-fold desc="Swing components  - size">
+    Dimension frameSize = new  Dimension(1000, 700);
+    Dimension westPanelSize;
+    Dimension mainPanelSize;
+    Dimension northPanelSize;
+    Dimension eastPanelSize;
+    //</editor-fold>
+    //<editor-fold desc="Frames">
     JFrame frame = new JFrame();
+    //</editor-fold>
+    //<editor-fold desc="Buttons">
+    JButton acceptButton;
+    JButton backToMainWindowButton;
+    JButton exitProgramProductWindowButton = new JButton();
+    JButton goToNextDayButton;
+    JButton goToPreviousDayButton;
+    //</editor-fold>
+    //<editor-fold desc="Panels">
+    JPanel chartDietMainPanel = new JPanel();
+    JPanel chartDietPanelNorth = new JPanel();
+    JPanel chartDietPanelWest = new JPanel();
+    JPanel chartDietPanelEast = new JPanel();
+    JPanel chartDietPanelSouth = new JPanel();
+    //</editor-fold>
     //</editor-fold>
 
     //<editor-fold desc="showChart methods">
@@ -86,4 +111,55 @@ public class DisplayChart {
 
         return chart;
     }
+
+    //<editor-fold desc="Getters and Setters">
+    public Dimension getWestPanelSize() {
+        return westPanelSize;
+    }
+
+    public void setWestPanelSize(Dimension westPanelSize) {
+        this.westPanelSize = westPanelSize;
+    }
+
+    public Dimension getMainPanelSize() {
+        return mainPanelSize;
+    }
+
+    public void setMainPanelSize(Dimension mainPanelSize) {
+        this.mainPanelSize = mainPanelSize;
+    }
+
+    public Dimension getNorthPanelSize() {
+        return northPanelSize;
+    }
+
+    public void setNorthPanelSize(Dimension northPanelSize) {
+        this.northPanelSize = northPanelSize;
+    }
+
+    public Dimension getEastPanelSize() {
+        return eastPanelSize;
+    }
+
+    public void setEastPanelSize(Dimension eastPanelSize) {
+        this.eastPanelSize = eastPanelSize;
+    }
+
+    public Dimension getSouthPanelSize() {
+        return southPanelSize;
+    }
+
+    public void setSouthPanelSize(Dimension southPanelSize) {
+        this.southPanelSize = southPanelSize;
+    }
+
+    Dimension southPanelSize;
+    public Dimension getFrameSize() {
+        return frameSize;
+    }
+
+    public void setFrameSize(Dimension frameSize) {
+        this.frameSize = frameSize;
+    }
+    //</editor-fold>
 }

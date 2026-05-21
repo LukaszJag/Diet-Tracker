@@ -1,0 +1,20 @@
+INSERT INTO `diet_tracker_schema`.product_table
+(`product_name`,
+`product_brand`,
+`product_package_has`,
+`product_macro_for`,
+`product_kcal`,
+`product_protein`,
+`product_fat`,
+`product_carbs`,
+`comment_optional`)
+Values
+('Naleśniki z nadzieniem serowym - truskawkowym',
+'SmakMAK',
+400.0,
+100.0,
+177.0,
+5.6,
+4.2,
+29.0,
+'Link: https://www.frisco.pl/pid,147335/n,smakmak-nalesniki-z-nadzieniem-serowym---truskawkowym/stn,product');

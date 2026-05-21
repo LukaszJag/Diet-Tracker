@@ -14,6 +14,7 @@ import org.jfree.data.category.CategoryDataset;
 import org.jfree.data.category.DefaultCategoryDataset;
 import tools.calendar_tools.MyDate;
 import tools.charts_tools.DisplayChart;
+import tools.charts_tools.charts_type.DailyMacroChart;
 import tools.debug_tools.Debug;
 import tools.products_tools.Macro;
 import tools.sql_tools.calendar.SelectFromCalendar;
@@ -1587,74 +1588,14 @@ public class CalendarMonthStatsView {
     }
 
     private class TestChartDietButtonActionListener implements ActionListener {
-        JFrame chartJFrame;
-        JFreeChart jFreeChart;
-        ChartPanel chartPanel;
-
-        //<editor-fold desc="Panels">
-        JPanel chartDietMainPanel = new JPanel();
-        JPanel chartDietPanelNorth = new JPanel();
-        JPanel chartDietPanelWest = new JPanel();
-        JPanel chartDietPanelEast = new JPanel();
-        JPanel chartDietPanelSouth = new JPanel();
-        //</editor-fold>
-
-        //<editor-fold desc="Buttons">
-        JButton acceptButton;
-        JButton backToMainWindowButton;
-        JButton exitProgramProductWindowButton = new JButton();
-        JButton goToNextDayButton;
-        JButton goToPreviousDayButton;
-        //</editor-fold>
-
-        public void initSwingComponents() {
-            chartJFrame = new JFrame("Chart Window");
-
-            //<editor-fold desc="Panels">
-            chartDietMainPanel = new JPanel();
-            chartDietPanelNorth = new JPanel();
-            chartDietPanelWest = new JPanel();
-            chartDietPanelEast = new JPanel();
-            chartDietPanelSouth = new JPanel();
-            //</editor-fold>
-
-            //<editor-fold desc="Buttons">
-            acceptButton = new JButton();
-            backToMainWindowButton = new JButton("Back");
-            exitProgramProductWindowButton = new JButton("Exit");
-            goToNextDayButton = new JButton("Next Day");
-            goToPreviousDayButton = new JButton("Previous Day");
-            //</editor-fold>
-        }
 
 
-        public void setupFrame() {
-
-            chartJFrame.setSize(800, 400);
-            chartJFrame.setLayout(new BorderLayout());
-            chartJFrame.setResizable(false);
-            chartJFrame.setLocationRelativeTo(null);
-            chartJFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            chartJFrame.setVisible(true);
-            chartJFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        }
-
-        public void addComponentsToPanels(){
-            chartDietMainPanel.add(chartPanel);
-
-            chartDietPanelSouth.add(backToMainWindowButton);
-            chartDietPanelSouth.add(exitProgramProductWindowButton);
-            chartDietPanelSouth.add(goToNextDayButton);
-            chartDietPanelSouth.add(goToPreviousDayButton);
-        }
-
-        public void addComponentsToFrame(){
-
-        }
 
         @Override
-        public void actionPerformed(ActionEvent e) {
-
+        public void actionPerformed(ActionEvent e)
+        {
+            DailyMacroChart dailyMacroChart = new DailyMacroChart("Test daily chart", "2026-05-18");
+            dailyMacroChart.getDataForSelectedDay();
         }
     }
     //</editor-fold>

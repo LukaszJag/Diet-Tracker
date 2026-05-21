@@ -1,0 +1,9 @@
+Name: Carrefour Extra Krokiety z mięsem
+Brand: Carrefour
+Package has: 400.0
+Macro for: 100.0
+KCal: 251.0
+Protein: 9.6
+Fat: 13.0
+Carbs: 23.0
+Comment optional: Link: https://www.carrefour.pl/dania-gotowe-i-przystawki/dania-gotowe-i-przystawki-7v/krokiety-i-nalesniki/carrefour-extra-krokiety-z-miesem-400-g

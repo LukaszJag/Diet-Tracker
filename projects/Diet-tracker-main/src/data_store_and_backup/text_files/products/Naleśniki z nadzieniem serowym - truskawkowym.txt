@@ -1,0 +1,9 @@
+Name: Naleśniki z nadzieniem serowym - truskawkowym
+Brand: SmakMAK
+Package has: 400.0
+Macro for: 100.0
+KCal: 177.0
+Protein: 5.6
+Fat: 4.2
+Carbs: 29.0
+Comment optional: Link: https://www.frisco.pl/pid,147335/n,smakmak-nalesniki-z-nadzieniem-serowym---truskawkowym/stn,product
