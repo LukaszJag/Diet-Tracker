@@ -1,0 +1,9 @@
+Name: Pierogi Ukraińskie
+Brand: Auchan
+Package has: 1000.0
+Macro for: 100.0
+KCal: 140.0
+Protein: 5.4
+Fat: 2.1
+Carbs: 26.0
+Comment optional: Link: https://zakupy.auchan.pl/products/pierogi-ukrai%C5%84skie-auchan-1-kg/00766820

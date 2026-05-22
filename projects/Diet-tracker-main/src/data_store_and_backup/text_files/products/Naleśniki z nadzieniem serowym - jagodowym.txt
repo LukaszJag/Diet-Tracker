@@ -1,0 +1,9 @@
+Name: Naleśniki z nadzieniem serowym - jagodowym
+Brand: SmakMAK 
+Package has: 400.0
+Macro for: 100.0
+KCal: 171.0
+Protein: 5.2
+Fat: 3.3
+Carbs: 30.0
+Comment optional: Link: https://www.frisco.pl/pid,147331/n,smakmak-nalesniki-z-nadzieniem-serowym---jagodowym/stn,product
