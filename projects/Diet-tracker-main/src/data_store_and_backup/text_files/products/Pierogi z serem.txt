@@ -7,3 +7,12 @@ Protein: 6.8
 Fat: 1.7
 Carbs: 31.0
 Comment optional: Link: https://zakupy.auchan.pl/products/pierogi-z-serem-auchan-400-g/00766593?srsltid=AfmBOopw-rp_DzMa8pBLJpL7W7Hg3NTBBKwnp9n0Hk95Oa35ICasIq3f
+Name: Pierogi z serem
+Brand: Carrefour
+Package has: 400.0
+Macro for: 100.0
+KCal: 198.0
+Protein: 9.2
+Fat: 4.0
+Carbs: 31.0
+Comment optional: Link: https://www.carrefour.pl/dania-gotowe-i-przystawki/dania-gotowe-i-przystawki-7v/pierogi-i-knedle/carrefour-classic-pierogi-z-serem-400-g

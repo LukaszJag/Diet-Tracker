@@ -1,0 +1,20 @@
+INSERT INTO `diet_tracker_schema`.product_table
+(`product_name`,
+`product_brand`,
+`product_package_has`,
+`product_macro_for`,
+`product_kcal`,
+`product_protein`,
+`product_fat`,
+`product_carbs`,
+`comment_optional`)
+Values
+('Złote paluszki rybne',
+'Frosta',
+450.0,
+100.0,
+182.0,
+13.0,
+8.3,
+14.0,
+'Link: https://www.frosta.pl/produkty/ryby/zlote-paluszki-rybne-450g/');

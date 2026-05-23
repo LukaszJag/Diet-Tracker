@@ -1,0 +1,9 @@
+Name: Pierogi z serem - Carrefour Classic
+Brand: Carrefour
+Package has: 400.0
+Macro for: 100.0
+KCal: 198.0
+Protein: 9.2
+Fat: 4.0
+Carbs: 31.0
+Comment optional: Link: https://www.carrefour.pl/dania-gotowe-i-przystawki/dania-gotowe-i-przystawki-7v/pierogi-i-knedle/carrefour-classic-pierogi-z-serem-400-g

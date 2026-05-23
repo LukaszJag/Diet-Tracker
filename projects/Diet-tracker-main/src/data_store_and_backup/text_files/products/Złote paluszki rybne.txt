@@ -1,0 +1,9 @@
+Name: Złote paluszki rybne
+Brand: Frosta
+Package has: 450.0
+Macro for: 100.0
+KCal: 182.0
+Protein: 13.0
+Fat: 8.3
+Carbs: 14.0
+Comment optional: Link: https://www.frosta.pl/produkty/ryby/zlote-paluszki-rybne-450g/
