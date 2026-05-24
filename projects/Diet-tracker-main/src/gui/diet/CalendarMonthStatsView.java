@@ -1595,7 +1595,7 @@ public class CalendarMonthStatsView {
         public void actionPerformed(ActionEvent e)
         {
             DailyMacroChart dailyMacroChart = new DailyMacroChart("Test daily chart", "2026-05-18");
-            dailyMacroChart.getDataForSelectedDay();
+            new DisplayChart().showChart(dailyMacroChart.getjFreeBarChart());
         }
     }
     //</editor-fold>

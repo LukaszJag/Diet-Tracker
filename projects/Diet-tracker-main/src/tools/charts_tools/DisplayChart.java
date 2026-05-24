@@ -42,6 +42,11 @@ public class DisplayChart {
     //</editor-fold>
 
     //<editor-fold desc="showChart methods">
+    public  void showChart(ChartPanel chartPanel1, ChartPanel chartPanel2){
+        setupAndShowFrame(chartPanel1, chartPanel2);
+        frame.setSize(1000, 700);
+    }
+
     public  void showChart(JFreeChart jFreeChart){
         setupAndShowFrame(jFreeChart);
         frame.setSize(1000, 700);
@@ -56,6 +61,14 @@ public class DisplayChart {
     public void setupAndShowFrame(JFreeChart jFreeChart){
         ChartPanel chartPanel = new ChartPanel(jFreeChart);
         frame.setContentPane(chartPanel);
+        frame.setLocationRelativeTo(null);
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        frame.setVisible(true);
+    }
+
+    public void setupAndShowFrame(ChartPanel chartPanel1, ChartPanel ChartPanel2){
+        frame.add(chartPanel1);
+        frame.add(ChartPanel2);
         frame.setLocationRelativeTo(null);
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.setVisible(true);

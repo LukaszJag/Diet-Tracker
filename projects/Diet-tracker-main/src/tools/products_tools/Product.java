@@ -28,7 +28,7 @@ public class Product {
                 '}';
     }
 
-    // Constructors
+    //<editor-fold desc="Constructors">
     public Product(String name, String brand, float productMeasureOfProductWeightToCalculateMacro, Macro product_macro, float weight_of_pack, String commentOptional){
         this.productName = name;
         this.productBrand = brand;
@@ -37,6 +37,9 @@ public class Product {
         this.productPackWeight = weight_of_pack;
         this.commentOptional = commentOptional;
     }
+
+    public Product(){}
+    //</editor-fold>
 
     public static boolean isProductEqual(Product productOne, Product productTwo){
         String[] productOneInArray = productOne.productDataInStringArray(productOne);
