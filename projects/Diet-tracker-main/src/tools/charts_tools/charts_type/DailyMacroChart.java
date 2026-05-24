@@ -4,17 +4,19 @@ import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.CategoryPlot;
-import org.jfree.chart.plot.XYPlot;
+import org.jfree.chart.renderer.category.LineAndShapeRenderer;
 import org.jfree.data.category.DefaultCategoryDataset;
 import tools.calendar_tools.MyDate;
 import tools.debug_tools.Debug;
 import tools.products_tools.Macro;
 import tools.products_tools.Product;
+import tools.products_tools.ProductConsumed;
 import tools.sql_tools.general.RowInTable;
 import tools.sql_tools.general.Table;
 import tools.sql_tools.general.statements.QueryMaker;
 import tools.sql_tools.general.statements.Select;
 
+import java.awt.*;
 import java.util.ArrayList;
 
 import static java.lang.System.exit;
@@ -26,21 +28,21 @@ public class DailyMacroChart {
     String dateInSQLFormat;
     //</editor-fold>
 
-    ChartPanel chartPanel;
-
-    JFreeChart jFreeGeneralChart;
+    //<editor-fold desc="Jfree charts - components">
     JFreeChart jFreeBarChart;
+    JFreeChart combinedChart;
     JFreeChart jFreeLineChart;
+
     CategoryPlot categoryPlot;
 
     ChartPanel panelBarChart;
     ChartPanel panelLineChart;
 
-    XYPlot plot;
+    DefaultCategoryDataset barDataset = new DefaultCategoryDataset();
+    DefaultCategoryDataset lineDataset = new DefaultCategoryDataset();
+    //</editor-fold>
 
-    DefaultCategoryDataset datasetBarChart = new DefaultCategoryDataset();
-
-    ArrayList<TMPProduct> productFromSQLDatabase = new ArrayList<>();
+    ArrayList<ProductConsumed> productFromSQLDatabase = new ArrayList<>();
     //<editor-fold desc="Colors">
 
     //</editor-fold>
@@ -52,8 +54,9 @@ public class DailyMacroChart {
         this.dateInSQLFormat = dateInSQLFormat;
         categoryPlot = new CategoryPlot();
         getDataForSelectedDay();
-        prepareBarChart();
-        createLineChartPanel();
+        createBarChart();
+        createLineChart();
+        combineTwoCharts();
 
     }
     //</editor-fold>
@@ -72,7 +75,7 @@ public class DailyMacroChart {
         fullTableData.printTable();
 
         for (int i = 0; i < fullTableData.getAmountOfRowsInTable(); i++) {
-            TMPProduct tmpProduct;
+            ProductConsumed productConsumed;
 
             RowInTable rowInTable = fullTableData.getRowInTable(i);
 
@@ -107,67 +110,71 @@ public class DailyMacroChart {
 
             float amountOfProduct = Float.parseFloat(rowInTable.getValue("amount_of_product"));
 
-            productFromSQLDatabase.add(new TMPProduct(product, amountOfProduct,consumedMacro));
+            productFromSQLDatabase.add(new ProductConsumed(product, amountOfProduct,consumedMacro));
 
-        }
-        for (int i = 0; i < productFromSQLDatabase.size(); i++) {
-            System.out.print("\n\n");
-            Debug.printBlueSystemPrintln("Product number: " + i);
-            System.out.println(productFromSQLDatabase.get(i).getProduct().getProductName());
-            System.out.println(productFromSQLDatabase.get(i).getConsumedMacro().getShortMacroInformation());
         }
     }
 
-    public void prepareBarChart(){
-        DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+    public void createBarChart(){
 
         String[] labelsForColumns = new String[productFromSQLDatabase.size()];
         for (int i = 0; i <productFromSQLDatabase.size(); i++) {
-            labelsForColumns[i] = productFromSQLDatabase.get(i).product.getProductName();
+            labelsForColumns[i] = productFromSQLDatabase.get(i).getProduct().getProductName();
         }
 
         for (int i = 0; i < labelsForColumns.length; i++) {
 
-            dataset.addValue(productFromSQLDatabase.get(i).consumedMacro.getKcal(), ("" + (i + 1) + "-" + productFromSQLDatabase.get(i).getProduct().getProductName()), "kcal");
+            barDataset.addValue(productFromSQLDatabase.get(i).getConsumedMacro().getKcal(), ("" + (i + 1) + "-" + productFromSQLDatabase.get(i).getProduct().getProductName()), "kcal");
         }
 
         jFreeBarChart = ChartFactory.createBarChart(chartName, "Kcal", "Kcal",
-                dataset);
+                barDataset);
 
         panelBarChart = new ChartPanel(jFreeBarChart);
     }
 
-    public void createLineChartPanel(){
+    public void createLineChart(){
 
         float kcalSum = 0;
 
         String valueAxisLabel = "kcal";
         String categoryAxisLabel = "products";
 
-        DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-
         for (int i = 0; i < productFromSQLDatabase.size(); i++) {
             kcalSum += productFromSQLDatabase.get(i).getConsumedMacro().getKcal();
-            dataset.addValue(kcalSum, "Kcal", productFromSQLDatabase.get(i).getProduct().getProductName());
+            lineDataset.addValue(kcalSum, "Kcal", productFromSQLDatabase.get(i).getProduct().getProductName());
         }
 
         jFreeLineChart = ChartFactory.createLineChart(
                 chartName,
                 categoryAxisLabel,
                 valueAxisLabel,
-                dataset);
+                lineDataset);
 
         panelBarChart = new ChartPanel(jFreeLineChart);
     }
 
     public void combineTwoCharts(){
-        XYPlot plot = jFreeGeneralChart.getXYPlot();
 
-        plot.setDataset(0, da);
-        plot.setRenderer(0, renderer1);
+        CategoryPlot plot = jFreeBarChart.getCategoryPlot();
 
-        plot.setDataset(1, dataset2);
-        plot.setRenderer(1, renderer2);
+        plot.setDataset(1, lineDataset);
+
+        LineAndShapeRenderer lineRenderer = new LineAndShapeRenderer();
+        lineRenderer.setSeriesPaint(0, Color.RED); // Make the line red so it stands out
+        lineRenderer.setSeriesStroke(0, new BasicStroke(3.0f)); // Make the line thicker
+
+        plot.setRenderer(1, lineRenderer);
+
+        // (Optional but good practice) Map the line dataset to the first Y-axis
+        plot.mapDatasetToRangeAxis(1, 0);
+
+        combinedChart = new JFreeChart(
+                chartName, // Your chart title
+                JFreeChart.DEFAULT_TITLE_FONT,
+                plot,
+                true // Show legend
+        );
     }
     //<editor-fold desc="Getters and Setters">
     public JFreeChart getjFreeBarChart() {
@@ -193,60 +200,15 @@ public class DailyMacroChart {
     public void setPanelLineChart(ChartPanel panelLineChart) {
         this.panelLineChart = panelLineChart;
     }
+
+    public JFreeChart getCombinedChart() {
+        return combinedChart;
+    }
+
+    public void setCombinedChart(JFreeChart combinedChart) {
+        this.combinedChart = combinedChart;
+    }
     //</editor-fold>
 
-    class TMPProduct{
 
-
-        Product product = new Product();
-        Macro consumedMacro = new Macro();
-        float amountOfProduct;
-
-        @Override
-        public String toString() {
-            return "TMPProduct{" +
-                    "productArrayList=" + product +
-                    ", consumedMacro=" + consumedMacro +
-                    ", amountOfProduct=" + amountOfProduct +
-                    '}';
-        }
-
-        //<editor-fold desc="Constructors">
-        public TMPProduct(){}
-
-        public TMPProduct(Product productArrayList, float amountOfProduct, Macro consumedMacro) {
-            this.product = productArrayList;
-            this.amountOfProduct = amountOfProduct;
-            this.consumedMacro = consumedMacro;
-        }
-        //</editor-fold>
-
-        //<editor-fold desc="Getters and Setters">
-        public Product getProduct() {
-            return product;
-        }
-
-        public void setProduct(Product product) {
-            this.product = product;
-        }
-
-        public Macro getConsumedMacro() {
-            return consumedMacro;
-        }
-
-        public void setConsumedMacro(Macro consumedMacro) {
-            this.consumedMacro = consumedMacro;
-        }
-
-        public float getAmountOfProduct() {
-            return amountOfProduct;
-        }
-
-        public void setAmountOfProduct(float amountOfProduct) {
-            this.amountOfProduct = amountOfProduct;
-        }
-
-
-        //</editor-fold>
-    }
 }
