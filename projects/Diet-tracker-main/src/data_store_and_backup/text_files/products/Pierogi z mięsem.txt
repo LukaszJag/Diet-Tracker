@@ -1,0 +1,9 @@
+Name: Pierogi z mięsem
+Brand: U Jędrusia
+Package has: 400.0
+Macro for: 100.0
+KCal: 209.0
+Protein: 8.9
+Fat: 8.5
+Carbs: 22.9
+Comment optional: Link: https://ujedrusia.pl/produkt/pierogi-z-miesem

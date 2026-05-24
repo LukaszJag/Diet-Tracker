@@ -1,0 +1,9 @@
+Name: Kukurydza słodka
+Brand: Dawtona
+Package has: 400.0
+Macro for: 100.0
+KCal: 74.0
+Protein: 2.5
+Fat: 2.1
+Carbs: 10.0
+Comment optional: Link: https://www.carrefour.pl/artykuly-spozywcze/przetwory-warzywne-i-owocowe/kukurydza-groszek-fasolka/dawtona-kukurydza-slodka-400-g

@@ -1,0 +1,20 @@
+INSERT INTO `diet_tracker_schema`.product_table
+(`product_name`,
+`product_brand`,
+`product_package_has`,
+`product_macro_for`,
+`product_kcal`,
+`product_protein`,
+`product_fat`,
+`product_carbs`,
+`comment_optional`)
+Values
+('Kukurydza słodka',
+'Dawtona',
+400.0,
+100.0,
+74.0,
+2.5,
+2.1,
+10.0,
+'Link: https://www.carrefour.pl/artykuly-spozywcze/przetwory-warzywne-i-owocowe/kukurydza-groszek-fasolka/dawtona-kukurydza-slodka-400-g');
