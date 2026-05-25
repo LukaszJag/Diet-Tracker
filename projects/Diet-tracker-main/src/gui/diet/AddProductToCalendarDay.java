@@ -5,7 +5,9 @@ import logs.Log;
 import runners.run_update.RunnerFullUpdateDayStatistics;
 import tools.calendar_tools.DayInCalendar;
 import tools.calendar_tools.MyDate;
+import tools.charts_tools.DisplayChart;
 import tools.charts_tools.charts_type.ChartForMonthsKcalCompare;
+import tools.charts_tools.charts_type.DailyMacroChart;
 import tools.products_tools.Macro;
 import tools.products_tools.Product;
 import tools.sql_tools.calendar.InsertToCalendarDayTable;
@@ -66,6 +68,8 @@ public class AddProductToCalendarDay {
 
     JButton middlePanelWestPlusDayForDaysStatisticButton = new JButton("+");
     JButton middlePanelWestMinusDayForDaysStatisticButton = new JButton("-");
+
+    JButton showDailyChartButton = new JButton("Daily Chart");
     //</editor-fold>
 
     //<editor-fold desc="East panel - buttons">
@@ -355,11 +359,6 @@ public class AddProductToCalendarDay {
 
         addProductToDayDisplaySelectedDayDate.setForeground(Config.addProductToDayCurrentDateLabelColor);
 
-        // chosenCalendarTableLabel
-        chosenCalendarTableLabel = new JLabel("Current Table is: " + Config.CURRENT_DATABASE_TABLE_CALENDAR);
-        chosenCalendarTableLabel.setForeground(Config.CHOSE_TABLE_TO_INSERT_DATA);
-        chosenCalendarTableLabel.setFont(new Font(chosenCalendarTableLabel.getFont().getFontName(), chosenCalendarTableLabel.getFont().getStyle(), 11));
-        //</editor-fold>
 
         //<editor-fold desc="Mid - inner panel components setup">
 
@@ -394,8 +393,10 @@ public class AddProductToCalendarDay {
 
         //<editor-fold desc="Add components to - upperPanelWest, middlePanelWest, tables panels">
         //<editor-fold desc="Add components to - upper panel west">
+        showDailyChartButton.addActionListener(new ShowDailyChartButtonActionListener());
+
         upperPanelWest.add(inputCurrentDayButton);
-        upperPanelWest.add(chosenCalendarTableLabel);
+        upperPanelWest.add(showDailyChartButton);
 
         setNextDayButton.addActionListener(new SetNextButtonActionListener());
         setPreviousButton.addActionListener(new SetPreviousButtonActionListener());
@@ -1181,6 +1182,15 @@ public class AddProductToCalendarDay {
             setUpMacroTable(checkCalendarTableDateTextField.getText());
         }
     }
+
+    private class ShowDailyChartButtonActionListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            DailyMacroChart dailyMacroChart = new DailyMacroChart(checkCalendarTableDateTextField.getText(), checkCalendarTableDateTextField.getText());
+            new DisplayChart().showChart(dailyMacroChart.getCombinedChart());
+        }
+    }
+
     //</editor-fold>
 
     //<editor-fold desc="addProductToDay - Panel Main - Buttons ActionListener">
@@ -1442,6 +1452,7 @@ public class AddProductToCalendarDay {
         @Override
         public void actionPerformed(ActionEvent e) {
             Config.CURRENT_DATABASE_TABLE_CALENDAR = "calendar";
+            JOptionPane.showMessageDialog(null, "Current Table is: " + Config.CURRENT_DATABASE_TABLE_CALENDAR  );
             chosenCalendarTableLabel.setText("Current Table is: " + Config.CURRENT_DATABASE_TABLE_CALENDAR);
         }
     }
@@ -2007,6 +2018,7 @@ public class AddProductToCalendarDay {
             }
         }
     }
+
 
     //</editor-fold>
 
