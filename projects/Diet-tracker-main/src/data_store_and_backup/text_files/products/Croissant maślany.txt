@@ -1,0 +1,9 @@
+Name: Croissant maślany
+Brand: Carrefour
+Package has: 55.0
+Macro for: 100.0
+KCal: 340.0
+Protein: 6.8
+Fat: 16.0
+Carbs: 42.0
+Comment optional: Link: https://www.carrefour.pl/piekarnia-ciastkarnia/wypieki-francuskie/rogale-francuskie/croissant-maslany

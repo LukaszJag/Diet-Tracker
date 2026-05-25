@@ -1,0 +1,20 @@
+INSERT INTO `diet_tracker_schema`.product_table
+(`product_name`,
+`product_brand`,
+`product_package_has`,
+`product_macro_for`,
+`product_kcal`,
+`product_protein`,
+`product_fat`,
+`product_carbs`,
+`comment_optional`)
+Values
+('Croissant maślany',
+'Carrefour',
+55.0,
+100.0,
+340.0,
+6.8,
+16.0,
+42.0,
+'Link: https://www.carrefour.pl/piekarnia-ciastkarnia/wypieki-francuskie/rogale-francuskie/croissant-maslany');
