@@ -3,7 +3,11 @@ package tools.charts_tools.charts_type;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
+import org.jfree.chart.axis.CategoryAxis;
+import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.plot.CategoryPlot;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.chart.renderer.category.BarRenderer;
 import org.jfree.chart.renderer.category.LineAndShapeRenderer;
 import org.jfree.data.category.DefaultCategoryDataset;
 import tools.calendar_tools.MyDate;
@@ -16,7 +20,6 @@ import tools.sql_tools.general.Table;
 import tools.sql_tools.general.statements.QueryMaker;
 import tools.sql_tools.general.statements.Select;
 
-import java.awt.*;
 import java.util.ArrayList;
 
 import static java.lang.System.exit;
@@ -42,6 +45,7 @@ public class DailyMacroChart {
     DefaultCategoryDataset lineDataset = new DefaultCategoryDataset();
     //</editor-fold>
 
+    ArrayList<String> labels = new ArrayList<>();
     ArrayList<ProductConsumed> productFromSQLDatabase = new ArrayList<>();
     //<editor-fold desc="Colors">
 
@@ -72,7 +76,6 @@ public class DailyMacroChart {
 
         Table fullTableData;
         fullTableData = Select.getDataToTable(QueryMaker.selectCalendarQueryWithDay(dateInSQLFormat));
-        fullTableData.printTable();
 
         for (int i = 0; i < fullTableData.getAmountOfRowsInTable(); i++) {
             ProductConsumed productConsumed;
@@ -111,7 +114,7 @@ public class DailyMacroChart {
             float amountOfProduct = Float.parseFloat(rowInTable.getValue("amount_of_product"));
 
             productFromSQLDatabase.add(new ProductConsumed(product, amountOfProduct,consumedMacro));
-
+            labels.add(productFromSQLDatabase.get(i).getProduct().getProductName());
         }
     }
 
@@ -124,11 +127,10 @@ public class DailyMacroChart {
 
         for (int i = 0; i < labelsForColumns.length; i++) {
 
-            barDataset.addValue(productFromSQLDatabase.get(i).getConsumedMacro().getKcal(), ("" + (i + 1) + "-" + productFromSQLDatabase.get(i).getProduct().getProductName()), "kcal");
+            barDataset.addValue(productFromSQLDatabase.get(i).getConsumedMacro().getKcal(), "Products",labels.get(i));
         }
 
-        jFreeBarChart = ChartFactory.createBarChart(chartName, "Kcal", "Kcal",
-                barDataset);
+        jFreeBarChart = ChartFactory.createBarChart(chartName, "Products kcal", "kcal", barDataset);
 
         panelBarChart = new ChartPanel(jFreeBarChart);
     }
@@ -141,8 +143,10 @@ public class DailyMacroChart {
         String categoryAxisLabel = "products";
 
         for (int i = 0; i < productFromSQLDatabase.size(); i++) {
+
+
             kcalSum += productFromSQLDatabase.get(i).getConsumedMacro().getKcal();
-            lineDataset.addValue(kcalSum, "Kcal", productFromSQLDatabase.get(i).getProduct().getProductName());
+            lineDataset.addValue(kcalSum, "kcal sum", labels.get(i));
         }
 
         jFreeLineChart = ChartFactory.createLineChart(
@@ -158,16 +162,27 @@ public class DailyMacroChart {
 
         CategoryPlot plot = jFreeBarChart.getCategoryPlot();
 
-        plot.setDataset(1, lineDataset);
+        plot.setDataset(0, lineDataset);
+        plot.setRenderer(0, new LineAndShapeRenderer());
 
-        LineAndShapeRenderer lineRenderer = new LineAndShapeRenderer();
-        lineRenderer.setSeriesPaint(0, Color.RED); // Make the line red so it stands out
-        lineRenderer.setSeriesStroke(0, new BasicStroke(3.0f)); // Make the line thicker
+        plot.setDataset(1, barDataset);
 
-        plot.setRenderer(1, lineRenderer);
+        plot.setRenderer(1, new BarRenderer());
 
-        // (Optional but good practice) Map the line dataset to the first Y-axis
-        plot.mapDatasetToRangeAxis(1, 0);
+        plot.setDomainAxis(new CategoryAxis("Products"));
+        plot.setRangeAxis(new NumberAxis("Kcal value"));
+
+        plot.setOrientation(PlotOrientation.VERTICAL);
+        plot.setRangeGridlinesVisible(true);
+        plot.setDomainGridlinesVisible(true);
+
+
+
+//        LineAndShapeRenderer lineRenderer = new LineAndShapeRenderer();
+//        lineRenderer.setSeriesPaint(0, Color.RED); // Make the line red so it stands out
+//        lineRenderer.setSeriesStroke(0, new BasicStroke(3.0f)); // Make the line thicker
+
+
 
         combinedChart = new JFreeChart(
                 chartName, // Your chart title
