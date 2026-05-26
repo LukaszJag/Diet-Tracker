@@ -1,0 +1,9 @@
+Name: Twaróg tłusty
+Brand: Polmlek
+Package has: 250.0
+Macro for: 100.0
+KCal: 163.0
+Protein: 15.0
+Fat: 9.7
+Carbs: 3.6
+Comment optional: Link: https://www.frisco.pl/pid,125915/n,polmlek-twarog-tlusty/stn,product
