@@ -8,4 +8,4 @@ public class Main {
         MainWindow mainWindow = new MainWindow();
         //GUIManager
     }
-}   
+}
