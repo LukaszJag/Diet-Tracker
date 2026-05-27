@@ -1,0 +1,9 @@
+Name: Pierogi z serem - U Jędrusia
+Brand: U Jędrusia
+Package has: 400.0
+Macro for: 100.0
+KCal: 175.0
+Protein: 9.0
+Fat: 1.9
+Carbs: 29.7
+Comment optional: Link: https://ujedrusia.pl/produkt/pierogi-z-serem

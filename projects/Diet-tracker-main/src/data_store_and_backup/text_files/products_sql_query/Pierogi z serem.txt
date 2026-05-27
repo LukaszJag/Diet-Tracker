@@ -38,3 +38,23 @@ Values
 4.0,
 31.0,
 'Link: https://www.carrefour.pl/dania-gotowe-i-przystawki/dania-gotowe-i-przystawki-7v/pierogi-i-knedle/carrefour-classic-pierogi-z-serem-400-g');
+INSERT INTO `diet_tracker_schema`.product_table
+(`product_name`,
+`product_brand`,
+`product_package_has`,
+`product_macro_for`,
+`product_kcal`,
+`product_protein`,
+`product_fat`,
+`product_carbs`,
+`comment_optional`)
+Values
+('Pierogi z serem',
+'U Jędrusia',
+400.0,
+100.0,
+175.0,
+9.0,
+1.9,
+29.7,
+'Link: https://ujedrusia.pl/produkt/pierogi-z-serem');

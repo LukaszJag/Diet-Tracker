@@ -16,3 +16,12 @@ Protein: 9.2
 Fat: 4.0
 Carbs: 31.0
 Comment optional: Link: https://www.carrefour.pl/dania-gotowe-i-przystawki/dania-gotowe-i-przystawki-7v/pierogi-i-knedle/carrefour-classic-pierogi-z-serem-400-g
+Name: Pierogi z serem
+Brand: U Jędrusia
+Package has: 400.0
+Macro for: 100.0
+KCal: 175.0
+Protein: 9.0
+Fat: 1.9
+Carbs: 29.7
+Comment optional: Link: https://ujedrusia.pl/produkt/pierogi-z-serem
