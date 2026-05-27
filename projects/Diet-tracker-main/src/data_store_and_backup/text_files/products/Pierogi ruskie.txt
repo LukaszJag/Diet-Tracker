@@ -1,0 +1,9 @@
+Name: Pierogi ruskie
+Brand: U Jędrusia
+Package has: 400.0
+Macro for: 100.0
+KCal: 164.0
+Protein: 5.7
+Fat: 4.1
+Carbs: 24.9
+Comment optional: Link: https://ujedrusia.pl/produkt/pierogi-ruskie
