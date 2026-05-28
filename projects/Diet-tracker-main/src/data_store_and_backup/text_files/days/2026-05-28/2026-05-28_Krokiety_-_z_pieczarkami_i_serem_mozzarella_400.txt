@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2026-05-28',
+'Thursday',
+'Snack 2',
+400.0,
+'Krokiety - z pieczarkami i serem mozzarella',
+213.0,
+7.7,
+8.1,
+26.3,
+'2026-05-28 02:56:40',
+'none',
+852.0,
+105.2,
+32.4,
+30.8
+);
