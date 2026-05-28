@@ -1,0 +1,9 @@
+Name: Fanta Orange
+Brand: Fanta
+Package has: 1500.0
+Macro for: 100.0
+KCal: 17.0
+Protein: 0.0
+Fat: 0.0
+Carbs: 4.1
+Comment optional: Link: https://www.frisco.pl/pid,153905/n,fanta-orange-napoj-gazowany-o-smaku-pomaranczowym/stn,product
