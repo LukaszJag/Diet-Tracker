@@ -1,4 +1,4 @@
-package runners.run_GUI.diet;
+package runners.run_GUI;
 
 import gui.general.MainWindow;
 
