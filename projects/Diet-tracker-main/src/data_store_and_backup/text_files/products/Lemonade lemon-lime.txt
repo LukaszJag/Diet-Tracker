@@ -1,0 +1,9 @@
+Name: Lemonade lemon-lime
+Brand: Riviva
+Package has: 1500.0
+Macro for: 100.0
+KCal: 22.0
+Protein: 0.0
+Fat: 0.0
+Carbs: 5.1
+Comment optional: Dane z opakowania
