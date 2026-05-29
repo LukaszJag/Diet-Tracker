@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2026-05-29',
+'Friday',
+'Breakfast',
+400.0,
+'Naleśniki z nadzieniem serowym - jagodowym',
+171.0,
+5.2,
+3.3,
+30.0,
+'2026-05-29 11:19:14',
+'none',
+684.0,
+120.0,
+13.2,
+20.8
+);
