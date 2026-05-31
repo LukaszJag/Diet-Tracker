@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2026-05-31',
+'Sunday',
+'Snack 2',
+52.0,
+'Bonitki wafle kokosowe',
+562.0,
+4.4,
+36.0,
+53.0,
+'2026-06-01 12:07:14',
+'none',
+292.24,
+27.56,
+18.72,
+2.2879999
+);

@@ -1,0 +1,9 @@
+Name: Bonitki wafle kokosowe
+Brand: Biedronka
+Package has: 200.0
+Macro for: 100.0
+KCal: 562.0
+Protein: 4.4
+Fat: 36.0
+Carbs: 53.0
+Comment optional: Link: https://zakupy.biedronka.pl/bonitki-bonitki-wafle-kokosowe-200-g-0000015409.html

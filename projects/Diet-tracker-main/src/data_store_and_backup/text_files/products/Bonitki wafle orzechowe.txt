@@ -1,0 +1,9 @@
+Name: Bonitki wafle orzechowe
+Brand: Biedronka
+Package has: 200.0
+Macro for: 100.0
+KCal: 526.0
+Protein: 5.3
+Fat: 29.0
+Carbs: 60.0
+Comment optional: Link: https://zakupy.biedronka.pl/bonitki-bonitki-wafle-orzechowe-200-g-0000015410.html

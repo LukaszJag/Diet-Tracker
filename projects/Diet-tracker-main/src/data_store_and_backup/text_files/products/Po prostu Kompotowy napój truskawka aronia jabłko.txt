@@ -1,0 +1,9 @@
+Name: Po prostu Kompotowy napój truskawka aronia jabłko
+Brand: Tymbark
+Package has: 1250.0
+Macro for: 100.0
+KCal: 19.0
+Protein: 0.0
+Fat: 0.0
+Carbs: 4.7
+Comment optional: Link: https://www.frisco.pl/pid,154774/n,tymbark-po-prostu-kompotowy-napoj-truskawka-aronia-jablko/stn,product

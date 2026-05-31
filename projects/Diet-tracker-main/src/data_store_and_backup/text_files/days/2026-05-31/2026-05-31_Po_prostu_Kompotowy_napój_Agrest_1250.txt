@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2026-05-31',
+'Sunday',
+'Snack 2',
+1250.0,
+'Po prostu Kompotowy napój Agrest',
+20.0,
+0.0,
+0.0,
+4.7,
+'2026-06-01 12:00:23',
+'none',
+250.0,
+58.749996,
+0.0,
+0.0
+);
