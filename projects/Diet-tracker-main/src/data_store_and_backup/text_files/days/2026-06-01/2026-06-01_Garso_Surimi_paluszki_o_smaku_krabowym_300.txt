@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2026-06-01',
+'Monday',
+'Dinner',
+300.0,
+'Garso Surimi paluszki o smaku krabowym',
+119.0,
+4.1,
+3.8,
+17.0,
+'2026-06-01 08:06:58',
+'none',
+357.0,
+51.0,
+11.4,
+12.299999
+);

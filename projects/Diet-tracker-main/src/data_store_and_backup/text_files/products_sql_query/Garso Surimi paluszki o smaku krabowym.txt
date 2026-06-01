@@ -1,0 +1,20 @@
+INSERT INTO `diet_tracker_schema`.product_table
+(`product_name`,
+`product_brand`,
+`product_package_has`,
+`product_macro_for`,
+`product_kcal`,
+`product_protein`,
+`product_fat`,
+`product_carbs`,
+`comment_optional`)
+Values
+('Garso Surimi paluszki o smaku krabowym',
+'Nickal',
+100.0,
+100.0,
+119.0,
+4.1,
+3.8,
+17.0,
+'Link: https://www.carrefour.pl/ryby-i-owoce-morza/salatki-rybne/garso-surimi-paluszki-o-smaku-krabowym-100-g');

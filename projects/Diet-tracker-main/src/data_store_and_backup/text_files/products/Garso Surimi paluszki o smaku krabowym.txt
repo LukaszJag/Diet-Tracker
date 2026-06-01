@@ -1,0 +1,9 @@
+Name: Garso Surimi paluszki o smaku krabowym
+Brand: Nickal
+Package has: 100.0
+Macro for: 100.0
+KCal: 119.0
+Protein: 4.1
+Fat: 3.8
+Carbs: 17.0
+Comment optional: Link: https://www.carrefour.pl/ryby-i-owoce-morza/salatki-rybne/garso-surimi-paluszki-o-smaku-krabowym-100-g
