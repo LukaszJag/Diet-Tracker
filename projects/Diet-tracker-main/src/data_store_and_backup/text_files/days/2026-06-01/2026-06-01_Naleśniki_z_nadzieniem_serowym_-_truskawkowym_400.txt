@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2026-06-01',
+'Monday',
+'Supper',
+400.0,
+'Naleśniki z nadzieniem serowym - truskawkowym',
+177.0,
+5.6,
+4.2,
+29.0,
+'2026-06-02 02:57:50',
+'none',
+708.0,
+116.0,
+16.8,
+22.4
+);
