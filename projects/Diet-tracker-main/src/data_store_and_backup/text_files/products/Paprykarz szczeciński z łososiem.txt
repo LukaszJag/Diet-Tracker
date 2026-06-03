@@ -1,0 +1,9 @@
+Name: Paprykarz szczeciński z łososiem
+Brand: Marinero
+Package has: 330.0
+Macro for: 100.0
+KCal: 155.0
+Protein: 5.0
+Fat: 10.0
+Carbs: 9.3
+Comment optional: Link: https://www.tabele-kalorii.pl/kalorie,Paprykarz-szczecinski-z-lososiem-Marinero.html
