@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2026-06-05',
+'Friday',
+'Dinner',
+464.0,
+'Krokiety z kapustą i grzybami - domowe',
+176.87,
+7.45,
+6.6,
+20.5,
+'2026-06-05 09:23:25',
+'none',
+820.67676,
+95.119995,
+30.623999,
+34.567997
+);

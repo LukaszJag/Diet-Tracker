@@ -1,0 +1,9 @@
+Name: Krokiety z kapustą i grzybami - domowe
+Brand: domowe
+Package has: 0.0
+Macro for: 100.0
+KCal: 176.87
+Protein: 7.45
+Fat: 6.6
+Carbs: 20.5
+Comment optional: Link: https://www.tabele-kalorii.pl/kalorie,Krokiety-z-kapusta-i-grzybami-Przepis-od-gardenia.html

@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2026-06-05',
+'Friday',
+'Breakfast',
+35.0,
+'Śliwka suszona',
+294.0,
+3.4,
+3.2,
+58.3,
+'2026-06-05 09:17:28',
+'none',
+102.9,
+20.404999,
+1.12,
+1.19
+);
