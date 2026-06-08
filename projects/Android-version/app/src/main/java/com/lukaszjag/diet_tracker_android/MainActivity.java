@@ -15,12 +15,22 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.lukaszjag.diet_tracker_android.databinding.ActivityMainBinding;
+import com.lukaszjag.diet_tracker_android.tools.cloud_data_tools.AzureApiService;
+import com.lukaszjag.diet_tracker_android.tools.cloud_data_tools.RetrofitClient;
+import com.lukaszjag.diet_tracker_android.tools.cloud_data_tools.User;
 
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -127,6 +137,7 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+        fetchData();
     }
 
     @Override
@@ -151,4 +162,44 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    private void fetchData() {
+        // 1. Create the API service
+        AzureApiService apiService = RetrofitClient.getRetrofitInstance().create(AzureApiService.class);
+
+        // 2. Call the server asynchronously (won't freeze your app)
+        Call<List<User>> call = apiService.getDataFromAzure();
+        call.enqueue(new Callback<List<User>>() {
+
+            @Override
+            public void onResponse(Call<List<User>> call, Response<List<User>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+
+                    List<User> sqlData = response.body();
+
+                    // Success! Let's display the name of the first item in a Toast.
+                    if (sqlData.size() > 0) {
+                        String firstItemName = sqlData.get(0).getProduct_name();
+                        Toast.makeText(MainActivity.this, "Connected! Found: " + firstItemName, Toast.LENGTH_LONG).show();
+
+                        // You can also print the whole list to the Android Studio Logcat
+                        for (User user : sqlData) {
+                            Log.d("AZURE_SQL_DATA", "Name: " + user.getProduct_name() + ", Email: " + user.getDay_date());
+                        }
+                    } else {
+                        Toast.makeText(MainActivity.this, "Connected, but SQL table is empty", Toast.LENGTH_SHORT).show();
+                    }
+
+                } else {
+                    Toast.makeText(MainActivity.this, "Server error: " + response.code(), Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<User>> call, Throwable t) {
+                // This runs if there's no internet, wrong URL, or JSON parsing error
+                Toast.makeText(MainActivity.this, "Connection Failed!", Toast.LENGTH_SHORT).show();
+                Log.e("AZURE_SQL_ERROR", t.getMessage());
+            }
+        });
+    }
 }
