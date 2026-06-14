@@ -7,5 +7,5 @@ import retrofit2.http.GET;
 public interface AzureApiService {
     // This perfectly matches the name of your Azure Function from VS Code!
     @GET("api/AndroidAzure")
-    Call<List<User>> getDataFromAzure();
+    Call<List<CalendarDay>> getDataFromAzure();
 }

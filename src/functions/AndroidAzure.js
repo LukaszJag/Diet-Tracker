@@ -27,7 +27,7 @@ app.http("AndroidAzure", {
       // Execute the query (Replace 'Users' with your real SQL table name)
       let result = await pool
         .request()
-        .query("SELECT TOP (1000) * FROM [diet_tracker_schema].[calendar]");
+        .query("SELECT TOP (1000) * FROM diet_tracker_schema.calendar");
 
       return {
         status: 200,

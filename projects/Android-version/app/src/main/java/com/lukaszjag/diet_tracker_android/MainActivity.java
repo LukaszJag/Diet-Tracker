@@ -16,8 +16,9 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.lukaszjag.diet_tracker_android.databinding.ActivityMainBinding;
 import com.lukaszjag.diet_tracker_android.tools.cloud_data_tools.AzureApiService;
+import com.lukaszjag.diet_tracker_android.tools.cloud_data_tools.CalendarDay;
 import com.lukaszjag.diet_tracker_android.tools.cloud_data_tools.RetrofitClient;
-import com.lukaszjag.diet_tracker_android.tools.cloud_data_tools.User;
+import com.lukaszjag.diet_tracker_android.tools.cloud_data_tools.CalendarDay;
 
 import android.view.Menu;
 import android.view.MenuItem;
@@ -55,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
     EditText etKcal;
     EditText etProtein;
 
-    public void setupComponents(){
+    public void setupComponents() {
         passDataButton = (Button) findViewById(R.id.passDataButton);
 
         tvDate = (TextView) findViewById(R.id.date);
@@ -164,38 +165,72 @@ public class MainActivity extends AppCompatActivity {
 
     private void fetchData() {
         // 1. Create the API service
+        Log.i("i", "1. Create the API service");
         AzureApiService apiService = RetrofitClient.getRetrofitInstance().create(AzureApiService.class);
 
         // 2. Call the server asynchronously (won't freeze your app)
-        Call<List<User>> call = apiService.getDataFromAzure();
-        call.enqueue(new Callback<List<User>>() {
+        Log.i("i", "2. Call the server asynchronously (won't freeze your app)");
+        Call<List<CalendarDay>> call = apiService.getDataFromAzure();
+        call.enqueue(new Callback<List<CalendarDay>>() {
 
             @Override
-            public void onResponse(Call<List<User>> call, Response<List<User>> response) {
+            public void onResponse(Call<List<CalendarDay>> call, Response<List<CalendarDay>> response) {
                 if (response.isSuccessful() && response.body() != null) {
 
-                    List<User> sqlData = response.body();
+                    List<CalendarDay> sqlData = response.body();
 
                     // Success! Let's display the name of the first item in a Toast.
                     if (sqlData.size() > 0) {
                         String firstItemName = sqlData.get(0).getProduct_name();
+
                         Toast.makeText(MainActivity.this, "Connected! Found: " + firstItemName, Toast.LENGTH_LONG).show();
 
                         // You can also print the whole list to the Android Studio Logcat
-                        for (User user : sqlData) {
-                            Log.d("AZURE_SQL_DATA", "Name: " + user.getProduct_name() + ", Email: " + user.getDay_date());
+                        for (CalendarDay CalendarDay : sqlData) {
+                            Log.d("AZURE_SQL_DATA", "Name: " + CalendarDay.getProduct_name() + ", Email: " + CalendarDay.getDay_date());
                         }
                     } else {
                         Toast.makeText(MainActivity.this, "Connected, but SQL table is empty", Toast.LENGTH_SHORT).show();
                     }
 
                 } else {
+
+                    if(response.isSuccessful() ){
+                        Log.i("check_data", "response.isSuccessful() is true");
+                    } else {
+
+                        try {
+                            String errorUrl = response.raw().request().url().toString(); // <--- GETS THE EXACT URL
+                            Log.e("AZURE_SQL_ERROR", "Android tried to ping this URL: " + errorUrl);
+                            Log.e("AZURE_SQL_ERROR", "Server Code: " + response.code());
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    // Reveal the true error message hidden in errorBody
+                    try {
+                        String errorMessage = "Unknown error";
+                        if (response.errorBody() != null) {
+                            errorMessage = response.errorBody().string();
+                        }
+                        Log.e("AZURE_SQL_ERROR_OLD", "Server Code: " + response.code() + " | Error: " + errorMessage);
+                        Toast.makeText(MainActivity.this, "Ser  ver error: " + response.code(), Toast.LENGTH_LONG).show();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                    if(response.body() == null){
+                        Log.i("check_data", "Response body is null");
+                    }else{
+                        Log.i("check_data", "Response body is not null: " + response.body().toString());
+                    }
                     Toast.makeText(MainActivity.this, "Server error: " + response.code(), Toast.LENGTH_SHORT).show();
                 }
-            }
+
 
             @Override
-            public void onFailure(Call<List<User>> call, Throwable t) {
+            public void onFailure(Call<List<CalendarDay>> call, Throwable t) {
                 // This runs if there's no internet, wrong URL, or JSON parsing error
                 Toast.makeText(MainActivity.this, "Connection Failed!", Toast.LENGTH_SHORT).show();
                 Log.e("AZURE_SQL_ERROR", t.getMessage());

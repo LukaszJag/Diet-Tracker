@@ -1,22 +1,22 @@
 package com.lukaszjag.diet_tracker_android.tools.cloud_data_tools;
 
-public class User {
+public class CalendarDay {
     // Variable names MUST exactly match your SQL database column names
 
     String day_date;
     String day_name;
     String product_name;
-    String amount_of_product;
-    String kcal;
-    String protein;
-    String fat;
-    String carbs;
+    Double amount_of_product;
+    Double kcal;
+    Double protein;
+    Double fat;
+    Double carbs;
     String time_optional;
     String comment_optional;
-    String kcal_consume;
-    String carbs_consume;
-    String fat_consume;
-    String protein_consume;
+    Double kcal_consume;
+    Double carbs_consume;
+    Double fat_consume;
+    Double protein_consume;
     String meal_name;
 
     //<editor-fold desc="Getters and Setters">
@@ -44,43 +44,43 @@ public class User {
         this.product_name = product_name;
     }
 
-    public String getAmount_of_product() {
+    public Double getAmount_of_product() {
         return amount_of_product;
     }
 
-    public void setAmount_of_product(String amount_of_product) {
+    public void setAmount_of_product(Double amount_of_product) {
         this.amount_of_product = amount_of_product;
     }
 
-    public String getKcal() {
+    public Double getKcal() {
         return kcal;
     }
 
-    public void setKcal(String kcal) {
+    public void setKcal(Double kcal) {
         this.kcal = kcal;
     }
 
-    public String getProtein() {
+    public Double getProtein() {
         return protein;
     }
 
-    public void setProtein(String protein) {
+    public void setProtein(Double protein) {
         this.protein = protein;
     }
 
-    public String getFat() {
+    public Double getFat() {
         return fat;
     }
 
-    public void setFat(String fat) {
+    public void setFat(Double fat) {
         this.fat = fat;
     }
 
-    public String getCarbs() {
+    public Double getCarbs() {
         return carbs;
     }
 
-    public void setCarbs(String carbs) {
+    public void setCarbs(Double carbs) {
         this.carbs = carbs;
     }
 
@@ -100,35 +100,35 @@ public class User {
         this.comment_optional = comment_optional;
     }
 
-    public String getKcal_consume() {
+    public Double getKcal_consume() {
         return kcal_consume;
     }
 
-    public void setKcal_consume(String kcal_consume) {
+    public void setKcal_consume(Double kcal_consume) {
         this.kcal_consume = kcal_consume;
     }
 
-    public String getCarbs_consume() {
+    public Double getCarbs_consume() {
         return carbs_consume;
     }
 
-    public void setCarbs_consume(String carbs_consume) {
+    public void setCarbs_consume(Double carbs_consume) {
         this.carbs_consume = carbs_consume;
     }
 
-    public String getFat_consume() {
+    public Double getFat_consume() {
         return fat_consume;
     }
 
-    public void setFat_consume(String fat_consume) {
+    public void setFat_consume(Double fat_consume) {
         this.fat_consume = fat_consume;
     }
 
-    public String getProtein_consume() {
+    public Double getProtein_consume() {
         return protein_consume;
     }
 
-    public void setProtein_consume(String protein_consume) {
+    public void setProtein_consume(Double protein_consume) {
         this.protein_consume = protein_consume;
     }
 
