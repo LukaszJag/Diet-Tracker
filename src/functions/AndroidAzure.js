@@ -6,6 +6,24 @@ app.http("AndroidAzure", {
   authLevel: "anonymous",
   handler: async (request, context) => {
     context.log("Attempting to connect to SQL Database...");
+    const requestedTable = request.query.get("table") || "calendar";
+
+    let sqlQuery = "";
+
+    // 2. IMPORTANT: We use a Switch statement to prevent SQL Injection hackers!
+    switch (requestedTable) {
+      case "calendar":
+        sqlQuery = "SELECT * FROM diet_tracker_schema.calendar";
+        break;
+      case "products":
+        sqlQuery = "SELECT * FROM diet_tracker_schema.products"; // Example of a second table
+        break;
+      case "days_statistics_test":
+        sqlQuery = "SELECT * FROM diet_tracker_schema.days_statistics_test"; // Example of a third table
+        break;
+      default:
+        return { status: 400, body: "Invalid table requested!" };
+    }
 
     try {
       // Check carefully! Ensure no accidental spaces inside the quotes!
@@ -21,28 +39,12 @@ app.http("AndroidAzure", {
         },
       };
 
-      // Attempt to connect
       let pool = await sql.connect(config);
+      let result = await pool.request().query(sqlQuery);
 
-      // Execute the query (Replace 'Users' with your real SQL table name)
-      let result = await pool
-        .request()
-        .query("SELECT TOP (1000) * FROM diet_tracker_schema.calendar");
-
-      return {
-        status: 200,
-        jsonBody: result.recordset,
-      };
+      return { status: 200, jsonBody: result.recordset };
     } catch (err) {
-      // Log the error safely using V4 syntax
-      context.error("DATABASE CRASH CAUGHT: " + err.message);
-
-      // Send the raw error directly back to the browser screen!
-      return {
-        status: 200,
-        body:
-          "SQL CONNECTION FAILED!\n\nHere is the exact reason:\n" + err.message,
-      };
+      return { status: 500, body: "Error: " + err.message };
     }
   },
 });
