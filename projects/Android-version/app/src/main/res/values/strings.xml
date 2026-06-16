@@ -44,4 +44,5 @@
         vestibulum. Fusce dictum libero quis erat maximus, vitae volutpat diam dignissim.
     </string>
     <string name="add_meal_to_calendar">AddMealToCalendar</string>
+    <string name="title_activity_get_day_data">GetDayData</string>
 </resources>

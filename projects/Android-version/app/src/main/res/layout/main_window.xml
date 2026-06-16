@@ -6,21 +6,18 @@
     android:layout_height="match_parent">
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/addMealButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="38dp"
-        android:text="Day Stats"
-        app:layout_constraintBottom_toTopOf="@+id/button4"
-        app:layout_constraintEnd_toEndOf="@+id/button4" />
+        android:text="Add meal"
+        tools:layout_editor_absoluteX="58dp"
+        tools:layout_editor_absoluteY="72dp" />
 
     <Button
-        android:id="@+id/button4"
+        android:id="@+id/getDayDataButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="57dp"
-        android:layout_marginTop="158dp"
-        android:text="Add meal"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:text="Get day data"
+        tools:layout_editor_absoluteX="58dp"
+        tools:layout_editor_absoluteY="147dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -30,7 +30,7 @@ public class GetFromSQLDatabase {
 
                     // Success! Let's display the name of the first item in a Toast.
                     if (sqlData.size() > 0) {
-                        String firstItemName = sqlD ata.get(0).getProduct_name();
+                        String firstItemName = sqlData.get(0).getProduct_name();
 
                         Log.i("AZURE_SQL_INFO", "Connected! Found: " + firstItemName);
 

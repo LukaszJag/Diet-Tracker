@@ -7,33 +7,21 @@ import com.google.android.material.snackbar.Snackbar;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.util.Log;
 import android.view.View;
 
 import androidx.navigation.ui.AppBarConfiguration;
 
 import com.lukaszjag.diet_tracker_android.databinding.ActivityMainBinding;
 import com.lukaszjag.diet_tracker_android.gui.AddMealToCalendar;
-import com.lukaszjag.diet_tracker_android.tools.cloud_data_tools.AzureApiService;
-import com.lukaszjag.diet_tracker_android.tools.cloud_data_tools.CalendarDay;
-import com.lukaszjag.diet_tracker_android.tools.cloud_data_tools.RetrofitClient;
 
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
-import android.widget.Toast;
-
-import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
 
     Button mainButton;
+    Button getDayDataButton;
     private AppBarConfiguration appBarConfiguration;
     private ActivityMainBinding binding;
 
@@ -43,15 +31,8 @@ public class MainActivity extends AppCompatActivity {
 
         setContentView(R.layout.main_window);
 
-        mainButton = findViewById(R.id.button3);
+        addButtons();
 
-        mainButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, AddMealToCalendar.class);
-                startActivity(intent);
-            }
-        });
 
         super.onCreate(savedInstanceState);
 
@@ -65,6 +46,29 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+    }
+
+    private void addButtons() {
+        mainButton = findViewById(R.id.addMealButton);
+
+        mainButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, AddMealToCalendar.class);
+                startActivity(intent);
+            }
+        });
+
+        getDayDataButton = findViewById(R.id.getDayDataButton);
+
+        mainButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, AddMealToCalendar.class);
+                startActivity(intent);
+            }
+        });
+
     }
 
     @Override
