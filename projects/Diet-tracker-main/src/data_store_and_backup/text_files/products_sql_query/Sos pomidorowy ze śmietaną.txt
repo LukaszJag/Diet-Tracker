@@ -1,0 +1,20 @@
+INSERT INTO `diet_tracker_schema`.product_table
+(`product_name`,
+`product_brand`,
+`product_package_has`,
+`product_macro_for`,
+`product_kcal`,
+`product_protein`,
+`product_fat`,
+`product_carbs`,
+`comment_optional`)
+Values
+('Sos pomidorowy ze śmietaną',
+'Dawtona',
+520.0,
+100.0,
+57.0,
+1.1,
+1.9,
+8.6,
+'Link: https://www.carrefour.pl/artykuly-spozywcze/sosy-oleje-ocet/sosy-i-dressingi/dawtona-sos-pomidorowy-ze-smietana-520-g');

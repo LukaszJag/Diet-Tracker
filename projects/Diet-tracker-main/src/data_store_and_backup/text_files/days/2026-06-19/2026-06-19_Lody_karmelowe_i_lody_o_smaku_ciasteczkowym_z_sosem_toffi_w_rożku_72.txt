@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2026-06-19',
+'Friday',
+'Supper',
+72.0,
+'Lody karmelowe i lody o smaku ciasteczkowym z sosem toffi w rożku',
+319.0,
+3.3,
+16.0,
+40.0,
+'2026-06-19 11:41:54',
+'none',
+229.68001,
+28.800001,
+11.52,
+2.3760002
+);

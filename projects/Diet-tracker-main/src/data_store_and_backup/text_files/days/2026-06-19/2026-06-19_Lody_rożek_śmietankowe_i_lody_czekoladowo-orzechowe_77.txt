@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2026-06-19',
+'Friday',
+'Dinner',
+77.0,
+'Lody rożek śmietankowe i lody czekoladowo-orzechowe',
+321.0,
+4.6,
+17.7,
+35.2,
+'2026-06-19 11:47:32',
+'none',
+247.17,
+27.104,
+13.629001,
+3.5419998
+);

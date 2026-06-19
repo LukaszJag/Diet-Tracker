@@ -1,0 +1,20 @@
+INSERT INTO `diet_tracker_schema`.product_table
+(`product_name`,
+`product_brand`,
+`product_package_has`,
+`product_macro_for`,
+`product_kcal`,
+`product_protein`,
+`product_fat`,
+`product_carbs`,
+`comment_optional`)
+Values
+('Lody karmelowe i lody o smaku ciasteczkowym z sosem toffi w rożku',
+'Lion',
+72.0,
+100.0,
+319.0,
+3.3,
+16.0,
+40.0,
+'Link: https://www.frisco.pl/pid,134480/n,lion-lody-karmelowe-i-lody-o-smaku-ciasteczkowym-z-sosem-toffi-w-rozku/stn,product');

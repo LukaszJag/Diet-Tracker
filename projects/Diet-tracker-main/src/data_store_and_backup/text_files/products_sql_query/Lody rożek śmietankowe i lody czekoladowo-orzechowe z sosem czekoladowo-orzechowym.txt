@@ -1,0 +1,40 @@
+INSERT INTO `diet_tracker_schema`.product_table
+(`product_name`,
+`product_brand`,
+`product_package_has`,
+`product_macro_for`,
+`product_kcal`,
+`product_protein`,
+`product_fat`,
+`product_carbs`,
+`comment_optional`)
+Values
+('Lody rożek śmietankowe i lody czekoladowo-orzechowe z sosem czekoladowo-orzechowym',
+'Zott',
+77.0,
+100.0,
+321.0,
+4.6,
+17.7,
+35.2,
+'Link: https://www.carrefour.pl/mrozonki/lody/zott-monte-lody-smietankowe-i-lody-czekoladowo-orzechowe-z-sosem-czekoladowo-orzechowym-120-ml');
+INSERT INTO `diet_tracker_schema`.product_table
+(`product_name`,
+`product_brand`,
+`product_package_has`,
+`product_macro_for`,
+`product_kcal`,
+`product_protein`,
+`product_fat`,
+`product_carbs`,
+`comment_optional`)
+Values
+('Lody rożek śmietankowe i lody czekoladowo-orzechowe z sosem czekoladowo-orzechowym',
+'Zott',
+77.0,
+100.0,
+321.0,
+4.6,
+17.7,
+35.2,
+'Link: https://www.carrefour.pl/mrozonki/lody/zott-monte-lody-smietankowe-i-lody-czekoladowo-orzechowe-z-sosem-czekoladowo-orzechowym-120-ml');

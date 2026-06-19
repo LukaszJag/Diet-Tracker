@@ -1,0 +1,9 @@
+Name: Lody kakaowe z sosem o smaku czekoladowym w rożku
+Brand: Kitkat
+Package has: 68.0
+Macro for: 100.0
+KCal: 320.0
+Protein: 3.6
+Fat: 14.0
+Carbs: 43.0
+Comment optional: Link: https://www.frisco.pl/pid,134477/n,kitkat-lody-kakaowe-z-sosem-o-smaku-czekoladowym-w-rozku/stn,product

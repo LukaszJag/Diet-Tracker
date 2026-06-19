@@ -1,0 +1,9 @@
+Name: Sos pomidorowy ze śmietaną
+Brand: Dawtona
+Package has: 520.0
+Macro for: 100.0
+KCal: 57.0
+Protein: 1.1
+Fat: 1.9
+Carbs: 8.6
+Comment optional: Link: https://www.carrefour.pl/artykuly-spozywcze/sosy-oleje-ocet/sosy-i-dressingi/dawtona-sos-pomidorowy-ze-smietana-520-g

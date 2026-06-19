@@ -1,0 +1,9 @@
+Name: Lody rożek śmietankowe i lody czekoladowo-orzechowe z sosem czekoladowo orzechowym
+Brand: Zott
+Package has: 77.0
+Macro for: 100.0
+KCal: 321.0
+Protein: 4.6
+Fat: 17.7
+Carbs: 35.2
+Comment optional: Link: https://www.carrefour.pl/mrozonki/lody/zott-monte-lody-smietankowe-i-lody-czekoladowo-orzechowe-z-sosem-czekoladowo-orzechowym-120-ml

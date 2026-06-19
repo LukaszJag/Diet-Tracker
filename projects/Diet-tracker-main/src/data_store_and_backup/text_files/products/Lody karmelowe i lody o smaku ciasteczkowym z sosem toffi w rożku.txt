@@ -1,0 +1,9 @@
+Name: Lody karmelowe i lody o smaku ciasteczkowym z sosem toffi w rożku
+Brand: Lion
+Package has: 72.0
+Macro for: 100.0
+KCal: 319.0
+Protein: 3.3
+Fat: 16.0
+Carbs: 40.0
+Comment optional: Link: https://www.frisco.pl/pid,134480/n,lion-lody-karmelowe-i-lody-o-smaku-ciasteczkowym-z-sosem-toffi-w-rozku/stn,product
