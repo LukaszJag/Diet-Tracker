@@ -1,0 +1,14 @@
+Rozgrzewka dynamiczna - done/undone
+Rozgrzewka statyczna - done/undone
+
+
+Koszykówka  : - : - [']
+    Od zera do 21 -  : - : - [']
+        1. czas - '   ->  : - : - [']
+        2. czas - '   ->  : - : - [']
+        3. czas - '   ->  : - : - [']
+
+Piłkanożna  : - : - [']
+    Freestyle  : - : - [']
+            1. czas - '  ->  : - : - ['] 
+                -> max żonglerek - 
