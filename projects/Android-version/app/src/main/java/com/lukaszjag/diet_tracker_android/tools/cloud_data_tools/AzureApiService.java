@@ -1,12 +1,15 @@
 package com.lukaszjag.diet_tracker_android.tools.cloud_data_tools;
 
 import java.util.List;
+import java.util.Map;
 import retrofit2.Call;
-import retrofit2.http.GET;
-import retrofit2.http.Query;
+import retrofit2.http.Body;
+import retrofit2.http.POST;
 
 public interface AzureApiService {
-    // This perfectly matches the name of your Azure Function from VS Code!
-    @GET("api/AndroidAzure")
-    Call<List<CalendarDay>> getCalendarData(@Query("table") String tableName);
+
+    // Uses POST to safely send long SQL Strings to Azure
+    @POST("api/AndroidAzure")
+    Call<List<Map<String, Object>>> executeCustomQuery(@Body QueryRequest customQueryObject);
+
 }

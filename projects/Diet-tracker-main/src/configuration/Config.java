@@ -160,7 +160,8 @@ public class Config {
 
     //<editor-fold desc="BMR values">
     public static Macro BMR_07_10_2025 = new Macro(3531, 227, 151, 318);
-    public static Macro BMRActual = BMR_07_10_2025;
+    public static Macro BMR_19_06_2026 = new Macro(4500, 300, 150, 480);
+    public static Macro BMRActual = BMR_19_06_2026;
     //</editor-fold>
 
 

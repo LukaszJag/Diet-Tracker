@@ -4,6 +4,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.lukaszjag.diet_tracker_android.gui.AddMealToCalendar;
+import com.lukaszjag.diet_tracker_android.tools.sql_tools.RowInTable;
 
 import java.util.List;
 
@@ -12,6 +13,36 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class GetFromSQLDatabase {
+}
+/*
+    private void getColumnLike(String tableName, String columnName, String likeArgument) {
+
+        String sglQuery = "SELECT * FROM" +
+                "[diet_tracker_schema].[" + tableName + "]"
+                + "WHERE LOWER(" + columnName + ")  LIKE \'" + likeArgument + "%\'";
+        AzureApiService apiService = RetrofitClient.getRetrofitInstance().create(AzureApiService.class);
+        Call<List<RowInTable>> call = apiService.getRowInTable("product_table");
+        call.enqueue(new Callback<List<RowInTable>>() {
+            @Override
+            public void onResponse(Call<List<RowInTable>> call, Response<List<RowInTable>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+
+                } else {
+                    Log.i("Response Error", response.body().toString());
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<List<RowInTable>> call, Throwable t) {
+
+            }
+        });
+    }
+}
+*/
+
+/*
     private void fetchData() {
         // 1. Create the API service
         Log.i("i", "1. Create the API service");
@@ -19,7 +50,7 @@ public class GetFromSQLDatabase {
 
         // 2. Call the server asynchronously (won't freeze your app)
         Log.i("i", "2. Call the server asynchronously (won't freeze your app)");
-        Call<List<CalendarDay>> call = apiService.getCalendarData("calendar");
+        Call<List<CalendarDay>> call = apiService("calendar");
         call.enqueue(new Callback<List<CalendarDay>>() {
 
             @Override
@@ -86,4 +117,6 @@ public class GetFromSQLDatabase {
             }
         });
     }
+
 }
+*/

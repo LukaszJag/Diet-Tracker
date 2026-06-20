@@ -29,7 +29,7 @@ public class AddMealToCalendar extends AppCompatActivity {
 
     // UI components
     Button passDataButton;
-
+    Button searchProductButton;
     TextView tvDate;
     TextView tvMealName;
     TextView tvProductName;
@@ -75,6 +75,7 @@ public class AddMealToCalendar extends AppCompatActivity {
         setContentView(R.layout.add_meal_to_calendar);
 
         passDataButton = (Button) findViewById(R.id.passDataButton);
+        searchProductButton = findViewById(R.id.searchProductButton);
 
         tvDate = (TextView) findViewById(R.id.date);
         tvMealName = (TextView) findViewById(R.id.mealName);
@@ -131,6 +132,13 @@ public class AddMealToCalendar extends AppCompatActivity {
                 Log.i("data", String.valueOf(etAmount.getText()));
                 Log.i("data", String.valueOf(etKcal.getText()));
                 Log.i("data", String.valueOf(etProtein.getText()));
+            }
+        });
+
+        searchProductButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
             }
         });
     }

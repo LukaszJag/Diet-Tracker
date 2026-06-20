@@ -7,16 +7,30 @@ import com.google.android.material.snackbar.Snackbar;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.util.Log;
 import android.view.View;
 
 import androidx.navigation.ui.AppBarConfiguration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.lukaszjag.diet_tracker_android.databinding.ActivityMainBinding;
 import com.lukaszjag.diet_tracker_android.gui.AddMealToCalendar;
+import com.lukaszjag.diet_tracker_android.tools.cloud_data_tools.AzureApiService;
+import com.lukaszjag.diet_tracker_android.tools.cloud_data_tools.QueryRequest;
+import com.lukaszjag.diet_tracker_android.tools.cloud_data_tools.RetrofitClient;
 
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
+import android.widget.Toast;
+
+import java.util.List;
+import java.util.Map;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -29,12 +43,17 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         //setupComponents();
 
-        setContentView(R.layout.main_window);
-
-        addButtons();
-
-
         super.onCreate(savedInstanceState);
+
+        setContentView(R.layout.activity_main); // or whatever layout you are using
+
+        // 1. Find the RecyclerView
+        RecyclerView recyclerView = findViewById(R.id.recyclerViewDiet);
+
+        // 2. THIS IS THE LINE FIXING YOUR CRASH: Tell it to be a vertical list
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+       // addButtons();
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
 
@@ -46,6 +65,10 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+
+        String queryToRun ="SELECT * FROM [diet_tracker_schema].[product_table] WHERE LOWER(product_name) LIKE 'pom%'";
+        //runCustomAzureQuery(queryToRun);
+
     }
 
     private void addButtons() {
@@ -93,5 +116,41 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    private void runCustomAzureQuery(String mySqlString) {
+        AzureApiService apiService = RetrofitClient.getRetrofitInstance().create(AzureApiService.class);
 
+        // 1. Package the string into the object
+        QueryRequest requestBody = new QueryRequest(mySqlString);
+
+        // 2. Send the raw string directly to Azure!
+        Call<List<Map<String, Object>>> call = apiService.executeCustomQuery(requestBody);
+
+        call.enqueue(new Callback<List<Map<String, Object>>>() {
+            @Override
+            public void onResponse(Call<List<Map<String, Object>>> call, Response<List<Map<String, Object>>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+
+                    List<Map<String, Object>> dynamicSqlData = response.body();
+
+                    if (dynamicSqlData.size() > 0) {
+                        Toast.makeText(MainActivity.this, "Query Success! Items: " + dynamicSqlData.size(), Toast.LENGTH_SHORT).show();
+
+                        // You can check the logs to see the resulting columns
+                        Map<String, Object> firstRow = dynamicSqlData.get(0);
+                        Log.d("AZURE_CUSTOM_SQL", "First row data: " + firstRow.toString());
+                    } else {
+                        Toast.makeText(MainActivity.this, "Query executed, but no results found", Toast.LENGTH_SHORT).show();
+                    }
+
+                } else {
+                    Toast.makeText(MainActivity.this, "Syntax Error or Server crash: " + response.code(), Toast.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Map<String, Object>>> call, Throwable t) {
+                Log.e("AZURE_CUSTOM_SQL", "Network fail: " + t.getMessage());
+            }
+        });
+    }
 }
