@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2026-06-20',
+'Saturday',
+'Supper',
+68.0,
+'Lody kakaowe z sosem o smaku czekoladowym w rożku',
+320.0,
+3.6,
+14.0,
+43.0,
+'2026-06-20 10:51:41',
+'none',
+217.6,
+29.24,
+9.52,
+2.448
+);
