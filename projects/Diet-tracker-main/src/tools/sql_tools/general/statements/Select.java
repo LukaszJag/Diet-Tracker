@@ -312,7 +312,7 @@ how to handle this upper examples
         ResultSet resultSet;
         Statement statement;
 
-        String[] productsArray = new String[600];
+        String[] productsArray = new String[1200];
 
         String sql = "SELECT product_name FROM diet_tracker_schema.product_table";
 
