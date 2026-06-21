@@ -16,7 +16,6 @@ import com.lukaszjag.diet_tracker_android.MainActivity;
 import com.lukaszjag.diet_tracker_android.R;
 import com.lukaszjag.diet_tracker_android.databinding.ActivityMainBinding;
 import com.lukaszjag.diet_tracker_android.tools.cloud_data_tools.AzureApiService;
-import com.lukaszjag.diet_tracker_android.tools.cloud_data_tools.CalendarDay;
 import com.lukaszjag.diet_tracker_android.tools.cloud_data_tools.RetrofitClient;
 
 import java.util.List;

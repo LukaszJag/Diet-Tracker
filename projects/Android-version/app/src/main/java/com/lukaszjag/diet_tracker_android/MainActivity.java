@@ -23,6 +23,7 @@ import com.lukaszjag.diet_tracker_android.tools.cloud_data_tools.RetrofitClient;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import java.util.List;
@@ -33,9 +34,10 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
-
+    Button getProductDataButton;
     Button mainButton;
     Button getDayDataButton;
+    EditText productNameInputEditText;
     private AppBarConfiguration appBarConfiguration;
     private ActivityMainBinding binding;
 
@@ -45,15 +47,15 @@ public class MainActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_main); // or whatever layout you are using
+        setContentView(R.layout.get_product_data); // or whatever layout you are using
 
         // 1. Find the RecyclerView
-        RecyclerView recyclerView = findViewById(R.id.recyclerViewDiet);
+        RecyclerView recyclerView = findViewById(R.id.getProductDataRecyclerView);
 
         // 2. THIS IS THE LINE FIXING YOUR CRASH: Tell it to be a vertical list
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-       // addButtons();
+        // addButtons();
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
 
@@ -65,10 +67,28 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+        addGetProductDataComponents();
+        /*
+        String queryToRun = "SELECT * FROM [diet_tracker_schema].[product_table] WHERE LOWER(product_name) LIKE 'pom%'";
+        runCustomAzureQuery(queryToRun);
+*/
+    }
 
-        String queryToRun ="SELECT * FROM [diet_tracker_schema].[product_table] WHERE LOWER(product_name) LIKE 'pom%'";
-        //runCustomAzureQuery(queryToRun);
+    private String makeQueryForButtonListener(String productData){
+        return "SELECT * FROM [diet_tracker_schema].[product_table] WHERE LOWER(product_name) LIKE '%" + productData + "%'";
+    }
+    private void addGetProductDataComponents(){
+        productNameInputEditText =findViewById(R.id.productNameEditText);
+        getProductDataButton = findViewById(R.id.getProductFromDatabase);
+        getProductDataButton.setOnClickListener(new View.OnClickListener(){
 
+            @Override
+            public void onClick(View v) {
+                String query = makeQueryForButtonListener(productNameInputEditText.getText().toString());
+                Log.i("BUTTON ALLERT", "Run query: " + query);
+                runCustomAzureQuery(query);
+            }
+        });
     }
 
     private void addButtons() {
@@ -134,10 +154,15 @@ public class MainActivity extends AppCompatActivity {
 
                     if (dynamicSqlData.size() > 0) {
                         Toast.makeText(MainActivity.this, "Query Success! Items: " + dynamicSqlData.size(), Toast.LENGTH_SHORT).show();
-
+                        Log.d("AZURE_CUSTOM_SQL", "amount of rows: " + dynamicSqlData.size());
                         // You can check the logs to see the resulting columns
-                        Map<String, Object> firstRow = dynamicSqlData.get(0);
-                        Log.d("AZURE_CUSTOM_SQL", "First row data: " + firstRow.toString());
+
+
+                        for (int i = 0; i < dynamicSqlData.size(); i++) {
+                            Map<String, Object> row = dynamicSqlData.get(i);
+                            Log.d("AZURE_CUSTOM_SQL", "Row data: [" + i + "]: "  + row.get("product_name"));
+                            //Log.d("AZURE_CUSTOM_SQL", "First row data: " + row.toString());
+                        }
                     } else {
                         Toast.makeText(MainActivity.this, "Query executed, but no results found", Toast.LENGTH_SHORT).show();
                     }
