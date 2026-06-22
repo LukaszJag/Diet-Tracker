@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2026-06-22',
+'Monday',
+'Breakfast',
+177.0,
+'Szynka drobiowa',
+479.0,
+19.0,
+1.9,
+4.9,
+'2026-06-22 11:06:29',
+'none',
+847.83,
+8.673,
+3.363,
+33.63
+);

@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2026-06-22',
+'Monday',
+'Breakfast',
+61.0,
+'Ketchup łagodny',
+93.0,
+0.6,
+0.5,
+22.0,
+'2026-06-22 11:06:39',
+'none',
+56.73,
+13.42,
+0.305,
+0.36600003
+);

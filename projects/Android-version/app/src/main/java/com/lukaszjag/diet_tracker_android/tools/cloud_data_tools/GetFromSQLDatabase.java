@@ -3,120 +3,55 @@ package com.lukaszjag.diet_tracker_android.tools.cloud_data_tools;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.lukaszjag.diet_tracker_android.MainActivity;
 import com.lukaszjag.diet_tracker_android.gui.AddMealToCalendar;
 import com.lukaszjag.diet_tracker_android.tools.sql_tools.RowInTable;
 
 import java.util.List;
+import java.util.Map;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class GetFromSQLDatabase {
-}
-/*
-    private void getColumnLike(String tableName, String columnName, String likeArgument) {
-
-        String sglQuery = "SELECT * FROM" +
-                "[diet_tracker_schema].[" + tableName + "]"
-                + "WHERE LOWER(" + columnName + ")  LIKE \'" + likeArgument + "%\'";
+    private void runCustomAzureQuery(String mySqlString) {
         AzureApiService apiService = RetrofitClient.getRetrofitInstance().create(AzureApiService.class);
-        Call<List<RowInTable>> call = apiService.getRowInTable("product_table");
-        call.enqueue(new Callback<List<RowInTable>>() {
+
+        QueryRequest requestBody = new QueryRequest(mySqlString);
+
+        Call<List<Map<String, Object>>> call = apiService.executeCustomQuery(requestBody);
+
+        call.enqueue(new Callback<List<Map<String, Object>>>() {
             @Override
-            public void onResponse(Call<List<RowInTable>> call, Response<List<RowInTable>> response) {
+            public void onResponse(Call<List<Map<String, Object>>> call, Response<List<Map<String, Object>>> response) {
                 if (response.isSuccessful() && response.body() != null) {
 
-                } else {
-                    Log.i("Response Error", response.body().toString());
-                }
+                    List<Map<String, Object>> dynamicSqlData = response.body();
 
+                    if (dynamicSqlData.size() > 0) {
+                        Log.d("AZURE_CUSTOM_SQL", "amount of rows: " + dynamicSqlData.size());
+                        // You can check the logs to see the resulting columns
+
+
+                        for (int i = 0; i < dynamicSqlData.size(); i++) {
+                            Map<String, Object> row = dynamicSqlData.get(i);
+                            Log.d("AZURE_CUSTOM_SQL", "Row data: [" + i + "]: " + row.get("product_name"));
+                            //Log.d("AZURE_CUSTOM_SQL", "First row data: " + row.toString());
+                        }
+                    } else {
+                        Log.d("AZURE_DATABASE_SQL", "No result");
+                    }
+
+                } else {
+                    Log.d("AZURE_ERROR", "response.isSuccessful() or response.body() != null");
+                }
             }
 
             @Override
-            public void onFailure(Call<List<RowInTable>> call, Throwable t) {
-
+            public void onFailure(Call<List<Map<String, Object>>> call, Throwable t) {
+                Log.e("AZURE_CUSTOM_SQL", "Network fail: " + t.getMessage());
             }
         });
     }
 }
-*/
-
-/*
-    private void fetchData() {
-        // 1. Create the API service
-        Log.i("i", "1. Create the API service");
-        AzureApiService apiService = RetrofitClient.getRetrofitInstance().create(AzureApiService.class);
-
-        // 2. Call the server asynchronously (won't freeze your app)
-        Log.i("i", "2. Call the server asynchronously (won't freeze your app)");
-        Call<List<CalendarDay>> call = apiService("calendar");
-        call.enqueue(new Callback<List<CalendarDay>>() {
-
-            @Override
-            public void onResponse(Call<List<CalendarDay>> call, Response<List<CalendarDay>> response) {
-                if (response.isSuccessful() && response.body() != null) {
-
-                    List<CalendarDay> sqlData = response.body();
-
-                    // Success! Let's display the name of the first item in a Toast.
-                    if (sqlData.size() > 0) {
-                        String firstItemName = sqlData.get(0).getProduct_name();
-
-                        Log.i("AZURE_SQL_INFO", "Connected! Found: " + firstItemName);
-
-                        // You can also print the whole list to the Android Studio Logcat
-                        for (CalendarDay CalendarDay : sqlData) {
-                            Log.d("AZURE_SQL_DATA", "Name: " + CalendarDay.getProduct_name() + ", Email: " + CalendarDay.getDay_date());
-                        }
-                    } else {
-                        Log.i("AZURE_SQL_INFO", "Connected, but SQL table is empty");
-                    }
-
-                } else {
-
-                    if(response.isSuccessful() ){
-                        Log.i("check_data", "response.isSuccessful() is true");
-                    } else {
-
-                        try {
-                            String errorUrl = response.raw().request().url().toString(); // <--- GETS THE EXACT URL
-                            Log.e("AZURE_SQL_ERROR", "Android tried to ping this URL: " + errorUrl);
-                            Log.e("AZURE_SQL_ERROR", "Server Code: " + response.code());
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    }
-                    // Reveal the true error message hidden in errorBody
-                    try {
-                        String errorMessage = "Unknown error";
-                        if (response.errorBody() != null) {
-                            errorMessage = response.errorBody().string();
-                        }
-                        Log.e("AZURE_SQL_ERROR_OLD", "Server Code: " + response.code() + " | Error: " + errorMessage);
-                        Log.e("AZURE_SQL_ERROR_OLD", "Server error: " + response.code());
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-
-                if(response.body() == null){
-                    Log.i("check_data", "Response body is null");
-                }else{
-                    Log.i("check_data", "Response body is not null: " + response.body().toString());
-                }
-                Log.e("AZURE_SQL_ERROR", "Server error: " + response.code());
-            }
-
-
-            @Override
-            public void onFailure(Call<List<CalendarDay>> call, Throwable t) {
-                // This runs if there's no internet, wrong URL, or JSON parsing error
-                Log.e("AZURE_SQL_ERROR", "Connection Failed!");
-                Log.e("AZURE_SQL_ERROR", t.getMessage());
-            }
-        });
-    }
-
-}
-*/

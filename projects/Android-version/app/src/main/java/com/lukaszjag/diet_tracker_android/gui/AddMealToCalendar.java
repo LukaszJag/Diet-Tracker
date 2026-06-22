@@ -26,9 +26,12 @@ import retrofit2.Response;
 
 public class AddMealToCalendar extends AppCompatActivity {
 
-    // UI components
+    //<editor-fold desc="Buttons">
     Button passDataButton;
     Button searchProductButton;
+    //</editor-fold>
+
+    //<editor-fold desc="TextViews">
     TextView tvDate;
     TextView tvMealName;
     TextView tvProductName;
@@ -37,7 +40,9 @@ public class AddMealToCalendar extends AppCompatActivity {
     TextView tvAmount;
     TextView tvKcal;
     TextView tvProtein;
+    //</editor-fold>
 
+    //<editor-fold desc="EditTexts">
     EditText etDate;
     EditText etMealName;
     EditText etProductName;
@@ -46,16 +51,14 @@ public class AddMealToCalendar extends AppCompatActivity {
     EditText etAmount;
     EditText etKcal;
     EditText etProtein;
+    //</editor-fold>
 
     private ActivityMainBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        //setupComponents();
 
         setContentView(R.layout.add_meal_to_calendar);
-
-
 
         super.onCreate(savedInstanceState);
 

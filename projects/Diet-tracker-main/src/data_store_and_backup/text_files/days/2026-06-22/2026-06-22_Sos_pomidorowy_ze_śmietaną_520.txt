@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2026-06-22',
+'Monday',
+'Snack 2',
+520.0,
+'Sos pomidorowy ze śmietaną',
+57.0,
+1.1,
+1.9,
+8.6,
+'2026-06-22 11:11:02',
+'none',
+296.4,
+44.72,
+9.879999,
+5.72
+);
