@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2026-06-25',
+'Thursday',
+'Dinner',
+1250.0,
+'Lemoniada o smaku cytryna-mięta',
+20.0,
+0.0,
+0.0,
+4.9,
+'2026-06-25 02:54:58',
+'none',
+250.0,
+61.25,
+0.0,
+0.0
+);

@@ -1,0 +1,20 @@
+INSERT INTO `diet_tracker_schema`.product_table
+(`product_name`,
+`product_brand`,
+`product_package_has`,
+`product_macro_for`,
+`product_kcal`,
+`product_protein`,
+`product_fat`,
+`product_carbs`,
+`comment_optional`)
+Values
+('Rolada truskawkowa',
+'Dan Cake',
+300.0,
+100.0,
+374.0,
+4.4,
+11.0,
+64.0,
+'Link: https://www.carrefour.pl/artykuly-spozywcze/slodkie-wypieki-sp/dan-cake-rolada-truskawkowa-300-g');

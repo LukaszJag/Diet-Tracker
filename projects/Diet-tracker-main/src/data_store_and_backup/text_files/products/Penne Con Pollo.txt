@@ -1,0 +1,9 @@
+Name: Penne Con Pollo
+Brand: Donatello
+Package has: 380.0
+Macro for: 100.0
+KCal: 169.0
+Protein: 7.7
+Fat: 6.1
+Carbs: 20.0
+Comment optional: Link: https://pl.openfoodfacts.org/product/5905644031746/penne-con-pollo-donatello

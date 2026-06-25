@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2026-06-24',
+'Wednesday',
+'Breakfast',
+44.0,
+'Rolada truskawkowa',
+374.0,
+4.4,
+11.0,
+64.0,
+'2026-06-25 02:39:18',
+'none',
+164.56,
+28.16,
+4.84,
+1.936
+);

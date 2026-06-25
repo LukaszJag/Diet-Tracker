@@ -1,0 +1,9 @@
+Name: Rolada truskawkowa
+Brand: Dan Cake
+Package has: 300.0
+Macro for: 100.0
+KCal: 374.0
+Protein: 4.4
+Fat: 11.0
+Carbs: 64.0
+Comment optional: Link: https://www.carrefour.pl/artykuly-spozywcze/slodkie-wypieki-sp/dan-cake-rolada-truskawkowa-300-g

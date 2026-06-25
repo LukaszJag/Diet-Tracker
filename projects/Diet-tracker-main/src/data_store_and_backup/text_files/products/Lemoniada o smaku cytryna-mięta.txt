@@ -1,0 +1,9 @@
+Name: Lemoniada o smaku cytryna-mięta
+Brand: Tymbark
+Package has: 1250.0
+Macro for: 100.0
+KCal: 20.0
+Protein: 0.0
+Fat: 0.0
+Carbs: 4.9
+Comment optional: Link: https://www.frisco.pl/pid,155928/n,tymbark-lemoniada-o-smaku-cytryna-mieta/stn,product
