@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2026-06-27',
+'Saturday',
+'Breakfast',
+330.0,
+'Paprykarz szczeciński - Graal',
+120.0,
+5.9,
+6.6,
+8.0,
+'2026-06-27 12:33:21',
+'none',
+396.0,
+26.4,
+21.779999,
+19.47
+);
