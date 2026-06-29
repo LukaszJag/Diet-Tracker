@@ -1,0 +1,17 @@
+Repos:
+
+    Searching note+app+android+ Java stars desc:
+
+        https://github.com/search?q=note+app+android+language%3AJava&type=repositories&l=Java&s=stars&o=desc
+
+    Shouheng88 - MarkNote:
+
+        https://github.com/Shouheng88/MarkNote/tree/master
+
+
+    nextcloud - notes-android:
+
+        https://github.com/nextcloud/notes-android
+
+
+

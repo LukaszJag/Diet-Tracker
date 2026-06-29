@@ -15,7 +15,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class GetFromSQLDatabase {
-    private void runCustomAzureQuery(String mySqlString) {
+    public void runCustomAzureQuery(String mySqlString) {
         AzureApiService apiService = RetrofitClient.getRetrofitInstance().create(AzureApiService.class);
 
         QueryRequest requestBody = new QueryRequest(mySqlString);
