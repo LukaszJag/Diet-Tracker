@@ -3,4 +3,11 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="get_product_data_main_background">#2596be</color>
+
+    <color name="day_statistic_main_background">#ed931c</color>
+    <color name="day_statistic_table_background">#70b893</color>
+
+    <color name="activity_main_background">#525654</color>
+
+
 </resources>
