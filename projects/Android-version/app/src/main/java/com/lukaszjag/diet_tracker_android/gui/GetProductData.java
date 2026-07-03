@@ -65,13 +65,11 @@ public class GetProductData extends AppCompatActivity {
 
         setupAllElements();
     }
-
     private void setupAllElements() {
         setupUIComponents();
         setGetProductDataComponents();
         addListeners();
     }
-
     private void setupUIComponents(){
         // 2. Connect the variables to the XML IDs using findViewById
 
@@ -100,7 +98,6 @@ public class GetProductData extends AppCompatActivity {
         fatValueTextView = findViewById(R.id.fatValueTextView);
         carbsValueTextView = findViewById(R.id.carbsValueTextView);
     }
-
     private void addListeners(){
         //<editor-fold desc="getProductFromDatabase - Listener">
         getProductFromDatabase.setOnClickListener(new View.OnClickListener() {
@@ -181,23 +178,47 @@ public class GetProductData extends AppCompatActivity {
         // 2. THIS IS THE LINE FIXING YOUR CRASH: Tell it to be a vertical list
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
-
     private void addMacroFromProduct(){
+// Brand is text, so it stays exactly as you had it
         brandValueTextView.setText(products.get(counter).getValue("product_brand"));
-        kcalValueTextView.setText(products.get(counter).getValue("product_kcal"));
-        proteinValueTextView.setText(products.get(counter).getValue("product_protein"));
-        fatValueTextView.setText(products.get(counter).getValue("product_fat"));
-        carbsValueTextView.setText(products.get(counter).getValue("product_carbs"));
+
+        try {
+            // 1. Get the raw values (converting to String first to be safe)
+            String rawKcal = String.valueOf(products.get(counter).getValue("product_kcal"));
+            String rawProtein = String.valueOf(products.get(counter).getValue("product_protein"));
+            String rawFat = String.valueOf(products.get(counter).getValue("product_fat"));
+            String rawCarbs = String.valueOf(products.get(counter).getValue("product_carbs"));
+
+            // 2. Parse them into doubles
+            double kcal = Double.parseDouble(rawKcal);
+            double protein = Double.parseDouble(rawProtein);
+            double fat = Double.parseDouble(rawFat);
+            double carbs = Double.parseDouble(rawCarbs);
+
+            // 3. Format and set the text
+            // "%.0f" for kcal because calories are usually whole numbers (e.g., 238)
+            kcalValueTextView.setText(String.format(java.util.Locale.getDefault(), "%.0f", kcal));
+
+            // "%.1f" for macros for 1 decimal place (e.g., 7.2)
+            proteinValueTextView.setText(String.format(java.util.Locale.getDefault(), "%.1f", protein));
+            fatValueTextView.setText(String.format(java.util.Locale.getDefault(), "%.1f", fat));
+            carbsValueTextView.setText(String.format(java.util.Locale.getDefault(), "%.1f", carbs));
+
+        } catch (NumberFormatException | NullPointerException e) {
+            // FALLBACK: If the database is missing a value (null) or has bad data,
+            // it will prevent the app from crashing and just set the raw value instead.
+            kcalValueTextView.setText(products.get(counter).getValue("product_kcal"));
+            proteinValueTextView.setText(products.get(counter).getValue("product_protein"));
+            fatValueTextView.setText(products.get(counter).getValue("product_fat"));
+            carbsValueTextView.setText(products.get(counter).getValue("product_carbs"));
+        }
     }
     private void setGetProductDataComponents() {
 
 
     }
-
     private String makeQueryForButtonListener(String productData) {
         return "SELECT * FROM [diet_tracker_schema].[product_table] WHERE LOWER(product_name) LIKE '%" + productData + "%'";
     }
-
-
 
 }

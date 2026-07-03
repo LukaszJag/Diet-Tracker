@@ -33,8 +33,10 @@
 
     <LinearLayout
         android:id="@+id/linearLayout4"
-        android:layout_width="409dp"
-        android:layout_height="wrap_content"
+        android:layout_width="244dp"
+        android:layout_height="178dp"
+        android:layout_marginEnd="60dp"
+        android:background="@drawable/border"
         android:orientation="vertical"
         android:padding="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -67,6 +69,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="brand"
+                android:textStyle="bold"
                 tools:layout_editor_absoluteX="42dp"
                 tools:layout_editor_absoluteY="308dp" />
 
@@ -92,6 +95,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="kcal"
+                android:textStyle="bold"
                 tools:layout_editor_absoluteX="42dp"
                 tools:layout_editor_absoluteY="345dp" />
 
@@ -117,6 +121,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="protein"
+                android:textStyle="bold"
                 tools:layout_editor_absoluteX="42dp"
                 tools:layout_editor_absoluteY="384dp" />
 
@@ -140,6 +145,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="fat"
+                android:textStyle="bold"
                 tools:layout_editor_absoluteX="42dp"
                 tools:layout_editor_absoluteY="423dp" />
 
@@ -163,6 +169,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="carbs"
+                android:textStyle="bold"
                 tools:layout_editor_absoluteX="42dp"
                 tools:layout_editor_absoluteY="466dp" />
 
