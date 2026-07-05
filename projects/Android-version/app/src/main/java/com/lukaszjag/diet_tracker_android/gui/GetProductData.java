@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
+import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.AdapterView;
 
@@ -22,6 +23,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.lukaszjag.diet_tracker_android.R;
 import com.lukaszjag.diet_tracker_android.tools.cloud_data_tools.AzureDataCallback;
 import com.lukaszjag.diet_tracker_android.tools.cloud_data_tools.GetFromSQLDatabase;
+import com.lukaszjag.diet_tracker_android.tools.date_tools.MyDate;
 import com.lukaszjag.diet_tracker_android.tools.sql_tools.QueryMaker;
 import com.lukaszjag.diet_tracker_android.tools.sql_tools.RowInTable;
 
@@ -40,6 +42,7 @@ public class GetProductData extends AppCompatActivity {
     private Button getProductFromDatabase;
     private Button previousButton;
     private Button nextButton;
+    private Button dateDataButton;
     //</editor-fold>
 
     //<editor-fold desc="EditText">
@@ -58,12 +61,19 @@ public class GetProductData extends AppCompatActivity {
     private TextView proteinValueTextView;
     private TextView fatValueTextView;
     private TextView carbsValueTextView;
+
+    private TextView dateDataTextView;
     //</editor-fold>
     //</editor-fold>
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        this.getWindow().setFlags(
+                WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN
+        );
 
         setContentView(R.layout.get_product_data);
         setupAllElements();
@@ -82,6 +92,7 @@ public class GetProductData extends AppCompatActivity {
         getProductFromDatabase = findViewById(R.id.getProductFromDatabase);
         previousButton = findViewById(R.id.previousButton);
         nextButton = findViewById(R.id.nextButton);
+        dateDataButton = findViewById(R.id.datePickButton);
         //</editor-fold>
 
         //<editor-fold desc="EditText">
@@ -100,6 +111,9 @@ public class GetProductData extends AppCompatActivity {
         proteinValueTextView = findViewById(R.id.proteinValueTextView);
         fatValueTextView = findViewById(R.id.fatValueTextView);
         carbsValueTextView = findViewById(R.id.carbsValueTextView);
+
+        dateDataTextView = findViewById(R.id.dateDataTextView);
+        dateDataTextView.setText(MyDate.getCurrentDayInSQLFormat());
         //</editor-fold>
     }
     private void addListeners(){
@@ -188,6 +202,12 @@ public class GetProductData extends AppCompatActivity {
                     }
                     productSpinner.setSelection(counter); // This triggers the Spinner listener to update macros
                 }
+            }
+        });
+        dateDataTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
             }
         });
 
