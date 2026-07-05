@@ -634,10 +634,9 @@ public class MyDate {
     }
 
     public static String getCurrentDayInSQLFormat() {
-        System.out.println("TMP");
-        //System.out.println("Config dat: " + dateLocal.toString());
         return new SimpleDateFormat("yyyy-MM-dd").format(dateLocal);
     }
+
 
     public static String getCurrentYearAndMonthInSQLFormat() {
         String result = new SimpleDateFormat("yyyy-MM").format(dateLocal);

@@ -2,6 +2,7 @@ package com.lukaszjag.diet_tracker_android.gui;
 
 import static android.app.PendingIntent.getActivity;
 
+import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -20,6 +21,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.datepicker.MaterialDatePicker;
 import com.lukaszjag.diet_tracker_android.R;
 import com.lukaszjag.diet_tracker_android.tools.cloud_data_tools.AzureDataCallback;
 import com.lukaszjag.diet_tracker_android.tools.cloud_data_tools.GetFromSQLDatabase;
@@ -27,8 +29,12 @@ import com.lukaszjag.diet_tracker_android.tools.date_tools.MyDate;
 import com.lukaszjag.diet_tracker_android.tools.sql_tools.QueryMaker;
 import com.lukaszjag.diet_tracker_android.tools.sql_tools.RowInTable;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class GetProductData extends AppCompatActivity {
 
@@ -204,9 +210,26 @@ public class GetProductData extends AppCompatActivity {
                 }
             }
         });
-        dateDataTextView.setOnClickListener(new View.OnClickListener() {
+
+        dateDataButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                MaterialDatePicker<Long> datePicker = MaterialDatePicker.Builder.datePicker()
+                        .setTitleText("Select a Date")
+                        .setSelection(MaterialDatePicker.todayInUtcMilliseconds()) // default to today
+                        .build();
+
+                // Listen for when the user clicks "OK"
+                datePicker.addOnPositiveButtonClickListener(selection -> {
+                    // Convert the timestamp back to a readable date string
+                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+                    String formattedDate = sdf.format(new Date(selection));
+
+                    dateDataTextView.setText(formattedDate);
+                });
+
+                // Show the picker
+                datePicker.show(getSupportFragmentManager(), "MATERIAL_DATE_PICKER");
 
             }
         });
