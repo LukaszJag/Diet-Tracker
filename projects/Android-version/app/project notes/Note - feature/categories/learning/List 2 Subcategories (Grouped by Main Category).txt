@@ -1,0 +1,107 @@
+List 2: Subcategories (Grouped by Main Category)
+
+Java Ecosystem
+
+    Java
+
+    Spring
+
+    JUNIT
+
+    Android
+
+    Java – Web Scraping
+
+    Java Diet Tracker
+
+Frontend
+
+    HTML, CSS
+
+    JavaScript
+
+Cloud and Infrastructure
+
+    Linux
+
+    PowerShell
+
+    Network
+
+    Cloud
+
+    Windows Server
+
+    Windows
+
+    Containers
+
+GameDev
+
+    UE5 (Unreal Engine 5)
+
+Computer Science
+
+    Algorytmy
+
+    General IT Knowledge
+
+Soft Skills
+
+    Szukanie pracy (Job Searching)
+
+    Japoński (Japanese)
+
+    Angielski (English)
+
+Versatile Frameworks
+
+    Python
+
+    .NET (C#)
+
+WSB
+
+    WSB (Bazy danych i Big Data, Architektura systemów, Projekt itp.)
+
+Certs
+
+    CompTIA A+
+
+    CompTIA Network+
+
+    CompTIA Linux+
+
+Backend
+
+    x (Placeholder)
+
+Data and BI
+
+    Excel
+
+    Word
+
+    Power Point
+
+    Power BI
+
+Low-Level Languages
+
+    C
+
+    C++
+
+Dev Tools
+
+    Git
+
+    Jira
+
+    Postman
+
+AI & Machine Learning
+
+    AI Assistants
+
+    Machine Learning Basics

@@ -1,0 +1,29 @@
+List 1: Main Categories
+
+Java Ecosystem
+
+Frontend
+
+Cloud and Infrastructure
+
+GameDev
+
+Computer Science
+
+Soft Skills
+
+Versatile Frameworks
+
+WSB
+
+Certs
+
+Backend
+
+Data and BI
+
+Low-Level Languages
+
+Dev Tools
+
+AI & Machine Learning
