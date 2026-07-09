@@ -14,7 +14,7 @@
 
         <!-- 1. Set GetProductData as the LAUNCHER activity -->
         <activity
-            android:name=".gui.GetProductData"
+            android:name=".gui.diet.GetProductData"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

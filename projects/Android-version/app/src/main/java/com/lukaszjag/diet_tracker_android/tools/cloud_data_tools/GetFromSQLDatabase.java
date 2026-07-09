@@ -1,10 +1,7 @@
 package com.lukaszjag.diet_tracker_android.tools.cloud_data_tools;
 
 import android.util.Log;
-import android.widget.Toast;
 
-import com.lukaszjag.diet_tracker_android.MainActivity;
-import com.lukaszjag.diet_tracker_android.gui.AddMealToCalendar;
 import com.lukaszjag.diet_tracker_android.tools.sql_tools.RowInTable;
 
 import java.io.IOException;

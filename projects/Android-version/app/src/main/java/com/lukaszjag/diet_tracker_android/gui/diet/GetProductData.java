@@ -1,8 +1,7 @@
-package com.lukaszjag.diet_tracker_android.gui;
+package com.lukaszjag.diet_tracker_android.gui.diet;
 
 import static android.app.PendingIntent.getActivity;
 
-import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -18,8 +17,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.lukaszjag.diet_tracker_android.R;
@@ -31,7 +28,6 @@ import com.lukaszjag.diet_tracker_android.tools.sql_tools.RowInTable;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;

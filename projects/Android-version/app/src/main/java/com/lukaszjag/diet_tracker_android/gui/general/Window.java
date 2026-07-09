@@ -1,4 +1,4 @@
-package com.lukaszjag.diet_tracker_android.gui;
+package com.lukaszjag.diet_tracker_android.gui.general;
 
 public interface Window {
     private void setFrame() {
