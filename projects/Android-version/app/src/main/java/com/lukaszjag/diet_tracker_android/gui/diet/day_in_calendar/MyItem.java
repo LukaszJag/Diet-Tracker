@@ -1,4 +1,4 @@
-package com.lukaszjag.diet_tracker_android.tmp;
+package com.lukaszjag.diet_tracker_android.gui.diet.day_in_calendar;
 
 public class MyItem {
     private String string1;
