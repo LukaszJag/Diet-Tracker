@@ -9,15 +9,27 @@
         android:id="@+id/addMealButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="58dp"
+        android:layout_marginTop="72dp"
         android:text="Add meal"
-        tools:layout_editor_absoluteX="58dp"
-        tools:layout_editor_absoluteY="72dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/getDayDataButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="27dp"
         android:text="Get day data"
-        tools:layout_editor_absoluteX="58dp"
-        tools:layout_editor_absoluteY="147dp" />
+        app:layout_constraintStart_toStartOf="@+id/addMealButton"
+        app:layout_constraintTop_toBottomOf="@+id/addMealButton" />
+
+    <Button
+        android:id="@+id/noteTaskButtonButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="Note - tasks"
+        app:layout_constraintStart_toStartOf="@+id/getDayDataButton"
+        app:layout_constraintTop_toBottomOf="@+id/getDayDataButton" />
 </androidx.constraintlayout.widget.ConstraintLayout>

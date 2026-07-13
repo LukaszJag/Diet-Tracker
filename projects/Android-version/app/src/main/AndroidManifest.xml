@@ -11,22 +11,29 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Diettrackerandroid">
-
+        <activity
+            android:name=".gui.diet.day_data_view.DayData"
+            android:exported="false" />
         <!-- 1. Set GetProductData as the LAUNCHER activity -->
         <activity
-            android:name=".gui.diet.day_in_calendar.DayInCalendar"
+            android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <!-- 2. Keep MainActivity as a secondary activity without the launcher filter -->
         <activity
-            android:name=".MainActivity"
-            android:exported="false" />
+            android:name=".gui.diet.GetProductData"
+            android:exported="true">
 
+        </activity>
+        <activity
+            android:name=".gui.notes.Notes"
+            android:exported="true">
+
+        </activity>
     </application>
 
 </manifest>

@@ -11,25 +11,45 @@ import androidx.navigation.ui.AppBarConfiguration;
 
 import com.lukaszjag.diet_tracker_android.databinding.ActivityMainBinding;
 import com.lukaszjag.diet_tracker_android.gui.diet.GetProductData;
+import com.lukaszjag.diet_tracker_android.gui.diet.day_data_view.DayData;
+import com.lukaszjag.diet_tracker_android.gui.notes.Notes;
 
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration appBarConfiguration;
     private ActivityMainBinding binding;
 
+    private Button addMealButton;
+    private Button getDayDataButton;
+    private Button noteTasksButton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
 
-        // Inflate MainActivity's own layout
-        binding = ActivityMainBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
+        setContentView(R.layout.main_window);
 
-        // Example: Trigger navigation to GetProductData (e.g., using the Floating Action Button)
-        binding.fab.setOnClickListener(new View.OnClickListener() {
+        setupUIComponents();
+        addListeners();
+
+    }
+
+    private void addListeners() {
+        noteTasksButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, Notes.class);
+
+                startActivity(intent);
+            }
+        });
+
+        addMealButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this, GetProductData.class);
@@ -37,6 +57,21 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        getDayDataButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, DayData.class);
+
+                startActivity(intent);
+            }
+        });
+    }
+
+    private void setupUIComponents() {
+        addMealButton = findViewById(R.id.addMealButton);
+        getDayDataButton = findViewById(R.id.getDayDataButton);
+        noteTasksButton = findViewById(R.id.noteTaskButtonButton);
     }
 
     @Override

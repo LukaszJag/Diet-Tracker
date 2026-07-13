@@ -2,6 +2,8 @@ package com.lukaszjag.diet_tracker_android.gui.diet;
 
 import static android.app.PendingIntent.getActivity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -28,6 +30,7 @@ import com.lukaszjag.diet_tracker_android.tools.sql_tools.RowInTable;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -35,16 +38,20 @@ import java.util.Locale;
 public class GetProductData extends AppCompatActivity {
 
     ArrayList<RowInTable> products = new ArrayList<>();
+    ArrayList<RowInTable> mealNames = new ArrayList<>();
     int counter;
+    String productComment = "none";
 
     //<editor-fold desc="UI components">
     private Spinner productSpinner;
+    private Spinner mealNameSpinner;
 
     //<editor-fold desc="Button">
     private Button getProductFromDatabase;
     private Button previousButton;
     private Button nextButton;
     private Button dateDataButton;
+    private Button productCommentButton;
     //</editor-fold>
 
     //<editor-fold desc="EditText">
@@ -82,12 +89,30 @@ public class GetProductData extends AppCompatActivity {
     }
 
     private void setupAllElements() {
-        setupUIComponents();
+        initUIComponents();
+        setupComponents();
         addListeners();
     }
-    private void setupUIComponents(){
+
+    private void setupComponents() {
+
+        ArrayList<String> mealNames = new ArrayList<>(Arrays.asList("None", "Breakfast", "Second Breakfast", "Snack 1", "Dinner", "Snack 2"
+                , "Supper", "After workout", "Night snack"));
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(
+                GetProductData.this,
+                android.R.layout.simple_spinner_item,
+                mealNames
+        );
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        mealNameSpinner.setAdapter(adapter);
+    }
+
+    private void initUIComponents(){
         //<editor-fold desc="Spinner">
         productSpinner = findViewById(R.id.productSpinner);
+
+        mealNameSpinner = findViewById(R.id.mealNameSpinner);
         //</editor-fold>
 
         //<editor-fold desc="Buttons">
@@ -95,6 +120,7 @@ public class GetProductData extends AppCompatActivity {
         previousButton = findViewById(R.id.previousButton);
         nextButton = findViewById(R.id.nextButton);
         dateDataButton = findViewById(R.id.datePickButton);
+        productCommentButton = findViewById(R.id.productCommentButton);
         //</editor-fold>
 
         //<editor-fold desc="EditText">
@@ -119,6 +145,12 @@ public class GetProductData extends AppCompatActivity {
         //</editor-fold>
     }
     private void addListeners(){
+        productCommentButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showSimpleDialog();
+            }
+        });
 
         getProductFromDatabase.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -174,7 +206,7 @@ public class GetProductData extends AppCompatActivity {
 
                 if (!products.isEmpty()) {
                     productNameTextView.setText(products.get(0).getValue("product_name"));
-                    addMacroFromProduct();
+                    addDataFromProduct();
                 }
             }
         });
@@ -236,7 +268,7 @@ public class GetProductData extends AppCompatActivity {
                 if (!products.isEmpty()) {
                     counter = position;
                     productNameTextView.setText(products.get(counter).getValue("product_name"));
-                    addMacroFromProduct();
+                    addDataFromProduct();
                 }
             }
 
@@ -246,9 +278,24 @@ public class GetProductData extends AppCompatActivity {
         });
 
     }
-    private void addMacroFromProduct(){
+
+    private void showSimpleDialog() {
+        new AlertDialog.Builder(GetProductData.this)
+                .setTitle(products.get(counter).getValue("product_name"))
+                .setMessage(productComment)
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                })
+                .show();
+    }
+
+    private void addDataFromProduct(){
 // Brand is text, so it stays exactly as you had it
         brandValueTextView.setText(products.get(counter).getValue("product_brand"));
+        productComment = products.get(counter).getValue("comment_optional");
 
         try {
             // 1. Get the raw values (converting to String first to be safe)

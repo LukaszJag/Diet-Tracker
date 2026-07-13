@@ -1,4 +1,4 @@
-package com.lukaszjag.diet_tracker_android.gui.diet.day_in_calendar;
+package com.lukaszjag.diet_tracker_android.gui.notes;
 
 import android.view.LayoutInflater;
 import android.view.View;

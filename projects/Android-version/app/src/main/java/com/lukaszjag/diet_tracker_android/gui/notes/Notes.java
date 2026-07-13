@@ -1,4 +1,4 @@
-package com.lukaszjag.diet_tracker_android.gui.diet.day_in_calendar;
+package com.lukaszjag.diet_tracker_android.gui.notes;
 
 import android.os.Bundle;
 
@@ -10,12 +10,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.lukaszjag.diet_tracker_android.R;
 import com.lukaszjag.diet_tracker_android.tools.notes_tool.Note;
 
-public class DayInCalendar extends AppCompatActivity{    private RecyclerView recyclerView;
+public class Notes extends AppCompatActivity{    private RecyclerView recyclerView;
     private MyAdapter adapter;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.day_in_calendar);
+        setContentView(R.layout.notes_view_layout);
         // 1. Initialize RecyclerView
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
