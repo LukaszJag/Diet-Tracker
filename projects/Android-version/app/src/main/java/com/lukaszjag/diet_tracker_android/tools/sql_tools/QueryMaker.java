@@ -4,4 +4,8 @@ public class QueryMaker {
     public static String getAllProductTableLikeProductNameCaseInsensitive(String productData) {
         return "SELECT * FROM [diet_tracker_schema].[product_table] WHERE LOWER(product_name) LIKE '%" + productData + "%'";
     }
+
+    public static String getAllProductsFromCalendarTableLikeDate(String date) {
+        return "SELECT * FROM [diet_tracker_schema].[calendar] WHERE day_date LIKE '%" + date + "%'";
+    }
 }

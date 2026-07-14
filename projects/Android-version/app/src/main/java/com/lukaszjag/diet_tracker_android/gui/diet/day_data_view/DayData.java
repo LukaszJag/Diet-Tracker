@@ -1,9 +1,15 @@
 package com.lukaszjag.diet_tracker_android.gui.diet.day_data_view;
 
+import static kotlinx.coroutines.internal.Concurrent_commonKt.getValue;
+
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,12 +18,19 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.lukaszjag.diet_tracker_android.R;
+import com.lukaszjag.diet_tracker_android.gui.diet.GetProductData;
+import com.lukaszjag.diet_tracker_android.tools.cloud_data_tools.AzureDataCallback;
+import com.lukaszjag.diet_tracker_android.tools.cloud_data_tools.GetFromSQLDatabase;
 import com.lukaszjag.diet_tracker_android.tools.date_tools.MyDate;
 import com.lukaszjag.diet_tracker_android.tools.products_tools.MyAdapterProduct;
 import com.lukaszjag.diet_tracker_android.tools.products_tools.Product;
+import com.lukaszjag.diet_tracker_android.tools.sql_tools.QueryMaker;
+import com.lukaszjag.diet_tracker_android.tools.sql_tools.RowInTable;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 public class DayData extends AppCompatActivity {
@@ -26,13 +39,20 @@ public class DayData extends AppCompatActivity {
     private MyAdapterProduct adapter;
     private Button dateDataButton;
     private TextView dateDataTextView;
+    ArrayList<RowInTable> products = new ArrayList<>();
+    String dateOfData;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.day_data_layout);
+
+        dateOfData = MyDate.getCurrentDayInSQLFormat();
+
         setupAllElements();
         addListeners();
+        getDataForDate(dateOfData);
+        setDataToView();
 
         // 1. Initialize RecyclerView
         recyclerView = findViewById(R.id.recyclerView);
@@ -42,7 +62,7 @@ public class DayData extends AppCompatActivity {
         adapter = new MyAdapterProduct();
         recyclerView.setAdapter(adapter);
 
-        addTestProducts();
+        //addTestProducts();
 
     }
 
@@ -52,7 +72,7 @@ public class DayData extends AppCompatActivity {
     }
 
     private void initUIComponents() {
-        dateDataButton= findViewById(R.id.datePickButton);
+        dateDataButton = findViewById(R.id.datePickButton);
 
         dateDataTextView = findViewById(R.id.dateTextView);
         dateDataTextView.setText(MyDate.getCurrentDayInSQLFormat());
@@ -79,6 +99,9 @@ public class DayData extends AppCompatActivity {
                 // Show the picker
                 datePicker.show(getSupportFragmentManager(), "MATERIAL_DATE_PICKER");
 
+            dateOfData = dateDataTextView.getText().toString();
+                getDataForDate(dateOfData);
+                setDataToView();
             }
         });
     }
@@ -100,5 +123,37 @@ public class DayData extends AppCompatActivity {
         adapter.addItem(new Product("Kasza gryczana - ugotowana", "369", "446.49"));
         adapter.addItem(new Product("Zbyszko 3 Cytryny Napój gazowany", "1750", "332.5"));
         adapter.addItem(new Product("Sok Cytryna limonka", "1000", "450"));
+    }
+
+    private void getDataForDate(String dateInSQLFormat) {
+
+        String query = QueryMaker.getAllProductsFromCalendarTableLikeDate(dateOfData);
+
+        // Call the method and provide the callback
+        GetFromSQLDatabase.runAzureQueryAIChat(query, new AzureDataCallback() {
+
+            @Override
+            public void onSuccess(ArrayList<RowInTable> resultTable) {
+                // This code runs when the data successfully arrives from Azure!
+                System.out.println("Result size: " + resultTable.size());
+                products = resultTable;
+            }
+
+            @Override
+            public void onFailure(String errorMessage) {
+                // Handle the error (e.g., show a Toast to the user)
+                System.out.println("Failed to get data: " + errorMessage);
+            }
+        });
+    }
+
+    private void setDataToView() {
+        String productName, amountOfProduct, kcalOfProduct;
+        for (int i = 0; i < products.size(); i++) {
+            productName = products.get(i).getValue("product_name");
+            amountOfProduct = products.get(i).getValue("amount_of_product");
+            kcalOfProduct = products.get(i).getValue("kcal_consume");
+            adapter.addItem(new Product(productName,amountOfProduct, kcalOfProduct));
+        }
     }
 }
