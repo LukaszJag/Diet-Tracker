@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Note {
+    //<editor-fold desc="Global variables">
     private String noteTitle;
     private String noteSubtitle;
     private String noteDescription;
@@ -17,14 +18,15 @@ public class Note {
     private boolean isGeneralToDo;
     private boolean IisTodayTask;
 
-
     private ArrayList<String> urgentScaleEnglish = new ArrayList<>(Arrays.asList("no urgent scale", "Priority Deliverable",
             "Mission-Critical Sprint", "High-Stakes Campaign", "Marathon Project",
             "Strategic Initiative", "Monumental Undertaking", "Magnum Opus / Grand Challenge"));
     private ArrayList<String> urgentScalePolish = new ArrayList<>(Arrays.asList("brak ram czasowych", "Naglące zlecenie priorytetowe", "Krytyczna faza mobilizacji",
             "Złożona operacja celowa", "Wyzwanie długodystansowe (Projekt-maraton)", "Strategiczna transformacja", "Fundamentalne przedsięwzięcie",
             "Dzieło życia (Opus Magnum)"));
+    //</editor-fold>
 
+    //<editor-fold desc="Constructors">
     public Note() {}
 
     public Note(String noteTitle, String noteSubtitle, String noteDescription) {
@@ -32,7 +34,9 @@ public class Note {
         this.noteSubtitle = noteSubtitle;
         this.noteDescription = noteDescription;
     }
+    //</editor-fold>
 
+    //<editor-fold desc="Getters and Setters">
     public String getNoteSubtitle() {
         return noteSubtitle;
     }
@@ -96,5 +100,6 @@ public class Note {
     public void setIisTodayTask(boolean iisTodayTask) {
         IisTodayTask = iisTodayTask;
     }
+    //</editor-fold>
 }
 

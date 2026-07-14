@@ -3,10 +3,7 @@ package com.lukaszjag.diet_tracker_android.tools.products_tools;
 import com.lukaszjag.diet_tracker_android.config.Config;
 
 public class Product {
-
-    // Values
-
-    //<editor-fold desc="Fundamental values">
+    //<editor-fold desc="Global values">
     private String productName;
     private float productMeasureOfProductWeightToCalculateMacro;
     private Macro productMacroForItsSetMeasure;
@@ -15,20 +12,8 @@ public class Product {
     private String commentOptional;
     //</editor-fold>
 
+    //<editor-fold desc="Constructors">
 
-    @Override
-    public String toString() {
-        return "Product{" + "\n" +
-                "productName = '" + productName + '\'' + "\n" +
-                "productMeasureOfProductWeightToCalculateMacro = " + productMeasureOfProductWeightToCalculateMacro + "\n" +
-                "productMacroForItsSetMeasure = " + productMacroForItsSetMeasure.getShortMacroInformation() + "\n" +
-                "productBrand = '" + productBrand + '\'' + "\n" +
-                "productPackWeight = " + productPackWeight + "\n" +
-                "commentOptional = '" + commentOptional + '\'' + "\n" +
-                '}';
-    }
-
-    // Constructors
     public Product(String name, String brand, float productMeasureOfProductWeightToCalculateMacro, Macro product_macro, float weight_of_pack, String commentOptional){
         this.productName = name;
         this.productBrand = brand;
@@ -37,6 +22,14 @@ public class Product {
         this.productPackWeight = weight_of_pack;
         this.commentOptional = commentOptional;
     }
+
+    public Product(String productName, String productMeasureOfProductWeightToCalculateMacro, String kcalProductMacroForItsSetMeasure) {
+        this.productName = productName;
+        this.productMeasureOfProductWeightToCalculateMacro = Float.valueOf(productMeasureOfProductWeightToCalculateMacro);
+        this.productMacroForItsSetMeasure = new Macro(Float.valueOf(kcalProductMacroForItsSetMeasure),0f,0f,0f);
+    }
+
+    //</editor-fold>
 
     public static boolean isProductEqual(Product productOne, Product productTwo){
         String[] productOneInArray = productOne.productDataInStringArray(productOne);
@@ -118,5 +111,16 @@ public class Product {
     }
     //</editor-fold>
 
+    @Override
+    public String toString() {
+        return "Product{" + "\n" +
+                "productName = '" + productName + '\'' + "\n" +
+                "productMeasureOfProductWeightToCalculateMacro = " + productMeasureOfProductWeightToCalculateMacro + "\n" +
+                "productMacroForItsSetMeasure = " + productMacroForItsSetMeasure.getShortMacroInformation() + "\n" +
+                "productBrand = '" + productBrand + '\'' + "\n" +
+                "productPackWeight = " + productPackWeight + "\n" +
+                "commentOptional = '" + commentOptional + '\'' + "\n" +
+                '}';
+    }
 
 }

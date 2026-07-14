@@ -1,4 +1,4 @@
-package com.lukaszjag.diet_tracker_android.gui.notes;
+package com.lukaszjag.diet_tracker_android.tools.notes_tool;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,21 +8,25 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.lukaszjag.diet_tracker_android.R;
-import com.lukaszjag.diet_tracker_android.tools.notes_tool.Note;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
+    //<editor-fold desc="Global variables">
     private List<Note> noteList;
+    //</editor-fold>
 
+    //<editor-fold desc="Constructors">
     public MyAdapter() {
         this.noteList = new ArrayList<>();
     }
+    //</editor-fold>
 
     // --- CUSTOM METHODS TO MANAGE DATA ---
 
+    //<editor-fold desc="ADD, GET, SET, DELETE - object">
     // ADD an object
     public void addItem(Note note) {
         noteList.add(note);
@@ -56,6 +60,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
             notifyItemRangeChanged(position, noteList.size());
         }
     }
+    //</editor-fold>
 
     // --- RECYCLERVIEW OVERRIDE METHODS ---
 

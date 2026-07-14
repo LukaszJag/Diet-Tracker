@@ -1,8 +1,8 @@
 Repos:
 
-    Searching note+app+android+ Java stars desc:
+    Searching product+app+android+ Java stars desc:
 
-        https://github.com/search?q=note+app+android+language%3AJava&type=repositories&l=Java&s=stars&o=desc
+        https://github.com/search?q=product+app+android+language%3AJava&type=repositories&l=Java&s=stars&o=desc
 
     Shouheng88 - MarkNote:
 

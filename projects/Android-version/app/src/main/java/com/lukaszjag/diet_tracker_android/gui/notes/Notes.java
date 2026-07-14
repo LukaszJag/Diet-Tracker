@@ -8,10 +8,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.lukaszjag.diet_tracker_android.R;
+import com.lukaszjag.diet_tracker_android.tools.notes_tool.MyAdapter;
 import com.lukaszjag.diet_tracker_android.tools.notes_tool.Note;
 
-public class Notes extends AppCompatActivity{    private RecyclerView recyclerView;
+public class Notes extends AppCompatActivity{
+    private RecyclerView recyclerView;
     private MyAdapter adapter;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,6 +37,7 @@ public class Notes extends AppCompatActivity{    private RecyclerView recyclerVi
         adapter.addItem(new Note("Title 6", "Sprawdzić jak uporządkować Google AI Studio - np. w foldery", "Description 6"));
         adapter.addItem(new Note("Title 7", "Setup basic active directory: with ~ 6 windows users, with ~ 2-3 groups", "Description 7"));
         adapter.addItem(new Note("Title 8", "Diet tracker android version - add daily tasks with checkboxes", "Description 8"));
+
         // 4. Testing the Get method (Get the first item and print it to console)
         Note fetchedItem = adapter.getItem(0);
         if(fetchedItem != null) {

@@ -9,4 +9,33 @@
         android:layout_height="match_parent"
         android:scrollbars="vertical" />
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme">
+
+        <!-- Center the TextView -->
+        <TextView
+            android:id="@+id/dateTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="TextView"
+            android:textSize="18sp"
+            android:textColor="#ffffff"/>
+
+        <!-- Align the Button to the Right (End) -->
+        <Button
+            android:id="@+id/datePickButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginEnd="16dp"
+            android:text="date" />
+
+    </androidx.appcompat.widget.Toolbar>
+
 </RelativeLayout>
