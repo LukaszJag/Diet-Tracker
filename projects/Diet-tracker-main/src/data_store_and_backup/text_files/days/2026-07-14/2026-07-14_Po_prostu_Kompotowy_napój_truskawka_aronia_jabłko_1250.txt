@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2026-07-14',
+'Tuesday',
+'Dinner',
+1250.0,
+'Po prostu Kompotowy napój truskawka aronia jabłko',
+19.0,
+0.0,
+0.0,
+4.7,
+'2026-07-15 12:39:58',
+'none',
+237.5,
+58.749996,
+0.0,
+0.0
+);

@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2026-07-13',
+'Monday',
+'Breakfast',
+189.0,
+'Budyń o smaku czekoladowym z cukrem (sam proszek)',
+365.0,
+3.17,
+1.26,
+86.5,
+'2026-07-15 12:31:36',
+'none',
+689.85,
+163.485,
+2.3813999,
+5.9913
+);

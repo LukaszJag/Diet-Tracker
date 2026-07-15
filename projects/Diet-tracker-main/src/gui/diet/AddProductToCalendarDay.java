@@ -1,7 +1,6 @@
 package gui.diet;
 
 import configuration.Config;
-import gui.GUIWindow;
 import logs.Log;
 import runners.run_update.RunnerFullUpdateDayStatistics;
 import tools.calendar_tools.DayInCalendar;
@@ -33,7 +32,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class AddProductToCalendarDay implements GUIWindow {
+public class AddProductToCalendarDay {
 
     //<editor-fold desc="Main - AddProductToCalendarDay - components and variables">
 
@@ -244,7 +243,7 @@ public class AddProductToCalendarDay implements GUIWindow {
     //<editor-fold desc="Frame methods">
 
 
-    @Override
+
     private void setFrame() {
         // Set window size
         addProductToDayFrame.setSize(Config.ADD_PRODUCT_TO_DAY_WINDOWS_WIDTH, Config.ADD_PRODUCT_TO_DAY_WINDOWS_HEIGHT);
@@ -261,10 +260,6 @@ public class AddProductToCalendarDay implements GUIWindow {
 
     }
 
-    @Override
-    public void finishSetupFrame() {
-
-    }
 
     private void finishSetUpFrame() {
         addProductToDayFrame.setResizable(true);
