@@ -7,13 +7,3 @@ Protein: 5.3
 Fat: 10.0
 Carbs: 10.0
 Comment optional: Opakowanie ma - 135g
-
-Name: Paprykarz szczeciński
-Brand: Graal
-Package has: 330.0
-Macro for: 100.0
-KCal: 120.0
-Protein: 5.9
-Fat: 6.6
-Carbs: 8.0
-Comment optional: Link: https://www.graal.pl/nasze-produkty/paprykarz-szczecinski-z-lososiem-330-g

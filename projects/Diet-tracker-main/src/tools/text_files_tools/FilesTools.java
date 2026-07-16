@@ -71,7 +71,7 @@ public class FilesTools {
         String[] fileByLinesInArray = new String[maxLinesInFile];
         int counter = 0;
         int indexOfColon = 0;
-        String line;
+        String line = String.valueOf(-1);
         try {
             Scanner fileScanner = new Scanner(new File(fileNameWithExtension));
             while (fileScanner.hasNext()) {
@@ -86,6 +86,12 @@ public class FilesTools {
                 counter++;
             }
         } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+
+        }catch (StringIndexOutOfBoundsException e){
+            System.out.println("Counter: " + counter);
+            System.out.println("Line: " + line);
+            System.out.println("fileNameWithExtension: " + fileNameWithExtension);
             throw new RuntimeException(e);
         }
 
@@ -273,7 +279,7 @@ public class FilesTools {
     //<editor-fold desc="Read files to get data">
     public static String[] getStringArrayForAllFilesInDirectory(String directory) {
         // Danger and possible problem cause because max amount of files is dynamic
-        int maxAmountOfFiles = 600;
+        int maxAmountOfFiles = 1000;
         String[] fileNameAndDirectory = new String[maxAmountOfFiles];
         int counter = 0;
 

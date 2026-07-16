@@ -1,0 +1,9 @@
+Name: Fanta Zero Sugar
+Brand: Fanta
+Package has: 1500.0
+Macro for: 100.0
+KCal: 3.0
+Protein: 0.0
+Fat: 0.0
+Carbs: 0.4
+Comment optional: Link: https://leclerc.com.pl/fanta-zero-sugar-napoj-gazowany-o-smaku-pomaranczowym
