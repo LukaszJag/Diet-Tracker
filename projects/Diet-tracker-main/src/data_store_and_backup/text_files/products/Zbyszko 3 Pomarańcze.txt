@@ -1,0 +1,9 @@
+Name: Zbyszko 3 Pomarańcze
+Brand: Zbyszko
+Package has: 1500.0
+Macro for: 100.0
+KCal: 39.0
+Protein: 0.0
+Fat: 0.0
+Carbs: 9.8
+Comment optional: Link: https://www.frisco.pl/pid,103075/n,zbyszko-3-pomarancze-napoj-gazowany/stn,product
