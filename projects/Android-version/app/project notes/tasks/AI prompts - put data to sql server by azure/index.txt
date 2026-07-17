@@ -1,0 +1,36 @@
+const sql = require("mssql");
+
+module.exports = async function (context, req) {
+  // Put your exact Azure SQL details here
+  const config = {
+    user: "root-android-server",
+    password: "CENSORED",
+    server: "first-server-android.database.windows.net",
+    database: "free-sql-db-6758529",
+    options: {
+      encrypt: true, // Required for Azure SQL
+      enableArithAbort: true,
+    },
+  };
+
+  try {
+    // Connect to Azure SQL
+    let pool = await sql.connect(config);
+
+    // Run your SQL query (Replace 'Users' with your actual table name)
+    let result = await pool.request().query("SELECT * FROM Users");
+
+    // Send the JSON result back to your Android App
+    context.res = {
+      status: 200,
+      headers: { "Content-Type": "application/json" },
+      body: result.recordset,
+    };
+  } catch (err) {
+    context.log.error(err);
+    context.res = {
+      status: 500,
+      body: "Database connection error.",
+    };
+  }
+};
