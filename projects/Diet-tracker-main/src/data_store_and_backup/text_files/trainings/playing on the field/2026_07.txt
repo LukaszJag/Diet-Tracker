@@ -1,0 +1,19 @@
+#id ??
+2026-07-18
+    Trening na boisku:  17:42 - 18:56 [1"14']
+    Localization: Boisko - koło szkoły przy wroclavi
+
+        Piłkanożna 17:42 - 18:07 [25']
+            Freestyle - żonglerki i strzały na bramke 17:42 - 18:07 [25']
+                    1. czas -  25' -> 17:42 - 18:07 [25']
+                        -> max żonglerek 25 <= - x
+
+        Koszykówka 18:08 - 18:25 [17']
+            Od zera do 21 - 18:08 - 18:25 [17']
+                1. czas - 18' -> 18:08 - 18:25 [17']
+
+        Piłkanożna 18:27 - 18:56 [29']
+            Freestyle - żonglerki i strzały na bramke 18:27 - 18:56 [29']
+                    1. czas -  29' -> 17:42 - 18:07 [25']
+                        -> max żonglerek 25 <= - 25, 25, 31, 33
+
