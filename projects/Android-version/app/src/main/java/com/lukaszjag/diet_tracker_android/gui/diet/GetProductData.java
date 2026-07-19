@@ -52,6 +52,7 @@ public class GetProductData extends AppCompatActivity {
     private Button nextButton;
     private Button dateDataButton;
     private Button productCommentButton;
+    private Button acceptButton;
     //</editor-fold>
 
     //<editor-fold desc="EditText">
@@ -121,6 +122,7 @@ public class GetProductData extends AppCompatActivity {
         nextButton = findViewById(R.id.nextButton);
         dateDataButton = findViewById(R.id.datePickButton);
         productCommentButton = findViewById(R.id.productCommentButton);
+        acceptButton = findViewById(R.id.acceptButton);
         //</editor-fold>
 
         //<editor-fold desc="EditText">
@@ -277,6 +279,26 @@ public class GetProductData extends AppCompatActivity {
             }
         });
 
+        acceptButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                String myInsertQuery = "null"; // = QueryMaker.insertMealToCalendarTable(null, null);
+
+                GetFromSQLDatabase.runAzureQueryAIChat(myInsertQuery, new AzureDataCallback() {
+                    @Override
+                    public void onSuccess(ArrayList<RowInTable> resultTable) {
+                        // Since we added SELECT 1, this will trigger successfully!
+                        System.out.println("Data successfully inserted into database!");
+                    }
+
+                    @Override
+                    public void onFailure(String errorMessage) {
+                        System.out.println("Insert failed: " + errorMessage);
+                    }
+                });
+            }
+        });
     }
 
     private void showSimpleDialog() {
@@ -323,5 +345,27 @@ public class GetProductData extends AppCompatActivity {
             fatValueTextView.setText(products.get(counter).getValue("product_fat"));
             carbsValueTextView.setText(products.get(counter).getValue("product_carbs"));
         }
+    }
+
+    private void gatherInformationFromUI(){
+        String dayDate;
+        String dayName;
+        String mealName;
+        double amountOfProduct;
+        String productName;
+        double kcal;
+        double protein;
+        double fat;
+        double carbs;
+        String timeOptional;
+        String commentOptional;
+        double kcalConsume;
+        double carbsConsume;
+        double fatConsume;
+        double proteinConsume;
+
+        dayDate = (String) dateDataTextView.getText();
+
+        System.out.println("All data: " + dayDate);
     }
 }
