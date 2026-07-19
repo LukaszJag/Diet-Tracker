@@ -1,0 +1,20 @@
+INSERT INTO `diet_tracker_schema`.product_table
+(`product_name`,
+`product_brand`,
+`product_package_has`,
+`product_macro_for`,
+`product_kcal`,
+`product_protein`,
+`product_fat`,
+`product_carbs`,
+`comment_optional`)
+Values
+('Makaron w stylu Hong Kong',
+'Asia Flavours',
+1000.0,
+100.0,
+148.0,
+4.4,
+5.1,
+20.0,
+'Link: https://pl.openfoodfacts.org/product/8716584600018/makaron-w-stylu-hong-kong-asia-flavours');

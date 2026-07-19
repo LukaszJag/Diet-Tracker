@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2026-07-19',
+'Sunday',
+'Dinner',
+557.0,
+'Makaron w stylu Hong Kong',
+148.0,
+4.4,
+5.1,
+20.0,
+'2026-07-19 10:44:52',
+'none',
+824.36005,
+111.4,
+28.407,
+24.508001
+);
