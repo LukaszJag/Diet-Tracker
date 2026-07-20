@@ -1,0 +1,9 @@
+Name: Noodle w stylu Singapur z warzywami, mięsem wieprzowym i jajkiem
+Brand: Asia Flavours
+Package has: 1000.0
+Macro for: 100.0
+KCal: 148.0
+Protein: 4.3
+Fat: 4.9
+Carbs: 21.0
+Comment optional: Link: https://pl.openfoodfacts.org/product/8716584600025/noodle-w-stylu-singapur-z-warzywami-mi%C4%99sem-wieprzowym-i-jajkiem-asia-flavours

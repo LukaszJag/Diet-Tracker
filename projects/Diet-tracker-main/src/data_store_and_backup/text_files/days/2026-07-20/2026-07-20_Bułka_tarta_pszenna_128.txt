@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2026-07-20',
+'Monday',
+'Second Breakfast',
+128.0,
+'Bułka tarta pszenna',
+361.0,
+14.0,
+1.1,
+71.0,
+'2026-07-20 10:57:02',
+'none',
+462.08,
+90.88,
+1.408,
+17.92
+);

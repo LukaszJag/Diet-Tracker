@@ -1,0 +1,20 @@
+INSERT INTO `diet_tracker_schema`.product_table
+(`product_name`,
+`product_brand`,
+`product_package_has`,
+`product_macro_for`,
+`product_kcal`,
+`product_protein`,
+`product_fat`,
+`product_carbs`,
+`comment_optional`)
+Values
+('Noodle w stylu Singapur z warzywami, mięsem wieprzowym i jajkiem',
+'Asia Flavours',
+1000.0,
+100.0,
+148.0,
+4.3,
+4.9,
+21.0,
+'Link: https://pl.openfoodfacts.org/product/8716584600025/noodle-w-stylu-singapur-z-warzywami-mi%C4%99sem-wieprzowym-i-jajkiem-asia-flavours');
