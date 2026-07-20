@@ -4,7 +4,7 @@
     <color name="white">#FFFFFFFF</color>
 
 
-    <color name="get_product_data_main_background">#2596be</color>
+    <color name="get_product_data_main_background">#ffffff</color>
     <color name="get_product_data_table_border">#3e6a7a</color>
 
     <color name="day_statistic_main_background">#ed931c</color>
