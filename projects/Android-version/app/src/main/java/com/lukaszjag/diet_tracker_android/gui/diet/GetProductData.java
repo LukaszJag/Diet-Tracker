@@ -57,6 +57,7 @@ public class GetProductData extends AppCompatActivity {
 
     //<editor-fold desc="EditText">
     private EditText productNameEditText;
+    private EditText weightEditText;
     //</editor-fold>
 
     //<editor-fold desc="TextView">
@@ -73,6 +74,36 @@ public class GetProductData extends AppCompatActivity {
     private TextView carbsValueTextView;
 
     private TextView dateDataTextView;
+    //</editor-fold>
+
+    //<editor-fold desc="Gather Information From UI - Variables">
+    String dayDate;
+    String dayName;
+    String mealName;
+    double amountOfProduct;
+    String productName;
+    String productBrand;
+    String timeOptional;
+    String commentOptional;
+
+    //<editor-fold desc="Macro variables">
+    double kcal;
+    double protein;
+    double fat;
+    double carbs;
+
+    double kcalConsume;
+    double carbsConsume;
+    double proteinConsume;
+    double fatConsume;
+
+    String rawKcal;
+    String rawProtein;
+    String rawFat;
+    String rawCarbs;
+    //</editor-fold>
+
+
     //</editor-fold>
     //</editor-fold>
 
@@ -127,6 +158,7 @@ public class GetProductData extends AppCompatActivity {
 
         //<editor-fold desc="EditText">
         productNameEditText = findViewById(R.id.productNameEditText);
+        weightEditText = findViewById(R.id.weightEditText);
         //</editor-fold>
 
         //<editor-fold desc="TextViews">
@@ -146,6 +178,7 @@ public class GetProductData extends AppCompatActivity {
         dateDataTextView.setText(MyDate.getCurrentDayInSQLFormat());
         //</editor-fold>
     }
+
     private void addListeners(){
         productCommentButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -282,21 +315,23 @@ public class GetProductData extends AppCompatActivity {
         acceptButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                addDataFromProduct();
+                gatherInformationFromUIPrintValues();
 
-                String myInsertQuery = "null"; // = QueryMaker.insertMealToCalendarTable(null, null);
-
-                GetFromSQLDatabase.runAzureQueryAIChat(myInsertQuery, new AzureDataCallback() {
-                    @Override
-                    public void onSuccess(ArrayList<RowInTable> resultTable) {
-                        // Since we added SELECT 1, this will trigger successfully!
-                        System.out.println("Data successfully inserted into database!");
-                    }
-
-                    @Override
-                    public void onFailure(String errorMessage) {
-                        System.out.println("Insert failed: " + errorMessage);
-                    }
-                });
+//                String myInsertQuery = "null"; // = QueryMaker.insertMealToCalendarTable(null, null);
+//
+//                GetFromSQLDatabase.runAzureQueryAIChat(myInsertQuery, new AzureDataCallback() {
+//                    @Override
+//                    public void onSuccess(ArrayList<RowInTable> resultTable) {
+//                        // Since we added SELECT 1, this will trigger successfully!
+//                        System.out.println("Data successfully inserted into database!");
+//                    }
+//
+//                    @Override
+//                    public void onFailure(String errorMessage) {
+//                        System.out.println("Insert failed: " + errorMessage);
+//                    }
+//                });
             }
         });
     }
@@ -315,54 +350,60 @@ public class GetProductData extends AppCompatActivity {
     }
 
     private void addDataFromProduct(){
-// Brand is text, so it stays exactly as you had it
-        brandValueTextView.setText(products.get(counter).getValue("product_brand"));
-        productComment = products.get(counter).getValue("comment_optional");
 
         try {
+            dayDate = String.valueOf(dateDataTextView.getText());
+            dayName = MyDate.getDayNameInLowerCase(dayDate);
+
+            mealName = mealNameSpinner.getSelectedItem().toString();
+
+            // Brand is text, so it stays exactly as you had it
+            productBrand = String.valueOf(brandLabel.getText());
+            productComment = products.get(counter).getValue("comment_optional");
+            productName = productSpinner.getSelectedItem().toString();
+
+            String amountOfProductTmp = String.valueOf(weightEditText.getText());
+            amountOfProduct = Double.valueOf(amountOfProductTmp);
+
             // 1. Get the raw values (converting to String first to be safe)
-            String rawKcal = String.valueOf(products.get(counter).getValue("product_kcal"));
-            String rawProtein = String.valueOf(products.get(counter).getValue("product_protein"));
-            String rawFat = String.valueOf(products.get(counter).getValue("product_fat"));
-            String rawCarbs = String.valueOf(products.get(counter).getValue("product_carbs"));
+            rawKcal = String.valueOf(products.get(counter).getValue("product_kcal"));
+            rawProtein = String.valueOf(products.get(counter).getValue("product_protein"));
+            rawFat = String.valueOf(products.get(counter).getValue("product_fat"));
+            rawCarbs = String.valueOf(products.get(counter).getValue("product_carbs"));
 
             // 2. Parse them into doubles
-            double kcal = Double.parseDouble(rawKcal);
-            double protein = Double.parseDouble(rawProtein);
-            double fat = Double.parseDouble(rawFat);
-            double carbs = Double.parseDouble(rawCarbs);
+            kcal = Double.parseDouble(rawKcal);
+            protein = Double.parseDouble(rawProtein);
+            fat = Double.parseDouble(rawFat);
+            carbs = Double.parseDouble(rawCarbs);
 
-            // 3. Format and set the text
-            kcalValueTextView.setText(String.format(java.util.Locale.getDefault(), "%.0f", kcal));
 
-            proteinValueTextView.setText(String.format(java.util.Locale.getDefault(), "%.1f", protein));
-            fatValueTextView.setText(String.format(java.util.Locale.getDefault(), "%.1f", fat));
-            carbsValueTextView.setText(String.format(java.util.Locale.getDefault(), "%.1f", carbs));
 
         } catch (NumberFormatException | NullPointerException e) {
-            kcalValueTextView.setText(products.get(counter).getValue("product_kcal"));
-            proteinValueTextView.setText(products.get(counter).getValue("product_protein"));
-            fatValueTextView.setText(products.get(counter).getValue("product_fat"));
-            carbsValueTextView.setText(products.get(counter).getValue("product_carbs"));
+            System.out.println("Gather information - get data from UI error");
         }
     }
 
+    private void gatherInformationFromUIPrintValues() {
+        System.out.println("dayDate: " + dayDate);
+        System.out.println("dayName: " + dayName);
+        System.out.println("mealName: " + mealName);
+        System.out.println("productBrand: " + productBrand);
+        System.out.println("productComment: " + productComment);
+        System.out.println("productName: " + productName);
+        System.out.println("amountOfProduct: " + amountOfProduct);
+        System.out.println("rawKcal: " + rawKcal);
+        System.out.println("rawProtein: " + rawProtein);
+        System.out.println("rawFat: " + rawFat);
+        System.out.println("rawCarbs: " + rawCarbs);
+        System.out.println("kcal: " + kcal);
+        System.out.println("protein: " + protein);
+        System.out.println("fat: " + fat);
+        System.out.println("carbs: " + carbs);
+    }
+
     private void gatherInformationFromUI(){
-        String dayDate;
-        String dayName;
-        String mealName;
-        double amountOfProduct;
-        String productName;
-        double kcal;
-        double protein;
-        double fat;
-        double carbs;
-        String timeOptional;
-        String commentOptional;
-        double kcalConsume;
-        double carbsConsume;
-        double fatConsume;
-        double proteinConsume;
+
 
         dayDate = (String) dateDataTextView.getText();
 
