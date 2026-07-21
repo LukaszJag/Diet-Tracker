@@ -428,6 +428,15 @@ public class MyDate {
         String dayNameCurrentDateLowerCase = format.format(utilDateImport);
         return dayNameCurrentDateLowerCase.toLowerCase();
     }
+
+    public static String getDayNameInLowerCase(String dateInSQLFormat) {
+        // Parses "yyyy-MM-dd" automatically
+        LocalDate date = LocalDate.parse(dateInSQLFormat);
+
+        // getDayOfWeek().name() returns "MONDAY", then we convert it
+        return date.getDayOfWeek().name().toLowerCase();
+    }
+
     //</editor-fold>
 
     //<editor-fold desc="Get date in (...) format">
