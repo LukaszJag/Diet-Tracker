@@ -1,0 +1,9 @@
+Name: Chleb proteinowy kurczak pieczony pomidory suszone
+Brand: Tomcio Paluch
+Package has: 190.0
+Macro for: 100.0
+KCal: 233.0
+Protein: 14.0
+Fat: 13.0
+Carbs: 13.0
+Comment optional: Link: https://www.dine4fit.pl/produkty/chleb-proteinowy-kurczak-pieczony-pomidory-suszone-tomcio-paluch-1

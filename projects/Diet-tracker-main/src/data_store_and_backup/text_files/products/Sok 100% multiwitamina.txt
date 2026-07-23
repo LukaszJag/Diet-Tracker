@@ -1,0 +1,9 @@
+Name: Sok 100% multiwitamina
+Brand: Hortex
+Package has: 1000.0
+Macro for: 100.0
+KCal: 44.0
+Protein: 0.3
+Fat: 0.0
+Carbs: 10.6
+Comment optional: Link: https://leclerc.com.pl/hortex-sok-100-multiwitamina

@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2026-07-22',
+'Wednesday',
+'Supper',
+166.0,
+'Tost z Kurczakiem i Bekonem',
+266.0,
+16.0,
+11.0,
+24.0,
+'2026-07-23 08:42:09',
+'none',
+441.56,
+39.84,
+18.26,
+26.56
+);

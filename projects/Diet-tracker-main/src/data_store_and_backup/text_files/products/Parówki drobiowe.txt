@@ -1,0 +1,9 @@
+Name: Parówki drobiowe
+Brand: Kraina Wędlin
+Package has: 700.0
+Macro for: 100.0
+KCal: 213.0
+Protein: 12.0
+Fat: 17.0
+Carbs: 2.5
+Comment optional: Link: https://pl.openfoodfacts.org/product/5900567020037/par%C3%B3wki-drobiowe-kraina-w%C4%99dlin

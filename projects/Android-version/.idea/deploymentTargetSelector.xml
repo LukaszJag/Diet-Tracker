@@ -4,10 +4,10 @@
     <selectionStates>
       <SelectionState runConfigName="app">
         <option name="selectionMode" value="DROPDOWN" />
-        <DropdownSelection timestamp="2026-07-20T21:31:26.304775900Z">
+        <DropdownSelection timestamp="2026-07-21T09:47:13.813463500Z">
           <Target type="DEFAULT_BOOT">
             <handle>
-              <DeviceId pluginId="PhysicalDevice" identifier="serial=abd2caca0409" />
+              <DeviceId pluginId="LocalEmulator" identifier="path=C:\Users\lukas\.android\avd\Pixel_3a_API_36_extension_level_17_x86_64.avd" />
             </handle>
           </Target>
         </DropdownSelection>
@@ -15,6 +15,20 @@
       </SelectionState>
       <SelectionState runConfigName="main window">
         <option name="selectionMode" value="DROPDOWN" />
+      </SelectionState>
+      <SelectionState runConfigName="getDayNameInLowerCase()">
+        <option name="selectionMode" value="DROPDOWN" />
+      </SelectionState>
+      <SelectionState runConfigName="MyDateTests">
+        <option name="selectionMode" value="DROPDOWN" />
+        <DropdownSelection timestamp="2026-07-21T09:44:31.883759500Z">
+          <Target type="DEFAULT_BOOT">
+            <handle>
+              <DeviceId pluginId="LocalEmulator" identifier="path=C:\Users\lukas\.android\avd\Pixel_3a_API_36_extension_level_17_x86_64.avd" />
+            </handle>
+          </Target>
+        </DropdownSelection>
+        <DialogSelection />
       </SelectionState>
     </selectionStates>
   </component>

@@ -1,0 +1,9 @@
+Name: Grillowany schab
+Brand: Szam Amm
+Package has: 400.0
+Macro for: 100.0
+KCal: 90.0
+Protein: 5.8
+Fat: 2.9
+Carbs: 9.1
+Comment optional: Dane z opakowania

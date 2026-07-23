@@ -1,0 +1,9 @@
+Name: Tost z Kurczakiem i Bekonem
+Brand: Żabka
+Package has: 166.0
+Macro for: 100.0
+KCal: 266.0
+Protein: 16.0
+Fat: 11.0
+Carbs: 24.0
+Comment optional: Link: https://www.fatsecret.pl/kalorie-warto%C5%9Bci%C2%A0od%C5%BCywcze/%C5%BBabka/tost-z-kurczakiem-i-bekonem/100g
