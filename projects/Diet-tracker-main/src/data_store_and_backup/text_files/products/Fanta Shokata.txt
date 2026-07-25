@@ -1,0 +1,9 @@
+Name: Fanta Shokata
+Brand: Fanta
+Package has: 850.0
+Macro for: 100.0
+KCal: 28.0
+Protein: 0.0
+Fat: 0.0
+Carbs: 6.8
+Comment optional: Link: https://www.frisco.pl/pid,112199/n,fanta-shokata-napoj-gazowany/stn,product
