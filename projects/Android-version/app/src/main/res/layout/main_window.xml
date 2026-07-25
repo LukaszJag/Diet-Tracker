@@ -9,33 +9,55 @@
         android:id="@+id/addMealButton"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="76dp"
+        android:layout_marginTop="164dp"
+        android:background="@drawable/add_meal_button"
         android:text="Add meal"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="-1dp"
-        android:background="@drawable/buttons_main"
         app:backgroundTint="@null"
-        />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="0dp" />
 
     <Button
-        android:id="@+id/getDayDataButton"
+        android:id="@+id/monthlyStatsButton"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
-        android:text="Get day data"
+        android:layout_marginTop="88dp"
         android:background="@drawable/buttons_main"
+        android:text="Monthy stats"
         app:backgroundTint="@null"
-        app:layout_constraintStart_toStartOf="@+id/addMealButton"
-        app:layout_constraintTop_toBottomOf="@+id/addMealButton" />
+        app:layout_constraintStart_toStartOf="@+id/getDayDataButton"
+        app:layout_constraintTop_toBottomOf="@+id/getDayDataButton" />
 
     <Button
         android:id="@+id/noteTaskButtonButton"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/note_task_button"
         android:text="Note - tasks"
-        android:background="@drawable/buttons_main"
         app:backgroundTint="@null"
         app:layout_constraintStart_toStartOf="@+id/getDayDataButton"
         app:layout_constraintTop_toBottomOf="@+id/getDayDataButton" />
+
+    <Button
+        android:id="@+id/getDayDataButton"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/get_day_data"
+        android:text="Get day data"
+        app:backgroundTint="@null"
+        app:layout_constraintStart_toStartOf="@+id/addMealButton"
+        app:layout_constraintTop_toBottomOf="@+id/addMealButton" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:background="#4253a6"
+        android:text="Welcome to Diet tracker"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:gravity="center_vertical"
+        android:paddingStart="16dp" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
