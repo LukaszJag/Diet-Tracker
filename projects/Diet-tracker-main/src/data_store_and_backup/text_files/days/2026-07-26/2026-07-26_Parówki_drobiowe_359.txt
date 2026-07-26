@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2026-07-26',
+'Sunday',
+'Breakfast',
+359.0,
+'Parówki drobiowe',
+213.0,
+12.0,
+17.0,
+2.5,
+'2026-07-26 07:10:44',
+'none',
+764.67,
+8.974999,
+61.03,
+43.079998
+);
