@@ -37,6 +37,7 @@ import java.util.Locale;
 
 public class GetProductData extends AppCompatActivity {
 
+    //<editor-fold desc="Global variables">
     ArrayList<RowInTable> products = new ArrayList<>();
     ArrayList<RowInTable> mealNames = new ArrayList<>();
     int counter;
@@ -106,7 +107,9 @@ public class GetProductData extends AppCompatActivity {
 
     //</editor-fold>
     //</editor-fold>
+    //</editor-fold>
 
+    //<editor-fold desc="On start methods">
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -125,7 +128,9 @@ public class GetProductData extends AppCompatActivity {
         setupComponents();
         addListeners();
     }
+    //</editor-fold>
 
+    //<editor-fold desc="UI Components - setup and more">
     private void setupComponents() {
 
         ArrayList<String> mealNames = new ArrayList<>(Arrays.asList("None", "Breakfast", "Second Breakfast", "Snack 1", "Dinner", "Snack 2"
@@ -226,8 +231,8 @@ public class GetProductData extends AppCompatActivity {
 
                                 if (!products.isEmpty()) {
                                     productNameTextView.setText(products.get(0).getValue("product_name"));
-                                    addDataFromProduct();
-                                    setMacroToUITable();
+                                    getMacroValues();
+                                    setValuesToMacroUITable();
                                 }
                             }
                         });
@@ -252,8 +257,8 @@ public class GetProductData extends AppCompatActivity {
                         counter = 0;
                     }
                     productSpinner.setSelection(counter); // This triggers the Spinner listener to update macros
-                    addDataFromProduct();
-                    setMacroToUITable();
+                    getMacroValues();
+                    setValuesToMacroUITable();
                 }
             }
         });
@@ -268,8 +273,8 @@ public class GetProductData extends AppCompatActivity {
                         counter = products.size() - 1;
                     }
                     productSpinner.setSelection(counter); // This triggers the Spinner listener to update macros
-                    addDataFromProduct();
-                    setMacroToUITable();
+                    getMacroValues();
+                    setValuesToMacroUITable();
                 }
             }
         });
@@ -303,8 +308,8 @@ public class GetProductData extends AppCompatActivity {
                 if (!products.isEmpty()) {
                     counter = position;
                     productNameTextView.setText(products.get(counter).getValue("product_name"));
-                    addDataFromProduct();
-                    setMacroToUITable();
+                    getMacroValues();
+                    setValuesToMacroUITable();
                 }
             }
 
@@ -316,7 +321,7 @@ public class GetProductData extends AppCompatActivity {
         acceptButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                addDataFromProduct();
+                getMacroValues();
                 gatherInformationFromUIPrintValues();
 
 //                String myInsertQuery = "null"; // = QueryMaker.insertMealToCalendarTable(null, null);
@@ -337,20 +342,19 @@ public class GetProductData extends AppCompatActivity {
         });
     }
 
-    private void showSimpleDialog() {
-        new AlertDialog.Builder(GetProductData.this)
-                .setTitle(products.get(counter).getValue("product_name"))
-                .setMessage(productComment)
-                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                })
-                .show();
-    }
+    private void setValuesToMacroUITable() {
+        brandValueTextView.setText(productBrand);
 
-    private void addDataFromProduct() {
+        kcalValueTextView.setText(String.format(java.util.Locale.getDefault(), "%.0f", kcal));
+        proteinValueTextView.setText(String.format(java.util.Locale.getDefault(), "%.1f", protein));
+        fatValueTextView.setText(String.format(java.util.Locale.getDefault(), "%.1f", fat));
+        carbsValueTextView.setText(String.format(java.util.Locale.getDefault(), "%.1f", carbs));
+
+    }
+    //</editor-fold>
+
+    //<editor-fold desc="Gather data">
+    private void getMacroValues() {
         if (products.isEmpty() || counter < 0 || counter >= products.size()) {
             return;
         }
@@ -413,15 +417,27 @@ public class GetProductData extends AppCompatActivity {
         }
     }
 
-    private void setMacroToUITable() {
-        brandValueTextView.setText(productBrand);
-
-        kcalValueTextView.setText(String.format(java.util.Locale.getDefault(), "%.0f", kcal));
-        proteinValueTextView.setText(String.format(java.util.Locale.getDefault(), "%.1f", protein));
-        fatValueTextView.setText(String.format(java.util.Locale.getDefault(), "%.1f", fat));
-        carbsValueTextView.setText(String.format(java.util.Locale.getDefault(), "%.1f", carbs));
+    private void gatherInformationFromUI() {
 
 
+        dayDate = (String) dateDataTextView.getText();
+
+        System.out.println("All data: " + dayDate);
+    }
+    //</editor-fold>
+
+    //<editor-fold desc="Debug methods">
+    private void showSimpleDialog() {
+        new AlertDialog.Builder(GetProductData.this)
+                .setTitle(products.get(counter).getValue("product_name"))
+                .setMessage(productComment)
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                })
+                .show();
     }
 
     private void gatherInformationFromUIPrintValues() {
@@ -441,12 +457,5 @@ public class GetProductData extends AppCompatActivity {
         System.out.println("fat: " + fat);
         System.out.println("carbs: " + carbs);
     }
-
-    private void gatherInformationFromUI() {
-
-
-        dayDate = (String) dateDataTextView.getText();
-
-        System.out.println("All data: " + dayDate);
-    }
+    //</editor-fold>
 }
