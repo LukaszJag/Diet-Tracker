@@ -1,0 +1,9 @@
+Name: Serek o smaku waniliowym
+Brand: Delikate
+Package has: 400.0
+Macro for: 100.0
+KCal: 136.0
+Protein: 5.6
+Fat: 6.5
+Carbs: 13.5
+Comment optional: Link: https://www.dine4fit.pl/produkty/serek-o-smaku-waniliowym-delikate
