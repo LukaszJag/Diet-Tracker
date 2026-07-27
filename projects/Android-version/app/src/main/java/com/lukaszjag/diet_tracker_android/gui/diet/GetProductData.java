@@ -140,7 +140,7 @@ public class GetProductData extends AppCompatActivity {
         mealNameSpinner.setAdapter(adapter);
     }
 
-    private void initUIComponents(){
+    private void initUIComponents() {
         //<editor-fold desc="Spinner">
         productSpinner = findViewById(R.id.productSpinner);
 
@@ -179,7 +179,7 @@ public class GetProductData extends AppCompatActivity {
         //</editor-fold>
     }
 
-    private void addListeners(){
+    private void addListeners() {
         productCommentButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -194,55 +194,51 @@ public class GetProductData extends AppCompatActivity {
                 String query = QueryMaker.getAllProductTableLikeProductNameCaseInsensitive(productNameEditText.getText().toString());
                 Log.i("BUTTON ALLERT", "Run query: " + query);
 
-                // Call the method and provide the callback
                 GetFromSQLDatabase.runAzureQueryAIChat(query, new AzureDataCallback() {
-
                     @Override
                     public void onSuccess(ArrayList<RowInTable> resultTable) {
-                        // This code runs when the data successfully arrives from Azure!
-                        System.out.println("Result size: " + resultTable.size());
+                        // This code runs when the data successfully arrives from Azure
                         products = resultTable;
                         counter = 0;
-                        // NOW the ArrayList has your data.
-                        // You can update your RecyclerView, UI, or variables here.
-                        // e.g., myAdapter.setData(resultTable);
-                        // e.g., myAdapter.notifyDataSetChanged();
+                        Toast.makeText(getApplicationContext(), String.valueOf(products.size()), Toast.LENGTH_SHORT).show();
+
+                        // Update the UI on the Main (UI) Thread
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+
+                                for (int i = 0; i < products.size(); i++) {
+                                    products.get(i).printAlLValuesAndKey();
+                                }
+
+                                List<String> productList = new ArrayList<>();
+                                for (int i = 0; i < products.size(); i++) {
+                                    productList.add(products.get(i).getValue("product_name"));
+                                }
+
+                                ArrayAdapter<String> adapter = new ArrayAdapter<>(
+                                        GetProductData.this,
+                                        android.R.layout.simple_spinner_item,
+                                        productList
+                                );
+                                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                                productSpinner.setAdapter(adapter);
+
+                                if (!products.isEmpty()) {
+                                    productNameTextView.setText(products.get(0).getValue("product_name"));
+                                    addDataFromProduct();
+                                    setMacroToUITable();
+                                }
+                            }
+                        });
                     }
 
                     @Override
                     public void onFailure(String errorMessage) {
-                        // Handle the error (e.g., show a Toast to the user)
+                        Toast.makeText(getApplicationContext(), "no connection", Toast.LENGTH_SHORT).show();
                         System.out.println("Failed to get data: " + errorMessage);
                     }
                 });
-
-
-                Toast.makeText(getApplicationContext(), String.valueOf(products.size()), Toast.LENGTH_LONG).show();
-                //toast.show();
-
-                for (int i = 0; i < products.size(); i++) {
-                    products.get(i).printAlLValuesAndKey();
-                }
-
-                Spinner spinner = (Spinner) findViewById(R.id.productSpinner);
-
-                List<String> productList = new ArrayList<>();
-                for (int i = 0; i < products.size(); i++) {
-                    productList.add(products.get(i).getValue("product_name"));
-                }
-
-                ArrayAdapter<String> adapter = new ArrayAdapter<>(
-                        GetProductData.this,
-                        android.R.layout.simple_spinner_item,
-                        productList
-                );
-                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                productSpinner.setAdapter(adapter);
-
-                if (!products.isEmpty()) {
-                    productNameTextView.setText(products.get(0).getValue("product_name"));
-                    addDataFromProduct();
-                }
             }
         });
 
@@ -256,6 +252,8 @@ public class GetProductData extends AppCompatActivity {
                         counter = 0;
                     }
                     productSpinner.setSelection(counter); // This triggers the Spinner listener to update macros
+                    addDataFromProduct();
+                    setMacroToUITable();
                 }
             }
         });
@@ -270,6 +268,8 @@ public class GetProductData extends AppCompatActivity {
                         counter = products.size() - 1;
                     }
                     productSpinner.setSelection(counter); // This triggers the Spinner listener to update macros
+                    addDataFromProduct();
+                    setMacroToUITable();
                 }
             }
         });
@@ -304,6 +304,7 @@ public class GetProductData extends AppCompatActivity {
                     counter = position;
                     productNameTextView.setText(products.get(counter).getValue("product_name"));
                     addDataFromProduct();
+                    setMacroToUITable();
                 }
             }
 
@@ -349,39 +350,78 @@ public class GetProductData extends AppCompatActivity {
                 .show();
     }
 
-    private void addDataFromProduct(){
+    private void addDataFromProduct() {
+        if (products.isEmpty() || counter < 0 || counter >= products.size()) {
+            return;
+        }
+
+        dayDate = String.valueOf(dateDataTextView.getText());
+        dayName = MyDate.getDayNameInLowerCase(dayDate);
+
+        if (mealNameSpinner.getSelectedItem() != null) {
+            mealName = mealNameSpinner.getSelectedItem().toString();
+        }
+
+        // Is brand label text correct? (See point 3 below)
+        productBrand = String.valueOf(brandLabel.getText());
+        productComment = products.get(counter).getValue("comment_optional");
+
+        if (productSpinner.getSelectedItem() != null) {
+            productName = productSpinner.getSelectedItem().toString();
+        }
+
+        // 1. Safe parsing of weight
+        String amountOfProductTmp = String.valueOf(weightEditText.getText()).trim();
+        try {
+            if (!amountOfProductTmp.isEmpty()) {
+                amountOfProduct = Double.parseDouble(amountOfProductTmp);
+            } else {
+                amountOfProduct = 0.0;
+            }
+        } catch (NumberFormatException e) {
+            amountOfProduct = 0.0;
+            System.out.println("Invalid weight value entered.");
+        }
+
+        // 2. Safe parsing of macros (independent of weight)
+        try {
+            rawKcal = String.valueOf(products.get(counter).getValue("product_kcal"));
+            kcal = Double.parseDouble(rawKcal);
+        } catch (NumberFormatException | NullPointerException e) {
+            kcal = 0.0;
+        }
 
         try {
-            dayDate = String.valueOf(dateDataTextView.getText());
-            dayName = MyDate.getDayNameInLowerCase(dayDate);
-
-            mealName = mealNameSpinner.getSelectedItem().toString();
-
-            // Brand is text, so it stays exactly as you had it
-            productBrand = String.valueOf(brandLabel.getText());
-            productComment = products.get(counter).getValue("comment_optional");
-            productName = productSpinner.getSelectedItem().toString();
-
-            String amountOfProductTmp = String.valueOf(weightEditText.getText());
-            amountOfProduct = Double.valueOf(amountOfProductTmp);
-
-            // 1. Get the raw values (converting to String first to be safe)
-            rawKcal = String.valueOf(products.get(counter).getValue("product_kcal"));
             rawProtein = String.valueOf(products.get(counter).getValue("product_protein"));
-            rawFat = String.valueOf(products.get(counter).getValue("product_fat"));
-            rawCarbs = String.valueOf(products.get(counter).getValue("product_carbs"));
-
-            // 2. Parse them into doubles
-            kcal = Double.parseDouble(rawKcal);
             protein = Double.parseDouble(rawProtein);
-            fat = Double.parseDouble(rawFat);
-            carbs = Double.parseDouble(rawCarbs);
-
-
-
         } catch (NumberFormatException | NullPointerException e) {
-            System.out.println("Gather information - get data from UI error");
+            protein = 0.0;
         }
+
+        try {
+            rawFat = String.valueOf(products.get(counter).getValue("product_fat"));
+            fat = Double.parseDouble(rawFat);
+        } catch (NumberFormatException | NullPointerException e) {
+            fat = 0.0;
+        }
+
+        try {
+            rawCarbs = String.valueOf(products.get(counter).getValue("product_carbs"));
+            carbs = Double.parseDouble(rawCarbs);
+        } catch (NumberFormatException | NullPointerException e) {
+            carbs = 0.0;
+        }
+    }
+
+    private void setMacroToUITable() {
+        brandValueTextView.setText(productBrand);
+
+        kcalValueTextView.setText(String.format(java.util.Locale.getDefault(), "%.0f", kcal));
+        proteinValueTextView.setText(String.format(java.util.Locale.getDefault(), "%.1f", protein));
+        fatValueTextView.setText(String.format(java.util.Locale.getDefault(), "%.1f", fat));
+        carbsValueTextView.setText(String.format(java.util.Locale.getDefault(), "%.1f", carbs));
+
+
     }
 
     private void gatherInformationFromUIPrintValues() {
@@ -402,7 +442,7 @@ public class GetProductData extends AppCompatActivity {
         System.out.println("carbs: " + carbs);
     }
 
-    private void gatherInformationFromUI(){
+    private void gatherInformationFromUI() {
 
 
         dayDate = (String) dateDataTextView.getText();
