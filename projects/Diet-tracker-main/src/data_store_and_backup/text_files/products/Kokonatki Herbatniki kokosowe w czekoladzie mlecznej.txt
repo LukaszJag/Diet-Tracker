@@ -1,0 +1,9 @@
+Name: Kokonatki Herbatniki kokosowe w czekoladzie mlecznej
+Brand: Krakuski
+Package has: 174.0
+Macro for: 100.0
+KCal: 518.0
+Protein: 6.9
+Fat: 27.0
+Carbs: 60.0
+Comment optional: Link: https://www.carrefour.pl/artykuly-spozywcze/slodycze/ciastka/krakuski-kokonatki-herbatniki-kokosowe-w-czekoladzie-mlecznej-174-g

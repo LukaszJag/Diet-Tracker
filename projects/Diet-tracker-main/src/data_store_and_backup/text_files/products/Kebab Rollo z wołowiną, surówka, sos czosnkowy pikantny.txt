@@ -1,0 +1,9 @@
+Name: Kebab Rollo z wołowiną, surówka, sos czosnkowy pikantny
+Brand: Żabka
+Package has: 280.0
+Macro for: 100.0
+KCal: 254.0
+Protein: 9.4
+Fat: 14.0
+Carbs: 21.0
+Comment optional: Link: https://www.tabele-kalorii.pl/kalorie,Kebab-Rollo-z-wolowina-surowka-sos-czosnkowy-pikantny-Zabka-Zahir-Kebab.html

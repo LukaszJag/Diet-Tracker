@@ -1,0 +1,9 @@
+Name: Kebab Rollo z kurczakiem i frytkami
+Brand: Żabka
+Package has: 280.0
+Macro for: 100.0
+KCal: 288.0
+Protein: 11.0
+Fat: 16.0
+Carbs: 24.0
+Comment optional: Dane z opakowania

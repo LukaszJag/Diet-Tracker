@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2026-07-28',
+'Tuesday',
+'Dinner',
+275.0,
+'Rollo kebab z kurczakiem surówka i sosem czosnkowym',
+229.0,
+12.0,
+9.7,
+20.0,
+'2026-07-30 12:37:23',
+'none',
+629.75,
+55.0,
+26.675,
+33.0
+);

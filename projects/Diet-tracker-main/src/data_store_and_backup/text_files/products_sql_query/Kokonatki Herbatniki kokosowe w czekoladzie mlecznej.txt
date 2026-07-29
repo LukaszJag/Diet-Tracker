@@ -1,0 +1,20 @@
+INSERT INTO `diet_tracker_schema`.product_table
+(`product_name`,
+`product_brand`,
+`product_package_has`,
+`product_macro_for`,
+`product_kcal`,
+`product_protein`,
+`product_fat`,
+`product_carbs`,
+`comment_optional`)
+Values
+('Kokonatki Herbatniki kokosowe w czekoladzie mlecznej',
+'Krakuski',
+174.0,
+100.0,
+518.0,
+6.9,
+27.0,
+60.0,
+'Link: https://www.carrefour.pl/artykuly-spozywcze/slodycze/ciastka/krakuski-kokonatki-herbatniki-kokosowe-w-czekoladzie-mlecznej-174-g');

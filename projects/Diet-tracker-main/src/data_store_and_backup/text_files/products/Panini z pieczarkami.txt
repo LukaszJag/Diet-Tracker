@@ -1,0 +1,9 @@
+Name: Panini z pieczarkami
+Brand: Żabka
+Package has: 190.0
+Macro for: 100.0
+KCal: 248.0
+Protein: 11.0
+Fat: 9.0
+Carbs: 30.0
+Comment optional: Link: https://www.fitatu.com/catalog/pl/panini-z-pieczarkamizabka--88282956

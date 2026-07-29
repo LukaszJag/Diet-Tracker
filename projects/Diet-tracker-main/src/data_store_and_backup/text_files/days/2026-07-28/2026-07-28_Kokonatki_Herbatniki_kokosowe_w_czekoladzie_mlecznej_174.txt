@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2026-07-28',
+'Tuesday',
+'Supper',
+174.0,
+'Kokonatki Herbatniki kokosowe w czekoladzie mlecznej',
+518.0,
+6.9,
+27.0,
+60.0,
+'2026-07-30 12:44:32',
+'none',
+901.32,
+104.4,
+46.98,
+12.0060005
+);

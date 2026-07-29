@@ -1,0 +1,9 @@
+Name: Lody o smaku waniliowym z ciasteczkami w rożku
+Brand: Oreo
+Package has: 66.0
+Macro for: 100.0
+KCal: 347.0
+Protein: 3.4
+Fat: 20.0
+Carbs: 38.0
+Comment optional: Link: https://www.frisco.pl/pid,143220/n,oreo-lody-o-smaku-waniliowym-z-ciasteczkami-w-rozku/stn,product

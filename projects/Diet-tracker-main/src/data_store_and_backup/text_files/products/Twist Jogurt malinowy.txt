@@ -1,0 +1,9 @@
+Name: Twist Jogurt malinowy
+Brand: Bakoma
+Package has: 370.0
+Macro for: 100.0
+KCal: 65.0
+Protein: 2.7
+Fat: 1.6
+Carbs: 10.0
+Comment optional: Link: https://www.carrefour.pl/mleko-nabial-jaja/jogurt-kefir-maslanka-serki-homogenizowane/jogurty-pitne/bakoma-twist-jogurt-malinowy-370-g

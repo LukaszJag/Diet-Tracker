@@ -1,0 +1,9 @@
+Name: Rollo kebab z kurczakiem surówka i sosem czosnkowym
+Brand: Żabka
+Package has: 275.0
+Macro for: 100.0
+KCal: 229.0
+Protein: 12.0
+Fat: 9.7
+Carbs: 20.0
+Comment optional: Link: https://www.dine4fit.pl/produkty/rollo-kebab-z-kurczakiem-surowka-i-sosem-czosnkowym-zabka

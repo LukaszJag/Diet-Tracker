@@ -24,7 +24,7 @@ Set 1: +0 kg × 12 reps
 Set 2: +5 kg × 12 reps
 Set 3: +10 kg × 12 reps
 Set 4: +10 kg × 12 reps
-
+``
 
 Bicep Curl (Dumbbell)
 Set 1: 10 kg × 12 reps
