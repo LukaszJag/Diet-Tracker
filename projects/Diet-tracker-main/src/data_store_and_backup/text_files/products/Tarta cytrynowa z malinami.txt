@@ -1,0 +1,9 @@
+Name: Tarta cytrynowa z malinami
+Brand: Słodka Pracownia
+Package has: 120.0
+Macro for: 100.0
+KCal: 330.0
+Protein: 4.6
+Fat: 18.0
+Carbs: 37.0
+Comment optional: Dane z opakowania

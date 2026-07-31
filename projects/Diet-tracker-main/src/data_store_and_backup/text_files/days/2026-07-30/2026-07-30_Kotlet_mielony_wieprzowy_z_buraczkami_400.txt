@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2026-07-30',
+'Thursday',
+'Dinner',
+400.0,
+'Kotlet mielony wieprzowy z buraczkami',
+116.0,
+4.4,
+5.3,
+12.0,
+'2026-07-31 09:53:26',
+'none',
+464.0,
+48.0,
+21.2,
+17.6
+);

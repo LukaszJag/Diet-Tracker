@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2026-07-30',
+'Thursday',
+'Supper',
+150.0,
+'Serek wiejski ze szczypiorkiem',
+97.0,
+11.0,
+5.0,
+2.0,
+'2026-07-31 09:55:50',
+'none',
+145.5,
+3.0,
+7.5,
+16.5
+);

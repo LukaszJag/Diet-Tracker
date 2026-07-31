@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2026-07-30',
+'Thursday',
+'Supper',
+120.0,
+'Tarta cytrynowa z malinami',
+330.0,
+4.6,
+18.0,
+37.0,
+'2026-07-31 09:59:38',
+'none',
+396.00003,
+44.4,
+21.6,
+5.52
+);

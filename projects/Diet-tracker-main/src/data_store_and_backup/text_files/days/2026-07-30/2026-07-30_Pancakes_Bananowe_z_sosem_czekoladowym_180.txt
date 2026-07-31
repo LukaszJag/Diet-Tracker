@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2026-07-30',
+'Thursday',
+'Supper',
+180.0,
+'Pancakes Bananowe z sosem czekoladowym',
+320.0,
+5.7,
+16.0,
+38.0,
+'2026-07-31 10:01:52',
+'none',
+576.0,
+68.4,
+28.8,
+10.259999
+);

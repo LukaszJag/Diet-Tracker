@@ -1,0 +1,9 @@
+Name: Pancakes Bananowe z sosem czekoladowym
+Brand: Szam Amm
+Package has: 180.0
+Macro for: 100.0
+KCal: 320.0
+Protein: 5.7
+Fat: 16.0
+Carbs: 38.0
+Comment optional: Link: https://delio.com.pl/products/A0024675-pancakes-bananowe-z-sosem-czekoladowym-szamamm

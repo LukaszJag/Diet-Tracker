@@ -1,0 +1,9 @@
+Name: Serek wiejski ze szczypiorkiem
+Brand: Piątnica
+Package has: 150.0
+Macro for: 100.0
+KCal: 97.0
+Protein: 11.0
+Fat: 5.0
+Carbs: 2.0
+Comment optional: Link: https://delio.com.pl/products/A0018156-serek-wiejski-ze-szczypiorkiem-piatnica
