@@ -32,7 +32,20 @@ android {
     buildFeatures {
         viewBinding = true
     }
+
+    sourceSets {
+        getByName("main") {
+            res.srcDirs(
+                "src/main/res/layouts/diet",
+                "src/main/res/layouts/main",
+                "src/main/res/layouts/notes",
+                "src/main/res/layouts",
+                "src/main/res" // Always include the default res folder
+            )
+        }
+    }
 }
+
 
 dependencies {
 
