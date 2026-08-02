@@ -1,0 +1,9 @@
+Name: Kotlet schabowy z kapustą i puree
+Brand: Szam Amm
+Package has: 400.0
+Macro for: 100.0
+KCal: 97.0
+Protein: 5.3
+Fat: 4.6
+Carbs: 7.8
+Comment optional: Link: https://delio.com.pl/products/A0018196-kotlet-schabowy-z-kapusta-i-puree-szamamm

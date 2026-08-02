@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2026-07-31',
+'Friday',
+'Breakfast',
+73.0,
+'Miód wielokwiatowy nektarowy',
+318.0,
+0.3,
+0.0,
+79.5,
+'2026-08-02 12:49:15',
+'none',
+232.14,
+58.035,
+0.0,
+0.21900001
+);

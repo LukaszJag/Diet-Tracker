@@ -1,0 +1,9 @@
+Name: Pierogi z mięsem - żabka
+Brand: Szam Amm
+Package has: 320.0
+Macro for: 100.0
+KCal: 221.0
+Protein: 9.6
+Fat: 11.0
+Carbs: 22.0
+Comment optional: Link: https://delio.com.pl/products/A0000714-pierogi-z-miesem-szamamm

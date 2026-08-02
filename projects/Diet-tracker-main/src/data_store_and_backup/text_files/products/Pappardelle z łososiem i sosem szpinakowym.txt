@@ -1,0 +1,9 @@
+Name: Pappardelle z łososiem i sosem szpinakowym
+Brand: Szam Amm
+Package has: 400.0
+Macro for: 100.0
+KCal: 151.0
+Protein: 5.4
+Fat: 7.3
+Carbs: 15.0
+Comment optional: Dane z opakowania

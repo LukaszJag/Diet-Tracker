@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2026-08-01',
+'Saturday',
+'Supper',
+400.0,
+'Kotlet schabowy z kapustą i puree',
+97.0,
+5.3,
+4.6,
+7.8,
+'2026-08-02 12:42:49',
+'none',
+388.0,
+31.2,
+18.4,
+21.2
+);

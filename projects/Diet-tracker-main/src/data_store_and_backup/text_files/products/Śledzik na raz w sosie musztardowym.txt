@@ -1,0 +1,9 @@
+Name: Śledzik na raz w sosie musztardowym
+Brand: Lisner
+Package has: 100.0
+Macro for: 100.0
+KCal: 367.0
+Protein: 7.2
+Fat: 34.0
+Carbs: 7.8
+Comment optional: Link: https://www.frisco.pl/pid,91789/n,lisner-sledzik-na-raz-w-sosie-musztardowym/stn,product

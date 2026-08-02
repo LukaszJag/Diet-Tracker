@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2026-08-01',
+'Saturday',
+'Supper',
+320.0,
+'Pierogi z mięsem - żabka',
+221.0,
+9.6,
+11.0,
+22.0,
+'2026-08-02 12:38:23',
+'none',
+707.2,
+70.4,
+35.2,
+30.720001
+);

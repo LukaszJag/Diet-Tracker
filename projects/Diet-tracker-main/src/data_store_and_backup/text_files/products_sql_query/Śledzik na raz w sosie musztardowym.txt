@@ -1,0 +1,20 @@
+INSERT INTO `diet_tracker_schema`.product_table
+(`product_name`,
+`product_brand`,
+`product_package_has`,
+`product_macro_for`,
+`product_kcal`,
+`product_protein`,
+`product_fat`,
+`product_carbs`,
+`comment_optional`)
+Values
+('Śledzik na raz w sosie musztardowym',
+'Lisner',
+100.0,
+100.0,
+367.0,
+7.2,
+34.0,
+7.8,
+'Link: https://www.frisco.pl/pid,91789/n,lisner-sledzik-na-raz-w-sosie-musztardowym/stn,product');
