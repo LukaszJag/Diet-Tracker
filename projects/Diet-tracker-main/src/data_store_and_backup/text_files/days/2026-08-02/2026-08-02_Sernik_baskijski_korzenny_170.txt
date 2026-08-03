@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2026-08-02',
+'Sunday',
+'Supper',
+170.0,
+'Sernik baskijski korzenny',
+282.0,
+5.2,
+18.0,
+25.0,
+'2026-08-03 11:04:15',
+'none',
+479.40002,
+42.5,
+30.6,
+8.84
+);

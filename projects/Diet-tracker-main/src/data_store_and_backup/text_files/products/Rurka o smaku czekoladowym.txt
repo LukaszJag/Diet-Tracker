@@ -1,0 +1,9 @@
+Name: Rurka o smaku czekoladowym
+Brand: Nordis
+Package has: 100.0
+Macro for: 100.0
+KCal: 178.0
+Protein: 2.2
+Fat: 7.7
+Carbs: 25.0
+Comment optional: Dane z opakowania

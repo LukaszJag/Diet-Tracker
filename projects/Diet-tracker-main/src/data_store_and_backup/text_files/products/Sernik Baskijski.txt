@@ -1,0 +1,9 @@
+Name: Sernik Baskijski
+Brand: Słodka Pracownia
+Package has: 160.0
+Macro for: 100.0
+KCal: 217.0
+Protein: 4.7
+Fat: 14.0
+Carbs: 18.0
+Comment optional: Link: https://pl.openfoodfacts.org/product/5904310524407/sernik-baskijski-s%C5%82odka-pracownia

@@ -1,0 +1,9 @@
+Name: Sernik baskijski korzenny
+Brand: Słodka Pracownia
+Package has: 170.0
+Macro for: 100.0
+KCal: 282.0
+Protein: 5.2
+Fat: 18.0
+Carbs: 25.0
+Comment optional: Link: https://www.dine4fit.pl/produkty/sernik-baskijski-korzenny-slodka-pracownia
