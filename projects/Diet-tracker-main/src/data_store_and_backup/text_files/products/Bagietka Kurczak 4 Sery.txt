@@ -1,0 +1,9 @@
+Name: Bagietka Kurczak 4 Sery
+Brand: Tomcio Paluch
+Package has: 220.0
+Macro for: 100.0
+KCal: 225.0
+Protein: 12.0
+Fat: 10.0
+Carbs: 28.0
+Comment optional: Link: https://pl.openfoodfacts.org/product/75386015121829/bagietka-kurczak-4-sery-tomcio-paluch

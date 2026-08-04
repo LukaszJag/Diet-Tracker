@@ -1,0 +1,9 @@
+Name: Spicy chicken - chipsy
+Brand: Lay S
+Package has: 130.0
+Macro for: 100.0
+KCal: 517.0
+Protein: 6.6
+Fat: 30.0
+Carbs: 52.0
+Comment optional: Dane z opakowania

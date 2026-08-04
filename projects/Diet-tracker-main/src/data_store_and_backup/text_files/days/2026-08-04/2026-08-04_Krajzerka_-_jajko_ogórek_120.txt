@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2026-08-04',
+'Tuesday',
+'Breakfast',
+120.0,
+'Krajzerka - jajko ogórek',
+244.0,
+8.3,
+11.0,
+27.0,
+'2026-08-04 09:46:48',
+'none',
+292.80002,
+32.4,
+13.200001,
+9.960001
+);
