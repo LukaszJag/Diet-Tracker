@@ -31,9 +31,9 @@ public class Note {
     private ArrayList<String> urgentScaleEnglish = new ArrayList<>(Arrays.asList("no urgent scale", "Priority Deliverable",
             "Mission-Critical Sprint", "High-Stakes Campaign", "Marathon Project",
             "Strategic Initiative", "Monumental Undertaking", "Magnum Opus / Grand Challenge"));
-    private ArrayList<String> urgentScalePolish = new ArrayList<>(Arrays.asList("brak ram czasowych", "Naglące zlecenie priorytetowe", "Krytyczna faza mobilizacji",
-            "Złożona operacja celowa", "Wyzwanie długodystansowe (Projekt-maraton)", "Strategiczna transformacja", "Fundamentalne przedsięwzięcie",
-            "Dzieło życia (Opus Magnum)"));
+    private ArrayList<String> urgentScalePolish = new ArrayList<>(Arrays.asList("brak ram czasowych", "Nagl�ce zlecenie priorytetowe", "Krytyczna faza mobilizacji",
+            "Z�o�ona operacja celowa", "Wyzwanie d�ugodystansowe (Projekt-maraton)", "Strategiczna transformacja", "Fundamentalne przedsi�wzi�cie",
+            "Dzie�o �ycia (Opus Magnum)"));
 
     public Note() {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
