@@ -1,0 +1,9 @@
+Name: Ciasto jogurtowe z jagodami
+Brand: Słodka Pracownia
+Package has: 130.0
+Macro for: 100.0
+KCal: 304.0
+Protein: 2.1
+Fat: 15.0
+Carbs: 39.0
+Comment optional: Dane z opakowania

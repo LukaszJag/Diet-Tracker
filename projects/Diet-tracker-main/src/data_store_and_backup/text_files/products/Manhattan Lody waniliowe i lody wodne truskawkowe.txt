@@ -1,0 +1,9 @@
+Name: Manhattan Lody waniliowe i lody wodne truskawkowe
+Brand: Manhattan
+Package has: 1400.0
+Macro for: 100.0
+KCal: 78.0
+Protein: 0.7
+Fat: 1.9
+Carbs: 15.0
+Comment optional: Link: https://www.carrefour.pl/mrozonki/lody/lody-familijne/manhattan-lody-waniliowe-i-lody-wodne-truskawkowe-1400-ml

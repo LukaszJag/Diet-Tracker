@@ -1,0 +1,9 @@
+Name: Sernik baskijski z malinami i belgijską czekoladą
+Brand: Słodka Pracownia
+Package has: 170.0
+Macro for: 100.0
+KCal: 313.0
+Protein: 5.5
+Fat: 18.0
+Carbs: 32.0
+Comment optional: Link: https://www.fitatu.com/catalog/pl/sernik-baskijski-z-malinami-i-belgijska-czekolada--147502287

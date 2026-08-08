@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2026-08-06',
+'Thursday',
+'Second Breakfast',
+280.0,
+'Rollo Butter Chicken',
+222.0,
+12.0,
+7.8,
+24.0,
+'2026-08-08 10:04:26',
+'none',
+621.6,
+67.2,
+21.84,
+33.6
+);

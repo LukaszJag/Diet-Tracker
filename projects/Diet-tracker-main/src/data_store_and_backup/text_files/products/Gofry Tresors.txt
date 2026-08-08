@@ -1,0 +1,9 @@
+Name: Gofry Tresors
+Brand: Auchan
+Package has: 250.0
+Macro for: 100.0
+KCal: 467.0
+Protein: 7.6
+Fat: 26.0
+Carbs: 50.0
+Comment optional: Link: https://zakupy.auchan.pl/products/gofry-tresors-250-g/00678346?srsltid=AfmBOoqcjGadBAo4zRzeO8jiHYgUHMd_Zt6APUkoMjoZ85O4yzAtHzdB

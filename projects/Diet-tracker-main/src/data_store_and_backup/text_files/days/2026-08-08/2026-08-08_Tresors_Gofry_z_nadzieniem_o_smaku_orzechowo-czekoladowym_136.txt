@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2026-08-08',
+'Saturday',
+'Dinner',
+136.0,
+'Tresors Gofry z nadzieniem o smaku orzechowo-czekoladowym',
+500.0,
+6.1,
+29.0,
+52.0,
+'2026-08-08 10:40:36',
+'none',
+680.0,
+70.72,
+39.44,
+8.296
+);

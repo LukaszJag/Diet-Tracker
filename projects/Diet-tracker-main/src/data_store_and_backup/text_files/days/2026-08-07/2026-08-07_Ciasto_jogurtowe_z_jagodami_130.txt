@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2026-08-07',
+'Friday',
+'Second Breakfast',
+130.0,
+'Ciasto jogurtowe z jagodami',
+304.0,
+2.1,
+15.0,
+39.0,
+'2026-08-08 10:28:22',
+'none',
+395.19998,
+50.699997,
+19.5,
+2.7299998
+);

@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2026-08-06',
+'Thursday',
+'Second Breakfast',
+2000.0,
+'Napój wiśnia – jabłko - Tymbark',
+19.0,
+0.0,
+0.0,
+4.5,
+'2026-08-08 09:55:00',
+'none',
+380.0,
+90.0,
+0.0,
+0.0
+);

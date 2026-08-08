@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2026-08-06',
+'Thursday',
+'Supper',
+313.0,
+'Manhattan Lody waniliowe i lody wodne truskawkowe',
+78.0,
+0.7,
+1.9,
+15.0,
+'2026-08-08 10:17:53',
+'none',
+244.14001,
+46.95,
+5.947,
+2.191
+);

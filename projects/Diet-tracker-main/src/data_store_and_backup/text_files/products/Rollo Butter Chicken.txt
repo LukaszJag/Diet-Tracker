@@ -1,0 +1,9 @@
+Name: Rollo Butter Chicken
+Brand: Żabka
+Package has: 280.0
+Macro for: 100.0
+KCal: 222.0
+Protein: 12.0
+Fat: 7.8
+Carbs: 24.0
+Comment optional: Link: https://www.fatsecret.pl/kalorie-warto%C5%9Bci%C2%A0od%C5%BCywcze/%C5%BBabka/rollo-butter-chicken/100g

@@ -1,0 +1,9 @@
+Name: Lody Diuna
+Brand: Biedronka
+Package has: 2000.0
+Macro for: 100.0
+KCal: 223.0
+Protein: 4.1
+Fat: 13.0
+Carbs: 23.0
+Comment optional: Link: https://www.fatsecret.pl/kalorie-warto%C5%9Bci%C2%A0od%C5%BCywcze/biedronka/lody-diuna/100ml

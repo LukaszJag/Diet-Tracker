@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2026-08-07',
+'Friday',
+'Second Breakfast',
+170.0,
+'Sernik baskijski z malinami i belgijską czekoladą',
+313.0,
+5.5,
+18.0,
+32.0,
+'2026-08-08 10:28:34',
+'none',
+532.10004,
+54.4,
+30.6,
+9.35
+);

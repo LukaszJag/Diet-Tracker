@@ -1,0 +1,9 @@
+Name: Actimel Kids Napój jogurtowy o smaku truskawkowo-bananowym
+Brand: Danone
+Package has: 400.0
+Macro for: 100.0
+KCal: 68.0
+Protein: 2.9
+Fat: 1.4
+Carbs: 10.1
+Comment optional: Link: https://leclerc24.pl/actimel-kids-napoj-jogurtowy-o-smaku-truskawkowo-bananowym-400-g-4-x-100-g

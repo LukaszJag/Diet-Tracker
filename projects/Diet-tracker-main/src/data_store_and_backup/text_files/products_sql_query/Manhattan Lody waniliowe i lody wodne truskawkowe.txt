@@ -1,0 +1,20 @@
+INSERT INTO `diet_tracker_schema`.product_table
+(`product_name`,
+`product_brand`,
+`product_package_has`,
+`product_macro_for`,
+`product_kcal`,
+`product_protein`,
+`product_fat`,
+`product_carbs`,
+`comment_optional`)
+Values
+('Manhattan Lody waniliowe i lody wodne truskawkowe',
+'Manhattan',
+1400.0,
+100.0,
+78.0,
+0.7,
+1.9,
+15.0,
+'Link: https://www.carrefour.pl/mrozonki/lody/lody-familijne/manhattan-lody-waniliowe-i-lody-wodne-truskawkowe-1400-ml');

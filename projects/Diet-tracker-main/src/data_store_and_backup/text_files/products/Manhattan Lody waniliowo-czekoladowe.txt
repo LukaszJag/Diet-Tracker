@@ -1,0 +1,9 @@
+Name: Manhattan Lody waniliowo-czekoladowe
+Brand: Manhattan
+Package has: 1400.0
+Macro for: 100.0
+KCal: 84.0
+Protein: 1.0
+Fat: 3.1
+Carbs: 13.0
+Comment optional: Link: https://www.carrefour.pl/mrozonki/lody/lody-familijne/manhattan-lody-waniliowo-czekoladowe-1400-ml

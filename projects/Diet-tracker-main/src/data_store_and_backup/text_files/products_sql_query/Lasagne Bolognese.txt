@@ -1,0 +1,20 @@
+INSERT INTO `diet_tracker_schema`.product_table
+(`product_name`,
+`product_brand`,
+`product_package_has`,
+`product_macro_for`,
+`product_kcal`,
+`product_protein`,
+`product_fat`,
+`product_carbs`,
+`comment_optional`)
+Values
+('Lasagne Bolognese',
+'Come a casa',
+400.0,
+100.0,
+139.0,
+7.3,
+6.9,
+11.0,
+'Link: https://comeacasa.com/pl-PL/products/lasagne-bolognese');

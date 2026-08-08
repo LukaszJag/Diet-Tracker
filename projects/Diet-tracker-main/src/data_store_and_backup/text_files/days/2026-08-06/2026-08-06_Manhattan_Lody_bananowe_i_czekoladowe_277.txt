@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2026-08-06',
+'Thursday',
+'Supper',
+277.0,
+'Manhattan Lody bananowe i czekoladowe',
+204.0,
+2.0,
+9.4,
+27.0,
+'2026-08-08 10:19:07',
+'none',
+565.08,
+74.79,
+26.037998,
+5.54
+);

@@ -1,0 +1,9 @@
+Name: Tresors Gofry z nadzieniem o smaku orzechowo-czekoladowym
+Brand: Tresors
+Package has: 136.0
+Macro for: 100.0
+KCal: 500.0
+Protein: 6.1
+Fat: 29.0
+Carbs: 52.0
+Comment optional: Link: https://leclerc24.pl/tresors-gofry-z-nadzieniem-o-smaku-orzechow-laskowych-136g
