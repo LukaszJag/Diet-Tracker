@@ -1,0 +1,9 @@
+Name: Chicken bites green onion
+Brand: Snacky
+Package has: 72.5
+Macro for: 100.0
+KCal: 193.0
+Protein: 19.0
+Fat: 11.0
+Carbs: 2.9
+Comment optional: Link: https://www.dine4fit.pl/produkty/chicken-bites-green-onion-snacky

@@ -62,7 +62,8 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         }
     }
 
-    public void filter(String subtitle, String category, String urgently) {
+    public void filter(String subtitle, String category, String urgently,
+                       boolean showLearningOnly, boolean showGeneralOnly, boolean showTodayOnly) {
         noteList.clear();
         String qSub = subtitle != null ? subtitle.toLowerCase().trim() : "";
         String qCat = category != null ? category.toLowerCase().trim() : "";
@@ -73,7 +74,11 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
             boolean matchCat = qCat.isEmpty() || (note.getNoteCategory() != null && note.getNoteCategory().toLowerCase().contains(qCat));
             boolean matchUrg = qUrg.isEmpty() || (note.getNoteUrgently() != null && note.getNoteUrgently().toLowerCase().contains(qUrg));
 
-            if (matchSub && matchCat && matchUrg) {
+            boolean matchLearning = !showLearningOnly || note.isLearning();
+            boolean matchGeneral = !showGeneralOnly || note.isGeneralToDo();
+            boolean matchToday = !showTodayOnly || note.isIisTodayTask();
+
+            if (matchSub && matchCat && matchUrg && matchLearning && matchGeneral && matchToday) {
                 noteList.add(note);
             }
         }

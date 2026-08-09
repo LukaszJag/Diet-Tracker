@@ -1,0 +1,9 @@
+Name: Naleśniki z serem i jagodami
+Brand: Szam Amm
+Package has: 300.0
+Macro for: 100.0
+KCal: 156.0
+Protein: 6.5
+Fat: 3.4
+Carbs: 24.0
+Comment optional: Link: https://www.dine4fit.pl/produkty/nalesniki-z-serem-i-jagodami-szamamm

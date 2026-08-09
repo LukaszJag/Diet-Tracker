@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -36,6 +37,7 @@ public class Notes extends AppCompatActivity {
     private MyAdapter adapter;
     private Button btnAddNote;
     private EditText filterSubtitle, filterCategory, filterUrgently;
+    private CheckBox filterCbLearning, filterCbGeneral, filterCbToday;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -51,6 +53,10 @@ public class Notes extends AppCompatActivity {
         filterSubtitle = findViewById(R.id.filterSubtitle);
         filterCategory = findViewById(R.id.filterCategory);
         filterUrgently = findViewById(R.id.filterUrgently);
+
+        filterCbLearning = findViewById(R.id.filterCbLearning);
+        filterCbGeneral = findViewById(R.id.filterCbGeneral);
+        filterCbToday = findViewById(R.id.filterCbToday);
 
         TextWatcher filterTextWatcher = new TextWatcher() {
             @Override
@@ -68,6 +74,11 @@ public class Notes extends AppCompatActivity {
         filterSubtitle.addTextChangedListener(filterTextWatcher);
         filterCategory.addTextChangedListener(filterTextWatcher);
         filterUrgently.addTextChangedListener(filterTextWatcher);
+
+        CompoundButton.OnCheckedChangeListener filterCheckWatcher = (buttonView, isChecked) -> applyFilters();
+        filterCbLearning.setOnCheckedChangeListener(filterCheckWatcher);
+        filterCbGeneral.setOnCheckedChangeListener(filterCheckWatcher);
+        filterCbToday.setOnCheckedChangeListener(filterCheckWatcher);
 
         btnAddNote = findViewById(R.id.button);
         btnAddNote.setText("Add Note");
@@ -87,7 +98,13 @@ public class Notes extends AppCompatActivity {
         String subtitleQuery = filterSubtitle.getText().toString();
         String categoryQuery = filterCategory.getText().toString();
         String urgentlyQuery = filterUrgently.getText().toString();
-        adapter.filter(subtitleQuery, categoryQuery, urgentlyQuery);
+
+        boolean showLearningOnly = filterCbLearning.isChecked();
+        boolean showGeneralOnly = filterCbGeneral.isChecked();
+        boolean showTodayOnly = filterCbToday.isChecked();
+
+        adapter.filter(subtitleQuery, categoryQuery, urgentlyQuery,
+                showLearningOnly, showGeneralOnly, showTodayOnly);
     }
 
     private void showAddNoteDialog() {

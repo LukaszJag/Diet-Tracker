@@ -79,6 +79,34 @@
                 android:textSize="12sp"
                 android:inputType="text" />
         </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="4dp">
+
+            <CheckBox
+                android:id="@+id/filterCbLearning"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Learning"
+                android:textSize="12sp" />
+
+            <CheckBox
+                android:id="@+id/filterCbGeneral"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="General"
+                android:textSize="12sp" />
+
+            <CheckBox
+                android:id="@+id/filterCbToday"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Today"
+                android:textSize="12sp" />
+        </LinearLayout>
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView

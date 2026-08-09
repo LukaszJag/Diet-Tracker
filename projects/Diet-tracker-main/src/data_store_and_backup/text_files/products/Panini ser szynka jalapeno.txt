@@ -1,0 +1,9 @@
+Name: Panini ser szynka jalapeno
+Brand: Żabka
+Package has: 205.0
+Macro for: 100.0
+KCal: 246.0
+Protein: 10.0
+Fat: 10.0
+Carbs: 27.0
+Comment optional: Link: https://www.tabele-kalorii.pl/kalorie,Panini-ser-szynka-jalapeno-Zabka.html

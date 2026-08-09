@@ -1,0 +1,9 @@
+Name: Panini z kurczakiem i sosem bazyliowym
+Brand: Żabka
+Package has: 215.0
+Macro for: 100.0
+KCal: 243.0
+Protein: 13.0
+Fat: 8.6
+Carbs: 27.0
+Comment optional: Link: https://www.fitatu.com/catalog/pl/panini-z-kurczakiem-i-sosem-bazyliowym--105263217

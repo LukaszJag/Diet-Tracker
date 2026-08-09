@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2026-08-09',
+'Sunday',
+'Snack 1',
+215.0,
+'Panini z kurczakiem i sosem bazyliowym',
+243.0,
+13.0,
+8.6,
+27.0,
+'2026-08-09 10:05:31',
+'none',
+522.45,
+58.050003,
+18.490002,
+27.95
+);

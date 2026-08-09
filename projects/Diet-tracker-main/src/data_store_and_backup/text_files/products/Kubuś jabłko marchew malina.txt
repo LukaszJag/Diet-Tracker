@@ -1,0 +1,9 @@
+Name: Kubuś jabłko marchew malina
+Brand: Kubuś
+Package has: 850.0
+Macro for: 100.0
+KCal: 42.0
+Protein: 0.4
+Fat: 0.2
+Carbs: 9.1
+Comment optional: Link: https://pl.openfoodfacts.org/product/5901067406796/kubu%C5%9B-jab%C5%82ko-marchew-malina

@@ -1,0 +1,9 @@
+Name: Panini z serem cheddar
+Brand: Żabka
+Package has: 191.0
+Macro for: 100.0
+KCal: 330.0
+Protein: 11.0
+Fat: 18.0
+Carbs: 29.0
+Comment optional: Link: https://www.fitatu.com/catalog/pl/panini-z-serem-cheddar--113223599

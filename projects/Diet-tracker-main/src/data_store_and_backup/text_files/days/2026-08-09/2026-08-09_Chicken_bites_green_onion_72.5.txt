@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2026-08-09',
+'Sunday',
+'Second Breakfast',
+72.5,
+'Chicken bites green onion',
+193.0,
+19.0,
+11.0,
+2.9,
+'2026-08-09 10:15:29',
+'none',
+139.925,
+2.1025002,
+7.9750004,
+13.775001
+);
