@@ -33,17 +33,44 @@ import java.util.List;
 import java.util.Locale;
 
 public class Notes extends AppCompatActivity {
-    private RecyclerView recyclerView;
+
+    //<editor-fold desc="Global Variables">
     private MyAdapter adapter;
+
+    //<editor-fold desc="UI components">
+    private RecyclerView recyclerView;
     private Button btnAddNote;
     private EditText filterSubtitle, filterCategory, filterUrgently;
     private CheckBox filterCbLearning, filterCbGeneral, filterCbToday;
+
+    //<editor-fold desc="Note display UI components">
+    EditText dialogTitle;
+    EditText dialogSubtitle;
+    EditText dialogDescription;
+    EditText dialogCategory;
+    Spinner dialogSpinnerUrgent;
+    CheckBox dialogCbLearning;
+    CheckBox dialogCbGeneral;
+    CheckBox dialogCbToday;
+    TextView tvLearningCatLabel;
+    Spinner dialogSpinnerLearningCat;
+    EditText dialogDeadline;
+    //</editor-fold>
+
+    //</editor-fold>
+    //</editor-fold>
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.notes_view_layout);
 
+        setupUIComponents();
+        addNotesOnStart();
+    }
+
+
+    private void setupUIComponents(){
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
@@ -83,17 +110,7 @@ public class Notes extends AppCompatActivity {
         btnAddNote = findViewById(R.id.button);
         btnAddNote.setText("Add Note");
         btnAddNote.setOnClickListener(v -> showAddNoteDialog());
-
-        List<Note> loadedNotes = NoteStorage.loadNotes(this);
-        if (loadedNotes.isEmpty()) {
-            populateDummyData();
-        } else {
-            for (Note note : loadedNotes) {
-                adapter.addItem(note);
-            }
-        }
     }
-
     private void applyFilters() {
         String subtitleQuery = filterSubtitle.getText().toString();
         String categoryQuery = filterCategory.getText().toString();
@@ -112,17 +129,17 @@ public class Notes extends AppCompatActivity {
         View dialogView = getLayoutInflater().inflate(R.layout.dialog_note, null);
         builder.setView(dialogView);
 
-        final EditText dialogTitle = dialogView.findViewById(R.id.dialogTitle);
-        final EditText dialogSubtitle = dialogView.findViewById(R.id.dialogSubtitle);
-        final EditText dialogDescription = dialogView.findViewById(R.id.dialogDescription);
-        final EditText dialogCategory = dialogView.findViewById(R.id.dialogCategory);
-        final Spinner dialogSpinnerUrgent = dialogView.findViewById(R.id.dialogSpinnerUrgent);
-        final CheckBox dialogCbLearning = dialogView.findViewById(R.id.dialogCbLearning);
-        final CheckBox dialogCbGeneral = dialogView.findViewById(R.id.dialogCbGeneral);
-        final CheckBox dialogCbToday = dialogView.findViewById(R.id.dialogCbToday);
-        final TextView tvLearningCatLabel = dialogView.findViewById(R.id.tvLearningCatLabel);
-        final Spinner dialogSpinnerLearningCat = dialogView.findViewById(R.id.dialogSpinnerLearningCat);
-        final EditText dialogDeadline = dialogView.findViewById(R.id.dialogDeadline);
+        dialogTitle = dialogView.findViewById(R.id.dialogTitle);
+        dialogSubtitle = dialogView.findViewById(R.id.dialogSubtitle);
+        dialogDescription = dialogView.findViewById(R.id.dialogDescription);
+        dialogCategory = dialogView.findViewById(R.id.dialogCategory);
+        dialogSpinnerUrgent = dialogView.findViewById(R.id.dialogSpinnerUrgent);
+        dialogCbLearning = dialogView.findViewById(R.id.dialogCbLearning);
+        dialogCbGeneral = dialogView.findViewById(R.id.dialogCbGeneral);
+        dialogCbToday = dialogView.findViewById(R.id.dialogCbToday);
+        tvLearningCatLabel = dialogView.findViewById(R.id.tvLearningCatLabel);
+        dialogSpinnerLearningCat = dialogView.findViewById(R.id.dialogSpinnerLearningCat);
+        dialogDeadline = dialogView.findViewById(R.id.dialogDeadline);
 
         Note sampleNote = new Note();
         ArrayAdapter<String> urgentAdapter = new ArrayAdapter<>(this,
@@ -188,7 +205,37 @@ public class Notes extends AppCompatActivity {
         builder.setNegativeButton("Cancel", null);
         builder.create().show();
     }
+    private void addNotesOnStart() {
+        // 1. Define the physical path to your file on disk
+        java.io.File physicalFile = new java.io.File(
+                android.os.Environment.getExternalStoragePublicDirectory(android.os.Environment.DIRECTORY_DOWNLOADS),
+                "diet-tracker-data/notes_data.json"
+        );
 
+        // 2. Try to load the notes using MediaStore
+        List<Note> loadedNotes = NoteStorage.loadNotes(this);
+
+        if (loadedNotes.isEmpty()) {
+            // 3. Check if the file physically exists on disk
+            if (physicalFile.exists()) {
+                // The file is physically there. We shouldn't overwrite it with dummy data.
+                // This indicates either a MediaStore indexing lag or a syntax error in your JSON.
+                System.out.println("DEBUG: The file physically exists, but could not be parsed or indexed. Skipping dummy data to protect your edits.");
+                android.widget.Toast.makeText(this, "Notes file detected but couldn't be loaded (Check JSON format or restart device)", android.widget.Toast.LENGTH_LONG).show();
+            } else {
+                // The file truly does not exist anywhere, safe to create dummy data.
+                populateDummyData();
+            }
+        } else {
+            // Load the notes normally
+            int counter = 0;
+            for (Note note : loadedNotes) {
+                System.out.println(counter + " -> " + note.getNoteTitle());
+                adapter.addItem(note);
+                counter++;
+            }
+        }
+    }
     private void populateDummyData() {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
         String today = sdf.format(new Date());

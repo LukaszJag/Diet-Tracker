@@ -88,18 +88,19 @@ public class NoteStorage {
         }
     }
 
-    public static List<Note> loadNotes(Context context) {
+// NoteStorage.java
+
+    public static List<Note> loadNotes(Context context){
         List<Note> notes = new ArrayList<>();
-        String fileName = "notes_data.json"; // Replace with your FILE_NAME constant if needed
+        String fileName = "notes_data.json";
         ContentResolver resolver = context.getContentResolver();
         Uri collection = MediaStore.Downloads.EXTERNAL_CONTENT_URI;
 
         Uri fileUri = null;
 
-        // 1. Query MediaStore to locate "notes_data.json" in the Download folder
+        // 1. Query MediaStore to locate "notes_data.json"
         String[] projection = new String[]{MediaStore.MediaColumns._ID};
         String selection = MediaStore.MediaColumns.DISPLAY_NAME + " = ? AND " + MediaStore.MediaColumns.RELATIVE_PATH + " = ?";
-        // Points the query to "Download/diet-tracker-data/"
         String targetFolder = Environment.DIRECTORY_DOWNLOADS + "/diet-tracker-data/";
         String[] selectionArgs = new String[]{fileName, targetFolder};
 
@@ -113,29 +114,52 @@ public class NoteStorage {
             e.printStackTrace();
         }
 
-        // If the file is not found, return an empty list (replaces the old FileNotFoundException block)
-        if (fileUri == null) {
+        // Fallback file in case MediaStore database is lagging
+        java.io.File fallbackFile = new java.io.File(
+                Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS),
+                "diet-tracker-data/notes_data.json"
+        );
+
+        // If both paths fail, return the empty notes list early
+        if (fileUri == null && !fallbackFile.exists()) {
             return notes;
         }
 
-        // 2. Open the input stream using ContentResolver and load the data
-        try (InputStream fis = resolver.openInputStream(fileUri); InputStreamReader isr = new InputStreamReader(fis, StandardCharsets.UTF_8); BufferedReader bufferedReader = new BufferedReader(isr)) {
+        // 2. Open the file stream using whichever source is available
+        try (InputStream fis = (fileUri != null) ? resolver.openInputStream(fileUri) : new FileInputStream(fallbackFile);
+             InputStreamReader isr = new InputStreamReader(fis, StandardCharsets.UTF_8);
+             BufferedReader reader = new BufferedReader(isr)) {
 
+            // 3. Read the entire stream using a character buffer to preserve exact UTF-8 formatting
             StringBuilder sb = new StringBuilder();
-            String line;
-            while ((line = bufferedReader.readLine()) != null) {
-                sb.append(line);
+            char[] buffer = new char[1024];
+            int numRead;
+            while ((numRead = reader.read(buffer)) != -1) {
+                sb.append(buffer, 0, numRead);
             }
 
-            JSONArray jsonArray = new JSONArray(sb.toString());
-            for (int i = 0; i < jsonArray.length(); i++) {
-                JSONObject noteJson = jsonArray.getJSONObject(i);
-                Note note = Note.fromJsonObject(noteJson);
-                if (note != null) {
-                    notes.add(note);
+            String jsonContent = sb.toString();
+
+            // 4. STRIP BOM (Byte Order Mark) IF PRESENT
+            // This removes the hidden Windows marker (\uFEFF) that breaks Android's JSON parsing
+            if (jsonContent.startsWith("\uFEFF")) {
+                jsonContent = jsonContent.substring(1);
+            }
+            jsonContent = jsonContent.trim();
+
+            // 5. Parse the cleaned JSON string
+            if (!jsonContent.isEmpty()) {
+                JSONArray jsonArray = new JSONArray(jsonContent);
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    JSONObject noteJson = jsonArray.getJSONObject(i);
+                    Note note = Note.fromJsonObject(noteJson);
+                    if (note != null) {
+                        notes.add(note);
+                    }
                 }
             }
         } catch (Exception e) {
+            System.err.println("Error reading or parsing notes JSON file:");
             e.printStackTrace();
         }
 
