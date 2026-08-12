@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2026-08-11',
+'Tuesday',
+'Supper',
+252.0,
+'Kinder Mleczna Kanapka Biszkopt z mlecznym nadzieniem',
+421.0,
+7.9,
+27.9,
+34.0,
+'2026-08-12 01:50:49',
+'none',
+1060.92,
+85.68,
+70.308,
+19.908
+);

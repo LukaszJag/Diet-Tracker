@@ -1,0 +1,9 @@
+Name: Sushi Wrap Z Pieczonym Łososiem
+Brand: Wrap4You
+Package has: 150.0
+Macro for: 100.0
+KCal: 152.0
+Protein: 5.5
+Fat: 5.1
+Carbs: 21.0
+Comment optional: Link: https://pl.openfoodfacts.org/product/5905386403665/sushi-wrap-z-pieczonym-%C5%82ososiem-wrap4you

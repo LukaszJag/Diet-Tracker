@@ -1,0 +1,9 @@
+Name: Kinder Mleczna Kanapka Biszkopt z mlecznym nadzieniem
+Brand: Kinder
+Package has: 28.0
+Macro for: 100.0
+KCal: 421.0
+Protein: 7.9
+Fat: 27.9
+Carbs: 34.0
+Comment optional: Link: https://zakupy.biedronka.pl/kinder-kinder-mleczna-kanapka-biszkopt-z-mlecznym-nadzieniem-28-g-0000001174.html

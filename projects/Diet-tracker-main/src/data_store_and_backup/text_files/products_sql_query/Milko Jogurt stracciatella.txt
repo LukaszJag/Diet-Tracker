@@ -1,0 +1,20 @@
+INSERT INTO `diet_tracker_schema`.product_table
+(`product_name`,
+`product_brand`,
+`product_package_has`,
+`product_macro_for`,
+`product_kcal`,
+`product_protein`,
+`product_fat`,
+`product_carbs`,
+`comment_optional`)
+Values
+('Milko Jogurt stracciatella',
+'Milko',
+330.0,
+100.0,
+94.0,
+3.4,
+2.3,
+15.0,
+'Link: https://www.carrefour.pl/mleko-nabial-jaja/jogurt-kefir-maslanka-serki-homogenizowane/jogurty-pitne/milko-jogurt-stracciatella-330-ml');

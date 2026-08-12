@@ -1,0 +1,9 @@
+Name: Sushi noriko
+Brand: Sushi 4you
+Package has: 225.0
+Macro for: 100.0
+KCal: 141.0
+Protein: 3.6
+Fat: 2.6
+Carbs: 24.0
+Comment optional: Link: https://www.dine4fit.pl/produkty/sushi-noriko-sushi-4you

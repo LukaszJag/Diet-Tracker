@@ -1,0 +1,9 @@
+Name: Milko Jogurt stracciatella
+Brand: Milko
+Package has: 330.0
+Macro for: 100.0
+KCal: 94.0
+Protein: 3.4
+Fat: 2.3
+Carbs: 15.0
+Comment optional: Link: https://www.carrefour.pl/mleko-nabial-jaja/jogurt-kefir-maslanka-serki-homogenizowane/jogurty-pitne/milko-jogurt-stracciatella-330-ml
