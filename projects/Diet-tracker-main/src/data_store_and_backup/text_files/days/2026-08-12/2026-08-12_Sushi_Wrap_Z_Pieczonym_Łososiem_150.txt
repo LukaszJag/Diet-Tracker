@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2026-08-12',
+'Wednesday',
+'Breakfast',
+150.0,
+'Sushi Wrap Z Pieczonym Łososiem',
+152.0,
+5.5,
+5.1,
+21.0,
+'2026-08-12 12:57:11',
+'none',
+228.0,
+31.5,
+7.6499996,
+8.25
+);

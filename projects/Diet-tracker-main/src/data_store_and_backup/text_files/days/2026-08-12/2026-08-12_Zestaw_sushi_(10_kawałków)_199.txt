@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2026-08-12',
+'Wednesday',
+'Breakfast',
+199.0,
+'Zestaw sushi (10 kawałków)',
+157.0,
+6.4,
+4.0,
+23.3,
+'2026-08-12 01:00:45',
+'none',
+312.43,
+46.367,
+7.96,
+12.736
+);
