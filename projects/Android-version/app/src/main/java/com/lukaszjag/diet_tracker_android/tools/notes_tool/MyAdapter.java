@@ -5,6 +5,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -13,10 +14,26 @@ import com.lukaszjag.diet_tracker_android.R;
 import java.util.ArrayList;
 import java.util.List;
 
+// MyAdapter.java
+
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
     private List<Note> noteList;
     private List<Note> originalList;
+    private boolean showCategory = true;
+    private boolean showUrgency = true;
+    private boolean showDates = true;
+
+    // 1. ADD CLICK LISTENER INTERFACE
+    public interface OnItemClickListener {
+        void onItemClick(int position, Note note);
+    }
+
+    private OnItemClickListener clickListener;
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.clickListener = listener;
+    }
 
     public MyAdapter() {
         this.noteList = new ArrayList<>();
@@ -40,7 +57,8 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         return null;
     }
 
-    public void setItem(int position, Note note) {
+    // 2. UPDATE SETITEM TO SAVE TO STORAGE
+    public void setItem(int position, Note note, android.content.Context context) {
         if (position >= 0 && position < noteList.size()) {
             Note oldNote = noteList.get(position);
             int origIdx = originalList.indexOf(oldNote);
@@ -49,16 +67,20 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
             }
             noteList.set(position, note);
             notifyItemChanged(position);
+
+            // Automatically save updated notes list to local storage
+            NoteStorage.saveNotes(context, originalList);
         }
     }
 
-    public void deleteItem(int position) {
+    public void deleteItem(int position, android.content.Context context) {
         if (position >= 0 && position < noteList.size()) {
             Note note = noteList.get(position);
             originalList.remove(note);
             noteList.remove(position);
             notifyItemRemoved(position);
             notifyItemRangeChanged(position, noteList.size());
+            NoteStorage.saveNotes(context, originalList);
         }
     }
 
@@ -100,24 +122,63 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         holder.tv2.setText(currentItem.getNoteSubtitle());
         holder.tv3.setText(currentItem.getNoteDescription());
 
-        holder.tvCategory.setText("Category: " + (currentItem.getNoteCategory() != null ? currentItem.getNoteCategory() : "-"));
-        holder.tvUrgently.setText("Urgently: " + (currentItem.getNoteUrgently() != null ? currentItem.getNoteUrgently() : "-"));
+        // --- Dynamic Category Visibility ---
+        if (showCategory) {
+            holder.tvCategory.setVisibility(View.VISIBLE);
+            holder.tvCategory.setText("Category: " + (currentItem.getNoteCategory() != null ? currentItem.getNoteCategory() : "-"));
+        } else {
+            holder.tvCategory.setVisibility(View.GONE);
+        }
+
+        // --- Dynamic Urgency Visibility ---
+        if (showUrgency) {
+            holder.tvUrgently.setVisibility(View.VISIBLE);
+            holder.tvUrgently.setText("Urgently: " + (currentItem.getNoteUrgently() != null ? currentItem.getNoteUrgently() : "-"));
+        } else {
+            holder.tvUrgently.setVisibility(View.GONE);
+        }
 
         holder.cbIsLearning.setChecked(currentItem.isLearning());
         holder.cbIsGeneralToDo.setChecked(currentItem.isGeneralToDo());
         holder.cbIsTodayTask.setChecked(currentItem.isIisTodayTask());
 
-        String createdDate = currentItem.getDateCreated() != null ? currentItem.getDateCreated() : "-";
-        String deadlineDate = (currentItem.getDateDeadline() != null && !currentItem.getDateDeadline().isEmpty()) ? currentItem.getDateDeadline() : "None";
-        holder.tvDates.setText("Created: " + createdDate + " | Deadline: " + deadlineDate);
+        // --- Dynamic Dates and Days Since Visibility ---
+        if (showDates) {
+            holder.tvDates.setVisibility(View.VISIBLE);
+            holder.tvDaysSince.setVisibility(View.VISIBLE);
 
-        long daysSince = currentItem.getDaysSinceCreation();
-        holder.tvDaysSince.setText(daysSince + " days since create");
+            String createdDate = currentItem.getDateCreated() != null ? currentItem.getDateCreated() : "-";
+            String deadlineDate = (currentItem.getDateDeadline() != null && !currentItem.getDateDeadline().isEmpty()) ? currentItem.getDateDeadline() : "None";
+            holder.tvDates.setText("Created: " + createdDate + " | Deadline: " + deadlineDate);
+
+            long daysSince = currentItem.getDaysSinceCreation();
+            holder.tvDaysSince.setText(daysSince + " days since create");
+        } else {
+            holder.tvDates.setVisibility(View.GONE);
+            holder.tvDaysSince.setVisibility(View.GONE);
+        }
+
+        holder.itemView.setOnClickListener(v -> {
+            if (clickListener != null) {
+                int currentPos = holder.getBindingAdapterPosition();
+                if (currentPos != RecyclerView.NO_POSITION) {
+                    clickListener.onItemClick(currentPos, noteList.get(currentPos));
+                }
+            }
+        });
     }
 
     @Override
     public int getItemCount() {
         return noteList.size();
+    }
+
+    // Call this from your Activity to update what elements are displayed
+    public void setViewOptions(boolean showCategory, boolean showUrgency, boolean showDates) {
+        this.showCategory = showCategory;
+        this.showUrgency = showUrgency;
+        this.showDates = showDates;
+        notifyDataSetChanged(); // Redraw list items with new visibility rules
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
@@ -139,4 +200,6 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
             cbIsTodayTask = itemView.findViewById(R.id.cbIsTodayTask);
         }
     }
+
+
 }

@@ -32,6 +32,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.ItemTouchHelper;
+
 public class Notes extends AppCompatActivity {
 
     //<editor-fold desc="Global Variables">
@@ -70,12 +73,53 @@ public class Notes extends AppCompatActivity {
     }
 
 
-    private void setupUIComponents(){
+    private void setupUIComponents() {
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         adapter = new MyAdapter();
         recyclerView.setAdapter(adapter);
+
+        // --- SWIPE TO DELETE INTEGRATION ---
+        androidx.recyclerview.widget.ItemTouchHelper.SimpleCallback itemTouchHelperCallback =
+                new androidx.recyclerview.widget.ItemTouchHelper.SimpleCallback(0, androidx.recyclerview.widget.ItemTouchHelper.LEFT | androidx.recyclerview.widget.ItemTouchHelper.RIGHT) {
+                    @Override
+                    public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+                        return false; // No drag-and-drop support needed
+                    }
+
+                    @Override
+                    public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+                        int position = viewHolder.getBindingAdapterPosition();
+
+                        new AlertDialog.Builder(Notes.this)
+                                .setTitle("Delete Task")
+                                .setMessage("Are you sure you want to delete this task?")
+                                .setPositiveButton("Delete", (dialog, which) -> {
+                                    // Pass the Context (Notes.this) to save the updated list to JSON
+                                    adapter.deleteItem(position, Notes.this);
+                                })
+                                .setNegativeButton("Cancel", (dialog, which) -> {
+                                    // If the user cancels, restore the item to its original state
+                                    adapter.notifyItemChanged(position);
+                                })
+                                .setCancelable(false)
+                                .show();
+                    }
+                };
+
+        new androidx.recyclerview.widget.ItemTouchHelper(itemTouchHelperCallback).attachToRecyclerView(recyclerView);
+        // -------------------------------------
+
+
+// --- ADD THE ON-ITEM-CLICK LISTENER FOR EDITING ---
+        adapter.setOnItemClickListener((position, note) -> {
+            showEditNoteDialog(position, note);
+        });
+// --------------------------------------------------
+
+        filterSubtitle = findViewById(R.id.filterSubtitle);
+// ... (the rest of setupUIComponents remains identical)
 
         filterSubtitle = findViewById(R.id.filterSubtitle);
         filterCategory = findViewById(R.id.filterCategory);
@@ -87,7 +131,8 @@ public class Notes extends AppCompatActivity {
 
         TextWatcher filterTextWatcher = new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
@@ -95,7 +140,8 @@ public class Notes extends AppCompatActivity {
             }
 
             @Override
-            public void afterTextChanged(Editable s) {}
+            public void afterTextChanged(Editable s) {
+            }
         };
 
         filterSubtitle.addTextChangedListener(filterTextWatcher);
@@ -111,6 +157,7 @@ public class Notes extends AppCompatActivity {
         btnAddNote.setText("Add Note");
         btnAddNote.setOnClickListener(v -> showAddNoteDialog());
     }
+
     private void applyFilters() {
         String subtitleQuery = filterSubtitle.getText().toString();
         String categoryQuery = filterCategory.getText().toString();
@@ -205,6 +252,7 @@ public class Notes extends AppCompatActivity {
         builder.setNegativeButton("Cancel", null);
         builder.create().show();
     }
+
     private void addNotesOnStartOld() {
         // 1. Define the physical path to your file on disk
         java.io.File physicalFile = new java.io.File(
@@ -236,6 +284,7 @@ public class Notes extends AppCompatActivity {
             }
         }
     }
+
     private void populateDummyData() {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
         String today = sdf.format(new Date());
@@ -260,5 +309,121 @@ public class Notes extends AppCompatActivity {
                 counter++;
             }
         }
+    }
+
+    // Notes.java
+
+    private void showEditNoteDialog(int position, Note note) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        View dialogView = getLayoutInflater().inflate(R.layout.dialog_note, null);
+        builder.setView(dialogView);
+
+        dialogTitle = dialogView.findViewById(R.id.dialogTitle);
+        dialogSubtitle = dialogView.findViewById(R.id.dialogSubtitle);
+        dialogDescription = dialogView.findViewById(R.id.dialogDescription);
+        dialogCategory = dialogView.findViewById(R.id.dialogCategory);
+        dialogSpinnerUrgent = dialogView.findViewById(R.id.dialogSpinnerUrgent);
+        dialogCbLearning = dialogView.findViewById(R.id.dialogCbLearning);
+        dialogCbGeneral = dialogView.findViewById(R.id.dialogCbGeneral);
+        dialogCbToday = dialogView.findViewById(R.id.dialogCbToday);
+        tvLearningCatLabel = dialogView.findViewById(R.id.tvLearningCatLabel);
+        dialogSpinnerLearningCat = dialogView.findViewById(R.id.dialogSpinnerLearningCat);
+        dialogDeadline = dialogView.findViewById(R.id.dialogDeadline);
+
+        // 1. Pre-populate the dialog text fields
+        dialogTitle.setText(note.getNoteTitle());
+        dialogSubtitle.setText(note.getNoteSubtitle());
+        dialogDescription.setText(note.getNoteDescription());
+        dialogCategory.setText(note.getNoteCategory());
+        dialogDeadline.setText(note.getDateDeadline());
+
+        // 2. Pre-populate checkboxes
+        dialogCbLearning.setChecked(note.isLearning());
+        dialogCbGeneral.setChecked(note.isGeneralToDo());
+        dialogCbToday.setChecked(note.isIisTodayTask());
+
+        // 3. Set the visibility status for the learning spinner
+        int initialVisibility = note.isLearning() ? View.VISIBLE : View.GONE;
+        tvLearningCatLabel.setVisibility(initialVisibility);
+        dialogSpinnerLearningCat.setVisibility(initialVisibility);
+
+        Note sampleNote = new Note();
+        ArrayAdapter<String> urgentAdapter = new ArrayAdapter<>(this,
+                android.R.layout.simple_spinner_item, sampleNote.getUrgentScaleEnglish());
+        urgentAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        dialogSpinnerUrgent.setAdapter(urgentAdapter);
+
+        // 4. Set the selection for the urgent spinner
+        int urgentPos = sampleNote.getUrgentScaleEnglish().indexOf(note.getNoteUrgently());
+        if (urgentPos != -1) {
+            dialogSpinnerUrgent.setSelection(urgentPos);
+        }
+
+        List<LearningCategories> learningCatOptions = new ArrayList<>();
+        learningCatOptions.add(new LearningCategories("Software Engineering (Java)", true, false));
+        learningCatOptions.add(new LearningCategories("Android Core Frameworks", true, false));
+        learningCatOptions.add(new LearningCategories("Database Systems Concepts", false, true));
+        learningCatOptions.add(new LearningCategories("Artificial Intelligence Basics", false, true));
+
+        ArrayAdapter<LearningCategories> learnCatAdapter = new ArrayAdapter<>(this,
+                android.R.layout.simple_spinner_item, learningCatOptions);
+        learnCatAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        dialogSpinnerLearningCat.setAdapter(learnCatAdapter);
+
+        // 5. Pre-select the learning category spinner if applicable
+        if (note.isLearning() && note.getNoteLearningCategories() != null) {
+            for (int i = 0; i < learningCatOptions.size(); i++) {
+                if (learningCatOptions.get(i).getCategoryName().equals(note.getNoteLearningCategories().getCategoryName())) {
+                    dialogSpinnerLearningCat.setSelection(i);
+                    break;
+                }
+            }
+        }
+
+        dialogCbLearning.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            int visibility = isChecked ? View.VISIBLE : View.GONE;
+            tvLearningCatLabel.setVisibility(visibility);
+            dialogSpinnerLearningCat.setVisibility(visibility);
+        });
+
+        dialogDeadline.setOnClickListener(v -> {
+            Calendar calendar = Calendar.getInstance();
+            int year = calendar.get(Calendar.YEAR);
+            int month = calendar.get(Calendar.MONTH);
+            int day = calendar.get(Calendar.DAY_OF_MONTH);
+
+            DatePickerDialog datePickerDialog = new DatePickerDialog(Notes.this, (view, selectedYear, selectedMonth, selectedDay) -> {
+                String dateStr = String.format(Locale.getDefault(), "%04d-%02d-%02d", selectedYear, selectedMonth + 1, selectedDay);
+                dialogDeadline.setText(dateStr);
+            }, year, month, day);
+            datePickerDialog.show();
+        });
+
+        builder.setPositiveButton("Save", (dialog, which) -> {
+            String title = dialogTitle.getText().toString();
+            String subtitle = dialogSubtitle.getText().toString();
+            String description = dialogDescription.getText().toString();
+            String category = dialogCategory.getText().toString();
+            String urgent = dialogSpinnerUrgent.getSelectedItem().toString();
+
+            boolean isLearning = dialogCbLearning.isChecked();
+            boolean isGeneral = dialogCbGeneral.isChecked();
+            boolean isToday = dialogCbToday.isChecked();
+
+            LearningCategories selectedLearningCat = isLearning ? (LearningCategories) dialogSpinnerLearningCat.getSelectedItem() : null;
+            String deadline = dialogDeadline.getText().toString();
+
+            // Keep the original creation date unchanged
+            String dateCreated = note.getDateCreated();
+
+            Note updatedNote = new Note(title, subtitle, description, category, urgent,
+                    isLearning, isGeneral, isToday, selectedLearningCat, dateCreated, deadline);
+
+            // Save updated data to adapter and storage file
+            adapter.setItem(position, updatedNote, Notes.this);
+        });
+
+        builder.setNegativeButton("Cancel", null);
+        builder.create().show();
     }
 }
