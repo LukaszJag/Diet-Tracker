@@ -205,7 +205,7 @@ public class Notes extends AppCompatActivity {
         builder.setNegativeButton("Cancel", null);
         builder.create().show();
     }
-    private void addNotesOnStart() {
+    private void addNotesOnStartOld() {
         // 1. Define the physical path to your file on disk
         java.io.File physicalFile = new java.io.File(
                 android.os.Environment.getExternalStoragePublicDirectory(android.os.Environment.DIRECTORY_DOWNLOADS),
@@ -245,5 +245,20 @@ public class Notes extends AppCompatActivity {
         adapter.addItem(new Note("Savings Goal", "Wyznaczyć kwotę do odłożenia na monitor", "Znaleźć konkretny model do kupienia i odłożyć budżet", "Financial", "Strategic Initiative", false, true, true, null, today, "2026-12-31"));
 
         NoteStorage.saveNotes(this, adapter.getOriginalList());
+    }
+
+    private void addNotesOnStart() {
+        List<Note> loadedNotes = NoteStorage.loadNotes(this);
+
+        if (loadedNotes.isEmpty()) {
+            populateDummyData();
+        } else {
+            int counter = 0;
+            for (Note note : loadedNotes) {
+                System.out.println(counter + " -> " + note.getNoteTitle());
+                adapter.addItem(note);
+                counter++;
+            }
+        }
     }
 }
