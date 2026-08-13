@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2026-08-12',
+'Wednesday',
+'Supper',
+150.0,
+'Monte mega white',
+184.0,
+2.4,
+13.5,
+12.9,
+'2026-08-13 01:35:34',
+'none',
+276.0,
+19.349998,
+20.25,
+3.6000001
+);

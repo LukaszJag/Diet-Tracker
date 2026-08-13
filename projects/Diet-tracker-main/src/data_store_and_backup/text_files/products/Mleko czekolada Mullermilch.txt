@@ -1,0 +1,9 @@
+Name: Mleko czekolada Mullermilch
+Brand: Muller
+Package has: 400.0
+Macro for: 100.0
+KCal: 71.0
+Protein: 3.4
+Fat: 1.6
+Carbs: 10.7
+Comment optional: Link: https://www.mullerpolska.pl/produkty/muellermilch/mullermilch-original/muellermilch-czekolada

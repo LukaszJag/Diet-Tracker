@@ -1,0 +1,20 @@
+INSERT INTO `diet_tracker_schema`.product_table
+(`product_name`,
+`product_brand`,
+`product_package_has`,
+`product_macro_for`,
+`product_kcal`,
+`product_protein`,
+`product_fat`,
+`product_carbs`,
+`comment_optional`)
+Values
+('Mleko czekolada Mullermilch',
+'Muller',
+400.0,
+100.0,
+71.0,
+3.4,
+1.6,
+10.7,
+'Link: https://www.mullerpolska.pl/produkty/muellermilch/mullermilch-original/muellermilch-czekolada');
