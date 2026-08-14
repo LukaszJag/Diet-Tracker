@@ -1,0 +1,9 @@
+Name: Wołowiner
+Brand: Żabka
+Package has: 146.0
+Macro for: 100.0
+KCal: 228.0
+Protein: 14.0
+Fat: 10.0
+Carbs: 23.0
+Comment optional: Dane z opakowania

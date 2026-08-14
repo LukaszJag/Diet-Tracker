@@ -1,0 +1,9 @@
+Name: Serek czekoladowy
+Brand: Rolmlecz
+Package has: 200.0
+Macro for: 100.0
+KCal: 138.0
+Protein: 7.0
+Fat: 5.5
+Carbs: 15.0
+Comment optional: Link: https://www.carrefour.pl/mleko-nabial-jaja/jogurt-kefir-maslanka-serki-homogenizowane/serki-homogenizowane/rolmlecz-serek-czekoladowy-200-g

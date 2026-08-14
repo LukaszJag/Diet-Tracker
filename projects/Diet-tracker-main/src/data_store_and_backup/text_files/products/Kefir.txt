@@ -1,0 +1,9 @@
+Name: Kefir
+Brand: Krasnystaw
+Package has: 420.0
+Macro for: 100.0
+KCal: 50.0
+Protein: 3.4
+Fat: 2.0
+Carbs: 4.7
+Comment optional: Link: https://www.carrefour.pl/napoje/mleko-napoje-mleczne-i-roslinne/napoje-mleczne-kawowe/krasnystaw-kefir-420-g

@@ -1,0 +1,20 @@
+INSERT INTO `diet_tracker_schema`.product_table
+(`product_name`,
+`product_brand`,
+`product_package_has`,
+`product_macro_for`,
+`product_kcal`,
+`product_protein`,
+`product_fat`,
+`product_carbs`,
+`comment_optional`)
+Values
+('Serek czekoladowy',
+'Rolmlecz',
+200.0,
+100.0,
+138.0,
+7.0,
+5.5,
+15.0,
+'Link: https://www.carrefour.pl/mleko-nabial-jaja/jogurt-kefir-maslanka-serki-homogenizowane/serki-homogenizowane/rolmlecz-serek-czekoladowy-200-g');

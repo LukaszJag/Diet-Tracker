@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2026-08-14',
+'Friday',
+'Second Breakfast',
+382.0,
+'Panini z serem cheddar',
+330.0,
+11.0,
+18.0,
+29.0,
+'2026-08-14 01:12:14',
+'none',
+1260.6,
+110.78,
+68.76,
+42.02
+);
