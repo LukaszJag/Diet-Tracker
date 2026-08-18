@@ -767,7 +767,7 @@ public class AddProductToCalendarDay {
         macroTable.setValueAt("Points from notepad", 0, 0);
         macroTable.setValueAt(SelectFromDaysStatistics.getAmountOfPointsFromNotepad(MyDate.getCurrentDayInSQLFormat()), 0, 1);
         macroTable.setValueAt("Filled points", 1, 0);
-        macroTable.setValueAt(SelectFromDaysStatistics.getAmountOfFilledPointsFromNotepad(MyDate.getCurrentDayInSQLFormat()), 1, 1);
+        macroTable.setValueAt(SelectFromDaysStatistics.getAmountOfFilledPointsFromNotepad(addProductToDayDisplaySelectedFDateDayLabel.getText()), 1, 1);
         macroTable.setValueAt("kcal_consume", 2, 0);
         macroTable.setValueAt(macroToDisplay.getKcal(), 2, 1);
         macroTable.setValueAt("protein_consume", 3, 0);
