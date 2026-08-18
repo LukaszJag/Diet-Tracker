@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2026-08-17',
+'Monday',
+'Second Breakfast',
+220.0,
+'Bagietka katalońska',
+277.0,
+10.0,
+17.0,
+21.0,
+'2026-08-18 02:03:53',
+'none',
+609.4,
+46.2,
+37.4,
+22.0
+);

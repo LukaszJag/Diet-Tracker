@@ -1,0 +1,9 @@
+Name: Activia Jogurt truskawka kiwi
+Brand: Danone
+Package has: 280.0
+Macro for: 100.0
+KCal: 62.0
+Protein: 2.8
+Fat: 1.2
+Carbs: 9.9
+Comment optional: Link: https://www.carrefour.pl/mleko-nabial-jaja/jogurt-kefir-maslanka-serki-homogenizowane/jogurty-probiotyczne/activia-jogurt-truskawka-kiwi-280-g

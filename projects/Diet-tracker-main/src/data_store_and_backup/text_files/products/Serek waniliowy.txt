@@ -1,0 +1,9 @@
+Name: Serek waniliowy
+Brand: Rolmlecz
+Package has: 200.0
+Macro for: 100.0
+KCal: 132.0
+Protein: 7.5
+Fat: 5.5
+Carbs: 13.0
+Comment optional: Dane z opakowania

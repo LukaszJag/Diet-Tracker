@@ -1,0 +1,40 @@
+INSERT INTO `diet_tracker_schema`.product_table
+(`product_name`,
+`product_brand`,
+`product_package_has`,
+`product_macro_for`,
+`product_kcal`,
+`product_protein`,
+`product_fat`,
+`product_carbs`,
+`comment_optional`)
+Values
+('Bagietka katalońska',
+'Katalońska',
+220.0,
+100.0,
+277.0,
+10.0,
+17.0,
+21.0,
+'Link: https://www.dine4fit.pl/produkty/bagietka-katalonska-tomcio-paluch');
+INSERT INTO `diet_tracker_schema`.product_table
+(`product_name`,
+`product_brand`,
+`product_package_has`,
+`product_macro_for`,
+`product_kcal`,
+`product_protein`,
+`product_fat`,
+`product_carbs`,
+`comment_optional`)
+Values
+('Bagietka katalońska',
+'Tomcio Paluch',
+220.0,
+100.0,
+277.0,
+10.0,
+17.0,
+21.0,
+'Link: https://www.dine4fit.pl/produkty/bagietka-katalonska-tomcio-paluch');
