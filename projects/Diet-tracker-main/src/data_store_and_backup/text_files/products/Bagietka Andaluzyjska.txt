@@ -1,0 +1,9 @@
+Name: Bagietka Andaluzyjska
+Brand: Tomcio Paluch
+Package has: 210.0
+Macro for: 100.0
+KCal: 298.0
+Protein: 11.0
+Fat: 16.0
+Carbs: 29.0
+Comment optional: Link: https://delio.com.pl/products/A0005640-bagietka-andaluzyjska-tomcio-paluch

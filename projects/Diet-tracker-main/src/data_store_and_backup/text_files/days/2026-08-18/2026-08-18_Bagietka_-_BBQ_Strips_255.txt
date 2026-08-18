@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2026-08-18',
+'Tuesday',
+'Breakfast',
+255.0,
+'Bagietka - BBQ Strips',
+263.0,
+9.7,
+12.0,
+28.0,
+'2026-08-18 01:05:07',
+'none',
+670.64996,
+71.4,
+30.599998,
+24.734999
+);
