@@ -39,9 +39,6 @@ public class Notes extends AppCompatActivity {
     private EditText filterSubtitle, filterCategory, filterUrgently;
     private CheckBox filterCbLearning, filterCbGeneral, filterCbToday;
 
-    // Visibility toggle checkboxes
-    private CheckBox hideCbSection1, hideCbSection2, hideCbSection3, hideCbSection4;
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,12 +57,6 @@ public class Notes extends AppCompatActivity {
         filterCbLearning = findViewById(R.id.filterCbLearning);
         filterCbGeneral = findViewById(R.id.filterCbGeneral);
         filterCbToday = findViewById(R.id.filterCbToday);
-
-        // Binding new section hiding checkboxes
-        hideCbSection1 = findViewById(R.id.hideCbSection1);
-        hideCbSection2 = findViewById(R.id.hideCbSection2);
-        hideCbSection3 = findViewById(R.id.hideCbSection3);
-        hideCbSection4 = findViewById(R.id.hideCbSection4);
 
         TextWatcher filterTextWatcher = new TextWatcher() {
             @Override
@@ -88,13 +79,6 @@ public class Notes extends AppCompatActivity {
         filterCbLearning.setOnCheckedChangeListener(filterCheckWatcher);
         filterCbGeneral.setOnCheckedChangeListener(filterCheckWatcher);
         filterCbToday.setOnCheckedChangeListener(filterCheckWatcher);
-
-        // Listener for section display toggle checkboxes
-        CompoundButton.OnCheckedChangeListener hideCheckWatcher = (buttonView, isChecked) -> updateSectionVisibilities();
-        hideCbSection1.setOnCheckedChangeListener(hideCheckWatcher);
-        hideCbSection2.setOnCheckedChangeListener(hideCheckWatcher);
-        hideCbSection3.setOnCheckedChangeListener(hideCheckWatcher);
-        hideCbSection4.setOnCheckedChangeListener(hideCheckWatcher);
 
         btnAddNote = findViewById(R.id.button);
         btnAddNote.setText("Add Note");
@@ -121,14 +105,6 @@ public class Notes extends AppCompatActivity {
 
         adapter.filter(subtitleQuery, categoryQuery, urgentlyQuery,
                 showLearningOnly, showGeneralOnly, showTodayOnly);
-    }
-
-    private void updateSectionVisibilities() {
-        boolean hideS1 = hideCbSection1.isChecked();
-        boolean hideS2 = hideCbSection2.isChecked();
-        boolean hideS3 = hideCbSection3.isChecked();
-        boolean hideS4 = hideCbSection4.isChecked();
-        adapter.setSectionVisibilities(hideS1, hideS2, hideS3, hideS4);
     }
 
     private void showAddNoteDialog() {

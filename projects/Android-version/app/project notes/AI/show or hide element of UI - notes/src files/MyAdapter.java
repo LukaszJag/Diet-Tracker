@@ -18,12 +18,6 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     private List<Note> noteList;
     private List<Note> originalList;
 
-    // Visibility states for the 4 sections
-    private boolean hideSection1 = false;
-    private boolean hideSection2 = false;
-    private boolean hideSection3 = false;
-    private boolean hideSection4 = false;
-
     public MyAdapter() {
         this.noteList = new ArrayList<>();
         this.originalList = new ArrayList<>();
@@ -31,14 +25,6 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
     public List<Note> getOriginalList() {
         return originalList;
-    }
-
-    public void setSectionVisibilities(boolean hideS1, boolean hideS2, boolean hideS3, boolean hideS4) {
-        this.hideSection1 = hideS1;
-        this.hideSection2 = hideS2;
-        this.hideSection3 = hideS3;
-        this.hideSection4 = hideS4;
-        notifyDataSetChanged();
     }
 
     public void addItem(Note note) {
@@ -110,12 +96,6 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         Note currentItem = noteList.get(position);
 
-        // Control section container visibilities
-        holder.section1.setVisibility(hideSection1 ? View.GONE : View.VISIBLE);
-        holder.section2.setVisibility(hideSection2 ? View.GONE : View.VISIBLE);
-        holder.section3.setVisibility(hideSection3 ? View.GONE : View.VISIBLE);
-        holder.section4.setVisibility(hideSection4 ? View.GONE : View.VISIBLE);
-
         holder.tv1.setText(currentItem.getNoteTitle());
         holder.tv2.setText(currentItem.getNoteSubtitle());
         holder.tv3.setText(currentItem.getNoteDescription());
@@ -144,7 +124,6 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         TextView tv1, tv2, tv3;
         TextView tvCategory, tvUrgently, tvDates, tvDaysSince;
         CheckBox cbIsLearning, cbIsGeneralToDo, cbIsTodayTask;
-        View section1, section2, section3, section4;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -158,11 +137,6 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
             cbIsLearning = itemView.findViewById(R.id.cbIsLearning);
             cbIsGeneralToDo = itemView.findViewById(R.id.cbIsGeneralToDo);
             cbIsTodayTask = itemView.findViewById(R.id.cbIsTodayTask);
-
-            section1 = itemView.findViewById(R.id.section1);
-            section2 = itemView.findViewById(R.id.section2);
-            section3 = itemView.findViewById(R.id.section3);
-            section4 = itemView.findViewById(R.id.section4);
         }
     }
 }
