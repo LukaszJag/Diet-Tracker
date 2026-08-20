@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -18,7 +17,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.ItemTouchHelper;
+import androidx.recyclerview.widget.ItemTouchHelper; // Added import
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -39,21 +38,11 @@ public class Notes extends AppCompatActivity {
     private RecyclerView recyclerView;
     private MyAdapter adapter;
     private Button btnAddNote;
-    private EditText filterSubtitle;
+    private EditText filterSubtitle, filterCategory, filterUrgently;
     private CheckBox filterCbLearning, filterCbGeneral, filterCbToday;
 
+    // Checkboxes used to hide section displays
     private CheckBox hideCbSection1, hideCbSection2, hideCbSection3, hideCbSection4;
-
-    private Spinner sortSpinner;
-
-    // Filter controls for Categories and Urgency
-    private TextView filterCategorySpinner;
-    private Spinner filterUrgentlySpinner;
-
-    // Multichoice State Fields
-    private List<String> uniqueCategoriesList = new ArrayList<>();
-    private boolean[] checkedCategories;
-    private List<String> selectedCategories = new ArrayList<>();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -66,35 +55,27 @@ public class Notes extends AppCompatActivity {
         adapter = new MyAdapter();
         recyclerView.setAdapter(adapter);
 
+        // Bind clicks on individual notes to the edit flow
         adapter.setOnItemClickListener((position, note) -> {
             showEditNoteDialog(position, note);
         });
 
-        // Swipe-to-Delete Configuration
-        ItemTouchHelper.SimpleCallback swipeCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+        // Setup Swipe-to-Delete functionality (Left Swiping only)
+        ItemTouchHelper.SimpleCallback swipeCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
             @Override
             public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
-                return false;
+                return false; // No drag-and-drop actions needed
             }
 
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
                 int position = viewHolder.getAdapterPosition();
                 if (position != RecyclerView.NO_POSITION) {
+                    // Removes the note from adapter's active and original list structures
                     adapter.deleteItem(position);
+                    // Persists the changes directly to the JSON storage
                     NoteStorage.saveNotes(Notes.this, adapter.getOriginalList());
-                    setupCategorySpinner(); // Refreshes categories in case deleted note was the only one in its category
                 }
-            }
-
-            @Override
-            public boolean isItemViewSwipeEnabled() {
-                return true;
-            }
-
-            @Override
-            public float getSwipeThreshold(@NonNull RecyclerView.ViewHolder viewHolder) {
-                return 0.3f;
             }
         };
 
@@ -102,8 +83,8 @@ public class Notes extends AppCompatActivity {
         itemTouchHelper.attachToRecyclerView(recyclerView);
 
         filterSubtitle = findViewById(R.id.filterSubtitle);
-        filterCategorySpinner = findViewById(R.id.filterCategorySpinner);
-        filterUrgentlySpinner = findViewById(R.id.filterUrgentlySpinner);
+        filterCategory = findViewById(R.id.filterCategory);
+        filterUrgently = findViewById(R.id.filterUrgently);
 
         filterCbLearning = findViewById(R.id.filterCbLearning);
         filterCbGeneral = findViewById(R.id.filterCbGeneral);
@@ -114,48 +95,7 @@ public class Notes extends AppCompatActivity {
         hideCbSection3 = findViewById(R.id.hideCbSection3);
         hideCbSection4 = findViewById(R.id.hideCbSection4);
 
-        sortSpinner = findViewById(R.id.sortSpinner);
-
-        // Sorting Spinner Configuration
-        List<String> sortOptions = new ArrayList<>();
-        sortOptions.add("None");
-        sortOptions.add("Date Created (Newest First)");
-        sortOptions.add("Date Created (Oldest First)");
-        sortOptions.add("Urgency (High to Low)");
-        sortOptions.add("Urgency (Low to High)");
-
-        ArrayAdapter<String> sortAdapter = new ArrayAdapter<>(this,
-                android.R.layout.simple_spinner_item, sortOptions);
-        sortAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        sortSpinner.setAdapter(sortAdapter);
-
-        sortSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                int criteria = MyAdapter.SORT_NONE;
-                switch (position) {
-                    case 1:
-                        criteria = MyAdapter.SORT_DATE_NEWEST;
-                        break;
-                    case 2:
-                        criteria = MyAdapter.SORT_DATE_OLDEST;
-                        break;
-                    case 3:
-                        criteria = MyAdapter.SORT_URGENCY_HIGH;
-                        break;
-                    case 4:
-                        criteria = MyAdapter.SORT_URGENCY_LOW;
-                        break;
-                }
-                adapter.setSortCriteria(criteria);
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {}
-        });
-
-        // Subtitle text filter
-        filterSubtitle.addTextChangedListener(new TextWatcher() {
+        TextWatcher filterTextWatcher = new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 
@@ -166,7 +106,11 @@ public class Notes extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {}
-        });
+        };
+
+        filterSubtitle.addTextChangedListener(filterTextWatcher);
+        filterCategory.addTextChangedListener(filterTextWatcher);
+        filterUrgently.addTextChangedListener(filterTextWatcher);
 
         CompoundButton.OnCheckedChangeListener filterCheckWatcher = (buttonView, isChecked) -> applyFilters();
         filterCbLearning.setOnCheckedChangeListener(filterCheckWatcher);
@@ -191,24 +135,18 @@ public class Notes extends AppCompatActivity {
                 adapter.addItem(note);
             }
         }
-
-        // Initialize custom selection spinners
-        setupCategorySpinner();
-        setupUrgencySpinner();
     }
 
     private void applyFilters() {
         String subtitleQuery = filterSubtitle.getText().toString();
-
-        // Obtains selected Urgency from spinner selection
-        String urgencyQuery = filterUrgentlySpinner.getSelectedItem() != null ?
-                filterUrgentlySpinner.getSelectedItem().toString() : "All Urgencies";
+        String categoryQuery = filterCategory.getText().toString();
+        String urgentlyQuery = filterUrgently.getText().toString();
 
         boolean showLearningOnly = filterCbLearning.isChecked();
         boolean showGeneralOnly = filterCbGeneral.isChecked();
         boolean showTodayOnly = filterCbToday.isChecked();
 
-        adapter.filter(subtitleQuery, selectedCategories, urgencyQuery,
+        adapter.filter(subtitleQuery, categoryQuery, urgentlyQuery,
                 showLearningOnly, showGeneralOnly, showTodayOnly);
     }
 
@@ -218,113 +156,6 @@ public class Notes extends AppCompatActivity {
         boolean hideS3 = hideCbSection3.isChecked();
         boolean hideS4 = hideCbSection4.isChecked();
         adapter.setSectionVisibilities(hideS1, hideS2, hideS3, hideS4);
-    }
-
-    // Gathers unique categories dynamically, maintaining checks on pre-existing filters
-    private void setupCategorySpinner() {
-        List<String> previouslyChecked = new ArrayList<>(selectedCategories);
-
-        uniqueCategoriesList.clear();
-        for (Note note : adapter.getOriginalList()) {
-            String cat = note.getNoteCategory();
-            if (cat != null && !cat.trim().isEmpty() && !uniqueCategoriesList.contains(cat.trim())) {
-                uniqueCategoriesList.add(cat.trim());
-            }
-        }
-
-        // Hardcoded defaults to ensure categories list is never empty
-        String[] defaults = {"Security", "Organize", "Financial", "General"};
-        for (String d : defaults) {
-            if (!uniqueCategoriesList.contains(d)) {
-                uniqueCategoriesList.add(d);
-            }
-        }
-
-        checkedCategories = new boolean[uniqueCategoriesList.size()];
-        selectedCategories.clear();
-
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < uniqueCategoriesList.size(); i++) {
-            String currentCat = uniqueCategoriesList.get(i);
-            if (previouslyChecked.contains(currentCat)) {
-                checkedCategories[i] = true;
-                selectedCategories.add(currentCat);
-                if (sb.length() > 0) sb.append(", ");
-                sb.append(currentCat);
-            }
-        }
-
-        if (selectedCategories.isEmpty()) {
-            filterCategorySpinner.setText("All Categories");
-        } else {
-            filterCategorySpinner.setText(sb.toString());
-        }
-
-        filterCategorySpinner.setOnClickListener(v -> showCategorySelectionDialog());
-    }
-
-    private void showCategorySelectionDialog() {
-        String[] items = uniqueCategoriesList.toArray(new String[0]);
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Select Categories");
-        builder.setMultiChoiceItems(items, checkedCategories, (dialog, which, isChecked) -> {
-            checkedCategories[which] = isChecked;
-        });
-        builder.setPositiveButton("OK", (dialog, which) -> {
-            selectedCategories.clear();
-            StringBuilder sb = new StringBuilder();
-            for (int i = 0; i < checkedCategories.length; i++) {
-                if (checkedCategories[i]) {
-                    selectedCategories.add(uniqueCategoriesList.get(i));
-                    if (sb.length() > 0) sb.append(", ");
-                    sb.append(uniqueCategoriesList.get(i));
-                }
-            }
-            if (selectedCategories.isEmpty()) {
-                filterCategorySpinner.setText("All Categories");
-            } else {
-                filterCategorySpinner.setText(sb.toString());
-            }
-            applyFilters();
-        });
-        builder.setNegativeButton("Cancel", null);
-        builder.setNeutralButton("Clear All", (dialog, which) -> {
-            for (int i = 0; i < checkedCategories.length; i++) {
-                checkedCategories[i] = false;
-            }
-            selectedCategories.clear();
-            filterCategorySpinner.setText("All Categories");
-            applyFilters();
-        });
-        builder.create().show();
-    }
-
-    private void setupUrgencySpinner() {
-        Note sampleNote = new Note();
-        List<String> urgencyOptions = new ArrayList<>();
-        urgencyOptions.add("All Urgencies");
-
-        for (String u : sampleNote.getUrgentScaleEnglish()) {
-            if (!urgencyOptions.contains(u)) urgencyOptions.add(u);
-        }
-        for (String u : sampleNote.getUrgentScalePolish()) {
-            if (!urgencyOptions.contains(u)) urgencyOptions.add(u);
-        }
-
-        ArrayAdapter<String> urgencyFilterAdapter = new ArrayAdapter<>(this,
-                android.R.layout.simple_spinner_item, urgencyOptions);
-        urgencyFilterAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        filterUrgentlySpinner.setAdapter(urgencyFilterAdapter);
-
-        filterUrgentlySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                applyFilters();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {}
-        });
     }
 
     private void showEditNoteDialog(int position, Note note) {
@@ -344,6 +175,7 @@ public class Notes extends AppCompatActivity {
         final Spinner dialogSpinnerLearningCat = dialogView.findViewById(R.id.dialogSpinnerLearningCat);
         final EditText dialogDeadline = dialogView.findViewById(R.id.dialogDeadline);
 
+        // Pre-fill existing fields
         dialogTitle.setText(note.getNoteTitle());
         dialogSubtitle.setText(note.getNoteSubtitle());
         dialogDescription.setText(note.getNoteDescription());
@@ -375,6 +207,7 @@ public class Notes extends AppCompatActivity {
         learnCatAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         dialogSpinnerLearningCat.setAdapter(learnCatAdapter);
 
+        // Setup visibility depending on stored checkbox state
         if (note.isLearning()) {
             tvLearningCatLabel.setVisibility(View.VISIBLE);
             dialogSpinnerLearningCat.setVisibility(View.VISIBLE);
@@ -424,6 +257,7 @@ public class Notes extends AppCompatActivity {
             LearningCategories selectedLearningCat = isLearning ? (LearningCategories) dialogSpinnerLearningCat.getSelectedItem() : null;
             String deadline = dialogDeadline.getText().toString();
 
+            // Maintain the note's original creation date
             String dateCreated = note.getDateCreated();
 
             Note updatedNote = new Note(title, subtitle, description, category, urgent,
@@ -431,13 +265,11 @@ public class Notes extends AppCompatActivity {
 
             adapter.setItem(position, updatedNote);
             NoteStorage.saveNotes(Notes.this, adapter.getOriginalList());
-            setupCategorySpinner(); // Rebuilds the categories filter list dynamically on update
         });
 
         builder.setNeutralButton("Delete", (dialog, which) -> {
             adapter.deleteItem(position);
             NoteStorage.saveNotes(Notes.this, adapter.getOriginalList());
-            setupCategorySpinner();
         });
 
         builder.setNegativeButton("Cancel", null);
@@ -520,7 +352,6 @@ public class Notes extends AppCompatActivity {
             adapter.addItem(newNote);
 
             NoteStorage.saveNotes(Notes.this, adapter.getOriginalList());
-            setupCategorySpinner(); // Rebuilds the category multichoice options dynamically for any newly added category
         });
 
         builder.setNegativeButton("Cancel", null);

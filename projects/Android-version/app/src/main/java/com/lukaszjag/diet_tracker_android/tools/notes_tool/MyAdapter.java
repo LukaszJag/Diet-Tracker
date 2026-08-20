@@ -11,18 +11,32 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.lukaszjag.diet_tracker_android.R;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
+    public static final int SORT_NONE = 0;
+    public static final int SORT_DATE_NEWEST = 1;
+    public static final int SORT_DATE_OLDEST = 2;
+    public static final int SORT_URGENCY_HIGH = 3;
+    public static final int SORT_URGENCY_LOW = 4;
+
+    public interface OnItemClickListener {
+        void onItemClick(int position, Note note);
+    }
+
     private List<Note> noteList;
     private List<Note> originalList;
+    private OnItemClickListener listener;
 
-    // Visibility states for the 4 sections
     private boolean hideSection1 = false;
     private boolean hideSection2 = false;
     private boolean hideSection3 = false;
     private boolean hideSection4 = false;
+
+    private int sortCriteria = SORT_NONE;
 
     public MyAdapter() {
         this.noteList = new ArrayList<>();
@@ -33,6 +47,10 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         return originalList;
     }
 
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.listener = listener;
+    }
+
     public void setSectionVisibilities(boolean hideS1, boolean hideS2, boolean hideS3, boolean hideS4) {
         this.hideSection1 = hideS1;
         this.hideSection2 = hideS2;
@@ -41,10 +59,17 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         notifyDataSetChanged();
     }
 
+    public void setSortCriteria(int criteria) {
+        this.sortCriteria = criteria;
+        applySort();
+        notifyDataSetChanged();
+    }
+
     public void addItem(Note note) {
         noteList.add(note);
         originalList.add(note);
-        notifyItemInserted(noteList.size() - 1);
+        applySort();
+        notifyItemInserted(noteList.indexOf(note));
     }
 
     public Note getItem(int position) {
@@ -62,7 +87,8 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
                 originalList.set(origIdx, note);
             }
             noteList.set(position, note);
-            notifyItemChanged(position);
+            applySort();
+            notifyDataSetChanged();
         }
     }
 
@@ -76,16 +102,72 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         }
     }
 
-    public void filter(String subtitle, String category, String urgently,
+    private void applySort() {
+        if (sortCriteria == SORT_NONE) return;
+
+        Collections.sort(noteList, new Comparator<Note>() {
+            @Override
+            public int compare(Note n1, Note n2) {
+                switch (sortCriteria) {
+                    case SORT_DATE_NEWEST: {
+                        String d1 = n1.getDateCreated() != null ? n1.getDateCreated() : "";
+                        String d2 = n2.getDateCreated() != null ? n2.getDateCreated() : "";
+                        return d2.compareTo(d1);
+                    }
+                    case SORT_DATE_OLDEST: {
+                        String d1 = n1.getDateCreated() != null ? n1.getDateCreated() : "";
+                        String d2 = n2.getDateCreated() != null ? n2.getDateCreated() : "";
+                        return d1.compareTo(d2);
+                    }
+                    case SORT_URGENCY_HIGH:
+                        return Integer.compare(getUrgencyWeight(n2), getUrgencyWeight(n1));
+                    case SORT_URGENCY_LOW:
+                        return Integer.compare(getUrgencyWeight(n1), getUrgencyWeight(n2));
+                    default:
+                        return 0;
+                }
+            }
+        });
+    }
+
+    private int getUrgencyWeight(Note note) {
+        if (note == null) return 0;
+        String urgency = note.getNoteUrgently();
+        if (urgency == null) return 0;
+
+        int idx = note.getUrgentScaleEnglish().indexOf(urgency);
+        if (idx != -1) return idx;
+
+        idx = note.getUrgentScalePolish().indexOf(urgency);
+        if (idx != -1) return idx;
+
+        return 0;
+    }
+
+    public void filter(String subtitle, List<String> selectedCategories, String selectedUrgency,
                        boolean showLearningOnly, boolean showGeneralOnly, boolean showTodayOnly) {
         noteList.clear();
         String qSub = subtitle != null ? subtitle.toLowerCase().trim() : "";
-        String qCat = category != null ? category.toLowerCase().trim() : "";
-        String qUrg = urgently != null ? urgently.toLowerCase().trim() : "";
+        String qUrg = (selectedUrgency == null || selectedUrgency.equals("All Urgencies")) ? "" : selectedUrgency.toLowerCase().trim();
 
         for (Note note : originalList) {
             boolean matchSub = qSub.isEmpty() || (note.getNoteSubtitle() != null && note.getNoteSubtitle().toLowerCase().contains(qSub));
-            boolean matchCat = qCat.isEmpty() || (note.getNoteCategory() != null && note.getNoteCategory().toLowerCase().contains(qCat));
+
+            // Evaluates multi-selection list filter for Categories
+            boolean matchCat = true;
+            if (selectedCategories != null && !selectedCategories.isEmpty()) {
+                matchCat = false;
+                if (note.getNoteCategory() != null) {
+                    String noteCat = note.getNoteCategory().trim().toLowerCase();
+                    for (String selected : selectedCategories) {
+                        if (selected.trim().toLowerCase().equals(noteCat)) {
+                            matchCat = true;
+                            break;
+                        }
+                    }
+                }
+            }
+
             boolean matchUrg = qUrg.isEmpty() || (note.getNoteUrgently() != null && note.getNoteUrgently().toLowerCase().contains(qUrg));
 
             boolean matchLearning = !showLearningOnly || note.isLearning();
@@ -96,6 +178,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
                 noteList.add(note);
             }
         }
+        applySort();
         notifyDataSetChanged();
     }
 
@@ -110,7 +193,6 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         Note currentItem = noteList.get(position);
 
-        // Control section container visibilities
         holder.section1.setVisibility(hideSection1 ? View.GONE : View.VISIBLE);
         holder.section2.setVisibility(hideSection2 ? View.GONE : View.VISIBLE);
         holder.section3.setVisibility(hideSection3 ? View.GONE : View.VISIBLE);
@@ -133,6 +215,13 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
         long daysSince = currentItem.getDaysSinceCreation();
         holder.tvDaysSince.setText(daysSince + " days since create");
+
+        holder.itemView.setOnClickListener(v -> {
+            int pos = holder.getAdapterPosition();
+            if (listener != null && pos != RecyclerView.NO_POSITION) {
+                listener.onItemClick(pos, noteList.get(pos));
+            }
+        });
     }
 
     @Override

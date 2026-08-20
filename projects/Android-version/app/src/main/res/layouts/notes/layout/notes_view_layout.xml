@@ -61,23 +61,26 @@
                 android:textSize="12sp"
                 android:inputType="text" />
 
-            <EditText
-                android:id="@+id/filterCategory"
+            <!-- Multichoice Category Spinner Dropdown -->
+            <TextView
+                android:id="@+id/filterCategorySpinner"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:hint="Category"
-                android:textSize="12sp"
-                android:inputType="text" />
+                style="?android:attr/spinnerStyle"
+                android:text="All Categories"
+                android:textSize="11sp"
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:layout_gravity="center_vertical" />
 
-            <EditText
-                android:id="@+id/filterUrgently"
+            <!-- Urgency ComboBox -->
+            <Spinner
+                android:id="@+id/filterUrgentlySpinner"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:hint="Urgency"
-                android:textSize="12sp"
-                android:inputType="text" />
+                android:layout_gravity="center_vertical" />
         </LinearLayout>
 
         <LinearLayout
@@ -108,7 +111,7 @@
                 android:textSize="12sp" />
         </LinearLayout>
 
-        <!-- New Row to Toggle Section Visibilities (Hidden when checked) -->
+        <!-- Toggle Section Visibilities -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -151,6 +154,29 @@
                 android:layout_height="wrap_content"
                 android:text="4"
                 android:textSize="12sp" />
+        </LinearLayout>
+
+        <!-- Sorting Section -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="4dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Sort by:"
+                android:textStyle="bold"
+                android:textSize="12sp"
+                android:textColor="#555555"
+                android:layout_gravity="center_vertical"/>
+
+            <Spinner
+                android:id="@+id/sortSpinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp" />
         </LinearLayout>
     </LinearLayout>
 
