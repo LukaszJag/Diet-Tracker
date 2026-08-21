@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2026-08-21',
+'Friday',
+'Dinner',
+80.0,
+'Pastella jajeczna z kurkami',
+438.0,
+3.7,
+44.0,
+6.2,
+'2026-08-21 08:44:53',
+'none',
+350.4,
+4.96,
+35.2,
+2.96
+);

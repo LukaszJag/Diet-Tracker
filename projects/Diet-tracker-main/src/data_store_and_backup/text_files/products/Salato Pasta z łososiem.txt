@@ -1,0 +1,9 @@
+Name: Salato Pasta z łososiem
+Brand: Salato
+Package has: 80.0
+Macro for: 100.0
+KCal: 512.0
+Protein: 4.7
+Fat: 51.9
+Carbs: 6.0
+Comment optional: Link: https://zakupy.biedronka.pl/salato-salato-pasta-z-lososiem-80-g-0001215472.html

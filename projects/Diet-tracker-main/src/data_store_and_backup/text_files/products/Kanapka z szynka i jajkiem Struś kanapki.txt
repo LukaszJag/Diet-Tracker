@@ -1,0 +1,9 @@
+Name: Kanapka z szynka i jajkiem Struś kanapki
+Brand: Struś kanapki
+Package has: 170.0
+Macro for: 100.0
+KCal: 247.0
+Protein: 10.0
+Fat: 12.0
+Carbs: 24.0
+Comment optional: Link: https://www.dine4fit.pl/produkty/kanapka-z-szynka-i-jajkiem-strus-kanapki

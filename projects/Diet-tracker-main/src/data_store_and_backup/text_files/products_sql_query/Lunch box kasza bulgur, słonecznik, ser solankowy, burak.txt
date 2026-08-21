@@ -1,0 +1,20 @@
+INSERT INTO `diet_tracker_schema`.product_table
+(`product_name`,
+`product_brand`,
+`product_package_has`,
+`product_macro_for`,
+`product_kcal`,
+`product_protein`,
+`product_fat`,
+`product_carbs`,
+`comment_optional`)
+Values
+('Lunch box kasza bulgur, słonecznik, ser solankowy, burak',
+'Vital Fresh',
+250.0,
+100.0,
+153.0,
+5.4,
+8.0,
+13.0,
+'Link: https://pl.openfoodfacts.org/product/5902666643971/lunch-box-kasza-bulgur-s%C5%82onecznik-ser-solankowy-burak-vital-fresh');

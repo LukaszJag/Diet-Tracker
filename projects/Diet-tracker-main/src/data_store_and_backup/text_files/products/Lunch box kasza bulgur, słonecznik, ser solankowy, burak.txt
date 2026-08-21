@@ -1,0 +1,9 @@
+Name: Lunch box kasza bulgur, słonecznik, ser solankowy, burak
+Brand: Vital Fresh
+Package has: 250.0
+Macro for: 100.0
+KCal: 153.0
+Protein: 5.4
+Fat: 8.0
+Carbs: 13.0
+Comment optional: Link: https://pl.openfoodfacts.org/product/5902666643971/lunch-box-kasza-bulgur-s%C5%82onecznik-ser-solankowy-burak-vital-fresh

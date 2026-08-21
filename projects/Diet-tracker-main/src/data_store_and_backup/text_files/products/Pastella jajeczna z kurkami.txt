@@ -1,0 +1,9 @@
+Name: Pastella jajeczna z kurkami
+Brand: Lisner
+Package has: 80.0
+Macro for: 100.0
+KCal: 438.0
+Protein: 3.7
+Fat: 44.0
+Carbs: 6.2
+Comment optional: Link: https://www.lisner.pl/produkty/pasty/pasta-jajeczna-z-kurkami-80g

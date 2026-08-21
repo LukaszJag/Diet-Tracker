@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2026-08-20',
+'Thursday',
+'Second Breakfast',
+170.0,
+'Kanapka z szynka i jajkiem Struś kanapki',
+247.0,
+10.0,
+12.0,
+24.0,
+'2026-08-21 09:24:55',
+'none',
+419.90002,
+40.800003,
+20.400002,
+17.0
+);

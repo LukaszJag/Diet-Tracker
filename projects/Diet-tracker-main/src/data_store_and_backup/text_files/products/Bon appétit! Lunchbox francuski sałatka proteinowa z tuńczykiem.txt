@@ -1,0 +1,9 @@
+Name: Bon appétit! Lunchbox francuski sałatka proteinowa z tuńczykiem
+Brand: Carrefour
+Package has: 270.0
+Macro for: 100.0
+KCal: 155.0
+Protein: 9.36
+Fat: 7.6
+Carbs: 10.6
+Comment optional: Link: https://www.carrefour.pl/dania-gotowe-i-przystawki/surowki-salatki/carrefour-bon-appetit-lunchbox-francuski-salatka-proteinowa-z-tunczykiem-270-g

@@ -1,0 +1,20 @@
+INSERT INTO `diet_tracker_schema`.product_table
+(`product_name`,
+`product_brand`,
+`product_package_has`,
+`product_macro_for`,
+`product_kcal`,
+`product_protein`,
+`product_fat`,
+`product_carbs`,
+`comment_optional`)
+Values
+('Salato Pasta z łososiem',
+'Salato',
+80.0,
+100.0,
+512.0,
+4.7,
+51.9,
+6.0,
+'Link: https://zakupy.biedronka.pl/salato-salato-pasta-z-lososiem-80-g-0001215472.html');
