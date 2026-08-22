@@ -531,9 +531,7 @@ public class Notes extends AppCompatActivity {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
         String today = sdf.format(new Date());
 
-        adapter.addItem(new Note("BitWarden Config", "Skonfigurować BitWardena", "Założyć konto, ustawić hasło, dodać kilka haseł", "Security", "High-Stakes Campaign", false, true, false, null, today, ""));
-        adapter.addItem(new Note("Bookshelf Sort", "Dodać kategorie do książek na półce", "Przeniesienie bazy do serwisu lubimyczytać.pl", "Organize", "no urgent scale", false, false, false, null, today, ""));
-        adapter.addItem(new Note("Savings Goal", "Wyznaczyć kwotę do odłożenia na monitor", "Znaleźć konkretny model do kupienia i odłożyć budżet", "Financial", "Strategic Initiative", false, true, true, null, today, "2026-12-31"));
+        adapter.addItem(new Note("Test task", "-1", "empty", "empty", "no urgent scale", false, false, false, null, "", ""));
 
         NoteStorage.saveNotes(this, adapter.getOriginalList());
     }

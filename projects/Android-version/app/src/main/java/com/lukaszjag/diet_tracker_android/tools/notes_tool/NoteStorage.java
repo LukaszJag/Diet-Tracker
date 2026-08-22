@@ -1,6 +1,8 @@
 package com.lukaszjag.diet_tracker_android.tools.notes_tool;
 
 import android.content.Context;
+import android.net.Uri;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -8,6 +10,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.nio.charset.StandardCharsets;
@@ -17,6 +20,9 @@ import java.util.List;
 public class NoteStorage {
     private static final String FILE_NAME = "notes_data.json";
 
+    /**
+     * Saves the list of notes to the app's secure internal storage directory.
+     */
     public static void saveNotes(Context context, List<Note> notes) {
         try {
             JSONArray jsonArray = new JSONArray();
@@ -28,7 +34,7 @@ public class NoteStorage {
             }
             String jsonContent = jsonArray.toString(4);
 
-            // Save directly to the app's secure internal files directory
+            // Save directly to the app's internal files directory (bypasses Scoped Storage restrictions)
             File file = new File(context.getFilesDir(), FILE_NAME);
             try (FileOutputStream fos = new FileOutputStream(file);
                  OutputStreamWriter osw = new OutputStreamWriter(fos, StandardCharsets.UTF_8)) {
@@ -39,6 +45,9 @@ public class NoteStorage {
         }
     }
 
+    /**
+     * Loads the list of notes from the app's internal storage directory.
+     */
     public static List<Note> loadNotes(Context context) {
         List<Note> notes = new ArrayList<>();
         File file = new File(context.getFilesDir(), FILE_NAME);
@@ -60,7 +69,7 @@ public class NoteStorage {
 
             String jsonContent = sb.toString();
 
-            // Strip hidden UTF-8 BOM if present
+            // Strip hidden UTF-8 BOM if present (often added by Windows/external text editors)
             if (jsonContent.startsWith("\uFEFF")) {
                 jsonContent = jsonContent.substring(1);
             }
@@ -81,5 +90,46 @@ public class NoteStorage {
         }
 
         return notes;
+    }
+
+    /**
+     * Imports external JSON files via Uri, validates structure, and overwrites local notes storage.
+     */
+    public static boolean importNotes(Context context, Uri sourceUri) {
+        try (InputStream in = context.getContentResolver().openInputStream(sourceUri)) {
+            if (in == null) return false;
+
+            BufferedReader reader = new BufferedReader(new InputStreamReader(in, StandardCharsets.UTF_8));
+            StringBuilder sb = new StringBuilder();
+            char[] buffer = new char[1024];
+            int numRead;
+            while ((numRead = reader.read(buffer)) != -1) {
+                sb.append(buffer, 0, numRead);
+            }
+
+            String jsonContent = sb.toString();
+
+            // Strip hidden UTF-8 BOM if present
+            if (jsonContent.startsWith("\uFEFF")) {
+                jsonContent = jsonContent.substring(1);
+            }
+            jsonContent = jsonContent.trim();
+
+            JSONArray jsonArray = new JSONArray(jsonContent);
+            List<Note> importedNotes = new ArrayList<>();
+            for (int i = 0; i < jsonArray.length(); i++) {
+                Note note = Note.fromJsonObject(jsonArray.getJSONObject(i));
+                if (note != null) {
+                    importedNotes.add(note);
+                }
+            }
+
+            // Write validated imported notes directly to secure internal storage
+            saveNotes(context, importedNotes);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 }
