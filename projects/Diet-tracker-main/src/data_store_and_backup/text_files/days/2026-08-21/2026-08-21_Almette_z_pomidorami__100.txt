@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2026-08-21',
+'Friday',
+'Supper',
+100.0,
+'Almette z pomidorami ',
+238.0,
+7.2,
+21.0,
+5.0,
+'2026-08-22 05:30:05',
+'none',
+238.0,
+5.0,
+21.0,
+7.2
+);
