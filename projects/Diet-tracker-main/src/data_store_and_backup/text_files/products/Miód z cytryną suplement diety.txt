@@ -1,0 +1,9 @@
+Name: Miód z cytryną suplement diety
+Brand: Herbapol
+Package has: 420.0
+Macro for: 100.0
+KCal: 259.0
+Protein: 0.0
+Fat: 0.0
+Carbs: 65.0
+Comment optional: Dane z chata GPT: https://chatgpt.com/share/6a8b28ea-ac94-83eb-959e-b0738461ef0b

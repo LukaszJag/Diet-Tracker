@@ -1,0 +1,20 @@
+INSERT INTO `diet_tracker_schema`.product_table
+(`product_name`,
+`product_brand`,
+`product_package_has`,
+`product_macro_for`,
+`product_kcal`,
+`product_protein`,
+`product_fat`,
+`product_carbs`,
+`comment_optional`)
+Values
+('Miód z cytryną suplement diety',
+'Herbapol',
+420.0,
+100.0,
+259.0,
+0.0,
+0.0,
+65.0,
+'Dane z chata GPT: https://chatgpt.com/share/6a8b28ea-ac94-83eb-959e-b0738461ef0b');

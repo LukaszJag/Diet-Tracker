@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2026-08-23',
+'Sunday',
+'Dinner',
+632.0,
+'Kotlet z jajka i bułki tartej',
+230.0,
+12.54,
+10.12,
+21.0,
+'2026-08-23 06:58:03',
+'none',
+1453.6001,
+132.72,
+63.9584,
+79.2528
+);

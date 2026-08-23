@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2026-08-23',
+'Sunday',
+'Breakfast',
+363.0,
+'Miód z cytryną suplement diety',
+259.0,
+0.0,
+0.0,
+65.0,
+'2026-08-23 07:09:15',
+'none',
+940.17004,
+235.95001,
+0.0,
+0.0
+);
