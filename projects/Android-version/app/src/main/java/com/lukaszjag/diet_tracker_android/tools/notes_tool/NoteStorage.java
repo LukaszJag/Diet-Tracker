@@ -2,6 +2,7 @@ package com.lukaszjag.diet_tracker_android.tools.notes_tool;
 
 import android.content.Context;
 import android.net.Uri;
+import android.os.Environment;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -20,8 +21,24 @@ import java.util.List;
 public class NoteStorage {
     private static final String FILE_NAME = "notes_data.json";
 
+    // Resolves dynamically to the standard Download/diet-tracker-data directory on any Android device
+    private static final File TARGET_DIRECTORY = new File(
+            Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS),
+            "diet-tracker-data"
+    );
+
     /**
-     * Saves the list of notes to the app's secure internal storage directory.
+     * Resolves the target directory and ensures the folder structure is created.
+     */
+    private static File getTargetFile() {
+        if (!TARGET_DIRECTORY.exists()) {
+            TARGET_DIRECTORY.mkdirs(); // Automatically creates "diet-tracker-data" if missing
+        }
+        return new File(TARGET_DIRECTORY, FILE_NAME);
+    }
+
+    /**
+     * Saves the list of notes to the specified external storage path.
      */
     public static void saveNotes(Context context, List<Note> notes) {
         try {
@@ -34,23 +51,22 @@ public class NoteStorage {
             }
             String jsonContent = jsonArray.toString(4);
 
-            // Save directly to the app's internal files directory (bypasses Scoped Storage restrictions)
-            File file = new File(context.getFilesDir(), FILE_NAME);
+            File file = getTargetFile();
             try (FileOutputStream fos = new FileOutputStream(file);
                  OutputStreamWriter osw = new OutputStreamWriter(fos, StandardCharsets.UTF_8)) {
                 osw.write(jsonContent);
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            android.util.Log.e("NoteStorage", "Error saving notes", e);
         }
     }
 
     /**
-     * Loads the list of notes from the app's internal storage directory.
+     * Loads the list of notes from the specified external storage path.
      */
     public static List<Note> loadNotes(Context context) {
         List<Note> notes = new ArrayList<>();
-        File file = new File(context.getFilesDir(), FILE_NAME);
+        File file = getTargetFile();
 
         if (!file.exists()) {
             return notes;
@@ -86,7 +102,7 @@ public class NoteStorage {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            android.util.Log.e("NoteStorage", "Error reading or parsing notes JSON file", e);
         }
 
         return notes;
@@ -124,11 +140,11 @@ public class NoteStorage {
                 }
             }
 
-            // Write validated imported notes directly to secure internal storage
+            // Write validated imported notes directly to the target external storage
             saveNotes(context, importedNotes);
             return true;
         } catch (Exception e) {
-            e.printStackTrace();
+            android.util.Log.e("NoteStorage", "Error importing notes", e);
             return false;
         }
     }

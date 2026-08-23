@@ -1,7 +1,12 @@
 package com.lukaszjag.diet_tracker_android.gui.notes;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.Settings;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -13,6 +18,7 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -36,6 +42,8 @@ import java.util.List;
 import java.util.Locale;
 
 public class Notes extends AppCompatActivity {
+    private static final int STORAGE_PERMISSION_CODE = 101;
+
     private RecyclerView recyclerView;
     private MyAdapter adapter;
     private Button btnAddNote;
@@ -63,12 +71,9 @@ public class Notes extends AppCompatActivity {
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
+        // Initialize the adapter
         adapter = new MyAdapter();
         recyclerView.setAdapter(adapter);
-
-        adapter.setOnItemClickListener((position, note) -> {
-            showEditNoteDialog(position, note);
-        });
 
         // Swipe-to-Delete Configuration
         ItemTouchHelper.SimpleCallback swipeCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
@@ -183,18 +188,104 @@ public class Notes extends AppCompatActivity {
         btnAddNote.setText("Add Note");
         btnAddNote.setOnClickListener(v -> showAddNoteDialog());
 
-        List<Note> loadedNotes = NoteStorage.loadNotes(this);
-        if (loadedNotes.isEmpty()) {
-            populateDummyData();
-        } else {
-            for (Note note : loadedNotes) {
-                adapter.addItem(note);
-            }
-        }
+        // Check/Request storage permissions before initializing load
+        checkAndRequestPermissions();
 
         // Initialize custom selection spinners
         setupCategorySpinner();
         setupUrgencySpinner();
+    }
+
+    /**
+     * Checks if the app has permission to manage external files on Android 11+
+     * or standard read/write permissions on Android 6.0 - 10.
+     */
+    private void checkAndRequestPermissions() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            // Android 11 (API 30) and above
+            if (!Environment.isExternalStorageManager()) {
+                try {
+                    Intent intent = new Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION);
+                    Uri uri = Uri.fromParts("package", getPackageName(), null);
+                    intent.setData(uri);
+                    startActivity(intent);
+                } catch (Exception e) {
+                    Intent intent = new Intent();
+                    intent.setAction(Settings.ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION);
+                    startActivity(intent);
+                }
+            } else {
+                loadNotesOnStartup();
+            }
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            // Android 6.0 (API 23) to Android 10 (API 29)
+            if (checkSelfPermission(android.Manifest.permission.READ_EXTERNAL_STORAGE) != android.content.pm.PackageManager.PERMISSION_GRANTED ||
+                    checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE) != android.content.pm.PackageManager.PERMISSION_GRANTED) {
+
+                requestPermissions(new String[]{
+                        android.Manifest.permission.READ_EXTERNAL_STORAGE,
+                        android.Manifest.permission.WRITE_EXTERNAL_STORAGE
+                }, STORAGE_PERMISSION_CODE);
+            } else {
+                loadNotesOnStartup();
+            }
+        } else {
+            loadNotesOnStartup();
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == STORAGE_PERMISSION_CODE) {
+            if (grantResults.length > 0 && grantResults[0] == android.content.pm.PackageManager.PERMISSION_GRANTED) {
+                loadNotesOnStartup();
+                setupCategorySpinner();
+            } else {
+                Toast.makeText(this, "Storage permission is required to access your notes from the public directory.", Toast.LENGTH_LONG).show();
+                loadNotesOnStartup(); // Fallback load attempt
+            }
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // Automatically checks if permission was granted when returning from settings screen
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            if (Environment.isExternalStorageManager() && adapter.getOriginalList().isEmpty()) {
+                loadNotesOnStartup();
+                setupCategorySpinner();
+            }
+        }
+    }
+
+    /**
+     * Resets the adapter to clean lists to avoid duplicated items on reload,
+     * then reads the JSON storage file and populates the UI.
+     */
+    private void loadNotesOnStartup() {
+        List<Note> loadedNotes = NoteStorage.loadNotes(this);
+
+        // Re-initialize adapter to avoid duplicate items on re-execution (e.g., inside onResume)
+        adapter = new MyAdapter();
+        recyclerView.setAdapter(adapter);
+
+        adapter.setOnItemClickListener((position, note) -> {
+            showEditNoteDialog(position, note);
+        });
+
+        if (loadedNotes.isEmpty()) {
+            System.out.println("loadedNotes.isEmpty");
+            populateDummyData();
+        } else {
+            System.out.println("NOT loadedNotes.isEmpty");
+            System.out.println("loadedNotes.size(): " + loadedNotes.size());
+            for (Note note : loadedNotes) {
+                System.out.println(note.getNoteTitle());
+                adapter.addItem(note);
+            }
+        }
     }
 
     private void applyFilters() {
