@@ -626,4 +626,4 @@ public class Notes extends AppCompatActivity {
 
         NoteStorage.saveNotes(this, adapter.getOriginalList());
     }
-}
+}   

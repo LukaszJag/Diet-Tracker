@@ -1,0 +1,33 @@
+INSERT INTO `diet_tracker_schema`.`calendar`
+(`day_date`,
+`day_name`,
+`meal_name`,
+`amount_of_product`,
+`product_name`,
+`kcal`,
+`protein`,
+`fat`,
+`carbs`,
+`time_optional`,
+`comment_optional`,
+`kcal_consume`,
+`carbs_consume`,
+`fat_consume`,
+`protein_consume`)
+Values
+('2026-08-18',
+'Tuesday',
+'Supper',
+260.0,
+'Winogrona',
+70.0,
+0.72,
+0.16,
+17.2,
+'2026-08-25 10:17:08',
+'none',
+182.0,
+44.72,
+0.41599998,
+1.872
+);
