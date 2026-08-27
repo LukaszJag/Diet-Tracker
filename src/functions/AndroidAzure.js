@@ -37,10 +37,12 @@ app.http("AndroidAzure", {
       let pool = await sql.connect(config);
       let result = await pool.request().query(rawSqlQuery);
 
-      // 4. Send the data back generic JSON
+      // 4. Send the data back as generic JSON (providing fallback if recordset is undefined)
       return {
         status: 200,
-        jsonBody: result.recordset,
+        jsonBody: result.recordset || [
+          { success: true, rowsAffected: result.rowsAffected },
+        ],
       };
     } catch (err) {
       context.error("SQL ERROR: " + err.message);

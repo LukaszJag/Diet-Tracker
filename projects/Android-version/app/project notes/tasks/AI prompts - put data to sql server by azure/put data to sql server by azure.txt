@@ -1,2 +1,0 @@
-I need to put data to sql server from my android app
-I have setup azure access to my app like this:

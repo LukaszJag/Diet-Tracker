@@ -438,83 +438,24 @@ public class GetProductData extends AppCompatActivity {
         acceptButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // 1. Gather UI details and calculate baseline macro variables
                 getMacroValues();
-
-                // 2. Validate input before proceeding
-                if (productName == null || productName.trim().isEmpty()) {
-                    Toast.makeText(GetProductData.this, "Please select a product first", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-                if (amountOfProduct <= 0) {
-                    Toast.makeText(GetProductData.this, "Please enter a valid weight", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-                // 3. Compute consumed macros (based on standard 100g product nutrition values)
-                kcalConsume = (kcal * amountOfProduct) / 100.0;
-                carbsConsume = (carbs * amountOfProduct) / 100.0;
-                fatConsume = (fat * amountOfProduct) / 100.0;
-                proteinConsume = (protein * amountOfProduct) / 100.0;
-
-                // Default to "none" if no value exists. QueryMaker will translate this to NULL
-                timeOptional = "none";
-                commentOptional = (productComment != null && !productComment.trim().isEmpty()) ? productComment : "none";
-
-                // Print values in Logcat for debugging purposes
                 gatherInformationFromUIPrintValues();
 
-                // 4. Build the query
-                String myInsertQuery = QueryMaker.insertMealToCalendarTable(
-                        dayDate,
-                        dayName,
-                        mealName,
-                        amountOfProduct,
-                        productName,
-                        kcal,
-                        protein,
-                        fat,
-                        carbs,
-                        timeOptional,
-                        commentOptional,
-                        kcalConsume,
-                        carbsConsume,
-                        fatConsume,
-                        proteinConsume
-                );
-
-                Log.d("AZURE_INSERT_SQL", "Executing: " + myInsertQuery);
-
-                // 5. Run the query on Azure via your background Retrofit client
-                GetFromSQLDatabase.runAzureQueryAIChat(myInsertQuery, new AzureDataCallback() {
-                    @Override
-                    public void onSuccess(ArrayList<RowInTable> resultTable) {
-                        // Return to UI Thread to safely present UI updates
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                Toast.makeText(GetProductData.this, "Meal added successfully!", Toast.LENGTH_SHORT).show();
-
-                                // Reset weight field on success
-                                weightEditText.setText("");
-                            }
-                        });
-                    }
-
-                    @Override
-                    public void onFailure(String errorMessage) {
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                Toast.makeText(GetProductData.this, "Failed to add meal: " + errorMessage, Toast.LENGTH_LONG).show();
-                                Log.e("AZURE_INSERT_ERROR", errorMessage);
-                            }
-                        });
-                    }
-                });
+//                String myInsertQuery = "null"; // = QueryMaker.insertMealToCalendarTable(null, null);
+//
+//                GetFromSQLDatabase.runAzureQueryAIChat(myInsertQuery, new AzureDataCallback() {
+//                    @Override
+//                    public void onSuccess(ArrayList<RowInTable> resultTable) {
+//                        // Since we added SELECT 1, this will trigger successfully!
+//                        System.out.println("Data successfully inserted into database!");
+//                    }
+//
+//                    @Override
+//                    public void onFailure(String errorMessage) {
+//                        System.out.println("Insert failed: " + errorMessage);
+//                    }
+//                });
             }
         });
     }
 }
-

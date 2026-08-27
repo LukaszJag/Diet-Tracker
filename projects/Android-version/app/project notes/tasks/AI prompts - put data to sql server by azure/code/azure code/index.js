@@ -4,7 +4,7 @@ module.exports = async function (context, req) {
   // Put your exact Azure SQL details here
   const config = {
     user: "root-android-server",
-    password: "CENSORED",
+    password: "censored",
     server: "first-server-android.database.windows.net",
     database: "free-sql-db-6758529",
     options: {

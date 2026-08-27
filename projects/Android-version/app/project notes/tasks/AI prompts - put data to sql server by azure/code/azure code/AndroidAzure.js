@@ -23,7 +23,7 @@ app.http("AndroidAzure", {
       // 2. Standard Database Config
       const config = {
         user: "root-android-server",
-        password: "CENSORED",
+        password: "censored",
         server: "first-server-android.database.windows.net",
         database: "free-sql-db-6758529",
         options: {

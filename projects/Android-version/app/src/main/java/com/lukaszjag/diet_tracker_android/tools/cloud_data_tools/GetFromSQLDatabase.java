@@ -154,47 +154,63 @@ public class GetFromSQLDatabase {
         AzureApiService apiService = RetrofitClient.getRetrofitInstance().create(AzureApiService.class);
         QueryRequest requestBody = new QueryRequest(mySqlString);
 
+        Log.d("AZURE_DEBUG", "Sending Query: " + mySqlString);
+
         Call<List<Map<String, Object>>> call = apiService.executeCustomQuery(requestBody);
 
-        // .enqueue() runs in the background automatically. No frozen UI!
         call.enqueue(new retrofit2.Callback<List<Map<String, Object>>>() {
-
             @Override
             public void onResponse(Call<List<Map<String, Object>>> call, retrofit2.Response<List<Map<String, Object>>> response) {
                 ArrayList<RowInTable> resultTable = new ArrayList<>();
 
-                if (response.isSuccessful() && response.body() != null) {
-                    List<Map<String, Object>> dynamicSqlData = response.body();
+                // Log response metadata
+                Log.d("AZURE_DEBUG", "Response Code: " + response.code());
+                Log.d("AZURE_DEBUG", "Response Message: " + response.message());
 
-                    if (dynamicSqlData.size() > 0) {
-                        for (int i = 0; i < dynamicSqlData.size(); i++) {
-                            Map<String, Object> row = dynamicSqlData.get(i);
-                            RowInTable rowInTable = new RowInTable();
+                if (response.isSuccessful()) {
+                    if (response.body() != null) {
+                        List<Map<String, Object>> dynamicSqlData = response.body();
+                        Log.d("AZURE_DEBUG", "Success! Rows retrieved: " + dynamicSqlData.size());
 
-                            for (String key : row.keySet()) {
-                                rowInTable.putKeyAndValueToRow(key, String.valueOf(row.get(key)));
+                        if (dynamicSqlData.size() > 0) {
+                            for (int i = 0; i < dynamicSqlData.size(); i++) {
+                                Map<String, Object> row = dynamicSqlData.get(i);
+                                RowInTable rowInTable = new RowInTable();
+
+                                for (String key : row.keySet()) {
+                                    rowInTable.putKeyAndValueToRow(key, String.valueOf(row.get(key)));
+                                }
+                                resultTable.add(rowInTable);
                             }
-
-                            resultTable.add(rowInTable);
+                            callback.onSuccess(resultTable);
+                        } else {
+                            Log.d("AZURE_DEBUG", "Query executed successfully but returned empty dataset.");
+                            callback.onSuccess(new ArrayList<>());
                         }
-
-                        // SUCCESS! Send the filled ArrayList back to where it was called
-                        callback.onSuccess(resultTable);
-
                     } else {
-                        Log.d("AZURE_DATABASE_SQL", "No result");
-                        callback.onSuccess(new ArrayList<>()); // Send back empty list
+                        Log.w("AZURE_DEBUG", "Response was successful but body is null.");
+                        callback.onFailure("Server returned empty body");
                     }
                 } else {
-                    Log.d("AZURE_ERROR", "Response failed or body is null");
-                    callback.onFailure("Server returned an error");
+                    // Extract the detailed error message sent by Azure (e.g., SQL syntax errors)
+                    String detailedError = "Unknown error";
+                    try {
+                        if (response.errorBody() != null) {
+                            detailedError = response.errorBody().string();
+                        }
+                    } catch (IOException e) {
+                        Log.e("AZURE_DEBUG", "Failed to parse error body: " + e.getMessage());
+                    }
+
+                    Log.e("AZURE_ERROR_DETAILS", "HTTP Error " + response.code() + ": " + detailedError);
+                    callback.onFailure("Server error (" + response.code() + "): " + detailedError);
                 }
             }
 
             @Override
             public void onFailure(Call<List<Map<String, Object>>> call, Throwable t) {
-                Log.e("AZURE_CUSTOM_SQL", "Network fail: " + t.getMessage());
-                callback.onFailure(t.getMessage());
+                Log.e("AZURE_DEBUG", "Network Transport Failure: " + t.getMessage(), t);
+                callback.onFailure("Network fail: " + t.getMessage());
             }
         });
     }
