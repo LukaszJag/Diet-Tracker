@@ -1,44 +1,90 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="40dp"
+    android:layout_height="wrap_content"
     android:layout_margin="8dp"
     android:background="#EEEEEE"
-    android:orientation="horizontal"
-    android:padding="16dp">
+    android:orientation="vertical"
+    android:padding="12dp">
 
+    <!-- Product Name -->
+    <TextView
+        android:id="@+id/productNameTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="#000000"
+        android:textSize="16sp"
+        android:textStyle="bold" />
 
+    <!-- Meal Name and Amount Info -->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:orientation="vertical">
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="4dp">
 
         <TextView
-            android:id="@+id/productNameTextView"
+            android:id="@+id/mealNameTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:textColor="#000000"
-            android:textSize="18sp"
-            android:textStyle="bold" />
+            android:textColor="#555555"
+            android:textSize="13sp"
+            android:textStyle="italic" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" | "
+            android:textColor="#888888" />
 
         <TextView
             android:id="@+id/amountOfProductTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:textColor="#555555"
-            android:textSize="14sp" />
+            android:textSize="13sp" />
+    </LinearLayout>
+
+    <!-- Macronutrient Consumed Details Grid -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="6dp"
+        android:weightSum="4">
 
         <TextView
             android:id="@+id/kcalConsumeTextView"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:textColor="#266278"
-            android:textSize="16sp"
+            android:textSize="13sp"
             android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/proteinConsumeTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textColor="#8B0000"
+            android:textSize="13sp" />
+
+        <TextView
+            android:id="@+id/fatConsumeTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textColor="#FF8C00"
+            android:textSize="13sp" />
+
+        <TextView
+            android:id="@+id/carbsConsumeTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textColor="#2E8B57"
+            android:textSize="13sp" />
     </LinearLayout>
 
 </LinearLayout>

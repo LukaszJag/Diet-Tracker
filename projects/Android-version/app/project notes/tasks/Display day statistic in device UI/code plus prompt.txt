@@ -1,0 +1,1521 @@
+================================================================================
+FILE: DayData.java
+================================================================================
+package com.lukaszjag.diet_tracker_android.gui.diet.day_data_view;
+
+import static kotlinx.coroutines.internal.Concurrent_commonKt.getValue;
+
+import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.material.datepicker.MaterialDatePicker;
+import com.lukaszjag.diet_tracker_android.R;
+import com.lukaszjag.diet_tracker_android.gui.diet.GetProductData;
+import com.lukaszjag.diet_tracker_android.tools.cloud_data_tools.AzureDataCallback;
+import com.lukaszjag.diet_tracker_android.tools.cloud_data_tools.GetFromSQLDatabase;
+import com.lukaszjag.diet_tracker_android.tools.date_tools.MyDate;
+import com.lukaszjag.diet_tracker_android.tools.products_tools.MyAdapterProduct;
+import com.lukaszjag.diet_tracker_android.tools.products_tools.Product;
+import com.lukaszjag.diet_tracker_android.tools.sql_tools.QueryMaker;
+import com.lukaszjag.diet_tracker_android.tools.sql_tools.RowInTable;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
+
+public class DayData extends AppCompatActivity {
+
+    private RecyclerView recyclerView;
+    private MyAdapterProduct adapter;
+    private Button dateDataButton;
+    private TextView dateDataTextView;
+    ArrayList<RowInTable> products = new ArrayList<>();
+    String dateOfData;
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.day_data_layout);
+
+        dateOfData = MyDate.getCurrentDayInSQLFormat();
+
+        setupAllElements();
+        addListeners();
+        getDataForDate(dateOfData);
+        setDataToView();
+
+        // 1. Initialize RecyclerView
+        recyclerView = findViewById(R.id.recyclerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        // 2. Initialize and set Adapter
+        adapter = new MyAdapterProduct();
+        recyclerView.setAdapter(adapter);
+
+        //addTestProducts();
+
+    }
+
+
+    private void setupAllElements() {
+        initUIComponents();
+    }
+
+    private void initUIComponents() {
+        dateDataButton = findViewById(R.id.datePickButton);
+
+        dateDataTextView = findViewById(R.id.dateTextView);
+        dateDataTextView.setText(MyDate.getCurrentDayInSQLFormat());
+    }
+
+    private void addListeners() {
+        dateDataButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MaterialDatePicker<Long> datePicker = MaterialDatePicker.Builder.datePicker()
+                        .setTitleText("Select a Date")
+                        .setSelection(MaterialDatePicker.todayInUtcMilliseconds()) // default to today
+                        .build();
+
+                // Listen for when the user clicks "OK"
+                datePicker.addOnPositiveButtonClickListener(selection -> {
+                    // Convert the timestamp back to a readable date string
+                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+                    String formattedDate = sdf.format(new Date(selection));
+
+                    dateDataTextView.setText(formattedDate);
+                });
+
+                // Show the picker
+                datePicker.show(getSupportFragmentManager(), "MATERIAL_DATE_PICKER");
+
+            dateOfData = dateDataTextView.getText().toString();
+                getDataForDate(dateOfData);
+                setDataToView();
+            }
+        });
+    }
+
+    private void addTestProducts() {
+        adapter.addItem(new Product("Kotlet schabowy", "323", "487.73"));
+        adapter.addItem(new Product("Ketchup lagodny", "53", "49.29"));
+        adapter.addItem(new Product("Orzeszki ziemne solone", "61", "369.05"));
+        adapter.addItem(new Product("Bułka grahamka", "80", "212"));
+        adapter.addItem(new Product("Paprykarz szczeciński - Graal", "330", "396"));
+        adapter.addItem(new Product("Mleko 1,5%", "818", "359.92"));
+        adapter.addItem(new Product("Budyń o smaku czekoladowym z cukrem (sam proszek)", "126", "459.9"));
+        adapter.addItem(new Product("Pestki dyni", "47", "261.32"));
+        adapter.addItem(new Product("Śliwka suszona", "43", "126.42"));
+        adapter.addItem(new Product("Orzechy włoskie", "26", "167.7"));
+        adapter.addItem(new Product("Żurawina suszona", "46", "157.32"));
+        adapter.addItem(new Product("Daktyle", "19", "55.1"));
+        adapter.addItem(new Product("Jajko sadzone", "192", "470.4"));
+        adapter.addItem(new Product("Kasza gryczana - ugotowana", "369", "446.49"));
+        adapter.addItem(new Product("Zbyszko 3 Cytryny Napój gazowany", "1750", "332.5"));
+        adapter.addItem(new Product("Sok Cytryna limonka", "1000", "450"));
+    }
+
+    private void getDataForDate(String dateInSQLFormat) {
+
+        String query = QueryMaker.getAllProductsFromCalendarTableLikeDate(dateOfData);
+
+        // Call the method and provide the callback
+        GetFromSQLDatabase.runAzureQueryAIChat(query, new AzureDataCallback() {
+
+            @Override
+            public void onSuccess(ArrayList<RowInTable> resultTable) {
+                // This code runs when the data successfully arrives from Azure!
+                System.out.println("Result size: " + resultTable.size());
+                products = resultTable;
+            }
+
+            @Override
+            public void onFailure(String errorMessage) {
+                // Handle the error (e.g., show a Toast to the user)
+                System.out.println("Failed to get data: " + errorMessage);
+            }
+        });
+    }
+
+    private void setDataToView() {
+        String productName, amountOfProduct, kcalOfProduct;
+        for (int i = 0; i < products.size(); i++) {
+            productName = products.get(i).getValue("product_name");
+            amountOfProduct = products.get(i).getValue("amount_of_product");
+            kcalOfProduct = products.get(i).getValue("kcal_consume");
+            adapter.addItem(new Product(productName,amountOfProduct, kcalOfProduct));
+        }
+    }
+}
+
+
+================================================================================
+FILE: day_data_layout.xml
+================================================================================
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="vertical" />
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme">
+
+        <!-- Center the TextView -->
+        <TextView
+            android:id="@+id/dateTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="TextView"
+            android:textSize="18sp"
+            android:textColor="#ffffff"/>
+
+        <!-- Align the Button to the Right (End) -->
+        <Button
+            android:id="@+id/datePickButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginEnd="16dp"
+            android:text="date" />
+
+    </androidx.appcompat.widget.Toolbar>
+
+</RelativeLayout>
+
+
+================================================================================
+FILE: get_product_data.xml
+================================================================================
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/get_product_data_main_background">
+
+
+    <EditText
+        android:id="@+id/productNameEditText"
+        android:layout_width="250dp"
+        android:layout_height="50dp"
+        android:height="60dp"
+        android:ems="10"
+        android:inputType="text"
+        android:text=""
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.503"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.116" />
+
+    <LinearLayout
+        android:id="@+id/macroLinearLayout"
+        android:layout_width="0dp"
+        android:layout_height="178dp"
+        android:layout_marginStart="71dp"
+        android:layout_marginEnd="71dp"
+        android:layout_marginBottom="44dp"
+        android:background="@drawable/border"
+        android:orientation="vertical"
+        android:padding="20dp"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayoutButtons"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/productNameTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="product name"
+                tools:layout_editor_absoluteX="68dp"
+                tools:layout_editor_absoluteY="224dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/brandLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="brand"
+                android:textStyle="bold"
+                tools:layout_editor_absoluteX="42dp"
+                tools:layout_editor_absoluteY="308dp" />
+
+            <TextView
+                android:id="@+id/brandValueTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="TextView"
+                tools:layout_editor_absoluteX="141dp"
+                tools:layout_editor_absoluteY="308dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/kcalLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="kcal"
+                android:textStyle="bold"
+                tools:layout_editor_absoluteX="42dp"
+                tools:layout_editor_absoluteY="345dp" />
+
+            <TextView
+                android:id="@+id/kcalValueTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="TextView"
+                tools:layout_editor_absoluteX="177dp"
+                tools:layout_editor_absoluteY="448dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/proteinLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="protein"
+                android:textStyle="bold"
+                tools:layout_editor_absoluteX="42dp"
+                tools:layout_editor_absoluteY="384dp" />
+
+            <TextView
+                android:id="@+id/proteinValueTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="TextView"
+                tools:layout_editor_absoluteX="141dp"
+                tools:layout_editor_absoluteY="384dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/fatLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="fat"
+                android:textStyle="bold"
+                tools:layout_editor_absoluteX="42dp"
+                tools:layout_editor_absoluteY="423dp" />
+
+            <TextView
+                android:id="@+id/fatValueTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="TextView"
+                tools:layout_editor_absoluteX="141dp"
+                tools:layout_editor_absoluteY="423dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/carbsLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="carbs"
+                android:textStyle="bold"
+                tools:layout_editor_absoluteX="42dp"
+                tools:layout_editor_absoluteY="466dp" />
+
+            <TextView
+                android:id="@+id/carbsValueTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="TextView"
+                tools:layout_editor_absoluteX="141dp"
+                tools:layout_editor_absoluteY="466dp" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayoutButtons"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="52dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/acceptButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/amountAndComentLinearLayout">
+
+        <Button
+            android:id="@+id/getProductFromDatabase"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Get product from Azure SQL"
+            tools:layout_editor_absoluteX="200dp"
+            tools:layout_editor_absoluteY="66dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/previousButton"
+                android:layout_width="wrap_content"
+                android:layout_height="53dp"
+                android:layout_weight="1"
+                android:text="previous"
+                tools:layout_editor_absoluteX="186dp"
+                tools:layout_editor_absoluteY="122dp" />
+
+            <Button
+                android:id="@+id/nextButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="next"
+                tools:layout_editor_absoluteX="297dp"
+                tools:layout_editor_absoluteY="120dp" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/spinerLinearLayout"
+        android:layout_width="393dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="189dp"
+        android:layout_marginBottom="40dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/amountAndComentLinearLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <Spinner
+            android:id="@+id/mealNameSpinner"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_marginBottom="10dp" />
+
+        <Spinner
+            android:id="@+id/productSpinner"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:tooltipText="food"
+            android:visibility="visible" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/datePickButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="28dp"
+        android:text="Date"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.947"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/dateDataTextView"
+        android:layout_width="176dp"
+        android:layout_height="32dp"
+        android:layout_marginTop="36dp"
+        android:layout_marginEnd="40dp"
+        android:text="dateData"
+        app:layout_constraintEnd_toStartOf="@+id/datePickButton"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/amountAndComentLinearLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="255dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayoutButtons"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spinerLinearLayout">
+
+        <Button
+            android:id="@+id/productCommentButton"
+            android:layout_width="wrap_content"
+            android:layout_height="46dp"
+            android:layout_weight="1"
+            android:text="Products comment" />
+
+        <EditText
+            android:id="@+id/weightEditText"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:ems="10"
+            android:inputType="text" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/acceptButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="40dp"
+        android:text="Accept"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+
+================================================================================
+FILE: product_layout.xml
+================================================================================
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="40dp"
+    android:layout_margin="8dp"
+    android:background="#EEEEEE"
+    android:orientation="horizontal"
+    android:padding="16dp">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/productNameTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textColor="#000000"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/amountOfProductTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textColor="#555555"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/kcalConsumeTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textColor="#266278"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+</LinearLayout>
+
+
+================================================================================
+FILE: AzureApiService.java
+================================================================================
+package com.lukaszjag.diet_tracker_android.tools.cloud_data_tools;
+
+import java.util.List;
+import java.util.Map;
+import retrofit2.Call;
+import retrofit2.http.Body;
+import retrofit2.http.POST;
+
+public interface AzureApiService {
+
+    // Uses POST to safely send long SQL Strings to Azure
+    @POST("api/AndroidAzure")
+    Call<List<Map<String, Object>>> executeCustomQuery(@Body QueryRequest customQueryObject);
+
+}
+
+
+================================================================================
+FILE: AzureDataCallback.java
+================================================================================
+package com.lukaszjag.diet_tracker_android.tools.cloud_data_tools;
+
+import com.lukaszjag.diet_tracker_android.tools.sql_tools.RowInTable;
+
+import java.util.ArrayList;
+
+public interface AzureDataCallback {
+    void onSuccess(ArrayList<RowInTable> resultTable);
+    void onFailure(String errorMessage);
+}
+
+
+
+================================================================================
+FILE: GetFromSQLDatabase.java
+================================================================================
+package com.lukaszjag.diet_tracker_android.tools.cloud_data_tools;
+
+import android.util.Log;
+
+import com.lukaszjag.diet_tracker_android.tools.sql_tools.RowInTable;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+public class GetFromSQLDatabase {
+    public void runCustomAzureQuery(String mySqlString) {
+        AzureApiService apiService = RetrofitClient.getRetrofitInstance().create(AzureApiService.class);
+
+        QueryRequest requestBody = new QueryRequest(mySqlString);
+
+        Call<List<Map<String, Object>>> call = apiService.executeCustomQuery(requestBody);
+
+        call.enqueue(new Callback<List<Map<String, Object>>>() {
+            @Override
+            public void onResponse(Call<List<Map<String, Object>>> call, Response<List<Map<String, Object>>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+
+                    List<Map<String, Object>> dynamicSqlData = response.body();
+
+                    if (dynamicSqlData.size() > 0) {
+                        Log.d("AZURE_CUSTOM_SQL", "amount of rows: " + dynamicSqlData.size());
+
+                        for (int i = 0; i < dynamicSqlData.size(); i++) {
+                            Map<String, Object> row = dynamicSqlData.get(i);
+                            Log.d("AZURE_CUSTOM_SQL", "Row data: [" + i + "]: " + row.get("product_name"));
+                            //Log.d("AZURE_CUSTOM_SQL", "First row data: " + row.toString());
+                        }
+                    } else {
+                        Log.d("AZURE_DATABASE_SQL", "No result");
+                    }
+
+                } else {
+                    Log.d("AZURE_ERROR", "response.isSuccessful() or response.body() != null");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Map<String, Object>>> call, Throwable t) {
+                Log.e("AZURE_CUSTOM_SQL", "Network fail: " + t.getMessage());
+            }
+        });
+    }
+
+    public ArrayList<RowInTable> runAzureQuery(String mySqlString) {
+        AzureApiService apiService = RetrofitClient.getRetrofitInstance().create(AzureApiService.class);
+
+        ArrayList<RowInTable> resultTable = new ArrayList<>();
+        QueryRequest requestBody = new QueryRequest(mySqlString);
+
+        Call<List<Map<String, Object>>> call = apiService.executeCustomQuery(requestBody);
+
+        call.enqueue(new Callback<List<Map<String, Object>>>() {
+            @Override
+            public void onResponse(Call<List<Map<String, Object>>> call, Response<List<Map<String, Object>>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+
+                    List<Map<String, Object>> dynamicSqlData = response.body();
+
+                    if (dynamicSqlData.size() > 0) {
+                        Log.d("AZURE_CUSTOM_SQL", "amount of rows: " + dynamicSqlData.size());
+
+                        int counter = 0;
+                        for (int i = 0; i < dynamicSqlData.size(); i++) {
+                            Map<String, Object> row = dynamicSqlData.get(i);
+                            RowInTable rowInTable = new RowInTable();
+
+                            for (String  key : row.keySet()) {
+                                //System.out.println("hello");
+                                //System.out.println("key: " + key);
+                                //System.out.println("Value: " + row.get(key));
+                                rowInTable.putKeyAndValueToRow(key, String.valueOf(row.get(key)));
+                            }
+
+                            resultTable.add(counter, rowInTable);
+                            counter++;
+                            Log.d("AZURE_CUSTOM_SQL", "Row data: [" + i + "]: " + row.get("product_name"));
+                            //Log.d("AZURE_CUSTOM_SQL", "First row data: " + row.toString());
+                        }
+                    } else {
+                        Log.d("AZURE_DATABASE_SQL", "No result");
+                    }
+
+                } else {
+                    Log.d("AZURE_ERROR", "response.isSuccessful() or response.body() != null");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Map<String, Object>>> call, Throwable t) {
+                Log.e("AZURE_CUSTOM_SQL", "Network fail: " + t.getMessage());
+            }
+        });
+        System.out.println(resultTable.size());
+        return resultTable;
+    }
+
+    public ArrayList<RowInTable> runAzureQueryAIChat(String mySqlString) {
+        AzureApiService apiService = RetrofitClient.getRetrofitInstance().create(AzureApiService.class);
+        ArrayList<RowInTable> resultTable = new ArrayList<>();
+        QueryRequest requestBody = new QueryRequest(mySqlString);
+
+        Call<List<Map<String, Object>>> call = apiService.executeCustomQuery(requestBody);
+
+        try {
+            // .execute() blocks the thread and waits for the network response
+            Response<List<Map<String, Object>>> response = call.execute();
+
+            if (response.isSuccessful() && response.body() != null) {
+                List<Map<String, Object>> dynamicSqlData = response.body();
+
+                if (dynamicSqlData.size() > 0) {
+                    for (int i = 0; i < dynamicSqlData.size(); i++) {
+                        Map<String, Object> row = dynamicSqlData.get(i);
+                        RowInTable rowInTable = new RowInTable();
+
+                        for (String key : row.keySet()) {
+                            rowInTable.putKeyAndValueToRow(key, String.valueOf(row.get(key)));
+                        }
+
+                        resultTable.add(rowInTable);
+                    }
+                } else {
+                    Log.d("AZURE_DATABASE_SQL", "No result");
+                }
+            } else {
+                Log.d("AZURE_ERROR", "response.isSuccessful() or response.body() != null");
+            }
+
+        } catch (IOException e) {
+            // This catches network errors (like no internet connection)
+            Log.e("AZURE_CUSTOM_SQL", "Network fail: " + e.getMessage());
+        }
+
+        // This will now have the correct items because the code waited for the response!
+        System.out.println("Result size: " + resultTable.size());
+
+        return resultTable;
+    }
+// NEW APPROACH
+
+
+    public static void runAzureQueryAIChat(String mySqlString, AzureDataCallback callback) {
+        AzureApiService apiService = RetrofitClient.getRetrofitInstance().create(AzureApiService.class);
+        QueryRequest requestBody = new QueryRequest(mySqlString);
+
+        Log.d("AZURE_DEBUG", "Sending Query: " + mySqlString);
+
+        Call<List<Map<String, Object>>> call = apiService.executeCustomQuery(requestBody);
+
+        call.enqueue(new retrofit2.Callback<List<Map<String, Object>>>() {
+            @Override
+            public void onResponse(Call<List<Map<String, Object>>> call, retrofit2.Response<List<Map<String, Object>>> response) {
+                ArrayList<RowInTable> resultTable = new ArrayList<>();
+
+                // Log response metadata
+                Log.d("AZURE_DEBUG", "Response Code: " + response.code());
+                Log.d("AZURE_DEBUG", "Response Message: " + response.message());
+
+                if (response.isSuccessful()) {
+                    if (response.body() != null) {
+                        List<Map<String, Object>> dynamicSqlData = response.body();
+                        Log.d("AZURE_DEBUG", "Success! Rows retrieved: " + dynamicSqlData.size());
+
+                        if (dynamicSqlData.size() > 0) {
+                            for (int i = 0; i < dynamicSqlData.size(); i++) {
+                                Map<String, Object> row = dynamicSqlData.get(i);
+                                RowInTable rowInTable = new RowInTable();
+
+                                for (String key : row.keySet()) {
+                                    rowInTable.putKeyAndValueToRow(key, String.valueOf(row.get(key)));
+                                }
+                                resultTable.add(rowInTable);
+                            }
+                            callback.onSuccess(resultTable);
+                        } else {
+                            Log.d("AZURE_DEBUG", "Query executed successfully but returned empty dataset.");
+                            callback.onSuccess(new ArrayList<>());
+                        }
+                    } else {
+                        Log.w("AZURE_DEBUG", "Response was successful but body is null.");
+                        callback.onFailure("Server returned empty body");
+                    }
+                } else {
+                    // Extract the detailed error message sent by Azure (e.g., SQL syntax errors)
+                    String detailedError = "Unknown error";
+                    try {
+                        if (response.errorBody() != null) {
+                            detailedError = response.errorBody().string();
+                        }
+                    } catch (IOException e) {
+                        Log.e("AZURE_DEBUG", "Failed to parse error body: " + e.getMessage());
+                    }
+
+                    Log.e("AZURE_ERROR_DETAILS", "HTTP Error " + response.code() + ": " + detailedError);
+                    callback.onFailure("Server error (" + response.code() + "): " + detailedError);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Map<String, Object>>> call, Throwable t) {
+                Log.e("AZURE_DEBUG", "Network Transport Failure: " + t.getMessage(), t);
+                callback.onFailure("Network fail: " + t.getMessage());
+            }
+        });
+    }
+}
+
+
+
+================================================================================
+FILE: QueryRequest.java
+================================================================================
+package com.lukaszjag.diet_tracker_android.tools.cloud_data_tools;
+
+public class QueryRequest {
+    private String sql_query;
+
+    public QueryRequest(String customQuery) {
+        this.sql_query = customQuery;
+    }
+}
+
+
+================================================================================
+FILE: RetrofitClient.java
+================================================================================
+package com.lukaszjag.diet_tracker_android.tools.cloud_data_tools;
+
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
+public class RetrofitClient {
+    // Exact domain, ending in a slash:
+    private static final String BASE_URL = "https://diettrackerandroidversionapi-grcbhva9e5gqhzhz.polandcentral-01.azurewebsites.net/";
+    private static Retrofit retrofit;
+
+    public static Retrofit getRetrofitInstance() {
+        if (retrofit == null) {
+            retrofit = new Retrofit.Builder()
+                    .baseUrl(BASE_URL)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build();
+        }
+        return retrofit;
+    }
+}
+
+
+================================================================================
+FILE: Macro.java
+================================================================================
+package com.lukaszjag.diet_tracker_android.tools.products_tools;
+
+public class Macro {
+    // Values
+    private float kcal;
+    private float protein;
+    private float fat;
+    private float carbs;
+
+    // Constructors
+    public Macro(){
+        this.kcal = 0;
+        this.protein = 0;
+        this.fat = 0;
+        this.carbs = 0;
+    }
+
+    public Macro(float kcal, float protein, float fat, float carbs){
+        this.kcal = kcal;
+        this.protein = protein;
+        this.fat = fat;
+        this.carbs = carbs;
+    }
+
+    public static boolean isMacroEqual(Macro macro1, Macro macro2){
+        if (macro1.getKcal() == macro2.getKcal()){
+
+        }else{
+            return false;
+        }
+
+        if (macro1.getProtein() == macro2.getProtein()){
+
+        }else{
+            return false;
+        }
+
+        if (macro1.getFat() == macro2.getFat()){
+
+        }else{
+            return false;
+        }
+
+        if (macro1.getCarbs() == macro2.getCarbs()){
+
+        }else{
+            return false;
+        }
+
+        return true;
+    }
+    public static Macro getConsumedMacro(float amount, Macro macro){
+        float amountMultiplier = amount/100.00f;
+        String floatValue = String.format("%2f",amountMultiplier);
+        amountMultiplier = Float.valueOf(floatValue);
+        Macro consumedMacro = new Macro(
+                amountMultiplier * macro.getKcal(),
+                amountMultiplier * macro.getProtein(),
+                amountMultiplier * macro.getFat(),
+                amountMultiplier * macro.getCarbs()
+        );
+        return consumedMacro;
+    }
+
+    public static Macro cutNumberPrecisionForAllValues(Macro macro){
+        Macro cuttedMacro = new Macro(
+                Float.valueOf(String.format("%.0f", macro.getKcal())),
+                Float.valueOf(String.format("%.0f", macro.getProtein())),
+                Float.valueOf(String.format("%.0f", macro.getFat())),
+                Float.valueOf(String.format("%.0f", macro.getCarbs()))
+        );
+
+        return cuttedMacro;
+    }
+
+    public static Macro sumOfTwoMacros(Macro macro1, Macro macro2){
+        Macro sumMacro = new Macro(0,0,0,0);
+        sumMacro.setKcal(macro1.getKcal() +macro2.getKcal());
+        sumMacro.setProtein(macro1.getProtein() +macro2.getProtein());
+        sumMacro.setFat(macro1.getFat() +macro2.getFat());
+        sumMacro.setCarbs(macro1.getCarbs() +macro2.getCarbs());
+
+        return sumMacro;
+    }
+    public static void printAllValues(Macro macro){
+        System.out.println("Kcal \t: " + macro.getKcal());
+        System.out.println("Protein : " + macro.getProtein());
+        System.out.println("Fat \t: " + macro.getFat());
+        System.out.println("Carbs \t: " + macro.getCarbs());
+    }
+
+    public static void showAllMacroData(Macro macro){
+        System.out.println("kcal: " + macro.getKcal());
+        System.out.println("protein: " + macro.getProtein());
+        System.out.println("fat: " + macro.getFat());
+        System.out.println("carbs: " + macro.getCarbs());
+
+    }
+    public static String getShortMacroInformation(Macro macro){
+        String shortMacroInfo = "";
+        shortMacroInfo +=
+                "kcal: " + macro.getKcal() + "--" +
+                        "protein: " + macro.getProtein() + "--" +
+                        "fat: " + macro.getFat() + "--" +
+                        "carbs: " + macro.getCarbs();
+
+        return shortMacroInfo;
+    }
+
+    public static String getShortMacroInformationMinimalFormat(Macro macro){
+        String shortMacroInfo = "";
+        shortMacroInfo +=
+                "kcal: " + String.format("%.2f", macro.getKcal())+ " " +
+                        "protein: " + String.format("%.2f", macro.getProtein()) + " " +
+                        "fat: " + String.format("%.2f", macro.getFat()) + " " +
+                        "carbs: " + String.format("%.2f", macro.getCarbs());
+
+        return shortMacroInfo;
+    }
+
+    public static String getShortMacroInformationPrettyFormat(Macro macro){
+        String shortMacroInfo = "";
+        shortMacroInfo +=
+                "kcal: " + macro.getKcal() + "--\n" +
+                        "protein: " + macro.getProtein() + "--\n" +
+                        "fat: " + macro.getFat() + "--\n" +
+                        "carbs: " + macro.getCarbs();
+
+        return shortMacroInfo;
+    }
+
+    public String getShortMacroInformation(){
+        String shortMacroInfo = "";
+        shortMacroInfo +=
+                "kcal: " + String.format("%.2f", this.kcal) + "\n" +
+                        "protein: " + String.format("%.2f", this.protein)  + "\n" +
+                        "fat: " + String.format("%.2f", this.fat)  + "\n" +
+                        "carbs: " + String.format("%.2f", this.carbs) ;
+
+        return shortMacroInfo;
+    }
+
+    public static Macro divisionMacroByValue(Macro macro, float value){
+        Macro divisionedMacro = new Macro(macro.getKcal() / value,
+                macro.getProtein() / value,
+                macro.getFat() / value,
+                macro.getCarbs() / value
+        );
+
+        return divisionedMacro;
+    }
+
+
+    //<editor-fold desc="Getters and Setters">
+    public float getKcal() {
+        return kcal;
+    }
+
+    public void setKcal(float kcal) {
+        this.kcal = kcal;
+    }
+
+    public float getProtein() {
+        return protein;
+    }
+
+    public void setProtein(float protein) {
+        this.protein = protein;
+    }
+
+    public float getFat() {
+        return fat;
+    }
+
+    public void setFat(float fat) {
+        this.fat = fat;
+    }
+
+    public float getCarbs() {
+        return carbs;
+    }
+
+    public void setCarbs(float carbs) {
+        this.carbs = carbs;
+    }
+    //</editor-fold>
+}
+
+
+
+
+================================================================================
+FILE: MyAdapterProduct.java
+================================================================================
+package com.lukaszjag.diet_tracker_android.tools.products_tools;
+
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.lukaszjag.diet_tracker_android.R;
+
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class MyAdapterProduct extends RecyclerView.Adapter<MyAdapterProduct.MyViewHolder> {
+
+    //<editor-fold desc="Global variables">
+    private List<Product> productList;
+    //</editor-fold>
+
+    //<editor-fold desc="Constructors">
+    public MyAdapterProduct() {
+        this.productList = new ArrayList<>();
+    }
+    //</editor-fold>
+
+    // --- CUSTOM METHODS TO MANAGE DATA ---
+
+    //<editor-fold desc="ADD, GET, SET, DELETE - object">
+    // ADD an object
+    public void addItem(Product product) {
+        productList.add(product);
+        // Notify the adapter that an item was inserted at the very end
+        notifyItemInserted(productList.size() - 1);
+    }
+
+    // GET an object
+    public Product getItem(int position) {
+        if (position >= 0 && position < productList.size()) {
+            return productList.get(position);
+        }
+        return null;
+    }
+
+    // SET (Update) an object
+    public void setItem(int position, Product product) {
+        if (position >= 0 && position < productList.size()) {
+            productList.set(position, product);
+            // Notify the adapter that a specific item changed
+            notifyItemChanged(position);
+        }
+    }
+
+    // DELETE an object
+    public void deleteItem(int position) {
+        if (position >= 0 && position < productList.size()) {
+            productList.remove(position);
+            // Notify the adapter to animate removal and shift remaining items
+            notifyItemRemoved(position);
+            notifyItemRangeChanged(position, productList.size());
+        }
+    }
+    //</editor-fold>
+
+    // --- RECYCLERVIEW OVERRIDE METHODS ---
+
+    @NonNull
+    @Override
+    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.product_layout, parent, false);
+        return new MyViewHolder(view);
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
+        Product currentItem = productList.get(position);
+
+        holder.tv1.setText(String.valueOf(currentItem.getProductName()));
+        holder.tv2.setText(String.valueOf(currentItem.getProductMeasureOfProductWeightToCalculateMacro()));
+        holder.tv3.setText(String.valueOf(currentItem.getProductMacroForItsSetMeasure().getKcal()));
+    }
+
+    @Override
+    public int getItemCount() {
+        return productList.size();
+    }
+
+    // ViewHolder class maps the views inside item_layout.xml
+    public static class MyViewHolder extends RecyclerView.ViewHolder {
+        TextView tv1, tv2, tv3;
+
+        public MyViewHolder(@NonNull View itemView) {
+            super(itemView);
+            tv1 = itemView.findViewById(R.id.productNameTextView);
+            tv2 = itemView.findViewById(R.id.amountOfProductTextView);
+            tv3 = itemView.findViewById(R.id.kcalConsumeTextView);
+        }
+    }
+}
+
+
+================================================================================
+FILE: Product.java
+================================================================================
+package com.lukaszjag.diet_tracker_android.tools.products_tools;
+
+import com.lukaszjag.diet_tracker_android.config.Config;
+
+public class Product {
+    //<editor-fold desc="Global values">
+    private String productName;
+    private float productMeasureOfProductWeightToCalculateMacro;
+    private Macro productMacroForItsSetMeasure;
+    private String productBrand;
+    private float productPackWeight;
+    private String commentOptional;
+    //</editor-fold>
+
+    //<editor-fold desc="Constructors">
+
+    public Product(String name, String brand, float productMeasureOfProductWeightToCalculateMacro, Macro product_macro, float weight_of_pack, String commentOptional){
+        this.productName = name;
+        this.productBrand = brand;
+        this.productMeasureOfProductWeightToCalculateMacro = productMeasureOfProductWeightToCalculateMacro;
+        this.productMacroForItsSetMeasure = product_macro;
+        this.productPackWeight = weight_of_pack;
+        this.commentOptional = commentOptional;
+    }
+
+    public Product(String productName, String productMeasureOfProductWeightToCalculateMacro, String kcalProductMacroForItsSetMeasure) {
+        this.productName = productName;
+        this.productMeasureOfProductWeightToCalculateMacro = Float.valueOf(productMeasureOfProductWeightToCalculateMacro);
+        this.productMacroForItsSetMeasure = new Macro(Float.valueOf(kcalProductMacroForItsSetMeasure),0f,0f,0f);
+    }
+
+    //</editor-fold>
+
+    public static boolean isProductEqual(Product productOne, Product productTwo){
+        String[] productOneInArray = productOne.productDataInStringArray(productOne);
+        String[] productTwoInArray = productOne.productDataInStringArray(productTwo);
+
+        for (int i = 0; i < productOneInArray.length; i++) {
+            if(!productOneInArray[i].equals(productTwoInArray[i])){
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public String[] productDataInStringArray(Product productWithData){
+        String[] productDataStringArray = new String[Config.ALL_PRODUCT_VALUES_FIELD_COUNT];
+
+        // Set values to array - no numeric
+        productDataStringArray[0] = productWithData.getProductName();
+        productDataStringArray[1] = productWithData.getProductBrand();
+
+        // Set values to array - numeric
+        productDataStringArray[2] = String.valueOf(productWithData.getProductPackWeight());
+        productDataStringArray[3] = String.valueOf(productWithData.getProductMeasureOfProductWeightToCalculateMacro());
+        productDataStringArray[4] = String.valueOf(productWithData.getProductMacroForItsSetMeasure().getKcal());
+        productDataStringArray[5] = String.valueOf(productWithData.getProductMacroForItsSetMeasure().getProtein());
+        productDataStringArray[6] = String.valueOf(productWithData.getProductMacroForItsSetMeasure().getFat());
+        productDataStringArray[7] = String.valueOf(productWithData.getProductMacroForItsSetMeasure().getCarbs());
+        productDataStringArray[8] =  productWithData.getCommentOptional();
+        return productDataStringArray;
+    }
+
+    //<editor-fold desc="Getter and Setters">
+    public String getProductName() {
+        return productName;
+    }
+
+    public void setProductName(String productName) {
+        this.productName = productName;
+    }
+
+    public float getProductMeasureOfProductWeightToCalculateMacro() {
+        return productMeasureOfProductWeightToCalculateMacro;
+    }
+
+    public void setProductMeasureOfProductWeightToCalculateMacro(float productMeasureOfProductWeightToCalculateMacro) {
+        this.productMeasureOfProductWeightToCalculateMacro = productMeasureOfProductWeightToCalculateMacro;
+    }
+
+    public Macro getProductMacroForItsSetMeasure() {
+        return productMacroForItsSetMeasure;
+    }
+
+    public void setProductMacroForItsSetMeasure(Macro productMacroForItsSetMeasure) {
+        this.productMacroForItsSetMeasure = productMacroForItsSetMeasure;
+    }
+
+    public String getProductBrand() {
+        return productBrand;
+    }
+
+    public void setProductBrand(String productBrand) {
+        this.productBrand = productBrand;
+    }
+
+    public float getProductPackWeight() {
+        return productPackWeight;
+    }
+
+    public void setProductPackWeight(float productPackWeight) {
+        this.productPackWeight = productPackWeight;
+    }
+
+    public String getCommentOptional() {
+        return commentOptional;
+    }
+
+    public void setCommentOptional(String commentOptional) {
+        this.commentOptional = commentOptional;
+    }
+    //</editor-fold>
+
+    @Override
+    public String toString() {
+        return "Product{" + "\n" +
+                "productName = '" + productName + '\'' + "\n" +
+                "productMeasureOfProductWeightToCalculateMacro = " + productMeasureOfProductWeightToCalculateMacro + "\n" +
+                "productMacroForItsSetMeasure = " + productMacroForItsSetMeasure.getShortMacroInformation() + "\n" +
+                "productBrand = '" + productBrand + '\'' + "\n" +
+                "productPackWeight = " + productPackWeight + "\n" +
+                "commentOptional = '" + commentOptional + '\'' + "\n" +
+                '}';
+    }
+
+}
+
+
+
+================================================================================
+FILE: QueryMaker.java
+================================================================================
+package com.lukaszjag.diet_tracker_android.tools.sql_tools;
+
+import java.util.Locale;
+
+public class QueryMaker {
+    public static String getAllProductTableLikeProductNameCaseInsensitive(String productData) {
+        return "SELECT * FROM [diet_tracker_schema].[product_table] WHERE LOWER(product_name) LIKE '%" + productData + "%'";
+    }
+
+    public static String getAllProductsFromCalendarTableLikeDate(String date) {
+        return "SELECT * FROM [diet_tracker_schema].[calendar] WHERE day_date LIKE '%" + date + "%'";
+    }
+
+    public static String insertMealToCalendarTable(
+            String dayDate, String dayName, String mealName, double amountOfProduct,
+            String productName, double kcal, double protein, double fat, double carbs,
+            String timeOptional, String commentOptional, double kcalConsume,
+            double carbsConsume, double fatConsume, double proteinConsume) {
+
+        // Helper to format Date/Time or Text fields to raw NULL if they are "none", null, or empty
+        String sqlDayDate = (dayDate == null || dayDate.trim().isEmpty())
+                ? "NULL" : "'" + dayDate + "'";
+
+        String sqlDayName = (dayName == null || dayName.trim().isEmpty())
+                ? "NULL" : "'" + dayName + "'";
+
+        String sqlMealName = (mealName == null || mealName.trim().isEmpty())
+                ? "NULL" : "'" + mealName + "'";
+
+        String sqlProductName = (productName == null || productName.trim().isEmpty())
+                ? "NULL" : "'" + productName.replace("'", "''") + "'";
+
+        // If time is "none", convert to raw SQL NULL so Azure SQL doesn't fail parsing it
+        String sqlTime = (timeOptional == null || timeOptional.equalsIgnoreCase("none") || timeOptional.trim().isEmpty())
+                ? "NULL" : "'" + timeOptional + "'";
+
+        String sqlComment = (commentOptional == null || commentOptional.equalsIgnoreCase("none") || commentOptional.trim().isEmpty())
+                ? "NULL" : "'" + commentOptional.replace("'", "''") + "'";
+
+        String query =
+                "INSERT INTO [diet_tracker_schema].[calendar]\n" +
+                        "([day_date], [day_name], [meal_name], [amount_of_product], [product_name],\n" +
+                        "[kcal], [protein], [fat], [carbs], [time_optional], [comment_optional],\n" +
+                        "[kcal_consume], [carbs_consume], [fat_consume], [protein_consume])\n" +
+                        "VALUES (\n" +
+                        sqlDayDate + ",\n" +
+                        sqlDayName + ",\n" +
+                        sqlMealName + ",\n" +
+                        amountOfProduct + ",\n" +
+                        sqlProductName + ",\n" +
+                        kcal + ",\n" +
+                        protein + ",\n" +
+                        fat + ",\n" +
+                        carbs + ",\n" +
+                        sqlTime + ",\n" +
+                        sqlComment + ",\n" +
+                        kcalConsume + ",\n" +
+                        carbsConsume + ",\n" +
+                        fatConsume + ",\n" +
+                        proteinConsume + "\n" +
+                        ");\n" +
+                        "SELECT 1 AS success;";
+
+        return String.format(Locale.US, query);
+    }
+}
+
+
+================================================================================
+FILE: RowInTable.java
+================================================================================
+package com.lukaszjag.diet_tracker_android.tools.sql_tools;
+
+import com.lukaszjag.diet_tracker_android.tools.debug_tools.Debug;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
+
+public class RowInTable {
+
+    public HashMap<String, String> fields = new HashMap<>();
+
+    //<editor-fold desc="Constructors">
+    public RowInTable() {
+
+    }
+
+    public RowInTable(HashMap<String, String> fields) {
+        this.fields = fields;
+    }
+    //</editor-fold>
+
+    public void putKeyAndValueToRow(String key, String value) {
+        fields.put(key, value);
+    }
+
+    //<editor-fold desc="Print methods">
+    public void printAlLValuesAndKey() {
+        for (String key : fields.keySet()) {
+            Debug.printKeyAndValue(key, fields.get(key), 6);
+        }
+    }
+    //</editor-fold>
+
+    //<editor-fold desc="Get methods">
+    public int getSizeOfRow() {
+        return fields.size();
+    }
+
+    public String getValue(String key) {
+
+        //System.out.println(fields.get(key));
+        return fields.get(key);
+
+
+    }
+
+    public String getKey(Object value) {
+        if (fields == null) return null;
+
+        String firstKey = null;
+        int counter = 0;
+        for (Map.Entry<String, ?> entry : fields.entrySet()) {
+            String value2 = (String) entry.getValue();
+            counter++;
+
+            if (value2.equals(value)) {
+                String key = entry.getKey();
+                if (firstKey == null) {
+                    firstKey = entry.getKey();
+                } else {
+                    System.out.println(
+                            "Warning: multiple keys map to the given value; "
+                                    + "returning first: " + firstKey
+                    );
+                    return firstKey;
+                }
+            }
+        }
+        return firstKey;
+    }
+
+    public String getKeyMINE(String value) {
+        if (fields == null) return null;
+
+        String firstKey = null;
+        int counter = 0;
+        for (Map.Entry<String, ?> entry : fields.entrySet()) {
+            String value2 = (String) entry.getValue();
+            counter++;
+
+            if (value2.equals(value)) {
+                String key = entry.getKey();
+                if (firstKey == null) {
+                    firstKey = entry.getKey();
+                } else {
+                    System.out.println(
+                            "Warning: multiple keys map to the given value; "
+                                    + "returning first: " + firstKey
+                    );
+                    return firstKey;
+                }
+            }
+        }
+        return firstKey;
+    }
+
+    public ArrayList<String> getAllKeys() {
+        Set setOfKeys = fields.keySet();
+        return new ArrayList<String>(setOfKeys);
+    }
+
+    public ArrayList<String> getAllValues() {
+        return new ArrayList<>(fields.values());
+    }
+    //</editor-fold>
+
+    //<editor-fold desc="Getters and Setters">
+    public HashMap<String, String> getFields() {
+        return fields;
+    }
+
+    public void setFields(HashMap<String, String> fields) {
+        this.fields = fields;
+    }
+    //</editor-fold>
+}
+
+
+Add buttons two in toolbar which allow to set previous or next day after click it should show data like:
+
+at the top sum of every macro elements below list of  product where each is object on the list if click on it show full data
+
+each element of list must have this information:
+
+product name
+amount of product
+meal name
+consumed
+kcal
+protein
+fat
+carbs
+
+if there is no data it will display under toolbar no data to show
+
+if you need more information about my code to do some element ask me don't improvise
+
+give me on to the right of data label name of day like monday at so on

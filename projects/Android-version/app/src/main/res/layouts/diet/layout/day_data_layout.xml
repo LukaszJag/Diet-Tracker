@@ -1,13 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scrollbars="vertical" />
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
@@ -17,25 +12,164 @@
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme">
 
-        <!-- Center the TextView -->
-        <TextView
-            android:id="@+id/dateTextView"
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="TextView"
-            android:textSize="18sp"
-            android:textColor="#ffffff"/>
+            android:layout_marginEnd="16dp">
 
-        <!-- Align the Button to the Right (End) -->
-        <Button
-            android:id="@+id/datePickButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:layout_marginEnd="16dp"
-            android:text="date" />
+            <!-- Previous Day Button -->
+            <Button
+                android:id="@+id/prevDayButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:text="&lt;"
+                style="?android:attr/buttonStyleSmall" />
+
+            <!-- Date & Day Name Group -->
+            <LinearLayout
+                android:id="@+id/dateContainer"
+                android:layout_width="142dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="16dp"
+                android:layout_toEndOf="@+id/prevDayButton"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/dateTextView"
+                    android:layout_width="61dp"
+                    android:layout_height="50dp"
+                    android:gravity="center"
+                    android:text="Date"
+                    android:textColor="#ffffff"
+                    android:textSize="11sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/dayNameTextView"
+                    android:layout_width="46dp"
+                    android:layout_height="50dp"
+                    android:layout_marginStart="8dp"
+                    android:gravity="center"
+                    android:text="Day"
+                    android:textColor="#dddddd"
+                    android:textSize="9sp" />
+            </LinearLayout>
+
+            <!-- Next Day and Date Picker Buttons -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                >
+
+                <Button
+                    android:id="@+id/nextDayButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="&gt;"
+                    style="?android:attr/buttonStyleSmall" />
+
+                <Button
+                    android:id="@+id/datePickButton"
+                    style="?android:attr/buttonStyleSmall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="date"
+                    android:textSize="11sp" />
+            </LinearLayout>
+
+        </RelativeLayout>
 
     </androidx.appcompat.widget.Toolbar>
 
-</RelativeLayout>
+    <!-- Daily Macro Summary Card -->
+    <LinearLayout
+        android:id="@+id/summaryLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="12dp"
+        android:background="#EEEEEE"
+        android:elevation="2dp"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Daily Summary"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:textColor="#333333"
+            android:layout_marginBottom="4dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="4">
+
+            <TextView
+                android:id="@+id/totalKcalTextView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:textSize="12sp"
+                android:text="Kcal: 0"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/totalProteinTextView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:textSize="12sp"
+                android:text="Prot: 0g" />
+
+            <TextView
+                android:id="@+id/totalFatTextView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:textSize="12sp"
+                android:text="Fat: 0g" />
+
+            <TextView
+                android:id="@+id/totalCarbsTextView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:textSize="12sp"
+                android:text="Carb: 0g" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- No Data Placeholder -->
+    <TextView
+        android:id="@+id/noDataTextView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="No data to show"
+        android:textSize="18sp"
+        android:textColor="#888888"
+        android:visibility="gone" />
+
+    <!-- RecyclerView -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="vertical" />
+
+</LinearLayout>

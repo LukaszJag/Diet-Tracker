@@ -3,19 +3,16 @@ package com.lukaszjag.diet_tracker_android.tools.products_tools;
 import com.lukaszjag.diet_tracker_android.config.Config;
 
 public class Product {
+    //<editor-fold desc="Global values">
     private String productName;
     private float productMeasureOfProductWeightToCalculateMacro;
     private Macro productMacroForItsSetMeasure;
     private String productBrand;
     private float productPackWeight;
     private String commentOptional;
+    //</editor-fold>
 
-    // Added support parameters
-    private String mealName;
-    private float consumedKcal;
-    private float consumedProtein;
-    private float consumedFat;
-    private float consumedCarbs;
+    //<editor-fold desc="Constructors">
 
     public Product(String name, String brand, float productMeasureOfProductWeightToCalculateMacro, Macro product_macro, float weight_of_pack, String commentOptional){
         this.productName = name;
@@ -32,19 +29,7 @@ public class Product {
         this.productMacroForItsSetMeasure = new Macro(Float.valueOf(kcalProductMacroForItsSetMeasure),0f,0f,0f);
     }
 
-    // Extended constructor for comprehensive history entries
-    public Product(String productName, String mealName, float amountOfProduct, float consumedKcal, float consumedProtein, float consumedFat, float consumedCarbs, String commentOptional) {
-        this.productName = productName;
-        this.mealName = mealName;
-        this.productMeasureOfProductWeightToCalculateMacro = amountOfProduct;
-        this.consumedKcal = consumedKcal;
-        this.consumedProtein = consumedProtein;
-        this.consumedFat = consumedFat;
-        this.consumedCarbs = consumedCarbs;
-
-        this.commentOptional = commentOptional;
-        this.productMacroForItsSetMeasure = new Macro(consumedKcal, consumedProtein, consumedFat, consumedCarbs);
-    }
+    //</editor-fold>
 
     public static boolean isProductEqual(Product productOne, Product productTwo){
         String[] productOneInArray = productOne.productDataInStringArray(productOne);
@@ -61,8 +46,11 @@ public class Product {
     public String[] productDataInStringArray(Product productWithData){
         String[] productDataStringArray = new String[Config.ALL_PRODUCT_VALUES_FIELD_COUNT];
 
+        // Set values to array - no numeric
         productDataStringArray[0] = productWithData.getProductName();
         productDataStringArray[1] = productWithData.getProductBrand();
+
+        // Set values to array - numeric
         productDataStringArray[2] = String.valueOf(productWithData.getProductPackWeight());
         productDataStringArray[3] = String.valueOf(productWithData.getProductMeasureOfProductWeightToCalculateMacro());
         productDataStringArray[4] = String.valueOf(productWithData.getProductMacroForItsSetMeasure().getKcal());
@@ -73,7 +61,7 @@ public class Product {
         return productDataStringArray;
     }
 
-    // Getters and Setters
+    //<editor-fold desc="Getter and Setters">
     public String getProductName() {
         return productName;
     }
@@ -121,30 +109,7 @@ public class Product {
     public void setCommentOptional(String commentOptional) {
         this.commentOptional = commentOptional;
     }
-
-    public String getMealName() {
-        return mealName;
-    }
-
-    public void setMealName(String mealName) {
-        this.mealName = mealName;
-    }
-
-    public float getConsumedKcal() {
-        return consumedKcal;
-    }
-
-    public float getConsumedProtein() {
-        return consumedProtein;
-    }
-
-    public float getConsumedFat() {
-        return consumedFat;
-    }
-
-    public float getConsumedCarbs() {
-        return consumedCarbs;
-    }
+    //</editor-fold>
 
     @Override
     public String toString() {
@@ -157,4 +122,5 @@ public class Product {
                 "commentOptional = '" + commentOptional + '\'' + "\n" +
                 '}';
     }
+
 }
