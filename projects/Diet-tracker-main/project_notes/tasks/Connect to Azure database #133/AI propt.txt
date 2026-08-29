@@ -1,0 +1,3 @@
+I want to implement in my app to insert data to my local mysql database which is already done and to my azure database which will be your task
+
+Show me step by step how to do this explain changes in code that you will do 
