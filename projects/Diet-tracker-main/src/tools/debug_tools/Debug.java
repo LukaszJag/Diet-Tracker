@@ -11,7 +11,9 @@ public class Debug {
         System.out.println(ANSI_YELLOW + message + ANSI_RESET);;
     }
 
-
+    public static void printGreenSystemPrintln(String message){
+        System.out.println(ANSI_GREEN + message +  ANSI_RESET);;
+    }
 
     public static void printBlueSystemPrintln(String message){
         System.out.println(ANSI_BLUE + message +  ANSI_RESET);;

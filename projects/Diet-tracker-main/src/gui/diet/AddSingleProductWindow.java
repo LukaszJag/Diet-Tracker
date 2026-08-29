@@ -283,9 +283,18 @@ public class AddSingleProductWindow {
         Product newProduct = new Product(name, brand, Float.parseFloat(macroFor), newProductMacro, Float.parseFloat(packageHas), commentOptional);
 
         FilesTools.makeTextFileForProduct(newProduct, Float.parseFloat(macroFor));
-        FilesTools.makeSQLTextFileForProduct(newProduct.getProductName(), InsertProductToSQL_Table.createInsertSQLQueryForProductTable(newProduct));
+
+        // 1. Generate the MySQL Query
+        String insertQuery = InsertProductToSQL_Table.createInsertSQLQueryForProductTable(newProduct);
+        FilesTools.makeSQLTextFileForProduct(newProduct.getProductName(), insertQuery);
+
         try {
+            // 2. Write to Local Database
             InsertProductToSQL_Table.insertProduct(newProduct);
+
+            // 3. Sync to Azure Database
+            tools.azure.AzureSqlSync.syncQueryToAzure(insertQuery);
+
         } catch (SQLException ex) {
             throw new RuntimeException(ex);
         }

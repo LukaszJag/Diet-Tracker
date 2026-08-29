@@ -84,6 +84,8 @@ public class AddProductToCalendarDay {
     JButton refreshDaysStatisticsDataBaseButton = new JButton("Refresh DaysStatistics Data");
     JButton editDaysStatisticsFileButton = new JButton("Edit current statistics");
     JButton showBatChartForMonthButton = new JButton("Show barchart");
+    JButton pullDatabaseFromAzureButton = new JButton("Pull Azure Database");
+    JButton pullCalendarFromAzureButton = new JButton("Pull Azure Calendar");
     //</editor-fold>
 
     //<editor-fold desc="Main panel - buttons"">
@@ -490,7 +492,16 @@ public class AddProductToCalendarDay {
 
         showBatChartForMonthButton.addActionListener(new ShowBarChartForMonthButtonActionListener());
         addProductToDayPanelEast.add(showBatChartForMonthButton);
+
+        pullDatabaseFromAzureButton.addActionListener(new PullDatabaseFromAzureButtonActionListener());
+        pullDatabaseFromAzureButton.setBackground(Color.CYAN);
+        addProductToDayPanelEast.add(pullDatabaseFromAzureButton);
+
+        pullCalendarFromAzureButton.addActionListener(new PullCalendarFromAzureButtonActionListener());
+        pullCalendarFromAzureButton.setBackground(Color.GREEN);
+        addProductToDayPanelEast.add(pullCalendarFromAzureButton);
         //</editor-fold>
+
     }
 
     private void addComponentsToSouthPanel() {
@@ -642,8 +653,7 @@ public class AddProductToCalendarDay {
         try {
             amountOfProductInGrams = Float.valueOf(amountOfProductTextField.getText());
         } catch (Exception ex) {
-            // TODO change to display message by try catch
-            System.out.println("Error: Cannot parse data from amountOfProductTextField[String]->[Float]");
+            System.out.println("Error: Cannot parse data from amountOfProductTextField");
         }
 
         Product dayInCalendarProduct = getDayProductFromGUI();
@@ -656,8 +666,15 @@ public class AddProductToCalendarDay {
         Log.addNewLogForProductToCalendarGUIAccept(dayInCalendar.getDayDateFormatFriendlyForSQL(), dayInCalendarProduct.getProductName(), dayInCalendar.getDayProductMacro(),
                 dayInCalendar.getDayAmountOfProduct(), dayInCalendar.getDayDateDayName(), dayInCalendar.getMealName(), dayInCalendar.getDayProductProduct(),
                 dayInCalendar.getConsumedMacro(), dayInCalendar);
+
         try {
+            // 1. Insert to Local MySQL Database
             InsertToCalendarDayTable.addRowToCalendarTable(dayInCalendar);
+
+            // 2. Generate the query and sync to Azure SQL
+            String query = InsertToCalendarDayTable.createInsertSQLQueryForCalendarDay(dayInCalendar);
+            tools.azure.AzureSqlSync.syncQueryToAzure(query);
+
         } catch (SQLException ex) {
             throw new RuntimeException(ex);
         }
@@ -1765,6 +1782,29 @@ public class AddProductToCalendarDay {
         public void actionPerformed(ActionEvent e) {
 
             new ChartForMonthsKcalCompare().displayChartBar();
+        }
+    }
+
+    private class PullDatabaseFromAzureButtonActionListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            // Run pull synchronization on a background thread
+            new Thread(() -> {
+                JOptionPane.showMessageDialog(null, "Synchronizing local database with Azure cloud...");
+                tools.azure.AzureToLocalSync.pullProductsFromAzure();
+                JOptionPane.showMessageDialog(null, "Sync Complete!");
+            }).start();
+        }
+    }
+
+    private class PullCalendarFromAzureButtonActionListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            new Thread(() -> {
+                JOptionPane.showMessageDialog(null, "Synchronizing local calendar with Azure cloud...");
+                tools.azure.AzureToLocalSync.pullCalendarFromAzure();
+                JOptionPane.showMessageDialog(null, "Calendar Sync Complete!");
+            }).start();
         }
     }
 

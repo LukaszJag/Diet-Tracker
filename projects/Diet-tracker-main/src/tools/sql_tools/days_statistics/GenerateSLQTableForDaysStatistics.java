@@ -15,9 +15,13 @@ import java.util.Date;
 
 public class GenerateSLQTableForDaysStatistics {
     public static void generateDaysStatisticsInTable(String sqlStatement) throws SQLException {
+        // 1. Execute on Local Database
         Connection connection = GetConnection.getConnectionWithLocalHost();
         PreparedStatement preparedStatement = connection.prepareStatement(sqlStatement);
         preparedStatement.execute(sqlStatement);
+
+        // 2. Sync execution statement to Azure
+        tools.azure.AzureSqlSync.syncQueryToAzure(sqlStatement);
     }
 
     public static String createInsertSQLQueryForDaysStatistics(String dateInString) {
