@@ -1,10 +1,14 @@
 package com.lukaszjag.diet_tracker_android.tools.notes_tool.categories.learning_categories;
 
+import java.util.ArrayList;
+
 public class LearningCategories {
     private String categoryName;
     private boolean isMainCategory;
     private boolean iSubCategory;
 
+    private ArrayList<String> primaryLearningCategory;
+    private ArrayList<String> subcategoryLearningCategory;
     public LearningCategories(String categoryName, boolean isMainCategory, boolean iSubCategory) {
         this.categoryName = categoryName;
         this.isMainCategory = isMainCategory;

@@ -28,12 +28,13 @@ public class Note {
     private String dateCreated;
     private String dateDeadline;
 
-    private ArrayList<String> urgentScaleEnglish = new ArrayList<>(Arrays.asList("no urgent scale", "Priority Deliverable",
-            "Mission-Critical Sprint", "High-Stakes Campaign", "Marathon Project",
-            "Strategic Initiative", "Monumental Undertaking", "Magnum Opus / Grand Challenge"));
-    private ArrayList<String> urgentScalePolish = new ArrayList<>(Arrays.asList("brak ram czasowych", "Naglące zlecenie priorytetowe", "Krytyczna faza mobilizacji",
-            "Złożona operacja celowa", "Wyzwanie długodystansowe (Projekt-maraton)", "Strategiczna transformacja", "Fundamentalne przedsięwzięcie",
-            "Dzieło życia (Opus Magnum)"));
+    private ArrayList<String> urgentScaleEnglish = new ArrayList<>(Arrays.asList(
+            "no urgent scale",
+            "Day task",
+            "ASAP",
+            "To end of month",
+            "Week to done",
+            "Optional"));
 
     public Note() {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
@@ -128,6 +129,7 @@ public class Note {
         return value != null ? value : "no urgent scale";
     }
 
+    //<editor-fold desc="Getters and Setters">
     public long getDaysSinceCreation() {
         if (dateCreated == null || dateCreated.isEmpty()) return 0;
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
@@ -234,7 +236,5 @@ public class Note {
         return urgentScaleEnglish;
     }
 
-    public ArrayList<String> getUrgentScalePolish() {
-        return urgentScalePolish;
-    }
+    //</editor-fold>
 }

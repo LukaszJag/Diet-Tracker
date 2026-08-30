@@ -138,9 +138,6 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         int idx = note.getUrgentScaleEnglish().indexOf(urgency);
         if (idx != -1) return idx;
 
-        idx = note.getUrgentScalePolish().indexOf(urgency);
-        if (idx != -1) return idx;
-
         return 0;
     }
 

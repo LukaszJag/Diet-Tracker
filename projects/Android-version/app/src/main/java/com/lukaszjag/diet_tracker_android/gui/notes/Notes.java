@@ -36,12 +36,56 @@ import com.lukaszjag.diet_tracker_android.tools.notes_tool.categories.learning_c
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
 public class Notes extends AppCompatActivity {
+
+    //<editor-fold desc="Global variables">
+    //<editor-fold desc="Learning categories">
+    public enum PrimaryCategory {
+        JAVA_ECOSYSTEM(1, "Java ecosystem", List.of("Java", "Spring", "JUNIT", "Android", "Java – Web Scraping", "Java Diet Tracker")),
+        FRONTEND(2, "Frontend", List.of("HTML, CSS", "JavaScript")),
+        CLOUD_AND_INFRASTRUCTURE(3, "Cloud and Infrastructure", List.of("Linux", "PowerShell", "Network", "Cloud", "Windows Server", "Windows", "Containers")),
+        GAMEDEV(4, "GameDev", List.of("UE5")),
+        COMPUTER_SCIENCE(5, "Computer Science", List.of("Algorytmy", "General IT Knowledge")),
+        SOFT_SKILLS(6, "Soft Skills", List.of("Szukanie pracy", "Japoński", "Angielski")),
+        VERSATILE_FRAMEWORKS(7, "Versatile Frameworks", List.of("Python", ".NET(C#)")),
+        WSB(8, "WSB", List.of("WSB")),
+        CERTS(9, "Certs", List.of("CompTIA A+", "CompTIA Network +", "CompTIA Linux +")),
+        BACKEND(10, "Backend", List.of("x")),
+        DATA_AND_BI(11, "Data and BI", List.of("Excel", "Word", "Power Point", "Power BI")),
+        LOW_LEVEL_LANGUAGES(12, "Low-Level Languages", List.of("C", "C++")),
+        DEV_TOOLS(13, "Dev Tools", List.of("Git", "Jira", "Postman", "IDE")),
+        AI_MACHINE_LEARNING(14, "AI & Machine Learning", List.of("AI Assistants", "Machine Learning Basics"));
+
+        private final int id;
+        private final String displayName;
+        private final List<String> subcategories;
+
+        PrimaryCategory(int id, String displayName, List<String> subcategories) {
+            this.id = id;
+            this.displayName = displayName;
+            this.subcategories = subcategories;
+        }
+
+        public int getId() { return id; }
+        public String getDisplayName() { return displayName; }
+        public List<String> getSubcategories() { return subcategories; }
+
+        // Add this method inside your PrimaryCategory enum
+        public static List<String> getSubcategoriesByDisplayName(String displayName) {
+            return Arrays.stream(values())
+                    .filter(category -> category.getDisplayName().equalsIgnoreCase(displayName))
+                    .findFirst()
+                    .map(PrimaryCategory::getSubcategories)
+                    .orElse(List.of()); // Returns an empty list if no match is found
+        }
+    }
+    //</editor-fold>
     private static final int STORAGE_PERMISSION_CODE = 101;
 
     private RecyclerView recyclerView;
@@ -62,6 +106,7 @@ public class Notes extends AppCompatActivity {
     private List<String> uniqueCategoriesList = new ArrayList<>();
     private boolean[] checkedCategories;
     private List<String> selectedCategories = new ArrayList<>();
+    //</editor-fold>
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -196,6 +241,31 @@ public class Notes extends AppCompatActivity {
         setupUrgencySpinner();
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == STORAGE_PERMISSION_CODE) {
+            if (grantResults.length > 0 && grantResults[0] == android.content.pm.PackageManager.PERMISSION_GRANTED) {
+                loadNotesOnStartup();
+                setupCategorySpinner();
+            } else {
+                Toast.makeText(this, "Storage permission is required to access your notes from the public directory.", Toast.LENGTH_LONG).show();
+                loadNotesOnStartup(); // Fallback load attempt
+            }
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // Automatically checks if permission was granted when returning from settings screen
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            if (Environment.isExternalStorageManager() && adapter.getOriginalList().isEmpty()) {
+                loadNotesOnStartup();
+                setupCategorySpinner();
+            }
+        }
+    }
     /**
      * Checks if the app has permission to manage external files on Android 11+
      * or standard read/write permissions on Android 6.0 - 10.
@@ -231,32 +301,6 @@ public class Notes extends AppCompatActivity {
             }
         } else {
             loadNotesOnStartup();
-        }
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == STORAGE_PERMISSION_CODE) {
-            if (grantResults.length > 0 && grantResults[0] == android.content.pm.PackageManager.PERMISSION_GRANTED) {
-                loadNotesOnStartup();
-                setupCategorySpinner();
-            } else {
-                Toast.makeText(this, "Storage permission is required to access your notes from the public directory.", Toast.LENGTH_LONG).show();
-                loadNotesOnStartup(); // Fallback load attempt
-            }
-        }
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        // Automatically checks if permission was granted when returning from settings screen
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            if (Environment.isExternalStorageManager() && adapter.getOriginalList().isEmpty()) {
-                loadNotesOnStartup();
-                setupCategorySpinner();
-            }
         }
     }
 
@@ -396,9 +440,6 @@ public class Notes extends AppCompatActivity {
         urgencyOptions.add("All Urgencies");
 
         for (String u : sampleNote.getUrgentScaleEnglish()) {
-            if (!urgencyOptions.contains(u)) urgencyOptions.add(u);
-        }
-        for (String u : sampleNote.getUrgentScalePolish()) {
             if (!urgencyOptions.contains(u)) urgencyOptions.add(u);
         }
 
@@ -550,6 +591,7 @@ public class Notes extends AppCompatActivity {
         final CheckBox dialogCbToday = dialogView.findViewById(R.id.dialogCbToday);
         final TextView tvLearningCatLabel = dialogView.findViewById(R.id.tvLearningCatLabel);
         final Spinner dialogSpinnerLearningCat = dialogView.findViewById(R.id.dialogSpinnerLearningCat);
+        final Spinner secondCategorySpinnerLearningCat = dialogView.findViewById(R.id.secondLearningCategory);
         final EditText dialogDeadline = dialogView.findViewById(R.id.dialogDeadline);
 
         Note sampleNote = new Note();
@@ -559,20 +601,42 @@ public class Notes extends AppCompatActivity {
         dialogSpinnerUrgent.setAdapter(urgentAdapter);
 
         List<LearningCategories> learningCatOptions = new ArrayList<>();
-        learningCatOptions.add(new LearningCategories("Software Engineering (Java)", true, false));
-        learningCatOptions.add(new LearningCategories("Android Core Frameworks", true, false));
-        learningCatOptions.add(new LearningCategories("Database Systems Concepts", false, true));
-        learningCatOptions.add(new LearningCategories("Artificial Intelligence Basics", false, true));
+        for (PrimaryCategory category : PrimaryCategory.values()) {
+            learningCatOptions.add(new LearningCategories(category.displayName, true, false));
+        }
 
-        ArrayAdapter<LearningCategories> learnCatAdapter = new ArrayAdapter<>(this,
-                android.R.layout.simple_spinner_item, learningCatOptions);
+        ArrayAdapter<LearningCategories> learnCatAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, learningCatOptions);
         learnCatAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         dialogSpinnerLearningCat.setAdapter(learnCatAdapter);
+
+
+        dialogSpinnerLearningCat.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String selectedItem = parent.getItemAtPosition(position).toString();
+                List<String> subcategories = PrimaryCategory.getSubcategoriesByDisplayName(selectedItem);
+
+                List<LearningCategories> secondLearnCatOptions = new ArrayList<>();
+
+                for (String subcategory : subcategories) {
+                    secondLearnCatOptions.add(new LearningCategories(subcategory, true, false));
+                }
+                ArrayAdapter<LearningCategories> secondLearnCatAdapter = new ArrayAdapter<>(Notes.this, android.R.layout.simple_spinner_item, secondLearnCatOptions);
+                secondLearnCatAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                secondCategorySpinnerLearningCat.setAdapter(secondLearnCatAdapter);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
 
         dialogCbLearning.setOnCheckedChangeListener((buttonView, isChecked) -> {
             int visibility = isChecked ? View.VISIBLE : View.GONE;
             tvLearningCatLabel.setVisibility(visibility);
             dialogSpinnerLearningCat.setVisibility(visibility);
+            secondCategorySpinnerLearningCat.setVisibility(visibility);
         });
 
         dialogDeadline.setOnClickListener(v -> {
@@ -626,4 +690,4 @@ public class Notes extends AppCompatActivity {
 
         NoteStorage.saveNotes(this, adapter.getOriginalList());
     }
-}   
+}
