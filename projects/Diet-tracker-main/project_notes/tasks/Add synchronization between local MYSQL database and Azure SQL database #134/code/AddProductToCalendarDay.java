@@ -668,23 +668,16 @@ public class AddProductToCalendarDay {
                 dayInCalendar.getConsumedMacro(), dayInCalendar);
 
         try {
-            // Generate a single unique ID for this new entry
-            String rowId = java.util.UUID.randomUUID().toString();
+            // 1. Insert to Local MySQL Database
+            InsertToCalendarDayTable.addRowToCalendarTable(dayInCalendar);
 
-            // 1. Insert to Local MySQL Database (stores row_id and sets is_synced = 0)
-            InsertToCalendarDayTable.addRowToCalendarTable(dayInCalendar, rowId);
-
-            // 2. Generate the query for Azure SQL (includes row_id, but excludes is_synced)
-            String queryForAzure = InsertToCalendarDayTable.createInsertSQLQueryForCalendarDay(dayInCalendar, rowId, false);
-
-            // 3. Sync to Azure SQL asynchronously
-            tools.azure.AzureSqlSync.syncQueryToAzure(queryForAzure, rowId);
+            // 2. Generate the query and sync to Azure SQL
+            String query = InsertToCalendarDayTable.createInsertSQLQueryForCalendarDay(dayInCalendar);
+            tools.azure.AzureSqlSync.syncQueryToAzure(query);
 
         } catch (SQLException ex) {
             throw new RuntimeException(ex);
         }
-
-        // ... Keep the rest of your statistics generation and dialog popup code as-is ...
 
 
         //<editor-fold desc="Prepare and Execute update data for selected month">

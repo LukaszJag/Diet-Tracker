@@ -139,12 +139,6 @@ public class AzureToLocalSync {
     /**
      * Downloads the calendar entries from Azure and merges them into the local MySQL database.
      */
-    /**
-     * Downloads the calendar entries from Azure and merges them into the local MySQL database.
-     */
-    /**
-     * Downloads the calendar entries from Azure and merges them into the local MySQL database.
-     */
     public static void pullCalendarFromAzure() {
         try {
             // 1. Query to fetch all calendar records from the custom schema
@@ -181,18 +175,18 @@ public class AzureToLocalSync {
             Connection localConn = GetConnection.getConnectionWithLocalHost();
             localConn.setAutoCommit(false);
 
-            // SQL using REPLACE INTO matching all 17 local columns
+            // SQL using REPLACE INTO matching the 15 columns in your schema
             String localSql = "REPLACE INTO diet_tracker_schema.calendar " +
                     "(day_date, day_name, product_name, amount_of_product, kcal, protein, fat, carbs, " +
                     "time_optional, comment_optional, kcal_consume, carbs_consume, fat_consume, " +
-                    "protein_consume, meal_name, row_id, is_synced) " +
-                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 1)"; // 1 = already synced
+                    "protein_consume, meal_name) " +
+                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
             PreparedStatement pstmt = localConn.prepareStatement(localSql);
 
             for (Map<String, String> item : entries) {
-                // Clean day_date
-                String rawDate = getStringSafe(item, "day_date");
+                // 1. Clean day_date
+                String rawDate = item.getOrDefault("day_date", "");
                 if (rawDate != null && rawDate.length() >= 10) {
                     rawDate = rawDate.substring(0, 10);
                 }
@@ -206,49 +200,28 @@ public class AzureToLocalSync {
                 pstmt.setFloat(7, getFloatSafe(item, "fat"));
                 pstmt.setFloat(8, getFloatSafe(item, "carbs"));
 
-                // Clean time_optional
-                String rawTime = getStringSafe(item, "time_optional");
-                if (rawTime != null) {
-                    if (rawTime.contains("T")) {
-                        rawTime = rawTime.replace("T", " ");
-                        if (rawTime.contains(".")) {
-                            rawTime = rawTime.substring(0, rawTime.indexOf('.'));
-                        } else if (rawTime.endsWith("Z")) {
-                            rawTime = rawTime.substring(0, rawTime.length() - 1);
-                        }
+                // 2. Clean time_optional
+                String rawTime = item.getOrDefault("time_optional", "");
+                if (rawTime != null && rawTime.contains("T")) {
+                    rawTime = rawTime.replace("T", " ");
+                    if (rawTime.contains(".")) {
+                        rawTime = rawTime.substring(0, rawTime.indexOf('.'));
+                    } else if (rawTime.endsWith("Z")) {
+                        rawTime = rawTime.substring(0, rawTime.length() - 1);
                     }
                 }
-                pstmt.setString(9, rawTime); // Safely sets database SQL NULL if rawTime is null
+                pstmt.setString(9, rawTime);
 
-                pstmt.setString(10, getStringSafe(item, "comment_optional"));
+                pstmt.setString(10, item.getOrDefault("comment_optional", ""));
                 pstmt.setFloat(11, getFloatSafe(item, "kcal_consume"));
                 pstmt.setFloat(12, getFloatSafe(item, "carbs_consume"));
                 pstmt.setFloat(13, getFloatSafe(item, "fat_consume"));
                 pstmt.setFloat(14, getFloatSafe(item, "protein_consume"));
                 pstmt.setString(15, item.getOrDefault("meal_name", "None"));
-
-                // Fetch the unique row ID
-                pstmt.setString(16, item.getOrDefault("row_id", ""));
                 pstmt.addBatch();
             }
-
-            pstmt.executeBatch();
-            localConn.commit();
-            pstmt.close();
-            localConn.close();
-            System.out.println("Calendar pulled and synced locally!");
-
         } catch (Exception e) {
             System.err.println("Calendar synchronization error: " + e.getMessage());
         }
-    }
-
-
-    private static String getStringSafe(Map<String, String> map, String key) {
-        String val = map.get(key);
-        if (val == null || val.trim().isEmpty() || val.trim().equalsIgnoreCase("null")) {
-            return null;
-        }
-        return val.trim();
     }
 }

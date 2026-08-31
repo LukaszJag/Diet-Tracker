@@ -10,51 +10,47 @@ import java.sql.SQLException;
 
 public class InsertToCalendarDayTable {
 
-    // Keep original method for compatibility
     public static void addRowToCalendarTable(DayInCalendar dayInCalendar) throws SQLException {
-        addRowToCalendarTable(dayInCalendar, java.util.UUID.randomUUID().toString());
+        Connection connection = GetConnection.getConnectionWithLocalHost();
+        String sqlStatement = createInsertSQLQueryForCalendarDay(dayInCalendar);
+
+        PreparedStatement preparedStatement = connection.prepareStatement(sqlStatement);
+        preparedStatement.execute(sqlStatement);
     }
 
-    // NEW Overloaded Method: Inserts locally with rowId and sets is_synced = 0
-    public static void addRowToCalendarTable(DayInCalendar dayInCalendar, String rowId) throws SQLException {
-        String sqlStatement = createInsertSQLQueryForCalendarDay(dayInCalendar, rowId, true);
-        try (Connection connection = GetConnection.getConnectionWithLocalHost();
-             PreparedStatement preparedStatement = connection.prepareStatement(sqlStatement)) {
-            preparedStatement.execute();
-        }
-    }
-
-    // Keep original method for compatibility
     public static String createInsertSQLQueryForCalendarDay(DayInCalendar dayToInsert) {
-        return createInsertSQLQueryForCalendarDay(dayToInsert, java.util.UUID.randomUUID().toString(), false);
-    }
-
-    // NEW Overloaded Method: Dynamically appends row_id and is_synced
-    public static String createInsertSQLQueryForCalendarDay(DayInCalendar dayToInsert, String rowId, boolean includeIsSynced) {
+        // Set head of query
         String sqlStatement = "INSERT INTO `diet_tracker_schema`." + "`" + Config.CURRENT_DATABASE_TABLE_CALENDAR + "`\n";
         sqlStatement += "(";
 
+        // Set columns name in query
         for (int i = 0; i < Config.SQL_COLUMNS_CALENDAR.length; i++) {
-            sqlStatement += "`" + Config.SQL_COLUMNS_CALENDAR[i] + "`,\n";
+
+            sqlStatement += "`" + Config.SQL_COLUMNS_CALENDAR[i] + "`";
+
+            if (i == Config.SQL_COLUMNS_CALENDAR.length - 1) {
+                sqlStatement += ")";
+            } else {
+                sqlStatement += ",\n";
+            }
         }
 
-        sqlStatement += "`row_id`";
-        if (includeIsSynced) {
-            sqlStatement += ",\n`is_synced`";
-        }
-        sqlStatement += ")";
-
+        // Set Values verse
         sqlStatement += "\nValues\n(";
         String[] dayDataInArray = dayToInsert.dayDataInStringArray(dayToInsert);
 
         for (int i = 0; i < Config.SQL_COLUMNS_CALENDAR.length; i++) {
+
+            // Take care to float value ends with .f
             if (i <= 10) {
-                if (i == 0 || i == 1 || i == 2 || i == 4 || i == 9 || i == 10) {
+
+                if (i == 0 || i == 1 || i == 2 || i==4 || i == 9 || i == 10) {
                     sqlStatement += "'" + dayDataInArray[i] + "'";
                 } else {
                     sqlStatement += dayDataInArray[i];
                 }
-            } else {
+            }else {
+                // hard code manual add consume macro
                 if (i == 11) {
                     sqlStatement += String.valueOf(dayToInsert.getConsumedMacro().getKcal());
                 }
@@ -68,13 +64,14 @@ public class InsertToCalendarDayTable {
                     sqlStatement += String.valueOf(dayToInsert.getConsumedMacro().getProtein());
                 }
             }
-            sqlStatement += ",\n";
+
+            if (i != Config.SQL_COLUMNS_CALENDAR.length - 1) {
+                sqlStatement += ",\n";
+            } else {
+                sqlStatement += "\n";
+            }
         }
 
-        sqlStatement += "'" + rowId + "'";
-        if (includeIsSynced) {
-            sqlStatement += ",\n0"; // 0 = Unsynced in Local MySQL
-        }
         sqlStatement += ");";
 
         return sqlStatement;
