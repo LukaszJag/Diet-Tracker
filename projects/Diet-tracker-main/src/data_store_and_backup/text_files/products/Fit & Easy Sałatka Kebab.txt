@@ -1,0 +1,9 @@
+Name: Fit & Easy Sałatka Kebab
+Brand: Fit & Easy
+Package has: 200.0
+Macro for: 100.0
+KCal: 106.0
+Protein: 4.5
+Fat: 7.5
+Carbs: 4.3
+Comment optional: Link: https://www.frisco.pl/pid,149636/n,fit-easy-mieszanka-salat-z-kebabem/stn,product

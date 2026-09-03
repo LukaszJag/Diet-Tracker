@@ -1,0 +1,9 @@
+Name: Carrefour Bon appétit! Lunchbox cezar
+Brand: Carrefour
+Package has: 200.0
+Macro for: 100.0
+KCal: 141.0
+Protein: 6.5
+Fat: 9.6
+Carbs: 7.1
+Comment optional: Link: https://www.carrefour.pl/dania-gotowe-i-przystawki/surowki-salatki/carrefour-bon-appetit-lunchbox-cezar-200-g

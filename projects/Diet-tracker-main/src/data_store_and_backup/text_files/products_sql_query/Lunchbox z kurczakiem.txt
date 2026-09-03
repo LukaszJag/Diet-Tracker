@@ -1,0 +1,20 @@
+INSERT INTO `diet_tracker_schema`.product_table
+(`product_name`,
+`product_brand`,
+`product_package_has`,
+`product_macro_for`,
+`product_kcal`,
+`product_protein`,
+`product_fat`,
+`product_carbs`,
+`comment_optional`)
+Values
+('Lunchbox z kurczakiem',
+'Auchan',
+200.0,
+100.0,
+280.0,
+13.0,
+19.0,
+6.0,
+'Link: https://zakupy.auchan.pl/products/lunchbox-z-kurczakiem-auchan-200-g/00302455?srsltid=AfmBOooKmuWrn6_0gunpuKsB8gOPPi-69VM6GUX_lv681OvHh5kU-l4q');

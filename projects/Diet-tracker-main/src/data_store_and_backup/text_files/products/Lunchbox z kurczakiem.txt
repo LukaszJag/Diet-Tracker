@@ -1,0 +1,9 @@
+Name: Lunchbox z kurczakiem
+Brand: Auchan
+Package has: 200.0
+Macro for: 100.0
+KCal: 280.0
+Protein: 13.0
+Fat: 19.0
+Carbs: 6.0
+Comment optional: Link: https://zakupy.auchan.pl/products/lunchbox-z-kurczakiem-auchan-200-g/00302455?srsltid=AfmBOooKmuWrn6_0gunpuKsB8gOPPi-69VM6GUX_lv681OvHh5kU-l4q

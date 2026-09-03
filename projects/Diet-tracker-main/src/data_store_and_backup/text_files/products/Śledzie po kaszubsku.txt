@@ -1,0 +1,9 @@
+Name: Śledzie po kaszubsku
+Brand: produkt ogólny
+Package has: 0.0
+Macro for: 100.0
+KCal: 180.29
+Protein: 9.57
+Fat: 14.41
+Carbs: 3.01
+Comment optional: Link: https://www.tabele-kalorii.pl/kalorie,Sledzie-po-kaszubsku-Przepis-od-sirkostek.html
