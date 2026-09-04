@@ -43,7 +43,6 @@ public class AzureToLocalSync {
                 return;
             }
 
-            // High-performance flat JSON parsing
             List<Map<String, String>> products = parseJsonArray(response.body());
             if (products.isEmpty()) {
                 System.out.println("No products found on Azure SQL to sync.");
@@ -53,7 +52,7 @@ public class AzureToLocalSync {
             System.out.println("Processing " + products.size() + " products for local import...");
 
             Connection localConn = GetConnection.getConnectionWithLocalHost();
-            localConn.setAutoCommit(false); // Enable transaction
+            localConn.setAutoCommit(false);
 
             String localSql = "REPLACE INTO diet_tracker_schema.product_table " +
                     "(product_name, product_brand, product_package_has, product_macro_for, " +
@@ -72,17 +71,16 @@ public class AzureToLocalSync {
                 pstmt.setFloat(6, getFloatSafe(item, "product_protein"));
                 pstmt.setFloat(7, getFloatSafe(item, "product_fat"));
                 pstmt.setFloat(8, getFloatSafe(item, "product_carbs"));
-                pstmt.setString(9, item.getOrDefault("product_comment", ""));
+                pstmt.setString(9, truncateSafe(item.getOrDefault("product_comment", ""), 255));
                 pstmt.addBatch();
 
-                // Chunking execution to prevent memory overflow
                 if (++count % 1000 == 0) {
                     pstmt.executeBatch();
                 }
             }
 
-            pstmt.executeBatch(); // Send remaining batch elements
-            localConn.commit();   // Commit transaction
+            pstmt.executeBatch();
+            localConn.commit();
             pstmt.close();
             localConn.close();
 
@@ -105,10 +103,6 @@ public class AzureToLocalSync {
         }
     }
 
-    /**
-     * An optimized, dependency-free character scanner to parse flat JSON arrays
-     * in linear time, bypassing regex backtrack limits and compilation overhead.
-     */
     private static List<Map<String, String>> parseJsonArray(String json) {
         List<Map<String, String>> list = new ArrayList<>();
         if (json == null || json.trim().isEmpty()) {
@@ -122,54 +116,47 @@ public class AzureToLocalSync {
             char c = json.charAt(i);
             if (c == '{') {
                 Map<String, String> map = new HashMap<>();
-                i++; // Skip '{'
+                i++;
 
                 while (i < len) {
-                    // Skip whitespace/commas to find key or end of current object
                     while (i < len && json.charAt(i) != '"' && json.charAt(i) != '}') {
                         i++;
                     }
                     if (i >= len || json.charAt(i) == '}') {
-                        if (i < len) i++; // Skip '}'
+                        if (i < len) i++;
                         break;
                     }
 
-                    // Extract Key
-                    i++; // Skip open quote
+                    i++;
                     int keyStart = i;
                     while (i < len && json.charAt(i) != '"') {
-                        if (json.charAt(i) == '\\') i++; // Skip escape characters
+                        if (json.charAt(i) == '\\') i++;
                         i++;
                     }
                     String key = json.substring(keyStart, i);
-                    i++; // Skip close quote
+                    i++;
 
-                    // Advance to colon ':' separator
                     while (i < len && json.charAt(i) != ':') {
                         i++;
                     }
-                    i++; // Skip ':'
+                    i++;
 
-                    // Skip whitespace preceding value
                     while (i < len && Character.isWhitespace(json.charAt(i))) {
                         i++;
                     }
 
-                    // Extract Value
                     String value = null;
                     if (i < len) {
                         if (json.charAt(i) == '"') {
-                            // Extract String literal value
-                            i++; // Skip open quote
+                            i++;
                             int valStart = i;
                             while (i < len && json.charAt(i) != '"') {
-                                if (json.charAt(i) == '\\') i++; // Skip escape
+                                if (json.charAt(i) == '\\') i++;
                                 i++;
                             }
                             value = json.substring(valStart, i);
-                            i++; // Skip close quote
+                            i++;
                         } else {
-                            // Extract Numeric, Boolean or Null values
                             int valStart = i;
                             while (i < len && json.charAt(i) != ',' && json.charAt(i) != '}') {
                                 i++;
@@ -218,7 +205,6 @@ public class AzureToLocalSync {
                 return;
             }
 
-            // High-performance flat JSON parsing
             List<Map<String, String>> entries = parseJsonArray(response.body());
             if (entries.isEmpty()) {
                 System.out.println("No calendar entries found on Azure SQL to sync.");
@@ -238,11 +224,15 @@ public class AzureToLocalSync {
 
             PreparedStatement pstmt = localConn.prepareStatement(localSql);
 
+            // Collect unique dates involved in the pull payload
+            java.util.Set<String> uniqueDates = new java.util.HashSet<>();
+
             int count = 0;
             for (Map<String, String> item : entries) {
                 String rawDate = getStringSafe(item, "day_date");
                 if (rawDate != null && rawDate.length() >= 10) {
                     rawDate = rawDate.substring(0, 10);
+                    uniqueDates.add(rawDate);
                 }
                 pstmt.setString(1, rawDate);
 
@@ -267,7 +257,7 @@ public class AzureToLocalSync {
                 }
                 pstmt.setString(9, rawTime);
 
-                pstmt.setString(10, getStringSafe(item, "comment_optional"));
+                pstmt.setString(10, truncateSafe(getStringSafe(item, "comment_optional"), 255));
                 pstmt.setFloat(11, getFloatSafe(item, "kcal_consume"));
                 pstmt.setFloat(12, getFloatSafe(item, "carbs_consume"));
                 pstmt.setFloat(13, getFloatSafe(item, "fat_consume"));
@@ -276,21 +266,55 @@ public class AzureToLocalSync {
                 pstmt.setString(16, item.getOrDefault("row_id", ""));
                 pstmt.addBatch();
 
-                // Chunk execution boundary
                 if (++count % 1000 == 0) {
                     pstmt.executeBatch();
                 }
             }
 
-            pstmt.executeBatch(); // Send remaining batch elements
-            localConn.commit();   // Commit transaction
+            pstmt.executeBatch();
+            localConn.commit();
             pstmt.close();
             localConn.close();
             System.out.println("Calendar pulled and synced locally!");
 
+            // Trigger the local aggregate updates for days_statistics_test
+            updateLocalStatistics(uniqueDates);
+
         } catch (Exception e) {
             System.err.println("Calendar synchronization error: " + e.getMessage());
         }
+    }
+
+    /**
+     * Iterates over pulled dates to locally check, create, and update entries inside days_statistics_test.
+     */
+    private static void updateLocalStatistics(java.util.Set<String> uniqueDates) {
+        if (uniqueDates == null || uniqueDates.isEmpty()) {
+            return;
+        }
+
+        System.out.println("Refreshing days_statistics_test for " + uniqueDates.size() + " unique dates...");
+        for (String date : uniqueDates) {
+            try {
+                // 1. If row does not exist locally in days_statistics_test, insert standard empty placeholder
+                if (!tools.sql_tools.general.get_check_data.CheckIfRowExist.isDaysStatisticRowExistInTableCheckByDate(date)) {
+                    String insertSql = tools.sql_tools.days_statistics.GenerateSLQTableForDaysStatistics.createInsertSQLQueryForDaysStatistics(date);
+                    tools.sql_tools.general.run.RunQuery.runQuery(insertSql);
+                }
+
+                // 2. Re-calculate and write consumed macro sums from local calendar database
+                String updateMacrosSql = tools.sql_tools.days_statistics.UpdateDaysStatisticsFilledData.prepareQueryForFillConsumedMacro(date);
+                tools.sql_tools.general.run.RunQuery.runQuery(updateMacrosSql);
+
+                // 3. Re-calculate and write count of entries (amount_of_filled_points_from_notepad)
+                String updatePointsSql = tools.sql_tools.days_statistics.UpdateDaysStatisticsFilledData.prepareQueryForUpdateAmountOfFilledPointsFromNotepad(date);
+                tools.sql_tools.general.run.RunQuery.runQuery(updatePointsSql);
+
+            } catch (Exception e) {
+                System.err.println("Failed to update statistics for date " + date + ": " + e.getMessage());
+            }
+        }
+        System.out.println("Local days_statistics_test update complete!");
     }
 
     private static String getStringSafe(Map<String, String> map, String key) {
@@ -299,5 +323,15 @@ public class AzureToLocalSync {
             return null;
         }
         return val.trim();
+    }
+
+    private static String truncateSafe(String value, int maxLength) {
+        if (value == null) {
+            return null;
+        }
+        if (value.length() > maxLength) {
+            return value.substring(0, maxLength);
+        }
+        return value;
     }
 }
