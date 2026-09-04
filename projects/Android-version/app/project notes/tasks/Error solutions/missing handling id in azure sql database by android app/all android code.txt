@@ -1,0 +1,3777 @@
+================================================================================
+FILE: AzureApiService.java
+================================================================================
+package com.lukaszjag.diet_tracker_android.tools.cloud_data_tools;
+
+import java.util.List;
+import java.util.Map;
+import retrofit2.Call;
+import retrofit2.http.Body;
+import retrofit2.http.POST;
+
+public interface AzureApiService {
+
+    // Uses POST to safely send long SQL Strings to Azure
+    @POST("api/AndroidAzure")
+    Call<List<Map<String, Object>>> executeCustomQuery(@Body QueryRequest customQueryObject);
+
+}
+
+
+================================================================================
+FILE: AzureDataCallback.java
+================================================================================
+package com.lukaszjag.diet_tracker_android.tools.cloud_data_tools;
+
+import com.lukaszjag.diet_tracker_android.tools.sql_tools.RowInTable;
+
+import java.util.ArrayList;
+
+public interface AzureDataCallback {
+    void onSuccess(ArrayList<RowInTable> resultTable);
+    void onFailure(String errorMessage);
+}
+
+
+
+================================================================================
+FILE: GetFromSQLDatabase.java
+================================================================================
+package com.lukaszjag.diet_tracker_android.tools.cloud_data_tools;
+
+import android.util.Log;
+
+import com.lukaszjag.diet_tracker_android.tools.sql_tools.RowInTable;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+public class GetFromSQLDatabase {
+    public void runCustomAzureQuery(String mySqlString) {
+        AzureApiService apiService = RetrofitClient.getRetrofitInstance().create(AzureApiService.class);
+
+        QueryRequest requestBody = new QueryRequest(mySqlString);
+
+        Call<List<Map<String, Object>>> call = apiService.executeCustomQuery(requestBody);
+
+        call.enqueue(new Callback<List<Map<String, Object>>>() {
+            @Override
+            public void onResponse(Call<List<Map<String, Object>>> call, Response<List<Map<String, Object>>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+
+                    List<Map<String, Object>> dynamicSqlData = response.body();
+
+                    if (dynamicSqlData.size() > 0) {
+                        Log.d("AZURE_CUSTOM_SQL", "amount of rows: " + dynamicSqlData.size());
+
+                        for (int i = 0; i < dynamicSqlData.size(); i++) {
+                            Map<String, Object> row = dynamicSqlData.get(i);
+                            Log.d("AZURE_CUSTOM_SQL", "Row data: [" + i + "]: " + row.get("product_name"));
+                            //Log.d("AZURE_CUSTOM_SQL", "First row data: " + row.toString());
+                        }
+                    } else {
+                        Log.d("AZURE_DATABASE_SQL", "No result");
+                    }
+
+                } else {
+                    Log.d("AZURE_ERROR", "response.isSuccessful() or response.body() != null");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Map<String, Object>>> call, Throwable t) {
+                Log.e("AZURE_CUSTOM_SQL", "Network fail: " + t.getMessage());
+            }
+        });
+    }
+
+    public ArrayList<RowInTable> runAzureQuery(String mySqlString) {
+        AzureApiService apiService = RetrofitClient.getRetrofitInstance().create(AzureApiService.class);
+
+        ArrayList<RowInTable> resultTable = new ArrayList<>();
+        QueryRequest requestBody = new QueryRequest(mySqlString);
+
+        Call<List<Map<String, Object>>> call = apiService.executeCustomQuery(requestBody);
+
+        call.enqueue(new Callback<List<Map<String, Object>>>() {
+            @Override
+            public void onResponse(Call<List<Map<String, Object>>> call, Response<List<Map<String, Object>>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+
+                    List<Map<String, Object>> dynamicSqlData = response.body();
+
+                    if (dynamicSqlData.size() > 0) {
+                        Log.d("AZURE_CUSTOM_SQL", "amount of rows: " + dynamicSqlData.size());
+
+                        int counter = 0;
+                        for (int i = 0; i < dynamicSqlData.size(); i++) {
+                            Map<String, Object> row = dynamicSqlData.get(i);
+                            RowInTable rowInTable = new RowInTable();
+
+                            for (String  key : row.keySet()) {
+                                //System.out.println("hello");
+                                //System.out.println("key: " + key);
+                                //System.out.println("Value: " + row.get(key));
+                                rowInTable.putKeyAndValueToRow(key, String.valueOf(row.get(key)));
+                            }
+
+                            resultTable.add(counter, rowInTable);
+                            counter++;
+                            Log.d("AZURE_CUSTOM_SQL", "Row data: [" + i + "]: " + row.get("product_name"));
+                            //Log.d("AZURE_CUSTOM_SQL", "First row data: " + row.toString());
+                        }
+                    } else {
+                        Log.d("AZURE_DATABASE_SQL", "No result");
+                    }
+
+                } else {
+                    Log.d("AZURE_ERROR", "response.isSuccessful() or response.body() != null");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Map<String, Object>>> call, Throwable t) {
+                Log.e("AZURE_CUSTOM_SQL", "Network fail: " + t.getMessage());
+            }
+        });
+        System.out.println(resultTable.size());
+        return resultTable;
+    }
+
+    public ArrayList<RowInTable> runAzureQueryAIChat(String mySqlString) {
+        AzureApiService apiService = RetrofitClient.getRetrofitInstance().create(AzureApiService.class);
+        ArrayList<RowInTable> resultTable = new ArrayList<>();
+        QueryRequest requestBody = new QueryRequest(mySqlString);
+
+        Call<List<Map<String, Object>>> call = apiService.executeCustomQuery(requestBody);
+
+        try {
+            // .execute() blocks the thread and waits for the network response
+            Response<List<Map<String, Object>>> response = call.execute();
+
+            if (response.isSuccessful() && response.body() != null) {
+                List<Map<String, Object>> dynamicSqlData = response.body();
+
+                if (dynamicSqlData.size() > 0) {
+                    for (int i = 0; i < dynamicSqlData.size(); i++) {
+                        Map<String, Object> row = dynamicSqlData.get(i);
+                        RowInTable rowInTable = new RowInTable();
+
+                        for (String key : row.keySet()) {
+                            rowInTable.putKeyAndValueToRow(key, String.valueOf(row.get(key)));
+                        }
+
+                        resultTable.add(rowInTable);
+                    }
+                } else {
+                    Log.d("AZURE_DATABASE_SQL", "No result");
+                }
+            } else {
+                Log.d("AZURE_ERROR", "response.isSuccessful() or response.body() != null");
+            }
+
+        } catch (IOException e) {
+            // This catches network errors (like no internet connection)
+            Log.e("AZURE_CUSTOM_SQL", "Network fail: " + e.getMessage());
+        }
+
+        // This will now have the correct items because the code waited for the response!
+        System.out.println("Result size: " + resultTable.size());
+
+        return resultTable;
+    }
+// NEW APPROACH
+
+
+    public static void runAzureQueryAIChat(String mySqlString, AzureDataCallback callback) {
+        AzureApiService apiService = RetrofitClient.getRetrofitInstance().create(AzureApiService.class);
+        QueryRequest requestBody = new QueryRequest(mySqlString);
+
+        Log.d("AZURE_DEBUG", "Sending Query: " + mySqlString);
+
+        Call<List<Map<String, Object>>> call = apiService.executeCustomQuery(requestBody);
+
+        call.enqueue(new retrofit2.Callback<List<Map<String, Object>>>() {
+            @Override
+            public void onResponse(Call<List<Map<String, Object>>> call, retrofit2.Response<List<Map<String, Object>>> response) {
+                ArrayList<RowInTable> resultTable = new ArrayList<>();
+
+                // Log response metadata
+                Log.d("AZURE_DEBUG", "Response Code: " + response.code());
+                Log.d("AZURE_DEBUG", "Response Message: " + response.message());
+
+                if (response.isSuccessful()) {
+                    if (response.body() != null) {
+                        List<Map<String, Object>> dynamicSqlData = response.body();
+                        Log.d("AZURE_DEBUG", "Success! Rows retrieved: " + dynamicSqlData.size());
+
+                        if (dynamicSqlData.size() > 0) {
+                            for (int i = 0; i < dynamicSqlData.size(); i++) {
+                                Map<String, Object> row = dynamicSqlData.get(i);
+                                RowInTable rowInTable = new RowInTable();
+
+                                for (String key : row.keySet()) {
+                                    rowInTable.putKeyAndValueToRow(key, String.valueOf(row.get(key)));
+                                }
+                                resultTable.add(rowInTable);
+                            }
+                            callback.onSuccess(resultTable);
+                        } else {
+                            Log.d("AZURE_DEBUG", "Query executed successfully but returned empty dataset.");
+                            callback.onSuccess(new ArrayList<>());
+                        }
+                    } else {
+                        Log.w("AZURE_DEBUG", "Response was successful but body is null.");
+                        callback.onFailure("Server returned empty body");
+                    }
+                } else {
+                    // Extract the detailed error message sent by Azure (e.g., SQL syntax errors)
+                    String detailedError = "Unknown error";
+                    try {
+                        if (response.errorBody() != null) {
+                            detailedError = response.errorBody().string();
+                        }
+                    } catch (IOException e) {
+                        Log.e("AZURE_DEBUG", "Failed to parse error body: " + e.getMessage());
+                    }
+
+                    Log.e("AZURE_ERROR_DETAILS", "HTTP Error " + response.code() + ": " + detailedError);
+                    callback.onFailure("Server error (" + response.code() + "): " + detailedError);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Map<String, Object>>> call, Throwable t) {
+                Log.e("AZURE_DEBUG", "Network Transport Failure: " + t.getMessage(), t);
+                callback.onFailure("Network fail: " + t.getMessage());
+            }
+        });
+    }
+}
+
+
+
+================================================================================
+FILE: QueryRequest.java
+================================================================================
+package com.lukaszjag.diet_tracker_android.tools.cloud_data_tools;
+
+public class QueryRequest {
+    private String sql_query;
+
+    public QueryRequest(String customQuery) {
+        this.sql_query = customQuery;
+    }
+}
+
+
+================================================================================
+FILE: RetrofitClient.java
+================================================================================
+package com.lukaszjag.diet_tracker_android.tools.cloud_data_tools;
+
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
+public class RetrofitClient {
+    // Exact domain, ending in a slash:
+    private static final String BASE_URL = "https://diettrackerandroidversionapi-grcbhva9e5gqhzhz.polandcentral-01.azurewebsites.net/";
+    private static Retrofit retrofit;
+
+    public static Retrofit getRetrofitInstance() {
+        if (retrofit == null) {
+            retrofit = new Retrofit.Builder()
+                    .baseUrl(BASE_URL)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build();
+        }
+        return retrofit;
+    }
+}
+
+
+================================================================================
+FILE: QueryMaker.java
+================================================================================
+package com.lukaszjag.diet_tracker_android.tools.sql_tools;
+
+public class QueryMaker {
+    public static String getAllProductTableLikeProductNameCaseInsensitive(String productData) {
+        // If productData contains a single quote, we escape it to prevent SQL syntax errors.
+        String escapedData = productData != null ? productData.replace("'", "''") : "";
+        return "SELECT * FROM [diet_tracker_schema].[product_table] WHERE LOWER(product_name) LIKE '%" + escapedData + "%'";
+    }
+
+    public static String getAllProductsFromCalendarTableLikeDate(String date) {
+        String escapedDate = date != null ? date.replace("'", "''") : "";
+        return "SELECT * FROM [diet_tracker_schema].[calendar] WHERE day_date LIKE '%" + escapedDate + "%'";
+    }
+
+    public static String insertMealToCalendarTable(
+            String dayDate, String dayName, String mealName, double amountOfProduct,
+            String productName, double kcal, double protein, double fat, double carbs,
+            String timeOptional, String commentOptional, double kcalConsume,
+            double carbsConsume, double fatConsume, double proteinConsume) {
+
+        // Helper to format Date/Time or Text fields to raw NULL if they are "none", null, or empty
+        String sqlDayDate = (dayDate == null || dayDate.trim().isEmpty())
+                ? "NULL" : "'" + dayDate.replace("'", "''") + "'";
+
+        String sqlDayName = (dayName == null || dayName.trim().isEmpty())
+                ? "NULL" : "'" + dayName.replace("'", "''") + "'";
+
+        String sqlMealName = (mealName == null || mealName.trim().isEmpty())
+                ? "NULL" : "'" + mealName.replace("'", "''") + "'";
+
+        String sqlProductName = (productName == null || productName.trim().isEmpty())
+                ? "NULL" : "'" + productName.replace("'", "''") + "'";
+
+        // If time is "none", convert to raw SQL NULL so Azure SQL doesn't fail parsing it
+        String sqlTime = (timeOptional == null || timeOptional.equalsIgnoreCase("none") || timeOptional.trim().isEmpty())
+                ? "NULL" : "'" + timeOptional.replace("'", "''") + "'";
+
+        String sqlComment = (commentOptional == null || commentOptional.equalsIgnoreCase("none") || commentOptional.trim().isEmpty())
+                ? "NULL" : "'" + commentOptional.replace("'", "''") + "'";
+
+        // Returns the built query directly.
+        // Java's implicit double-to-string conversion always uses the dot decimal separator.
+        return "INSERT INTO [diet_tracker_schema].[calendar]\n" +
+                "([day_date], [day_name], [meal_name], [amount_of_product], [product_name],\n" +
+                "[kcal], [protein], [fat], [carbs], [time_optional], [comment_optional],\n" +
+                "[kcal_consume], [carbs_consume], [fat_consume], [protein_consume])\n" +
+                "VALUES (\n" +
+                sqlDayDate + ",\n" +
+                sqlDayName + ",\n" +
+                sqlMealName + ",\n" +
+                amountOfProduct + ",\n" +
+                sqlProductName + ",\n" +
+                kcal + ",\n" +
+                protein + ",\n" +
+                fat + ",\n" +
+                carbs + ",\n" +
+                sqlTime + ",\n" +
+                sqlComment + ",\n" +
+                kcalConsume + ",\n" +
+                carbsConsume + ",\n" +
+                fatConsume + ",\n" +
+                proteinConsume + "\n" +
+                ");\n" +
+                "SELECT 1 AS success;";
+    }
+}
+
+
+================================================================================
+FILE: RowInTable.java
+================================================================================
+package com.lukaszjag.diet_tracker_android.tools.sql_tools;
+
+import com.lukaszjag.diet_tracker_android.tools.debug_tools.Debug;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
+
+public class RowInTable {
+
+    public HashMap<String, String> fields = new HashMap<>();
+
+    //<editor-fold desc="Constructors">
+    public RowInTable() {
+
+    }
+
+    public RowInTable(HashMap<String, String> fields) {
+        this.fields = fields;
+    }
+    //</editor-fold>
+
+    public void putKeyAndValueToRow(String key, String value) {
+        fields.put(key, value);
+    }
+
+    //<editor-fold desc="Print methods">
+    public void printAlLValuesAndKey() {
+        for (String key : fields.keySet()) {
+            Debug.printKeyAndValue(key, fields.get(key), 6);
+        }
+    }
+    //</editor-fold>
+
+    //<editor-fold desc="Get methods">
+    public int getSizeOfRow() {
+        return fields.size();
+    }
+
+    public String getValue(String key) {
+
+        //System.out.println(fields.get(key));
+        return fields.get(key);
+
+
+    }
+
+    public String getKey(Object value) {
+        if (fields == null) return null;
+
+        String firstKey = null;
+        int counter = 0;
+        for (Map.Entry<String, ?> entry : fields.entrySet()) {
+            String value2 = (String) entry.getValue();
+            counter++;
+
+            if (value2.equals(value)) {
+                String key = entry.getKey();
+                if (firstKey == null) {
+                    firstKey = entry.getKey();
+                } else {
+                    System.out.println(
+                            "Warning: multiple keys map to the given value; "
+                                    + "returning first: " + firstKey
+                    );
+                    return firstKey;
+                }
+            }
+        }
+        return firstKey;
+    }
+
+    public String getKeyMINE(String value) {
+        if (fields == null) return null;
+
+        String firstKey = null;
+        int counter = 0;
+        for (Map.Entry<String, ?> entry : fields.entrySet()) {
+            String value2 = (String) entry.getValue();
+            counter++;
+
+            if (value2.equals(value)) {
+                String key = entry.getKey();
+                if (firstKey == null) {
+                    firstKey = entry.getKey();
+                } else {
+                    System.out.println(
+                            "Warning: multiple keys map to the given value; "
+                                    + "returning first: " + firstKey
+                    );
+                    return firstKey;
+                }
+            }
+        }
+        return firstKey;
+    }
+
+    public ArrayList<String> getAllKeys() {
+        Set setOfKeys = fields.keySet();
+        return new ArrayList<String>(setOfKeys);
+    }
+
+    public ArrayList<String> getAllValues() {
+        return new ArrayList<>(fields.values());
+    }
+    //</editor-fold>
+
+    //<editor-fold desc="Getters and Setters">
+    public HashMap<String, String> getFields() {
+        return fields;
+    }
+
+    public void setFields(HashMap<String, String> fields) {
+        this.fields = fields;
+    }
+    //</editor-fold>
+}
+
+
+================================================================================
+FILE: SearchForKey.java
+================================================================================
+package tools.sql_tools;
+
+import tools.sql_tools.general.statements.QueryMaker;
+import tools.sql_tools.general.run.RunQuery;
+
+import java.sql.SQLException;
+
+public class SearchForKey {
+    public static void searchForKeyInCalendarTable(String productValue) throws SQLException {
+        String tableName = "calendar_test";
+        String productKey = "product_name";
+        String sqlStatement = QueryMaker.makeSearchByOneKeySQLStatement(tableName, productKey, productValue, "String");
+        RunQuery.runQuery(sqlStatement);
+    }
+}
+
+
+
+================================================================================
+FILE: ChangeCalendarTextFiles.java
+================================================================================
+package tools.sql_tools.calendar;
+
+import tools.products_tools.Macro;
+import tools.sql_tools.general.statements.Select;
+import tools.text_files_tools.DirectoryTools;
+import tools.text_files_tools.FilesTools;
+
+import java.io.FileNotFoundException;
+import java.sql.SQLException;
+
+public class ChangeCalendarTextFiles {
+    public static void changeAllSQLTextFilesForCalendar() throws FileNotFoundException {
+        String[] allFilesPath;
+        String pathToSQLTextFiles = "src/data_store_and_backup/text_files/days";
+        allFilesPath = DirectoryTools.getPathForAllFilesInAllDirectory(pathToSQLTextFiles);
+
+        System.out.println("All files path amount: " + allFilesPath.length + "\n");
+
+        String[] fileArrayTMP;
+        int allRightDataRows = 0;
+        int allWrongDataRows = 0;
+        int allFileDataRowsCheck = 0;
+
+        for (int i = 0; i < allFilesPath.length; i++) {
+
+            fileArrayTMP = FilesTools.convertFileToStringArray(allFilesPath[i]);
+            if (extractDataAndPassToDoesCalendarProductHasRightMacro(fileArrayTMP, allFilesPath[i])){
+                allRightDataRows++;
+            }else {
+                System.out.print("[" + i + "]");
+                System.out.println();
+                allWrongDataRows++;
+            }
+            allFileDataRowsCheck++;
+        }
+
+        System.out.println("All file data rows checked: " + allFileDataRowsCheck);
+        System.out.println("All file data rows with right data: " + allRightDataRows);
+        System.out.println("All file data rows with wrong data; " + allWrongDataRows);
+    }
+
+    public static boolean extractDataAndPassToDoesCalendarProductHasRightMacro(String[] fileTextContentInArray, String pathToFile) {
+        Macro productMacro;
+        Macro consumedMacro;
+        String productName = fileTextContentInArray[21].replace("'", "");
+        float amountOfProduct;
+        // delete last coma
+        productName = productName.substring(0, productName.length() - 1);
+
+        amountOfProduct = Float.valueOf(fileTextContentInArray[20].substring(0, fileTextContentInArray[20].length() - 1));
+        productMacro = new Macro(
+                Float.valueOf(fileTextContentInArray[22].substring(0, fileTextContentInArray[22].length() - 1)),
+                Float.valueOf(fileTextContentInArray[23].substring(0, fileTextContentInArray[23].length() - 1)),
+                Float.valueOf(fileTextContentInArray[24].substring(0, fileTextContentInArray[24].length() - 1)),
+                Float.valueOf(fileTextContentInArray[25].substring(0, fileTextContentInArray[25].length() - 1))
+        );
+
+        consumedMacro = new Macro(
+                Float.valueOf(fileTextContentInArray[28].substring(0, fileTextContentInArray[28].length() - 1)),
+                Float.valueOf(fileTextContentInArray[31].substring(0, fileTextContentInArray[31].length() - 1)),
+                Float.valueOf(fileTextContentInArray[30].substring(0, fileTextContentInArray[30].length() - 1)),
+                Float.valueOf(fileTextContentInArray[29].substring(0, fileTextContentInArray[29].length() - 1))
+        );
+
+       // QuickTests.printArrayWithNumOfPosition(fileTextContentInArray);
+        if (!doesCalendarRowDataIsCorrect(productName, amountOfProduct, productMacro, consumedMacro, false)){
+            System.out.println("\n" + pathToFile);
+        }
+        return doesCalendarRowDataIsCorrect(productName, amountOfProduct, productMacro, consumedMacro, true);
+    }
+
+    public static boolean doesCalendarRowDataIsCorrect(String productName, float amountOfProduct, Macro productMacroFromCalendar,
+                                                       Macro consumedMacro, boolean showLogs) {
+        boolean isDataCorrect = true;
+        Macro productMacroFromSQLProductTable = getMacroFromProductTableByProductName(productName);
+        boolean errorType1 = false;
+        boolean errorType2 = false;
+        boolean errorType3 = false;
+
+        Macro consumedMacroCalculateByProductMacroFromCalendar = Macro.getConsumedMacro(amountOfProduct, productMacroFromCalendar);
+        Macro consumedMacroCalculateByProductMacroFromProductTable = Macro.getConsumedMacro(amountOfProduct, productMacroFromSQLProductTable);
+
+        consumedMacroCalculateByProductMacroFromCalendar = Macro.cutNumberPrecisionForAllValues(consumedMacroCalculateByProductMacroFromCalendar);
+        consumedMacro = Macro.cutNumberPrecisionForAllValues(consumedMacro);
+        consumedMacroCalculateByProductMacroFromProductTable = Macro.cutNumberPrecisionForAllValues(consumedMacroCalculateByProductMacroFromProductTable);
+
+        if (consumedMacroCalculateByProductMacroFromProductTable.getKcal() == consumedMacro.getKcal()){
+
+        }else {
+            if (!Macro.isMacroEqual(productMacroFromSQLProductTable, productMacroFromCalendar)) {
+                isDataCorrect = false;
+                errorType1 = true;
+            }
+
+            if (!Macro.isMacroEqual(consumedMacroCalculateByProductMacroFromProductTable, consumedMacro)) {
+                isDataCorrect = false;
+                errorType2 = true;
+            }
+
+            if (!Macro.isMacroEqual(consumedMacroCalculateByProductMacroFromProductTable, consumedMacroCalculateByProductMacroFromCalendar)) {
+                isDataCorrect = false;
+                errorType3 = true;
+            }
+        }
+
+        if (errorType1 && showLogs){
+            System.out.println("Macro from SQL Product Table doesn't match Macro from SQL Calendar table");
+            System.out.println("Error type [1] for product: " + productName
+                    + "\nAmount: " + amountOfProduct);
+
+            System.out.println();
+            Macro.printAllValues(productMacroFromSQLProductTable);
+            System.out.println();
+            Macro.printAllValues(productMacroFromCalendar);
+            System.out.println();
+        }
+
+        if (errorType2 && showLogs){
+            System.out.println("Consumed Macro: from SQL Product Table doesn't match Consumed Macro from SQL Calendar table");
+            System.out.println("Error type [2] for product: " + productName
+                    + "\nAmount: " + amountOfProduct);
+            System.out.println("\nconsumedMacroCalculateByProductMacroFromProductTable:");
+            Macro.printAllValues(consumedMacroCalculateByProductMacroFromProductTable);
+            System.out.println("\nconsumedMacro:");
+            Macro.printAllValues(consumedMacro);
+            System.out.println();
+        }
+
+        if (errorType3 && showLogs){
+            System.out.println("Consumed Macro: from SQL Product Table doesn't match Consumed Macro calculated from product Macro from SQL Calendar table");
+            System.out.println("Error type [3] for product: " + productName
+                    + "\nAmount: " + amountOfProduct);
+            System.out.println();
+            Macro.printAllValues(consumedMacroCalculateByProductMacroFromProductTable);
+            System.out.println();
+            Macro.printAllValues(consumedMacroCalculateByProductMacroFromCalendar);
+            System.out.println();
+        }
+
+
+        if (!isDataCorrect && showLogs){
+            System.out.println();
+            System.out.println();
+            System.out.println();
+        }
+
+        return isDataCorrect;
+    }
+
+    public static Macro getMacroFromProductTableByProductName(String productName) {
+        String[] productDataFromSQL;
+        Macro resultMacro = new Macro(-1,-1,-1,-1);
+        try {
+            productDataFromSQL = Select.getRowFromProductTableByProductNameGetArray(productName);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        try{
+
+        resultMacro = new Macro(
+                Float.valueOf(productDataFromSQL[4]),
+                Float.valueOf(productDataFromSQL[5]),
+                Float.valueOf(productDataFromSQL[6]),
+                Float.valueOf(productDataFromSQL[7])
+
+        );
+        }catch (NullPointerException e){
+            System.out.println("Catch exception:");
+            System.out.println(productName);
+
+            for (int i = 0; i < productDataFromSQL.length; i++) {
+                System.out.println(productDataFromSQL[i]);
+            }
+
+            System.exit(0);
+        }
+
+        return resultMacro;
+    }
+}
+
+
+
+================================================================================
+FILE: CloseAllSQLVariables.java
+================================================================================
+package tools.sql_tools.calendar;
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+public class CloseAllSQLVariables {
+    public static void closeAllSQLVariables(Connection connection, ResultSet resultSet, Statement statementSQL) {
+        try {
+            resultSet.close();
+            statementSQL.close();
+            connection.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static void closeSQLVariablesConnectionStatement(Connection connection, Statement statementSQL) {
+        try {
+            connection.close();
+            statementSQL.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+}
+
+
+
+================================================================================
+FILE: ExportAllDaysDataToSQLCalendar.java
+================================================================================
+package tools.sql_tools.calendar;
+
+import tools.sql_tools.general.run.RunQuery;
+import tools.text_files_tools.FilesTools;
+
+import java.io.File;
+import java.sql.SQLException;
+
+public class ExportAllDaysDataToSQLCalendar {
+    static String pathToDaysTXTFilesDirectory = "src/data_store_and_backup/text_files/days";
+
+    public static void exportDataFromTxtToSQLCalendarTable() {
+        getAllTXTFiles(pathToDaysTXTFilesDirectory);
+    }
+
+    public static void getAllTXTFiles(String startPath) {
+        File dir = new File(startPath);
+        File[] directoryListing = dir.listFiles();
+        String fileName = "";
+        int dotIndex = 0;
+
+        if (directoryListing != null) {
+
+            for (File child : directoryListing) {
+                fileName = child.getName();
+                dotIndex = fileName.lastIndexOf('.');
+
+                if (child.isFile()) {
+                    System.out.println(fileName.substring(dotIndex));
+                    if (fileName.substring(dotIndex).equals(".txt")) {
+
+                        try {
+                            RunQuery.runQuery(FilesTools.readTXTFile(child.getPath()));
+                        } catch (SQLException e) {
+                            throw new RuntimeException(e);
+                        }
+
+                    }
+                }
+
+                if (child.isDirectory()) {
+                    getAllTXTFiles(child.getPath());
+                }
+            }
+
+        } else {
+            System.out.println("Wrong directory");
+        }
+    }
+}
+
+
+
+
+================================================================================
+FILE: InsertToCalendarDayTable.java
+================================================================================
+package tools.sql_tools.calendar;
+
+import tools.calendar_tools.DayInCalendar;
+import configuration.Config;
+import tools.sql_tools.general.get.GetConnection;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
+public class InsertToCalendarDayTable {
+
+    // Keep original method for compatibility
+    public static void addRowToCalendarTable(DayInCalendar dayInCalendar) throws SQLException {
+        addRowToCalendarTable(dayInCalendar, java.util.UUID.randomUUID().toString());
+    }
+
+    // NEW Overloaded Method: Inserts locally with rowId and sets is_synced = 0
+    public static void addRowToCalendarTable(DayInCalendar dayInCalendar, String rowId) throws SQLException {
+        String sqlStatement = createInsertSQLQueryForCalendarDay(dayInCalendar, rowId, true);
+        try (Connection connection = GetConnection.getConnectionWithLocalHost();
+             PreparedStatement preparedStatement = connection.prepareStatement(sqlStatement)) {
+            preparedStatement.execute();
+        }
+    }
+
+    // Keep original method for compatibility
+    public static String createInsertSQLQueryForCalendarDay(DayInCalendar dayToInsert) {
+        return createInsertSQLQueryForCalendarDay(dayToInsert, java.util.UUID.randomUUID().toString(), false);
+    }
+
+    // NEW Overloaded Method: Dynamically appends row_id and is_synced
+    public static String createInsertSQLQueryForCalendarDay(DayInCalendar dayToInsert, String rowId, boolean includeIsSynced) {
+        String sqlStatement = "INSERT INTO `diet_tracker_schema`." + "`" + Config.CURRENT_DATABASE_TABLE_CALENDAR + "`\n";
+        sqlStatement += "(";
+
+        for (int i = 0; i < Config.SQL_COLUMNS_CALENDAR.length; i++) {
+            sqlStatement += "`" + Config.SQL_COLUMNS_CALENDAR[i] + "`,\n";
+        }
+
+        sqlStatement += "`row_id`";
+        if (includeIsSynced) {
+            sqlStatement += ",\n`is_synced`";
+        }
+        sqlStatement += ")";
+
+        sqlStatement += "\nValues\n(";
+        String[] dayDataInArray = dayToInsert.dayDataInStringArray(dayToInsert);
+
+        for (int i = 0; i < Config.SQL_COLUMNS_CALENDAR.length; i++) {
+            if (i <= 10) {
+                if (i == 0 || i == 1 || i == 2 || i == 4 || i == 9 || i == 10) {
+                    sqlStatement += "'" + dayDataInArray[i] + "'";
+                } else {
+                    sqlStatement += dayDataInArray[i];
+                }
+            } else {
+                if (i == 11) {
+                    sqlStatement += String.valueOf(dayToInsert.getConsumedMacro().getKcal());
+                }
+                if (i == 12) {
+                    sqlStatement += String.valueOf(dayToInsert.getConsumedMacro().getCarbs());
+                }
+                if (i == 13) {
+                    sqlStatement += String.valueOf(dayToInsert.getConsumedMacro().getFat());
+                }
+                if (i == 14) {
+                    sqlStatement += String.valueOf(dayToInsert.getConsumedMacro().getProtein());
+                }
+            }
+            sqlStatement += ",\n";
+        }
+
+        sqlStatement += "'" + rowId + "'";
+        if (includeIsSynced) {
+            sqlStatement += ",\n0"; // 0 = Unsynced in Local MySQL
+        }
+        sqlStatement += ");";
+
+        return sqlStatement;
+    }
+}
+
+
+================================================================================
+FILE: SelectFromCalendar.java
+================================================================================
+package tools.sql_tools.calendar;
+
+import tools.sql_tools.general.get.GetResultSet;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+public class SelectFromCalendar {
+    public static String[][] selectAllDataFromCalendarTableForDay(String dayDateSQLFriendlyFormat) throws SQLException {
+        // Hard code sizes may cause problem
+        // 26 row each with 15 fields of data
+        String [][] allRows = new String[26][15];
+
+        String sqlStatement = "SELECT * FROM calendar WHERE day_date=" + "'" + dayDateSQLFriendlyFormat + "'" + ";";
+        ResultSet resultSet;
+        GetResultSet getResultSet = new GetResultSet();
+        resultSet = getResultSet.getResultSetFromSQL(sqlStatement);
+
+        int realAmountOfRows = 0;
+        int counter = 0;
+        while(resultSet.next()){
+            if (resultSet.getString(1).equals("null")){
+                break;
+            }
+            for (int i = 0; i < 15; i++) {
+                allRows[counter][i] = resultSet.getString(i+1);
+            }
+            realAmountOfRows++;
+            counter++;
+        }
+
+        getResultSet.closeResultSet(resultSet);
+        getResultSet.closeAllVariables();
+
+        String [][] resultArray = new String[realAmountOfRows][15];
+
+        for (int i = 0; i < realAmountOfRows; i++) {
+            for (int j = 0; j < resultArray[i].length; j++) {
+                resultArray[i][j] = allRows[i][j];
+            }
+        }
+
+
+        return resultArray;
+    }
+
+    public static String[] selectAllFromCalendarTableForDateAndProductName(String productName, String dayDateSQLFriendlyFormat) throws SQLException {
+        String sqlStatement = "SELECT * FROM calendar WHERE day_date=" + "'" + dayDateSQLFriendlyFormat + "'" + " AND "+ "product_name =" + "'" + productName  + "'" + ";";
+        String[] rowData = new String[15];
+
+        ResultSet resultSet;
+        GetResultSet getResultSet = new GetResultSet();
+        resultSet = getResultSet.getResultSetFromSQL(sqlStatement);
+
+        while (resultSet.next()){
+            for (int i = 0; i < rowData.length; i++) {
+                rowData[i] = resultSet.getString(i+1);
+            }
+        }
+        return rowData;
+    }
+}
+
+
+
+================================================================================
+FILE: GenerateSLQTableForDaysStatistics.java
+================================================================================
+package tools.sql_tools.days_statistics;
+
+import configuration.Config;
+import tools.calendar_tools.MyDate;
+import tools.sql_tools.general.get.GetConnection;
+import tools.sql_tools.general.get_check_data.IsTheRowAlreadyExist;
+import tools.text_files_tools.FilesTools;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+public class GenerateSLQTableForDaysStatistics {
+    public static void generateDaysStatisticsInTable(String sqlStatement) throws SQLException {
+        // 1. Execute on Local Database
+        Connection connection = GetConnection.getConnectionWithLocalHost();
+        PreparedStatement preparedStatement = connection.prepareStatement(sqlStatement);
+        preparedStatement.execute(sqlStatement);
+
+        // 2. Sync execution statement to Azure
+        tools.azure.AzureSqlSync.syncQueryToAzure(sqlStatement);
+    }
+
+    public static String createInsertSQLQueryForDaysStatistics(String dateInString) {
+        String sqlStatement = "INSERT INTO `diet_tracker_schema`." + "`" + "days_statistics_test" + "`\n";
+        sqlStatement += "(";
+
+        for (int i = 0; i < Config.SQL_COLUMNS_DAYS_STATISTICS_TEST.length; i++) {
+
+            sqlStatement += Config.SQL_COLUMNS_DAYS_STATISTICS_TEST[i];
+
+            if (i == Config.SQL_COLUMNS_DAYS_STATISTICS_TEST.length - 1) {
+                sqlStatement += ")";
+            } else {
+                sqlStatement += ",\n";
+            }
+        }
+        sqlStatement += "\nValues\n(";
+
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", java.util.Locale.ENGLISH);
+
+        Date date = null;
+
+        try {
+            date = sdf.parse(dateInString);
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
+
+        //specifies the pattern to print
+        sdf.applyPattern("EEEE");
+        String correctDate = sdf.format(date);
+
+
+        String dayNameInString = "Monday";
+        String[] dataForDaysStatistics = {dateInString, "0", "0", "null", "null", "null", "null", correctDate};
+        for (int i = 0; i < Config.SQL_COLUMNS_DAYS_STATISTICS_TEST.length; i++) {
+
+            // Take care to float value ends with .f
+            if (i == 0 || i == 7) {
+                sqlStatement += "'" + dataForDaysStatistics[i] + "'";
+            } else {
+                sqlStatement += dataForDaysStatistics[i];
+            }
+
+            if (i != Config.SQL_COLUMNS_DAYS_STATISTICS_TEST.length - 1) {
+                sqlStatement += ",\n";
+            }
+        }
+
+        sqlStatement += ");";
+
+        return sqlStatement;
+    }
+
+    public static void generateWholeMonth(String month, int year) {
+        int daysInMonth = MyDate.getAmountOfDaysInMonth(month);
+
+        if (month.equals("December")) {
+            month = "12";
+        }
+        if (month.equals("November")) {
+            month = "11";
+        }
+        if (month.equals("October")) {
+            month = "10";
+        }
+        if (month.equals("September")) {
+            month = "09";
+        }
+        if (month.equals("August")) {
+            month = "08";
+        }
+        if (month.equals("July")) {
+            month = "07";
+        }
+        if (month.equals("June")) {
+            month = "06";
+        }
+        if (month.equals("May")) {
+            month = "05";
+        }
+        if (month.equals("April")) {
+            month = "04";
+        }
+
+        if (month.equals("January")) {
+            month = "01";
+        }
+
+        if (month.equals("February")) {
+            month = "02";
+        }
+
+        if (month.equals("March")) {
+            month = "03";
+        }
+
+
+        String[] readyDateDays = new String[daysInMonth];
+        for (int i = 0; i < readyDateDays.length; i++) {
+            if (String.valueOf(i + 1).length() == 1) {
+                readyDateDays[i] = year + "-" + month + "-" + "0" + (i + 1);
+            } else {
+                readyDateDays[i] = year + "-" + month + "-" + (i + 1);
+            }
+        }
+
+        for (int i = 0; i < readyDateDays.length; i++) {
+            if (!IsTheRowAlreadyExist.isTheDayAlreadyExist("days_statistics_test", "day_date", readyDateDays[i])) {
+                try {
+                    generateDaysStatisticsInTable(createInsertSQLQueryForDaysStatistics(readyDateDays[i]));
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+    }
+
+    public static void generateWholeMonthAndFillAmountOfPointsFromNotepad(String month, int year) {
+        String queryForExecute = "";
+        String dateDay = "";
+        String pointInOneDay = "";
+
+        int daysInMonth = MyDate.getAmountOfDaysInMonth(month);
+        String numberOfMonthInYear = String.valueOf(MyDate.getNumberOfMonthInYear(month));
+
+        if (numberOfMonthInYear.length() == 1) {
+            numberOfMonthInYear = "0" + numberOfMonthInYear;
+        }
+
+        String txtFile = month.toLowerCase() + "_" + year + ".txt";
+
+        for (int i = 1; i <= daysInMonth; i++) {
+            dateDay = String.valueOf(i);
+            if (dateDay.length() == 1) {
+                dateDay = "0" + dateDay;
+            }
+            pointInOneDay = FilesTools.readAndGetLineTXTFile("src/data_store_and_backup/text_files/days_statistics_test/"
+                    + year + "/" + txtFile, i);
+
+            queryForExecute = "UPDATE `diet_tracker_schema`.`days_statistics_test`" +
+                    "SET "
+                    + "`amount_of_points_from_notepad`= " + pointInOneDay
+                    + " WHERE day_date = '" + year + "-" + numberOfMonthInYear + "-" + dateDay + "';";
+
+            if (pointInOneDay.equals("")) {
+                return;
+            }
+
+            try {
+                generateDaysStatisticsInTable(queryForExecute);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+
+    public static void generateWholeMonthAndFillAmountOfPointsFromNotepad(int numberOfDay, String month, int year) {
+        String queryForExecute = "";
+        String dateDay = "";
+        String pointInOneDay = "";
+
+        String numberOfMonthInYear = String.valueOf(MyDate.getNumberOfMonthInYear(month));
+
+        if (numberOfMonthInYear.length() == 1) {
+            numberOfMonthInYear = "0" + numberOfMonthInYear;
+        }
+
+        String txtFile = month.toLowerCase() + "_" + year + ".txt";
+
+        if (numberOfDay < 10) {
+            dateDay = "0" + numberOfDay;
+        } else {
+            dateDay = String.valueOf(numberOfDay);
+        }
+
+        pointInOneDay = FilesTools.readAndGetLineTXTFile("src/data_store_and_backup/text_files/days_statistics_test/" + year + "/" + txtFile, numberOfDay);
+        queryForExecute = "UPDATE `diet_tracker_schema`.`days_statistics_test`" +
+                "SET "
+                + "`amount_of_points_from_notepad`= " + pointInOneDay
+                + " WHERE day_date = '" + year + "-" + numberOfMonthInYear + "-" + dateDay + "';";
+        if (pointInOneDay.equals("")) {
+            return;
+        }
+
+        try {
+            generateDaysStatisticsInTable(queryForExecute);
+            System.out.println(queryForExecute);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+}
+
+
+
+================================================================================
+FILE: SelectFromDaysStatistics.java
+================================================================================
+package tools.sql_tools.days_statistics;
+
+import tools.calendar_tools.MyDate;
+import tools.products_tools.Macro;
+import tools.sql_tools.general.statements.SumTable;
+import tools.sql_tools.general.get.GetResultSet;
+
+import java.sql.ResultSet;
+import java.util.Hashtable;
+
+public class SelectFromDaysStatistics {
+    public static Macro getMacroFromDaysStatisticsByDate(String SQLFriendlyDateFormat) {
+        ResultSet resultSet;
+
+        String sql = "SELECT * FROM days_statistics_test WHERE day_date = " + "\"" + SQLFriendlyDateFormat + "\"" + ";";
+        GetResultSet getResultSet = new GetResultSet();
+        resultSet = getResultSet.getResultSetFromSQL(sql);
+
+        Macro resultMacro = new Macro(-2, -2, -2, -2);
+        float kcalConsumeFloat = -2;
+        float proteinConsumeFloat = -2;
+        float fatConsumeFloat = -2;
+        float carbsConsumeFloat = -2;
+
+        if (getResultSet.resultSetNextReturnValue(resultSet) == false) {
+        } else {
+
+            if (GetResultSet.getFromResultSetGetString("kcal_consume", resultSet) != null) {
+                kcalConsumeFloat = Float.valueOf(GetResultSet.getFromResultSetGetString("kcal_consume", resultSet));
+            }
+
+            if (GetResultSet.getFromResultSetGetString("protein_consume", resultSet) != null) {
+                proteinConsumeFloat = Float.valueOf(GetResultSet.getFromResultSetGetString("protein_consume", resultSet));
+            }
+
+            if (GetResultSet.getFromResultSetGetString("fat_consume", resultSet) != null) {
+                fatConsumeFloat = Float.valueOf(GetResultSet.getFromResultSetGetString("fat_consume", resultSet));
+            }
+
+            if (GetResultSet.getFromResultSetGetString("carbs_consume", resultSet) != null) {
+                carbsConsumeFloat = Float.valueOf(GetResultSet.getFromResultSetGetString("carbs_consume", resultSet));
+            }
+            resultMacro = new Macro(kcalConsumeFloat, proteinConsumeFloat, fatConsumeFloat, carbsConsumeFloat);
+        }
+
+
+        getResultSet.closeResultSet(resultSet);
+        getResultSet.closeAllVariables();
+
+        return resultMacro;
+    }
+
+    public static int getAmountOfPointsFromNotepad(String SQLFriendlyDateFormat) {
+        ResultSet resultSet;
+        int amountOfPointsFromNotepad = -1;
+
+        String sql = "SELECT * FROM days_statistics_test WHERE day_date = " + "\"" + SQLFriendlyDateFormat + "\"" + ";";
+
+        GetResultSet getResultSet = new GetResultSet();
+        resultSet = getResultSet.getResultSetFromSQL(sql);
+        if (getResultSet.resultSetNextReturnValue(resultSet) == false) {
+        } else {
+            if (GetResultSet.getFromResultSetGetString("amount_of_points_from_notepad", resultSet) != null) {
+                amountOfPointsFromNotepad = Integer.valueOf(GetResultSet.getFromResultSetGetString("amount_of_points_from_notepad", resultSet));
+                System.out.println("amount_of_points_from_notepad" + amountOfPointsFromNotepad);
+            }
+        }
+
+        return amountOfPointsFromNotepad;
+    }
+
+    public static int getAmountOfFilledPointsFromNotepad(String SQLFriendlyDateFormat) {
+        ResultSet resultSet;
+        int amountOfFilledPointsFromNotepad = -1;
+
+        String sql = "SELECT * FROM days_statistics_test WHERE day_date = " + "\"" + SQLFriendlyDateFormat + "\"" + ";";
+
+        GetResultSet getResultSet = new GetResultSet();
+        resultSet = getResultSet.getResultSetFromSQL(sql);
+        if (getResultSet.resultSetNextReturnValue(resultSet) == false) {
+        } else {
+            if (GetResultSet.getFromResultSetGetString("amount_of_filled_points_from_notepad", resultSet) != null) {
+                amountOfFilledPointsFromNotepad = Integer.valueOf(GetResultSet.getFromResultSetGetString("amount_of_filled_points_from_notepad", resultSet));
+            }
+        }
+        return amountOfFilledPointsFromNotepad;
+    }
+
+    public static Macro getAverageMacroForMonth(int year, int month, int beginFromDayNumber, int endToDayNumber) {
+        String tableName = "days_statistics_test";
+        String[] fieldsNamesToSum = {"kcal_consume", "protein_consume", "fat_consume", "carbs_consume"};
+        String whereColumnName = "day_date";
+
+        String monthInSQLFormat = "";
+        if (month < 10) {
+            monthInSQLFormat = year + "-" + "0" + month + "%";
+        } else {
+            monthInSQLFormat = year + "-" + month + "%";
+        }
+        Hashtable<String, Float> macroTable = SumTable.sumRowsInTableWhereMonthOfTime(tableName, fieldsNamesToSum, whereColumnName, monthInSQLFormat);
+
+        Macro sumMacro = new Macro(
+                macroTable.get("kcal_consume"),
+                macroTable.get("protein_consume"),
+                macroTable.get("fat_consume"),
+                macroTable.get("carbs_consume"));
+
+        int amountOfDays = endToDayNumber - beginFromDayNumber + 1;
+
+        Macro averageMacro = new Macro(
+                sumMacro.getKcal(),
+                sumMacro.getProtein(),
+                sumMacro.getFat(),
+                sumMacro.getCarbs());
+
+        averageMacro = Macro.divisionMacroByValue(averageMacro, amountOfDays);
+
+        return averageMacro;
+    }
+
+    public static Macro getAverageMacroForMonth(int year, int month) {
+        String tableName = "days_statistics_test";
+        String[] fieldsNamesToSum = {"kcal_consume", "protein_consume", "fat_consume", "carbs_consume"};
+        String whereColumnName = "day_date";
+
+        String monthInSQLFormat = "";
+        if (month < 10) {
+            monthInSQLFormat = year + "-" + "0" + month + "%";
+        } else {
+            monthInSQLFormat = year + "-" + month + "%";
+        }
+        Hashtable<String, Float> macroTable = SumTable.sumRowsInTableWhereMonthOfTime(tableName, fieldsNamesToSum, whereColumnName, monthInSQLFormat);
+
+        if (!macroTable.isEmpty()) {
+            Macro sumMacro = new Macro(
+                    macroTable.get("kcal_consume"),
+                    macroTable.get("protein_consume"),
+                    macroTable.get("fat_consume"),
+                    macroTable.get("carbs_consume"));
+
+
+            int amountOfDays = MyDate.getAmountOfDaysInCurrentMonthOPassedMonth(year, month);
+
+
+
+            Macro averageMacro = new Macro(
+                    sumMacro.getKcal(),
+                    sumMacro.getProtein(),
+                    sumMacro.getFat(),
+                    sumMacro.getCarbs());
+
+            averageMacro = Macro.divisionMacroByValue(averageMacro, amountOfDays);
+
+            return averageMacro;
+        }
+        return new Macro(0,0,0,0);
+    }
+}
+
+
+================================================================================
+FILE: UpdateDaysStatisticsFilledData.java
+================================================================================
+package tools.sql_tools.days_statistics;
+
+import tools.calendar_tools.MyDate;
+import tools.sql_tools.general.run.RunQuery;
+
+import java.sql.SQLException;
+
+public class UpdateDaysStatisticsFilledData {
+
+    public static void updateWholeMonthMacroSum(String month, int year) throws SQLException {
+        int monthInt = MyDate.getNumberOfMonthInYear(month);
+        String dayDate = year + "-";
+
+        if (monthInt < 10) {
+            dayDate = dayDate + "0" + monthInt + "-";
+
+        }
+
+        if (monthInt >= 10) {
+            dayDate += monthInt + "-";
+        }
+
+        String dayDateBuffor = dayDate;
+
+        for (int i = 1; i <= MyDate.getAmountOfDaysInMonth(month); i++) {
+            if (String.valueOf(i).length() == 1) {
+                dayDate = dayDate + "0" + String.valueOf(i);
+            } else {
+                dayDate = dayDate + String.valueOf(i);
+            }
+
+            RunQuery.runQuery(prepareQueryForFillConsumedMacro(dayDate));
+            dayDate = dayDateBuffor;
+        }
+    }
+
+    public static void updateWholeMonthMacroSum(int numberOfDay, String month, int year) throws SQLException {
+        int monthInt = MyDate.getNumberOfMonthInYear(month);
+        String dayDate = year + "-";
+
+        if (monthInt < 10) {
+            dayDate = dayDate + "0" + monthInt + "-";
+
+        }
+
+        if (monthInt >= 10) {
+            dayDate += monthInt + "-";
+        }
+
+        String dayDateBuffor = dayDate;
+
+
+        if (numberOfDay < 10) {
+            dayDate = dayDate + "0" + String.valueOf(numberOfDay);
+        } else {
+            dayDate = dayDate + String.valueOf(numberOfDay);
+        }
+
+        RunQuery.runQuery(prepareQueryForFillConsumedMacro(dayDate));
+        dayDate = dayDateBuffor;
+    }
+
+    public static void  updateAmountOfFilledPointsFromNotepad(String month, int year) throws SQLException {
+        int monthInt = MyDate.getNumberOfMonthInYear(month);
+        String dayDate = year + "-";
+
+        if (monthInt < 10) {
+            dayDate = dayDate + "0" + monthInt + "-";
+
+        }
+
+        if (monthInt >= 10) {
+            dayDate += monthInt + "-";
+        }
+
+        String dayDateBuffor = dayDate;
+
+        for (int i = 1; i <= MyDate.getAmountOfDaysInMonth(month); i++) {
+            if (String.valueOf(i).length() == 1) {
+                dayDate = dayDate + "0" + String.valueOf(i);
+            } else {
+                dayDate = dayDate + String.valueOf(i);
+            }
+
+            RunQuery.runQuery(prepareQueryForUpdateAmountOfFilledPointsFromNotepad(dayDate));
+            dayDate = dayDateBuffor;
+        }
+    }
+
+    public static void updateAmountOfFilledPointsFromNotepad(int numberOfDay, String month, int year) throws SQLException {
+        int monthInt = MyDate.getNumberOfMonthInYear(month);
+        String dayDate = year + "-";
+
+        if (monthInt < 10) {
+            dayDate = dayDate + "0" + monthInt + "-";
+
+        }
+
+        if (monthInt >= 10) {
+            dayDate += monthInt + "-";
+        }
+
+        String dayDateBuffor = dayDate;
+
+
+        if (numberOfDay < 10) {
+            dayDate = dayDate + "0" + String.valueOf(numberOfDay);
+        } else {
+            dayDate = dayDate + String.valueOf(numberOfDay);
+        }
+
+        RunQuery.runQuery(prepareQueryForUpdateAmountOfFilledPointsFromNotepad(dayDate));
+        dayDate = dayDateBuffor;
+
+    }
+
+    public static String prepareQueryForUpdateAmountOfFilledPointsFromNotepad(String day_date) {
+        String updateQuery = "UPDATE `diet_tracker_schema`.`days_statistics_test`\n"
+                + "SET\n"
+                + "`amount_of_filled_points_from_notepad` = (SELECT COUNT(day_date) FROM calendar WHERE day_date ="
+                + "'" + day_date + "')\n"
+                + "WHERE day_date ="
+                + "'" + day_date + "'";
+        return updateQuery;
+    }
+
+    public static String prepareQueryForFillConsumedMacro(String day_date) {
+        String query = "UPDATE `diet_tracker_schema`.`days_statistics_test`\n"
+                + "SET\n"
+                + "kcal_consume = (SELECT SUM(kcal_consume) FROM calendar WHERE day_date = '" + day_date + "'),\n"
+                + "protein_consume = (SELECT SUM(protein_consume) FROM calendar WHERE day_date = '" + day_date + "'),\n"
+                + "fat_consume = (SELECT SUM(fat_consume) FROM calendar WHERE day_date = '" + day_date + "'),\n"
+                + "carbs_consume = (SELECT SUM(carbs_consume) FROM calendar WHERE day_date = '" + day_date + "')\n"
+                + "WHERE day_date = '" + day_date + "';";
+        return query;
+    }
+}
+
+
+
+================================================================================
+FILE: RowInTable.java
+================================================================================
+package tools.sql_tools.general;
+
+import tools.debug_tools.Debug;
+
+import java.util.*;
+
+public class RowInTable {
+
+
+
+    public HashMap<String, String> fields = new HashMap<>();
+
+    //<editor-fold desc="Constructors">
+    public RowInTable() {
+
+    }
+
+    public RowInTable(HashMap<String, String> fields) {
+        this.fields = fields;
+    }
+    //</editor-fold>
+
+    public void putKeyAndValueToRow(String key, String value) {
+        fields.put(key, value);
+    }
+
+    //<editor-fold desc="Print methods">
+    public void printAlLValuesAndKey() {
+        for (String key : fields.keySet()) {
+            Debug.printKeyAndValue(key, fields.get(key), 6);
+        }
+    }
+    //</editor-fold>
+
+    //<editor-fold desc="Get methods">
+    public int getSizeOfRow() {
+        return fields.size();
+    }
+
+    public String getValue(String key) {
+
+        //System.out.println(fields.get(key));
+        return fields.get(key);
+
+
+    }
+
+    public String getKey(Object value) {
+        if (fields == null) return null;
+
+        String firstKey = null;
+        int counter = 0;
+        for (Map.Entry<String, ?> entry : fields.entrySet()) {
+            String value2 = (String) entry.getValue();
+            counter++;
+
+            if (value2.equals(value)) {
+                String key = entry.getKey();
+                if (firstKey == null) {
+                    firstKey = entry.getKey();
+                } else {
+                    System.out.println(
+                            "Warning: multiple keys map to the given value; "
+                                    + "returning first: " + firstKey
+                    );
+                    return firstKey;
+                }
+            }
+        }
+        return firstKey;
+    }
+
+    public String getKeyMINE(String value) {
+        if (fields == null) return null;
+
+        String firstKey = null;
+        int counter = 0;
+        for (Map.Entry<String, ?> entry : fields.entrySet()) {
+            String value2 = (String) entry.getValue();
+            counter++;
+
+            if (value2.equals(value)) {
+                String key = entry.getKey();
+                if (firstKey == null) {
+                    firstKey = entry.getKey();
+                } else {
+                    System.out.println(
+                            "Warning: multiple keys map to the given value; "
+                                    + "returning first: " + firstKey
+                    );
+                    return firstKey;
+                }
+            }
+        }
+        return firstKey;
+    }
+
+    public ArrayList<String> getAllKeys() {
+        Set setOfKeys = fields.keySet();
+        return new ArrayList<String>(setOfKeys);
+    }
+
+    public ArrayList<String> getAllValues() {
+        return new ArrayList<>(fields.values());
+    }
+    //</editor-fold>
+
+    //<editor-fold desc="Getters and Setters">
+    public HashMap<String, String> getFields() {
+        return fields;
+    }
+
+    public void setFields(HashMap<String, String> fields) {
+        this.fields = fields;
+    }
+    //</editor-fold>
+}
+
+
+
+================================================================================
+FILE: Table.java
+================================================================================
+package tools.sql_tools.general;
+
+import tools.debug_tools.Debug;
+
+import java.util.ArrayList;
+
+public class Table {
+
+    String tableName = "not set";;
+    ArrayList<RowInTable> rows;
+    String SQLQuery;
+
+    //<editor-fold desc="Constructors">
+    public Table() {
+        this.rows = new ArrayList<>();
+    }
+
+    // TODO - no code, add code to constructor -> public Table(String tableName, String SQLQuery)
+    public Table(String SQLQuery) {
+        this.SQLQuery = SQLQuery;
+        getAllRowFromClassQuery();
+    }
+
+    public Table(String tableName, String SQLQuery) {
+        this.rows = new ArrayList<RowInTable>();
+        getAllRowFromClassQuery();
+    }
+
+
+    //</editor-fold>
+
+    //<editor-fold desc="Put methods">
+    public void putRowToTable(RowInTable rowToInsert) {
+        rows.add(rowToInsert);
+    }
+
+    public void putRowToTable(RowInTable rowToInsert, boolean printEveryRow) {
+        this.rows.add(rowToInsert);
+        if (printEveryRow) {
+            rowToInsert.printAlLValuesAndKey();
+            System.out.println();
+            System.out.println();
+        }
+    }
+
+    public void printAllRowsInTable(){
+        for (int i = 0; i < rows.size(); i++) {
+            Debug.printYellowSystemPrintln("Row: " + i);
+            rows.get(i).printAlLValuesAndKey();
+        }
+    }
+    //</editor-fold>
+
+    //<editor-fold desc="Get methods">
+
+    public int getAmountOfRowsInTable(){
+        return rows.size();
+    }
+
+    public void getAllRowFromClassQuery() {
+        if (SQLQuery == null) {
+            System.out.println("SQLQuery is null");
+        }
+        if (SQLQuery.isBlank()) {
+            System.out.println("SQLQuery is Blank");
+        }
+        if (SQLQuery.isEmpty()) {
+            System.out.println("SQLQuery is Empty");
+        }
+
+    }
+
+    public RowInTable getRowInTable(int index) {
+        if (rows.size() <= index) {
+            System.out.println("getRowInTable(int index -> index: Out of bond: " + index);
+            return null;
+        }
+
+        if (rows == null){
+            System.out.println("rows is null");
+            return null;
+        }
+
+        if (rows.isEmpty()){
+            System.out.println("rows is empty");
+            return null;
+        }
+
+        return rows.get(index);
+    }
+    //</editor-fold>
+
+    //<editor-fold desc="Print methods">
+    public void printTable() {
+        for (int i = 0; i < rows.size(); i++) {
+            System.out.println("Row:" + i);
+            rows.get(i).printAlLValuesAndKey();
+            System.out.println();
+            System.out.println();
+        }
+    }
+
+    public void printSizeOfRows() {
+        System.out.println("Size of rows: " + rows.size());
+    }
+
+    public void printSQLQuery() {
+        System.out.println("SQLQuery: " + SQLQuery);
+    }
+
+    public void printTableName() {
+        System.out.println("Table name: " + tableName);
+    }
+
+
+//    public void pe
+    //</editor-fold>
+
+    //<editor-fold desc="Getters and Setters">
+    public ArrayList<RowInTable> getRows() {
+        return rows;
+    }
+
+    public void setRows(ArrayList<RowInTable> rows) {
+        this.rows = rows;
+    }
+
+    public String getSQLQuery() {
+        return SQLQuery;
+    }
+
+    public void setSQLQuery(String SQLQuery) {
+        this.SQLQuery = SQLQuery;
+    }
+
+    public String getTableName() {
+        return tableName;
+    }
+
+    public void setTableName(String tableName) {
+        this.tableName = tableName;
+    }
+    //</editor-fold>
+
+    @Override
+    public String toString() {
+        return "Table{" +
+                "tableName='" + tableName + '\'' +
+                ", rows=" + rows +
+                ", SQLQuery='" + SQLQuery + '\'' +
+                '}';
+    }
+}
+
+
+
+================================================================================
+FILE: GetConnection.java
+================================================================================
+package tools.sql_tools.general.get;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+
+public class GetConnection {
+    public static Connection getConnectionWithLocalHost() throws SQLException {
+        Connection connection = DriverManager.getConnection(
+                "jdbc:mysql://localhost:3306/diet_tracker_schema",
+                "root",
+                "sword444");
+        return connection;
+    }
+
+    public static Connection getConnectionWithLocalHostWithoutTryCatch(){
+        Connection connection = null;
+        try {
+            connection = DriverManager.getConnection(
+                    "jdbc:mysql://localhost:3306/diet_tracker_schema",
+                    "root",
+                    "sword444");
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return connection;
+    }
+}
+
+
+
+================================================================================
+FILE: GetResultSet.java
+================================================================================
+package tools.sql_tools.general.get;
+
+import java.sql.*;
+import java.util.ArrayList;
+
+public class GetResultSet {
+
+
+    Connection connection;
+    ResultSet resultSet;
+    Statement statementSQL;
+
+    public GetResultSet(Connection connection) {
+        this.connection = connection;
+    }
+
+    public GetResultSet() {
+
+    }
+
+    public GetResultSet(Connection connection, ResultSet resultSet, Statement statementSQL) {
+        this.connection = connection;
+        this.resultSet = resultSet;
+        this.statementSQL = statementSQL;
+    }
+
+
+    //<editor-fold desc="Get methods">
+    public static ResultSet getResultSetFromSQL(String SQLStatement) {
+        Connection connection;
+        ResultSet resultSet;
+        Statement statementSQL;
+
+        try {
+            connection = GetConnection.getConnectionWithLocalHost();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        try {
+            statementSQL = connection.createStatement();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        try {
+            resultSet = statementSQL.executeQuery(SQLStatement);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return resultSet;
+    }
+
+    public static void getNextForResultSet(ResultSet resultSet) {
+        try {
+            resultSet.next();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static String getFromResultSetGetString(String SQLColumnLabel, ResultSet resultSet) {
+        try {
+            return resultSet.getString(SQLColumnLabel);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static String getFromResultSetByColumnNumberString(int columnNumber, ResultSet resultSet) {
+        try {
+            return resultSet.getString(columnNumber);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static ResultSetMetaData getResultSetMetaData(ResultSet resultSet) {
+        ResultSetMetaData resultSetMetaData;
+
+        try {
+            resultSetMetaData = resultSet.getMetaData();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return resultSetMetaData;
+
+    }
+
+    public static int getAmountColumnsInResultSet(ResultSet resultSet) {
+        ResultSetMetaData resultSetMetaData = GetResultSet.getResultSetMetaData(resultSet);
+        int count;
+        try {
+            count = resultSetMetaData.getColumnCount();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return count;
+    }
+
+    public static int getAmountRosInResultSet(ResultSet resultSet) {
+        int rows = 0;
+
+        while(true){
+            try {
+                if (!resultSet.next()) break;
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            rows++;
+        }
+
+
+        return rows;
+    }
+
+
+    public static ArrayList<String> getAllColumnLabels(ResultSet resultSet) {
+        ResultSetMetaData resultSetMetaData = GetResultSet.getResultSetMetaData(resultSet);
+
+        ArrayList<String> columnsNames = null;
+        int amountOfColumns = GetResultSet.getAmountColumnsInResultSet(resultSet);
+
+        for (int i = 0; i < amountOfColumns; i++) {
+            try {
+                columnsNames.add(resultSetMetaData.getColumnLabel(i));
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return columnsNames;
+    }
+
+    public static String getColumnName(ResultSet resultSet, int index) {
+        ResultSetMetaData resultSetMetaData = GetResultSet.getResultSetMetaData(resultSet);
+        try {
+            return resultSetMetaData.getColumnLabel(index);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static String getValueOfString(ResultSet resultSetParam, int index) {
+        try {
+            return resultSetParam.getString(index);
+        } catch (SQLException e) {
+            System.out.println("index: " + index);
+            throw new RuntimeException(e);
+        }
+    }
+
+    //</editor-fold>
+
+
+    public void closeResultSet(ResultSet resultSet) {
+        try {
+            if (resultSet != null) resultSet.close();
+        } catch (Exception e) {
+        }
+
+
+    }
+    public void closeAllVariables() {
+        try {
+            if (this.resultSet != null) this.resultSet.close();
+        } catch (Exception e) {
+        }
+
+        try {
+            if (this.statementSQL != null) this.statementSQL.close();
+        } catch (Exception e) {
+        }
+
+
+        try {
+            if (this.connection != null) this.connection.close();
+        } catch (Exception e) {
+        }
+
+    }
+
+    public void checkGetResultSetStatus() {
+
+        try {
+            if (this.connection == null) {
+                System.out.println("Connection is null");
+            } else if (this.connection.isClosed() == false) {
+                System.out.println("Connection is active");
+            }
+
+            if (this.statementSQL == null) {
+                System.out.println("Statement is null");
+            } else if (this.statementSQL.isClosed() == false) {
+                System.out.println("Statement is active");
+            }
+
+            if (this.resultSet == null) {
+                System.out.println("ResultSet is null");
+            } else if (this.resultSet.next() == false) {
+                System.out.println("ResultSet is active");
+            }
+
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static boolean isResultSetHasNext(ResultSet resultSet) {
+        try {
+            return resultSet.next();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public static boolean resultSetNextReturnValue(ResultSet resultSet) {
+        try {
+            return resultSet.next();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static boolean nextFromResultSet(ResultSet resultSet) {
+        try {
+            return resultSet.next();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    //<editor-fold desc="Getters and Setters">
+    public Connection getConnection() {
+        return connection;
+    }
+
+    public void setConnection(Connection connection) {
+        this.connection = connection;
+    }
+
+    public ResultSet getResultSet() {
+        return resultSet;
+    }
+
+    public void setResultSet(ResultSet resultSet) {
+        this.resultSet = resultSet;
+    }
+
+    public Statement getStatementSQL() {
+        return statementSQL;
+    }
+
+    public void setStatementSQL(Statement statementSQL) {
+        this.statementSQL = statementSQL;
+    }
+    //</editor-fold>
+
+}
+
+
+
+================================================================================
+FILE: CheckIfRowExist.java
+================================================================================
+package tools.sql_tools.general.get_check_data;
+
+import tools.sql_tools.general.get.GetConnection;
+
+import java.sql.*;
+
+public class CheckIfRowExist {
+    Connection connection;
+    ResultSet resultSet;
+    Statement statement;
+
+    public CheckIfRowExist(){
+        try {
+            connection = GetConnection.getConnectionWithLocalHost();
+        } catch (SQLException e) {
+
+            throw new RuntimeException(e);
+        }
+
+        try {
+            statement = connection.createStatement();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static boolean isProductNameExistInProductTable(String productName) throws SQLException {
+        Connection connection = GetConnection.getConnectionWithLocalHost();
+        ResultSet resultSet;
+        Statement statement;
+        PreparedStatement preparedStatement;
+
+        String sqlStatement = "SELECT COUNT(product_name) AS bool\n" +
+                "FROM product_table\n" +
+                "WHERE product_name = '" + productName + "';";
+
+        statement = connection.createStatement();
+        resultSet = statement.executeQuery(sqlStatement);
+        resultSet.next();
+
+        int result = resultSet.getInt("bool");
+
+        // Close unnecessary connections
+        connection.close();
+        resultSet.close();
+
+        if (result == 1) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public static boolean isCalendarRowExistInProductTable(String dayDate, String productName, String productAmount) throws SQLException {
+        Connection connection = GetConnection.getConnectionWithLocalHost();
+        ResultSet resultSet;
+        Statement statement;
+
+        String sqlStatement = "SELECT COUNT(product_name) AS bool\n" +
+                "FROM calendar\n" +
+                "WHERE day_date =\'" + dayDate + "\'  && " +
+                "product_name = \'" + productName + "\' && " +
+                "amount_of_product = \'" + productAmount + "\'" + ";";
+
+        statement = connection.createStatement();
+        resultSet = statement.executeQuery(sqlStatement);
+        resultSet.next();
+
+        int result = resultSet.getInt("bool");
+
+        // Close unnecessary connections
+        connection.close();
+        resultSet.close();
+        statement.close();
+
+        if (result >= 1) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public boolean isCalendarRowExistInProductTable_local_variables(String dayDate, String productName, String productAmount) throws SQLException {
+        String sqlStatement = "SELECT COUNT(product_name) AS bool\n" +
+                "FROM calendar\n" +
+                "WHERE day_date =\'" + dayDate + "\'  && " +
+                "product_name = \'" + productName + "\' && " +
+                "amount_of_product = \'" + productAmount + "\'" + ";";
+
+        resultSet = statement.executeQuery(sqlStatement);
+        resultSet.next();
+
+        int result = resultSet.getInt("bool");
+
+        // Close unnecessary connections
+        resultSet.close();
+
+        if (result >= 1) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public static boolean isDaysStatisticRowExistInTableCheckByDate(String day_date) throws SQLException {
+        Connection connection = GetConnection.getConnectionWithLocalHost();
+        ResultSet resultSet;
+        Statement statement;
+        PreparedStatement preparedStatement;
+
+        String sqlStatement = "SELECT COUNT(day_date) AS bool\n" +
+                "FROM days_statistics_test\n" +
+                "WHERE day_date = '" + day_date + "';";
+
+        statement = connection.createStatement();
+        resultSet = statement.executeQuery(sqlStatement);
+        resultSet.next();
+
+        int result = resultSet.getInt("bool");
+
+        // Close unnecessary connections
+        connection.close();
+        resultSet.close();
+
+        if (result == 1) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+}
+
+
+
+================================================================================
+FILE: GetAmountOfColumnsRows.java
+================================================================================
+package tools.sql_tools.general.get_check_data;
+
+import tools.sql_tools.general.get.GetResultSet;
+
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
+
+public class GetAmountOfColumnsRows {
+    String SQLQuery;
+
+    public static int getAmountOfRows(String SQLQuery){
+        ResultSet resultSet = GetResultSet.getResultSetFromSQL(SQLQuery);
+        return GetResultSet.getAmountRosInResultSet (resultSet);
+    }
+
+    public static int getAmountOfColumns(String SQLQuery){
+        ResultSet resultSet = GetResultSet.getResultSetFromSQL(SQLQuery);
+        ResultSetMetaData resultSetMetaData = GetResultSet.getResultSetMetaData(resultSet);
+        int amountOfColumn;
+
+        try {
+            amountOfColumn = resultSetMetaData.getColumnCount();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return amountOfColumn;
+    }
+}
+
+
+
+================================================================================
+FILE: IsTheRowAlreadyExist.java
+================================================================================
+package tools.sql_tools.general.get_check_data;
+
+import tools.sql_tools.general.get.GetResultSet;
+
+import java.sql.*;
+
+public class IsTheRowAlreadyExist {
+    public static boolean isTheDayAlreadyExist(String tableName, String columnName, String dataInStringToCheckFormatSQLFriendly) {
+        Integer valueInInt;
+        Float valueInFloat;
+
+        try {
+            valueInFloat = Float.valueOf(dataInStringToCheckFormatSQLFriendly);
+        } catch (Exception e) {
+            //System.out.println("Only Warning: Passed data is not Float - location - IsTheRowAlreadyExist -> isTheDayAlreadyExist");
+        }
+
+        try {
+            valueInInt = Integer.valueOf(dataInStringToCheckFormatSQLFriendly);
+        } catch (Exception e) {
+            //System.out.println("Only Warning: Passed data is not Integer - location - IsTheRowAlreadyExist -> isTheDayAlreadyExist");
+        }
+
+
+
+
+        String sqlStatementString = "SELECT EXISTS(SELECT * FROM " + tableName + " WHERE " + columnName
+                + "=" + "\"" +  dataInStringToCheckFormatSQLFriendly + "\"" + ");";
+
+        ResultSet resultSet = GetResultSet.getResultSetFromSQL(sqlStatementString);
+        String sqlStatementStringResult;
+
+        if (GetResultSet.resultSetNextReturnValue(resultSet)){
+            sqlStatementStringResult = GetResultSet.getFromResultSetByColumnNumberString(1
+                , resultSet);
+
+        }else {
+            System.out.println("error result set");
+            return false;
+        }
+
+
+        if (sqlStatementStringResult.equals("1")) {
+            return true;
+        } else if (sqlStatementStringResult.equals("0")) {
+            return false;
+        } else {
+            System.out.println("Error - get unexpected value - need fix -  IsTheRowAlreadyExist -> isTheDayAlreadyExist");
+            return false;
+        }
+    }
+}
+
+
+
+================================================================================
+FILE: RunQuery.java
+================================================================================
+package tools.sql_tools.general.run;
+
+import configuration.Config;
+import tools.sql_tools.general.get.GetConnection;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
+public class RunQuery {
+    public static void runQuery(String SQLStatement) throws SQLException {
+        if (SQLStatement == null) {
+            System.out.println("SQLStatement is null");
+            return;
+        }
+
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+
+        try {
+            connection = GetConnection.getConnectionWithLocalHost();
+            preparedStatement = connection.prepareStatement(SQLStatement);
+            preparedStatement.execute(SQLStatement);
+        } catch (SQLException e) {
+            System.out.println(Config.ANSI_RED + "SQL Exception in: RunQuery.runQuery()" + Config.ANSI_RESET);
+        } finally {
+            if (preparedStatement != null) {
+                try {
+                    preparedStatement.close();
+                } catch (SQLException e) { /* Ignored */}
+            }
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException e) { /* Ignored */}
+            }
+        }
+    }
+}
+
+
+
+================================================================================
+FILE: CheckDataCorrectness.java
+================================================================================
+package tools.sql_tools.general.statements;
+
+public class CheckDataCorrectness {
+
+}
+
+    /*
+
+    public static void getProductAllRowInCalendar() throws SQLException {
+        Scanner input = new Scanner(System.in);
+        String newProductToCheck;
+        String[] dataCalendar;
+        String[] dataProduct;
+
+
+        while (true) {
+            newProductToCheck = input.next();
+            dataCalendar = getRowsInCalendarByProductName(newProductToCheck);
+            System.out.println();
+            for (int i = 0; i < dataCalendar.length; i++) {
+                if (dataCalendar[i] != null) {
+                    System.out.println(dataCalendar[i]);
+                }
+            }
+            System.out.println();
+            System.out.println(getRowFromProductTableByProductNameWithColumnName(newProductToCheck));
+        }
+    }
+
+    public static void getAllWrongProductByName() throws SQLException {
+        String[] wrongProductData;
+        wrongProductData = SQLSelect.getAllWrongProductByNameFromProductTable();
+
+        for (int i = 0; i < 3; i++) {
+            System.out.println(wrongProductData[i]);
+        }
+    }
+
+    public static void getAllWrongProductMacroByName() throws SQLException {
+        String[] wrongProductData;
+        wrongProductData = SQLSelect.getAllWrongProductByNameFromProductTable();
+
+        convertDataFromProductStringArrayToProductObject(wrongProductData[0]);
+        //for (int i = 0; i < 3; i++) {
+        //    System.out.println(wrongProductData[i]);
+        //}
+    }
+
+    public static String[] getStringArraySplitByColonSign(String[] arrayToSplit, int numberOfLines){
+        String[] resultArray = new String[arrayToSplit.length];
+        for (int i = 0; i < arrayToSplit.length; i++) {
+            if (arrayToSplit[i] == null) {
+                break;
+            } else{
+                resultArray[i] = arrayToSplit[i].substring((arrayToSplit[i].indexOf(":") + 1));
+            }
+        }
+
+        return resultArray;
+    }
+
+    public static Product convertDataFromProductStringArrayToProductObject(String rawData){
+        String[] data;
+        String[] rawDataLineByLine = rawData.split("\n");
+
+
+        data = getStringArraySplitByColonSign(rawDataLineByLine, 9);
+
+        Macro macro = new Macro(
+                Float.valueOf(data[4]),
+                (Float.valueOf(data[5])),
+                (Float.valueOf(data[6])),
+                (Float.valueOf(data[7])));
+
+        Product product = new Product(
+                data[0],
+                data[1],
+                (Float.valueOf(data[3])),
+                macro,
+                Float.valueOf(data[2]),
+                data[8]);
+
+        return product;
+    }
+
+    public static void splitProductFromProductArray(String[] SQLRawDataFromTable){
+        for (int i = 0; i < SQLRawDataFromTable.length; i++) {
+            if (SQLRawDataFromTable[i] == null){
+                break;
+            }else{
+                consumedMacroFromConsumedProductInCalendarTable(SQLRawDataFromTable[i].split("\n"));
+            }
+
+        }
+    }
+    public static Macro consumedMacroFromConsumedProductInCalendarTable(String[] SQLRawDataFromTable){
+        Macro resultMacro;
+
+        String[] dataAfterColon = getStringArraySplitByColonSign(SQLRawDataFromTable, 14);
+        resultMacro = new Macro(
+                Float.valueOf(dataAfterColon[10]),
+                Float.valueOf(dataAfterColon[11]),
+                Float.valueOf(dataAfterColon[12]),
+                Float.valueOf(dataAfterColon[13]));
+
+        //System.out.println("consumedMacroFromConsumedProductInCalendarTable");
+
+        System.out.println();
+        Macro.printAllValues(resultMacro);
+        return resultMacro;
+    }
+
+    public static Macro productMacroFromConsumedProductInCalendarTable(String[] SQLRawDataFromTable){
+        Macro resultMacro;
+
+        String[] dataAfterColon = getStringArraySplitByColonSign(SQLRawDataFromTable, 15);
+        resultMacro = new Macro(
+                Float.valueOf(dataAfterColon[4]),
+                Float.valueOf(dataAfterColon[5]),
+                Float.valueOf(dataAfterColon[6]),
+                Float.valueOf(dataAfterColon[7]));
+
+        return resultMacro;
+    }
+
+    public static float amountOfProductFromConsumedProductInCalendarTable(String[] SQLRawDataFromTable){
+        String[] dataAfterColon = getStringArraySplitByColonSign(SQLRawDataFromTable, 15);
+        float resultFloat = Float.valueOf(dataAfterColon[3]);
+        return resultFloat;
+    }
+
+    public static boolean compareTwoMacrosAndAmountOfProductFromCalendar(Macro macroFromProductTable, Macro macroFromCalendarTable, float productAmount){
+        System.out.println("macroFromProductTable macro: ");
+        Macro.printAllValues(macroFromProductTable);
+
+        System.out.println("macroFromCalendarTable macro: ");
+        Macro.printAllValues(macroFromCalendarTable);
+        System.out.println();
+
+        Macro rightMacro = new Macro(
+                (productAmount/100) * macroFromProductTable.getKcal(),
+                (productAmount/100) * macroFromProductTable.getProtein(),
+                (productAmount/100) * macroFromProductTable.getFat(),
+                (productAmount/100) * macroFromProductTable.getCarbs());
+
+        Macro macroToCheck = new Macro(
+                (productAmount/100) * macroFromCalendarTable.getKcal(),
+                (productAmount/100) * macroFromCalendarTable.getProtein(),
+                (productAmount/100) * macroFromCalendarTable.getFat(),
+                (productAmount/100) * macroFromCalendarTable.getCarbs());
+
+        System.out.println("rightMacro macro: ");
+        Macro.printAllValues(rightMacro);
+
+        System.out.println("macroToCheck macro: ");
+        Macro.printAllValues(macroToCheck);
+
+        return Macro.isMacroEqual(rightMacro, macroToCheck);
+    }
+
+    public static void printAllDataFromRawSQLStringArrayTEST() throws SQLException {
+        Product productFromProductTable = convertDataFromProductStringArrayToProductObject(SQLSelect.getRowFromProductTableByProductNameWithColumnName("Nutella"));
+        String[] array = productFromProductTable.productDataInStringArray(productFromProductTable);
+        for (String line: array) {
+            System.out.println(line);
+        }
+
+        String[] allProductFromCalendar = SQLSelect.getAllProductDataByNameFromCalendarTable("Nutella");
+        Macro productFromCalendarMacro;
+        for (int i = 0; i < allProductFromCalendar.length; i++) {
+            if(allProductFromCalendar[i] == null){
+                System.out.println("Null detected");
+                break;
+            }else {
+                String[] productRawSQLDataToArray = allProductFromCalendar[i].split("\n");
+
+                productFromCalendarMacro = productMacroFromConsumedProductInCalendarTable(productRawSQLDataToArray);
+                //.out.println(allProductFromCalendar[i]);
+                System.out.println(compareTwoMacrosAndAmountOfProductFromCalendar(productFromProductTable.getProductMacroForItsSetMeasure(),
+                        productFromCalendarMacro, amountOfProductFromConsumedProductInCalendarTable(productRawSQLDataToArray)));
+                System.out.println();
+            }
+        }
+
+    }
+
+}
+*/
+
+
+
+================================================================================
+FILE: InsertToTable.java
+================================================================================
+package tools.sql_tools.general.statements;
+
+import java.util.*;
+
+public class InsertToTable {
+    public static String prepareSQLStatement(String tableName, Hashtable<String, String> keysAndValues) {
+        String sqlStatement = "";
+        String namesPartOfStatement = "";
+        String valuesPartOfStatement = "";
+
+        Enumeration<String> names = keysAndValues.keys();
+        namesPartOfStatement += "(";
+        for (int i = 0; i < keysAndValues.size(); i++) {
+            namesPartOfStatement += "`" + names.nextElement() + "`" + "," + "\n";
+        }
+        namesPartOfStatement = namesPartOfStatement.substring(0, namesPartOfStatement.length() - 2);
+        namesPartOfStatement += ")";
+
+        Enumeration<String> values = keysAndValues.keys();
+        valuesPartOfStatement += "(";
+        for (int i = 0; i < keysAndValues.size(); i++) {
+            valuesPartOfStatement += "`" + keysAndValues.get(values.nextElement()) + "`" + "," + "\n";
+        }
+        valuesPartOfStatement = valuesPartOfStatement.substring(0, valuesPartOfStatement.length() - 2);
+        valuesPartOfStatement += ")";
+
+
+        sqlStatement = "INSERT INTO " + "`" + tableName + "`" + "\n" +
+                namesPartOfStatement +
+                "\n" + "VALUES" + "\n" +
+                valuesPartOfStatement +
+                ";";
+
+
+        return sqlStatement;
+    }
+
+    public static String prepareSQLInsertStatementHashMap(String tableName, HashMap<String, String> keysAndValues) {
+        String sqlStatement = "";
+        String namesPartOfStatement = "";
+        String valuesPartOfStatement = "";
+
+        Set<String> names = keysAndValues.keySet();
+        Iterator<String> iterator = names.iterator();
+        namesPartOfStatement += "(";
+        String[] keysInOrder = new String[names.size()];
+        for (int i = 0; i < keysAndValues.size(); i++) {
+            keysInOrder[i] = iterator.next();
+            namesPartOfStatement += "`" + keysInOrder[i] + "`" + "," + "\n";
+        }
+
+        namesPartOfStatement = namesPartOfStatement.substring(0, namesPartOfStatement.length() - 2);
+        namesPartOfStatement += ")";
+
+        valuesPartOfStatement += "(";
+        for (int i = 0; i < keysAndValues.size(); i++) {
+            valuesPartOfStatement += "`" + keysAndValues.get(keysInOrder[i]) + "`" + "," + "\n";
+        }
+        valuesPartOfStatement = valuesPartOfStatement.substring(0, valuesPartOfStatement.length() - 2);
+        valuesPartOfStatement += ")";
+
+
+        sqlStatement = "INSERT INTO " + "`" + tableName + "`" + "\n" +
+                namesPartOfStatement +
+                "\n" + "VALUES" + "\n" +
+                valuesPartOfStatement +
+                ";";
+
+
+        return sqlStatement;
+    }
+}
+
+
+
+================================================================================
+FILE: QueryMaker.java
+================================================================================
+package tools.sql_tools.general.statements;
+
+import configuration.Config;
+import tools.calendar_tools.MyDate;
+import tools.debug_tools.Debug;
+
+public class QueryMaker {
+
+    // Doesn't recognize different types of values
+    public static String makeInsertSQLStatement(String tableName, String[] keysToColumns, String[] values, String[] dataTypeTable){
+        if (keysToColumns.length != values.length){
+            System.out.println("Values and Keys NOT equal");
+            return "ERROR";
+        }
+
+        // Set head of query
+        String sqlStatement = "INSERT INTO `" + tableName + "`\n";
+        sqlStatement += "(";
+
+        // Set columns name in query
+        for (int i = 0; i < keysToColumns.length; i++) {
+            sqlStatement += keysToColumns[i];
+
+            if(i == keysToColumns.length - 1){
+                sqlStatement += ")";
+            }else {
+                sqlStatement += ",\n";
+            }
+        }
+
+        // Set Values verse
+        sqlStatement += "\nValues\n(";
+
+        // Useless loop
+        for (int i = 0; i < values.length; i++) {
+
+            // Take care to float value ends with .f
+            if(i == 0 || i == 1) {
+                sqlStatement += "'" + values[i] + "'";
+            }else{
+                sqlStatement += values[i];
+            }
+
+            if (i != Config.SQL_COLUMNS_PRODUCT.length - 1){
+                sqlStatement += ",\n";
+            }
+        }
+
+        sqlStatement += ");";
+        System.out.println("makeInsertSQLStatement made this SQL Statement:\n\n" + sqlStatement + "\n");
+        return  sqlStatement;
+    }
+
+    // Doesn't recognize different types of values
+    public static String makeSearchByOneKeySQLStatement(String tableName, String keyToSearch, String valueToSearch, String valueType){
+        String sqlStatement = "SELECT * FROM " + tableName + "\n";
+
+        if (valueType.equalsIgnoreCase("STRING")){
+            valueToSearch = "'" +  valueToSearch +"'";
+        }
+
+        sqlStatement += "WHERE " + keyToSearch + " = " + valueToSearch + " ;";
+
+        System.out.println("makeSearchByOneKeySQLStatement made this SQL Statement:\n\n" + sqlStatement + "\n");
+        return sqlStatement;
+    }
+
+    public static String selectCalendarQueryWithDay(String dayInSQLFormat){
+        if(MyDate.checkSQLFormat(dayInSQLFormat)==false){
+            Debug.printRedSystemPrintln("ERROR: Wrong date");
+            return "-1";
+        }
+        return "SELECT * FROM calendar WHERE day_date=" + "\"" + dayInSQLFormat + "\"" + ";";
+    }
+}
+
+
+
+================================================================================
+FILE: Select.java
+================================================================================
+package tools.sql_tools.general.statements;
+
+import com.mysql.cj.conf.ConnectionUrlParser;
+import configuration.Config;
+import tools.sql_tools.general.RowInTable;
+import tools.sql_tools.general.Table;
+import tools.sql_tools.general.get.GetConnection;
+import tools.sql_tools.general.get.GetResultSet;
+import tools.sql_tools.general.get_check_data.GetAmountOfColumnsRows;
+
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+
+public class Select {
+    // TODO clean up code
+    // TODO only selectAllDataFromTable AND selectOneRowDataFromTable - method is finish - finish rest of methods
+
+    //<editor-fold desc="Select All Data From Query">
+    public static LinkedHashMap<String, String> selectAllDataFromTable(String tableName, String key, String operator, String value) {
+        String sqlStatement = "SELECT";
+/*
+example:
+SELECT * from table WHERE key = value ??? -> =
+SELECT * from table WHERE key LIKE value ??? -> LIKE
+SELECT * from table WHERE key != value ??? -> !=
+
+how to handle this upper examples
+ */
+        return null;
+    }
+
+    public static LinkedHashMap<String, String> selectAllDataFromTable(String tableName, String selectedColumn1, String selectedColumn2,
+                                                                       String key, String operator, String value) {
+        LinkedHashMap<String, String> resultLinkedHashMap = new LinkedHashMap<>();
+
+        String sqlStatement = "SELECT " +
+                selectedColumn1 + " , " + selectedColumn2 +
+                " FROM " + tableName +
+                " WHERE " +
+                " " + key +
+                " " + operator +
+                " " + "\"" + value + "\"" + ";";
+
+        ResultSet resultSet;
+        GetResultSet getResultSet = new GetResultSet();
+        resultSet = getResultSet.getResultSetFromSQL(sqlStatement);
+
+
+        try {
+            while (resultSet.next()) {
+                resultLinkedHashMap.put(resultSet.getString(1), resultSet.getString(2));
+
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return resultLinkedHashMap;
+        /*
+example:
+SELECT * from table WHERE key = value ??? -> =
+SELECT * from table WHERE key LIKE value ??? -> LIKE
+SELECT * from table WHERE key != value ??? -> !=
+
+how to handle this upper examples
+ */
+
+    }
+
+    public static ArrayList<ArrayList<HashMap<String, String>>> selectAllDataFromQuery(String SQLQuery) {
+        //<editor-fold desc="Values">
+        ResultSet resultSet;
+        ResultSetMetaData resultSetMetaData;
+
+        ArrayList<String> columnsNames;
+        //</editor-fold>
+
+        resultSet = GetResultSet.getResultSetFromSQL(SQLQuery);
+
+        int amountOfColumns = GetResultSet.getAmountColumnsInResultSet(resultSet);
+
+        ArrayList<ArrayList<HashMap<String, String>>> rows = new ArrayList<ArrayList<HashMap<String, String>>>();
+
+        ArrayList<HashMap<String, String>> row = new ArrayList<HashMap<String, String>>();
+
+        HashMap<String, String> valuesAndKeysOfRow = new HashMap<>();
+
+
+        int counter = 0;
+        int rowNumber = 0;
+
+        while (GetResultSet.isResultSetHasNext(resultSet)) {
+            for (int i = 1; i < amountOfColumns; i++) {
+                valuesAndKeysOfRow.put(GetResultSet.getColumnName(resultSet, i), GetResultSet.getValueOfString(resultSet, i));
+            }
+            row.add(counter, valuesAndKeysOfRow);
+            valuesAndKeysOfRow.clear();
+            counter++;
+
+            rowNumber++;
+        }
+
+        rows.add(0, row);
+
+        return rows;
+    }
+
+    public static ArrayList<HashMap<String, String>> selectAllDataFromQuery2(String SQLQuery) {
+        //<editor-fold desc="Values">
+        ResultSet resultSet;
+        ResultSetMetaData resultSetMetaData;
+
+        ArrayList<String> columnsNames;
+        //</editor-fold>
+
+        resultSet = GetResultSet.getResultSetFromSQL(SQLQuery);
+
+        int amountOfColumns = GetResultSet.getAmountColumnsInResultSet(resultSet);
+
+        ArrayList<HashMap<String, String>> rows = new ArrayList<HashMap<String, String>>();
+
+        HashMap<String, String> valuesAndKeysOfRow = new HashMap<>();
+
+
+        int counter = 0;
+        int rowNumber = 0;
+
+        while (GetResultSet.isResultSetHasNext(resultSet)) {
+            for (int i = 1; i < amountOfColumns; i++) {
+                valuesAndKeysOfRow.put(GetResultSet.getColumnName(resultSet, i), GetResultSet.getValueOfString(resultSet, i));
+            }
+            rows.add(counter, valuesAndKeysOfRow);
+            valuesAndKeysOfRow.clear();
+            counter++;
+
+            rowNumber++;
+        }
+        return rows;
+    }
+    //</editor-fold>
+
+    //<editor-fold desc="Rows in SQL table - method">
+    public static Table getDataToTable(String SQLQuery) {
+        Table table = new Table();
+
+        int amountOfRows = GetAmountOfColumnsRows.getAmountOfRows(SQLQuery);
+
+        ResultSet resultSet = GetResultSet.getResultSetFromSQL(SQLQuery);
+        ResultSetMetaData resultSetMetaData = GetResultSet.getResultSetMetaData(resultSet);
+        int amountOfColumn = GetAmountOfColumnsRows.getAmountOfColumns(SQLQuery);
+
+        RowInTable tmpRowInTable;
+
+        ArrayList<RowInTable> rowInTables = new ArrayList<>();
+        int globalCounter = 0;
+        try {
+            while (resultSet.next()) {
+                 tmpRowInTable = new RowInTable();
+
+                for (int i = 1; i < amountOfColumn + 1; i++) {
+                    String columnLabel = resultSetMetaData.getColumnLabel(i);
+                    tmpRowInTable.putKeyAndValueToRow(columnLabel, resultSet.getString(i));
+
+                }
+                rowInTables.add(globalCounter, tmpRowInTable);
+                globalCounter++;
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        table.setRows(rowInTables);
+        return table;
+    }
+
+    public static ConnectionUrlParser.Pair<String, String> selectOneRowDataFromTable(String tableName, String selectedColumn1, String selectedColumn2,
+                                                                                     String key, String operator, String value) {
+        ConnectionUrlParser.Pair<String, String> resultPair;
+
+        String sqlStatement = "SELECT " +
+                selectedColumn1 + " , " + selectedColumn2 +
+                " FROM " + tableName +
+                " WHERE " +
+                " " + key +
+                " " + operator +
+                " " + "\"" + value + "\"" + ";";
+
+
+        ResultSet resultSet;
+        GetResultSet getResultSet = new GetResultSet();
+        resultSet = getResultSet.getResultSetFromSQL(sqlStatement);
+
+        String left = "";
+        String right = "";
+
+        try {
+            if (resultSet.next()) {
+                left = resultSet.getString(1);
+
+                right = resultSet.getString(2);
+
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return resultPair = new ConnectionUrlParser.Pair<>(left, right);
+        /*
+example:
+SELECT * from table WHERE key = value ??? -> =
+SELECT * from table WHERE key LIKE value ??? -> LIKE
+SELECT * from table WHERE key != value ??? -> !=
+
+how to handle this upper examples
+ */
+
+    }
+//</editor-fold>
+
+    //<editor-fold desc="Columns in SQL table - method">
+    public static String[] getAllValuesInColumn(String tableName, int column) {
+        String[] columnValues;
+        try {
+            ResultSet resultSet;
+            Statement statement;
+
+            String sql = "SELECT * FROM " + tableName;
+
+            int amountOfRows = 0;
+
+            Connection connection = GetConnection.getConnectionWithLocalHostWithoutTryCatch();
+
+            statement = connection.createStatement();
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery(sql);
+            amountOfRows = resultSet.getRow();
+
+            columnValues = new String[amountOfRows];
+
+            int counter = 0;
+            while (resultSet.next()) {
+                columnValues[counter] = resultSet.getString(column);
+
+            }
+
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return columnValues;
+    }
+
+    public static String[] getAllValuesInColumn(String tableName, String columnName) {
+        try {
+            ResultSet resultSet;
+            Statement statement;
+
+            String sql = "SELECT * FROM " + tableName;
+
+            int amountOfRows = 0;
+
+            Connection connection = GetConnection.getConnectionWithLocalHostWithoutTryCatch();
+
+            statement = connection.createStatement();
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery(sql);
+            amountOfRows = resultSet.getRow();
+
+            String[] columnValues = new String[amountOfRows];
+
+            int counter = 0;
+            while (resultSet.next()) {
+                columnValues[counter] = resultSet.getString(columnName);
+
+            }
+
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return null;
+    }
+//</editor-fold>
+
+    //<editor-fold desc="Product related methods">
+    public static String[] getRowFromProductTableByProductNameGetArray(String productName) throws SQLException {
+        ResultSet resultSet;
+        Statement statement;
+
+        String sql = "SELECT * FROM diet_tracker_schema.product_table WHERE product_name=\"" + productName + "\";";
+        String[] result = new String[Config.SQL_COLUMNS_PRODUCT.length];
+
+        Connection connection = GetConnection.getConnectionWithLocalHost();
+        statement = connection.createStatement();
+        resultSet = statement.executeQuery(sql);
+
+        while (resultSet.next()) {
+            for (int i = 0; i < Config.SQL_COLUMNS_PRODUCT.length; i++) {
+                result[i] = resultSet.getString(Config.SQL_COLUMNS_PRODUCT[i].replace("`", ""));
+            }
+        }
+        connection.close();
+        resultSet.close();
+        statement.close();
+
+        return result;
+    }
+
+    public static String[] getAllProductNamesFromProductTable() throws SQLException {
+        ResultSet resultSet;
+        Statement statement;
+
+        String[] productsArray = new String[1200];
+
+        String sql = "SELECT product_name FROM diet_tracker_schema.product_table";
+
+        Connection connection = GetConnection.getConnectionWithLocalHost();
+        statement = connection.createStatement();
+        resultSet = statement.executeQuery(sql);
+
+        int counter = 0;
+        while (resultSet.next()) {
+            productsArray[counter] = resultSet.getString(1);
+            counter++;
+        }
+
+        resultSet.close();
+        statement.close();
+        connection.close();
+
+        return productsArray;
+    }
+
+    public static HashMap<String, String> getAllProductAndBrandNamesFromProductTable() {
+        ResultSet resultSet;
+        Statement statement;
+
+        HashMap<String, String> allProductnameBrandnameHashMap = new HashMap<String, String>();
+
+        String SQLStatement = "SELECT product_name, product_brand FROM diet_tracker_schema.product_table;";
+
+        String result = "";
+        Connection connection = null;
+
+        try {
+            connection = GetConnection.getConnectionWithLocalHost();
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery(SQLStatement);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        String brandFieldSQl = "";
+        try {
+            while (resultSet.next()) {
+                if ((resultSet.getString(2)).equals(" ")) {
+                    brandFieldSQl = "none";
+                } else {
+                    brandFieldSQl = resultSet.getString(2);
+                }
+
+                allProductnameBrandnameHashMap.put(resultSet.getString(1), brandFieldSQl);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return allProductnameBrandnameHashMap;
+    }
+
+    public static String getRowFromProductTableByProductNameGetString(String productName) throws SQLException {
+        ResultSet resultSet;
+        Statement statement;
+
+        String sql = "SELECT * FROM diet_tracker_schema.product_table WHERE product_name=\"" + productName + "\";";
+        String result = "";
+
+
+        Connection connection = GetConnection.getConnectionWithLocalHost();
+        statement = connection.createStatement();
+        resultSet = statement.executeQuery(sql);
+
+        while (resultSet.next()) {
+            for (int i = 0; i < Config.SQL_COLUMNS_PRODUCT.length; i++) {
+                result += resultSet.getString(Config.SQL_COLUMNS_PRODUCT[i].replace("`", "")) + " ";
+            }
+        }
+
+        return result;
+    }
+
+    public static String getRowFromProductTableByProductNameWithColumnName(String productName) throws SQLException {
+        ResultSet resultSet;
+        Statement statement;
+        ResultSetMetaData resultSetMetaData;
+
+        String sql = "SELECT * FROM diet_tracker_schema.product_table WHERE product_name=\"" + productName + "\";";
+        String result = "";
+
+
+        Connection connection = GetConnection.getConnectionWithLocalHost();
+        statement = connection.createStatement();
+        resultSet = statement.executeQuery(sql);
+
+        resultSetMetaData = resultSet.getMetaData();
+        int amountOfColumns = resultSetMetaData.getColumnCount();
+
+        while (resultSet.next()) {
+            for (int i = 1; i <= amountOfColumns; i++) {
+                result += resultSetMetaData.getColumnName(i) + " : ";
+                result += resultSet.getString(i) + "\n";
+            }
+        }
+
+        return result;
+    }
+
+    public static String[] getRowsInCalendarByProductName(String productName) throws SQLException {
+        // Hard code array length
+        String[] allRowsArray = new String[50];
+        ResultSet resultSet;
+        Statement statement;
+        ResultSetMetaData resultSetMetaData;
+
+        String sql = "SELECT * FROM calendar WHERE product_name = " + "'" + productName + "'";
+
+        Connection connection = GetConnection.getConnectionWithLocalHost();
+        statement = connection.createStatement();
+        resultSet = statement.executeQuery(sql);
+        resultSetMetaData = resultSet.getMetaData();
+        int amountOfColumns = resultSetMetaData.getColumnCount();
+
+        String rowInString = "";
+        int counter = 0;
+        while (resultSet.next()) {
+            for (int i = 1; i <= amountOfColumns; i++) {
+                rowInString += resultSetMetaData.getColumnName(i) + " : ";
+                rowInString += resultSet.getString(i) + "\n";
+            }
+            allRowsArray[counter] = rowInString;
+            rowInString = "";
+            counter++;
+        }
+
+        resultSet.close();
+        connection.close();
+        statement.close();
+
+        return allRowsArray;
+    }
+
+    public static String[] getAllWrongProductByNameFromProductTable() throws SQLException {
+        // Hard code array length
+        String[] allRowsArray = new String[200];
+        ResultSet resultSet;
+        Statement statement;
+        ResultSetMetaData resultSetMetaData;
+
+        String sql = "SELECT * FROM product_table WHERE product_macro_for != 0 AND product_macro_for != 100";
+
+        Connection connection = GetConnection.getConnectionWithLocalHost();
+        statement = connection.createStatement();
+        resultSet = statement.executeQuery(sql);
+        resultSetMetaData = resultSet.getMetaData();
+        int amountOfColumns = resultSetMetaData.getColumnCount();
+
+        String rowInString = "";
+        int counter = 0;
+        while (resultSet.next()) {
+            for (int i = 1; i <= amountOfColumns; i++) {
+                rowInString += resultSetMetaData.getColumnName(i) + " : ";
+                rowInString += resultSet.getString(i) + "\n";
+            }
+            allRowsArray[counter] = rowInString;
+            rowInString = "";
+            counter++;
+        }
+
+        resultSet.close();
+        connection.close();
+        statement.close();
+
+        return allRowsArray;
+    }
+
+    public static String[] getAllProductDataByNameFromCalendarTable(String productName) throws SQLException {
+        // Hard code array length
+        String[] allRowsArray = new String[100];
+        ResultSet resultSet;
+        Statement statement;
+        ResultSetMetaData resultSetMetaData;
+
+        String sql = "SELECT * FROM calendar WHERE product_name = " + "'" + productName + "'";
+
+        Connection connection = GetConnection.getConnectionWithLocalHost();
+        statement = connection.createStatement();
+        resultSet = statement.executeQuery(sql);
+        resultSetMetaData = resultSet.getMetaData();
+        int amountOfColumns = resultSetMetaData.getColumnCount();
+
+        String rowInString = "";
+        int counter = 0;
+        while (resultSet.next()) {
+            for (int i = 1; i <= amountOfColumns; i++) {
+                // Temporary modification
+                rowInString += resultSetMetaData.getColumnName(i) + " : ";
+                rowInString += resultSet.getString(i) + "\n";
+            }
+            allRowsArray[counter] = rowInString;
+            rowInString = "";
+            counter++;
+        }
+
+        resultSet.close();
+        connection.close();
+        statement.close();
+
+        return allRowsArray;
+    }
+//</editor-fold>
+
+}
+
+
+
+================================================================================
+FILE: SelectDistinctValues.java
+================================================================================
+package tools.sql_tools.general.statements;
+
+import tools.sql_tools.general.get.GetConnection;
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+public class SelectDistinctValues {
+
+    public static String[] selectAllUniqueCalendarByDayDate(){
+        // It may cause error by hard code array length
+        int daysAmount = 100;
+        String[] tempArray = new String[daysAmount];
+        String[] allUnique;
+        String sqlStatement = "SELECT DISTINCT day_date FROM calendar";
+        Connection connection;
+        ResultSet resultSet;
+        Statement statement;
+        int counter = 0;
+        try {
+            connection = GetConnection.getConnectionWithLocalHost();
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery(sqlStatement);
+
+            while(resultSet.next()){
+                tempArray[counter] = resultSet.getString(1);
+                counter++;
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        allUnique = new String[counter];
+
+        for (int i = 0; i < counter; i++) {
+            allUnique[i] = tempArray[i];
+        }
+
+        return allUnique;
+    }
+
+
+}
+
+
+
+================================================================================
+FILE: SQLCount.java
+================================================================================
+package tools.sql_tools.general.statements;
+
+import tools.sql_tools.general.get.GetConnection;
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+public class SQLCount {
+
+    public static int getCountFromTable(String tableName, String dayDate) {
+
+        ResultSet resultSet;
+        Statement statement;
+
+        int countValue = -1;
+
+        String sql = "SELECT COUNT(*) FROM " + tableName + " WHERE day_date = " +  "\"" + dayDate + "\"" + ";";
+        System.out.println(sql);
+        String result = "";
+
+
+        Connection connection = null;
+        try {
+
+            connection = GetConnection.getConnectionWithLocalHost();
+
+        statement = connection.createStatement();
+        resultSet = statement.executeQuery(sql);
+
+        while (resultSet.next()) {
+            countValue = Integer.valueOf(resultSet.getString(1));
+        }
+
+        resultSet.close();
+        statement.close();
+        connection.close();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return countValue;
+    }
+}
+
+
+
+================================================================================
+FILE: SumTable.java
+================================================================================
+package tools.sql_tools.general.statements;
+
+import tools.sql_tools.general.get.GetResultSet;
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.Hashtable;
+
+public class SumTable {
+    public static Hashtable sumRowsInTableWhereColumnLike(String tableName, String[] fieldsNamesToSum, String whereColumnName, String whereColumnValue) {
+        Connection connection;
+
+        String sqlQuery = prepareSQLQuery(tableName, fieldsNamesToSum, whereColumnName, whereColumnValue);
+
+        Hashtable<String, Float> fieldAndSum = new Hashtable<>();
+
+        ResultSet resultSet = GetResultSet.getResultSetFromSQL(sqlQuery);
+        try {
+            while (resultSet.next()) {
+                for (int i = 0; i < fieldsNamesToSum.length; i++) {
+                    fieldAndSum.put(fieldsNamesToSum[i], Float.valueOf((resultSet.getString(fieldsNamesToSum[i])).replace(",", "")));
+
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+
+
+        return fieldAndSum;
+    }/**/
+
+    public static Hashtable sumRowsInTableWherePeriodOfTime(String tableName, String[] fieldsNamesToSum, String whereColumnName, String whereColumnValue) {
+        Connection connection;
+
+        String sqlQuery = prepareSQLQuery(tableName, fieldsNamesToSum, whereColumnName, whereColumnValue);
+
+        Hashtable<String, Float> fieldAndSum = new Hashtable<>();
+
+        ResultSet resultSet = GetResultSet.getResultSetFromSQL(sqlQuery);
+        try {
+            while (resultSet.next()) {
+                for (int i = 0; i < fieldsNamesToSum.length; i++) {
+                    fieldAndSum.put(fieldsNamesToSum[i], Float.valueOf((resultSet.getString(fieldsNamesToSum[i])).replace(",", "")));
+
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+
+
+        return fieldAndSum;
+    }
+
+    public static Hashtable sumRowsInTableWhereMonthOfTime(String tableName, String[] fieldsNamesToSum, String timeColumnName, String monthInSQLFormat) {
+        Connection connection;
+
+        String sqlQuery = prepareSQLQuery(tableName, fieldsNamesToSum, timeColumnName, monthInSQLFormat);
+
+        Hashtable<String, Float> fieldAndSum = new Hashtable<>();
+
+        ResultSet resultSet = GetResultSet.getResultSetFromSQL(sqlQuery);
+        try {
+            while (resultSet.next()) {
+                for (int i = 0; i < fieldsNamesToSum.length; i++) {
+                    if (resultSet.getString(fieldsNamesToSum[i]) == null) {
+                        System.out.println("i is null for: " + i);
+                    } else {
+                        String buffor = (resultSet.getString(fieldsNamesToSum[i])).replace(",", "");
+                        if (buffor == null) {
+
+                            fieldAndSum.put(fieldsNamesToSum[i], 0.0f);
+                        } else {
+                            fieldAndSum.put(fieldsNamesToSum[i], Float.valueOf(buffor));
+                        }
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+
+        return fieldAndSum;
+    }
+
+    public static String prepareSQLQueryWhereMonthOfTime(String tableName, String[] fieldsNamesToSum, String timeColumnName, String monthInSQLFormat) {
+        String fieldsSumQuery = "";
+
+        for (int i = 0; i < fieldsNamesToSum.length; i++) {
+            if (i == (fieldsNamesToSum.length - 1)) {
+                fieldsSumQuery += "FORMAT((SUM(" + fieldsNamesToSum[i] + ")), '0.00') AS \"" + fieldsNamesToSum[i] + "\" \n";
+            } else {
+                fieldsSumQuery += "FORMAT((SUM(" + fieldsNamesToSum[i] + ")), '0.00') AS \"" + fieldsNamesToSum[i] + "\", \n";
+            }
+        }
+
+        String sqlQuery = "SELECT \n" +
+                fieldsSumQuery +
+                "\n" +
+                "FROM " + tableName + "\n" +
+                "\n" +
+                "WHERE " + timeColumnName + " LIKE \"" + monthInSQLFormat + "\";\n";
+
+        return sqlQuery;
+    }
+
+    public static String prepareSQLQuery(String tableName, String[] fieldsNamesToSum, String whereColumnName, String whereColumnValue) {
+        String fieldsSumQuery = "";
+
+        for (int i = 0; i < fieldsNamesToSum.length; i++) {
+            if (i == (fieldsNamesToSum.length - 1)) {
+                fieldsSumQuery += "FORMAT((SUM(" + fieldsNamesToSum[i] + ")), '0.00') AS \"" + fieldsNamesToSum[i] + "\" \n";
+            } else {
+                fieldsSumQuery += "FORMAT((SUM(" + fieldsNamesToSum[i] + ")), '0.00') AS \"" + fieldsNamesToSum[i] + "\", \n";
+            }
+        }
+
+        String sqlQuery = "SELECT \n" +
+                fieldsSumQuery +
+                "\n" +
+                "FROM " + tableName + "\n" +
+                "\n" +
+                "WHERE " + whereColumnName + " LIKE \"" + whereColumnValue + "\";\n";
+
+        return sqlQuery;
+    }
+
+    public static String prepareSQLQueryWherePeriodOfTime(String tableName, String[] fieldsNamesToSum, String whereColumnName, String whereColumnValue) {
+        String fieldsSumQuery = "";
+
+        for (int i = 0; i < fieldsNamesToSum.length; i++) {
+            if (i == (fieldsNamesToSum.length - 1)) {
+                fieldsSumQuery += "FORMAT((SUM(" + fieldsNamesToSum[i] + ")), '0.00') AS \"" + fieldsNamesToSum[i] + "\" \n";
+            } else {
+                fieldsSumQuery += "FORMAT((SUM(" + fieldsNamesToSum[i] + ")), '0.00') AS \"" + fieldsNamesToSum[i] + "\", \n";
+            }
+        }
+
+        String sqlQuery = "SELECT \n" +
+                fieldsSumQuery +
+                "\n" +
+                "FROM " + tableName + "\n" +
+                "\n" +
+                "WHERE " + whereColumnName + " LIKE \"" + whereColumnValue + "\";\n";
+
+        return sqlQuery;
+    }
+}
+
+
+
+================================================================================
+FILE: ChangeProductTextFiles.java
+================================================================================
+package tools.sql_tools.products;
+
+import configuration.Config;
+import tools.text_files_tools.FilesTools;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.Scanner;
+
+public class ChangeProductTextFiles {
+
+    public static void getLineNumberInFile(String fileName, String filePath, int lineNumber) throws FileNotFoundException {
+        filePath = "";
+        String fullPath = filePath + fileName;
+        Scanner scannerInput = new Scanner(new File(fullPath));
+
+        // May cause error hard code array length
+        String[] textLinesInFile = new String[20];
+        int counter = 0;
+
+        while(scannerInput.hasNextLine()){
+            textLinesInFile[counter] = scannerInput.nextLine();
+            counter++;
+        }
+
+        /*
+        System.out.println("All file lines:");
+        for (int i = 0; i < counter; i++) {
+            System.out.println("[" + i + "]: " + textLinesInFile[i]);
+        }
+        */
+
+        System.out.println("Request line:");
+        System.out.println("[" + lineNumber + "]:" + textLinesInFile[lineNumber]);
+
+    }
+
+    public static void changeMacroForLineLineNumberInFile(String fullPath) throws IOException {
+        File oldFile = new File(fullPath);
+        Scanner scannerInput = new Scanner(oldFile);
+
+        // May cause error hard code array length
+        int counter = 0;
+        String[] textLinesInFile = new String[20];
+        while(scannerInput.hasNextLine()){
+            textLinesInFile[counter] = scannerInput.nextLine();
+            counter++;
+        }
+
+        /*
+        System.out.println("All file lines:");
+        for (int i = 0; i < counter; i++) {
+            System.out.println("[" + i + "]: " + textLinesInFile[i]);
+        }
+        */
+
+        String lineToWriteToFile = "";
+        textLinesInFile[3] = "Macro for: 100.0";
+        for (int i = 0; i < counter; i++) {
+            lineToWriteToFile += textLinesInFile[i] + "\n";
+        }
+
+        fullPath = fullPath.replace("src\\data_store_and_backup\\text_files\\products\\","");
+        fullPath = fullPath.replace(".txt","");
+        String onlyFileNamePath = fullPath;
+        scannerInput.close();
+        if (oldFile.delete()) {
+            //System.out.println("Deleted the file: " + oldFile.getName());
+        } else {
+            System.out.println("Failed to delete the file.");
+        }
+        System.out.println(onlyFileNamePath);
+        FilesTools.writeProductToFile(lineToWriteToFile, onlyFileNamePath);
+    }
+    public static void changeLineInTextFile() throws IOException {
+        //Instantiating the File class
+        String filePath = "src/textFiles/sampleTextField.txt";
+        //Instantiating the Scanner class to read the file
+        Scanner sc = new Scanner(new File(filePath));
+
+        //instantiating the StringBuffer class
+        StringBuffer buffer = new StringBuffer();
+
+        //Reading lines of the file and appending them to StringBuffer
+        while (sc.hasNextLine()) {
+            buffer.append(sc.nextLine() + System.lineSeparator());
+        }
+
+        String fileContents = buffer.toString();
+        System.out.println("Contents of the file: " + fileContents);
+
+        //closing the Scanner object
+        sc.close();
+
+        String oldLine = "Macro for: 600.0";
+        String newLine = "Macro for: 100.0";
+
+        //Replacing the old line with new line
+        fileContents = fileContents.replaceAll(oldLine, newLine);
+
+        //instantiating the FileWriter class
+        FileWriter writer = new FileWriter(filePath);
+
+        System.out.println("");
+        System.out.println("new data: " + fileContents);
+        writer.append(fileContents);
+        writer.flush();
+    }
+}
+
+
+
+================================================================================
+FILE: ImportDateFromTXTFilesToSQLDB.java
+================================================================================
+package tools.sql_tools.products;
+
+public class ImportDateFromTXTFilesToSQLDB {
+    public static String convertTextFileToSQLQuery(String[] fileInStringArray){
+        String[] pureDataFromTXTFile = getPureDateFromFileInArray(fileInStringArray);
+        String preparedStringQuery = prepareQueryAndFields(pureDataFromTXTFile);
+
+        return preparedStringQuery;
+    }
+
+    public static String[] getPureDateFromFileInArray(String[] fileInStringArray){
+        // Hard strict max array size may cause error
+        int maxLinesForResult = 30;
+        String tmpDataFromLine;
+        String pureDataFromLine;
+        int positionOfColon;
+        String[] result = new String[maxLinesForResult];
+        for (int i = 0; i < fileInStringArray.length; i++) {
+            if (fileInStringArray[i] != "0"){
+                tmpDataFromLine = fileInStringArray[i];
+                positionOfColon = tmpDataFromLine.indexOf(":");
+                pureDataFromLine = tmpDataFromLine.substring(positionOfColon + 1, fileInStringArray[i].length());
+                result[i] = pureDataFromLine;
+            }
+        }
+
+        return result;
+    }
+
+    public static String prepareQueryAndFields(String[] fieldDate){
+        /*
+        ORIGINAL QUERY:
+        INSERT INTO `diet_tracker_schema`.`product_table`
+        (`product_name`,
+        `product_brand`,
+        `product_package_has`,
+        `product_macro_for`,
+        `product_kcal`,
+        `product_protein`,
+        `product_fat`,
+        `product_carbs`)
+        VALUES
+        (<{product_name: }>,
+        <{product_brand: }>,
+        <{product_package_has: }>,
+        <{product_macro_for: }>,
+        <{product_kcal: }>,
+        <{product_protein: }>,
+        <{product_fat: }>,
+        <{product_carbs: }>);`
+
+
+         */
+        String comment = fieldDate[8];
+        if (comment.equals("")){
+            comment = "''";
+        }else {
+            comment = "'" +comment + "'";
+        }
+
+        String query = "INSERT INTO\n" +
+        "`diet_tracker_schema`.`product_table`\n" +
+        "(`product_name`,\n" +
+        "`product_brand`,\n" +
+        "`product_package_has`,\n" +
+        "`product_macro_for`,\n" +
+        "`product_kcal`,\n" +
+        "`product_protein`,\n" +
+        "`product_fat`,\n" +
+        "`product_carbs`,\n" +
+        "`comment_optional`)\n"+
+        "VALUES (\n" +
+        "'" + fieldDate[0] +"',\n" +
+        "'" + fieldDate[1] +"',\n" +
+        fieldDate[2] +",\n" +
+        fieldDate[3] +",\n" +
+        fieldDate[4] +",\n" +
+        fieldDate[5] +",\n" +
+        fieldDate[6] +",\n" +
+        fieldDate[7] +",\n"+
+        comment +");";
+
+        return query;
+    }
+}
+
+
+
+================================================================================
+FILE: InsertProductToSQL_Table.java
+================================================================================
+package tools.sql_tools.products;
+
+import configuration.Config;
+import tools.products_tools.Product;
+import tools.sql_tools.general.get.GetConnection;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
+public class InsertProductToSQL_Table {
+    public static void insertProduct(Product product) throws SQLException {
+        Connection connection = GetConnection.getConnectionWithLocalHost();
+        String sql = createInsertSQLQueryForProductTable(product);
+        PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        preparedStatement.execute(sql);
+    }
+
+
+    public static String createInsertSQLQueryForProductTable(Product productToInsert){
+        // Set head of query
+        String sqlStatement = "INSERT INTO `diet_tracker_schema`." + Config.CURRENT_DATABASE_TABLE_PRODUCT + "\n";
+        sqlStatement += "(";
+
+        // Set columns name in query
+        for (int i = 0; i < Config.SQL_COLUMNS_PRODUCT.length; i++) {
+
+            sqlStatement += Config.SQL_COLUMNS_PRODUCT[i];
+
+            if (i == Config.SQL_COLUMNS_PRODUCT.length - 1){
+                sqlStatement += ")";
+            }else {
+                sqlStatement += ",\n";
+            }
+        }
+
+        // Set Values verse
+        sqlStatement += "\nValues\n(";
+
+        String[] productDataInArray = productToInsert.productDataInStringArray(productToInsert);
+        // Useless loop
+        for (int i = 0; i < Config.howManyParametersToAddProduct; i++) {
+
+            // Take care to float value ends with .f
+            if(i == 0 || i == 1 || i == 8) {
+                sqlStatement += "'" + productDataInArray[i] + "'";
+            }else{
+                sqlStatement += productDataInArray[i];
+            }
+
+            if (i != Config.SQL_COLUMNS_PRODUCT.length - 1){
+                sqlStatement += ",\n";
+            }
+        }
+
+        System.out.println(sqlStatement);
+        sqlStatement += ");";
+        return  sqlStatement;
+    }
+}
+
+
+
+================================================================================
+FILE: SelectFromProductTable.java
+================================================================================
+package tools.sql_tools.products;
+
+import tools.sql_tools.general.get.GetResultSet;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+public class SelectFromProductTable {
+    public static String selectProductsBrandFromProductName(String productName) throws SQLException {
+        String sqlStatement = "SELECT product_brand FROM product_table WHERE product_name='"  + productName + "'" + ";";
+        String productsBrand = "-1";
+
+        ResultSet resultSet;
+        GetResultSet getResultSet = new GetResultSet();
+        resultSet = getResultSet.getResultSetFromSQL(sqlStatement);
+
+        resultSet.next();
+        productsBrand = resultSet.getString(1);
+
+        return productsBrand;
+    }
+}
+
+
+

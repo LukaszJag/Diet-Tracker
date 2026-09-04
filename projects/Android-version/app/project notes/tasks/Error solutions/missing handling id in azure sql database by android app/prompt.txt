@@ -1,0 +1,8 @@
+I have problem while put data to azure sql database in android studio app
+written by java because it doesn't handle sql id feature
+
+I give you part of code from android version which need modification
+and
+desktop version which already handle all of id in sql
+
+

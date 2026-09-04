@@ -13,9 +13,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class AzureToLocalSync {
 
+    // Use your actual Azure Function URL here
     private static final String AZURE_FUNCTION_URL = "https://diettrackerandroidversionapi-grcbhva9e5gqhzhz.polandcentral-01.azurewebsites.net/api/AndroidAzure";
 
     /**
@@ -23,6 +26,7 @@ public class AzureToLocalSync {
      */
     public static void pullProductsFromAzure() {
         try {
+            // 1. Prepare JSON query payload to fetch all products
             String jsonPayload = "{\"sql_query\":\"SELECT * FROM diet_tracker_schema.product_table\"}";
 
             HttpClient client = HttpClient.newBuilder()
@@ -43,7 +47,7 @@ public class AzureToLocalSync {
                 return;
             }
 
-            // High-performance flat JSON parsing
+            // 2. Parse the JSON response
             List<Map<String, String>> products = parseJsonArray(response.body());
             if (products.isEmpty()) {
                 System.out.println("No products found on Azure SQL to sync.");
@@ -52,9 +56,11 @@ public class AzureToLocalSync {
 
             System.out.println("Processing " + products.size() + " products for local import...");
 
+            // 3. Connect to local MySQL and write in a batch transaction
             Connection localConn = GetConnection.getConnectionWithLocalHost();
-            localConn.setAutoCommit(false); // Enable transaction
+            localConn.setAutoCommit(false); // Enable transaction for performance
 
+            // REPLACE INTO inserts new products or updates existing ones based on primary key (product_name)
             String localSql = "REPLACE INTO diet_tracker_schema.product_table " +
                     "(product_name, product_brand, product_package_has, product_macro_for, " +
                     "product_kcal, product_protein, product_fat, product_carbs, comment_optional) " +
@@ -62,7 +68,6 @@ public class AzureToLocalSync {
 
             PreparedStatement pstmt = localConn.prepareStatement(localSql);
 
-            int count = 0;
             for (Map<String, String> item : products) {
                 pstmt.setString(1, item.getOrDefault("product_name", "Unknown Product"));
                 pstmt.setString(2, item.getOrDefault("product_brand", ""));
@@ -74,15 +79,10 @@ public class AzureToLocalSync {
                 pstmt.setFloat(8, getFloatSafe(item, "product_carbs"));
                 pstmt.setString(9, item.getOrDefault("product_comment", ""));
                 pstmt.addBatch();
-
-                // Chunking execution to prevent memory overflow
-                if (++count % 1000 == 0) {
-                    pstmt.executeBatch();
-                }
             }
 
-            pstmt.executeBatch(); // Send remaining batch elements
-            localConn.commit();   // Commit transaction
+            pstmt.executeBatch();
+            localConn.commit(); // Commit all records
             pstmt.close();
             localConn.close();
 
@@ -106,89 +106,32 @@ public class AzureToLocalSync {
     }
 
     /**
-     * An optimized, dependency-free character scanner to parse flat JSON arrays
-     * in linear time, bypassing regex backtrack limits and compilation overhead.
+     * A lightweight, dependency-free regex JSON parser to parse flat JSON arrays
+     * returned from the Node.js Azure function.
      */
     private static List<Map<String, String>> parseJsonArray(String json) {
         List<Map<String, String>> list = new ArrayList<>();
-        if (json == null || json.trim().isEmpty()) {
-            return list;
-        }
 
-        int len = json.length();
-        int i = 0;
+        // Match individual object blocks: { ... }
+        Pattern objectPattern = Pattern.compile("\\{[^{}]+\\}");
+        Matcher objectMatcher = objectPattern.matcher(json);
 
-        while (i < len) {
-            char c = json.charAt(i);
-            if (c == '{') {
-                Map<String, String> map = new HashMap<>();
-                i++; // Skip '{'
+        while (objectMatcher.find()) {
+            String objectContent = objectMatcher.group();
+            Map<String, String> map = new HashMap<>();
 
-                while (i < len) {
-                    // Skip whitespace/commas to find key or end of current object
-                    while (i < len && json.charAt(i) != '"' && json.charAt(i) != '}') {
-                        i++;
-                    }
-                    if (i >= len || json.charAt(i) == '}') {
-                        if (i < len) i++; // Skip '}'
-                        break;
-                    }
+            // Match key-value pairs (e.g. "key": "value" or "key": number)
+            Pattern keyValuePattern = Pattern.compile("\"([^\"]+)\"\\s*:\\s*(?:\"([^\"]*)\"|([^,{}]+))");
+            Matcher kvMatcher = keyValuePattern.matcher(objectContent);
 
-                    // Extract Key
-                    i++; // Skip open quote
-                    int keyStart = i;
-                    while (i < len && json.charAt(i) != '"') {
-                        if (json.charAt(i) == '\\') i++; // Skip escape characters
-                        i++;
-                    }
-                    String key = json.substring(keyStart, i);
-                    i++; // Skip close quote
-
-                    // Advance to colon ':' separator
-                    while (i < len && json.charAt(i) != ':') {
-                        i++;
-                    }
-                    i++; // Skip ':'
-
-                    // Skip whitespace preceding value
-                    while (i < len && Character.isWhitespace(json.charAt(i))) {
-                        i++;
-                    }
-
-                    // Extract Value
-                    String value = null;
-                    if (i < len) {
-                        if (json.charAt(i) == '"') {
-                            // Extract String literal value
-                            i++; // Skip open quote
-                            int valStart = i;
-                            while (i < len && json.charAt(i) != '"') {
-                                if (json.charAt(i) == '\\') i++; // Skip escape
-                                i++;
-                            }
-                            value = json.substring(valStart, i);
-                            i++; // Skip close quote
-                        } else {
-                            // Extract Numeric, Boolean or Null values
-                            int valStart = i;
-                            while (i < len && json.charAt(i) != ',' && json.charAt(i) != '}') {
-                                i++;
-                            }
-                            value = json.substring(valStart, i).trim();
-                            if (value.equalsIgnoreCase("null")) {
-                                value = null;
-                            }
-                        }
-                    }
-
-                    if (value != null) {
-                        map.put(key.trim(), value.trim());
-                    }
+            while (kvMatcher.find()) {
+                String key = kvMatcher.group(1);
+                String value = kvMatcher.group(2) != null ? kvMatcher.group(2) : kvMatcher.group(3);
+                if (value != null) {
+                    map.put(key.trim(), value.trim().replace("\"", ""));
                 }
-                list.add(map);
-            } else {
-                i++;
             }
+            list.add(map);
         }
         return list;
     }
@@ -196,8 +139,15 @@ public class AzureToLocalSync {
     /**
      * Downloads the calendar entries from Azure and merges them into the local MySQL database.
      */
+    /**
+     * Downloads the calendar entries from Azure and merges them into the local MySQL database.
+     */
+    /**
+     * Downloads the calendar entries from Azure and merges them into the local MySQL database.
+     */
     public static void pullCalendarFromAzure() {
         try {
+            // 1. Query to fetch all calendar records from the custom schema
             String jsonPayload = "{\"sql_query\":\"SELECT * FROM diet_tracker_schema.calendar\"}";
 
             HttpClient client = HttpClient.newBuilder()
@@ -218,7 +168,7 @@ public class AzureToLocalSync {
                 return;
             }
 
-            // High-performance flat JSON parsing
+            // 2. Parse the JSON response
             List<Map<String, String>> entries = parseJsonArray(response.body());
             if (entries.isEmpty()) {
                 System.out.println("No calendar entries found on Azure SQL to sync.");
@@ -227,19 +177,21 @@ public class AzureToLocalSync {
 
             System.out.println("Processing " + entries.size() + " calendar entries for local import...");
 
+            // 3. Establish local transaction
             Connection localConn = GetConnection.getConnectionWithLocalHost();
             localConn.setAutoCommit(false);
 
+            // SQL using REPLACE INTO matching all 17 local columns
             String localSql = "REPLACE INTO diet_tracker_schema.calendar " +
                     "(day_date, day_name, product_name, amount_of_product, kcal, protein, fat, carbs, " +
                     "time_optional, comment_optional, kcal_consume, carbs_consume, fat_consume, " +
                     "protein_consume, meal_name, row_id, is_synced) " +
-                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 1)";
+                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 1)"; // 1 = already synced
 
             PreparedStatement pstmt = localConn.prepareStatement(localSql);
 
-            int count = 0;
             for (Map<String, String> item : entries) {
+                // Clean day_date
                 String rawDate = getStringSafe(item, "day_date");
                 if (rawDate != null && rawDate.length() >= 10) {
                     rawDate = rawDate.substring(0, 10);
@@ -254,6 +206,7 @@ public class AzureToLocalSync {
                 pstmt.setFloat(7, getFloatSafe(item, "fat"));
                 pstmt.setFloat(8, getFloatSafe(item, "carbs"));
 
+                // Clean time_optional
                 String rawTime = getStringSafe(item, "time_optional");
                 if (rawTime != null) {
                     if (rawTime.contains("T")) {
@@ -265,7 +218,7 @@ public class AzureToLocalSync {
                         }
                     }
                 }
-                pstmt.setString(9, rawTime);
+                pstmt.setString(9, rawTime); // Safely sets database SQL NULL if rawTime is null
 
                 pstmt.setString(10, getStringSafe(item, "comment_optional"));
                 pstmt.setFloat(11, getFloatSafe(item, "kcal_consume"));
@@ -273,17 +226,14 @@ public class AzureToLocalSync {
                 pstmt.setFloat(13, getFloatSafe(item, "fat_consume"));
                 pstmt.setFloat(14, getFloatSafe(item, "protein_consume"));
                 pstmt.setString(15, item.getOrDefault("meal_name", "None"));
+
+                // Fetch the unique row ID
                 pstmt.setString(16, item.getOrDefault("row_id", ""));
                 pstmt.addBatch();
-
-                // Chunk execution boundary
-                if (++count % 1000 == 0) {
-                    pstmt.executeBatch();
-                }
             }
 
-            pstmt.executeBatch(); // Send remaining batch elements
-            localConn.commit();   // Commit transaction
+            pstmt.executeBatch();
+            localConn.commit();
             pstmt.close();
             localConn.close();
             System.out.println("Calendar pulled and synced locally!");
@@ -292,6 +242,7 @@ public class AzureToLocalSync {
             System.err.println("Calendar synchronization error: " + e.getMessage());
         }
     }
+
 
     private static String getStringSafe(Map<String, String> map, String key) {
         String val = map.get(key);
