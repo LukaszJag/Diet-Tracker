@@ -1,0 +1,9 @@
+Name: Ziarna słonecznika
+Brand: produkt ogólny
+Package has: 0.0
+Macro for: 100.0
+KCal: 584.0
+Protein: 21.0
+Fat: 51.0
+Carbs: 20.0
+Comment optional: Link: https://kalkulatorkalorii.net/kalkulator-kalorii/463-100-slonecznik+ziarno
