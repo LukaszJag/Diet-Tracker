@@ -1,0 +1,9 @@
+Name: Wrap Salmon z wakame
+Brand: Movi
+Package has: 100.0
+Macro for: 100.0
+KCal: 144.0
+Protein: 5.3
+Fat: 5.2
+Carbs: 18.0
+Comment optional: Dane z opakowania
