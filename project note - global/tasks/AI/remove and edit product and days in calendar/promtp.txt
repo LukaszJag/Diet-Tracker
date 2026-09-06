@@ -1,0 +1,15 @@
+I have diet app in android written in java and desktop app written java
+I want to modify or replace day in calandar and product table in SQL database in azure abd local MySQL database
+
+In android make new button at startup layout witch direct to layout to edit and replace day in calandar and product table in SQL database in azure abd local MySQL database
+
+In desktop app add add to man window button  witch direct to layout to edit and replace day in calandar and product table in SQL database in azure abd local MySQL database
+
+tell me what you do step by step to achive my request 
+
+extand gui and more actions in you need
+
+if you need more code from my project tell and I will give you that
+
+If you don't have enough code tell me what you need and don't start more action otherwise say I have everything I need at start
+
