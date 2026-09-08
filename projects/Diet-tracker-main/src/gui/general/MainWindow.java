@@ -62,6 +62,11 @@ public class  MainWindow extends JFrame {
     JButton closeApplicationButton = new JButton("Exit");
 
     JButton copyGithubCommentToCopyClipboardButton = new JButton("Get GitHub pattern");
+
+    JButton editCalendarButton = new JButton("Edit Calendar Entry");
+    JButton editProductButton = new JButton("Edit Product Library");
+
+    JButton manageDatabaseButton = new JButton("Manage SQL Records");
     //</editor-fold>
 
     public void makeRunWindow() {
@@ -126,6 +131,29 @@ public class  MainWindow extends JFrame {
         addProductToDay.setBackground(Color.ORANGE);
         panelLeft.add(addProductToDay);
 
+        // Add Separate Edit Buttons
+        editCalendarButton.addActionListener(new EditCalendarButtonListener());
+        editCalendarButton.setBackground(Color.CYAN);
+        panelLeft.add(editCalendarButton);
+
+        editProductButton.addActionListener(new EditProductButtonListener());
+        editProductButton.setBackground(Color.YELLOW);
+        panelLeft.add(editProductButton);
+
+        calculateBMR.addActionListener(new calculateBMRActionListener());
+        panelLeft.add(calculateBMR);
+
+        calendarMonthStatsView.addActionListener(new calendarMonthStatsViewActionListener());
+        calendarMonthStatsView.setBackground(Color.GREEN);
+        panelLeft.add(calendarMonthStatsView);
+
+        // Binding New Database Editor Button
+        manageDatabaseButton.addActionListener(new ManageDatabaseButtonListener());
+        manageDatabaseButton.setBackground(Color.CYAN);
+        panelLeft.add(manageDatabaseButton);
+
+        calculateBMR.addActionListener(new calculateBMRActionListener());
+        panelLeft.add(calculateBMR);
 
         calculateBMR.addActionListener(new calculateBMRActionListener());
         panelLeft.add(calculateBMR);
@@ -244,6 +272,29 @@ public class  MainWindow extends JFrame {
                 throw new RuntimeException(ex);
             }
             JOptionPane.showMessageDialog(null, "Calendar and product database is update");
+        }
+    }
+
+    // New action listener class nested inside MainWindow
+    private class ManageDatabaseButtonListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            new gui.diet.ManageRecordsWindow();
+        }
+    }
+
+    // 3. Define the ActionListeners nested inside MainWindow
+    private class EditCalendarButtonListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            new gui.diet.EditCalendarWindow();
+        }
+    }
+
+    private class EditProductButtonListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            new gui.diet.EditProductWindow();
         }
     }
     //</editor-fold>

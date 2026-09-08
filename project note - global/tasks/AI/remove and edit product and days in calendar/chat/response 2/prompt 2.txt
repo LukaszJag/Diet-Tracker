@@ -1,0 +1,11 @@
+In  desktop version I need to search local and azure database through GUI you create
+split product edit and calendar edit to two separate gui window
+first
+calendar must be search by date and after it should make combobox with product name and it's amount
+second 
+after choose calendar row all other columns value must be fill in by data and i get pop up windows that everything is pull from databases
+third
+every value must be editable after change value by gui and accept it by button it must replace data in databases local as well as in azure sql database
+
+
+

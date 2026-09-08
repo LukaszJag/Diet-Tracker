@@ -1,0 +1,703 @@
+To modify or replace records in the calendar table and the product_table across
+both your Android and Desktop applications, you need to create user interfaces
+that retrieve, display, edit, and send updated data using your existing database
+synchronizers.
+
+Here is the step-by-step process of what needs to be changed, followed by the
+complete code modifications.
+
+Step-by-Step Plan
+
+Phase 1: Android Application Modifications
+
+1.  Update Startup UI (main_window.xml / MainActivity.java): Add a database
+    management button to open a new activity where users can edit/replace
+    database rows.
+2.  Implement Update SQL Queries in QueryMaker.java: Add helper methods to
+    generate the required UPDATE queries for both product_table and calendar
+    entries in MS SQL (Azure) syntax.
+3.  Create a Management Activity (ManageRecordsActivity.java):
+      - Mode 1 (Products): Search for a product, select it, load its fields into
+        text boxes, modify them, and execute an UPDATE query.
+      - Mode 2 (Calendar Meals): Query meals for a specific date, select a meal
+        entry (using its unique row_id), load/modify its properties (like meal
+        name, weight, and recalculated consumed macros), and execute an UPDATE
+        query.
+
+Phase 2: Desktop Application Modifications
+
+1.  Update the Startup UI (MainWindow.java): Add a "Manage Records" button on
+    the left panel that initializes a new Swing window.
+2.  Implement a UI Helper (ManageRecordsWindow.java): Create a Swing frame
+    containing input forms for updating database rows. It will use your existing
+    AzureSqlSync.syncQueryToAzure client to save changes directly to local MySQL
+    and queue synchronization to the Azure Cloud.
+
+1. Android Code Modifications
+
+Android: Update MainActivity.java
+
+Modify MainActivity.java to define and bind the new management button.
+
+package com.lukaszjag.diet_tracker_android;
+
+import android.content.Intent;
+import android.os.Bundle;
+import androidx.appcompat.app.AppCompatActivity;
+import android.view.View;
+import android.widget.Button;
+import com.lukaszjag.diet_tracker_android.databinding.ActivityMainBinding;
+import com.lukaszjag.diet_tracker_android.gui.diet.GetProductData;
+import com.lukaszjag.diet_tracker_android.gui.diet.day_data_view.DayData;
+import com.lukaszjag.diet_tracker_android.gui.notes.Notes;
+
+public class MainActivity extends AppCompatActivity {
+
+    private Button addMealButton;
+    private Button getDayDataButton;
+    private Button noteTasksButton;
+    private Button manageDatabaseButton; // New Button
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.main_window);
+
+        setupUIComponents();
+        addListeners();
+    }
+
+    private void setupUIComponents() {
+        addMealButton = findViewById(R.id.addMealButton);
+        getDayDataButton = findViewById(R.id.getDayDataButton);
+        noteTasksButton = findViewById(R.id.noteTaskButtonButton);
+        manageDatabaseButton = findViewById(R.id.manageDatabaseButton); // New ID
+    }
+
+    private void addListeners() {
+        noteTasksButton.setOnClickListener(view -> {
+            Intent intent = new Intent(MainActivity.this, Notes.class);
+            startActivity(intent);
+        });
+
+        addMealButton.setOnClickListener(view -> {
+            Intent intent = new Intent(MainActivity.this, GetProductData.class);
+            startActivity(intent);
+        });
+
+        getDayDataButton.setOnClickListener(view -> {
+            Intent intent = new Intent(MainActivity.this, DayData.class);
+            startActivity(intent);
+        });
+
+        // Click handler for new management screen
+        manageDatabaseButton.setOnClickListener(view -> {
+            Intent intent = new Intent(MainActivity.this, ManageRecordsActivity.class);
+            startActivity(intent);
+        });
+    }
+}
+
+(Note: You will need to add a button element with
+android:id="@+id/manageDatabaseButton" to your main_window.xml layout file.)
+
+Android: Add Update Methods to QueryMaker.java
+
+Append these methods to your existing
+com.lukaszjag.diet_tracker_android.tools.sql_tools.QueryMaker class.
+
+    /**
+     * Generates an UPDATE SQL statement for modifying product attributes inside product_table.
+     */
+    public static String updateProductInTable(
+            String originalName, String newName, String brand, double packWeight,
+            double macroFor, double kcal, double protein, double fat, double carbs, String comment) {
+
+        String escapedOrig = originalName != null ? originalName.replace("'", "''") : "";
+        String escapedNew = newName != null ? newName.replace("'", "''") : "";
+        String escapedBrand = brand != null ? brand.replace("'", "''") : "";
+        String escapedComment = (comment == null || comment.equalsIgnoreCase("none")) 
+                ? "NULL" : "'" + comment.replace("'", "''") + "'";
+
+        return "UPDATE [diet_tracker_schema].[product_table] SET " +
+                "[product_name] = '" + escapedNew + "', " +
+                "[product_brand] = '" + escapedBrand + "', " +
+                "[product_package_has] = " + packWeight + ", " +
+                "[product_macro_for] = " + macroFor + ", " +
+                "[product_kcal] = " + kcal + ", " +
+                "[product_protein] = " + protein + ", " +
+                "[product_fat] = " + fat + ", " +
+                "[product_carbs] = " + carbs + ", " +
+                "[comment_optional] = " + escapedComment + " " +
+                "WHERE [product_name] = '" + escapedOrig + "';";
+    }
+
+    /**
+     * Generates an UPDATE SQL statement to alter an existing calendar meal log via its unique row_id.
+     */
+    public static String updateCalendarEntryInTable(
+            String rowId, String dayDate, String dayName, String mealName, double amount,
+            String productName, double kcal, double protein, double fat, double carbs,
+            String timeOptional, String commentOptional, double kcalConsume,
+            double carbsConsume, double fatConsume, double proteinConsume) {
+
+        String sqlTime = (timeOptional == null || timeOptional.equalsIgnoreCase("none") || timeOptional.trim().isEmpty())
+                ? "NULL" : "'" + timeOptional.replace("'", "''") + "'";
+
+        String sqlComment = (commentOptional == null || commentOptional.equalsIgnoreCase("none") || commentOptional.trim().isEmpty())
+                ? "NULL" : "'" + commentOptional.replace("'", "''") + "'";
+
+        return "UPDATE [diet_tracker_schema].[calendar] SET " +
+                "[day_date] = '" + dayDate.replace("'", "''") + "', " +
+                "[day_name] = '" + dayName.replace("'", "''") + "', " +
+                "[meal_name] = '" + mealName.replace("'", "''") + "', " +
+                "[amount_of_product] = " + amount + ", " +
+                "[product_name] = '" + productName.replace("'", "''") + "', " +
+                "[kcal] = " + kcal + ", " +
+                "[protein] = " + protein + ", " +
+                "[fat] = " + fat + ", " +
+                "[carbs] = " + carbs + ", " +
+                "[time_optional] = " + sqlTime + ", " +
+                "[comment_optional] = " + sqlComment + ", " +
+                "[kcal_consume] = " + kcalConsume + ", " +
+                "[carbs_consume] = " + carbsConsume + ", " +
+                "[fat_consume] = " + fatConsume + ", " +
+                "[protein_consume] = " + proteinConsume + " " +
+                "WHERE [row_id] = '" + rowId.replace("'", "''") + "';";
+    }
+
+Android: Create ManageRecordsActivity.java
+
+Create this class under com.lukaszjag.diet_tracker_android (or your preferred
+GUI subfolder). You will need to create a matching layout file named
+activity_manage_records.xml containing the corresponding component IDs.
+
+package com.lukaszjag.diet_tracker_android;
+
+import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Spinner;
+import android.widget.Toast;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.lukaszjag.diet_tracker_android.tools.cloud_data_tools.AzureDataCallback;
+import com.lukaszjag.diet_tracker_android.tools.cloud_data_tools.GetFromSQLDatabase;
+import com.lukaszjag.diet_tracker_android.tools.sql_tools.QueryMaker;
+import com.lukaszjag.diet_tracker_android.tools.sql_tools.RowInTable;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class ManageRecordsActivity extends AppCompatActivity {
+
+    private Spinner modeSpinner, itemSpinner;
+    private EditText editField1, editField2, editField3, editField4, editField5, editField6, editField7, editField8;
+    private Button fetchButton, updateButton;
+
+    private ArrayList<RowInTable> loadedItems = new ArrayList<>();
+    private String selectedMode = "Products"; // Default mode
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_manage_records);
+
+        initUI();
+        setupModeSpinner();
+    }
+
+    private void initUI() {
+        modeSpinner = findViewById(R.id.modeSpinner);
+        itemSpinner = findViewById(R.id.itemSpinner);
+        editField1 = findViewById(R.id.editField1); // Name/Date
+        editField2 = findViewById(R.id.editField2); // Brand/Meal Name
+        editField3 = findViewById(R.id.editField3); // Package/Amount
+        editField4 = findViewById(R.id.editField4); // Kcal
+        editField5 = findViewById(R.id.editField5); // Protein
+        editField6 = findViewById(R.id.editField6); // Fat
+        editField7 = findViewById(R.id.editField7); // Carbs
+        editField8 = findViewById(R.id.editField8); // Comment
+
+        fetchButton = findViewById(R.id.fetchButton);
+        updateButton = findViewById(R.id.updateButton);
+
+        fetchButton.setOnClickListener(v -> fetchItems());
+        updateButton.setOnClickListener(v -> executeUpdateQuery());
+    }
+
+    private void setupModeSpinner() {
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                R.array.manage_modes_array, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        modeSpinner.setAdapter(adapter);
+
+        modeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                selectedMode = parent.getItemAtPosition(position).toString();
+                clearForm();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {}
+        });
+    }
+
+    private void fetchItems() {
+        String searchQuery = editField1.getText().toString().trim();
+        String query;
+
+        if (selectedMode.equals("Products")) {
+            query = QueryMaker.getAllProductTableLikeProductNameCaseInsensitive(searchQuery);
+        } else {
+            query = QueryMaker.getAllProductsFromCalendarTableLikeDate(searchQuery);
+        }
+
+        GetFromSQLDatabase.runAzureQueryAIChat(query, new AzureDataCallback() {
+            @Override
+            public void onSuccess(ArrayList<RowInTable> resultTable) {
+                loadedItems = resultTable;
+                List<String> displayList = new ArrayList<>();
+
+                for (RowInTable row : resultTable) {
+                    if (selectedMode.equals("Products")) {
+                        displayList.add(row.getValue("product_name"));
+                    } else {
+                        displayList.add(row.getValue("day_date") + " - " + row.getValue("product_name") + " (" + row.getValue("meal_name") + ")");
+                    }
+                }
+
+                runOnUiThread(() -> {
+                    ArrayAdapter<String> adapter = new ArrayAdapter<>(ManageRecordsActivity.this,
+                            android.R.layout.simple_spinner_item, displayList);
+                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    itemSpinner.setAdapter(adapter);
+
+                    itemSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                        @Override
+                        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                            populateFields(position);
+                        }
+
+                        @Override
+                        public void onNothingSelected(AdapterView<?> parent) {}
+                    });
+
+                    if (resultTable.isEmpty()) {
+                        Toast.makeText(ManageRecordsActivity.this, "No records found.", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+
+            @Override
+            public void onFailure(String errorMessage) {
+                runOnUiThread(() -> Toast.makeText(ManageRecordsActivity.this, "Network error: " + errorMessage, Toast.LENGTH_LONG).show());
+            }
+        });
+    }
+
+    private void populateFields(int position) {
+        if (position < 0 || position >= loadedItems.size()) return;
+        RowInTable selectedRow = loadedItems.get(position);
+
+        if (selectedMode.equals("Products")) {
+            editField1.setText(selectedRow.getValue("product_name"));
+            editField2.setText(selectedRow.getValue("product_brand"));
+            editField3.setText(selectedRow.getValue("product_package_has"));
+            editField4.setText(selectedRow.getValue("product_kcal"));
+            editField5.setText(selectedRow.getValue("product_protein"));
+            editField6.setText(selectedRow.getValue("product_fat"));
+            editField7.setText(selectedRow.getValue("product_carbs"));
+            editField8.setText(selectedRow.getValue("comment_optional"));
+        } else {
+            editField1.setText(selectedRow.getValue("day_date"));
+            editField2.setText(selectedRow.getValue("meal_name"));
+            editField3.setText(selectedRow.getValue("amount_of_product"));
+            editField4.setText(selectedRow.getValue("kcal"));
+            editField5.setText(selectedRow.getValue("protein"));
+            editField6.setText(selectedRow.getValue("fat"));
+            editField7.setText(selectedRow.getValue("carbs"));
+            editField8.setText(selectedRow.getValue("comment_optional"));
+        }
+    }
+
+    private void executeUpdateQuery() {
+        int selectedIndex = itemSpinner.getSelectedItemPosition();
+        if (selectedIndex < 0 || selectedIndex >= loadedItems.size()) {
+            Toast.makeText(this, "Please fetch and select an item first.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        RowInTable originalRow = loadedItems.get(selectedIndex);
+        String updateQuery;
+
+        try {
+            if (selectedMode.equals("Products")) {
+                String originalName = originalRow.getValue("product_name");
+                updateQuery = QueryMaker.updateProductInTable(
+                        originalName,
+                        editField1.getText().toString(),
+                        editField2.getText().toString(),
+                        Double.parseDouble(editField3.getText().toString()),
+                        100.0, // Standard product base measurement unit
+                        Double.parseDouble(editField4.getText().toString()),
+                        Double.parseDouble(editField5.getText().toString()),
+                        Double.parseDouble(editField6.getText().toString()),
+                        Double.parseDouble(editField7.getText().toString()),
+                        editField8.getText().toString()
+                );
+            } else {
+                String rowId = originalRow.getValue("row_id");
+                double amount = Double.parseDouble(editField3.getText().toString());
+                double baseKcal = Double.parseDouble(editField4.getText().toString());
+                double baseProtein = Double.parseDouble(editField5.getText().toString());
+                double baseFat = Double.parseDouble(editField6.getText().toString());
+                double baseCarbs = Double.parseDouble(editField7.getText().toString());
+
+                // Calculate updated macro values consumed based on selected amount changes
+                double kcalConsume = (baseKcal * amount) / 100.0;
+                double proteinConsume = (baseProtein * amount) / 100.0;
+                double fatConsume = (baseFat * amount) / 100.0;
+                double carbsConsume = (baseCarbs * amount) / 100.0;
+
+                updateQuery = QueryMaker.updateCalendarEntryInTable(
+                        rowId,
+                        editField1.getText().toString(),
+                        originalRow.getValue("day_name"),
+                        editField2.getText().toString(),
+                        amount,
+                        originalRow.getValue("product_name"),
+                        baseKcal, baseProtein, baseFat, baseCarbs,
+                        originalRow.getValue("time_optional"),
+                        editField8.getText().toString(),
+                        kcalConsume, carbsConsume, fatConsume, proteinConsume
+                );
+            }
+
+            GetFromSQLDatabase.runAzureQueryAIChat(updateQuery, new AzureDataCallback() {
+                @Override
+                public void onSuccess(ArrayList<RowInTable> resultTable) {
+                    runOnUiThread(() -> {
+                        Toast.makeText(ManageRecordsActivity.this, "Database entry successfully updated!", Toast.LENGTH_SHORT).show();
+                        clearForm();
+                    });
+                }
+
+                @Override
+                public void onFailure(String errorMessage) {
+                    runOnUiThread(() -> Toast.makeText(ManageRecordsActivity.this, "Update failed: " + errorMessage, Toast.LENGTH_LONG).show());
+                }
+            });
+
+        } catch (NumberFormatException e) {
+            Toast.makeText(this, "Please enter correct numeric values.", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void clearForm() {
+        loadedItems.clear();
+        itemSpinner.setAdapter(null);
+        editField1.setText("");
+        editField2.setText("");
+        editField3.setText("");
+        editField4.setText("");
+        editField5.setText("");
+        editField6.setText("");
+        editField7.setText("");
+        editField8.setText("");
+    }
+}
+
+Add the dropdown string resource to your project resources file (typically
+located inside res/values/strings.xml):
+
+<resources>
+    <string-array name="manage_modes_array">
+        <item>Products</item>
+        <item>Calendar Meals</item>
+    </string-array>
+</resources>
+
+2. Desktop Code Modifications
+
+Desktop: Update MainWindow.java
+
+Integrate a new button into your Swing application to launch the record manager
+window.
+
+    // Under Buttons declaration section
+    JButton manageDatabaseButton = new JButton("Manage SQL Records");
+
+    // Inside addButtons() method
+    private void addButtons() {
+        addProductButton.setBackground(Color.GREEN);
+        addProductButton.addActionListener(new AddProductButton());
+        panelLeft.add(addProductButton);
+
+        mealManagerButton.addActionListener(new MealMangerButton());
+        panelLeft.add(mealManagerButton);
+
+        addProductToDay.addActionListener(new AddProducttoDayButton());
+        addProductToDay.setBackground(Color.ORANGE);
+        panelLeft.add(addProductToDay);
+
+        // Binding New Database Editor Button
+        manageDatabaseButton.addActionListener(new ManageDatabaseButtonListener());
+        manageDatabaseButton.setBackground(Color.CYAN);
+        panelLeft.add(manageDatabaseButton);
+
+        calculateBMR.addActionListener(new calculateBMRActionListener());
+        panelLeft.add(calculateBMR);
+        
+        // ... remainder of addButtons()
+    }
+
+    // New action listener class nested inside MainWindow
+    private class ManageDatabaseButtonListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            new gui.diet.ManageRecordsWindow();
+        }
+    }
+
+Desktop: Create ManageRecordsWindow.java
+
+Create this new class file inside your desktop app's gui/diet folder structure.
+This window handles retrieving original values from the local database,
+displaying them in form text fields, and applying local updates while executing
+asynchronous updates with the Azure sync adapter (AzureSqlSync).
+
+package gui.diet;
+
+import configuration.Config;
+import tools.sql_tools.general.get.GetConnection;
+import tools.sql_tools.general.statements.Select;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+public class ManageRecordsWindow extends JFrame {
+
+    private JComboBox<String> selectModeBox = new JComboBox<>(new String[]{"Products", "Calendar Entries"});
+    private JTextField searchField = new JTextField(20);
+    private JButton searchButton = new JButton("Find Record");
+
+    private JTextField f1 = new JTextField(15); // name / date
+    private JTextField f2 = new JTextField(15); // brand / meal name
+    private JTextField f3 = new JTextField(15); // pack weight / amount
+    private JTextField f4 = new JTextField(15); // kcal
+    private JTextField f5 = new JTextField(15); // protein
+    private JTextField f6 = new JTextField(15); // fat
+    private JTextField f7 = new JTextField(15); // carbs
+    private JTextField f8 = new JTextField(15); // comment
+
+    private JButton saveButton = new JButton("Save Record Modifications");
+    private String originalKeyID = ""; // Stores product name or row_id context
+
+    public ManageRecordsWindow() {
+        super("Database Modification Utility");
+        setupWindow();
+    }
+
+    private void setupWindow() {
+        setSize(450, 480);
+        setLayout(new BorderLayout());
+
+        JPanel northPanel = new JPanel();
+        northPanel.add(new JLabel("Mode:"));
+        northPanel.add(selectModeBox);
+        northPanel.add(new JLabel("Search:"));
+        northPanel.add(searchField);
+        northPanel.add(searchButton);
+        add(northPanel, BorderLayout.NORTH);
+
+        JPanel centerPanel = new JPanel(new GridLayout(8, 2, 5, 5));
+        centerPanel.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
+        
+        centerPanel.add(new JLabel("Name / Date:"));
+        centerPanel.add(f1);
+        centerPanel.add(new JLabel("Brand / Meal:"));
+        centerPanel.add(f2);
+        centerPanel.add(new JLabel("Pack / Consumed weight:"));
+        centerPanel.add(f3);
+        centerPanel.add(new JLabel("Kcal (per 100g):"));
+        centerPanel.add(f4);
+        centerPanel.add(new JLabel("Protein:"));
+        centerPanel.add(f5);
+        centerPanel.add(new JLabel("Fat:"));
+        centerPanel.add(f6);
+        centerPanel.add(new JLabel("Carbs:"));
+        centerPanel.add(f7);
+        centerPanel.add(new JLabel("Comments:"));
+        centerPanel.add(f8);
+        add(centerPanel, BorderLayout.CENTER);
+
+        JPanel southPanel = new JPanel();
+        southPanel.add(saveButton);
+        add(southPanel, BorderLayout.SOUTH);
+
+        searchButton.addActionListener(e -> searchRecord());
+        saveButton.addActionListener(e -> updateRecord());
+
+        setLocationRelativeTo(null);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        setVisible(true);
+    }
+
+    private void searchRecord() {
+        String input = searchField.getText().trim();
+        if (input.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Search term cannot be empty!");
+            return;
+        }
+
+        String mode = selectModeBox.getSelectedItem().toString();
+        try (Connection conn = GetConnection.getConnectionWithLocalHost()) {
+            if (mode.equals("Products")) {
+                String sql = "SELECT * FROM product_table WHERE product_name LIKE ?";
+                try (PreparedStatement ps = conn.prepareStatement(sql)) {
+                    ps.setString(1, "%" + input + "%");
+                    try (ResultSet rs = ps.executeQuery()) {
+                        if (rs.next()) {
+                            originalKeyID = rs.getString("product_name");
+                            f1.setText(rs.getString("product_name"));
+                            f2.setText(rs.getString("product_brand"));
+                            f3.setText(String.valueOf(rs.getFloat("product_package_has")));
+                            f4.setText(String.valueOf(rs.getFloat("product_kcal")));
+                            f5.setText(String.valueOf(rs.getFloat("product_protein")));
+                            f6.setText(String.valueOf(rs.getFloat("product_fat")));
+                            f7.setText(String.valueOf(rs.getFloat("product_carbs")));
+                            f8.setText(rs.getString("comment_optional"));
+                        } else {
+                            JOptionPane.showMessageDialog(this, "No matching products found.");
+                        }
+                    }
+                }
+            } else {
+                String sql = "SELECT * FROM calendar WHERE day_date = ? LIMIT 1";
+                try (PreparedStatement ps = conn.prepareStatement(sql)) {
+                    ps.setString(1, input);
+                    try (ResultSet rs = ps.executeQuery()) {
+                        if (rs.next()) {
+                            originalKeyID = rs.getString("row_id");
+                            f1.setText(rs.getString("day_date"));
+                            f2.setText(rs.getString("meal_name"));
+                            f3.setText(String.valueOf(rs.getFloat("amount_of_product")));
+                            f4.setText(String.valueOf(rs.getFloat("kcal")));
+                            f5.setText(String.valueOf(rs.getFloat("protein")));
+                            f6.setText(String.valueOf(rs.getFloat("fat")));
+                            f7.setText(String.valueOf(rs.getFloat("carbs")));
+                            f8.setText(rs.getString("comment_optional"));
+                        } else {
+                            JOptionPane.showMessageDialog(this, "No calendar entries found for this date.");
+                        }
+                    }
+                }
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this, "SQL Failure: " + ex.getMessage());
+        }
+    }
+
+    private void updateRecord() {
+        if (originalKeyID.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Search and select a record first.");
+            return;
+        }
+
+        String mode = selectModeBox.getSelectedItem().toString();
+        try (Connection conn = GetConnection.getConnectionWithLocalHost()) {
+            if (mode.equals("Products")) {
+                String localSql = "UPDATE product_table SET product_name = ?, product_brand = ?, " +
+                        "product_package_has = ?, product_kcal = ?, product_protein = ?, " +
+                        "product_fat = ?, product_carbs = ?, comment_optional = ? WHERE product_name = ?";
+
+                try (PreparedStatement ps = conn.prepareStatement(localSql)) {
+                    ps.setString(1, f1.getText());
+                    ps.setString(2, f2.getText());
+                    ps.setFloat(3, Float.parseFloat(f3.getText()));
+                    ps.setFloat(4, Float.parseFloat(f4.getText()));
+                    ps.setFloat(5, Float.parseFloat(f5.getText()));
+                    ps.setFloat(6, Float.parseFloat(f6.getText()));
+                    ps.setFloat(7, Float.parseFloat(f7.getText()));
+                    ps.setString(8, f8.getText());
+                    ps.setString(9, originalKeyID);
+                    ps.executeUpdate();
+                }
+
+                // Push clean MS SQL standard update statement to Azure API
+                String azureSql = "UPDATE [diet_tracker_schema].[product_table] SET " +
+                        "product_name = '" + f1.getText().replace("'", "''") + "', " +
+                        "product_brand = '" + f2.getText().replace("'", "''") + "', " +
+                        "product_package_has = " + Float.parseFloat(f3.getText()) + ", " +
+                        "product_kcal = " + Float.parseFloat(f4.getText()) + ", " +
+                        "product_protein = " + Float.parseFloat(f5.getText()) + ", " +
+                        "product_fat = " + Float.parseFloat(f6.getText()) + ", " +
+                        "product_carbs = " + Float.parseFloat(f7.getText()) + ", " +
+                        "comment_optional = '" + f8.getText().replace("'", "''") + "' " +
+                        "WHERE product_name = '" + originalKeyID.replace("'", "''") + "'";
+
+                tools.azure.AzureSqlSync.syncQueryToAzure(azureSql);
+
+            } else {
+                float weight = Float.parseFloat(f3.getText());
+                float baseKcal = Float.parseFloat(f4.getText());
+                float baseProtein = Float.parseFloat(f5.getText());
+                float baseFat = Float.parseFloat(f6.getText());
+                float baseCarbs = Float.parseFloat(f7.getText());
+
+                float kcalConsume = (baseKcal * weight) / 100.0f;
+                float proteinConsume = (baseProtein * weight) / 100.0f;
+                float fatConsume = (baseFat * weight) / 100.0f;
+                float carbsConsume = (baseCarbs * weight) / 100.0f;
+
+                String localSql = "UPDATE calendar SET day_date = ?, meal_name = ?, amount_of_product = ?, " +
+                        "kcal_consume = ?, protein_consume = ?, fat_consume = ?, carbs_consume = ?, " +
+                        "comment_optional = ?, is_synced = 0 WHERE row_id = ?";
+
+                try (PreparedStatement ps = conn.prepareStatement(localSql)) {
+                    ps.setString(1, f1.getText());
+                    ps.setString(2, f2.getText());
+                    ps.setFloat(3, weight);
+                    ps.setFloat(4, kcalConsume);
+                    ps.setFloat(5, proteinConsume);
+                    ps.setFloat(6, fatConsume);
+                    ps.setFloat(7, carbsConsume);
+                    ps.setString(8, f8.getText());
+                    ps.setString(9, originalKeyID);
+                    ps.executeUpdate();
+                }
+
+                String azureSql = "UPDATE [diet_tracker_schema].[calendar] SET " +
+                        "day_date = '" + f1.getText().replace("'", "''") + "', " +
+                        "meal_name = '" + f2.getText().replace("'", "''") + "', " +
+                        "amount_of_product = " + weight + ", " +
+                        "kcal_consume = " + kcalConsume + ", " +
+                        "protein_consume = " + proteinConsume + ", " +
+                        "fat_consume = " + fatConsume + ", " +
+                        "carbs_consume = " + carbsConsume + ", " +
+                        "comment_optional = '" + f8.getText().replace("'", "''") + "' " +
+                        "WHERE row_id = '" + originalKeyID.replace("'", "''") + "'";
+
+                tools.azure.AzureSqlSync.syncQueryToAzure(azureSql, originalKeyID);
+            }
+
+            JOptionPane.showMessageDialog(this, "Local update completed. Azure sync queued successfully.");
+            originalKeyID = "";
+            searchField.setText("");
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "Failed updating resource: " + ex.getMessage());
+        }
+    }
+}
