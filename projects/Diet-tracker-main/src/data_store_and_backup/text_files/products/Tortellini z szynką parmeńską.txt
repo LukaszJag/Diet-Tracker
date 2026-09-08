@@ -1,0 +1,9 @@
+Name: Tortellini z szynką parmeńską
+Brand: Rana
+Package has: 250.0
+Macro for: 100.0
+KCal: 287.0
+Protein: 13.0
+Fat: 6.5
+Carbs: 43.0
+Comment optional: Dane z opakowania

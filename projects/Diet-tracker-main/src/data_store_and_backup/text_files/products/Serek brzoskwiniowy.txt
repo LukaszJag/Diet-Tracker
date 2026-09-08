@@ -1,0 +1,9 @@
+Name: Serek brzoskwiniowy
+Brand: Delikate
+Package has: 385.0
+Macro for: 100.0
+KCal: 136.0
+Protein: 5.7
+Fat: 6.5
+Carbs: 13.4
+Comment optional: Dane z opakowania
