@@ -1,0 +1,9 @@
+Name: Bon Appétit! Danie gotowe poke bowl z łososiem
+Brand: Carrefour
+Package has: 350.0
+Macro for: 100.0
+KCal: 169.0
+Protein: 5.2
+Fat: 8.6
+Carbs: 17.0
+Comment optional: Link: https://www.carrefour.pl/dania-gotowe-i-przystawki/dania-gotowe-i-przystawki-7v/zestawy-obiadowe/carrefour-bon-appetit-danie-gotowe-poke-bowl-z-lososiem-350-g
