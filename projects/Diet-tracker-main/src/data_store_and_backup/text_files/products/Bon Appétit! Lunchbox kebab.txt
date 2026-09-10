@@ -1,0 +1,9 @@
+Name: Bon Appétit! Lunchbox kebab
+Brand: Carrefour
+Package has: 200.0
+Macro for: 100.0
+KCal: 188.0
+Protein: 3.6
+Fat: 15.0
+Carbs: 9.7
+Comment optional: Link: https://www.carrefour.pl/dania-gotowe-i-przystawki/surowki-salatki/carrefour-bon-appetit-lunchbox-kebab-200-g
