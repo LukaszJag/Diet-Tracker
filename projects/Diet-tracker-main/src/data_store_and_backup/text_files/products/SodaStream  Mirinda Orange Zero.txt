@@ -1,0 +1,9 @@
+Name: SodaStream  Mirinda Orange Zero
+Brand: SodaStream
+Package has: 440.0
+Macro for: 100.0
+KCal: 19.0
+Protein: 0.0
+Fat: 0.0
+Carbs: 0.0
+Comment optional: Link: https://www.mediaexpert.pl/agd-male/do-kuchni/syropy-do-saturatorow/syrop-sodastream-mirinda-orange-zero-440-ml?srsltid=AU7gw4WzTlalzwNMiqtRL-w4-3dVikCmesghTZ2IxsKpO8CYdAtzENVU
