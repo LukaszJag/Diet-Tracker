@@ -80,12 +80,6 @@
             android:layout_height="wrap_content"
             android:text="Is Today Task" />
 
-        <CheckBox
-            android:id="@+id/dialogCbToBuy"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Is To Buy Task" />
-
         <TextView
             android:id="@+id/tvLearningCatLabel"
             android:layout_width="wrap_content"

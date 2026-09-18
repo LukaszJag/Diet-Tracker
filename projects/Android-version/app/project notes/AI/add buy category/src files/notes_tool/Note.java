@@ -24,7 +24,7 @@ public class Note {
     private boolean isLearning;
     private boolean isGeneralToDo;
     private boolean isTodayTask;
-    private boolean isToBuyTask; // New field
+
 
     private String dateCreated;
     private String dateDeadline;
@@ -53,7 +53,7 @@ public class Note {
     }
 
     public Note(String noteTitle, String noteSubtitle, String noteDescription, String noteCategory, String noteUrgently,
-                boolean isLearning, boolean isGeneralToDo, boolean isTodayTask, boolean isToBuyTask,
+                boolean isLearning, boolean isGeneralToDo, boolean IisTodayTask,
                 LearningCategories noteLearningCategories, String dateCreated, String dateDeadline) {
         this.noteTitle = noteTitle;
         this.noteSubtitle = noteSubtitle;
@@ -62,8 +62,7 @@ public class Note {
         this.noteUrgently = noteUrgently;
         this.isLearning = isLearning;
         this.isGeneralToDo = isGeneralToDo;
-        this.isTodayTask = isTodayTask;
-        this.isToBuyTask = isToBuyTask;
+        this.isTodayTask = IisTodayTask;
         this.noteLearningCategories = noteLearningCategories;
         this.dateCreated = dateCreated;
         this.dateDeadline = dateDeadline;
@@ -79,8 +78,7 @@ public class Note {
             json.put("noteUrgently", noteUglyUrgent(noteUrgently));
             json.put("isLearning", isLearning);
             json.put("isGeneralToDo", isGeneralToDo);
-            json.put("isTodayTask", isTodayTask);
-            json.put("isToBuyTask", isToBuyTask); // Save new field
+            json.put("IisTodayTask", isTodayTask);
             json.put("dateCreated", dateCreated);
             json.put("dateDeadline", dateDeadline);
 
@@ -107,8 +105,7 @@ public class Note {
             String urgently = json.optString("noteUrgently", "no urgent scale");
             boolean isLearning = json.optBoolean("isLearning", false);
             boolean isGeneralToDo = json.optBoolean("isGeneralToDo", false);
-            boolean isTodayTask = json.optBoolean("isTodayTask", false);
-            boolean isToBuyTask = json.optBoolean("isToBuyTask", false); // Load new field
+            boolean IisTodayTask = json.optBoolean("IisTodayTask", false);
             String dateCreated = json.optString("dateCreated", "");
             String dateDeadline = json.optString("dateDeadline", "");
 
@@ -122,7 +119,7 @@ public class Note {
             }
 
             return new Note(title, subtitle, description, category, urgently,
-                    isLearning, isGeneralToDo, isTodayTask, isToBuyTask, lc, dateCreated, dateDeadline);
+                    isLearning, isGeneralToDo, IisTodayTask, lc, dateCreated, dateDeadline);
         } catch (Exception e) {
             e.printStackTrace();
             return null;
@@ -133,7 +130,7 @@ public class Note {
         return value != null ? value : "no urgent scale";
     }
 
-    // Getters and Setters
+    //<editor-fold desc="Getters and Setters">
     public long getDaysSinceCreation() {
         if (dateCreated == null || dateCreated.isEmpty()) return 0;
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
@@ -148,32 +145,97 @@ public class Note {
         }
     }
 
-    public String getNoteSubtitle() { return noteSubtitle; }
-    public void setNoteSubtitle(String noteSubtitle) { this.noteSubtitle = noteSubtitle; }
-    public String getNoteTitle() { return noteTitle; }
-    public void setNoteTitle(String noteTitle) { this.noteTitle = noteTitle; }
-    public String getNoteDescription() { return noteDescription; }
-    public void setNoteDescription(String noteDescription) { this.noteDescription = noteDescription; }
-    public String getNoteCategory() { return noteCategory; }
-    public void setNoteCategory(String noteCategory) { this.noteCategory = noteCategory; }
-    public String getNoteUrgently() { return noteUrgently; }
-    public void setNoteUrgently(String noteUrgently) { this.noteUrgently = noteUrgently; }
-    public boolean isLearning() { return isLearning; }
-    public void setLearning(boolean learning) { isLearning = learning; }
-    public boolean isGeneralToDo() { return isGeneralToDo; }
-    public void setGeneralToDo(boolean generalToDo) { isGeneralToDo = generalToDo; }
-    public boolean isTodayTask() { return isTodayTask; }
-    public void setTodayTask(boolean todayTask) { isTodayTask = todayTask; }
+    public String getNoteSubtitle() {
+        return noteSubtitle;
+    }
 
-    // New Getter/Setter for To Buy
-    public boolean isToBuyTask() { return isToBuyTask; }
-    public void setToBuyTask(boolean toBuyTask) { isToBuyTask = toBuyTask; }
+    public void setNoteSubtitle(String noteSubtitle) {
+        this.noteSubtitle = noteSubtitle;
+    }
 
-    public LearningCategories getNoteLearningCategories() { return noteLearningCategories; }
-    public void setNoteLearningCategories(LearningCategories noteLearningCategories) { this.noteLearningCategories = noteLearningCategories; }
-    public String getDateCreated() { return dateCreated; }
-    public void setDateCreated(String dateCreated) { this.dateCreated = dateCreated; }
-    public String getDateDeadline() { return dateDeadline; }
-    public void setDateDeadline(String dateDeadline) { this.dateDeadline = dateDeadline; }
-    public ArrayList<String> getUrgentScaleEnglish() { return urgentScaleEnglish; }
+    public String getNoteTitle() {
+        return noteTitle;
+    }
+
+    public void setNoteTitle(String noteTitle) {
+        this.noteTitle = noteTitle;
+    }
+
+    public String getNoteDescription() {
+        return noteDescription;
+    }
+
+    public void setNoteDescription(String noteDescription) {
+        this.noteDescription = noteDescription;
+    }
+
+    public String getNoteCategory() {
+        return noteCategory;
+    }
+
+    public void setNoteCategory(String noteCategory) {
+        this.noteCategory = noteCategory;
+    }
+
+    public String getNoteUrgently() {
+        return noteUrgently;
+    }
+
+    public void setNoteUrgently(String noteUrgently) {
+        this.noteUrgently = noteUrgently;
+    }
+
+    public boolean isLearning() {
+        return isLearning;
+    }
+
+    public void setLearning(boolean learning) {
+        isLearning = learning;
+    }
+
+    public boolean isGeneralToDo() {
+        return isGeneralToDo;
+    }
+
+    public void setGeneralToDo(boolean generalToDo) {
+        isGeneralToDo = generalToDo;
+    }
+
+    public boolean isTodayTask() {
+        return isTodayTask;
+    }
+
+    public void setTodayTask(boolean todayTask) {
+        isTodayTask = todayTask;
+    }
+
+    public LearningCategories getNoteLearningCategories() {
+        return noteLearningCategories;
+    }
+
+    public void setNoteLearningCategories(LearningCategories noteLearningCategories) {
+        this.noteLearningCategories = noteLearningCategories;
+    }
+
+    public String getDateCreated() {
+        return dateCreated;
+    }
+
+    public void setDateCreated(String dateCreated) {
+        this.dateCreated = dateCreated;
+    }
+
+    public String getDateDeadline() {
+        return dateDeadline;
+    }
+
+    public void setDateDeadline(String dateDeadline) {
+        this.dateDeadline = dateDeadline;
+    }
+
+    public ArrayList<String> getUrgentScaleEnglish() {
+        return urgentScaleEnglish;
+    }
+
+    //</editor-fold>
 }

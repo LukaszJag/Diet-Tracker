@@ -109,14 +109,6 @@
                 android:layout_height="wrap_content"
                 android:text="Today"
                 android:textSize="12sp" />
-
-            <CheckBox
-                android:id="@+id/filterCbToBuy"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="To Buy"
-                android:textSize="12sp" />
-
         </LinearLayout>
 
         <!-- Toggle Section Visibilities -->
