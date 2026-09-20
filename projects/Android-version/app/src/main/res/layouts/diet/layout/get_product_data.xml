@@ -10,8 +10,8 @@
 
     <EditText
         android:id="@+id/productNameEditText"
-        android:layout_width="250dp"
-        android:layout_height="50dp"
+        android:layout_width="238dp"
+        android:layout_height="43dp"
         android:height="60dp"
         android:ems="10"
         android:inputType="text"
@@ -309,5 +309,13 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Name"
+        tools:layout_editor_absoluteX="11dp"
+        tools:layout_editor_absoluteY="101dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
