@@ -1,0 +1,18 @@
+Name: Nektarynka
+Brand: owoc
+Package has: 0.0
+Macro for: 100.0
+KCal: 50.0
+Protein: 0.9
+Fat: 0.2
+Carbs: 10.6
+Comment optional: Link: http://www.ilewazy.pl/nektarynka
+Name: Nektarynka
+Brand: owoc
+Package has: 0.0
+Macro for: 100.0
+KCal: 50.0
+Protein: 0.9
+Fat: 0.2
+Carbs: 10.6
+Comment optional: Link: http://www.ilewazy.pl/nektarynka
