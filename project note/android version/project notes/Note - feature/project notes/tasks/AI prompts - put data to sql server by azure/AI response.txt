@@ -1,0 +1,205 @@
+To enable saving data to your Azure SQL database when the Accept button is
+clicked, we need to address a few areas in your current codebase:
+
+1.  SQL Syntax Compatibility: Azure SQL (MS SQL) uses different syntax than
+    MySQL. We must replace MySQL backticks (` `) with MS SQL brackets ([ ]) and
+    ensure correct formatting of decimals.
+2.  Result Set Return: Since your Azure Function backend expects the query to
+    return a recordset (specifically via result.recordset), running a standard
+    INSERT statement might return an empty or undefined result. We can solve
+    this by appending a SELECT statement to the insert query.
+3.  Macro Consumption Math: We need to calculate the actual consumed
+    macronutrients (e.g., based on a 100g serving standard) before sending the
+    data to the database.
+
+Here is the step-by-step guide and code implementations required to establish
+this functionality.
+
+Step 1: Fix QueryMaker.java
+
+Update the query builder to generate MS SQL-compatible statements. We will
+replace the backticks with brackets and use a T-SQL compliant INSERT structure.
+We will also append SELECT 1 AS success; to the query so the Azure Function
+receives a valid recordset.
+
+Replace the content of QueryMaker.java with the following code:
+
+package com.lukaszjag.diet_tracker_android.tools.sql_tools;
+
+import java.util.Locale;
+
+public class QueryMaker {
+    public static String getAllProductTableLikeProductNameCaseInsensitive(String productData) {
+        return "SELECT * FROM [diet_tracker_schema].[product_table] WHERE LOWER(product_name) LIKE '%" + productData + "%'";
+    }
+
+    public static String getAllProductsFromCalendarTableLikeDate(String date) {
+        return "SELECT * FROM [diet_tracker_schema].[calendar] WHERE day_date LIKE '%" + date + "%'";
+    }
+
+    public static String insertMealToCalendarTable(
+            String dayDate, String dayName, String mealName, double amountOfProduct,
+            String productName, double kcal, double protein, double fat, double carbs,
+            String timeOptional, String commentOptional, double kcalConsume,
+            double carbsConsume, double fatConsume, double proteinConsume) {
+
+        // 1. Using brackets [] instead of MySQL backticks for Azure SQL Compatibility
+        // 2. Added 'SELECT 1 AS success;' at the end so Azure Functions has a recordset to return
+        String query =
+                "INSERT INTO [diet_tracker_schema].[calendar]\n" +
+                "([day_date], [day_name], [meal_name], [amount_of_product], [product_name],\n" +
+                "[kcal], [protein], [fat], [carbs], [time_optional], [comment_optional],\n" +
+                "[kcal_consume], [carbs_consume], [fat_consume], [protein_consume])\n" +
+                "VALUES (\n" +
+                "'" + dayDate + "',\n" +
+                "'" + dayName + "',\n" +
+                "'" + mealName + "',\n" +
+                amountOfProduct + ",\n" +
+                "'" + productName + "',\n" +
+                kcal + ",\n" +
+                protein + ",\n" +
+                fat + ",\n" +
+                carbs + ",\n" +
+                "'" + timeOptional + "',\n" +
+                "'" + commentOptional + "',\n" +
+                kcalConsume + ",\n" +
+                carbsConsume + ",\n" +
+                fatConsume + ",\n" +
+                proteinConsume + "\n" +
+                ");\n" +
+                "SELECT 1 AS success;";
+
+        // Using Locale.US ensures decimal points are formatted as '.' instead of ','
+        return String.format(Locale.US, query,
+                dayDate, dayName, mealName, amountOfProduct, productName,
+                kcal, protein, fat, carbs, timeOptional, commentOptional,
+                kcalConsume, carbsConsume, fatConsume, proteinConsume);
+    }
+}
+
+Step 2: Implement the Click Listener in GetProductData.java
+
+Now we need to update the acceptButton click listener to calculate the actual
+values consumed (usually: (MacroValue * ServingWeight) / 100) and call the
+asynchronous network request.
+
+Locate the acceptButton listener inside the addListeners() method in
+GetProductData.java, and replace it with the following:
+
+        acceptButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // 1. Gather UI details and calculate baseline macro variables
+                getMacroValues();
+
+                // 2. Validate input before proceeding
+                if (productName == null || productName.trim().isEmpty()) {
+                    Toast.makeText(GetProductData.this, "Please select a product first", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                if (amountOfProduct <= 0) {
+                    Toast.makeText(GetProductData.this, "Please enter a valid weight", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                // 3. Compute consumed macros (based on standard 100g product nutrition values)
+                kcalConsume = (kcal * amountOfProduct) / 100.0;
+                carbsConsume = (carbs * amountOfProduct) / 100.0;
+                fatConsume = (fat * amountOfProduct) / 100.0;
+                proteinConsume = (protein * amountOfProduct) / 100.0;
+
+                timeOptional = "none"; // You can replace this if you implement a time picker
+                commentOptional = (productComment != null) ? productComment : "none";
+
+                // Print values in Logcat for debugging purposes
+                gatherInformationFromUIPrintValues();
+
+                // 4. Build the query
+                String myInsertQuery = QueryMaker.insertMealToCalendarTable(
+                        dayDate,
+                        dayName,
+                        mealName,
+                        amountOfProduct,
+                        productName,
+                        kcal,
+                        protein,
+                        fat,
+                        carbs,
+                        timeOptional,
+                        commentOptional,
+                        kcalConsume,
+                        carbsConsume,
+                        fatConsume,
+                        proteinConsume
+                );
+
+                Log.d("AZURE_INSERT_SQL", "Executing: " + myInsertQuery);
+
+                // 5. Run the query on Azure via your background Retrofit client
+                GetFromSQLDatabase.runAzureQueryAIChat(myInsertQuery, new AzureDataCallback() {
+                    @Override
+                    public void onSuccess(ArrayList<RowInTable> resultTable) {
+                        // Return to UI Thread to safely present UI updates
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(GetProductData.this, "Meal added successfully!", Toast.LENGTH_SHORT).show();
+                                
+                                // Reset weight field on success
+                                weightEditText.setText("");
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void onFailure(String errorMessage) {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(GetProductData.this, "Failed to add meal: " + errorMessage, Toast.LENGTH_LONG).show();
+                                Log.e("AZURE_INSERT_ERROR", errorMessage);
+                            }
+                        });
+                    }
+                });
+            }
+        });
+
+Step 3: Ensure Backend Handles Empty/INSERT Results Safe
+
+In your AndroidAzure.js file, standard database operations are processed as:
+
+let result = await pool.request().query(rawSqlQuery);
+return {
+  status: 200,
+  jsonBody: result.recordset,
+};
+
+If an INSERT statement does not return rows, result.recordset might evaluate to
+undefined, which can cause a parsing error on your Android client during
+Retrofit serialization.
+
+Updating your query with SELECT 1 AS success; in Step 1 resolves this by forcing
+a resultset return. Alternatively, a fallback value can be configured in your
+backend code (AndroidAzure.js):
+
+      // 3. Connect and Execute the custom Android Query
+      let pool = await sql.connect(config);
+      let result = await pool.request().query(rawSqlQuery);
+
+      // 4. Send the data back as generic JSON (providing fallback if recordset is undefined)
+      return {
+        status: 200,
+        jsonBody: result.recordset || [{ success: true, rowsAffected: result.rowsAffected }],
+      };
+
+Important Security Note
+
+While sending SQL queries directly from an Android application can be useful
+during local testing or prototyping, it does expose your database to SQL
+Injection risks because any user could manipulate the SQL string.
+
+For production environments, a more secure architecture involves writing
+parameterized endpoints in your backend APIs (e.g., api/AddMeal) and passing
+clean JSON variables from Android rather than passing dynamic SQL strings.

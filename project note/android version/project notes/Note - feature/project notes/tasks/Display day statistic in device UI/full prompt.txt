@@ -1,0 +1,20 @@
+Add buttons two in toolbar which allow to set previous or next day after click it should show data like:
+
+at the top sum of every macro elements below list of  product where each is object on the list if click on it show full data
+
+each element of list must have this information:
+
+product name
+amount of product
+meal name
+consumed
+kcal
+protein
+fat
+carbs
+
+if there is no data it will display under toolbar no data to show
+
+if you need more information about my code to do some element ask me don't improvise
+
+give me on to the right of data label name of day like monday at so on

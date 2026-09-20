@@ -1,0 +1,66 @@
+1 Java ecosystem
+  1 Java
+  2 Spring
+  3 JUNIT
+  4 Android
+  5 Java – Web Scraping
+  6 Java Diet Tracker
+
+2 Frontend
+  1 HTML, CSS
+  2 JavaScript
+
+3 Cloud and Infrastructure  
+  1 Linux
+  2 PowerShell
+  3 Network
+  4 Cloud
+  5 Windows Server
+  6 Windows
+  7 Containers
+
+4 GameDev
+  1 UE5
+
+5 Computer Science
+  1 Algorytmy
+  2 General IT Knowledge
+
+6 Soft Skills
+  1 Szukanie pracy
+  2 Japoński
+  3 Angielski
+
+7 Versatile Frameworks
+  1 Python
+  2 .NET(C#)
+
+8 WSB
+  1 WSB (Bazy danych i Big Data, Architektura systemów, Projekt)
+
+9 Certs
+  1 CompTIA A+
+  2 CompTIA Network+
+  3 CompTIA Linux+
+
+10 Backend
+  1 x
+
+11 Data and BI
+  1 Excel
+  2 Word
+  3 Power Point
+  4 Power BI
+
+12 Low-Level Languages
+  1 C
+  2 C++
+
+13 Dev Tools
+  1 Git
+  2 Jira
+  3 Postman
+
+14 AI & Machine Learning
+  1 AI Assistants
+  2 Machine Learning Basics

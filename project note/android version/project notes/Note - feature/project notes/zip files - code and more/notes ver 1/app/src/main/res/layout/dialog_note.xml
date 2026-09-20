@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="New Note Details"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="12dp"/>
+
+        <EditText
+            android:id="@+id/dialogTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Title"
+            android:inputType="textCapSentences" />
+
+        <EditText
+            android:id="@+id/dialogSubtitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Subtitle"
+            android:inputType="textCapSentences" />
+
+        <EditText
+            android:id="@+id/dialogDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Description"
+            android:inputType="textMultiLine"
+            android:minLines="2" />
+
+        <EditText
+            android:id="@+id/dialogCategory"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Category"
+            android:inputType="textCapSentences" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Urgency Scale:"
+            android:layout_marginTop="8dp"
+            android:textSize="12sp"
+            android:textColor="#555555"/>
+
+        <Spinner
+            android:id="@+id/dialogSpinnerUrgent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp" />
+
+        <CheckBox
+            android:id="@+id/dialogCbLearning"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Is Learning Task"
+            android:layout_marginTop="8dp"/>
+
+        <CheckBox
+            android:id="@+id/dialogCbGeneral"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Is General To-Do" />
+
+        <CheckBox
+            android:id="@+id/dialogCbToday"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Is Today Task" />
+
+        <TextView
+            android:id="@+id/tvLearningCatLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Learning Category Option:"
+            android:layout_marginTop="8dp"
+            android:textSize="12sp"
+            android:textColor="#555555"
+            android:visibility="gone"/>
+
+        <Spinner
+            android:id="@+id/dialogSpinnerLearningCat"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:visibility="gone"/>
+
+        <EditText
+            android:id="@+id/dialogDeadline"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Deadline Date (Tap to select)"
+            android:focusable="false"
+            android:clickable="true"
+            android:layout_marginTop="8dp" />
+    </LinearLayout>
+</ScrollView>

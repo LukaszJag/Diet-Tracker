@@ -1,0 +1,136 @@
+Split item_layout.xml to 4 sections
+add 4 checkbox to notes_view_layout.xml
+witch will hide section in display if checkbox is selected
+
+
+
+1:
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#000000"
+        android:textSize="14sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#555555"
+        android:textSize="11sp"
+        android:layout_marginTop="2dp" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#888888"
+        android:textSize="9sp"
+        android:layout_marginTop="4dp" />
+
+2:
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="1dp">
+
+        <TextView
+            android:id="@+id/tvCategory"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:textColor="#2E7D32"
+            android:textSize="9sp"
+            android:text="Category: -" />
+
+        <TextView
+            android:id="@+id/tvUrgently"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:textColor="#C62828"
+            android:textSize="9sp"
+            android:text="Urgently: -" />
+    </LinearLayout>3
+
+
+3:
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="1dp">
+
+        <CheckBox
+            android:id="@+id/cbIsLearning"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Learning"
+            android:textSize="8sp"
+            android:clickable="false"
+            android:focusable="false"
+            android:scaleX="0.85"
+            android:scaleY="0.85"/>
+
+        <CheckBox
+            android:id="@+id/cbIsGeneralToDo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="General"
+            android:textSize="8sp"
+            android:clickable="false"
+            android:focusable="false"
+            android:scaleX="0.85"
+            android:scaleY="0.85"/>
+
+        <CheckBox
+            android:id="@+id/cbIsTodayTask"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Today"
+            android:textSize="8sp"
+            android:clickable="false"
+            android:focusable="false"
+            android:scaleX="0.85"
+            android:scaleY="0.85"/>
+    </LinearLayout>
+
+
+    4:
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="1dp">
+
+            <TextView
+                android:id="@+id/tvDates"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#666666"
+                android:textSize="10sp"
+                android:text="Created: - | Deadline: -" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_weight="1"/>
+
+            <TextView
+                android:id="@+id/tvDaysSince"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#D32F2F"
+                android:textSize="10sp"
+                android:textStyle="italic"
+                android:text="0 days since create" />
+        </LinearLayout>
+
+
+

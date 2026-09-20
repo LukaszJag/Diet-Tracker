@@ -1,0 +1,38 @@
+    modify this code to handle notes feature:
+
+    -> every note should have:
+
+        noteTitle         as text
+        noteSubtitle      as text
+        noteDescription   as text      
+        noteCategory      as text   
+        noteUrgently      as text
+
+        isLearning       as a checkbox while create or editing note
+        isGeneralToDo   as a checkbox while create or editing note
+        IisTodayTask    as a checkbox while create or editing note
+
+        noteLearningCategories to choose from while adding new note
+
+        total new:
+
+        date of create 
+        date deadline
+        amount of days since create
+
+
+    -> add note with button in toolbar
+
+    -> filtr note to show by:
+
+        noteSubtitle
+        noteCategory
+        noteUrgently
+
+    give me new code as zip or other compres code
+    tell me what you make as a new code
+    tell me what you modify in my code
+
+    make raport with all changes
+
+    point out what of my command to you is make by you and where it is in code
