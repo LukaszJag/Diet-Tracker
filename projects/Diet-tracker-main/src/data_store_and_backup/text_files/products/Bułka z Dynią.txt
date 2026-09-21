@@ -1,0 +1,9 @@
+Name: Bułka z Dynią
+Brand: Biedronka
+Package has: 70.0
+Macro for: 100.0
+KCal: 299.0
+Protein: 11.0
+Fat: 5.8
+Carbs: 49.0
+Comment optional: Link: https://www.fatsecret.pl/kalorie-warto%C5%9Bci%C2%A0od%C5%BCywcze/biedronka/bu%C5%82ka-z-dyni%C4%85/100g

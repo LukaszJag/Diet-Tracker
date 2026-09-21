@@ -1,0 +1,9 @@
+Name: Mixo Napój jogurtowy o smaku truskawka banan
+Brand: Fruvita
+Package has: 700.0
+Macro for: 100.0
+KCal: 66.0
+Protein: 1.7
+Fat: 0.8
+Carbs: 12.9
+Comment optional: Dane z opakowania
