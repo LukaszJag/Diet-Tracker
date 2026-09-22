@@ -1,0 +1,9 @@
+Name: Mieszanka Studencka
+Brand: BakaDOr Sélection
+Package has: 200.0
+Macro for: 100.0
+KCal: 506.0
+Protein: 17.0
+Fat: 33.0
+Carbs: 33.0
+Comment optional: Link: https://www.fatsecret.pl/kalorie-warto%C5%9Bci%C2%A0od%C5%BCywcze/bakador/mieszanka-studencka/100g

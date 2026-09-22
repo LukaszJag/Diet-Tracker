@@ -1,0 +1,18 @@
+Name: Mieszanka bakaliowa
+Brand: BakaD'Or Sélection
+Package has: 200.0
+Macro for: 100.0
+KCal: 515.0
+Protein: 16.0
+Fat: 35.0
+Carbs: 31.0
+Comment optional: Dane z opakowania
+Name: Mieszanka bakaliowa
+Brand: BakaDOr Sélection
+Package has: 200.0
+Macro for: 100.0
+KCal: 515.0
+Protein: 16.0
+Fat: 35.0
+Carbs: 31.0
+Comment optional: Dane z opakowania

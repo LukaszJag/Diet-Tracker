@@ -1,0 +1,40 @@
+INSERT INTO `diet_tracker_schema`.product_table
+(`product_name`,
+`product_brand`,
+`product_package_has`,
+`product_macro_for`,
+`product_kcal`,
+`product_protein`,
+`product_fat`,
+`product_carbs`,
+`comment_optional`)
+Values
+('Mieszanka bakaliowa',
+'BakaD'Or Sélection',
+200.0,
+100.0,
+515.0,
+16.0,
+35.0,
+31.0,
+'Dane z opakowania');
+INSERT INTO `diet_tracker_schema`.product_table
+(`product_name`,
+`product_brand`,
+`product_package_has`,
+`product_macro_for`,
+`product_kcal`,
+`product_protein`,
+`product_fat`,
+`product_carbs`,
+`comment_optional`)
+Values
+('Mieszanka bakaliowa',
+'BakaDOr Sélection',
+200.0,
+100.0,
+515.0,
+16.0,
+35.0,
+31.0,
+'Dane z opakowania');
