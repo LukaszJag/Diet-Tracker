@@ -1,0 +1,9 @@
+Name: SodaStream 7 UP - napój
+Brand: Sodastream
+Package has: 0.0
+Macro for: 100.0
+KCal: 0.6
+Protein: 0.0
+Fat: 0.0
+Carbs: 0.0
+Comment optional: Link: https://sodastream.pl/products/syrop-7up-zero-cukru-440ml?srsltid=AU7gw4XYJ5pQ70C_9Z-dQQn4_pqIbM7vg9-xbQatG-HSOSLGyZlg9YTk
