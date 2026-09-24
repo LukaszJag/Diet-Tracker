@@ -1,0 +1,9 @@
+Name: Mix Sałat Z Sałatą Lodową
+Brand: Vital Fresh
+Package has: 180.0
+Macro for: 100.0
+KCal: 16.0
+Protein: 0.8
+Fat: 0.0
+Carbs: 2.4
+Comment optional: Dane z opakowania
