@@ -1,0 +1,9 @@
+Name: Mieszanka nerkowiec-żurawina suszona 
+Brand: BakaDOr Sélection
+Package has: 200.0
+Macro for: 100.0
+KCal: 494.0
+Protein: 12.0
+Fat: 25.0
+Carbs: 52.0
+Comment optional: Dane z opakowania

@@ -1,0 +1,20 @@
+INSERT INTO `diet_tracker_schema`.product_table
+(`product_name`,
+`product_brand`,
+`product_package_has`,
+`product_macro_for`,
+`product_kcal`,
+`product_protein`,
+`product_fat`,
+`product_carbs`,
+`comment_optional`)
+Values
+('SodaStream Czerwone owoce leśne bez cukru',
+'SodaStream',
+440.0,
+100.0,
+1.0,
+0.0,
+0.0,
+0.0,
+'Link: https://www.mediaexpert.pl/agd-male/do-kuchni/syropy-do-saturatorow/syrop-soda-stream-czerwone-owoce-lesne-440?srsltid=AU7gw4WnJJKZlwJzemKGDsVh46m3nIkIRL-l7DOTn6R0hRIZlgmtv_ug');

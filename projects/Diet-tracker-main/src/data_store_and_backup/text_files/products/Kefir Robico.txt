@@ -1,0 +1,9 @@
+Name: Kefir Robico
+Brand: Robico
+Package has: 400.0
+Macro for: 100.0
+KCal: 43.0
+Protein: 3.1
+Fat: 1.5
+Carbs: 4.2
+Comment optional: Dane z opakowania

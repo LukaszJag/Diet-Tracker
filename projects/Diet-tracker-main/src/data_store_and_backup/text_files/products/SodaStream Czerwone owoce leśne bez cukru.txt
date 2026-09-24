@@ -1,0 +1,9 @@
+Name: SodaStream Czerwone owoce leśne bez cukru
+Brand: SodaStream
+Package has: 440.0
+Macro for: 100.0
+KCal: 1.0
+Protein: 0.0
+Fat: 0.0
+Carbs: 0.0
+Comment optional: Link: https://www.mediaexpert.pl/agd-male/do-kuchni/syropy-do-saturatorow/syrop-soda-stream-czerwone-owoce-lesne-440?srsltid=AU7gw4WnJJKZlwJzemKGDsVh46m3nIkIRL-l7DOTn6R0hRIZlgmtv_ug
