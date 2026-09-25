@@ -1,0 +1,9 @@
+Name: SodaStream Lemoniada bez cukru
+Brand: SodaStream
+Package has: 440.0
+Macro for: 100.0
+KCal: 1.0
+Protein: 0.0
+Fat: 0.0
+Carbs: 0.0
+Comment optional: Link: https://sodastream.pl/products/syrop-lemoniada-bez-cukru-440ml?srsltid=AU7gw4V5LIAUTm47PrkqG2VTN1KpRe7QCzOc4X0PvGqL8_FMIXv5gllF

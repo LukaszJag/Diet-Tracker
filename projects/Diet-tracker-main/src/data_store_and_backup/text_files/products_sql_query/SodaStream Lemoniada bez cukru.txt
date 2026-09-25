@@ -1,0 +1,20 @@
+INSERT INTO `diet_tracker_schema`.product_table
+(`product_name`,
+`product_brand`,
+`product_package_has`,
+`product_macro_for`,
+`product_kcal`,
+`product_protein`,
+`product_fat`,
+`product_carbs`,
+`comment_optional`)
+Values
+('SodaStream Lemoniada bez cukru',
+'SodaStream',
+440.0,
+100.0,
+1.0,
+0.0,
+0.0,
+0.0,
+'Link: https://sodastream.pl/products/syrop-lemoniada-bez-cukru-440ml?srsltid=AU7gw4V5LIAUTm47PrkqG2VTN1KpRe7QCzOc4X0PvGqL8_FMIXv5gllF');
