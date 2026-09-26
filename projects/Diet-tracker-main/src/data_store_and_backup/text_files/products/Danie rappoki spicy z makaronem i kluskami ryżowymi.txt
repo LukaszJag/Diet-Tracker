@@ -1,0 +1,9 @@
+Name: Danie rappoki spicy z makaronem i kluskami ryżowymi
+Brand: Asia Flavours
+Package has: 220.0
+Macro for: 100.0
+KCal: 240.0
+Protein: 6.3
+Fat: 0.7
+Carbs: 52.0
+Comment optional: Dane z opakowania
