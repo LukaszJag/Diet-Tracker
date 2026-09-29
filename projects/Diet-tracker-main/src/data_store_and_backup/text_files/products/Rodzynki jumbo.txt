@@ -1,0 +1,9 @@
+Name: Rodzynki jumbo
+Brand: BakaDOr Sélection
+Package has: 200.0
+Macro for: 100.0
+KCal: 314.0
+Protein: 3.0
+Fat: 0.7
+Carbs: 72.0
+Comment optional: Dane z opakowania

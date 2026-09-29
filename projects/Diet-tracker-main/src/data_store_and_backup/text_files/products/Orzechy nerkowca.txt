@@ -1,0 +1,9 @@
+Name: Orzechy nerkowca
+Brand: BakaDOr Sélection
+Package has: 200.0
+Macro for: 100.0
+KCal: 596.0
+Protein: 21.0
+Fat: 46.0
+Carbs: 22.0
+Comment optional: Dane z opakowania
