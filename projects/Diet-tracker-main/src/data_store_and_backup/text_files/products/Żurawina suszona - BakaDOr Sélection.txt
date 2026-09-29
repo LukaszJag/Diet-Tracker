@@ -1,0 +1,9 @@
+Name: Żurawina suszona - BakaDOr Sélection
+Brand: BakaDOr Sélection
+Package has: 200.0
+Macro for: 100.0
+KCal: 327.0
+Protein: 0.4
+Fat: 1.2
+Carbs: 76.0
+Comment optional: Link: https://pl.openfoodfacts.org/product/5900617049506/%C5%BCurawina-suszona-bakad-or

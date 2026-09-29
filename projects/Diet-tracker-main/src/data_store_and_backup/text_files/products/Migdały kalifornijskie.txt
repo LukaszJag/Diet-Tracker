@@ -1,0 +1,9 @@
+Name: Migdały kalifornijskie
+Brand: BakaDOr Sélection
+Package has: 200.0
+Macro for: 100.0
+KCal: 600.0
+Protein: 24.0
+Fat: 50.0
+Carbs: 7.5
+Comment optional: Link: https://pl.openfoodfacts.org/product/5900587048639/migda%C5%82y-kalifornijskie-bakador
