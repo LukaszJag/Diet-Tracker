@@ -1,0 +1,9 @@
+Name: SodaStream Pepsi Zero Cukru
+Brand: SodaStream
+Package has: 440.0
+Macro for: 100.0
+KCal: 0.3
+Protein: 0.0
+Fat: 0.0
+Carbs: 0.0
+Comment optional: Link: https://sodastream.pl/products/syrop-pepsi-zero-cukru-440ml?srsltid=AU7gw4ViefBqL-6Tw65RqqgFCw_50TixMuKFV3bHMwpuegTH22Oeix8j

@@ -1,0 +1,9 @@
+Name: Czekolada mleczna z nadzieniem arachidowym i orzeszkami
+Brand: Lewiatan
+Package has: 100.0
+Macro for: 100.0
+KCal: 530.0
+Protein: 9.5
+Fat: 32.0
+Carbs: 49.0
+Comment optional: Dane z opakowania
