@@ -1,0 +1,7 @@
+Android package review - projects/Android-version/app/src/main/java/com/lukaszjag/diet_tracker_android/tools/cloud_data_tools
+
+Link:
+https://github.com/LukaszJag/Diet-Tracker/issues/139
+
+
+
