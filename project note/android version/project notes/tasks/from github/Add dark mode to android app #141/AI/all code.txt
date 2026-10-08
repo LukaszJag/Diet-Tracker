@@ -1,0 +1,1598 @@
+================================================================================
+FILE: AndroidManifest.xml
+================================================================================
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.Diettrackerandroid">
+        <activity
+            android:name=".gui.diet.day_data_view.DayData"
+            android:exported="false" />
+        <!-- 1. Set GetProductData as the LAUNCHER activity -->
+        <activity
+            android:name=".MainActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".gui.diet.GetProductData"
+            android:exported="true">
+
+        </activity>
+        <activity
+            android:name=".gui.notes.Notes"
+            android:exported="true">
+
+        </activity>
+    </application>
+
+</manifest>
+
+
+================================================================================
+FILE: add_meal_button.xml
+================================================================================
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle"> <!-- "rectangle" defaults to sharp corners -->
+
+    <solid android:color="#b3780b" /> <!-- Background color -->
+
+    <!-- Optional border -->
+    <stroke
+        android:width="2dp"
+        android:color="#0D47A1" />
+
+    <!-- Notice there is no <corners> tag here! -->
+</shape>
+
+
+================================================================================
+FILE: border.xml
+================================================================================
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle">
+    <!-- The inside color -->
+    <solid android:color="@color/get_product_data_main_background" />
+
+    <!-- The border -->
+    <stroke android:width="5dp" android:color="@color/black" />
+</shape>
+
+
+
+================================================================================
+FILE: buttons_main.xml
+================================================================================
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle"> <!-- "rectangle" defaults to sharp corners -->
+
+    <solid android:color="#2196F3" /> <!-- Background color -->
+
+    <!-- Optional border -->
+    <stroke
+        android:width="2dp"
+        android:color="#0D47A1" />
+
+    <!-- Notice there is no <corners> tag here! -->
+</shape>
+
+
+================================================================================
+FILE: get_day_data.xml
+================================================================================
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle"> <!-- "rectangle" defaults to sharp corners -->
+
+    <solid android:color="#2d64e3" /> <!-- Background color -->
+
+    <!-- Optional border -->
+    <stroke
+        android:width="2dp"
+        android:color="#0D47A1" />
+
+    <!-- Notice there is no <corners> tag here! -->
+</shape>
+
+
+================================================================================
+FILE: ic_launcher_background.xml
+================================================================================
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <path
+        android:fillColor="#3DDC84"
+        android:pathData="M0,0h108v108h-108z" />
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M9,0L9,108"
+        android:strokeWidth="0.8"
+        android:strokeColor="#33FFFFFF" />
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M19,0L19,108"
+        android:strokeWidth="0.8"
+        android:strokeColor="#33FFFFFF" />
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M29,0L29,108"
+        android:strokeWidth="0.8"
+        android:strokeColor="#33FFFFFF" />
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M39,0L39,108"
+        android:strokeWidth="0.8"
+        android:strokeColor="#33FFFFFF" />
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M49,0L49,108"
+        android:strokeWidth="0.8"
+        android:strokeColor="#33FFFFFF" />
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M59,0L59,108"
+        android:strokeWidth="0.8"
+        android:strokeColor="#33FFFFFF" />
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M69,0L69,108"
+        android:strokeWidth="0.8"
+        android:strokeColor="#33FFFFFF" />
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M79,0L79,108"
+        android:strokeWidth="0.8"
+        android:strokeColor="#33FFFFFF" />
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M89,0L89,108"
+        android:strokeWidth="0.8"
+        android:strokeColor="#33FFFFFF" />
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M99,0L99,108"
+        android:strokeWidth="0.8"
+        android:strokeColor="#33FFFFFF" />
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M0,9L108,9"
+        android:strokeWidth="0.8"
+        android:strokeColor="#33FFFFFF" />
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M0,19L108,19"
+        android:strokeWidth="0.8"
+        android:strokeColor="#33FFFFFF" />
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M0,29L108,29"
+        android:strokeWidth="0.8"
+        android:strokeColor="#33FFFFFF" />
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M0,39L108,39"
+        android:strokeWidth="0.8"
+        android:strokeColor="#33FFFFFF" />
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M0,49L108,49"
+        android:strokeWidth="0.8"
+        android:strokeColor="#33FFFFFF" />
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M0,59L108,59"
+        android:strokeWidth="0.8"
+        android:strokeColor="#33FFFFFF" />
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M0,69L108,69"
+        android:strokeWidth="0.8"
+        android:strokeColor="#33FFFFFF" />
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M0,79L108,79"
+        android:strokeWidth="0.8"
+        android:strokeColor="#33FFFFFF" />
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M0,89L108,89"
+        android:strokeWidth="0.8"
+        android:strokeColor="#33FFFFFF" />
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M0,99L108,99"
+        android:strokeWidth="0.8"
+        android:strokeColor="#33FFFFFF" />
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M19,29L89,29"
+        android:strokeWidth="0.8"
+        android:strokeColor="#33FFFFFF" />
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M19,39L89,39"
+        android:strokeWidth="0.8"
+        android:strokeColor="#33FFFFFF" />
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M19,49L89,49"
+        android:strokeWidth="0.8"
+        android:strokeColor="#33FFFFFF" />
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M19,59L89,59"
+        android:strokeWidth="0.8"
+        android:strokeColor="#33FFFFFF" />
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M19,69L89,69"
+        android:strokeWidth="0.8"
+        android:strokeColor="#33FFFFFF" />
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M19,79L89,79"
+        android:strokeWidth="0.8"
+        android:strokeColor="#33FFFFFF" />
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M29,19L29,89"
+        android:strokeWidth="0.8"
+        android:strokeColor="#33FFFFFF" />
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M39,19L39,89"
+        android:strokeWidth="0.8"
+        android:strokeColor="#33FFFFFF" />
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M49,19L49,89"
+        android:strokeWidth="0.8"
+        android:strokeColor="#33FFFFFF" />
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M59,19L59,89"
+        android:strokeWidth="0.8"
+        android:strokeColor="#33FFFFFF" />
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M69,19L69,89"
+        android:strokeWidth="0.8"
+        android:strokeColor="#33FFFFFF" />
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M79,19L79,89"
+        android:strokeWidth="0.8"
+        android:strokeColor="#33FFFFFF" />
+</vector>
+
+
+
+================================================================================
+FILE: ic_launcher_foreground.xml
+================================================================================
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <path android:pathData="M31,63.928c0,0 6.4,-11 12.1,-13.1c7.2,-2.6 26,-1.4 26,-1.4l38.1,38.1L107,108.928l-32,-1L31,63.928z">
+        <aapt:attr name="android:fillColor">
+            <gradient
+                android:endX="85.84757"
+                android:endY="92.4963"
+                android:startX="42.9492"
+                android:startY="49.59793"
+                android:type="linear">
+                <item
+                    android:color="#44000000"
+                    android:offset="0.0" />
+                <item
+                    android:color="#00000000"
+                    android:offset="1.0" />
+            </gradient>
+        </aapt:attr>
+    </path>
+    <path
+        android:fillColor="#FFFFFF"
+        android:fillType="nonZero"
+        android:pathData="M65.3,45.828l3.8,-6.6c0.2,-0.4 0.1,-0.9 -0.3,-1.1c-0.4,-0.2 -0.9,-0.1 -1.1,0.3l-3.9,6.7c-6.3,-2.8 -13.4,-2.8 -19.7,0l-3.9,-6.7c-0.2,-0.4 -0.7,-0.5 -1.1,-0.3C38.8,38.328 38.7,38.828 38.9,39.228l3.8,6.6C36.2,49.428 31.7,56.028 31,63.928h46C76.3,56.028 71.8,49.428 65.3,45.828zM43.4,57.328c-0.8,0 -1.5,-0.5 -1.8,-1.2c-0.3,-0.7 -0.1,-1.5 0.4,-2.1c0.5,-0.5 1.4,-0.7 2.1,-0.4c0.7,0.3 1.2,1 1.2,1.8C45.3,56.528 44.5,57.328 43.4,57.328L43.4,57.328zM64.6,57.328c-0.8,0 -1.5,-0.5 -1.8,-1.2s-0.1,-1.5 0.4,-2.1c0.5,-0.5 1.4,-0.7 2.1,-0.4c0.7,0.3 1.2,1 1.2,1.8C66.5,56.528 65.6,57.328 64.6,57.328L64.6,57.328z"
+        android:strokeWidth="1"
+        android:strokeColor="#00000000" />
+</vector>
+
+
+================================================================================
+FILE: monthly_stats_button.xml
+================================================================================
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle"> <!-- "rectangle" defaults to sharp corners -->
+
+    <solid android:color="#000000" /> <!-- Background color -->
+
+    <!-- Optional border -->
+    <stroke
+        android:width="2dp"
+        android:color="#0D47A1" />
+
+    <!-- Notice there is no <corners> tag here! -->
+</shape>
+
+
+================================================================================
+FILE: note_task_button.xml
+================================================================================
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle"> <!-- "rectangle" defaults to sharp corners -->
+
+    <solid android:color="#8895b3" /> <!-- Background color -->
+
+    <!-- Optional border -->
+    <stroke
+        android:width="2dp"
+        android:color="#0D47A1" />
+
+    <!-- Notice there is no <corners> tag here! -->
+</shape>
+
+
+================================================================================
+FILE: day_data_layout.xml
+================================================================================
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp">
+
+            <!-- Previous Day Button -->
+            <Button
+                android:id="@+id/prevDayButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:text="&lt;"
+                style="?android:attr/buttonStyleSmall" />
+
+            <!-- Date & Day Name Group -->
+            <LinearLayout
+                android:id="@+id/dateContainer"
+                android:layout_width="142dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="16dp"
+                android:layout_toEndOf="@+id/prevDayButton"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/dateTextView"
+                    android:layout_width="61dp"
+                    android:layout_height="50dp"
+                    android:gravity="center"
+                    android:text="Date"
+                    android:textColor="#ffffff"
+                    android:textSize="11sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/dayNameTextView"
+                    android:layout_width="46dp"
+                    android:layout_height="50dp"
+                    android:layout_marginStart="8dp"
+                    android:gravity="center"
+                    android:text="Day"
+                    android:textColor="#dddddd"
+                    android:textSize="9sp" />
+            </LinearLayout>
+
+            <!-- Next Day and Date Picker Buttons -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                >
+
+                <Button
+                    android:id="@+id/nextDayButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="&gt;"
+                    style="?android:attr/buttonStyleSmall" />
+
+                <Button
+                    android:id="@+id/datePickButton"
+                    style="?android:attr/buttonStyleSmall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="date"
+                    android:textSize="11sp" />
+            </LinearLayout>
+
+        </RelativeLayout>
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <!-- Daily Macro Summary Card -->
+    <LinearLayout
+        android:id="@+id/summaryLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="12dp"
+        android:background="#EEEEEE"
+        android:elevation="2dp"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Daily Summary"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:textColor="#333333"
+            android:layout_marginBottom="4dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="4">
+
+            <TextView
+                android:id="@+id/totalKcalTextView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:textSize="12sp"
+                android:text="Kcal: 0"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/totalProteinTextView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:textSize="12sp"
+                android:text="Prot: 0g" />
+
+            <TextView
+                android:id="@+id/totalFatTextView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:textSize="12sp"
+                android:text="Fat: 0g" />
+
+            <TextView
+                android:id="@+id/totalCarbsTextView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:textSize="12sp"
+                android:text="Carb: 0g" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- No Data Placeholder -->
+    <TextView
+        android:id="@+id/noDataTextView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="No data to show"
+        android:textSize="18sp"
+        android:textColor="#888888"
+        android:visibility="gone" />
+
+    <!-- RecyclerView -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="vertical" />
+
+</LinearLayout>
+
+
+================================================================================
+FILE: get_product_data.xml
+================================================================================
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/get_product_data_main_background">
+
+
+    <EditText
+        android:id="@+id/productNameEditText"
+        android:layout_width="238dp"
+        android:layout_height="43dp"
+        android:height="60dp"
+        android:ems="10"
+        android:inputType="text"
+        android:text=""
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.503"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.116" />
+
+    <LinearLayout
+        android:id="@+id/macroLinearLayout"
+        android:layout_width="0dp"
+        android:layout_height="178dp"
+        android:layout_marginStart="71dp"
+        android:layout_marginEnd="71dp"
+        android:layout_marginBottom="44dp"
+        android:background="@drawable/border"
+        android:orientation="vertical"
+        android:padding="20dp"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayoutButtons"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/productNameTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="product name"
+                tools:layout_editor_absoluteX="68dp"
+                tools:layout_editor_absoluteY="224dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/brandLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="brand"
+                android:textStyle="bold"
+                tools:layout_editor_absoluteX="42dp"
+                tools:layout_editor_absoluteY="308dp" />
+
+            <TextView
+                android:id="@+id/brandValueTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="TextView"
+                tools:layout_editor_absoluteX="141dp"
+                tools:layout_editor_absoluteY="308dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/kcalLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="kcal"
+                android:textStyle="bold"
+                tools:layout_editor_absoluteX="42dp"
+                tools:layout_editor_absoluteY="345dp" />
+
+            <TextView
+                android:id="@+id/kcalValueTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="TextView"
+                tools:layout_editor_absoluteX="177dp"
+                tools:layout_editor_absoluteY="448dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/proteinLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="protein"
+                android:textStyle="bold"
+                tools:layout_editor_absoluteX="42dp"
+                tools:layout_editor_absoluteY="384dp" />
+
+            <TextView
+                android:id="@+id/proteinValueTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="TextView"
+                tools:layout_editor_absoluteX="141dp"
+                tools:layout_editor_absoluteY="384dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/fatLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="fat"
+                android:textStyle="bold"
+                tools:layout_editor_absoluteX="42dp"
+                tools:layout_editor_absoluteY="423dp" />
+
+            <TextView
+                android:id="@+id/fatValueTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="TextView"
+                tools:layout_editor_absoluteX="141dp"
+                tools:layout_editor_absoluteY="423dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/carbsLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="carbs"
+                android:textStyle="bold"
+                tools:layout_editor_absoluteX="42dp"
+                tools:layout_editor_absoluteY="466dp" />
+
+            <TextView
+                android:id="@+id/carbsValueTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="TextView"
+                tools:layout_editor_absoluteX="141dp"
+                tools:layout_editor_absoluteY="466dp" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayoutButtons"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="52dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/acceptButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/amountAndComentLinearLayout">
+
+        <Button
+            android:id="@+id/getProductFromDatabase"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Get product from Azure SQL"
+            tools:layout_editor_absoluteX="200dp"
+            tools:layout_editor_absoluteY="66dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/previousButton"
+                android:layout_width="wrap_content"
+                android:layout_height="53dp"
+                android:layout_weight="1"
+                android:text="previous"
+                tools:layout_editor_absoluteX="186dp"
+                tools:layout_editor_absoluteY="122dp" />
+
+            <Button
+                android:id="@+id/nextButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="next"
+                tools:layout_editor_absoluteX="297dp"
+                tools:layout_editor_absoluteY="120dp" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/spinerLinearLayout"
+        android:layout_width="393dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="189dp"
+        android:layout_marginBottom="40dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/amountAndComentLinearLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <Spinner
+            android:id="@+id/mealNameSpinner"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_marginBottom="10dp" />
+
+        <Spinner
+            android:id="@+id/productSpinner"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:tooltipText="food"
+            android:visibility="visible" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/datePickButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="28dp"
+        android:text="Date"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.947"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/dateDataTextView"
+        android:layout_width="176dp"
+        android:layout_height="32dp"
+        android:layout_marginTop="36dp"
+        android:layout_marginEnd="40dp"
+        android:text="dateData"
+        app:layout_constraintEnd_toStartOf="@+id/datePickButton"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/amountAndComentLinearLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="255dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayoutButtons"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spinerLinearLayout">
+
+        <Button
+            android:id="@+id/productCommentButton"
+            android:layout_width="wrap_content"
+            android:layout_height="46dp"
+            android:layout_weight="1"
+            android:text="Products comment" />
+
+        <EditText
+            android:id="@+id/weightEditText"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:ems="10"
+            android:inputType="text" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/acceptButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="40dp"
+        android:text="Accept"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Name"
+        tools:layout_editor_absoluteX="11dp"
+        tools:layout_editor_absoluteY="101dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+
+================================================================================
+FILE: product_layout.xml
+================================================================================
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    android:background="#EEEEEE"
+    android:orientation="vertical"
+    android:padding="12dp">
+
+    <!-- Product Name -->
+    <TextView
+        android:id="@+id/productNameTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="#000000"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+
+    <!-- Meal Name and Amount Info -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="4dp">
+
+        <TextView
+            android:id="@+id/mealNameTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#555555"
+            android:textSize="13sp"
+            android:textStyle="italic" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" | "
+            android:textColor="#888888" />
+
+        <TextView
+            android:id="@+id/amountOfProductTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#555555"
+            android:textSize="13sp" />
+    </LinearLayout>
+
+    <!-- Macronutrient Consumed Details Grid -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="6dp"
+        android:weightSum="4">
+
+        <TextView
+            android:id="@+id/kcalConsumeTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textColor="#266278"
+            android:textSize="13sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/proteinConsumeTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textColor="#8B0000"
+            android:textSize="13sp" />
+
+        <TextView
+            android:id="@+id/fatConsumeTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textColor="#FF8C00"
+            android:textSize="13sp" />
+
+        <TextView
+            android:id="@+id/carbsConsumeTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textColor="#2E8B57"
+            android:textSize="13sp" />
+    </LinearLayout>
+
+</LinearLayout>
+
+
+================================================================================
+FILE: activity_main.xml
+================================================================================
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:context=".MainActivity"
+    android:background="@color/activity_main_background">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fitsSystemWindows="true"/>
+
+
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_marginEnd="@dimen/fab_margin"
+        android:layout_marginBottom="16dp"
+        app:srcCompat="@android:drawable/ic_dialog_email" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewDiet"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+
+================================================================================
+FILE: main_window.xml
+================================================================================
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <Button
+        android:id="@+id/addMealButton"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="164dp"
+        android:background="@drawable/add_meal_button"
+        android:text="Add meal"
+        app:backgroundTint="@null"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="0dp" />
+
+    <Button
+        android:id="@+id/monthlyStatsButton"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="88dp"
+        android:background="@drawable/buttons_main"
+        android:text="Monthy stats"
+        app:backgroundTint="@null"
+        app:layout_constraintStart_toStartOf="@+id/getDayDataButton"
+        app:layout_constraintTop_toBottomOf="@+id/getDayDataButton" />
+
+    <Button
+        android:id="@+id/noteTaskButtonButton"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/note_task_button"
+        android:text="Note - tasks"
+        app:backgroundTint="@null"
+        app:layout_constraintStart_toStartOf="@+id/getDayDataButton"
+        app:layout_constraintTop_toBottomOf="@+id/getDayDataButton" />
+
+    <Button
+        android:id="@+id/getDayDataButton"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/get_day_data"
+        android:text="Get day data"
+        app:backgroundTint="@null"
+        app:layout_constraintStart_toStartOf="@+id/addMealButton"
+        app:layout_constraintTop_toBottomOf="@+id/addMealButton" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:background="#4253a6"
+        android:text="Welcome to Diet tracker"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:gravity="center_vertical"
+        android:paddingStart="16dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+
+================================================================================
+FILE: dialog_note.xml
+================================================================================
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="New Note Details"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="12dp"/>
+
+        <EditText
+            android:id="@+id/dialogTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Title"
+            android:inputType="textCapSentences" />
+
+        <EditText
+            android:id="@+id/dialogSubtitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Subtitle"
+            android:inputType="textCapSentences" />
+
+        <EditText
+            android:id="@+id/dialogDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Description"
+            android:inputType="textMultiLine"
+            android:minLines="2" />
+
+        <EditText
+            android:id="@+id/dialogCategory"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Category"
+            android:inputType="textCapSentences" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Urgency Scale:"
+            android:layout_marginTop="8dp"
+            android:textSize="12sp"
+            android:textColor="#555555"/>
+
+        <Spinner
+            android:id="@+id/dialogSpinnerUrgent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp" />
+
+        <CheckBox
+            android:id="@+id/dialogCbLearning"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Is Learning Task"
+            android:layout_marginTop="8dp"/>
+
+        <CheckBox
+            android:id="@+id/dialogCbGeneral"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Is General To-Do" />
+
+        <CheckBox
+            android:id="@+id/dialogCbToday"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Is Today Task" />
+
+        <CheckBox
+            android:id="@+id/dialogCbToBuy"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Is To Buy Task" />
+
+        <TextView
+            android:id="@+id/tvLearningCatLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Learning Category Option:"
+            android:layout_marginTop="8dp"
+            android:textSize="12sp"
+            android:textColor="#555555"
+            android:visibility="gone"/>
+
+        <Spinner
+            android:id="@+id/dialogSpinnerLearningCat"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:visibility="gone" />
+
+        <Spinner
+            android:id="@+id/secondLearningCategory"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone" />
+
+        <EditText
+            android:id="@+id/dialogDeadline"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Deadline Date (Tap to select)"
+            android:focusable="false"
+            android:clickable="true"
+            android:layout_marginTop="8dp" />
+    </LinearLayout>
+</ScrollView>
+
+
+================================================================================
+FILE: item_layout.xml
+================================================================================
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    android:background="#EEEEEE"
+    android:elevation="2dp"
+    android:orientation="vertical"
+    android:padding="12dp">
+
+    <!-- Section 1: Title, Subtitle, Description -->
+    <LinearLayout
+        android:id="@+id/section1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#000000"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#555555"
+            android:textSize="11sp"
+            android:layout_marginTop="2dp" />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#888888"
+            android:textSize="9sp"
+            android:layout_marginTop="4dp" />
+    </LinearLayout>
+
+    <!-- Section 2: Category and Urgently fields -->
+    <LinearLayout
+        android:id="@+id/section2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="1dp">
+
+        <TextView
+            android:id="@+id/tvCategory"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:textColor="#2E7D32"
+            android:textSize="9sp"
+            android:text="Category: -" />
+
+        <TextView
+            android:id="@+id/tvUrgently"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:textColor="#C62828"
+            android:textSize="9sp"
+            android:text="Urgently: -" />
+    </LinearLayout>
+
+    <!-- Section 3: Status Checkboxes -->
+    <LinearLayout
+        android:id="@+id/section3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="1dp">
+
+        <CheckBox
+            android:id="@+id/cbIsLearning"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Learning"
+            android:textSize="8sp"
+            android:clickable="false"
+            android:focusable="false"
+            android:scaleX="0.85"
+            android:scaleY="0.85"/>
+
+        <CheckBox
+            android:id="@+id/cbIsGeneralToDo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="General"
+            android:textSize="8sp"
+            android:clickable="false"
+            android:focusable="false"
+            android:scaleX="0.85"
+            android:scaleY="0.85"/>
+
+        <CheckBox
+            android:id="@+id/cbIsTodayTask"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Today"
+            android:textSize="8sp"
+            android:clickable="false"
+            android:focusable="false"
+            android:scaleX="0.85"
+            android:scaleY="0.85"/>
+
+        <!-- ADD THIS HERE IF IT IS MISSING -->
+        <CheckBox
+            android:id="@+id/cbIsToBuy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="To Buy"
+            android:textSize="8sp"
+            android:clickable="false"
+            android:focusable="false"
+            android:scaleX="0.85"
+            android:scaleY="0.85"/>
+    </LinearLayout>
+
+    <!-- Section 4: Creation Dates and Calculations -->
+    <LinearLayout
+        android:id="@+id/section4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="1dp">
+
+        <TextView
+            android:id="@+id/tvDates"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#666666"
+            android:textSize="10sp"
+            android:text="Created: - | Deadline: -" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1"/>
+
+        <TextView
+            android:id="@+id/tvDaysSince"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#D32F2F"
+            android:textSize="10sp"
+            android:textStyle="italic"
+            android:text="0 days since create" />
+    </LinearLayout>
+</LinearLayout>
+
+
+================================================================================
+FILE: notes_view_layout.xml
+================================================================================
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Notes"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginEnd="16dp"
+            android:text="Add" />
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <LinearLayout
+        android:id="@+id/filterLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/toolbar2"
+        android:orientation="vertical"
+        android:padding="8dp"
+        android:background="#F5F5F5">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Filter list by:"
+            android:textStyle="bold"
+            android:textSize="12sp"
+            android:textColor="#555555"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="3">
+
+            <EditText
+                android:id="@+id/filterSubtitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="Subtitle"
+                android:textSize="12sp"
+                android:inputType="text" />
+
+            <!-- Multichoice Category Spinner Dropdown -->
+            <TextView
+                android:id="@+id/filterCategorySpinner"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                style="?android:attr/spinnerStyle"
+                android:text="All Categories"
+                android:textSize="11sp"
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:layout_gravity="center_vertical" />
+
+            <!-- Urgency ComboBox -->
+            <Spinner
+                android:id="@+id/filterUrgentlySpinner"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_gravity="center_vertical" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="4dp">
+
+            <CheckBox
+                android:id="@+id/filterCbLearning"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Learning"
+                android:textSize="12sp" />
+
+            <CheckBox
+                android:id="@+id/filterCbGeneral"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="General"
+                android:textSize="12sp" />
+
+            <CheckBox
+                android:id="@+id/filterCbToday"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Today"
+                android:textSize="12sp" />
+
+            <CheckBox
+                android:id="@+id/filterCbToBuy"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="To Buy"
+                android:textSize="12sp" />
+
+        </LinearLayout>
+
+        <!-- Toggle Section Visibilities -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="4dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Hide Section:"
+                android:textStyle="bold"
+                android:textSize="12sp"
+                android:textColor="#555555"
+                android:layout_gravity="center_vertical"/>
+
+            <CheckBox
+                android:id="@+id/hideCbSection1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="1"
+                android:textSize="12sp" />
+
+            <CheckBox
+                android:id="@+id/hideCbSection2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2"
+                android:textSize="12sp" />
+
+            <CheckBox
+                android:id="@+id/hideCbSection3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="3"
+                android:textSize="12sp" />
+
+            <CheckBox
+                android:id="@+id/hideCbSection4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="4"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <!-- Sorting Section -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="4dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Sort by:"
+                android:textStyle="bold"
+                android:textSize="12sp"
+                android:textColor="#555555"
+                android:layout_gravity="center_vertical"/>
+
+            <Spinner
+                android:id="@+id/sortSpinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="vertical"
+        android:layout_below="@id/filterLayout"/>
+</RelativeLayout>
+
+
+================================================================================
+FILE: menu_main.xml
+================================================================================
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.lukaszjag.diet_tracker_android.MainActivity">
+    <item
+        android:id="@+id/action_settings"
+        android:orderInCategory="100"
+        android:title="@string/action_settings"
+        app:showAsAction="never" />
+</menu>
+
+
+================================================================================
+FILE: ic_launcher_round.xml
+================================================================================
+<?xml version="1.0" encoding="utf-8"?>
+<adaptive-icon xmlns:android="http://schemas.android.com/apk/res/android">
+    <background android:drawable="@drawable/ic_launcher_background" />
+    <foreground android:drawable="@drawable/ic_launcher_foreground" />
+    <monochrome android:drawable="@drawable/ic_launcher_foreground" />
+</adaptive-icon>
+
+
+================================================================================
+FILE: ic_launcher.xml
+================================================================================
+<?xml version="1.0" encoding="utf-8"?>
+<adaptive-icon xmlns:android="http://schemas.android.com/apk/res/android">
+    <background android:drawable="@drawable/ic_launcher_background" />
+    <foreground android:drawable="@drawable/ic_launcher_foreground" />
+    <monochrome android:drawable="@drawable/ic_launcher_foreground" />
+</adaptive-icon>
+
+
+================================================================================
+FILE: ic_launcher_round.webp
+================================================================================
+RIFFJ

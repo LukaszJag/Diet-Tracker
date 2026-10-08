@@ -1,0 +1,2 @@
+I need to add dark mode to my android app in android studio written in java give step by step what 
+I should do here is my layouts I want this be indepented from phone device system settings:
