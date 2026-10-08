@@ -1,0 +1,5202 @@
+================================================================================
+FILE: AndroidManifest.xml
+================================================================================
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.Diettrackerandroid">
+        <activity
+            android:name=".gui.diet.day_data_view.DayData"
+            android:exported="false" />
+        <!-- 1. Set GetProductData as the LAUNCHER activity -->
+        <activity
+            android:name=".MainActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".gui.diet.GetProductData"
+            android:exported="true">
+
+        </activity>
+        <activity
+            android:name=".gui.notes.Notes"
+            android:exported="true">
+
+        </activity>
+    </application>
+
+</manifest>
+
+
+================================================================================
+FILE: MainActivity.java
+================================================================================
+package com.lukaszjag.diet_tracker_android;
+
+import android.content.Intent;
+import android.os.Bundle;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.view.View;
+
+import androidx.navigation.ui.AppBarConfiguration;
+
+import com.lukaszjag.diet_tracker_android.databinding.ActivityMainBinding;
+import com.lukaszjag.diet_tracker_android.gui.diet.GetProductData;
+import com.lukaszjag.diet_tracker_android.gui.diet.day_data_view.DayData;
+import com.lukaszjag.diet_tracker_android.gui.notes.Notes;
+
+import android.view.Menu;
+import android.view.MenuItem;
+import android.widget.Button;
+
+public class MainActivity extends AppCompatActivity {
+
+    private AppBarConfiguration appBarConfiguration;
+    private ActivityMainBinding binding;
+
+    private Button addMealButton;
+    private Button getDayDataButton;
+    private Button noteTasksButton;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+
+        super.onCreate(savedInstanceState);
+
+        setContentView(R.layout.main_window);
+
+        setupUIComponents();
+        addListeners();
+
+    }
+
+    private void addListeners() {
+        noteTasksButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, Notes.class);
+
+                startActivity(intent);
+            }
+        });
+
+        addMealButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, GetProductData.class);
+
+                startActivity(intent);
+            }
+        });
+
+        getDayDataButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, DayData.class);
+
+                startActivity(intent);
+            }
+        });
+    }
+
+    private void setupUIComponents() {
+        addMealButton = findViewById(R.id.addMealButton);
+        getDayDataButton = findViewById(R.id.getDayDataButton);
+        noteTasksButton = findViewById(R.id.noteTaskButtonButton);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+
+}
+
+
+================================================================================
+FILE: Config.java
+================================================================================
+package com.lukaszjag.diet_tracker_android.config;
+
+import com.lukaszjag.diet_tracker_android.tools.products_tools.Macro;
+
+import java.util.Date;
+
+public class Config {
+    public static final int ALL_PRODUCT_VALUES_FIELD_COUNT = Config.SQL_COLUMNS_PRODUCT.length;
+
+    //<editor-fold desc="global variables">
+
+    //<editor-fold desc="Console colors">
+    //<editor-fold desc="Color for font in console">
+    public static final String ANSI_RESET = "\u001B[0m";
+    public static final String ANSI_BLACK = "\u001B[30m";
+    public static final String ANSI_RED = "\u001B[31m";
+    public static final String ANSI_GREEN = "\u001B[32m";
+    public static final String ANSI_YELLOW = "\u001B[33m";
+    public static final String ANSI_BLUE = "\u001B[34m";
+    public static final String ANSI_PURPLE = "\u001B[35m";
+    public static final String ANSI_CYAN = "\u001B[36m";
+    public static final String ANSI_WHITE = "\u001B[37m";
+
+    //<editor-fold desc="Colors for background in console">
+    public static final String ANSI_BLACK_BACKGROUND = "\u001B[40m";
+    public static final String ANSI_RED_BACKGROUND = "\u001B[41m";
+    public static final String ANSI_GREEN_BACKGROUND = "\u001B[42m";
+    public static final String ANSI_YELLOW_BACKGROUND = "\u001B[43m";
+    public static final String ANSI_BLUE_BACKGROUND = "\u001B[44m";
+    public static final String ANSI_PURPLE_BACKGROUND = "\u001B[45m";
+    public static final String ANSI_CYAN_BACKGROUND = "\u001B[46m";
+    public static final String ANSI_WHITE_BACKGROUND = "\u001B[47m";
+    //</editor-fold>
+    //</editor-fold>
+    //</editor-fold>
+
+
+    //<editor-fold desc="SQL CONFIGURATION AND OTHER DATA">
+
+    // SQL Configuration - Calendar fields
+    public static final String[] SQL_COLUMNS_CALENDAR = {"day_date", "day_name", "meal_name", "amount_of_product", "product_name",
+            "kcal", "protein", "fat", "carbs", "time_optional", "comment_optional", "kcal_consume", "carbs_consume", "fat_consume", "protein_consume"};
+
+    public static final String[] SQL_COLUMNS_CALENDAR_WITH_KCAL_CONSUME = {"day_date", "day_name", "amount_of_product", "product_name",
+            "kcal", "protein", "fat", "carbs", "time_optional", "comment_optional", "kcal_consume"};
+
+    //SQL Configuration - To insert product to table
+    public static final String[] SQL_COLUMNS_PRODUCT = {"`product_name`", "`product_brand`", "`product_package_has`",
+            "`product_macro_for`", "`product_kcal`", "`product_protein`", "`product_fat`", "`product_carbs`", "`comment_optional`"};
+    public static final String[] SQL_COLUMNS_DAYS_STATISTICS_TEST = {"`day_date`", "`amount_of_points_from_notepad`",
+            "`amount_of_filled_points_from_notepad`", "`kcal_consume`", "`protein_consume`", "`fat_consume`", "`carbs_consume`", "`day_name`"};
+    public static final String[] gym_workoutTable = {"workout_ID", "day_date", "day_name", "location_of_workout",
+            "general_type_of_workout", "type_of_workout", "name_of_exercise", "number_of_set",
+            "weight_in_kilograms", "type_of_weight", "reps", "duration_of_break_seconds",
+            "duration_in_seconds", "distance_in_meters", "amount_of_sets", "comment"};
+
+    public static String CURRENT_DATABASE_TABLE_PRODUCT = "product_table";
+    public static String CURRENT_DATABASE_TABLE_CALENDAR = "calendar";
+    //</editor-fold>
+
+    //<editor-fold desc="Date configuration">
+    String[] MONTHS2024 = {"May", "June", "July", "August", "September", "October", "November", "December"};
+    String[] MONTHS2025 = {"January", "February", "March", "April"};
+    public static final Date date = new Date();
+    //</editor-fold>
+
+    //<editor-fold desc="BMR values">
+    public static Macro BMR_07_10_2025 = new Macro(3531, 227, 151, 318);
+    public static Macro BMRActual = BMR_07_10_2025;
+    //</editor-fold>
+}
+
+
+
+================================================================================
+FILE: GetProductData.java
+================================================================================
+package com.lukaszjag.diet_tracker_android.gui.diet;
+
+import static android.app.PendingIntent.getActivity;
+
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+
+import android.view.WindowManager;
+import android.widget.ArrayAdapter;
+import android.widget.AdapterView;
+
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.android.material.datepicker.MaterialDatePicker;
+import com.lukaszjag.diet_tracker_android.R;
+import com.lukaszjag.diet_tracker_android.tools.cloud_data_tools.AzureDataCallback;
+import com.lukaszjag.diet_tracker_android.tools.cloud_data_tools.GetFromSQLDatabase;
+import com.lukaszjag.diet_tracker_android.tools.date_tools.MyDate;
+import com.lukaszjag.diet_tracker_android.tools.sql_tools.QueryMaker;
+import com.lukaszjag.diet_tracker_android.tools.sql_tools.RowInTable;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
+
+public class GetProductData extends AppCompatActivity {
+
+    //<editor-fold desc="Global variables">
+    ArrayList<RowInTable> products = new ArrayList<>();
+    ArrayList<RowInTable> mealNames = new ArrayList<>();
+    int counter;
+    String productComment = "none";
+
+    //<editor-fold desc="UI components">
+    private Spinner productSpinner;
+    private Spinner mealNameSpinner;
+
+    //<editor-fold desc="Button">
+    private Button getProductFromDatabase;
+    private Button previousButton;
+    private Button nextButton;
+    private Button dateDataButton;
+    private Button productCommentButton;
+    private Button acceptButton;
+    //</editor-fold>
+
+    //<editor-fold desc="EditText">
+    private EditText productNameEditText;
+    private EditText weightEditText;
+    //</editor-fold>
+
+    //<editor-fold desc="TextView">
+    private TextView productNameTextView;
+    private TextView brandLabel;
+    private TextView kcalLabel;
+    private TextView proteinLabel;
+    private TextView fatLabel;
+    private TextView carbsLabel;
+    private TextView brandValueTextView;
+    private TextView kcalValueTextView;
+    private TextView proteinValueTextView;
+    private TextView fatValueTextView;
+    private TextView carbsValueTextView;
+
+    private TextView dateDataTextView;
+    //</editor-fold>
+
+    //<editor-fold desc="Gather Information From UI - Variables">
+    String dayDate;
+    String dayName;
+    String mealName;
+    double amountOfProduct;
+    String productName;
+    String productBrand;
+    String timeOptional;
+    String commentOptional;
+
+    //<editor-fold desc="Macro variables">
+    double kcal;
+    double protein;
+    double fat;
+    double carbs;
+
+    double kcalConsume;
+    double carbsConsume;
+    double proteinConsume;
+    double fatConsume;
+
+    String rawKcal;
+    String rawProtein;
+    String rawFat;
+    String rawCarbs;
+    //</editor-fold>
+
+
+    //</editor-fold>
+    //</editor-fold>
+    //</editor-fold>
+
+    //<editor-fold desc="On start methods">
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        this.getWindow().setFlags(
+                WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN
+        );
+
+        setContentView(R.layout.get_product_data);
+        setupAllElements();
+    }
+
+    private void setupAllElements() {
+        initUIComponents();
+        setupComponents();
+        addListeners();
+    }
+    //</editor-fold>
+
+    //<editor-fold desc="UI Components - setup and more">
+    private void setupComponents() {
+
+        ArrayList<String> mealNames = new ArrayList<>(Arrays.asList("None", "Breakfast", "Second Breakfast", "Snack 1", "Dinner", "Snack 2"
+                , "Supper", "After workout", "Night snack"));
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(
+                GetProductData.this,
+                android.R.layout.simple_spinner_item,
+                mealNames
+        );
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        mealNameSpinner.setAdapter(adapter);
+    }
+
+    private void initUIComponents() {
+        //<editor-fold desc="Spinner">
+        productSpinner = findViewById(R.id.productSpinner);
+
+        mealNameSpinner = findViewById(R.id.mealNameSpinner);
+        //</editor-fold>
+
+        //<editor-fold desc="Buttons">
+        getProductFromDatabase = findViewById(R.id.getProductFromDatabase);
+        previousButton = findViewById(R.id.previousButton);
+        nextButton = findViewById(R.id.nextButton);
+        dateDataButton = findViewById(R.id.datePickButton);
+        productCommentButton = findViewById(R.id.productCommentButton);
+        acceptButton = findViewById(R.id.acceptButton);
+        //</editor-fold>
+
+        //<editor-fold desc="EditText">
+        productNameEditText = findViewById(R.id.productNameEditText);
+        weightEditText = findViewById(R.id.weightEditText);
+        //</editor-fold>
+
+        //<editor-fold desc="TextViews">
+        productNameTextView = findViewById(R.id.productNameTextView);
+        brandLabel = findViewById(R.id.brandLabel);
+        kcalLabel = findViewById(R.id.kcalLabel);
+        proteinLabel = findViewById(R.id.proteinLabel);
+        fatLabel = findViewById(R.id.fatLabel);
+
+        brandValueTextView = findViewById(R.id.brandValueTextView);
+        kcalValueTextView = findViewById(R.id.kcalValueTextView);
+        proteinValueTextView = findViewById(R.id.proteinValueTextView);
+        fatValueTextView = findViewById(R.id.fatValueTextView);
+        carbsValueTextView = findViewById(R.id.carbsValueTextView);
+
+        dateDataTextView = findViewById(R.id.dateDataTextView);
+        dateDataTextView.setText(MyDate.getCurrentDayInSQLFormat());
+        //</editor-fold>
+    }
+
+    private void setValuesToMacroUITable() {
+        brandValueTextView.setText(productBrand);
+
+        kcalValueTextView.setText(String.format(java.util.Locale.getDefault(), "%.0f", kcal));
+        proteinValueTextView.setText(String.format(java.util.Locale.getDefault(), "%.1f", protein));
+        fatValueTextView.setText(String.format(java.util.Locale.getDefault(), "%.1f", fat));
+        carbsValueTextView.setText(String.format(java.util.Locale.getDefault(), "%.1f", carbs));
+
+    }
+    //</editor-fold>
+
+    //<editor-fold desc="Gather data">
+    private void getMacroValues() {
+        if (products.isEmpty() || counter < 0 || counter >= products.size()) {
+            return;
+        }
+
+        dayDate = String.valueOf(dateDataTextView.getText());
+        dayName = MyDate.getDayNameInLowerCase(dayDate);
+
+        if (mealNameSpinner.getSelectedItem() != null) {
+            mealName = mealNameSpinner.getSelectedItem().toString();
+        }
+
+        // Is brand label text correct? (See point 3 below)
+        productBrand = String.valueOf(brandLabel.getText());
+        productComment = products.get(counter).getValue("comment_optional");
+
+        if (productSpinner.getSelectedItem() != null) {
+            productName = productSpinner.getSelectedItem().toString();
+        }
+
+        // 1. Safe parsing of weight
+        String amountOfProductTmp = String.valueOf(weightEditText.getText()).trim();
+        try {
+            if (!amountOfProductTmp.isEmpty()) {
+                amountOfProduct = Double.parseDouble(amountOfProductTmp);
+            } else {
+                amountOfProduct = 0.0;
+            }
+        } catch (NumberFormatException e) {
+            amountOfProduct = 0.0;
+            System.out.println("Invalid weight value entered.");
+        }
+
+        // 2. Safe parsing of macros (independent of weight)
+        try {
+            rawKcal = String.valueOf(products.get(counter).getValue("product_kcal"));
+            kcal = Double.parseDouble(rawKcal);
+        } catch (NumberFormatException | NullPointerException e) {
+            kcal = 0.0;
+        }
+
+        try {
+            rawProtein = String.valueOf(products.get(counter).getValue("product_protein"));
+            protein = Double.parseDouble(rawProtein);
+        } catch (NumberFormatException | NullPointerException e) {
+            protein = 0.0;
+        }
+
+        try {
+            rawFat = String.valueOf(products.get(counter).getValue("product_fat"));
+            fat = Double.parseDouble(rawFat);
+        } catch (NumberFormatException | NullPointerException e) {
+            fat = 0.0;
+        }
+
+        try {
+            rawCarbs = String.valueOf(products.get(counter).getValue("product_carbs"));
+            carbs = Double.parseDouble(rawCarbs);
+        } catch (NumberFormatException | NullPointerException e) {
+            carbs = 0.0;
+        }
+    }
+
+    private void gatherInformationFromUI() {
+
+
+        dayDate = (String) dateDataTextView.getText();
+
+        System.out.println("All data: " + dayDate);
+    }
+    //</editor-fold>
+
+    //<editor-fold desc="Debug methods">
+    private void showSimpleDialog() {
+        new AlertDialog.Builder(GetProductData.this)
+                .setTitle(products.get(counter).getValue("product_name"))
+                .setMessage(productComment)
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                })
+                .show();
+    }
+
+    private void gatherInformationFromUIPrintValues() {
+        System.out.println("dayDate: " + dayDate);
+        System.out.println("dayName: " + dayName);
+        System.out.println("mealName: " + mealName);
+        System.out.println("productBrand: " + productBrand);
+        System.out.println("productComment: " + productComment);
+        System.out.println("productName: " + productName);
+        System.out.println("amountOfProduct: " + amountOfProduct);
+        System.out.println("rawKcal: " + rawKcal);
+        System.out.println("rawProtein: " + rawProtein);
+        System.out.println("rawFat: " + rawFat);
+        System.out.println("rawCarbs: " + rawCarbs);
+        System.out.println("kcal: " + kcal);
+        System.out.println("protein: " + protein);
+        System.out.println("fat: " + fat);
+        System.out.println("carbs: " + carbs);
+    }
+    //</editor-fold>
+
+    private void addListeners() {
+        productCommentButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showSimpleDialog();
+            }
+        });
+
+        getProductFromDatabase.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.i("BUTTON ALLERT", "Press button");
+                String query = QueryMaker.getAllProductTableLikeProductNameCaseInsensitive(productNameEditText.getText().toString());
+                Log.i("BUTTON ALLERT", "Run query: " + query);
+
+                GetFromSQLDatabase.runAzureQueryAIChat(query, new AzureDataCallback() {
+                    @Override
+                    public void onSuccess(ArrayList<RowInTable> resultTable) {
+                        // This code runs when the data successfully arrives from Azure
+                        products = resultTable;
+                        counter = 0;
+                        Toast.makeText(getApplicationContext(), String.valueOf(products.size()), Toast.LENGTH_SHORT).show();
+
+                        // Update the UI on the Main (UI) Thread
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+
+                                for (int i = 0; i < products.size(); i++) {
+                                    products.get(i).printAlLValuesAndKey();
+                                }
+
+                                List<String> productList = new ArrayList<>();
+                                for (int i = 0; i < products.size(); i++) {
+                                    productList.add(products.get(i).getValue("product_name"));
+                                }
+
+                                ArrayAdapter<String> adapter = new ArrayAdapter<>(
+                                        GetProductData.this,
+                                        android.R.layout.simple_spinner_item,
+                                        productList
+                                );
+                                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                                productSpinner.setAdapter(adapter);
+
+                                if (!products.isEmpty()) {
+                                    productNameTextView.setText(products.get(0).getValue("product_name"));
+                                    getMacroValues();
+                                    setValuesToMacroUITable();
+                                }
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void onFailure(String errorMessage) {
+                        Toast.makeText(getApplicationContext(), "no connection", Toast.LENGTH_SHORT).show();
+                        System.out.println("Failed to get data: " + errorMessage);
+                    }
+                });
+            }
+        });
+
+        nextButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!products.isEmpty()) {
+                    if (counter < products.size() - 1) {
+                        counter++;
+                    } else {
+                        counter = 0;
+                    }
+                    productSpinner.setSelection(counter); // This triggers the Spinner listener to update macros
+                    getMacroValues();
+                    setValuesToMacroUITable();
+                }
+            }
+        });
+
+        previousButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!products.isEmpty()) {
+                    if (counter > 0) {
+                        counter--;
+                    } else {
+                        counter = products.size() - 1;
+                    }
+                    productSpinner.setSelection(counter); // This triggers the Spinner listener to update macros
+                    getMacroValues();
+                    setValuesToMacroUITable();
+                }
+            }
+        });
+
+        dateDataButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MaterialDatePicker<Long> datePicker = MaterialDatePicker.Builder.datePicker()
+                        .setTitleText("Select a Date")
+                        .setSelection(MaterialDatePicker.todayInUtcMilliseconds()) // default to today
+                        .build();
+
+                // Listen for when the user clicks "OK"
+                datePicker.addOnPositiveButtonClickListener(selection -> {
+                    // Convert the timestamp back to a readable date string
+                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+                    String formattedDate = sdf.format(new Date(selection));
+
+                    dateDataTextView.setText(formattedDate);
+                });
+
+                // Show the picker
+                datePicker.show(getSupportFragmentManager(), "MATERIAL_DATE_PICKER");
+
+            }
+        });
+
+        productSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (!products.isEmpty()) {
+                    counter = position;
+                    productNameTextView.setText(products.get(counter).getValue("product_name"));
+                    getMacroValues();
+                    setValuesToMacroUITable();
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
+
+        acceptButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // 1. Gather UI details and calculate baseline macro variables
+                getMacroValues();
+
+                // 2. Validate input before proceeding
+                if (productName == null || productName.trim().isEmpty()) {
+                    Toast.makeText(GetProductData.this, "Please select a product first", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                if (amountOfProduct <= 0) {
+                    Toast.makeText(GetProductData.this, "Please enter a valid weight", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                // 3. Compute consumed macros (based on standard 100g product nutrition values)
+                kcalConsume = (kcal * amountOfProduct) / 100.0;
+                carbsConsume = (carbs * amountOfProduct) / 100.0;
+                fatConsume = (fat * amountOfProduct) / 100.0;
+                proteinConsume = (protein * amountOfProduct) / 100.0;
+
+                // Default to "none" if no value exists. QueryMaker will translate this to NULL
+                timeOptional = "none";
+                commentOptional = (productComment != null && !productComment.trim().isEmpty()) ? productComment : "none";
+
+                // Print values in Logcat for debugging purposes
+                gatherInformationFromUIPrintValues();
+
+                // 4. Build the query
+                String myInsertQuery = QueryMaker.insertMealToCalendarTable(
+                        dayDate,
+                        dayName,
+                        mealName,
+                        amountOfProduct,
+                        productName,
+                        kcal,
+                        protein,
+                        fat,
+                        carbs,
+                        timeOptional,
+                        commentOptional,
+                        kcalConsume,
+                        carbsConsume,
+                        fatConsume,
+                        proteinConsume
+                );
+
+                Log.d("AZURE_INSERT_SQL", "Executing: " + myInsertQuery);
+
+                // 5. Run the query on Azure via your background Retrofit client
+                GetFromSQLDatabase.runAzureQueryAIChat(myInsertQuery, new AzureDataCallback() {
+                    @Override
+                    public void onSuccess(ArrayList<RowInTable> resultTable) {
+                        // Return to UI Thread to safely present UI updates
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(GetProductData.this, "Meal added successfully!", Toast.LENGTH_SHORT).show();
+
+                                // Reset weight field on success
+                                weightEditText.setText("");
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void onFailure(String errorMessage) {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(GetProductData.this, "Failed to add meal: " + errorMessage, Toast.LENGTH_LONG).show();
+                                Log.e("AZURE_INSERT_ERROR", errorMessage);
+                            }
+                        });
+                    }
+                });
+            }
+        });
+    }
+}
+
+
+
+
+================================================================================
+FILE: DayData.java
+================================================================================
+package com.lukaszjag.diet_tracker_android.gui.diet.day_data_view;
+
+import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.material.datepicker.MaterialDatePicker;
+import com.lukaszjag.diet_tracker_android.R;
+import com.lukaszjag.diet_tracker_android.tools.cloud_data_tools.AzureDataCallback;
+import com.lukaszjag.diet_tracker_android.tools.cloud_data_tools.GetFromSQLDatabase;
+import com.lukaszjag.diet_tracker_android.tools.date_tools.MyDate;
+import com.lukaszjag.diet_tracker_android.tools.products_tools.MyAdapterProduct;
+import com.lukaszjag.diet_tracker_android.tools.products_tools.Product;
+import com.lukaszjag.diet_tracker_android.tools.sql_tools.QueryMaker;
+import com.lukaszjag.diet_tracker_android.tools.sql_tools.RowInTable;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
+
+public class DayData extends AppCompatActivity {
+
+    private RecyclerView recyclerView;
+    private MyAdapterProduct adapter;
+    private Button dateDataButton;
+    private Button prevDayButton;
+    private Button nextDayButton;
+    private TextView dateDataTextView;
+    private TextView dayNameTextView;
+    private TextView noDataTextView;
+
+    // Summary views
+    private LinearLayout summaryLayout;
+    private TextView totalKcalTextView;
+    private TextView totalProteinTextView;
+    private TextView totalFatTextView;
+    private TextView totalCarbsTextView;
+
+    private ArrayList<RowInTable> products = new ArrayList<>();
+    private String dateOfData;
+
+    private final SimpleDateFormat sqlDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
+    private final SimpleDateFormat dayNameFormat = new SimpleDateFormat("EEEE", Locale.getDefault());
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.day_data_layout);
+
+        dateOfData = MyDate.getCurrentDayInSQLFormat();
+
+        setupAllElements();
+        addListeners();
+
+        // Initialize RecyclerView
+        recyclerView = findViewById(R.id.recyclerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        // Initialize and set Adapter
+        adapter = new MyAdapterProduct();
+        recyclerView.setAdapter(adapter);
+
+        // Adapter Click Listener
+        adapter.setOnProductClickListener(new MyAdapterProduct.OnProductClickListener() {
+            @Override
+            public void onProductClick(Product product) {
+                showFullProductDataDialog(product);
+            }
+        });
+
+        // Pull active date records
+        updateDateAndFetch();
+    }
+
+    private void setupAllElements() {
+        dateDataButton = findViewById(R.id.datePickButton);
+        prevDayButton = findViewById(R.id.prevDayButton);
+        nextDayButton = findViewById(R.id.nextDayButton);
+        dateDataTextView = findViewById(R.id.dateTextView);
+        dayNameTextView = findViewById(R.id.dayNameTextView);
+        noDataTextView = findViewById(R.id.noDataTextView);
+
+        // Summary components
+        summaryLayout = findViewById(R.id.summaryLayout);
+        totalKcalTextView = findViewById(R.id.totalKcalTextView);
+        totalProteinTextView = findViewById(R.id.totalProteinTextView);
+        totalFatTextView = findViewById(R.id.totalFatTextView);
+        totalCarbsTextView = findViewById(R.id.totalCarbsTextView);
+    }
+
+    private void addListeners() {
+        dateDataButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MaterialDatePicker<Long> datePicker = MaterialDatePicker.Builder.datePicker()
+                        .setTitleText("Select a Date")
+                        .setSelection(MaterialDatePicker.todayInUtcMilliseconds())
+                        .build();
+
+                datePicker.addOnPositiveButtonClickListener(selection -> {
+                    dateOfData = sqlDateFormat.format(new Date(selection));
+                    updateDateAndFetch();
+                });
+
+                datePicker.show(getSupportFragmentManager(), "MATERIAL_DATE_PICKER");
+            }
+        });
+
+        prevDayButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                shiftDate(-1);
+            }
+        });
+
+        nextDayButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                shiftDate(1);
+            }
+        });
+    }
+
+    private void shiftDate(int amount) {
+        try {
+            Date currentDate = sqlDateFormat.parse(dateOfData);
+            if (currentDate != null) {
+                Calendar cal = Calendar.getInstance();
+                cal.setTime(currentDate);
+                cal.add(Calendar.DATE, amount);
+                dateOfData = sqlDateFormat.format(cal.getTime());
+                updateDateAndFetch();
+            }
+        } catch (Exception e) {
+            Log.e("DayData", "Error updating calendar selection offset: " + e.getMessage());
+        }
+    }
+
+    private void updateDateAndFetch() {
+        dateDataTextView.setText(dateOfData);
+        updateDayOfWeekName(dateOfData);
+        getDataForDate(dateOfData);
+    }
+
+    private void updateDayOfWeekName(String sqlDateStr) {
+        try {
+            Date date = sqlDateFormat.parse(sqlDateStr);
+            if (date != null) {
+                String nameOfDay = dayNameFormat.format(date);
+                dayNameTextView.setText(nameOfDay);
+            }
+        } catch (Exception e) {
+            dayNameTextView.setText("");
+        }
+    }
+
+    private void getDataForDate(String dateInSQLFormat) {
+        String query = QueryMaker.getAllProductsFromCalendarTableLikeDate(dateInSQLFormat);
+
+        GetFromSQLDatabase.runAzureQueryAIChat(query, new AzureDataCallback() {
+            @Override
+            public void onSuccess(ArrayList<RowInTable> resultTable) {
+                products = resultTable;
+                setDataToView();
+            }
+
+            @Override
+            public void onFailure(String errorMessage) {
+                System.out.println("Failed to get data: " + errorMessage);
+                Toast.makeText(DayData.this, "Connection Error: " + errorMessage, Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void setDataToView() {
+        adapter.clearItems();
+
+        if (products == null || products.isEmpty()) {
+            noDataTextView.setVisibility(View.VISIBLE);
+            summaryLayout.setVisibility(View.GONE);
+            recyclerView.setVisibility(View.GONE);
+            return;
+        }
+
+        noDataTextView.setVisibility(View.GONE);
+        summaryLayout.setVisibility(View.VISIBLE);
+        recyclerView.setVisibility(View.VISIBLE);
+
+        float totalKcal = 0;
+        float totalProtein = 0;
+        float totalFat = 0;
+        float totalCarbs = 0;
+
+        for (RowInTable row : products) {
+            String productName = row.getValue("product_name");
+            String mealName = row.getValue("meal_name");
+            String amountOfProduct = row.getValue("amount_of_product");
+            String kcalConsume = row.getValue("kcal_consume");
+            String proteinConsume = row.getValue("protein_consume");
+            String fatConsume = row.getValue("fat_consume");
+            String carbsConsume = row.getValue("carbs_consume");
+            String comment = row.getValue("comment_optional");
+
+            float amount = safeParseFloat(amountOfProduct);
+            float kcal = safeParseFloat(kcalConsume);
+            float protein = safeParseFloat(proteinConsume);
+            float fat = safeParseFloat(fatConsume);
+            float carbs = safeParseFloat(carbsConsume);
+
+            totalKcal += kcal;
+            totalProtein += protein;
+            totalFat += fat;
+            totalCarbs += carbs;
+
+            Product entry = new Product(productName, mealName, amount, kcal, protein, fat, carbs, comment);
+            adapter.addItem(entry);
+        }
+
+        // Format all summary values to exactly two decimal places
+        totalKcalTextView.setText(String.format(Locale.getDefault(), "Kcal: %.2f", totalKcal));
+        totalProteinTextView.setText(String.format(Locale.getDefault(), "Prot: %.2fg", totalProtein));
+        totalFatTextView.setText(String.format(Locale.getDefault(), "Fat: %.2fg", totalFat));
+        totalCarbsTextView.setText(String.format(Locale.getDefault(), "Carb: %.2fg", totalCarbs));
+    }
+
+    private float safeParseFloat(String value) {
+        if (value == null || value.trim().isEmpty() || value.equalsIgnoreCase("null")) {
+            return 0f;
+        }
+        try {
+            return Float.parseFloat(value);
+        } catch (NumberFormatException e) {
+            return 0f;
+        }
+    }
+
+    private void showFullProductDataDialog(Product product) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(product.getProductName());
+
+        StringBuilder text = new StringBuilder();
+        text.append("Meal: ").append(product.getMealName() != null ? product.getMealName() : "N/A").append("\n");
+        text.append("Amount: ").append(product.getProductMeasureOfProductWeightToCalculateMacro()).append(" g\n\n");
+
+        text.append("Macro Calculations Consumed:\n");
+        text.append("- Calories: ").append(product.getConsumedKcal()).append(" kcal\n");
+        text.append("- Protein: ").append(product.getConsumedProtein()).append(" g\n");
+        text.append("- Fat: ").append(product.getConsumedFat()).append(" g\n");
+        text.append("- Carbohydrates: ").append(product.getConsumedCarbs()).append(" g\n\n");
+
+        if (product.getCommentOptional() != null && !product.getCommentOptional().isEmpty() && !product.getCommentOptional().equalsIgnoreCase("null")) {
+            text.append("Comment: ").append(product.getCommentOptional());
+        }
+
+        builder.setMessage(text.toString());
+        builder.setPositiveButton("Close", null);
+        builder.show();
+    }
+}
+
+
+================================================================================
+FILE: Window.java
+================================================================================
+package com.lukaszjag.diet_tracker_android.gui.general;
+
+public interface Window {
+    private void setFrame() {
+
+    }
+
+    void addPanelsToFrame();
+    void finishSetupFrame();
+    void setPanels();
+}
+
+
+
+================================================================================
+FILE: Notes.java
+================================================================================
+package com.lukaszjag.diet_tracker_android.gui.notes;
+
+import android.app.DatePickerDialog;
+import android.content.Intent;
+import android.net.Uri;
+import android.os.Build;
+import android.os.Bundle;
+import android.os.Environment;
+import android.provider.Settings;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.EditText;
+import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.ItemTouchHelper;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.lukaszjag.diet_tracker_android.R;
+import com.lukaszjag.diet_tracker_android.tools.notes_tool.MyAdapter;
+import com.lukaszjag.diet_tracker_android.tools.notes_tool.Note;
+import com.lukaszjag.diet_tracker_android.tools.notes_tool.NoteStorage;
+import com.lukaszjag.diet_tracker_android.tools.notes_tool.categories.learning_categories.LearningCategories;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
+
+public class Notes extends AppCompatActivity {
+
+    public enum PrimaryCategory {
+        JAVA_ECOSYSTEM(1, "Java ecosystem", List.of("Java", "Spring", "JUNIT", "Android", "Java – Web Scraping", "Java Diet Tracker")),
+        FRONTEND(2, "Frontend", List.of("HTML, CSS", "JavaScript")),
+        CLOUD_AND_INFRASTRUCTURE(3, "Cloud and Infrastructure", List.of("Linux", "PowerShell", "Network", "Cloud", "Windows Server", "Windows", "Containers")),
+        GAMEDEV(4, "GameDev", List.of("UE5")),
+        COMPUTER_SCIENCE(5, "Computer Science", List.of("Algorytmy", "General IT Knowledge")),
+        SOFT_SKILLS(6, "Soft Skills", List.of("Szukanie pracy", "Japoński", "Angielski")),
+        VERSATILE_FRAMEWORKS(7, "Versatile Frameworks", List.of("Python", ".NET(C#)")),
+        WSB(8, "WSB", List.of("WSB")),
+        CERTS(9, "Certs", List.of("CompTIA A+", "CompTIA Network +", "CompTIA Linux +")),
+        BACKEND(10, "Backend", List.of("x")),
+        DATA_AND_BI(11, "Data and BI", List.of("Excel", "Word", "Power Point", "Power BI")),
+        LOW_LEVEL_LANGUAGES(12, "Low-Level Languages", List.of("C", "C++")),
+        DEV_TOOLS(13, "Dev Tools", List.of("Git", "Jira", "Postman", "IDE")),
+        AI_MACHINE_LEARNING(14, "AI & Machine Learning", List.of("AI Assistants", "Machine Learning Basics"));
+
+        private final int id;
+        private final String displayName;
+        private final List<String> subcategories;
+
+        PrimaryCategory(int id, String displayName, List<String> subcategories) {
+            this.id = id;
+            this.displayName = displayName;
+            this.subcategories = subcategories;
+        }
+
+        // --- THESE METHODS MUST BE HERE, AFTER THE SEMICOLON ---
+        public int getId() { return id; }
+        public String getDisplayName() { return displayName; }
+        public List<String> getSubcategories() { return subcategories; }
+
+        public static List<String> getSubcategoriesByDisplayName(String displayName) {
+            return Arrays.stream(values())
+                    .filter(category -> category.getDisplayName().equalsIgnoreCase(displayName))
+                    .findFirst()
+                    .map(PrimaryCategory::getSubcategories)
+                    .orElse(List.of());
+        }
+    }
+    private RecyclerView recyclerView;
+    private MyAdapter adapter;
+    private EditText filterSubtitle;
+    private CheckBox filterCbLearning, filterCbGeneral, filterCbToday, filterCbToBuy;
+    private TextView filterCategorySpinner;
+    private Spinner filterUrgentlySpinner;
+    private List<String> selectedCategories = new ArrayList<>();
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.notes_view_layout);
+
+        recyclerView = findViewById(R.id.recyclerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        adapter = new MyAdapter();
+        recyclerView.setAdapter(adapter);
+
+        filterSubtitle = findViewById(R.id.filterSubtitle);
+        filterCategorySpinner = findViewById(R.id.filterCategorySpinner);
+        filterUrgentlySpinner = findViewById(R.id.filterUrgentlySpinner);
+        filterCbLearning = findViewById(R.id.filterCbLearning);
+        filterCbGeneral = findViewById(R.id.filterCbGeneral);
+        filterCbToday = findViewById(R.id.filterCbToday);
+        filterCbToBuy = findViewById(R.id.filterCbToBuy);
+
+        CompoundButton.OnCheckedChangeListener filterCheckWatcher = (buttonView, isChecked) -> applyFilters();
+        filterCbLearning.setOnCheckedChangeListener(filterCheckWatcher);
+        filterCbGeneral.setOnCheckedChangeListener(filterCheckWatcher);
+        filterCbToday.setOnCheckedChangeListener(filterCheckWatcher);
+        filterCbToBuy.setOnCheckedChangeListener(filterCheckWatcher);
+
+        findViewById(R.id.button).setOnClickListener(v -> showAddNoteDialog());
+
+        checkAndRequestPermissions();
+        setupCategorySpinner();
+        setupUrgencySpinner();
+    }
+
+    private void applyFilters() {
+        String subtitleQuery = filterSubtitle.getText().toString();
+        String urgencyQuery = filterUrgentlySpinner.getSelectedItem() != null ?
+                filterUrgentlySpinner.getSelectedItem().toString() : "All Urgencies";
+
+        adapter.filter(subtitleQuery, selectedCategories, urgencyQuery,
+                filterCbLearning.isChecked(),
+                filterCbGeneral.isChecked(),
+                filterCbToday.isChecked(),
+                filterCbToBuy.isChecked());
+    }
+
+    private void showAddNoteDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        View dialogView = getLayoutInflater().inflate(R.layout.dialog_note, null);
+        builder.setView(dialogView);
+
+        final EditText dialogTitle = dialogView.findViewById(R.id.dialogTitle);
+        final CheckBox dialogCbLearning = dialogView.findViewById(R.id.dialogCbLearning);
+        final CheckBox dialogCbGeneral = dialogView.findViewById(R.id.dialogCbGeneral);
+        final CheckBox dialogCbToday = dialogView.findViewById(R.id.dialogCbToday);
+        final CheckBox dialogCbToBuy = dialogView.findViewById(R.id.dialogCbToBuy);
+
+        builder.setPositiveButton("Create", (dialog, which) -> {
+            boolean isToBuy = dialogCbToBuy.isChecked();
+            // ... [Rest of your existing creation logic using isToBuy]
+            // Note newNote = new Note(..., isToBuy, ...);
+            // adapter.addItem(newNote);
+            NoteStorage.saveNotes(this, adapter.getOriginalList());
+        });
+        builder.setNegativeButton("Cancel", null);
+        builder.create().show();
+    }
+
+    // ... [Rest of your existing methods: setupCategorySpinner, setupUrgencySpinner, checkAndRequestPermissions, etc.]
+    private void setupCategorySpinner() { /* Existing implementation */ }
+    private void setupUrgencySpinner() { /* Existing implementation */ }
+    private void checkAndRequestPermissions() { /* Existing implementation */ }
+}
+
+
+================================================================================
+FILE: AzureApiService.java
+================================================================================
+package com.lukaszjag.diet_tracker_android.tools.cloud_data_tools;
+
+import java.util.List;
+import java.util.Map;
+import retrofit2.Call;
+import retrofit2.http.Body;
+import retrofit2.http.POST;
+
+public interface AzureApiService {
+
+    // Uses POST to safely send long SQL Strings to Azure
+    @POST("api/AndroidAzure")
+    Call<List<Map<String, Object>>> executeCustomQuery(@Body QueryRequest customQueryObject);
+
+}
+
+
+================================================================================
+FILE: AzureDataCallback.java
+================================================================================
+package com.lukaszjag.diet_tracker_android.tools.cloud_data_tools;
+
+import com.lukaszjag.diet_tracker_android.tools.sql_tools.RowInTable;
+
+import java.util.ArrayList;
+
+public interface AzureDataCallback {
+    void onSuccess(ArrayList<RowInTable> resultTable);
+    void onFailure(String errorMessage);
+}
+
+
+
+================================================================================
+FILE: GetFromSQLDatabase.java
+================================================================================
+package com.lukaszjag.diet_tracker_android.tools.cloud_data_tools;
+
+import android.util.Log;
+
+import com.lukaszjag.diet_tracker_android.tools.sql_tools.RowInTable;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+public class GetFromSQLDatabase {
+    public void runCustomAzureQuery(String mySqlString) {
+        AzureApiService apiService = RetrofitClient.getRetrofitInstance().create(AzureApiService.class);
+
+        QueryRequest requestBody = new QueryRequest(mySqlString);
+
+        Call<List<Map<String, Object>>> call = apiService.executeCustomQuery(requestBody);
+
+        call.enqueue(new Callback<List<Map<String, Object>>>() {
+            @Override
+            public void onResponse(Call<List<Map<String, Object>>> call, Response<List<Map<String, Object>>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+
+                    List<Map<String, Object>> dynamicSqlData = response.body();
+
+                    if (dynamicSqlData.size() > 0) {
+                        Log.d("AZURE_CUSTOM_SQL", "amount of rows: " + dynamicSqlData.size());
+
+                        for (int i = 0; i < dynamicSqlData.size(); i++) {
+                            Map<String, Object> row = dynamicSqlData.get(i);
+                            Log.d("AZURE_CUSTOM_SQL", "Row data: [" + i + "]: " + row.get("product_name"));
+                            //Log.d("AZURE_CUSTOM_SQL", "First row data: " + row.toString());
+                        }
+                    } else {
+                        Log.d("AZURE_DATABASE_SQL", "No result");
+                    }
+
+                } else {
+                    Log.d("AZURE_ERROR", "response.isSuccessful() or response.body() != null");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Map<String, Object>>> call, Throwable t) {
+                Log.e("AZURE_CUSTOM_SQL", "Network fail: " + t.getMessage());
+            }
+        });
+    }
+
+    public ArrayList<RowInTable> runAzureQuery(String mySqlString) {
+        AzureApiService apiService = RetrofitClient.getRetrofitInstance().create(AzureApiService.class);
+
+        ArrayList<RowInTable> resultTable = new ArrayList<>();
+        QueryRequest requestBody = new QueryRequest(mySqlString);
+
+        Call<List<Map<String, Object>>> call = apiService.executeCustomQuery(requestBody);
+
+        call.enqueue(new Callback<List<Map<String, Object>>>() {
+            @Override
+            public void onResponse(Call<List<Map<String, Object>>> call, Response<List<Map<String, Object>>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+
+                    List<Map<String, Object>> dynamicSqlData = response.body();
+
+                    if (dynamicSqlData.size() > 0) {
+                        Log.d("AZURE_CUSTOM_SQL", "amount of rows: " + dynamicSqlData.size());
+
+                        int counter = 0;
+                        for (int i = 0; i < dynamicSqlData.size(); i++) {
+                            Map<String, Object> row = dynamicSqlData.get(i);
+                            RowInTable rowInTable = new RowInTable();
+
+                            for (String  key : row.keySet()) {
+                                //System.out.println("hello");
+                                //System.out.println("key: " + key);
+                                //System.out.println("Value: " + row.get(key));
+                                rowInTable.putKeyAndValueToRow(key, String.valueOf(row.get(key)));
+                            }
+
+                            resultTable.add(counter, rowInTable);
+                            counter++;
+                            Log.d("AZURE_CUSTOM_SQL", "Row data: [" + i + "]: " + row.get("product_name"));
+                            //Log.d("AZURE_CUSTOM_SQL", "First row data: " + row.toString());
+                        }
+                    } else {
+                        Log.d("AZURE_DATABASE_SQL", "No result");
+                    }
+
+                } else {
+                    Log.d("AZURE_ERROR", "response.isSuccessful() or response.body() != null");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Map<String, Object>>> call, Throwable t) {
+                Log.e("AZURE_CUSTOM_SQL", "Network fail: " + t.getMessage());
+            }
+        });
+        System.out.println(resultTable.size());
+        return resultTable;
+    }
+
+    public ArrayList<RowInTable> runAzureQueryAIChat(String mySqlString) {
+        AzureApiService apiService = RetrofitClient.getRetrofitInstance().create(AzureApiService.class);
+        ArrayList<RowInTable> resultTable = new ArrayList<>();
+        QueryRequest requestBody = new QueryRequest(mySqlString);
+
+        Call<List<Map<String, Object>>> call = apiService.executeCustomQuery(requestBody);
+
+        try {
+            // .execute() blocks the thread and waits for the network response
+            Response<List<Map<String, Object>>> response = call.execute();
+
+            if (response.isSuccessful() && response.body() != null) {
+                List<Map<String, Object>> dynamicSqlData = response.body();
+
+                if (dynamicSqlData.size() > 0) {
+                    for (int i = 0; i < dynamicSqlData.size(); i++) {
+                        Map<String, Object> row = dynamicSqlData.get(i);
+                        RowInTable rowInTable = new RowInTable();
+
+                        for (String key : row.keySet()) {
+                            rowInTable.putKeyAndValueToRow(key, String.valueOf(row.get(key)));
+                        }
+
+                        resultTable.add(rowInTable);
+                    }
+                } else {
+                    Log.d("AZURE_DATABASE_SQL", "No result");
+                }
+            } else {
+                Log.d("AZURE_ERROR", "response.isSuccessful() or response.body() != null");
+            }
+
+        } catch (IOException e) {
+            // This catches network errors (like no internet connection)
+            Log.e("AZURE_CUSTOM_SQL", "Network fail: " + e.getMessage());
+        }
+
+        // This will now have the correct items because the code waited for the response!
+        System.out.println("Result size: " + resultTable.size());
+
+        return resultTable;
+    }
+// NEW APPROACH
+
+
+    public static void runAzureQueryAIChat(String mySqlString, AzureDataCallback callback) {
+        AzureApiService apiService = RetrofitClient.getRetrofitInstance().create(AzureApiService.class);
+        QueryRequest requestBody = new QueryRequest(mySqlString);
+
+        Log.d("AZURE_DEBUG", "Sending Query: " + mySqlString);
+
+        Call<List<Map<String, Object>>> call = apiService.executeCustomQuery(requestBody);
+
+        call.enqueue(new retrofit2.Callback<List<Map<String, Object>>>() {
+            @Override
+            public void onResponse(Call<List<Map<String, Object>>> call, retrofit2.Response<List<Map<String, Object>>> response) {
+                ArrayList<RowInTable> resultTable = new ArrayList<>();
+
+                // Log response metadata
+                Log.d("AZURE_DEBUG", "Response Code: " + response.code());
+                Log.d("AZURE_DEBUG", "Response Message: " + response.message());
+
+                if (response.isSuccessful()) {
+                    if (response.body() != null) {
+                        List<Map<String, Object>> dynamicSqlData = response.body();
+                        Log.d("AZURE_DEBUG", "Success! Rows retrieved: " + dynamicSqlData.size());
+
+                        if (dynamicSqlData.size() > 0) {
+                            for (int i = 0; i < dynamicSqlData.size(); i++) {
+                                Map<String, Object> row = dynamicSqlData.get(i);
+                                RowInTable rowInTable = new RowInTable();
+
+                                for (String key : row.keySet()) {
+                                    rowInTable.putKeyAndValueToRow(key, String.valueOf(row.get(key)));
+                                }
+                                resultTable.add(rowInTable);
+                            }
+                            callback.onSuccess(resultTable);
+                        } else {
+                            Log.d("AZURE_DEBUG", "Query executed successfully but returned empty dataset.");
+                            callback.onSuccess(new ArrayList<>());
+                        }
+                    } else {
+                        Log.w("AZURE_DEBUG", "Response was successful but body is null.");
+                        callback.onFailure("Server returned empty body");
+                    }
+                } else {
+                    // Extract the detailed error message sent by Azure (e.g., SQL syntax errors)
+                    String detailedError = "Unknown error";
+                    try {
+                        if (response.errorBody() != null) {
+                            detailedError = response.errorBody().string();
+                        }
+                    } catch (IOException e) {
+                        Log.e("AZURE_DEBUG", "Failed to parse error body: " + e.getMessage());
+                    }
+
+                    Log.e("AZURE_ERROR_DETAILS", "HTTP Error " + response.code() + ": " + detailedError);
+                    callback.onFailure("Server error (" + response.code() + "): " + detailedError);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Map<String, Object>>> call, Throwable t) {
+                Log.e("AZURE_DEBUG", "Network Transport Failure: " + t.getMessage(), t);
+                callback.onFailure("Network fail: " + t.getMessage());
+            }
+        });
+    }
+}
+
+
+
+================================================================================
+FILE: QueryRequest.java
+================================================================================
+package com.lukaszjag.diet_tracker_android.tools.cloud_data_tools;
+
+public class QueryRequest {
+    private String sql_query;
+
+    public QueryRequest(String customQuery) {
+        this.sql_query = customQuery;
+    }
+}
+
+
+================================================================================
+FILE: RetrofitClient.java
+================================================================================
+package com.lukaszjag.diet_tracker_android.tools.cloud_data_tools;
+
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
+public class RetrofitClient {
+    // Exact domain, ending in a slash:
+    private static final String BASE_URL = "https://diettrackerandroidversionapi-grcbhva9e5gqhzhz.polandcentral-01.azurewebsites.net/";
+    private static Retrofit retrofit;
+
+    public static Retrofit getRetrofitInstance() {
+        if (retrofit == null) {
+            retrofit = new Retrofit.Builder()
+                    .baseUrl(BASE_URL)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build();
+        }
+        return retrofit;
+    }
+}
+
+
+================================================================================
+FILE: DatePickerFragment.java
+================================================================================
+package com.lukaszjag.diet_tracker_android.tools.date_tools;
+
+import android.app.DatePickerDialog;
+import android.app.Dialog;
+import android.os.Bundle;
+import android.widget.DatePicker;
+
+import androidx.fragment.app.DialogFragment;
+
+import java.util.Calendar;
+
+public class DatePickerFragment extends DialogFragment implements DatePickerDialog.OnDateSetListener {
+
+    @Override
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
+        // Use the current date as the default date in the picker.
+        final Calendar c = Calendar.getInstance();
+        int year = c.get(Calendar.YEAR);
+        int month = c.get(Calendar.MONTH);
+        int day = c.get(Calendar.DAY_OF_MONTH);
+
+        // Create a new instance of DatePickerDialog and return it.
+        return new DatePickerDialog(requireContext(), this, year, month, day);
+    }
+
+    public void onDateSet(DatePicker view, int year, int month, int day) {
+        // Do something with the date the user picks.
+    }
+}
+
+
+
+================================================================================
+FILE: MyDate.java
+================================================================================
+package com.lukaszjag.diet_tracker_android.tools.date_tools;
+
+
+import java.text.DateFormat;
+import java.text.Format;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.Calendar;
+import java.util.Date;
+
+public class MyDate {
+    public static final Date dateLocal = new Date();
+
+    //<editor-fold desc="Get amount of - (...)">
+    public static int getAmountOfDaysInMonth(String month) {
+        if (month.equals("January")) {
+            return 31;
+        }
+        if (month.equals("February")) {
+            return 28;
+        }
+        if (month.equals("March")) {
+            return 31;
+        }
+        if (month.equals("April")) {
+            return 30;
+        }
+        if (month.equals("May")) {
+            return 31;
+        }
+        if (month.equals("June")) {
+            return 30;
+        }
+        if (month.equals("July")) {
+            return 31;
+        }
+        if (month.equals("August")) {
+            return 31;
+        }
+        if (month.equals("September")) {
+            return 30;
+        }
+        if (month.equals("October")) {
+            return 31;
+        }
+        if (month.equals("November")) {
+            return 30;
+        }
+        if (month.equals("December")) {
+            return 31;
+        }
+        return -1;
+    }
+
+    public static int getAmountOfDaysInMonthIfContainsItsName(String month) {
+        int amountOfDays = -1;
+        int amountOfDetectedMonth = 0;
+        if (month.toLowerCase().contains("january")) {
+            amountOfDays = 31;
+            amountOfDetectedMonth++;
+        }
+        if (month.toLowerCase().contains("february")) {
+            amountOfDays = 28;
+            amountOfDetectedMonth++;
+        }
+        if (month.toLowerCase().contains("march")) {
+            amountOfDays = 31;
+            amountOfDetectedMonth++;
+        }
+        if (month.toLowerCase().contains("april")) {
+            amountOfDays = 30;
+            amountOfDetectedMonth++;
+        }
+        if (month.toLowerCase().contains("may")) {
+            amountOfDays = 31;
+            amountOfDetectedMonth++;
+        }
+        if (month.toLowerCase().contains("june")) {
+            amountOfDays = 30;
+            amountOfDetectedMonth++;
+        }
+        if (month.toLowerCase().contains("july")) {
+            amountOfDays = 31;
+            amountOfDetectedMonth++;
+        }
+        if (month.toLowerCase().contains("august")) {
+            amountOfDays = 31;
+            amountOfDetectedMonth++;
+        }
+        if (month.toLowerCase().contains("september")) {
+            amountOfDays = 30;
+            amountOfDetectedMonth++;
+        }
+        if (month.toLowerCase().contains("october")) {
+            amountOfDays = 31;
+            amountOfDetectedMonth++;
+        }
+        if (month.toLowerCase().contains("november")) {
+            amountOfDays = 30;
+            amountOfDetectedMonth++;
+        }
+        if (month.toLowerCase().contains("december")) {
+            amountOfDays = 31;
+            amountOfDetectedMonth++;
+        }
+
+        if (amountOfDays > 1) {
+
+            System.out.println("Detected more then one month in input string");
+            // TODO - 14.12.25
+            //throw new IOException("Detected more then one month in input string");
+        }
+
+
+        if (amountOfDays > 1) {
+            System.out.println();
+        }
+        return amountOfDays;
+    }
+
+    public static int getAmountOfDaysInMonth(int month) {
+        if (month == 1) {
+            return 31;
+        }
+        if (month == 2) {
+            return 28;
+        }
+        if (month == 3) {
+            return 31;
+        }
+        if (month == 4) {
+            return 30;
+        }
+        if (month == 5) {
+            return 31;
+        }
+        if (month == 6) {
+            return 30;
+        }
+        if (month == 7) {
+            return 31;
+        }
+        if (month == 8) {
+            return 31;
+        }
+        if (month == 9) {
+            return 30;
+        }
+        if (month == 10) {
+            return 31;
+        }
+        if (month == 11) {
+            return 30;
+        }
+        if (month == 12) {
+            return 31;
+        }
+        return -1;
+    }
+
+    //</editor-fold>
+
+    //<editor-fold desc="Get number of - (...)">
+    public static int getNumberOfMonthInYear(String month) {
+        if (month.equalsIgnoreCase("January")) {
+            return 1;
+        }
+        if (month.equalsIgnoreCase("February")) {
+            return 2;
+        }
+        if (month.equalsIgnoreCase("March")) {
+            return 3;
+        }
+        if (month.equalsIgnoreCase("April")) {
+            return 4;
+        }
+        if (month.equalsIgnoreCase("May")) {
+            return 5;
+        }
+        if (month.equalsIgnoreCase("June")) {
+            return 6;
+        }
+        if (month.equalsIgnoreCase("July")) {
+            return 7;
+        }
+        if (month.equalsIgnoreCase("August")) {
+            return 8;
+        }
+        if (month.equalsIgnoreCase("September")) {
+            return 9;
+        }
+        if (month.equalsIgnoreCase("October")) {
+            return 10;
+        }
+        if (month.equalsIgnoreCase("November")) {
+            return 11;
+        }
+        if (month.equalsIgnoreCase("December")) {
+            return 12;
+        }
+        return -1;
+    }
+
+    //</editor-fold>
+
+    //<editor-fold desc="Get name of - (...)">
+    public static String getNameOfMonthFromNumber(int month) {
+
+        if (month == 1) {
+            return "January";
+        }
+        if (month == 2) {
+            return "February";
+        }
+
+        if (month == 3) {
+            return "March";
+        }
+
+        if (month == 4) {
+            return "April";
+        }
+
+        if (month == 5) {
+            return "May";
+        }
+
+        if (month == 6) {
+            return "June";
+        }
+
+        if (month == 7) {
+            return "July";
+        }
+
+
+        if (month == 8) {
+            return "August";
+        }
+
+        if (month == 9) {
+            return "September";
+        }
+
+        if (month == 10) {
+            return "October";
+        }
+
+        if (month == 11) {
+            return "November";
+        }
+
+        if (month == 12) {
+            return "December";
+        }
+
+        return "-1";
+    }
+
+    public static String getNameOfMonthFromNumberSQLFormat(int month) {
+        if (month == 1) {
+            return "01";
+        }
+
+        if (month == 2) {
+            return "02";
+        }
+
+        if (month == 3) {
+            return "03";
+        }
+
+        if (month == 4) {
+            return "04";
+        }
+
+
+        if (month == 5) {
+            return "05";
+        }
+
+        if (month == 6) {
+            return "06";
+        }
+
+        if (month == 7) {
+            return "07";
+        }
+
+
+        if (month == 8) {
+            return "08";
+        }
+
+        if (month == 9) {
+            return "09";
+        }
+
+        if (month == 10) {
+            return "10";
+        }
+
+        if (month == 11) {
+            return "11";
+        }
+
+        if (month == 12) {
+            return "12";
+        }
+
+        return "-1";
+    }
+
+    public static String getNameOfMonthFromNumberSQLFormat(String month) {
+        if (month.equalsIgnoreCase("January")) {
+            return "01";
+        }
+        if (month.equalsIgnoreCase("February")) {
+            return "02";
+        }
+        if (month.equalsIgnoreCase("March")) {
+            return "03";
+        }
+        if (month.equalsIgnoreCase("April")) {
+            return "04";
+        }
+        if (month.equalsIgnoreCase("May")) {
+            return "05";
+        }
+        if (month.equalsIgnoreCase("June")) {
+            return "06";
+        }
+        if (month.equalsIgnoreCase("July")) {
+            return "07";
+        }
+        if (month.equalsIgnoreCase("August")) {
+            return "08";
+        }
+        if (month.equalsIgnoreCase("September")) {
+            return "09";
+        }
+        if (month.equalsIgnoreCase("October")) {
+            return "10";
+        }
+        if (month.equalsIgnoreCase("November")) {
+            return "11";
+        }
+        if (month.equalsIgnoreCase("December")) {
+            return "12";
+        }
+        return "-1";
+    }
+
+    // TODO
+    public static int getNameOfMonthContainsInString(String fullStringContainsMonth) {
+        int counterMonthsInText = 0;
+        int monthNumber = -2;
+        if (fullStringContainsMonth.toLowerCase().contains("january")) {
+            monthNumber = 1;
+            counterMonthsInText++;
+        }
+        if (fullStringContainsMonth.toLowerCase().contains("february")) {
+            monthNumber = 2;
+            counterMonthsInText++;
+        }
+        if (fullStringContainsMonth.toLowerCase().contains("march")) {
+            monthNumber = 3;
+            counterMonthsInText++;
+        }
+        if (fullStringContainsMonth.toLowerCase().contains("april")) {
+            monthNumber = 4;
+            counterMonthsInText++;
+        }
+        if (fullStringContainsMonth.toLowerCase().contains("may")) {
+            monthNumber = 5;
+            counterMonthsInText++;
+        }
+        if (fullStringContainsMonth.toLowerCase().contains("june")) {
+            monthNumber = 6;
+            counterMonthsInText++;
+        }
+        if (fullStringContainsMonth.toLowerCase().contains("july")) {
+            monthNumber = 7;
+            counterMonthsInText++;
+        }
+        if (fullStringContainsMonth.toLowerCase().contains("august")) {
+            monthNumber = 8;
+            counterMonthsInText++;
+        }
+        if (fullStringContainsMonth.toLowerCase().contains("september")) {
+            monthNumber = 9;
+            counterMonthsInText++;
+        }
+        if (fullStringContainsMonth.toLowerCase().contains("october")) {
+            monthNumber = 10;
+            counterMonthsInText++;
+        }
+        if (fullStringContainsMonth.toLowerCase().contains("november")) {
+            monthNumber = 11;
+            counterMonthsInText++;
+        }
+        if (fullStringContainsMonth.toLowerCase().contains("december")) {
+            monthNumber = 12;
+            counterMonthsInText++;
+        }
+
+        // TODO
+        if (counterMonthsInText > 1) {
+            return -100;
+        } else if (counterMonthsInText == 1) {
+            return monthNumber;
+        } else {
+            return -1;
+        }
+    }
+
+    public static String getDayNameInPascalCase() {
+        Format format = new SimpleDateFormat("EEEE");
+        java.util.Date utilDateImport = new java.util.Date();
+        String dayNameCurrentDatePascalCase = format.format(utilDateImport);
+        return dayNameCurrentDatePascalCase;
+    }
+
+    public static String getDayNameInLowerCase() {
+        Format format = new SimpleDateFormat("EEEE");
+        java.util.Date utilDateImport = new java.util.Date();
+        String dayNameCurrentDateLowerCase = format.format(utilDateImport);
+        return dayNameCurrentDateLowerCase.toLowerCase();
+    }
+
+    public static String getDayNameInLowerCase(String dateInSQLFormat) {
+        // Parses "yyyy-MM-dd" automatically
+        LocalDate date = LocalDate.parse(dateInSQLFormat);
+
+        // getDayOfWeek().name() returns "MONDAY", then we convert it
+        return date.getDayOfWeek().name().toLowerCase();
+    }
+
+    //</editor-fold>
+
+    //<editor-fold desc="Get date in (...) format">
+    public static String[] getAllDaysInMonthAndYearSQLFriendlyFormat(int month, int year) {
+        String[] allDaysInSQLFormat = new String[getAmountOfDaysInMonth(month)];
+
+        String monthPart = "";
+        if (month < 10) {
+            monthPart = "0" + month;
+        } else {
+            monthPart = "" + month;
+        }
+
+        for (int i = 0; i < allDaysInSQLFormat.length; i++) {
+            if (i < 10) {
+                allDaysInSQLFormat[i] = "" + year + "-" + monthPart + "-" + "0" + (i + 1);
+            } else {
+                allDaysInSQLFormat[i] = "" + year + "-" + monthPart + "-" + (i + 1);
+            }
+        }
+
+        return allDaysInSQLFormat;
+    }
+
+    public static String getNextDayDateSQLFriendlyFormat(String dateSQLFormat) {
+        String dt = dateSQLFormat;  // Start date
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Calendar c = Calendar.getInstance();
+        try {
+            c.setTime(sdf.parse(dt));
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
+        c.add(Calendar.DATE, 1);  // number of days to add
+        dt = sdf.format(c.getTime());
+        return dt;
+    }
+
+    public static String getNextDayDateName(String dayName) {
+        String dt = dayName;  // Start date
+        SimpleDateFormat sdf = new SimpleDateFormat("EEEE");
+        Calendar c = Calendar.getInstance();
+        try {
+            c.setTime(sdf.parse(dt));
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
+        c.add(Calendar.DAY_OF_WEEK, 1);  // number of days to add
+        dt = sdf.format(c.getTime());
+        return dt;
+    }
+
+    public static String getPreviousDayDateName(String dayName) {
+        String dt = dayName;  // Start date
+        SimpleDateFormat sdf = new SimpleDateFormat("EEEE");
+        Calendar c = Calendar.getInstance();
+        try {
+            c.setTime(sdf.parse(dt));
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
+        c.add(Calendar.DAY_OF_WEEK, -1);  // number of days to add
+        dt = sdf.format(c.getTime());
+        return dt;
+    }
+
+    public static String getPreviousDayDateSQLFriendlyFormat(String dateSQLFormat) {
+        String dt = dateSQLFormat;  // Start date
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Calendar c = Calendar.getInstance();
+        try {
+            c.setTime(sdf.parse(dt));
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
+        c.add(Calendar.DATE, -1);  // number of days to add
+        dt = sdf.format(c.getTime());
+        return dt;
+    }
+
+    // TODO
+    public static String getNextDateFromMontAndYearSQLFriendlyFormat(String monthInNumber, String year) {
+        String dt = year + "-" + monthInNumber;  // Start date
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM");
+        Calendar c = Calendar.getInstance();
+        try {
+            c.setTime(sdf.parse(dt));
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
+        c.add(Calendar.MONTH, 1);  // number of months to add
+        dt = sdf.format(c.getTime());
+        return dt;
+    }
+
+    public static String getNextDateFromMontAndYearSQLFriendlyFormat(int month, int year) {
+        String monthInNumber = "";
+        if (month < 10) {
+            monthInNumber += "0" + month;
+        } else {
+            monthInNumber = month + "";
+        }
+
+        String dt = year + "-" + monthInNumber;  // Start date
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM");
+        Calendar c = Calendar.getInstance();
+        try {
+            c.setTime(sdf.parse(dt));
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
+        c.add(Calendar.MONTH, 1);  // number of months to add
+        dt = sdf.format(c.getTime());
+        return dt;
+    }
+
+    public static String getPreviousDateFromMontAndYearSQLFriendlyFormat(String monthInNumber, String year) {
+        String dt = year + "-" + monthInNumber;  // Start date
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM");
+        Calendar c = Calendar.getInstance();
+        try {
+            c.setTime(sdf.parse(dt));
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
+        c.add(Calendar.DATE, -1);  // number of months to add
+        dt = sdf.format(c.getTime());
+        return dt;
+    }
+
+    public static String getPreviousDateFromMontAndYearSQLFriendlyFormat(int month, int year) {
+        String monthInNumber = "";
+        if (month < 10) {
+            monthInNumber += "0" + month;
+        } else {
+            monthInNumber = month + "";
+        }
+
+        String dt = year + "-" + monthInNumber;  // Start date
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM");
+        Calendar c = Calendar.getInstance();
+        try {
+            c.setTime(sdf.parse(dt));
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
+        c.add(Calendar.DATE, -1);  // number of months to add
+        dt = sdf.format(c.getTime());
+        return dt;
+    }
+    //</editor-fold>
+
+    //GetDateFrom
+    public static String getYearFromSQLFriendlyFormatDate(String date) {
+        return date.substring(0, 4);
+    }
+
+    public static int getYearFromSQLFriendlyFormatDateToInt(String date) {
+        return Integer.valueOf(date.substring(0, 4));
+    }
+
+    public static String getMonthFromSQLFriendlyFormatDate(String date) {
+        return date.substring(5, 7);
+    }
+
+    public static int getMonthFromSQLFriendlyFormatDateToInt(String date) {
+        return Integer.valueOf(date.substring(5, 7));
+    }
+
+    public static boolean isYearAndMonthHasPassed(int year, int month, int day) {
+        Date date = dateLocal;
+        Date passedDate = new Date(year, month, day);
+
+        if (passedDate.before(date)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    //<editor-fold desc="Get data from current date ">
+    public static int getCurrentMonthNumber() {
+        return Integer.valueOf(new SimpleDateFormat("MM").format(dateLocal));
+    }
+
+    public static String getCurrentMonthName() {
+        return new SimpleDateFormat("MMMM").format(dateLocal);
+    }
+
+    public static int getCurrentYear() {
+        return Integer.valueOf(new SimpleDateFormat("yyyy").format(dateLocal));
+    }
+
+    public static int getAmountOfDaysInCurrentMonthOPassedMonth(int year, int month) {
+        LocalDate date = LocalDate.now();
+
+        LocalDate passedDate = LocalDate.of(year, month, MyDate.getAmountOfDaysInMonth(month));
+
+        if (date.isAfter(passedDate)) {
+            return MyDate.getAmountOfDaysInMonth(month);
+        } else {
+            return date.getDayOfMonth();
+        }
+    }
+
+    public static String getCurrentDayInSQLFormat() {
+        return new SimpleDateFormat("yyyy-MM-dd").format(dateLocal);
+    }
+
+
+    public static String getCurrentYearAndMonthInSQLFormat() {
+        String result = new SimpleDateFormat("yyyy-MM").format(dateLocal);
+        result += "%";
+        return result;
+    }
+
+    public static String[] getAllDaysForCurrentMonthInSQLFriendlyFormat() {
+        int monthInt = Integer.valueOf(new SimpleDateFormat("MM").format(dateLocal));
+        String firstPartOfResult = new SimpleDateFormat("yyyy-MM").format(dateLocal);
+
+        int amountOfDaysInCurrentMonth = getAmountOfDaysInMonth(monthInt);
+        String[] allDays = new String[amountOfDaysInCurrentMonth];
+
+        for (int i = 0; i < amountOfDaysInCurrentMonth; i++) {
+            if (i < 9) {
+                allDays[i] = firstPartOfResult + "-0" + (i + 1);
+            } else {
+                allDays[i] = firstPartOfResult + "-" + (i + 1);
+            }
+        }
+        return allDays;
+    }
+
+    public static String getCurrentDayNameOfDayCapitalizationCase() {
+        Format format = new SimpleDateFormat("EEEE");
+        java.util.Date utilDateImport = new java.util.Date();
+        String dayName = format.format(utilDateImport);
+
+        return dayName;
+    }
+
+    public static String getCurrentDayNameOfDayLowerCase() {
+        Format format = new SimpleDateFormat("EEEE");
+        java.util.Date utilDateImport = new java.util.Date();
+        String dayName = format.format(utilDateImport);
+
+        return dayName.toLowerCase();
+    }
+    //</editor-fold>
+
+    //<editor-fold desc="Check data correctness">
+    public static boolean checkSQLFormat(String date) {
+        String DATE_FORMAT = "yyyy-MM-dd";
+
+        if (!date.matches("[1-9]\\d{3}-\\d{2}-\\d{2}")) {
+            return false;
+        }
+
+        try {
+            DateFormat df = new SimpleDateFormat(DATE_FORMAT);
+            df.setLenient(false);
+            df.parse(date);
+            System.out.println(date);
+            return true;
+        } catch (ParseException e) {
+            return false;
+        }
+
+    }
+    //</editor-fold>
+}
+
+
+================================================================================
+FILE: Debug.java
+================================================================================
+package com.lukaszjag.diet_tracker_android.tools.debug_tools;
+
+import static com.lukaszjag.diet_tracker_android.config.Config.ANSI_BLUE;
+import static com.lukaszjag.diet_tracker_android.config.Config.ANSI_RED;
+import static com.lukaszjag.diet_tracker_android.config.Config.ANSI_RESET;
+import static com.lukaszjag.diet_tracker_android.config.Config.ANSI_YELLOW;
+
+public class Debug {
+    public static void printRedSystemPrintln(String message){
+        System.out.println(ANSI_RED + message + ANSI_RESET);;
+    }
+
+    public static void printYellowSystemPrintln(String message){
+        System.out.println(ANSI_YELLOW + message + ANSI_RESET);;
+    }
+
+
+
+    public static void printBlueSystemPrintln(String message){
+        System.out.println(ANSI_BLUE + message +  ANSI_RESET);;
+    }
+
+    public static void printKeyAndValue(String key, String value, int amountOfTabsBetween){
+        int amountOfTabs = (key.length()+1) / 4;
+        String tabs = "";
+
+        for (int j = 0; j < 6-amountOfTabs; j++) {
+            tabs += "\t";
+        }
+
+        System.out.println("key: " + key + tabs + " value: " + value);
+    }
+}
+
+
+
+================================================================================
+FILE: MyAdapter.java
+================================================================================
+package com.lukaszjag.diet_tracker_android.tools.notes_tool;
+
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.TextView;
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.lukaszjag.diet_tracker_android.R;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+
+public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
+
+    public static final int SORT_NONE = 0;
+    public static final int SORT_DATE_NEWEST = 1;
+    public static final int SORT_DATE_OLDEST = 2;
+    public static final int SORT_URGENCY_HIGH = 3;
+    public static final int SORT_URGENCY_LOW = 4;
+
+    public interface OnItemClickListener {
+        void onItemClick(int position, Note note);
+    }
+
+    private List<Note> noteList;
+    private List<Note> originalList;
+    private OnItemClickListener listener;
+
+    private boolean hideSection1 = false;
+    private boolean hideSection2 = false;
+    private boolean hideSection3 = false;
+    private boolean hideSection4 = false;
+
+    private int sortCriteria = SORT_NONE;
+
+    public MyAdapter() {
+        this.noteList = new ArrayList<>();
+        this.originalList = new ArrayList<>();
+    }
+
+    public List<Note> getOriginalList() { return originalList; }
+
+    public void setOnItemClickListener(OnItemClickListener listener) { this.listener = listener; }
+
+    public void setSectionVisibilities(boolean hideS1, boolean hideS2, boolean hideS3, boolean hideS4) {
+        this.hideSection1 = hideS1;
+        this.hideSection2 = hideS2;
+        this.hideSection3 = hideS3;
+        this.hideSection4 = hideS4;
+        notifyDataSetChanged();
+    }
+
+    public void setSortCriteria(int criteria) {
+        this.sortCriteria = criteria;
+        applySort();
+        notifyDataSetChanged();
+    }
+
+    public void addItem(Note note) {
+        noteList.add(note);
+        originalList.add(note);
+        applySort();
+        notifyItemInserted(noteList.indexOf(note));
+    }
+
+    public void setItem(int position, Note note) {
+        if (position >= 0 && position < noteList.size()) {
+            Note oldNote = noteList.get(position);
+            int origIdx = originalList.indexOf(oldNote);
+            if (origIdx != -1) originalList.set(origIdx, note);
+            noteList.set(position, note);
+            applySort();
+            notifyDataSetChanged();
+        }
+    }
+
+    public void deleteItem(int position) {
+        if (position >= 0 && position < noteList.size()) {
+            Note note = noteList.get(position);
+            originalList.remove(note);
+            noteList.remove(position);
+            notifyItemRemoved(position);
+            notifyItemRangeChanged(position, noteList.size());
+        }
+    }
+
+    private void applySort() {
+        if (sortCriteria == SORT_NONE) return;
+        Collections.sort(noteList, (n1, n2) -> {
+            switch (sortCriteria) {
+                case SORT_DATE_NEWEST: return (n2.getDateCreated() != null ? n2.getDateCreated() : "").compareTo(n1.getDateCreated() != null ? n1.getDateCreated() : "");
+                case SORT_DATE_OLDEST: return (n1.getDateCreated() != null ? n1.getDateCreated() : "").compareTo(n2.getDateCreated() != null ? n2.getDateCreated() : "");
+                case SORT_URGENCY_HIGH: return Integer.compare(getUrgencyWeight(n2), getUrgencyWeight(n1));
+                case SORT_URGENCY_LOW: return Integer.compare(getUrgencyWeight(n1), getUrgencyWeight(n2));
+                default: return 0;
+            }
+        });
+    }
+
+    private int getUrgencyWeight(Note note) {
+        if (note == null) return 0;
+        int idx = note.getUrgentScaleEnglish().indexOf(note.getNoteUrgently());
+        return (idx != -1) ? idx : 0;
+    }
+
+    public void filter(String subtitle, List<String> selectedCategories, String selectedUrgency,
+                       boolean showLearningOnly, boolean showGeneralOnly, boolean showTodayOnly, boolean showToBuyOnly) {
+        noteList.clear();
+        String qSub = (subtitle != null) ? subtitle.toLowerCase().trim() : "";
+        String qUrg = (selectedUrgency == null || selectedUrgency.equals("All Urgencies")) ? "" : selectedUrgency.toLowerCase().trim();
+
+        for (Note note : originalList) {
+            boolean matchSub = qSub.isEmpty() || (note.getNoteSubtitle() != null && note.getNoteSubtitle().toLowerCase().contains(qSub));
+            boolean matchCat = true;
+            if (selectedCategories != null && !selectedCategories.isEmpty()) {
+                matchCat = false;
+                if (note.getNoteCategory() != null && selectedCategories.contains(note.getNoteCategory().trim())) {
+                    matchCat = true;
+                }
+            }
+            boolean matchUrg = qUrg.isEmpty() || (note.getNoteUrgently() != null && note.getNoteUrgently().toLowerCase().contains(qUrg));
+            boolean matchLearning = !showLearningOnly || note.isLearning();
+            boolean matchGeneral = !showGeneralOnly || note.isGeneralToDo();
+            boolean matchToday = !showTodayOnly || note.isTodayTask();
+            boolean matchToBuy = !showToBuyOnly || note.isToBuyTask();
+
+            if (matchSub && matchCat && matchUrg && matchLearning && matchGeneral && matchToday && matchToBuy) {
+                noteList.add(note);
+            }
+        }
+        applySort();
+        notifyDataSetChanged();
+    }
+
+    @NonNull
+    @Override
+    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_layout, parent, false);
+        return new MyViewHolder(view);
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
+        Note currentItem = noteList.get(position);
+
+        holder.section1.setVisibility(hideSection1 ? View.GONE : View.VISIBLE);
+        holder.section2.setVisibility(hideSection2 ? View.GONE : View.VISIBLE);
+        holder.section3.setVisibility(hideSection3 ? View.GONE : View.VISIBLE);
+        holder.section4.setVisibility(hideSection4 ? View.GONE : View.VISIBLE);
+
+        holder.tv1.setText(currentItem.getNoteTitle());
+        holder.tv2.setText(currentItem.getNoteSubtitle());
+        holder.tv3.setText(currentItem.getNoteDescription());
+
+        holder.tvCategory.setText("Category: " + (currentItem.getNoteCategory() != null ? currentItem.getNoteCategory() : "-"));
+        holder.tvUrgently.setText("Urgently: " + (currentItem.getNoteUrgently() != null ? currentItem.getNoteUrgently() : "-"));
+
+        holder.cbIsLearning.setChecked(currentItem.isLearning());
+        holder.cbIsGeneralToDo.setChecked(currentItem.isGeneralToDo());
+        holder.cbIsTodayTask.setChecked(currentItem.isTodayTask());
+        holder.cbIsToBuy.setChecked(currentItem.isToBuyTask());
+
+        String createdDate = currentItem.getDateCreated() != null ? currentItem.getDateCreated() : "-";
+        String deadlineDate = (currentItem.getDateDeadline() != null && !currentItem.getDateDeadline().isEmpty()) ? currentItem.getDateDeadline() : "None";
+        holder.tvDates.setText("Created: " + createdDate + " | Deadline: " + deadlineDate);
+        holder.tvDaysSince.setText(currentItem.getDaysSinceCreation() + " days since create");
+
+        holder.itemView.setOnClickListener(v -> {
+            int pos = holder.getAdapterPosition();
+            if (listener != null && pos != RecyclerView.NO_POSITION) listener.onItemClick(pos, noteList.get(pos));
+        });
+    }
+
+    @Override
+    public int getItemCount() { return noteList.size(); }
+
+    public static class MyViewHolder extends RecyclerView.ViewHolder {
+        TextView tv1, tv2, tv3, tvCategory, tvUrgently, tvDates, tvDaysSince;
+        CheckBox cbIsLearning, cbIsGeneralToDo, cbIsTodayTask, cbIsToBuy;
+        View section1, section2, section3, section4;
+
+        public MyViewHolder(@NonNull View itemView) {
+            super(itemView);
+            tv1 = itemView.findViewById(R.id.textView1);
+            tv2 = itemView.findViewById(R.id.textView2);
+            tv3 = itemView.findViewById(R.id.textView3);
+            tvCategory = itemView.findViewById(R.id.tvCategory);
+            tvUrgently = itemView.findViewById(R.id.tvUrgently);
+            tvDates = itemView.findViewById(R.id.tvDates);
+            tvDaysSince = itemView.findViewById(R.id.tvDaysSince);
+            cbIsLearning = itemView.findViewById(R.id.cbIsLearning);
+            cbIsGeneralToDo = itemView.findViewById(R.id.cbIsGeneralToDo);
+            cbIsTodayTask = itemView.findViewById(R.id.cbIsTodayTask);
+            cbIsToBuy = itemView.findViewById(R.id.cbIsToBuy);
+
+            section1 = itemView.findViewById(R.id.section1);
+            section2 = itemView.findViewById(R.id.section2);
+            section3 = itemView.findViewById(R.id.section3);
+            section4 = itemView.findViewById(R.id.section4);
+        }
+    }
+}
+
+
+================================================================================
+FILE: Note.java
+================================================================================
+package com.lukaszjag.diet_tracker_android.tools.notes_tool;
+
+import com.lukaszjag.diet_tracker_android.tools.notes_tool.categories.learning_categories.LearningCategories;
+
+import org.json.JSONObject;
+import org.json.JSONException;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.Locale;
+import java.util.concurrent.TimeUnit;
+
+public class Note {
+    private String noteTitle;
+    private String noteSubtitle;
+    private String noteDescription;
+    private String noteCategory;
+    private String noteUrgently;
+
+    private LearningCategories noteLearningCategories;
+    private boolean isLearning;
+    private boolean isGeneralToDo;
+    private boolean isTodayTask;
+    private boolean isToBuyTask; // New field
+
+    private String dateCreated;
+    private String dateDeadline;
+
+    private ArrayList<String> urgentScaleEnglish = new ArrayList<>(Arrays.asList(
+            "no urgent scale",
+            "Day task",
+            "ASAP",
+            "To end of month",
+            "Week to done",
+            "Optional"));
+
+    public Note() {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+        this.dateCreated = sdf.format(new Date());
+        this.dateDeadline = "";
+        this.noteCategory = "General";
+        this.noteUrgently = "no urgent scale";
+    }
+
+    public Note(String noteTitle, String noteSubtitle, String noteDescription) {
+        this();
+        this.noteTitle = noteTitle;
+        this.noteSubtitle = noteSubtitle;
+        this.noteDescription = noteDescription;
+    }
+
+    public Note(String noteTitle, String noteSubtitle, String noteDescription, String noteCategory, String noteUrgently,
+                boolean isLearning, boolean isGeneralToDo, boolean isTodayTask, boolean isToBuyTask,
+                LearningCategories noteLearningCategories, String dateCreated, String dateDeadline) {
+        this.noteTitle = noteTitle;
+        this.noteSubtitle = noteSubtitle;
+        this.noteDescription = noteDescription;
+        this.noteCategory = noteCategory;
+        this.noteUrgently = noteUrgently;
+        this.isLearning = isLearning;
+        this.isGeneralToDo = isGeneralToDo;
+        this.isTodayTask = isTodayTask;
+        this.isToBuyTask = isToBuyTask;
+        this.noteLearningCategories = noteLearningCategories;
+        this.dateCreated = dateCreated;
+        this.dateDeadline = dateDeadline;
+    }
+
+    public JSONObject toJsonObject() {
+        try {
+            JSONObject json = new JSONObject();
+            json.put("noteTitle", noteTitle);
+            json.put("noteSubtitle", noteSubtitle);
+            json.put("noteDescription", noteDescription);
+            json.put("noteCategory", noteCategory);
+            json.put("noteUrgently", noteUglyUrgent(noteUrgently));
+            json.put("isLearning", isLearning);
+            json.put("isGeneralToDo", isGeneralToDo);
+            json.put("isTodayTask", isTodayTask);
+            json.put("isToBuyTask", isToBuyTask); // Save new field
+            json.put("dateCreated", dateCreated);
+            json.put("dateDeadline", dateDeadline);
+
+            if (noteLearningCategories != null) {
+                JSONObject lcJson = new JSONObject();
+                lcJson.put("categoryName", noteLearningCategories.getCategoryName());
+                lcJson.put("isMainCategory", noteLearningCategories.isMainCategory());
+                lcJson.put("iSubCategory", noteLearningCategories.isiSubCategory());
+                json.put("noteLearningCategories", lcJson);
+            }
+            return json;
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public static Note fromJsonObject(JSONObject json) {
+        try {
+            String title = json.optString("noteTitle", "");
+            String subtitle = json.optString("noteSubtitle", "");
+            String description = json.optString("noteDescription", "");
+            String category = json.optString("noteCategory", "General");
+            String urgently = json.optString("noteUrgently", "no urgent scale");
+            boolean isLearning = json.optBoolean("isLearning", false);
+            boolean isGeneralToDo = json.optBoolean("isGeneralToDo", false);
+            boolean isTodayTask = json.optBoolean("isTodayTask", false);
+            boolean isToBuyTask = json.optBoolean("isToBuyTask", false); // Load new field
+            String dateCreated = json.optString("dateCreated", "");
+            String dateDeadline = json.optString("dateDeadline", "");
+
+            LearningCategories lc = null;
+            if (json.has("noteLearningCategories")) {
+                JSONObject lcJson = json.getJSONObject("noteLearningCategories");
+                String lcName = lcJson.optString("categoryName", "");
+                boolean lcMain = lcJson.optBoolean("isMainCategory", false);
+                boolean lcSub = lcJson.optBoolean("iSubCategory", false);
+                lc = new LearningCategories(lcName, lcMain, lcSub);
+            }
+
+            return new Note(title, subtitle, description, category, urgently,
+                    isLearning, isGeneralToDo, isTodayTask, isToBuyTask, lc, dateCreated, dateDeadline);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    private String noteUglyUrgent(String value) {
+        return value != null ? value : "no urgent scale";
+    }
+
+    // Getters and Setters
+    public long getDaysSinceCreation() {
+        if (dateCreated == null || dateCreated.isEmpty()) return 0;
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+        try {
+            Date createdDate = sdf.parse(dateCreated);
+            Date systemToday = new Date();
+            Date systemTodayClean = sdf.parse(sdf.format(systemToday));
+            long diffInMs = systemTodayClean.getTime() - createdDate.getTime();
+            return TimeUnit.DAYS.convert(diffInMs, TimeUnit.MILLISECONDS);
+        } catch (ParseException e) {
+            return 0;
+        }
+    }
+
+    public String getNoteSubtitle() { return noteSubtitle; }
+    public void setNoteSubtitle(String noteSubtitle) { this.noteSubtitle = noteSubtitle; }
+    public String getNoteTitle() { return noteTitle; }
+    public void setNoteTitle(String noteTitle) { this.noteTitle = noteTitle; }
+    public String getNoteDescription() { return noteDescription; }
+    public void setNoteDescription(String noteDescription) { this.noteDescription = noteDescription; }
+    public String getNoteCategory() { return noteCategory; }
+    public void setNoteCategory(String noteCategory) { this.noteCategory = noteCategory; }
+    public String getNoteUrgently() { return noteUrgently; }
+    public void setNoteUrgently(String noteUrgently) { this.noteUrgently = noteUrgently; }
+    public boolean isLearning() { return isLearning; }
+    public void setLearning(boolean learning) { isLearning = learning; }
+    public boolean isGeneralToDo() { return isGeneralToDo; }
+    public void setGeneralToDo(boolean generalToDo) { isGeneralToDo = generalToDo; }
+    public boolean isTodayTask() { return isTodayTask; }
+    public void setTodayTask(boolean todayTask) { isTodayTask = todayTask; }
+
+    // New Getter/Setter for To Buy
+    public boolean isToBuyTask() { return isToBuyTask; }
+    public void setToBuyTask(boolean toBuyTask) { isToBuyTask = toBuyTask; }
+
+    public LearningCategories getNoteLearningCategories() { return noteLearningCategories; }
+    public void setNoteLearningCategories(LearningCategories noteLearningCategories) { this.noteLearningCategories = noteLearningCategories; }
+    public String getDateCreated() { return dateCreated; }
+    public void setDateCreated(String dateCreated) { this.dateCreated = dateCreated; }
+    public String getDateDeadline() { return dateDeadline; }
+    public void setDateDeadline(String dateDeadline) { this.dateDeadline = dateDeadline; }
+    public ArrayList<String> getUrgentScaleEnglish() { return urgentScaleEnglish; }
+}
+
+
+================================================================================
+FILE: NoteStorage.java
+================================================================================
+package com.lukaszjag.diet_tracker_android.tools.notes_tool;
+
+import android.content.Context;
+import android.net.Uri;
+import android.os.Environment;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.List;
+
+public class NoteStorage {
+    private static final String FILE_NAME = "notes_data.json";
+
+    // Resolves dynamically to the standard Download/diet-tracker-data directory on any Android device
+    private static final File TARGET_DIRECTORY = new File(
+            Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS),
+            "diet-tracker-data"
+    );
+
+    /**
+     * Resolves the target directory and ensures the folder structure is created.
+     */
+    private static File getTargetFile() {
+        if (!TARGET_DIRECTORY.exists()) {
+            TARGET_DIRECTORY.mkdirs(); // Automatically creates "diet-tracker-data" if missing
+        }
+        return new File(TARGET_DIRECTORY, FILE_NAME);
+    }
+
+    /**
+     * Saves the list of notes to the specified external storage path.
+     */
+    public static void saveNotes(Context context, List<Note> notes) {
+        try {
+            JSONArray jsonArray = new JSONArray();
+            for (Note note : notes) {
+                JSONObject noteJson = note.toJsonObject();
+                if (noteJson != null) {
+                    jsonArray.put(noteJson);
+                }
+            }
+            String jsonContent = jsonArray.toString(4);
+
+            File file = getTargetFile();
+            try (FileOutputStream fos = new FileOutputStream(file);
+                 OutputStreamWriter osw = new OutputStreamWriter(fos, StandardCharsets.UTF_8)) {
+                osw.write(jsonContent);
+            }
+        } catch (Exception e) {
+            android.util.Log.e("NoteStorage", "Error saving notes", e);
+        }
+    }
+
+    /**
+     * Loads the list of notes from the specified external storage path.
+     */
+    public static List<Note> loadNotes(Context context) {
+        List<Note> notes = new ArrayList<>();
+        File file = getTargetFile();
+
+        if (!file.exists()) {
+            return notes;
+        }
+
+        try (FileInputStream fis = new FileInputStream(file);
+             InputStreamReader isr = new InputStreamReader(fis, StandardCharsets.UTF_8);
+             BufferedReader reader = new BufferedReader(isr)) {
+
+            StringBuilder sb = new StringBuilder();
+            char[] buffer = new char[1024];
+            int numRead;
+            while ((numRead = reader.read(buffer)) != -1) {
+                sb.append(buffer, 0, numRead);
+            }
+
+            String jsonContent = sb.toString();
+
+            // Strip hidden UTF-8 BOM if present (often added by Windows/external text editors)
+            if (jsonContent.startsWith("\uFEFF")) {
+                jsonContent = jsonContent.substring(1);
+            }
+            jsonContent = jsonContent.trim();
+
+            if (!jsonContent.isEmpty()) {
+                JSONArray jsonArray = new JSONArray(jsonContent);
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    JSONObject noteJson = jsonArray.getJSONObject(i);
+                    Note note = Note.fromJsonObject(noteJson);
+                    if (note != null) {
+                        notes.add(note);
+                    }
+                }
+            }
+        } catch (Exception e) {
+            android.util.Log.e("NoteStorage", "Error reading or parsing notes JSON file", e);
+        }
+
+        return notes;
+    }
+
+    /**
+     * Imports external JSON files via Uri, validates structure, and overwrites local notes storage.
+     */
+    public static boolean importNotes(Context context, Uri sourceUri) {
+        try (InputStream in = context.getContentResolver().openInputStream(sourceUri)) {
+            if (in == null) return false;
+
+            BufferedReader reader = new BufferedReader(new InputStreamReader(in, StandardCharsets.UTF_8));
+            StringBuilder sb = new StringBuilder();
+            char[] buffer = new char[1024];
+            int numRead;
+            while ((numRead = reader.read(buffer)) != -1) {
+                sb.append(buffer, 0, numRead);
+            }
+
+            String jsonContent = sb.toString();
+
+            // Strip hidden UTF-8 BOM if present
+            if (jsonContent.startsWith("\uFEFF")) {
+                jsonContent = jsonContent.substring(1);
+            }
+            jsonContent = jsonContent.trim();
+
+            JSONArray jsonArray = new JSONArray(jsonContent);
+            List<Note> importedNotes = new ArrayList<>();
+            for (int i = 0; i < jsonArray.length(); i++) {
+                Note note = Note.fromJsonObject(jsonArray.getJSONObject(i));
+                if (note != null) {
+                    importedNotes.add(note);
+                }
+            }
+
+            // Write validated imported notes directly to the target external storage
+            saveNotes(context, importedNotes);
+            return true;
+        } catch (Exception e) {
+            android.util.Log.e("NoteStorage", "Error importing notes", e);
+            return false;
+        }
+    }
+}
+
+
+================================================================================
+FILE: Category.java
+================================================================================
+package com.lukaszjag.diet_tracker_android.tools.notes_tool.categories;
+
+public abstract class Category {
+}
+
+
+
+================================================================================
+FILE: iCategory.java
+================================================================================
+package com.lukaszjag.diet_tracker_android.tools.notes_tool.categories;
+
+public interface iCategory {
+}
+
+
+
+================================================================================
+FILE: GeneralCategories.java
+================================================================================
+package com.lukaszjag.diet_tracker_android.tools.notes_tool.categories.general_categories;
+
+public class GeneralCategories {
+    String categoryName;
+}
+
+
+
+================================================================================
+FILE: LearningCategories.java
+================================================================================
+package com.lukaszjag.diet_tracker_android.tools.notes_tool.categories.learning_categories;
+
+import java.util.ArrayList;
+
+public class LearningCategories {
+    private String categoryName;
+    private boolean isMainCategory;
+    private boolean iSubCategory;
+
+    private ArrayList<String> primaryLearningCategory;
+    private ArrayList<String> subcategoryLearningCategory;
+    public LearningCategories(String categoryName, boolean isMainCategory, boolean iSubCategory) {
+        this.categoryName = categoryName;
+        this.isMainCategory = isMainCategory;
+        this.iSubCategory = iSubCategory;
+    }
+
+    @Override
+    public String toString() {
+        return categoryName != null ? categoryName : "Uncategorized";
+    }
+
+    public String getCategoryName() {
+        return categoryName;
+    }
+
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
+    }
+
+    public boolean isMainCategory() {
+        return isMainCategory;
+    }
+
+    public void setMainCategory(boolean mainCategory) {
+        isMainCategory = mainCategory;
+    }
+
+    public boolean isiSubCategory() {
+        return iSubCategory;
+    }
+
+    public void setiSubCategory(boolean iSubCategory) {
+        this.iSubCategory = iSubCategory;
+    }
+}
+
+
+
+================================================================================
+FILE: Macro.java
+================================================================================
+package com.lukaszjag.diet_tracker_android.tools.products_tools;
+
+public class Macro {
+    // Values
+    private float kcal;
+    private float protein;
+    private float fat;
+    private float carbs;
+
+    // Constructors
+    public Macro(){
+        this.kcal = 0;
+        this.protein = 0;
+        this.fat = 0;
+        this.carbs = 0;
+    }
+
+    public Macro(float kcal, float protein, float fat, float carbs){
+        this.kcal = kcal;
+        this.protein = protein;
+        this.fat = fat;
+        this.carbs = carbs;
+    }
+
+    public static boolean isMacroEqual(Macro macro1, Macro macro2){
+        if (macro1.getKcal() == macro2.getKcal()){
+
+        }else{
+            return false;
+        }
+
+        if (macro1.getProtein() == macro2.getProtein()){
+
+        }else{
+            return false;
+        }
+
+        if (macro1.getFat() == macro2.getFat()){
+
+        }else{
+            return false;
+        }
+
+        if (macro1.getCarbs() == macro2.getCarbs()){
+
+        }else{
+            return false;
+        }
+
+        return true;
+    }
+    public static Macro getConsumedMacro(float amount, Macro macro){
+        float amountMultiplier = amount/100.00f;
+        String floatValue = String.format("%2f",amountMultiplier);
+        amountMultiplier = Float.valueOf(floatValue);
+        Macro consumedMacro = new Macro(
+                amountMultiplier * macro.getKcal(),
+                amountMultiplier * macro.getProtein(),
+                amountMultiplier * macro.getFat(),
+                amountMultiplier * macro.getCarbs()
+        );
+        return consumedMacro;
+    }
+
+    public static Macro cutNumberPrecisionForAllValues(Macro macro){
+        Macro cuttedMacro = new Macro(
+                Float.valueOf(String.format("%.0f", macro.getKcal())),
+                Float.valueOf(String.format("%.0f", macro.getProtein())),
+                Float.valueOf(String.format("%.0f", macro.getFat())),
+                Float.valueOf(String.format("%.0f", macro.getCarbs()))
+        );
+
+        return cuttedMacro;
+    }
+
+    public static Macro sumOfTwoMacros(Macro macro1, Macro macro2){
+        Macro sumMacro = new Macro(0,0,0,0);
+        sumMacro.setKcal(macro1.getKcal() +macro2.getKcal());
+        sumMacro.setProtein(macro1.getProtein() +macro2.getProtein());
+        sumMacro.setFat(macro1.getFat() +macro2.getFat());
+        sumMacro.setCarbs(macro1.getCarbs() +macro2.getCarbs());
+
+        return sumMacro;
+    }
+    public static void printAllValues(Macro macro){
+        System.out.println("Kcal \t: " + macro.getKcal());
+        System.out.println("Protein : " + macro.getProtein());
+        System.out.println("Fat \t: " + macro.getFat());
+        System.out.println("Carbs \t: " + macro.getCarbs());
+    }
+
+    public static void showAllMacroData(Macro macro){
+        System.out.println("kcal: " + macro.getKcal());
+        System.out.println("protein: " + macro.getProtein());
+        System.out.println("fat: " + macro.getFat());
+        System.out.println("carbs: " + macro.getCarbs());
+
+    }
+    public static String getShortMacroInformation(Macro macro){
+        String shortMacroInfo = "";
+        shortMacroInfo +=
+                "kcal: " + macro.getKcal() + "--" +
+                        "protein: " + macro.getProtein() + "--" +
+                        "fat: " + macro.getFat() + "--" +
+                        "carbs: " + macro.getCarbs();
+
+        return shortMacroInfo;
+    }
+
+    public static String getShortMacroInformationMinimalFormat(Macro macro){
+        String shortMacroInfo = "";
+        shortMacroInfo +=
+                "kcal: " + String.format("%.2f", macro.getKcal())+ " " +
+                        "protein: " + String.format("%.2f", macro.getProtein()) + " " +
+                        "fat: " + String.format("%.2f", macro.getFat()) + " " +
+                        "carbs: " + String.format("%.2f", macro.getCarbs());
+
+        return shortMacroInfo;
+    }
+
+    public static String getShortMacroInformationPrettyFormat(Macro macro){
+        String shortMacroInfo = "";
+        shortMacroInfo +=
+                "kcal: " + macro.getKcal() + "--\n" +
+                        "protein: " + macro.getProtein() + "--\n" +
+                        "fat: " + macro.getFat() + "--\n" +
+                        "carbs: " + macro.getCarbs();
+
+        return shortMacroInfo;
+    }
+
+    public String getShortMacroInformation(){
+        String shortMacroInfo = "";
+        shortMacroInfo +=
+                "kcal: " + String.format("%.2f", this.kcal) + "\n" +
+                        "protein: " + String.format("%.2f", this.protein)  + "\n" +
+                        "fat: " + String.format("%.2f", this.fat)  + "\n" +
+                        "carbs: " + String.format("%.2f", this.carbs) ;
+
+        return shortMacroInfo;
+    }
+
+    public static Macro divisionMacroByValue(Macro macro, float value){
+        Macro divisionedMacro = new Macro(macro.getKcal() / value,
+                macro.getProtein() / value,
+                macro.getFat() / value,
+                macro.getCarbs() / value
+        );
+
+        return divisionedMacro;
+    }
+
+
+    //<editor-fold desc="Getters and Setters">
+    public float getKcal() {
+        return kcal;
+    }
+
+    public void setKcal(float kcal) {
+        this.kcal = kcal;
+    }
+
+    public float getProtein() {
+        return protein;
+    }
+
+    public void setProtein(float protein) {
+        this.protein = protein;
+    }
+
+    public float getFat() {
+        return fat;
+    }
+
+    public void setFat(float fat) {
+        this.fat = fat;
+    }
+
+    public float getCarbs() {
+        return carbs;
+    }
+
+    public void setCarbs(float carbs) {
+        this.carbs = carbs;
+    }
+    //</editor-fold>
+}
+
+
+
+
+================================================================================
+FILE: MyAdapterProduct.java
+================================================================================
+package com.lukaszjag.diet_tracker_android.tools.products_tools;
+
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.lukaszjag.diet_tracker_android.R;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+
+public class MyAdapterProduct extends RecyclerView.Adapter<MyAdapterProduct.MyViewHolder> {
+
+    private List<Product> productList;
+    private OnProductClickListener onProductClickListener;
+
+    public interface OnProductClickListener {
+        void onProductClick(Product product);
+    }
+
+    public MyAdapterProduct() {
+        this.productList = new ArrayList<>();
+    }
+
+    public void setOnProductClickListener(OnProductClickListener listener) {
+        this.onProductClickListener = listener;
+    }
+
+    public void addItem(Product product) {
+        productList.add(product);
+        notifyItemInserted(productList.size() - 1);
+    }
+
+    public Product getItem(int position) {
+        if (position >= 0 && position < productList.size()) {
+            return productList.get(position);
+        }
+        return null;
+    }
+
+    public void setItem(int position, Product product) {
+        if (position >= 0 && position < productList.size()) {
+            productList.set(position, product);
+            notifyItemChanged(position);
+        }
+    }
+
+    public void deleteItem(int position) {
+        if (position >= 0 && position < productList.size()) {
+            productList.remove(position);
+            notifyItemRemoved(position);
+            notifyItemRangeChanged(position, productList.size());
+        }
+    }
+
+    public void clearItems() {
+        int size = productList.size();
+        productList.clear();
+        notifyItemRangeRemoved(0, size);
+    }
+
+    @NonNull
+    @Override
+    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.product_layout, parent, false);
+        return new MyViewHolder(view);
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
+        Product currentItem = productList.get(position);
+
+        holder.tv1.setText(currentItem.getProductName());
+
+        // Format product amount to 2 decimal places
+        holder.tv2.setText(String.format(Locale.getDefault(), "%.2f g", currentItem.getProductMeasureOfProductWeightToCalculateMacro()));
+
+        // Format consumed kcal to 2 decimal places
+        holder.tv3.setText(String.format(Locale.getDefault(), "Kcal: %.2f", currentItem.getConsumedKcal()));
+
+        if (holder.mealNameTv != null) {
+            holder.mealNameTv.setText(currentItem.getMealName() != null ? currentItem.getMealName() : "N/A");
+        }
+
+        // Format consumed protein, fat, and carbs to 2 decimal places
+        if (holder.proteinTv != null) {
+            holder.proteinTv.setText(String.format(Locale.getDefault(), "P: %.2fg", currentItem.getConsumedProtein()));
+        }
+        if (holder.fatTv != null) {
+            holder.fatTv.setText(String.format(Locale.getDefault(), "F: %.2fg", currentItem.getConsumedFat()));
+        }
+        if (holder.carbsTv != null) {
+            holder.carbsTv.setText(String.format(Locale.getDefault(), "C: %.2fg", currentItem.getConsumedCarbs()));
+        }
+
+        holder.itemView.setOnClickListener(v -> {
+            if (onProductClickListener != null) {
+                onProductClickListener.onProductClick(currentItem);
+            }
+        });
+    }
+
+    @Override
+    public int getItemCount() {
+        return productList.size();
+    }
+
+    public static class MyViewHolder extends RecyclerView.ViewHolder {
+        TextView tv1, tv2, tv3, mealNameTv, proteinTv, fatTv, carbsTv;
+
+        public MyViewHolder(@NonNull View itemView) {
+            super(itemView);
+            tv1 = itemView.findViewById(R.id.productNameTextView);
+            tv2 = itemView.findViewById(R.id.amountOfProductTextView);
+            tv3 = itemView.findViewById(R.id.kcalConsumeTextView);
+            mealNameTv = itemView.findViewById(R.id.mealNameTextView);
+            proteinTv = itemView.findViewById(R.id.proteinConsumeTextView);
+            fatTv = itemView.findViewById(R.id.fatConsumeTextView);
+            carbsTv = itemView.findViewById(R.id.carbsConsumeTextView);
+        }
+    }
+}
+
+
+================================================================================
+FILE: Product.java
+================================================================================
+package com.lukaszjag.diet_tracker_android.tools.products_tools;
+
+import com.lukaszjag.diet_tracker_android.config.Config;
+
+public class Product {
+    private String productName;
+    private float productMeasureOfProductWeightToCalculateMacro;
+    private Macro productMacroForItsSetMeasure;
+    private String productBrand;
+    private float productPackWeight;
+    private String commentOptional;
+
+    // Added support parameters
+    private String mealName;
+    private float consumedKcal;
+    private float consumedProtein;
+    private float consumedFat;
+    private float consumedCarbs;
+
+    public Product(String name, String brand, float productMeasureOfProductWeightToCalculateMacro, Macro product_macro, float weight_of_pack, String commentOptional){
+        this.productName = name;
+        this.productBrand = brand;
+        this.productMeasureOfProductWeightToCalculateMacro = productMeasureOfProductWeightToCalculateMacro;
+        this.productMacroForItsSetMeasure = product_macro;
+        this.productPackWeight = weight_of_pack;
+        this.commentOptional = commentOptional;
+    }
+
+    public Product(String productName, String productMeasureOfProductWeightToCalculateMacro, String kcalProductMacroForItsSetMeasure) {
+        this.productName = productName;
+        this.productMeasureOfProductWeightToCalculateMacro = Float.valueOf(productMeasureOfProductWeightToCalculateMacro);
+        this.productMacroForItsSetMeasure = new Macro(Float.valueOf(kcalProductMacroForItsSetMeasure),0f,0f,0f);
+    }
+
+    // Extended constructor for comprehensive history entries
+    public Product(String productName, String mealName, float amountOfProduct, float consumedKcal, float consumedProtein, float consumedFat, float consumedCarbs, String commentOptional) {
+        this.productName = productName;
+        this.mealName = mealName;
+        this.productMeasureOfProductWeightToCalculateMacro = amountOfProduct;
+        this.consumedKcal = consumedKcal;
+        this.consumedProtein = consumedProtein;
+        this.consumedFat = consumedFat;
+        this.consumedCarbs = consumedCarbs;
+
+        this.commentOptional = commentOptional;
+        this.productMacroForItsSetMeasure = new Macro(consumedKcal, consumedProtein, consumedFat, consumedCarbs);
+    }
+
+    public static boolean isProductEqual(Product productOne, Product productTwo){
+        String[] productOneInArray = productOne.productDataInStringArray(productOne);
+        String[] productTwoInArray = productOne.productDataInStringArray(productTwo);
+
+        for (int i = 0; i < productOneInArray.length; i++) {
+            if(!productOneInArray[i].equals(productTwoInArray[i])){
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public String[] productDataInStringArray(Product productWithData){
+        String[] productDataStringArray = new String[Config.ALL_PRODUCT_VALUES_FIELD_COUNT];
+
+        productDataStringArray[0] = productWithData.getProductName();
+        productDataStringArray[1] = productWithData.getProductBrand();
+        productDataStringArray[2] = String.valueOf(productWithData.getProductPackWeight());
+        productDataStringArray[3] = String.valueOf(productWithData.getProductMeasureOfProductWeightToCalculateMacro());
+        productDataStringArray[4] = String.valueOf(productWithData.getProductMacroForItsSetMeasure().getKcal());
+        productDataStringArray[5] = String.valueOf(productWithData.getProductMacroForItsSetMeasure().getProtein());
+        productDataStringArray[6] = String.valueOf(productWithData.getProductMacroForItsSetMeasure().getFat());
+        productDataStringArray[7] = String.valueOf(productWithData.getProductMacroForItsSetMeasure().getCarbs());
+        productDataStringArray[8] =  productWithData.getCommentOptional();
+        return productDataStringArray;
+    }
+
+    // Getters and Setters
+    public String getProductName() {
+        return productName;
+    }
+
+    public void setProductName(String productName) {
+        this.productName = productName;
+    }
+
+    public float getProductMeasureOfProductWeightToCalculateMacro() {
+        return productMeasureOfProductWeightToCalculateMacro;
+    }
+
+    public void setProductMeasureOfProductWeightToCalculateMacro(float productMeasureOfProductWeightToCalculateMacro) {
+        this.productMeasureOfProductWeightToCalculateMacro = productMeasureOfProductWeightToCalculateMacro;
+    }
+
+    public Macro getProductMacroForItsSetMeasure() {
+        return productMacroForItsSetMeasure;
+    }
+
+    public void setProductMacroForItsSetMeasure(Macro productMacroForItsSetMeasure) {
+        this.productMacroForItsSetMeasure = productMacroForItsSetMeasure;
+    }
+
+    public String getProductBrand() {
+        return productBrand;
+    }
+
+    public void setProductBrand(String productBrand) {
+        this.productBrand = productBrand;
+    }
+
+    public float getProductPackWeight() {
+        return productPackWeight;
+    }
+
+    public void setProductPackWeight(float productPackWeight) {
+        this.productPackWeight = productPackWeight;
+    }
+
+    public String getCommentOptional() {
+        return commentOptional;
+    }
+
+    public void setCommentOptional(String commentOptional) {
+        this.commentOptional = commentOptional;
+    }
+
+    public String getMealName() {
+        return mealName;
+    }
+
+    public void setMealName(String mealName) {
+        this.mealName = mealName;
+    }
+
+    public float getConsumedKcal() {
+        return consumedKcal;
+    }
+
+    public float getConsumedProtein() {
+        return consumedProtein;
+    }
+
+    public float getConsumedFat() {
+        return consumedFat;
+    }
+
+    public float getConsumedCarbs() {
+        return consumedCarbs;
+    }
+
+    @Override
+    public String toString() {
+        return "Product{" + "\n" +
+                "productName = '" + productName + '\'' + "\n" +
+                "productMeasureOfProductWeightToCalculateMacro = " + productMeasureOfProductWeightToCalculateMacro + "\n" +
+                "productMacroForItsSetMeasure = " + productMacroForItsSetMeasure.getShortMacroInformation() + "\n" +
+                "productBrand = '" + productBrand + '\'' + "\n" +
+                "productPackWeight = " + productPackWeight + "\n" +
+                "commentOptional = '" + commentOptional + '\'' + "\n" +
+                '}';
+    }
+}
+
+
+================================================================================
+FILE: QueryMaker.java
+================================================================================
+package com.lukaszjag.diet_tracker_android.tools.sql_tools;
+
+public class QueryMaker {
+    public static String getAllProductTableLikeProductNameCaseInsensitive(String productData) {
+        // If productData contains a single quote, we escape it to prevent SQL syntax errors.
+        String escapedData = productData != null ? productData.replace("'", "''") : "";
+        return "SELECT * FROM [diet_tracker_schema].[product_table] WHERE LOWER(product_name) LIKE '%" + escapedData + "%'";
+    }
+
+    public static String getAllProductsFromCalendarTableLikeDate(String date) {
+        String escapedDate = date != null ? date.replace("'", "''") : "";
+        return "SELECT * FROM [diet_tracker_schema].[calendar] WHERE day_date LIKE '%" + escapedDate + "%'";
+    }
+
+    /**
+     * Overloaded method to maintain compatibility with existing calls.
+     * It automatically generates a unique row_id.
+     */
+    public static String insertMealToCalendarTable(
+            String dayDate, String dayName, String mealName, double amountOfProduct,
+            String productName, double kcal, double protein, double fat, double carbs,
+            String timeOptional, String commentOptional, double kcalConsume,
+            double carbsConsume, double fatConsume, double proteinConsume) {
+
+        // Generate a unique row ID just like the desktop client
+        String autoGeneratedId = java.util.UUID.randomUUID().toString();
+
+        return insertMealToCalendarTable(
+                dayDate, dayName, mealName, amountOfProduct, productName,
+                kcal, protein, fat, carbs, timeOptional, commentOptional,
+                kcalConsume, carbsConsume, fatConsume, proteinConsume,
+                autoGeneratedId
+        );
+    }
+
+    /**
+     * Main method that includes the [row_id] column for insertion into Azure SQL.
+     */
+    public static String insertMealToCalendarTable(
+            String dayDate, String dayName, String mealName, double amountOfProduct,
+            String productName, double kcal, double protein, double fat, double carbs,
+            String timeOptional, String commentOptional, double kcalConsume,
+            double carbsConsume, double fatConsume, double proteinConsume,
+            String rowId) {
+
+        // Helper to format Date/Time or Text fields to raw NULL if they are "none", null, or empty
+        String sqlDayDate = (dayDate == null || dayDate.trim().isEmpty())
+                ? "NULL" : "'" + dayDate.replace("'", "''") + "'";
+
+        String sqlDayName = (dayName == null || dayName.trim().isEmpty())
+                ? "NULL" : "'" + dayName.replace("'", "''") + "'";
+
+        String sqlMealName = (mealName == null || mealName.trim().isEmpty())
+                ? "NULL" : "'" + mealName.replace("'", "''") + "'";
+
+        String sqlProductName = (productName == null || productName.trim().isEmpty())
+                ? "NULL" : "'" + productName.replace("'", "''") + "'";
+
+        // If time is "none", convert to raw SQL NULL so Azure SQL doesn't fail parsing it
+        String sqlTime = (timeOptional == null || timeOptional.equalsIgnoreCase("none") || timeOptional.trim().isEmpty())
+                ? "NULL" : "'" + timeOptional.replace("'", "''") + "'";
+
+        String sqlComment = (commentOptional == null || commentOptional.equalsIgnoreCase("none") || commentOptional.trim().isEmpty())
+                ? "NULL" : "'" + commentOptional.replace("'", "''") + "'";
+
+        String sqlRowId = (rowId == null || rowId.trim().isEmpty())
+                ? "NULL" : "'" + rowId.replace("'", "''") + "'";
+
+        // Returns the built query with [row_id] included
+        return "INSERT INTO [diet_tracker_schema].[calendar]\n" +
+                "([day_date], [day_name], [meal_name], [amount_of_product], [product_name],\n" +
+                "[kcal], [protein], [fat], [carbs], [time_optional], [comment_optional],\n" +
+                "[kcal_consume], [carbs_consume], [fat_consume], [protein_consume], [row_id])\n" +
+                "VALUES (\n" +
+                sqlDayDate + ",\n" +
+                sqlDayName + ",\n" +
+                sqlMealName + ",\n" +
+                amountOfProduct + ",\n" +
+                sqlProductName + ",\n" +
+                kcal + ",\n" +
+                protein + ",\n" +
+                fat + ",\n" +
+                carbs + ",\n" +
+                sqlTime + ",\n" +
+                sqlComment + ",\n" +
+                kcalConsume + ",\n" +
+                carbsConsume + ",\n" +
+                fatConsume + ",\n" +
+                proteinConsume + ",\n" +
+                sqlRowId + "\n" +
+                ");\n" +
+                "SELECT 1 AS success;";
+    }
+}
+
+
+================================================================================
+FILE: RowInTable.java
+================================================================================
+package com.lukaszjag.diet_tracker_android.tools.sql_tools;
+
+import com.lukaszjag.diet_tracker_android.tools.debug_tools.Debug;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
+
+public class RowInTable {
+
+    public HashMap<String, String> fields = new HashMap<>();
+
+    //<editor-fold desc="Constructors">
+    public RowInTable() {
+
+    }
+
+    public RowInTable(HashMap<String, String> fields) {
+        this.fields = fields;
+    }
+    //</editor-fold>
+
+    public void putKeyAndValueToRow(String key, String value) {
+        fields.put(key, value);
+    }
+
+    //<editor-fold desc="Print methods">
+    public void printAlLValuesAndKey() {
+        for (String key : fields.keySet()) {
+            Debug.printKeyAndValue(key, fields.get(key), 6);
+        }
+    }
+    //</editor-fold>
+
+    //<editor-fold desc="Get methods">
+    public int getSizeOfRow() {
+        return fields.size();
+    }
+
+    public String getValue(String key) {
+
+        //System.out.println(fields.get(key));
+        return fields.get(key);
+
+
+    }
+
+    public String getKey(Object value) {
+        if (fields == null) return null;
+
+        String firstKey = null;
+        int counter = 0;
+        for (Map.Entry<String, ?> entry : fields.entrySet()) {
+            String value2 = (String) entry.getValue();
+            counter++;
+
+            if (value2.equals(value)) {
+                String key = entry.getKey();
+                if (firstKey == null) {
+                    firstKey = entry.getKey();
+                } else {
+                    System.out.println(
+                            "Warning: multiple keys map to the given value; "
+                                    + "returning first: " + firstKey
+                    );
+                    return firstKey;
+                }
+            }
+        }
+        return firstKey;
+    }
+
+    public String getKeyMINE(String value) {
+        if (fields == null) return null;
+
+        String firstKey = null;
+        int counter = 0;
+        for (Map.Entry<String, ?> entry : fields.entrySet()) {
+            String value2 = (String) entry.getValue();
+            counter++;
+
+            if (value2.equals(value)) {
+                String key = entry.getKey();
+                if (firstKey == null) {
+                    firstKey = entry.getKey();
+                } else {
+                    System.out.println(
+                            "Warning: multiple keys map to the given value; "
+                                    + "returning first: " + firstKey
+                    );
+                    return firstKey;
+                }
+            }
+        }
+        return firstKey;
+    }
+
+    public ArrayList<String> getAllKeys() {
+        Set setOfKeys = fields.keySet();
+        return new ArrayList<String>(setOfKeys);
+    }
+
+    public ArrayList<String> getAllValues() {
+        return new ArrayList<>(fields.values());
+    }
+    //</editor-fold>
+
+    //<editor-fold desc="Getters and Setters">
+    public HashMap<String, String> getFields() {
+        return fields;
+    }
+
+    public void setFields(HashMap<String, String> fields) {
+        this.fields = fields;
+    }
+    //</editor-fold>
+}
+
+
+================================================================================
+FILE: add_meal_button.xml
+================================================================================
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle"> <!-- "rectangle" defaults to sharp corners -->
+
+    <solid android:color="#b3780b" /> <!-- Background color -->
+
+    <!-- Optional border -->
+    <stroke
+        android:width="2dp"
+        android:color="#0D47A1" />
+
+    <!-- Notice there is no <corners> tag here! -->
+</shape>
+
+
+================================================================================
+FILE: border.xml
+================================================================================
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle">
+    <!-- The inside color -->
+    <solid android:color="@color/get_product_data_main_background" />
+
+    <!-- The border -->
+    <stroke android:width="5dp" android:color="@color/black" />
+</shape>
+
+
+
+================================================================================
+FILE: buttons_main.xml
+================================================================================
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle"> <!-- "rectangle" defaults to sharp corners -->
+
+    <solid android:color="#2196F3" /> <!-- Background color -->
+
+    <!-- Optional border -->
+    <stroke
+        android:width="2dp"
+        android:color="#0D47A1" />
+
+    <!-- Notice there is no <corners> tag here! -->
+</shape>
+
+
+================================================================================
+FILE: get_day_data.xml
+================================================================================
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle"> <!-- "rectangle" defaults to sharp corners -->
+
+    <solid android:color="#2d64e3" /> <!-- Background color -->
+
+    <!-- Optional border -->
+    <stroke
+        android:width="2dp"
+        android:color="#0D47A1" />
+
+    <!-- Notice there is no <corners> tag here! -->
+</shape>
+
+
+================================================================================
+FILE: ic_launcher_background.xml
+================================================================================
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <path
+        android:fillColor="#3DDC84"
+        android:pathData="M0,0h108v108h-108z" />
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M9,0L9,108"
+        android:strokeWidth="0.8"
+        android:strokeColor="#33FFFFFF" />
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M19,0L19,108"
+        android:strokeWidth="0.8"
+        android:strokeColor="#33FFFFFF" />
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M29,0L29,108"
+        android:strokeWidth="0.8"
+        android:strokeColor="#33FFFFFF" />
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M39,0L39,108"
+        android:strokeWidth="0.8"
+        android:strokeColor="#33FFFFFF" />
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M49,0L49,108"
+        android:strokeWidth="0.8"
+        android:strokeColor="#33FFFFFF" />
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M59,0L59,108"
+        android:strokeWidth="0.8"
+        android:strokeColor="#33FFFFFF" />
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M69,0L69,108"
+        android:strokeWidth="0.8"
+        android:strokeColor="#33FFFFFF" />
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M79,0L79,108"
+        android:strokeWidth="0.8"
+        android:strokeColor="#33FFFFFF" />
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M89,0L89,108"
+        android:strokeWidth="0.8"
+        android:strokeColor="#33FFFFFF" />
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M99,0L99,108"
+        android:strokeWidth="0.8"
+        android:strokeColor="#33FFFFFF" />
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M0,9L108,9"
+        android:strokeWidth="0.8"
+        android:strokeColor="#33FFFFFF" />
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M0,19L108,19"
+        android:strokeWidth="0.8"
+        android:strokeColor="#33FFFFFF" />
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M0,29L108,29"
+        android:strokeWidth="0.8"
+        android:strokeColor="#33FFFFFF" />
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M0,39L108,39"
+        android:strokeWidth="0.8"
+        android:strokeColor="#33FFFFFF" />
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M0,49L108,49"
+        android:strokeWidth="0.8"
+        android:strokeColor="#33FFFFFF" />
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M0,59L108,59"
+        android:strokeWidth="0.8"
+        android:strokeColor="#33FFFFFF" />
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M0,69L108,69"
+        android:strokeWidth="0.8"
+        android:strokeColor="#33FFFFFF" />
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M0,79L108,79"
+        android:strokeWidth="0.8"
+        android:strokeColor="#33FFFFFF" />
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M0,89L108,89"
+        android:strokeWidth="0.8"
+        android:strokeColor="#33FFFFFF" />
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M0,99L108,99"
+        android:strokeWidth="0.8"
+        android:strokeColor="#33FFFFFF" />
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M19,29L89,29"
+        android:strokeWidth="0.8"
+        android:strokeColor="#33FFFFFF" />
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M19,39L89,39"
+        android:strokeWidth="0.8"
+        android:strokeColor="#33FFFFFF" />
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M19,49L89,49"
+        android:strokeWidth="0.8"
+        android:strokeColor="#33FFFFFF" />
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M19,59L89,59"
+        android:strokeWidth="0.8"
+        android:strokeColor="#33FFFFFF" />
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M19,69L89,69"
+        android:strokeWidth="0.8"
+        android:strokeColor="#33FFFFFF" />
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M19,79L89,79"
+        android:strokeWidth="0.8"
+        android:strokeColor="#33FFFFFF" />
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M29,19L29,89"
+        android:strokeWidth="0.8"
+        android:strokeColor="#33FFFFFF" />
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M39,19L39,89"
+        android:strokeWidth="0.8"
+        android:strokeColor="#33FFFFFF" />
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M49,19L49,89"
+        android:strokeWidth="0.8"
+        android:strokeColor="#33FFFFFF" />
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M59,19L59,89"
+        android:strokeWidth="0.8"
+        android:strokeColor="#33FFFFFF" />
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M69,19L69,89"
+        android:strokeWidth="0.8"
+        android:strokeColor="#33FFFFFF" />
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M79,19L79,89"
+        android:strokeWidth="0.8"
+        android:strokeColor="#33FFFFFF" />
+</vector>
+
+
+
+================================================================================
+FILE: ic_launcher_foreground.xml
+================================================================================
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <path android:pathData="M31,63.928c0,0 6.4,-11 12.1,-13.1c7.2,-2.6 26,-1.4 26,-1.4l38.1,38.1L107,108.928l-32,-1L31,63.928z">
+        <aapt:attr name="android:fillColor">
+            <gradient
+                android:endX="85.84757"
+                android:endY="92.4963"
+                android:startX="42.9492"
+                android:startY="49.59793"
+                android:type="linear">
+                <item
+                    android:color="#44000000"
+                    android:offset="0.0" />
+                <item
+                    android:color="#00000000"
+                    android:offset="1.0" />
+            </gradient>
+        </aapt:attr>
+    </path>
+    <path
+        android:fillColor="#FFFFFF"
+        android:fillType="nonZero"
+        android:pathData="M65.3,45.828l3.8,-6.6c0.2,-0.4 0.1,-0.9 -0.3,-1.1c-0.4,-0.2 -0.9,-0.1 -1.1,0.3l-3.9,6.7c-6.3,-2.8 -13.4,-2.8 -19.7,0l-3.9,-6.7c-0.2,-0.4 -0.7,-0.5 -1.1,-0.3C38.8,38.328 38.7,38.828 38.9,39.228l3.8,6.6C36.2,49.428 31.7,56.028 31,63.928h46C76.3,56.028 71.8,49.428 65.3,45.828zM43.4,57.328c-0.8,0 -1.5,-0.5 -1.8,-1.2c-0.3,-0.7 -0.1,-1.5 0.4,-2.1c0.5,-0.5 1.4,-0.7 2.1,-0.4c0.7,0.3 1.2,1 1.2,1.8C45.3,56.528 44.5,57.328 43.4,57.328L43.4,57.328zM64.6,57.328c-0.8,0 -1.5,-0.5 -1.8,-1.2s-0.1,-1.5 0.4,-2.1c0.5,-0.5 1.4,-0.7 2.1,-0.4c0.7,0.3 1.2,1 1.2,1.8C66.5,56.528 65.6,57.328 64.6,57.328L64.6,57.328z"
+        android:strokeWidth="1"
+        android:strokeColor="#00000000" />
+</vector>
+
+
+================================================================================
+FILE: monthly_stats_button.xml
+================================================================================
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle"> <!-- "rectangle" defaults to sharp corners -->
+
+    <solid android:color="#000000" /> <!-- Background color -->
+
+    <!-- Optional border -->
+    <stroke
+        android:width="2dp"
+        android:color="#0D47A1" />
+
+    <!-- Notice there is no <corners> tag here! -->
+</shape>
+
+
+================================================================================
+FILE: note_task_button.xml
+================================================================================
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle"> <!-- "rectangle" defaults to sharp corners -->
+
+    <solid android:color="#8895b3" /> <!-- Background color -->
+
+    <!-- Optional border -->
+    <stroke
+        android:width="2dp"
+        android:color="#0D47A1" />
+
+    <!-- Notice there is no <corners> tag here! -->
+</shape>
+
+
+================================================================================
+FILE: day_data_layout.xml
+================================================================================
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp">
+
+            <!-- Previous Day Button -->
+            <Button
+                android:id="@+id/prevDayButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:text="&lt;"
+                style="?android:attr/buttonStyleSmall" />
+
+            <!-- Date & Day Name Group -->
+            <LinearLayout
+                android:id="@+id/dateContainer"
+                android:layout_width="142dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="16dp"
+                android:layout_toEndOf="@+id/prevDayButton"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/dateTextView"
+                    android:layout_width="61dp"
+                    android:layout_height="50dp"
+                    android:gravity="center"
+                    android:text="Date"
+                    android:textColor="#ffffff"
+                    android:textSize="11sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/dayNameTextView"
+                    android:layout_width="46dp"
+                    android:layout_height="50dp"
+                    android:layout_marginStart="8dp"
+                    android:gravity="center"
+                    android:text="Day"
+                    android:textColor="#dddddd"
+                    android:textSize="9sp" />
+            </LinearLayout>
+
+            <!-- Next Day and Date Picker Buttons -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                >
+
+                <Button
+                    android:id="@+id/nextDayButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="&gt;"
+                    style="?android:attr/buttonStyleSmall" />
+
+                <Button
+                    android:id="@+id/datePickButton"
+                    style="?android:attr/buttonStyleSmall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="date"
+                    android:textSize="11sp" />
+            </LinearLayout>
+
+        </RelativeLayout>
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <!-- Daily Macro Summary Card -->
+    <LinearLayout
+        android:id="@+id/summaryLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="12dp"
+        android:background="#EEEEEE"
+        android:elevation="2dp"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Daily Summary"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:textColor="#333333"
+            android:layout_marginBottom="4dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="4">
+
+            <TextView
+                android:id="@+id/totalKcalTextView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:textSize="12sp"
+                android:text="Kcal: 0"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/totalProteinTextView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:textSize="12sp"
+                android:text="Prot: 0g" />
+
+            <TextView
+                android:id="@+id/totalFatTextView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:textSize="12sp"
+                android:text="Fat: 0g" />
+
+            <TextView
+                android:id="@+id/totalCarbsTextView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:textSize="12sp"
+                android:text="Carb: 0g" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- No Data Placeholder -->
+    <TextView
+        android:id="@+id/noDataTextView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="No data to show"
+        android:textSize="18sp"
+        android:textColor="#888888"
+        android:visibility="gone" />
+
+    <!-- RecyclerView -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="vertical" />
+
+</LinearLayout>
+
+
+================================================================================
+FILE: get_product_data.xml
+================================================================================
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/get_product_data_main_background">
+
+
+    <EditText
+        android:id="@+id/productNameEditText"
+        android:layout_width="238dp"
+        android:layout_height="43dp"
+        android:height="60dp"
+        android:ems="10"
+        android:inputType="text"
+        android:text=""
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.503"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.116" />
+
+    <LinearLayout
+        android:id="@+id/macroLinearLayout"
+        android:layout_width="0dp"
+        android:layout_height="178dp"
+        android:layout_marginStart="71dp"
+        android:layout_marginEnd="71dp"
+        android:layout_marginBottom="44dp"
+        android:background="@drawable/border"
+        android:orientation="vertical"
+        android:padding="20dp"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayoutButtons"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/productNameTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="product name"
+                tools:layout_editor_absoluteX="68dp"
+                tools:layout_editor_absoluteY="224dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/brandLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="brand"
+                android:textStyle="bold"
+                tools:layout_editor_absoluteX="42dp"
+                tools:layout_editor_absoluteY="308dp" />
+
+            <TextView
+                android:id="@+id/brandValueTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="TextView"
+                tools:layout_editor_absoluteX="141dp"
+                tools:layout_editor_absoluteY="308dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/kcalLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="kcal"
+                android:textStyle="bold"
+                tools:layout_editor_absoluteX="42dp"
+                tools:layout_editor_absoluteY="345dp" />
+
+            <TextView
+                android:id="@+id/kcalValueTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="TextView"
+                tools:layout_editor_absoluteX="177dp"
+                tools:layout_editor_absoluteY="448dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/proteinLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="protein"
+                android:textStyle="bold"
+                tools:layout_editor_absoluteX="42dp"
+                tools:layout_editor_absoluteY="384dp" />
+
+            <TextView
+                android:id="@+id/proteinValueTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="TextView"
+                tools:layout_editor_absoluteX="141dp"
+                tools:layout_editor_absoluteY="384dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/fatLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="fat"
+                android:textStyle="bold"
+                tools:layout_editor_absoluteX="42dp"
+                tools:layout_editor_absoluteY="423dp" />
+
+            <TextView
+                android:id="@+id/fatValueTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="TextView"
+                tools:layout_editor_absoluteX="141dp"
+                tools:layout_editor_absoluteY="423dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/carbsLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="carbs"
+                android:textStyle="bold"
+                tools:layout_editor_absoluteX="42dp"
+                tools:layout_editor_absoluteY="466dp" />
+
+            <TextView
+                android:id="@+id/carbsValueTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="TextView"
+                tools:layout_editor_absoluteX="141dp"
+                tools:layout_editor_absoluteY="466dp" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayoutButtons"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="52dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/acceptButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/amountAndComentLinearLayout">
+
+        <Button
+            android:id="@+id/getProductFromDatabase"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Get product from Azure SQL"
+            tools:layout_editor_absoluteX="200dp"
+            tools:layout_editor_absoluteY="66dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/previousButton"
+                android:layout_width="wrap_content"
+                android:layout_height="53dp"
+                android:layout_weight="1"
+                android:text="previous"
+                tools:layout_editor_absoluteX="186dp"
+                tools:layout_editor_absoluteY="122dp" />
+
+            <Button
+                android:id="@+id/nextButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="next"
+                tools:layout_editor_absoluteX="297dp"
+                tools:layout_editor_absoluteY="120dp" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/spinerLinearLayout"
+        android:layout_width="393dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="189dp"
+        android:layout_marginBottom="40dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/amountAndComentLinearLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <Spinner
+            android:id="@+id/mealNameSpinner"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_marginBottom="10dp" />
+
+        <Spinner
+            android:id="@+id/productSpinner"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:tooltipText="food"
+            android:visibility="visible" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/datePickButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="28dp"
+        android:text="Date"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.947"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/dateDataTextView"
+        android:layout_width="176dp"
+        android:layout_height="32dp"
+        android:layout_marginTop="36dp"
+        android:layout_marginEnd="40dp"
+        android:text="dateData"
+        app:layout_constraintEnd_toStartOf="@+id/datePickButton"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/amountAndComentLinearLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="255dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayoutButtons"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spinerLinearLayout">
+
+        <Button
+            android:id="@+id/productCommentButton"
+            android:layout_width="wrap_content"
+            android:layout_height="46dp"
+            android:layout_weight="1"
+            android:text="Products comment" />
+
+        <EditText
+            android:id="@+id/weightEditText"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:ems="10"
+            android:inputType="text" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/acceptButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="40dp"
+        android:text="Accept"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Name"
+        tools:layout_editor_absoluteX="11dp"
+        tools:layout_editor_absoluteY="101dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+
+================================================================================
+FILE: product_layout.xml
+================================================================================
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    android:background="#EEEEEE"
+    android:orientation="vertical"
+    android:padding="12dp">
+
+    <!-- Product Name -->
+    <TextView
+        android:id="@+id/productNameTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="#000000"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+
+    <!-- Meal Name and Amount Info -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="4dp">
+
+        <TextView
+            android:id="@+id/mealNameTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#555555"
+            android:textSize="13sp"
+            android:textStyle="italic" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" | "
+            android:textColor="#888888" />
+
+        <TextView
+            android:id="@+id/amountOfProductTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#555555"
+            android:textSize="13sp" />
+    </LinearLayout>
+
+    <!-- Macronutrient Consumed Details Grid -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="6dp"
+        android:weightSum="4">
+
+        <TextView
+            android:id="@+id/kcalConsumeTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textColor="#266278"
+            android:textSize="13sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/proteinConsumeTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textColor="#8B0000"
+            android:textSize="13sp" />
+
+        <TextView
+            android:id="@+id/fatConsumeTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textColor="#FF8C00"
+            android:textSize="13sp" />
+
+        <TextView
+            android:id="@+id/carbsConsumeTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textColor="#2E8B57"
+            android:textSize="13sp" />
+    </LinearLayout>
+
+</LinearLayout>
+
+
+================================================================================
+FILE: activity_main.xml
+================================================================================
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:context=".MainActivity"
+    android:background="@color/activity_main_background">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fitsSystemWindows="true"/>
+
+
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_marginEnd="@dimen/fab_margin"
+        android:layout_marginBottom="16dp"
+        app:srcCompat="@android:drawable/ic_dialog_email" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewDiet"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+
+================================================================================
+FILE: main_window.xml
+================================================================================
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <Button
+        android:id="@+id/addMealButton"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="164dp"
+        android:background="@drawable/add_meal_button"
+        android:text="Add meal"
+        app:backgroundTint="@null"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="0dp" />
+
+    <Button
+        android:id="@+id/monthlyStatsButton"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="88dp"
+        android:background="@drawable/buttons_main"
+        android:text="Monthy stats"
+        app:backgroundTint="@null"
+        app:layout_constraintStart_toStartOf="@+id/getDayDataButton"
+        app:layout_constraintTop_toBottomOf="@+id/getDayDataButton" />
+
+    <Button
+        android:id="@+id/noteTaskButtonButton"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/note_task_button"
+        android:text="Note - tasks"
+        app:backgroundTint="@null"
+        app:layout_constraintStart_toStartOf="@+id/getDayDataButton"
+        app:layout_constraintTop_toBottomOf="@+id/getDayDataButton" />
+
+    <Button
+        android:id="@+id/getDayDataButton"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/get_day_data"
+        android:text="Get day data"
+        app:backgroundTint="@null"
+        app:layout_constraintStart_toStartOf="@+id/addMealButton"
+        app:layout_constraintTop_toBottomOf="@+id/addMealButton" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:background="#4253a6"
+        android:text="Welcome to Diet tracker"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:gravity="center_vertical"
+        android:paddingStart="16dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+
+================================================================================
+FILE: dialog_note.xml
+================================================================================
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="New Note Details"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="12dp"/>
+
+        <EditText
+            android:id="@+id/dialogTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Title"
+            android:inputType="textCapSentences" />
+
+        <EditText
+            android:id="@+id/dialogSubtitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Subtitle"
+            android:inputType="textCapSentences" />
+
+        <EditText
+            android:id="@+id/dialogDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Description"
+            android:inputType="textMultiLine"
+            android:minLines="2" />
+
+        <EditText
+            android:id="@+id/dialogCategory"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Category"
+            android:inputType="textCapSentences" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Urgency Scale:"
+            android:layout_marginTop="8dp"
+            android:textSize="12sp"
+            android:textColor="#555555"/>
+
+        <Spinner
+            android:id="@+id/dialogSpinnerUrgent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp" />
+
+        <CheckBox
+            android:id="@+id/dialogCbLearning"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Is Learning Task"
+            android:layout_marginTop="8dp"/>
+
+        <CheckBox
+            android:id="@+id/dialogCbGeneral"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Is General To-Do" />
+
+        <CheckBox
+            android:id="@+id/dialogCbToday"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Is Today Task" />
+
+        <CheckBox
+            android:id="@+id/dialogCbToBuy"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Is To Buy Task" />
+
+        <TextView
+            android:id="@+id/tvLearningCatLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Learning Category Option:"
+            android:layout_marginTop="8dp"
+            android:textSize="12sp"
+            android:textColor="#555555"
+            android:visibility="gone"/>
+
+        <Spinner
+            android:id="@+id/dialogSpinnerLearningCat"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:visibility="gone" />
+
+        <Spinner
+            android:id="@+id/secondLearningCategory"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone" />
+
+        <EditText
+            android:id="@+id/dialogDeadline"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Deadline Date (Tap to select)"
+            android:focusable="false"
+            android:clickable="true"
+            android:layout_marginTop="8dp" />
+    </LinearLayout>
+</ScrollView>
+
+
+================================================================================
+FILE: item_layout.xml
+================================================================================
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    android:background="#EEEEEE"
+    android:elevation="2dp"
+    android:orientation="vertical"
+    android:padding="12dp">
+
+    <!-- Section 1: Title, Subtitle, Description -->
+    <LinearLayout
+        android:id="@+id/section1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#000000"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#555555"
+            android:textSize="11sp"
+            android:layout_marginTop="2dp" />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#888888"
+            android:textSize="9sp"
+            android:layout_marginTop="4dp" />
+    </LinearLayout>
+
+    <!-- Section 2: Category and Urgently fields -->
+    <LinearLayout
+        android:id="@+id/section2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="1dp">
+
+        <TextView
+            android:id="@+id/tvCategory"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:textColor="#2E7D32"
+            android:textSize="9sp"
+            android:text="Category: -" />
+
+        <TextView
+            android:id="@+id/tvUrgently"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:textColor="#C62828"
+            android:textSize="9sp"
+            android:text="Urgently: -" />
+    </LinearLayout>
+
+    <!-- Section 3: Status Checkboxes -->
+    <LinearLayout
+        android:id="@+id/section3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="1dp">
+
+        <CheckBox
+            android:id="@+id/cbIsLearning"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Learning"
+            android:textSize="8sp"
+            android:clickable="false"
+            android:focusable="false"
+            android:scaleX="0.85"
+            android:scaleY="0.85"/>
+
+        <CheckBox
+            android:id="@+id/cbIsGeneralToDo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="General"
+            android:textSize="8sp"
+            android:clickable="false"
+            android:focusable="false"
+            android:scaleX="0.85"
+            android:scaleY="0.85"/>
+
+        <CheckBox
+            android:id="@+id/cbIsTodayTask"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Today"
+            android:textSize="8sp"
+            android:clickable="false"
+            android:focusable="false"
+            android:scaleX="0.85"
+            android:scaleY="0.85"/>
+
+        <!-- ADD THIS HERE IF IT IS MISSING -->
+        <CheckBox
+            android:id="@+id/cbIsToBuy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="To Buy"
+            android:textSize="8sp"
+            android:clickable="false"
+            android:focusable="false"
+            android:scaleX="0.85"
+            android:scaleY="0.85"/>
+    </LinearLayout>
+
+    <!-- Section 4: Creation Dates and Calculations -->
+    <LinearLayout
+        android:id="@+id/section4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="1dp">
+
+        <TextView
+            android:id="@+id/tvDates"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#666666"
+            android:textSize="10sp"
+            android:text="Created: - | Deadline: -" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1"/>
+
+        <TextView
+            android:id="@+id/tvDaysSince"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#D32F2F"
+            android:textSize="10sp"
+            android:textStyle="italic"
+            android:text="0 days since create" />
+    </LinearLayout>
+</LinearLayout>
+
+
+================================================================================
+FILE: notes_view_layout.xml
+================================================================================
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Notes"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginEnd="16dp"
+            android:text="Add" />
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <LinearLayout
+        android:id="@+id/filterLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/toolbar2"
+        android:orientation="vertical"
+        android:padding="8dp"
+        android:background="#F5F5F5">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Filter list by:"
+            android:textStyle="bold"
+            android:textSize="12sp"
+            android:textColor="#555555"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="3">
+
+            <EditText
+                android:id="@+id/filterSubtitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="Subtitle"
+                android:textSize="12sp"
+                android:inputType="text" />
+
+            <!-- Multichoice Category Spinner Dropdown -->
+            <TextView
+                android:id="@+id/filterCategorySpinner"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                style="?android:attr/spinnerStyle"
+                android:text="All Categories"
+                android:textSize="11sp"
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:layout_gravity="center_vertical" />
+
+            <!-- Urgency ComboBox -->
+            <Spinner
+                android:id="@+id/filterUrgentlySpinner"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_gravity="center_vertical" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="4dp">
+
+            <CheckBox
+                android:id="@+id/filterCbLearning"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Learning"
+                android:textSize="12sp" />
+
+            <CheckBox
+                android:id="@+id/filterCbGeneral"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="General"
+                android:textSize="12sp" />
+
+            <CheckBox
+                android:id="@+id/filterCbToday"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Today"
+                android:textSize="12sp" />
+
+            <CheckBox
+                android:id="@+id/filterCbToBuy"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="To Buy"
+                android:textSize="12sp" />
+
+        </LinearLayout>
+
+        <!-- Toggle Section Visibilities -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="4dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Hide Section:"
+                android:textStyle="bold"
+                android:textSize="12sp"
+                android:textColor="#555555"
+                android:layout_gravity="center_vertical"/>
+
+            <CheckBox
+                android:id="@+id/hideCbSection1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="1"
+                android:textSize="12sp" />
+
+            <CheckBox
+                android:id="@+id/hideCbSection2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2"
+                android:textSize="12sp" />
+
+            <CheckBox
+                android:id="@+id/hideCbSection3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="3"
+                android:textSize="12sp" />
+
+            <CheckBox
+                android:id="@+id/hideCbSection4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="4"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <!-- Sorting Section -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="4dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Sort by:"
+                android:textStyle="bold"
+                android:textSize="12sp"
+                android:textColor="#555555"
+                android:layout_gravity="center_vertical"/>
+
+            <Spinner
+                android:id="@+id/sortSpinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="vertical"
+        android:layout_below="@id/filterLayout"/>
+</RelativeLayout>
+
+
+================================================================================
+FILE: menu_main.xml
+================================================================================
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.lukaszjag.diet_tracker_android.MainActivity">
+    <item
+        android:id="@+id/action_settings"
+        android:orderInCategory="100"
+        android:title="@string/action_settings"
+        app:showAsAction="never" />
+</menu>
+
+
+================================================================================
+FILE: ic_launcher_round.xml
+================================================================================
+<?xml version="1.0" encoding="utf-8"?>
+<adaptive-icon xmlns:android="http://schemas.android.com/apk/res/android">
+    <background android:drawable="@drawable/ic_launcher_background" />
+    <foreground android:drawable="@drawable/ic_launcher_foreground" />
+    <monochrome android:drawable="@drawable/ic_launcher_foreground" />
+</adaptive-icon>
+
+
+================================================================================
+FILE: ic_launcher.xml
+================================================================================
+<?xml version="1.0" encoding="utf-8"?>
+<adaptive-icon xmlns:android="http://schemas.android.com/apk/res/android">
+    <background android:drawable="@drawable/ic_launcher_background" />
+    <foreground android:drawable="@drawable/ic_launcher_foreground" />
+    <monochrome android:drawable="@drawable/ic_launcher_foreground" />
+</adaptive-icon>
+
+
+================================================================================
+FILE: ic_launcher_round.webp
+================================================================================
+RIFFJ

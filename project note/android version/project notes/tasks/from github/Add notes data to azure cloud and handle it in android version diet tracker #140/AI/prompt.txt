@@ -1,0 +1,9 @@
+I want to add and extend to my app note feature by:
+- connect it to azure database it must push and pull data from it
+- make it handle all columns data in UI in android studio
+
+inform me about every change in code and fully describe why it happend
+
+at the end give me all code that change with all code from it file where change happend
+
+
