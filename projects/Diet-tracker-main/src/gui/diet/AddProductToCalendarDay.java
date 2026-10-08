@@ -61,8 +61,6 @@ public class AddProductToCalendarDay {
 
     //<editor-fold desc="West panel - buttons">
     JButton inputCurrentDayButton = new JButton("Input  current day");
-    JButton setNextDayButton = new JButton("+");
-    JButton setPreviousButton = new JButton("-");
     JButton checkCalendarTableButton = new JButton("Check calendar table");
     JButton checkDaysStatisticFilledTableButton = new JButton("Check days statistic");
 
@@ -224,10 +222,10 @@ public class AddProductToCalendarDay {
         startAddProductToDayWindow();
     }
 
-    public AddProductToCalendarDay(boolean emptyInstance){
-        if (emptyInstance){
+    public AddProductToCalendarDay(boolean emptyInstance) {
+        if (emptyInstance) {
 
-        }else {
+        } else {
             startAddProductToDayWindow();
         }
     }
@@ -243,7 +241,6 @@ public class AddProductToCalendarDay {
     //</editor-fold>
 
     //<editor-fold desc="Frame methods">
-
 
 
     private void setFrame() {
@@ -403,11 +400,7 @@ public class AddProductToCalendarDay {
         upperPanelWest.add(inputCurrentDayButton);
         upperPanelWest.add(showDailyChartButton);
 
-        setNextDayButton.addActionListener(new SetNextButtonActionListener());
-        setPreviousButton.addActionListener(new SetPreviousButtonActionListener());
 
-        upperPanelWest.add(setPreviousButton);
-        upperPanelWest.add(setNextDayButton);
 
         upperPanelWest.add(addProductToDayDisplaySelectedDayName);
         upperPanelWest.add(addProductToDayDisplaySelectedFDateNameDayLabel);
@@ -817,6 +810,7 @@ public class AddProductToCalendarDay {
         macroTable.setValueAt("carbs_consume", 5, 0);
         macroTable.setValueAt(macroToDisplay.getCarbs(), 5, 1);
     }
+
     private void setupBMRTable() {
         BMRTable.setFont(macrosTablesFont);
         BMRTable.setValueAt("BMR_kcal", 0, 0);
@@ -845,6 +839,29 @@ public class AddProductToCalendarDay {
 
     //</editor-fold>
 
+    public void changeInputDatePlus() {
+        String currentSetDate = addProductToDayDisplaySelectedFDateDayLabel.getText();
+        addProductToDayDisplaySelectedFDateDayLabel.setText(MyDate.getNextDayDateSQLFriendlyFormat(currentSetDate));
+
+        String currentSetDateDayName = addProductToDayDisplaySelectedFDateNameDayLabel.getText();
+        addProductToDayDisplaySelectedFDateNameDayLabel.setText(MyDate.getNextDayDateName(currentSetDateDayName));
+
+        String oldDate = checkCalendarTableDateTextField.getText();
+        checkCalendarTableDateTextField.setText(MyDate.getNextDayDateSQLFriendlyFormat(oldDate));
+        setUpMacroTable(checkCalendarTableDateTextField.getText());
+    }
+
+    public void changeInputDateMinus() {
+        String currentSetDate = addProductToDayDisplaySelectedFDateDayLabel.getText();
+        addProductToDayDisplaySelectedFDateDayLabel.setText(MyDate.getPreviousDayDateSQLFriendlyFormat(currentSetDate));
+
+        String currentSetDateDayName = addProductToDayDisplaySelectedFDateNameDayLabel.getText();
+        addProductToDayDisplaySelectedFDateNameDayLabel.setText(MyDate.getPreviousDayDateName(currentSetDateDayName));
+
+        String oldDate = checkCalendarTableDateTextField.getText();
+        checkCalendarTableDateTextField.setText(MyDate.getPreviousDayDateSQLFriendlyFormat(oldDate));
+        setUpMacroTable(checkCalendarTableDateTextField.getText());
+    }
 
     //</editor-fold>
 
@@ -1170,43 +1187,17 @@ public class AddProductToCalendarDay {
         }
     }
 
-    private class SetNextButtonActionListener implements ActionListener {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            String currentSetDate = addProductToDayDisplaySelectedFDateDayLabel.getText();
-            addProductToDayDisplaySelectedFDateDayLabel.setText(MyDate.getNextDayDateSQLFriendlyFormat(currentSetDate));
-
-            String currentSetDateDayName = addProductToDayDisplaySelectedFDateNameDayLabel.getText();
-            addProductToDayDisplaySelectedFDateNameDayLabel.setText(MyDate.getNextDayDateName(currentSetDateDayName));
-        }
-    }
-
-    private class SetPreviousButtonActionListener implements ActionListener {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            String currentSetDate = addProductToDayDisplaySelectedFDateDayLabel.getText();
-            addProductToDayDisplaySelectedFDateDayLabel.setText(MyDate.getPreviousDayDateSQLFriendlyFormat(currentSetDate));
-
-            String currentSetDateDayName = addProductToDayDisplaySelectedFDateNameDayLabel.getText();
-            addProductToDayDisplaySelectedFDateNameDayLabel.setText(MyDate.getPreviousDayDateName(currentSetDateDayName));
-        }
-    }
-
     private class MiddlePanelWestPlusDayForDaysStatisticButtonActionListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            String oldDate = checkCalendarTableDateTextField.getText();
-            checkCalendarTableDateTextField.setText(MyDate.getNextDayDateSQLFriendlyFormat(oldDate));
-            setUpMacroTable(checkCalendarTableDateTextField.getText());
+            changeInputDatePlus();
         }
     }
 
     private class MiddlePanelWestMinusDayForDaysStatisticButtonActionListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            String oldDate = checkCalendarTableDateTextField.getText();
-            checkCalendarTableDateTextField.setText(MyDate.getPreviousDayDateSQLFriendlyFormat(oldDate));
-            setUpMacroTable(checkCalendarTableDateTextField.getText());
+            changeInputDateMinus();
         }
     }
 
@@ -1479,7 +1470,7 @@ public class AddProductToCalendarDay {
         @Override
         public void actionPerformed(ActionEvent e) {
             Config.CURRENT_DATABASE_TABLE_CALENDAR = "calendar";
-            JOptionPane.showMessageDialog(null, "Current Table is: " + Config.CURRENT_DATABASE_TABLE_CALENDAR  );
+            JOptionPane.showMessageDialog(null, "Current Table is: " + Config.CURRENT_DATABASE_TABLE_CALENDAR);
             chosenCalendarTableLabel.setText("Current Table is: " + Config.CURRENT_DATABASE_TABLE_CALENDAR);
         }
     }
@@ -2044,7 +2035,7 @@ public class AddProductToCalendarDay {
     public class CloseWindowKeyListener implements KeyListener {
         public JFrame toClose;
 
-        public CloseWindowKeyListener(JFrame frameToClose){
+        public CloseWindowKeyListener(JFrame frameToClose) {
             frameToClose.setFocusable(true);
             frameToClose.requestFocus();
             this.toClose = frameToClose;
