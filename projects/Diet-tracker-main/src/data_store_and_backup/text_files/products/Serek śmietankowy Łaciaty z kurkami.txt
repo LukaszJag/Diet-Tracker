@@ -1,0 +1,9 @@
+Name: Serek śmietankowy Łaciaty z kurkami
+Brand: Łaciaty
+Package has: 135.0
+Macro for: 100.0
+KCal: 234.0
+Protein: 5.5
+Fat: 21.0
+Carbs: 5.7
+Comment optional: Link: https://www.frisco.pl/pid,141225/n,laciaty-serek-smietankowy-laciaty-z-kurkami/stn,product
