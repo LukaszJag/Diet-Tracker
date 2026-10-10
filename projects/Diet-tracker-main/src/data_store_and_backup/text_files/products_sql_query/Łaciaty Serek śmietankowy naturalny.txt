@@ -1,0 +1,20 @@
+INSERT INTO `diet_tracker_schema`.product_table
+(`product_name`,
+`product_brand`,
+`product_package_has`,
+`product_macro_for`,
+`product_kcal`,
+`product_protein`,
+`product_fat`,
+`product_carbs`,
+`comment_optional`)
+Values
+('Łaciaty Serek śmietankowy naturalny',
+'Łaciaty',
+135.0,
+100.0,
+249.0,
+5.8,
+23.0,
+4.8,
+'Link: https://www.carrefour.pl/mleko-nabial-jaja/sery/sery-salatkowe-kanapkowe/laciaty-serek-smietankowy-naturalny-135-g');

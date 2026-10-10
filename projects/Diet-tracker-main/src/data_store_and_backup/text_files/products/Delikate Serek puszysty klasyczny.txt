@@ -1,0 +1,9 @@
+Name: Delikate Serek puszysty klasyczny
+Brand: Delikate
+Package has: 150.0
+Macro for: 100.0
+KCal: 243.0
+Protein: 6.0
+Fat: 23.0
+Carbs: 3.0
+Comment optional: Dane z opakowania

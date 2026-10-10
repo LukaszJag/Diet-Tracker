@@ -1,0 +1,9 @@
+Name: Łaciaty Serek śmietankowy naturalny
+Brand: Łaciaty
+Package has: 135.0
+Macro for: 100.0
+KCal: 249.0
+Protein: 5.8
+Fat: 23.0
+Carbs: 4.8
+Comment optional: Link: https://www.carrefour.pl/mleko-nabial-jaja/sery/sery-salatkowe-kanapkowe/laciaty-serek-smietankowy-naturalny-135-g
