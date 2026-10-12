@@ -204,4 +204,11 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
             section4 = itemView.findViewById(R.id.section4);
         }
     }
+
+    public void clearAll() {
+        this.noteList.clear();
+        this.originalList.clear();
+        notifyDataSetChanged();
+    }
+
 }

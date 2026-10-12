@@ -28,7 +28,7 @@ public class Note {
 
     private String dateCreated;
     private String dateDeadline;
-
+    private long id;
     private ArrayList<String> urgentScaleEnglish = new ArrayList<>(Arrays.asList(
             "no urgent scale",
             "Day task",
@@ -45,6 +45,7 @@ public class Note {
         this.noteUrgently = "no urgent scale";
     }
 
+
     public Note(String noteTitle, String noteSubtitle, String noteDescription) {
         this();
         this.noteTitle = noteTitle;
@@ -52,9 +53,10 @@ public class Note {
         this.noteDescription = noteDescription;
     }
 
-    public Note(String noteTitle, String noteSubtitle, String noteDescription, String noteCategory, String noteUrgently,
+    public Note(long id, String noteTitle, String noteSubtitle, String noteDescription, String noteCategory, String noteUrgently,
                 boolean isLearning, boolean isGeneralToDo, boolean isTodayTask, boolean isToBuyTask,
                 LearningCategories noteLearningCategories, String dateCreated, String dateDeadline) {
+        this.id = id;
         this.noteTitle = noteTitle;
         this.noteSubtitle = noteSubtitle;
         this.noteDescription = noteDescription;
@@ -100,6 +102,7 @@ public class Note {
 
     public static Note fromJsonObject(JSONObject json) {
         try {
+            long id = json.getLong("id");
             String title = json.optString("noteTitle", "");
             String subtitle = json.optString("noteSubtitle", "");
             String description = json.optString("noteDescription", "");
@@ -121,7 +124,7 @@ public class Note {
                 lc = new LearningCategories(lcName, lcMain, lcSub);
             }
 
-            return new Note(title, subtitle, description, category, urgently,
+            return new Note(id, title, subtitle, description, category, urgently,
                     isLearning, isGeneralToDo, isTodayTask, isToBuyTask, lc, dateCreated, dateDeadline);
         } catch (Exception e) {
             e.printStackTrace();
@@ -134,6 +137,8 @@ public class Note {
     }
 
     // Getters and Setters
+    public long getId() { return id; }
+    public void setId(long id) { this.id = id; }
     public long getDaysSinceCreation() {
         if (dateCreated == null || dateCreated.isEmpty()) return 0;
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());

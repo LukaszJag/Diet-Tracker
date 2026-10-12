@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -39,9 +38,13 @@ public class Notes extends AppCompatActivity {
         adapter = new MyAdapter();
         recyclerView.setAdapter(adapter);
 
-        findViewById(R.id.button).setOnClickListener(v -> showAddNoteDialog());
+        // Unified button listener: Pass null to indicate we are creating a new note
+        findViewById(R.id.button).setOnClickListener(v -> showNoteDialog(null));
 
-        // Fetch data from Azure on load
+        // Unified item click listener: Pass the note to edit
+        adapter.setOnItemClickListener((position, note) -> showNoteDialog(note));
+
+        setupVisibilityListeners();
         fetchNotesFromAzure();
     }
 
@@ -50,37 +53,36 @@ public class Notes extends AppCompatActivity {
         GetFromSQLDatabase.runAzureQueryAIChat(query, new AzureDataCallback() {
             @Override
             public void onSuccess(ArrayList<RowInTable> resultTable) {
-                List<Note> notesList = new ArrayList<>();
-                for (RowInTable row : resultTable) {
-                    Note note = new Note(
-                            row.getValue("title"),
-                            row.getValue("subtitle"),
-                            row.getValue("description"),
-                            row.getValue("category"),
-                            row.getValue("is_urgently"), // Simplified
-                            row.getValue("is_learning").equals("true") || row.getValue("is_learning").equals("1"),
-                            row.getValue("is_general_to_do").equals("true") || row.getValue("is_general_to_do").equals("1"),
-                            row.getValue("is_today_task").equals("true") || row.getValue("is_today_task").equals("1"),
-                            row.getValue("is_to_buy_task").equals("true") || row.getValue("is_to_buy_task").equals("1"),
-                            null, // LearningCategories mapping
-                            row.getValue("date_created"),
-                            row.getValue("date_deadline")
-                    );
-                    notesList.add(note);
-                }
                 runOnUiThread(() -> {
-                    for(Note n : notesList) adapter.addItem(n);
+                    adapter.clearAll(); // Ensure this method exists in your MyAdapter
+                    for (RowInTable row : resultTable) {
+                        Note note = new Note(
+                                Long.parseLong(row.getValue("id")),
+                                row.getValue("title"),
+                                row.getValue("subtitle"),
+                                row.getValue("description"),
+                                row.getValue("category"),
+                                row.getValue("is_urgently"),
+                                "true".equals(row.getValue("is_learning")) || "1".equals(row.getValue("is_learning")),
+                                "true".equals(row.getValue("is_general_to_do")) || "1".equals(row.getValue("is_general_to_do")),
+                                "true".equals(row.getValue("is_today_task")) || "1".equals(row.getValue("is_today_task")),
+                                "true".equals(row.getValue("is_to_buy_task")) || "1".equals(row.getValue("is_to_buy_task")),
+                                null, row.getValue("date_created"), row.getValue("date_deadline")
+                        );
+                        adapter.addItem(note);
+                    }
                 });
             }
 
             @Override
             public void onFailure(String errorMessage) {
-                runOnUiThread(() -> Toast.makeText(Notes.this, "Failed to load: " + errorMessage, Toast.LENGTH_SHORT).show());
+                runOnUiThread(() -> Toast.makeText(Notes.this, "Failed: " + errorMessage, Toast.LENGTH_SHORT).show());
             }
         });
     }
 
-    private void showAddNoteDialog() {
+    // Unified Dialog Method for BOTH Add and Edit
+    private void showNoteDialog(Note note) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         View dialogView = getLayoutInflater().inflate(R.layout.dialog_note, null);
         builder.setView(dialogView);
@@ -94,17 +96,60 @@ public class Notes extends AppCompatActivity {
         final CheckBox cbToday = dialogView.findViewById(R.id.dialogCbToday);
         final CheckBox cbBuy = dialogView.findViewById(R.id.dialogCbToBuy);
 
-        builder.setPositiveButton("Create", (dialog, which) -> {
-            String q = QueryMaker.insertNoteQuery(
-                    title.getText().toString(), subtitle.getText().toString(),
-                    desc.getText().toString(), cat.getText().toString(),
-                    false, cbLearn.isChecked(), cbGen.isChecked(),
-                    cbToday.isChecked(), cbBuy.isChecked(), "2026-10-08", null
-            );
+        boolean isEditMode = (note != null);
+
+        // Pre-fill fields if in Edit Mode
+        if (isEditMode) {
+            title.setText(note.getNoteTitle());
+            subtitle.setText(note.getNoteSubtitle());
+            desc.setText(note.getNoteDescription());
+            cat.setText(note.getNoteCategory());
+            cbLearn.setChecked(note.isLearning());
+            cbGen.setChecked(note.isGeneralToDo());
+            cbToday.setChecked(note.isTodayTask());
+            cbBuy.setChecked(note.isToBuyTask());
+        }
+
+        builder.setPositiveButton(isEditMode ? "Update" : "Create", (dialog, which) -> {
+            String q;
+            if (isEditMode) {
+                // Update existing note
+                q = QueryMaker.updateNoteQuery(
+                        note.getId(),
+                        title.getText().toString(),
+                        subtitle.getText().toString(),
+                        desc.getText().toString(),
+                        cat.getText().toString(),
+                        false,
+                        cbLearn.isChecked(),
+                        cbGen.isChecked(),
+                        cbToday.isChecked(),
+                        cbBuy.isChecked(),
+                        null
+                );
+            } else {
+                // Create new note
+                q = QueryMaker.insertNoteQuery(
+                        title.getText().toString(),
+                        subtitle.getText().toString(),
+                        desc.getText().toString(),
+                        cat.getText().toString(),
+                        false,
+                        cbLearn.isChecked(),
+                        cbGen.isChecked(),
+                        cbToday.isChecked(),
+                        cbBuy.isChecked(),
+                        "2026-10-08",
+                        null
+                );
+            }
 
             GetFromSQLDatabase.runAzureQueryAIChat(q, new AzureDataCallback() {
                 @Override public void onSuccess(ArrayList<RowInTable> res) {
-                    runOnUiThread(() -> Toast.makeText(Notes.this, "Saved!", Toast.LENGTH_SHORT).show());
+                    runOnUiThread(() -> {
+                        Toast.makeText(Notes.this, isEditMode ? "Updated!" : "Saved!", Toast.LENGTH_SHORT).show();
+                        fetchNotesFromAzure(); // Refresh the full list
+                    });
                 }
                 @Override public void onFailure(String err) {
                     runOnUiThread(() -> Toast.makeText(Notes.this, "Error: " + err, Toast.LENGTH_SHORT).show());
@@ -113,5 +158,26 @@ public class Notes extends AppCompatActivity {
         });
         builder.setNegativeButton("Cancel", null);
         builder.create().show();
+    }
+
+    private void setupVisibilityListeners() {
+        CheckBox cb1 = findViewById(R.id.hideCbSection1);
+        CheckBox cb2 = findViewById(R.id.hideCbSection2);
+        CheckBox cb3 = findViewById(R.id.hideCbSection3);
+        CheckBox cb4 = findViewById(R.id.hideCbSection4);
+
+        android.widget.CompoundButton.OnCheckedChangeListener listener = (buttonView, isChecked) -> {
+            adapter.setSectionVisibilities(
+                    cb1.isChecked(),
+                    cb2.isChecked(),
+                    cb3.isChecked(),
+                    cb4.isChecked()
+            );
+        };
+
+        cb1.setOnCheckedChangeListener(listener);
+        cb2.setOnCheckedChangeListener(listener);
+        cb3.setOnCheckedChangeListener(listener);
+        cb4.setOnCheckedChangeListener(listener);
     }
 }

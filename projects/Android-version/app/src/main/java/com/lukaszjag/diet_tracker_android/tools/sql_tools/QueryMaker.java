@@ -112,4 +112,22 @@ public class QueryMaker {
                 ");\n" +
                 "SELECT 1 AS success;";
     }
+
+    public static String updateNoteQuery(long id, String title, String subtitle, String description, String category,
+                                         boolean isUrgently, boolean isLearning, boolean isGeneral,
+                                         boolean isToday, boolean isToBuy, String deadline) {
+
+        return "UPDATE [diet_tracker_schema].[notes] SET " +
+                "[title] = N'" + title.replace("'", "''") + "', " +
+                "[subtitle] = N'" + subtitle.replace("'", "''") + "', " +
+                "[description] = N'" + description.replace("'", "''") + "', " +
+                "[category] = N'" + category.replace("'", "''") + "', " +
+                "[is_urgently] = " + (isUrgently ? 1 : 0) + ", " +
+                "[is_learning] = " + (isLearning ? 1 : 0) + ", " +
+                "[is_general_to_do] = " + (isGeneral ? 1 : 0) + ", " +
+                "[is_today_task] = " + (isToday ? 1 : 0) + ", " +
+                "[is_to_buy_task] = " + (isToBuy ? 1 : 0) + ", " +
+                "[date_deadline] = " + (deadline == null || deadline.isEmpty() ? "NULL" : "'" + deadline + "'") + " " +
+                "WHERE [id] = " + id + ";";
+    }
 }
