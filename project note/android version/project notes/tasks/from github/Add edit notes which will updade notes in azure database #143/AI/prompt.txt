@@ -1,0 +1,1 @@
+Add edit notes which will updade notes in azure databaseAdd edit notes feature which will updade notes in azure database and make possible do it in android app
