@@ -1,0 +1,9 @@
+Name: Ciasto Krówka
+Brand: domowe
+Package has: 0.0
+Macro for: 100.0
+KCal: 284.0
+Protein: 5.0
+Fat: 14.0
+Carbs: 36.0
+Comment optional: Link: https://kalkulatorkalorii.net/kalkulator-kalorii/6109-100-ciasto-krowka
