@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -24,7 +25,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Notes extends AppCompatActivity {
-
+    private EditText filterSubtitle;
+    private Spinner filterCategorySpinner;
+    private Spinner filterUrgentlySpinner;
+    private CheckBox filterCbLearning, filterCbGeneral, filterCbToday, filterCbToBuy;
     private RecyclerView recyclerView;
     private MyAdapter adapter;
 
@@ -32,6 +36,14 @@ public class Notes extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.notes_view_layout);
+
+        filterSubtitle = findViewById(R.id.filterSubtitle);
+        filterCategorySpinner = findViewById(R.id.filterCategorySpinner);
+        filterUrgentlySpinner = findViewById(R.id.filterUrgentlySpinner);
+        filterCbLearning = findViewById(R.id.filterCbLearning);
+        filterCbGeneral = findViewById(R.id.filterCbGeneral);
+        filterCbToday = findViewById(R.id.filterCbToday);
+        filterCbToBuy = findViewById(R.id.filterCbToBuy);
 
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -46,6 +58,7 @@ public class Notes extends AppCompatActivity {
 
         setupVisibilityListeners();
         fetchNotesFromAzure();
+        setupFilterListeners();
     }
 
     private void fetchNotesFromAzure() {
@@ -179,5 +192,57 @@ public class Notes extends AppCompatActivity {
         cb2.setOnCheckedChangeListener(listener);
         cb3.setOnCheckedChangeListener(listener);
         cb4.setOnCheckedChangeListener(listener);
+    }
+
+
+    // 3. Create the listener logic
+    private void setupFilterListeners() {
+        // Text input
+        filterSubtitle.addTextChangedListener(new android.text.TextWatcher() {
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            public void onTextChanged(CharSequence s, int start, int before, int count) { applyFilters(); }
+            public void afterTextChanged(android.text.Editable s) {}
+        });
+
+        // Spinners
+        android.widget.AdapterView.OnItemSelectedListener spinnerListener = new android.widget.AdapterView.OnItemSelectedListener() {
+            @Override public void onItemSelected(android.widget.AdapterView<?> parent, View view, int position, long id) { applyFilters(); }
+            @Override public void onNothingSelected(android.widget.AdapterView<?> parent) {}
+        };
+        filterCategorySpinner.setOnItemSelectedListener(spinnerListener);
+        filterUrgentlySpinner.setOnItemSelectedListener(spinnerListener);
+
+        // Checkboxes
+        android.widget.CompoundButton.OnCheckedChangeListener cbListener = (buttonView, isChecked) -> applyFilters();
+        filterCbLearning.setOnCheckedChangeListener(cbListener);
+        filterCbGeneral.setOnCheckedChangeListener(cbListener);
+        filterCbToday.setOnCheckedChangeListener(cbListener);
+        filterCbToBuy.setOnCheckedChangeListener(cbListener);
+    }
+
+    // 4. Create the central applyFilters function
+    private void applyFilters() {
+        String subtitle = filterSubtitle.getText().toString();
+
+        // Handle Category logic
+        List<String> selectedCategories = new ArrayList<>();
+        String selectedCat = filterCategorySpinner.getSelectedItem() != null ?
+                filterCategorySpinner.getSelectedItem().toString() : "All Categories";
+        if (!selectedCat.equals("All Categories")) {
+            selectedCategories.add(selectedCat);
+        }
+
+        String urgency = filterUrgentlySpinner.getSelectedItem() != null ?
+                filterUrgentlySpinner.getSelectedItem().toString() : "All Urgencies";
+
+        adapter.filter(
+                subtitle,
+                selectedCategories,
+                urgency,
+                filterCbLearning.isChecked(),
+                filterCbGeneral.isChecked(),
+                filterCbToday.isChecked(),
+                filterCbToBuy.isChecked()
+        );
     }
 }

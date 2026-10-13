@@ -62,7 +62,7 @@
                 android:inputType="text" />
 
             <!-- Multichoice Category Spinner Dropdown -->
-            <TextView
+            <Spinner
                 android:id="@+id/filterCategorySpinner"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
