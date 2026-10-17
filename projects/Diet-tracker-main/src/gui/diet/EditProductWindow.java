@@ -40,6 +40,7 @@ public class EditProductWindow extends JFrame {
     private JTextField commentField = new JTextField(15);
 
     private JButton saveButton = new JButton("Accept & Update Product");
+    private JButton deleteButton = new JButton("Delete Product (All DBs)");
     private String originalProductName = "";
 
     private static class ProductComboBoxItem {
@@ -60,12 +61,12 @@ public class EditProductWindow extends JFrame {
     }
 
     public EditProductWindow() {
-        super("Edit Product Library");
+        super("Edit & Delete Product Library (MySQL & Azure)");
         setupUI();
     }
 
     private void setupUI() {
-        setSize(520, 520);
+        setSize(540, 560);
         setLayout(new BorderLayout());
 
         JPanel searchPanel = new JPanel(new GridLayout(2, 1));
@@ -108,13 +109,24 @@ public class EditProductWindow extends JFrame {
         detailsPanel.add(commentField);
         add(detailsPanel, BorderLayout.CENTER);
 
-        JPanel southPanel = new JPanel();
+        JPanel southPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 20, 10));
+
+        saveButton.setBackground(new Color(40, 167, 69));
+        saveButton.setForeground(Color.WHITE);
+        saveButton.setFont(new Font("Arial", Font.BOLD, 12));
+
+        deleteButton.setBackground(new Color(220, 53, 69));
+        deleteButton.setForeground(Color.WHITE);
+        deleteButton.setFont(new Font("Arial", Font.BOLD, 12));
+
         southPanel.add(saveButton);
+        southPanel.add(deleteButton);
         add(southPanel, BorderLayout.SOUTH);
 
         searchButton.addActionListener(e -> executeSearch());
         matchesComboBox.addActionListener(e -> handleSelectionChange());
         saveButton.addActionListener(e -> handleSave());
+        deleteButton.addActionListener(e -> handleDelete());
 
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -129,13 +141,9 @@ public class EditProductWindow extends JFrame {
         }
 
         matchesComboBox.removeAllItems();
-        List<Map<String, String>> results = new ArrayList<>();
-
-        if (sourceLocal.isSelected()) {
-            results = queryLocalProducts(inputVal);
-        } else {
-            results = queryAzureProducts(inputVal);
-        }
+        List<Map<String, String>> results = sourceLocal.isSelected()
+                ? queryLocalProducts(inputVal)
+                : queryAzureProducts(inputVal);
 
         if (results.isEmpty()) {
             JOptionPane.showMessageDialog(this, "No products matched this keyword.");
@@ -167,23 +175,21 @@ public class EditProductWindow extends JFrame {
         fatField.setText(data.get("product_fat"));
         carbsField.setText(data.get("product_carbs"));
         commentField.setText(data.get("comment_optional") != null ? data.get("comment_optional") : data.get("product_comment"));
-
-        JOptionPane.showMessageDialog(this, "Product data pulled successfully!");
     }
 
     private void handleSave() {
         if (originalProductName.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Select a product from matches ComboBox before trying to save updates.");
+            JOptionPane.showMessageDialog(this, "Select a product first.");
             return;
         }
 
         try {
-            float packageHas = Float.parseFloat(packWeightField.getText());
-            float macroFor = Float.parseFloat(baseMeasureField.getText());
-            float kcal = Float.parseFloat(kcalField.getText());
-            float protein = Float.parseFloat(proteinField.getText());
-            float fat = Float.parseFloat(fatField.getText());
-            float carbs = Float.parseFloat(carbsField.getText());
+            float packageHas = Float.parseFloat(packWeightField.getText().replace(',', '.'));
+            float macroFor = Float.parseFloat(baseMeasureField.getText().replace(',', '.'));
+            float kcal = Float.parseFloat(kcalField.getText().replace(',', '.'));
+            float protein = Float.parseFloat(proteinField.getText().replace(',', '.'));
+            float fat = Float.parseFloat(fatField.getText().replace(',', '.'));
+            float carbs = Float.parseFloat(carbsField.getText().replace(',', '.'));
 
             // 1. Update Local MySQL
             try (Connection conn = GetConnection.getConnectionWithLocalHost()) {
@@ -206,7 +212,7 @@ public class EditProductWindow extends JFrame {
                 }
             }
 
-            // 2. Sync update to Azure SQL database
+            // 2. Sync update to Azure SQL
             String azureSql = "UPDATE [diet_tracker_schema].[product_table] SET " +
                     "product_name = '" + nameField.getText().replace("'", "''") + "', " +
                     "product_brand = '" + brandField.getText().replace("'", "''") + "', " +
@@ -221,13 +227,54 @@ public class EditProductWindow extends JFrame {
 
             AzureSqlSync.syncQueryToAzure(azureSql);
 
-            JOptionPane.showMessageDialog(this, "Local database and Azure SQL updated successfully.");
+            JOptionPane.showMessageDialog(this, "Product updated in Local and Azure databases!");
             clearForm();
 
         } catch (NumberFormatException ex) {
-            JOptionPane.showMessageDialog(this, "Numeric input formats are invalid. Please confirm entries are floats.");
+            JOptionPane.showMessageDialog(this, "Numeric input formats are invalid.");
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(this, "Failed saving changes locally: " + ex.getMessage());
+        }
+    }
+
+    private void handleDelete() {
+        if (originalProductName.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Select a product to delete first.");
+            return;
+        }
+
+        int confirm = JOptionPane.showConfirmDialog(
+                this,
+                "Are you sure you want to delete this product from BOTH Local MySQL and Azure SQL?\nProduct: " + originalProductName,
+                "Confirm Delete",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.WARNING_MESSAGE
+        );
+
+        if (confirm != JOptionPane.YES_OPTION) {
+            return;
+        }
+
+        try {
+            // 1. Delete from Local MySQL
+            try (Connection conn = GetConnection.getConnectionWithLocalHost()) {
+                String localSql = "DELETE FROM product_table WHERE product_name = ?";
+                try (PreparedStatement ps = conn.prepareStatement(localSql)) {
+                    ps.setString(1, originalProductName);
+                    ps.executeUpdate();
+                }
+            }
+
+            // 2. Delete from Azure SQL
+            String azureDelete = "DELETE FROM [diet_tracker_schema].[product_table] WHERE product_name = '"
+                    + originalProductName.replace("'", "''") + "'";
+            AzureSqlSync.syncQueryToAzure(azureDelete);
+
+            JOptionPane.showMessageDialog(this, "Product deleted from Local and Azure databases!");
+            clearForm();
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this, "Failed deleting locally: " + ex.getMessage());
         }
     }
 

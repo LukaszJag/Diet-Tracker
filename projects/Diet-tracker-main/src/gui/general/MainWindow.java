@@ -119,50 +119,37 @@ public class  MainWindow extends JFrame {
     private void addButtons() {
 
         addProductButton.setBackground(Color.GREEN);
-
         addProductButton.addActionListener(new AddProductButton());
         panelLeft.add(addProductButton);
 
         mealManagerButton.addActionListener(new MealMangerButton());
         panelLeft.add(mealManagerButton);
 
-
         addProductToDay.addActionListener(new AddProducttoDayButton());
         addProductToDay.setBackground(Color.ORANGE);
         panelLeft.add(addProductToDay);
 
-        // Add Separate Edit Buttons
+        // --- EDIT & DELETE BUTTONS ---
+        editCalendarButton.setText("Edit/Delete Calendar Row");
         editCalendarButton.addActionListener(new EditCalendarButtonListener());
         editCalendarButton.setBackground(Color.CYAN);
         panelLeft.add(editCalendarButton);
 
+        editProductButton.setText("Edit/Delete Product");
         editProductButton.addActionListener(new EditProductButtonListener());
         editProductButton.setBackground(Color.YELLOW);
         panelLeft.add(editProductButton);
 
-        calculateBMR.addActionListener(new calculateBMRActionListener());
-        panelLeft.add(calculateBMR);
-
-        calendarMonthStatsView.addActionListener(new calendarMonthStatsViewActionListener());
-        calendarMonthStatsView.setBackground(Color.GREEN);
-        panelLeft.add(calendarMonthStatsView);
-
-        // Binding New Database Editor Button
+        manageDatabaseButton.setText("Manage SQL Records");
         manageDatabaseButton.addActionListener(new ManageDatabaseButtonListener());
-        manageDatabaseButton.setBackground(Color.CYAN);
+        manageDatabaseButton.setBackground(new Color(173, 216, 230));
         panelLeft.add(manageDatabaseButton);
 
-        calculateBMR.addActionListener(new calculateBMRActionListener());
-        panelLeft.add(calculateBMR);
-
-        calculateBMR.addActionListener(new calculateBMRActionListener());
-        panelLeft.add(calculateBMR);
-
         calendarMonthStatsView.addActionListener(new calendarMonthStatsViewActionListener());
         calendarMonthStatsView.setBackground(Color.GREEN);
         panelLeft.add(calendarMonthStatsView);
 
-
+        // --- RIGHT PANEL BUTTONS ---
         changeProductDataBase.addActionListener(new ChangeProductTableActionListener());
         panelRight.add(changeProductDataBase);
         changeProductDataBase.setBackground(Color.PINK);
@@ -182,7 +169,7 @@ public class  MainWindow extends JFrame {
         copyGithubCommentToCopyClipboardButton.addActionListener(new CopyGithubCommentToCopyClipboardButtonActionListener());
         panelRight.add(copyGithubCommentToCopyClipboardButton);
     }
-
+    
     private void addLabels() {
         Label dateAndTime = new Label("There will be date and time");
         panelUpper.add(dateAndTime);

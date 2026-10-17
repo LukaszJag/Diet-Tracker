@@ -1,7 +1,9 @@
 package gui.diet;
 
 import tools.azure.AzureSqlSync;
+import tools.sql_tools.days_statistics.UpdateDaysStatisticsFilledData;
 import tools.sql_tools.general.get.GetConnection;
+import tools.sql_tools.general.run.RunQuery;
 
 import javax.swing.*;
 import java.awt.*;
@@ -40,10 +42,11 @@ public class EditCalendarWindow extends JFrame {
     private JTextField baseCarbsField = new JTextField(15);
     private JTextField commentField = new JTextField(15);
 
-    private JButton saveButton = new JButton("Accept & Save Changes");
+    // Action Buttons
+    private JButton saveButton = new JButton("Save Changes (All DBs)");
+    private JButton deleteButton = new JButton("Delete Record (All DBs)");
     private String selectedRowId = "";
 
-    // Inner class helper for dynamic ComboBox payloads
     private static class CalendarComboBoxItem {
         String rowId;
         String displayText;
@@ -62,12 +65,12 @@ public class EditCalendarWindow extends JFrame {
     }
 
     public EditCalendarWindow() {
-        super("Edit Calendar Logs");
+        super("Edit & Delete Calendar Entries (MySQL & Azure)");
         setupUI();
     }
 
     private void setupUI() {
-        setSize(520, 560);
+        setSize(560, 620);
         setLayout(new BorderLayout());
 
         JPanel searchPanel = new JPanel(new GridLayout(2, 1));
@@ -112,13 +115,25 @@ public class EditCalendarWindow extends JFrame {
         detailsPanel.add(commentField);
         add(detailsPanel, BorderLayout.CENTER);
 
-        JPanel southPanel = new JPanel();
+        // Buttons Panel
+        JPanel southPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 20, 10));
+
+        saveButton.setBackground(new Color(40, 167, 69));
+        saveButton.setForeground(Color.WHITE);
+        saveButton.setFont(new Font("Arial", Font.BOLD, 12));
+
+        deleteButton.setBackground(new Color(220, 53, 69));
+        deleteButton.setForeground(Color.WHITE);
+        deleteButton.setFont(new Font("Arial", Font.BOLD, 12));
+
         southPanel.add(saveButton);
+        southPanel.add(deleteButton);
         add(southPanel, BorderLayout.SOUTH);
 
         searchButton.addActionListener(e -> executeSearch());
         matchesComboBox.addActionListener(e -> handleSelectionChange());
         saveButton.addActionListener(e -> handleSave());
+        deleteButton.addActionListener(e -> handleDelete());
 
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -133,13 +148,9 @@ public class EditCalendarWindow extends JFrame {
         }
 
         matchesComboBox.removeAllItems();
-        List<Map<String, String>> results = new ArrayList<>();
-
-        if (sourceLocal.isSelected()) {
-            results = queryLocalCalendar(dateVal);
-        } else {
-            results = queryAzureCalendar(dateVal);
-        }
+        List<Map<String, String>> results = sourceLocal.isSelected()
+                ? queryLocalCalendar(dateVal)
+                : queryAzureCalendar(dateVal);
 
         if (results.isEmpty()) {
             JOptionPane.showMessageDialog(this, "No records found on the selected database source.");
@@ -152,7 +163,7 @@ public class EditCalendarWindow extends JFrame {
             matchesComboBox.addItem(new CalendarComboBoxItem(rowId, display, row));
         }
 
-        JOptionPane.showMessageDialog(this, "Search completed. Found " + results.size() + " matches.");
+        JOptionPane.showMessageDialog(this, "Found " + results.size() + " matches.");
     }
 
     private void handleSelectionChange() {
@@ -172,27 +183,27 @@ public class EditCalendarWindow extends JFrame {
         baseFatField.setText(data.get("fat"));
         baseCarbsField.setText(data.get("carbs"));
         commentField.setText(data.get("comment_optional"));
-
-        JOptionPane.showMessageDialog(this, "Calendar entry data successfully pulled from database!");
     }
 
     private void handleSave() {
         if (selectedRowId.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Please search and select a record to update.");
+            JOptionPane.showMessageDialog(this, "Please select an entry first.");
             return;
         }
 
         try {
-            float weight = Float.parseFloat(amountField.getText());
-            float baseKcal = Float.parseFloat(baseKcalField.getText());
-            float baseProtein = Float.parseFloat(baseProteinField.getText());
-            float baseFat = Float.parseFloat(baseFatField.getText());
-            float baseCarbs = Float.parseFloat(baseCarbsField.getText());
+            float weight = Float.parseFloat(amountField.getText().replace(',', '.'));
+            float baseKcal = Float.parseFloat(baseKcalField.getText().replace(',', '.'));
+            float baseProtein = Float.parseFloat(baseProteinField.getText().replace(',', '.'));
+            float baseFat = Float.parseFloat(baseFatField.getText().replace(',', '.'));
+            float baseCarbs = Float.parseFloat(baseCarbsField.getText().replace(',', '.'));
 
             float kcalConsume = (baseKcal * weight) / 100.0f;
             float proteinConsume = (baseProtein * weight) / 100.0f;
             float fatConsume = (baseFat * weight) / 100.0f;
             float carbsConsume = (baseCarbs * weight) / 100.0f;
+
+            String logDate = dateField.getText().trim();
 
             // 1. Update Local MySQL
             try (Connection conn = GetConnection.getConnectionWithLocalHost()) {
@@ -202,7 +213,7 @@ public class EditCalendarWindow extends JFrame {
                         "comment_optional = ?, is_synced = 0 WHERE row_id = ?";
 
                 try (PreparedStatement ps = conn.prepareStatement(localSql)) {
-                    ps.setString(1, dateField.getText());
+                    ps.setString(1, logDate);
                     ps.setString(2, dayNameField.getText());
                     ps.setString(3, mealNameField.getText());
                     ps.setString(4, productNameField.getText());
@@ -221,9 +232,9 @@ public class EditCalendarWindow extends JFrame {
                 }
             }
 
-            // 2. Sync Update statement with Azure SQL database
+            // 2. Sync Update statement with Azure SQL
             String azureSql = "UPDATE [diet_tracker_schema].[calendar] SET " +
-                    "day_date = '" + dateField.getText().replace("'", "''") + "', " +
+                    "day_date = '" + logDate.replace("'", "''") + "', " +
                     "day_name = '" + dayNameField.getText().replace("'", "''") + "', " +
                     "meal_name = '" + mealNameField.getText().replace("'", "''") + "', " +
                     "product_name = '" + productNameField.getText().replace("'", "''") + "', " +
@@ -241,13 +252,77 @@ public class EditCalendarWindow extends JFrame {
 
             AzureSqlSync.syncQueryToAzure(azureSql, selectedRowId);
 
-            JOptionPane.showMessageDialog(this, "Local record overwritten. Database updates successfully submitted.");
-            clearForm();
+            // 3. Recalculate local day statistics
+            refreshDayStatistics(logDate);
+
+            JOptionPane.showMessageDialog(this, "Row successfully updated in Local MySQL and Azure SQL!");
+            executeSearch();
 
         } catch (NumberFormatException ex) {
-            JOptionPane.showMessageDialog(this, "Please confirm all nutritional & measure entry values are valid numbers.");
+            JOptionPane.showMessageDialog(this, "Please verify all numerical values are valid numbers.");
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, "Failed updating record locally: " + ex.getMessage());
+            JOptionPane.showMessageDialog(this, "Failed updating locally: " + ex.getMessage());
+        }
+    }
+
+    private void handleDelete() {
+        if (selectedRowId.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please select an entry to delete.");
+            return;
+        }
+
+        int confirm = JOptionPane.showConfirmDialog(
+                this,
+                "Are you sure you want to permanently delete this row from BOTH Local MySQL and Azure SQL?\nProduct: "
+                        + productNameField.getText() + " (Row ID: " + selectedRowId + ")",
+                "Confirm Delete",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.WARNING_MESSAGE
+        );
+
+        if (confirm != JOptionPane.YES_OPTION) {
+            return;
+        }
+
+        String logDate = dateField.getText().trim();
+
+        try {
+            // 1. Delete from Local MySQL
+            try (Connection conn = GetConnection.getConnectionWithLocalHost()) {
+                String localDelete = "DELETE FROM calendar WHERE row_id = ?";
+                try (PreparedStatement ps = conn.prepareStatement(localDelete)) {
+                    ps.setString(1, selectedRowId);
+                    ps.executeUpdate();
+                }
+            }
+
+            // 2. Delete from Azure Cloud SQL
+            String azureDelete = "DELETE FROM [diet_tracker_schema].[calendar] WHERE [row_id] = '"
+                    + selectedRowId.replace("'", "''") + "'";
+            AzureSqlSync.syncQueryToAzure(azureDelete);
+
+            // 3. Recalculate day statistics locally
+            refreshDayStatistics(logDate);
+
+            JOptionPane.showMessageDialog(this, "Row permanently deleted from Local and Azure databases!");
+            clearForm();
+            executeSearch();
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this, "Error deleting locally: " + ex.getMessage());
+        }
+    }
+
+    private void refreshDayStatistics(String date) {
+        if (date == null || date.isEmpty()) return;
+        try {
+            String updateMacrosSql = UpdateDaysStatisticsFilledData.prepareQueryForFillConsumedMacro(date);
+            RunQuery.runQuery(updateMacrosSql);
+
+            String updatePointsSql = UpdateDaysStatisticsFilledData.prepareQueryForUpdateAmountOfFilledPointsFromNotepad(date);
+            RunQuery.runQuery(updatePointsSql);
+        } catch (Exception ex) {
+            System.err.println("Could not refresh statistics for date " + date + ": " + ex.getMessage());
         }
     }
 
@@ -306,12 +381,11 @@ public class EditCalendarWindow extends JFrame {
         return new ArrayList<>();
     }
 
-    // Basic custom JSON array parser to map object strings directly to runtime key-values
     private List<Map<String, String>> parseJson(String json) {
         List<Map<String, String>> results = new ArrayList<>();
         if (!json.contains("[")) return results;
 
-        String clean = json.trim().substring(1, json.trim().length() - 1); // remove outer brackets
+        String clean = json.trim().substring(1, json.trim().length() - 1);
         String[] objects = clean.split("\\},\\{");
         for (String obj : objects) {
             Map<String, String> map = new HashMap<>();

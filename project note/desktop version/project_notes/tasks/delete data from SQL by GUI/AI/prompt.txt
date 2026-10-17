@@ -1,0 +1,9 @@
+I want to add deleting data from my sql databases one local in mysql and second in azure sql database by button in MainWindows which will show windows where I can delete and change vaule in my row in all my databases at once
+
+
+
+
+
+
+
+
