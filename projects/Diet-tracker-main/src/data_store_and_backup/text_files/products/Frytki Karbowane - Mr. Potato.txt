@@ -1,0 +1,9 @@
+Name: Frytki Karbowane - Mr. Potato
+Brand: Mr. Potato
+Package has: 2500.0
+Macro for: 100.0
+KCal: 155.0
+Protein: 2.9
+Fat: 3.9
+Carbs: 26.0
+Comment optional: Dane z opakowania
