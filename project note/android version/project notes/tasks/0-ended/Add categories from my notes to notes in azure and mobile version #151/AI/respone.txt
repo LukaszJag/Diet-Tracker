@@ -1,0 +1,1174 @@
+Here is the complete implementation of the hierarchical categories and
+subcategories system for your notes feature.
+
+Step 1: Azure SQL Database Migration
+
+To store both the main category and the subcategory, run this script once in
+your Azure Portal Query Editor (or Azure Data Studio / SSMS) on database
+free-sql-db-6758529:
+
+-- Add subcategory column to the notes table if it does not already exist
+IF NOT EXISTS (
+    SELECT * FROM sys.columns 
+    WHERE object_id = OBJECT_ID(N'[diet_tracker_schema].[notes]') 
+    AND name = 'subcategory'
+)
+BEGIN
+    ALTER TABLE [diet_tracker_schema].[notes]
+    ADD [subcategory] NVARCHAR(255) NULL;
+END
+
+Explanation:
+Existing notes table stores [category], which will now hold the Main Category
+(e.g., "Java ecosystem"). The new [subcategory] column stores the Subcategory
+(e.g., "Spring"). Adding it as NVARCHAR(255) NULL ensures backward compatibility
+with notes that were already created without subcategories.
+
+Step 2: Category Mapping Data Structure (NoteCategoryData.java)
+
+Create a new file NoteCategoryData.java in package
+com.lukaszjag.diet_tracker_android.tools.notes_tool.categories.
+
+package com.lukaszjag.diet_tracker_android.tools.notes_tool.categories;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+
+public class NoteCategoryData {
+    public static final Map<String, List<String>> CATEGORY_MAP = new LinkedHashMap<>();
+
+    static {
+        CATEGORY_MAP.put("Java ecosystem", Arrays.asList(
+                "Java", "Spring", "JUNIT", "Android", "Java – Web Scraping", "Java Diet Tracker"
+        ));
+        CATEGORY_MAP.put("Frontend", Arrays.asList(
+                "HTML, CSS", "JavaScript"
+        ));
+        CATEGORY_MAP.put("Cloud and Infrastructure", Arrays.asList(
+                "Linux", "PowerShell", "Network", "Cloud", "Windows Server",
+                "Windows", "Containers", "SCCM - System Center Configuration Manager (MECM - Microsoft Endpoint Configuration Manager)"
+        ));
+        CATEGORY_MAP.put("GameDev", Arrays.asList(
+                "UE5"
+        ));
+        CATEGORY_MAP.put("Computer Science", Arrays.asList(
+                "Algorytmy", "General IT Knowledge"
+        ));
+        CATEGORY_MAP.put("Soft Skills", Arrays.asList(
+                "Szukanie pracy", "Japoński", "Angielski"
+        ));
+        CATEGORY_MAP.put("Versatile Frameworks", Arrays.asList(
+                "Python", ".NET (C#)"
+        ));
+        CATEGORY_MAP.put("WSB", Arrays.asList(
+                "WSB"
+        ));
+        CATEGORY_MAP.put("Certs", Arrays.asList(
+                "CompTIA A+", "CompTIA Network+", "CompTIA Linux+"
+        ));
+        CATEGORY_MAP.put("Backend", Arrays.asList(
+                "x"
+        ));
+        CATEGORY_MAP.put("Microsoft Office", Arrays.asList(
+                "Microsoft Office"
+        ));
+        CATEGORY_MAP.put("Low-Level Languages", Arrays.asList(
+                "C", "C++"
+        ));
+        CATEGORY_MAP.put("Dev Tools", Arrays.asList(
+                "Git", "Jira", "Postman", "IDE"
+        ));
+        CATEGORY_MAP.put("AI & Machine Learning", Arrays.asList(
+                "AI Assistants", "Machine Learning Basics"
+        ));
+        CATEGORY_MAP.put("UWR", Collections.emptyList());
+    }
+
+    public static List<String> getMainCategories() {
+        return new ArrayList<>(CATEGORY_MAP.keySet());
+    }
+
+    public static List<String> getSubcategories(String mainCategory) {
+        if (mainCategory == null || !CATEGORY_MAP.containsKey(mainCategory)) {
+            return Collections.emptyList();
+        }
+        return CATEGORY_MAP.get(mainCategory);
+    }
+}
+
+Explanation:
+A LinkedHashMap is used to strictly maintain the 1–15 insertion order of your
+main categories. getSubcategories() safely returns the matching subcategories or
+an empty list if a category like UWR has no subcategories.
+
+Step 3: Update Note.java
+
+Update Note.java to support noteSubcategory.
+
+package com.lukaszjag.diet_tracker_android.tools.notes_tool;
+
+import com.lukaszjag.diet_tracker_android.tools.notes_tool.categories.learning_categories.LearningCategories;
+
+import org.json.JSONObject;
+import org.json.JSONException;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.Locale;
+import java.util.concurrent.TimeUnit;
+
+public class Note {
+    private String noteTitle;
+    private String noteSubtitle;
+    private String noteDescription;
+    private String noteCategory;
+    private String noteSubcategory; // Added field for Subcategory
+    private String noteUrgently;
+
+    private LearningCategories noteLearningCategories;
+    private boolean isLearning;
+    private boolean isGeneralToDo;
+    private boolean isTodayTask;
+    private boolean isToBuyTask;
+
+    private String dateCreated;
+    private String dateDeadline;
+    private long id;
+    private ArrayList<String> urgentScaleEnglish = new ArrayList<>(Arrays.asList(
+            "no urgent scale",
+            "Day task",
+            "ASAP",
+            "To end of month",
+            "Week to done",
+            "Optional"));
+
+    public Note() {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+        this.dateCreated = sdf.format(new Date());
+        this.dateDeadline = "";
+        this.noteCategory = "Java ecosystem";
+        this.noteSubcategory = "Java";
+        this.noteUrgently = "no urgent scale";
+    }
+
+    public Note(String noteTitle, String noteSubtitle, String noteDescription) {
+        this();
+        this.noteTitle = noteTitle;
+        this.noteSubtitle = noteSubtitle;
+        this.noteDescription = noteDescription;
+    }
+
+    // Constructor with Subcategory support
+    public Note(long id, String noteTitle, String noteSubtitle, String noteDescription,
+                String noteCategory, String noteSubcategory, String noteUrgently,
+                boolean isLearning, boolean isGeneralToDo, boolean isTodayTask, boolean isToBuyTask,
+                LearningCategories noteLearningCategories, String dateCreated, String dateDeadline) {
+        this.id = id;
+        this.noteTitle = noteTitle;
+        this.noteSubtitle = noteSubtitle;
+        this.noteDescription = noteDescription;
+        this.noteCategory = noteCategory;
+        this.noteSubcategory = (noteSubcategory != null) ? noteSubcategory : "";
+        this.noteUrgently = noteUrgently;
+        this.isLearning = isLearning;
+        this.isGeneralToDo = isGeneralToDo;
+        this.isTodayTask = isTodayTask;
+        this.isToBuyTask = isToBuyTask;
+        this.noteLearningCategories = noteLearningCategories;
+        this.dateCreated = dateCreated;
+        this.dateDeadline = dateDeadline;
+    }
+
+    public JSONObject toJsonObject() {
+        try {
+            JSONObject json = new JSONObject();
+            json.put("noteTitle", noteTitle);
+            json.put("noteSubtitle", noteSubtitle);
+            json.put("noteDescription", noteDescription);
+            json.put("noteCategory", noteCategory);
+            json.put("noteSubcategory", noteSubcategory != null ? noteSubcategory : ""); // Serialize subcategory
+            json.put("noteUrgently", noteUglyUrgent(noteUrgently));
+            json.put("isLearning", isLearning);
+            json.put("isGeneralToDo", isGeneralToDo);
+            json.put("isTodayTask", isTodayTask);
+            json.put("isToBuyTask", isToBuyTask);
+            json.put("dateCreated", dateCreated);
+            json.put("dateDeadline", dateDeadline);
+
+            if (noteLearningCategories != null) {
+                JSONObject lcJson = new JSONObject();
+                lcJson.put("categoryName", noteLearningCategories.getCategoryName());
+                lcJson.put("isMainCategory", noteLearningCategories.isMainCategory());
+                lcJson.put("iSubCategory", noteLearningCategories.isiSubCategory());
+                json.put("noteLearningCategories", lcJson);
+            }
+            return json;
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public static Note fromJsonObject(JSONObject json) {
+        try {
+            long id = json.optLong("id", 0);
+            String title = json.optString("noteTitle", "");
+            String subtitle = json.optString("noteSubtitle", "");
+            String description = json.optString("noteDescription", "");
+            String category = json.optString("noteCategory", "Java ecosystem");
+            String subcategory = json.optString("noteSubcategory", "");
+            String urgently = json.optString("noteUrgently", "no urgent scale");
+            boolean isLearning = json.optBoolean("isLearning", false);
+            boolean isGeneralToDo = json.optBoolean("isGeneralToDo", false);
+            boolean isTodayTask = json.optBoolean("isTodayTask", false);
+            boolean isToBuyTask = json.optBoolean("isToBuyTask", false);
+            String dateCreated = json.optString("dateCreated", "");
+            String dateDeadline = json.optString("dateDeadline", "");
+
+            LearningCategories lc = null;
+            if (json.has("noteLearningCategories")) {
+                JSONObject lcJson = json.getJSONObject("noteLearningCategories");
+                String lcName = lcJson.optString("categoryName", "");
+                boolean lcMain = lcJson.optBoolean("isMainCategory", false);
+                boolean lcSub = lcJson.optBoolean("iSubCategory", false);
+                lc = new LearningCategories(lcName, lcMain, lcSub);
+            }
+
+            return new Note(id, title, subtitle, description, category, subcategory, urgently,
+                    isLearning, isGeneralToDo, isTodayTask, isToBuyTask, lc, dateCreated, dateDeadline);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    private String noteUglyUrgent(String value) {
+        return value != null ? value : "no urgent scale";
+    }
+
+    public long getId() { return id; }
+    public void setId(long id) { this.id = id; }
+    public long getDaysSinceCreation() {
+        if (dateCreated == null || dateCreated.isEmpty()) return 0;
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+        try {
+            Date createdDate = sdf.parse(dateCreated);
+            Date systemToday = new Date();
+            Date systemTodayClean = sdf.parse(sdf.format(systemToday));
+            long diffInMs = systemTodayClean.getTime() - createdDate.getTime();
+            return TimeUnit.DAYS.convert(diffInMs, TimeUnit.MILLISECONDS);
+        } catch (ParseException e) {
+            return 0;
+        }
+    }
+
+    public String getNoteSubtitle() { return noteSubtitle; }
+    public void setNoteSubtitle(String noteSubtitle) { this.noteSubtitle = noteSubtitle; }
+    public String getNoteTitle() { return noteTitle; }
+    public void setNoteTitle(String noteTitle) { this.noteTitle = noteTitle; }
+    public String getNoteDescription() { return noteDescription; }
+    public void setNoteDescription(String noteDescription) { this.noteDescription = noteDescription; }
+    public String getNoteCategory() { return noteCategory; }
+    public void setNoteCategory(String noteCategory) { this.noteCategory = noteCategory; }
+
+    public String getNoteSubcategory() { return noteSubcategory; }
+    public void setNoteSubcategory(String noteSubcategory) { this.noteSubcategory = noteSubcategory; }
+
+    public String getNoteUrgently() { return noteUrgently; }
+    public void setNoteUrgently(String noteUrgently) { this.noteUrgently = noteUrgently; }
+    public boolean isLearning() { return isLearning; }
+    public void setLearning(boolean learning) { isLearning = learning; }
+    public boolean isGeneralToDo() { return isGeneralToDo; }
+    public void setGeneralToDo(boolean generalToDo) { isGeneralToDo = generalToDo; }
+    public boolean isTodayTask() { return isTodayTask; }
+    public void setTodayTask(boolean todayTask) { isTodayTask = todayTask; }
+    public boolean isToBuyTask() { return isToBuyTask; }
+    public void setToBuyTask(boolean toBuyTask) { isToBuyTask = toBuyTask; }
+    public LearningCategories getNoteLearningCategories() { return noteLearningCategories; }
+    public void setNoteLearningCategories(LearningCategories noteLearningCategories) { this.noteLearningCategories = noteLearningCategories; }
+    public String getDateCreated() { return dateCreated; }
+    public void setDateCreated(String dateCreated) { this.dateCreated = dateCreated; }
+    public String getDateDeadline() { return dateDeadline; }
+    public void setDateDeadline(String dateDeadline) { this.dateDeadline = dateDeadline; }
+    public ArrayList<String> getUrgentScaleEnglish() { return urgentScaleEnglish; }
+}
+
+Explanation:
+Added noteSubcategory field with appropriate getter, setter, constructor
+arguments, and updated toJsonObject() / fromJsonObject() so that offline caching
+in NoteStorage also persists the subcategory seamlessly.
+
+Step 4: Update QueryMaker.java
+
+Update QueryMaker.java so INSERT and UPDATE queries push both category and
+subcategory to Azure SQL.
+
+package com.lukaszjag.diet_tracker_android.tools.sql_tools;
+
+public class QueryMaker {
+    public static String getAllProductTableLikeProductNameCaseInsensitive(String productData) {
+        String escapedData = productData != null ? productData.replace("'", "''") : "";
+        return "SELECT * FROM [diet_tracker_schema].[product_table] WHERE LOWER(product_name) LIKE '%" + escapedData + "%'";
+    }
+
+    public static String getAllProductsFromCalendarTableLikeDate(String date) {
+        String escapedDate = date != null ? date.replace("'", "''") : "";
+        return "SELECT * FROM [diet_tracker_schema].[calendar] WHERE day_date LIKE '%" + escapedDate + "%'";
+    }
+
+    // --- NOTES QUERIES ---
+
+    public static String getAllNotesQuery() {
+        return "SELECT * FROM [diet_tracker_schema].[notes]";
+    }
+
+    public static String insertNoteQuery(String title, String subtitle, String description,
+                                         String category, String subcategory,
+                                         boolean isUrgently, boolean isLearning, boolean isGeneral,
+                                         boolean isToday, boolean isToBuy, String created, String deadline) {
+
+        String safeTitle = title != null ? title.replace("'", "''") : "";
+        String safeSub = subtitle != null ? subtitle.replace("'", "''") : "";
+        String safeDesc = description != null ? description.replace("'", "''") : "";
+        String safeCat = category != null ? category.replace("'", "''") : "";
+        String safeSubcat = subcategory != null ? subcategory.replace("'", "''") : "";
+
+        return "INSERT INTO [diet_tracker_schema].[notes] " +
+                "([title], [subtitle], [description], [category], [subcategory], [is_urgently], [is_learning], " +
+                "[is_general_to_do], [is_today_task], [is_to_buy_task], [date_created], [date_deadline]) " +
+                "VALUES (" +
+                "N'" + safeTitle + "', " +
+                "N'" + safeSub + "', " +
+                "N'" + safeDesc + "', " +
+                "N'" + safeCat + "', " +
+                "N'" + safeSubcat + "', " +
+                (isUrgently ? 1 : 0) + ", " +
+                (isLearning ? 1 : 0) + ", " +
+                (isGeneral ? 1 : 0) + ", " +
+                (isToday ? 1 : 0) + ", " +
+                (isToBuy ? 1 : 0) + ", " +
+                "'" + created + "', " +
+                (deadline == null || deadline.isEmpty() ? "NULL" : "'" + deadline + "'") +
+                ");";
+    }
+
+    public static String updateNoteQuery(long id, String title, String subtitle, String description,
+                                         String category, String subcategory,
+                                         boolean isUrgently, boolean isLearning, boolean isGeneral,
+                                         boolean isToday, boolean isToBuy, String deadline) {
+
+        String safeTitle = title != null ? title.replace("'", "''") : "";
+        String safeSub = subtitle != null ? subtitle.replace("'", "''") : "";
+        String safeDesc = description != null ? description.replace("'", "''") : "";
+        String safeCat = category != null ? category.replace("'", "''") : "";
+        String safeSubcat = subcategory != null ? subcategory.replace("'", "''") : "";
+
+        return "UPDATE [diet_tracker_schema].[notes] SET " +
+                "[title] = N'" + safeTitle + "', " +
+                "[subtitle] = N'" + safeSub + "', " +
+                "[description] = N'" + safeDesc + "', " +
+                "[category] = N'" + safeCat + "', " +
+                "[subcategory] = N'" + safeSubcat + "', " +
+                "[is_urgently] = " + (isUrgently ? 1 : 0) + ", " +
+                "[is_learning] = " + (isLearning ? 1 : 0) + ", " +
+                "[is_general_to_do] = " + (isGeneral ? 1 : 0) + ", " +
+                "[is_today_task] = " + (isToday ? 1 : 0) + ", " +
+                "[is_to_buy_task] = " + (isToBuy ? 1 : 0) + ", " +
+                "[date_deadline] = " + (deadline == null || deadline.isEmpty() ? "NULL" : "'" + deadline + "'") + " " +
+                "WHERE [id] = " + id + ";";
+    }
+}
+
+Explanation:
+insertNoteQuery and updateNoteQuery now accept the subcategory argument and
+append [subcategory] = N'...' into the SQL statements. Existing single quotes
+are escaped with replace("'", "''") to prevent SQL syntax errors.
+getAllNotesQuery() runs SELECT *, which automatically fetches the new
+subcategory column.
+
+Step 5: Update Dialog Layout (dialog_note.xml)
+
+Replace the free-text dialogCategory EditText with two dependent Spinners:
+dialogSpinnerCategory (Main Category) and dialogSpinnerSubcategory
+(Subcategory).
+
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Note Details"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="12dp"/>
+
+        <EditText
+            android:id="@+id/dialogTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Title"
+            android:inputType="textCapSentences" />
+
+        <EditText
+            android:id="@+id/dialogSubtitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Subtitle"
+            android:inputType="textCapSentences" />
+
+        <EditText
+            android:id="@+id/dialogDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Description"
+            android:inputType="textMultiLine"
+            android:minLines="2" />
+
+        <!-- Main Category Label & Spinner -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Main Category:"
+            android:layout_marginTop="8dp"
+            android:textSize="12sp"
+            android:textColor="#555555"/>
+
+        <Spinner
+            android:id="@+id/dialogSpinnerCategory"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp" />
+
+        <!-- Subcategory Label & Spinner -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Subcategory:"
+            android:layout_marginTop="8dp"
+            android:textSize="12sp"
+            android:textColor="#555555"/>
+
+        <Spinner
+            android:id="@+id/dialogSpinnerSubcategory"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp" />
+
+        <CheckBox
+            android:id="@+id/dialogCbLearning"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Is Learning Task"
+            android:layout_marginTop="8dp"/>
+
+        <CheckBox
+            android:id="@+id/dialogCbGeneral"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Is General To-Do" />
+
+        <CheckBox
+            android:id="@+id/dialogCbToday"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Is Today Task" />
+
+        <CheckBox
+            android:id="@+id/dialogCbToBuy"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Is To Buy Task" />
+
+        <EditText
+            android:id="@+id/dialogDeadline"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Deadline Date (Tap to select)"
+            android:focusable="false"
+            android:clickable="true"
+            android:layout_marginTop="8dp" />
+    </LinearLayout>
+</ScrollView>
+
+Explanation:
+Replaces the manually typed dialogCategory EditText with structured dropdowns
+for Main Category and Subcategory. When creating or editing a note, the user can
+only choose valid predefined categories and subcategories.
+
+Step 6: notes_view_layout.xml Filter Bar Clarification
+
+In notes_view_layout.xml, filterCategorySpinner and filterUrgentlySpinner sit
+side-by-side. As requested:
+
+  - filterCategorySpinner selects from Main Categories.
+  - filterUrgentlySpinner acts as the dynamic Subcategory selector populated
+    according to the selected Main Category.
+
+Keep notes_view_layout.xml as is (the IDs @+id/filterCategorySpinner and
+@+id/filterUrgentlySpinner are retained so no layout inflation breaks occur).
+
+Step 7: Update MyAdapter.java
+
+Update MyAdapter.java to:
+
+1.  Display both Category and Subcategory on the note card (item_layout.xml).
+2.  Implement filtering by selectedMainCategory and selectedSubcategory.
+
+package com.lukaszjag.diet_tracker_android.tools.notes_tool;
+
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.TextView;
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.lukaszjag.diet_tracker_android.R;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
+
+    public static final int SORT_NONE = 0;
+    public static final int SORT_DATE_NEWEST = 1;
+    public static final int SORT_DATE_OLDEST = 2;
+    public static final int SORT_URGENCY_HIGH = 3;
+    public static final int SORT_URGENCY_LOW = 4;
+
+    public interface OnItemClickListener {
+        void onItemClick(int position, Note note);
+    }
+
+    private List<Note> noteList;
+    private List<Note> originalList;
+    private OnItemClickListener listener;
+
+    private boolean hideSection1 = false;
+    private boolean hideSection2 = false;
+    private boolean hideSection3 = false;
+    private boolean hideSection4 = false;
+
+    private int sortCriteria = SORT_NONE;
+
+    public MyAdapter() {
+        this.noteList = new ArrayList<>();
+        this.originalList = new ArrayList<>();
+    }
+
+    public List<Note> getOriginalList() { return originalList; }
+
+    public void setOnItemClickListener(OnItemClickListener listener) { this.listener = listener; }
+
+    public void setSectionVisibilities(boolean hideS1, boolean hideS2, boolean hideS3, boolean hideS4) {
+        this.hideSection1 = hideS1;
+        this.hideSection2 = hideS2;
+        this.hideSection3 = hideS3;
+        this.hideSection4 = hideS4;
+        notifyDataSetChanged();
+    }
+
+    public void setSortCriteria(int criteria) {
+        this.sortCriteria = criteria;
+        applySort();
+        notifyDataSetChanged();
+    }
+
+    public void addItem(Note note) {
+        noteList.add(note);
+        originalList.add(note);
+        applySort();
+        notifyItemInserted(noteList.indexOf(note));
+    }
+
+    public void setItem(int position, Note note) {
+        if (position >= 0 && position < noteList.size()) {
+            Note oldNote = noteList.get(position);
+            int origIdx = originalList.indexOf(oldNote);
+            if (origIdx != -1) originalList.set(origIdx, note);
+            noteList.set(position, note);
+            applySort();
+            notifyDataSetChanged();
+        }
+    }
+
+    public void deleteItem(int position) {
+        if (position >= 0 && position < noteList.size()) {
+            Note note = noteList.get(position);
+            originalList.remove(note);
+            noteList.remove(position);
+            notifyItemRemoved(position);
+            notifyItemRangeChanged(position, noteList.size());
+        }
+    }
+
+    private void applySort() {
+        if (sortCriteria == SORT_NONE) return;
+        Collections.sort(noteList, (n1, n2) -> {
+            switch (sortCriteria) {
+                case SORT_DATE_NEWEST:
+                    return (n2.getDateCreated() != null ? n2.getDateCreated() : "")
+                            .compareTo(n1.getDateCreated() != null ? n1.getDateCreated() : "");
+                case SORT_DATE_OLDEST:
+                    return (n1.getDateCreated() != null ? n1.getDateCreated() : "")
+                            .compareTo(n2.getDateCreated() != null ? n2.getDateCreated() : "");
+                case SORT_URGENCY_HIGH:
+                    return Integer.compare(getUrgencyWeight(n2), getUrgencyWeight(n1));
+                case SORT_URGENCY_LOW:
+                    return Integer.compare(getUrgencyWeight(n1), getUrgencyWeight(n2));
+                default:
+                    return 0;
+            }
+        });
+    }
+
+    private int getUrgencyWeight(Note note) {
+        if (note == null) return 0;
+        int idx = note.getUrgentScaleEnglish().indexOf(note.getNoteUrgently());
+        return (idx != -1) ? idx : 0;
+    }
+
+    /**
+     * Filters notes by subtitle, main category, subcategory, and status flags.
+     * - If main category is "All Categories", all categories match.
+     * - If a main category is selected and subcategory is "All Subcategories", all notes
+     *   with that main category match.
+     * - If both are selected, both must match.
+     */
+    public void filter(String subtitle, String selectedMainCategory, String selectedSubcategory,
+                       boolean showLearningOnly, boolean showGeneralOnly, boolean showTodayOnly, boolean showToBuyOnly) {
+        noteList.clear();
+        String qSub = (subtitle != null) ? subtitle.toLowerCase().trim() : "";
+        boolean isAllCategories = (selectedMainCategory == null || selectedMainCategory.equals("All Categories"));
+        boolean isAllSubcategories = (selectedSubcategory == null || selectedSubcategory.equals("All Subcategories"));
+
+        for (Note note : originalList) {
+            boolean matchSub = qSub.isEmpty() || (note.getNoteSubtitle() != null && note.getNoteSubtitle().toLowerCase().contains(qSub));
+
+            // Category and Subcategory matching
+            boolean matchCat = true;
+            if (!isAllCategories) {
+                matchCat = note.getNoteCategory() != null && note.getNoteCategory().equalsIgnoreCase(selectedMainCategory.trim());
+                if (matchCat && !isAllSubcategories) {
+                    matchCat = note.getNoteSubcategory() != null && note.getNoteSubcategory().equalsIgnoreCase(selectedSubcategory.trim());
+                }
+            }
+
+            boolean matchLearning = !showLearningOnly || note.isLearning();
+            boolean matchGeneral = !showGeneralOnly || note.isGeneralToDo();
+            boolean matchToday = !showTodayOnly || note.isTodayTask();
+            boolean matchToBuy = !showToBuyOnly || note.isToBuyTask();
+
+            if (matchSub && matchCat && matchLearning && matchGeneral && matchToday && matchToBuy) {
+                noteList.add(note);
+            }
+        }
+        applySort();
+        notifyDataSetChanged();
+    }
+
+    @NonNull
+    @Override
+    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_layout, parent, false);
+        return new MyViewHolder(view);
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
+        Note currentItem = noteList.get(position);
+
+        holder.section1.setVisibility(hideSection1 ? View.GONE : View.VISIBLE);
+        holder.section2.setVisibility(hideSection2 ? View.GONE : View.VISIBLE);
+        holder.section3.setVisibility(hideSection3 ? View.GONE : View.VISIBLE);
+        holder.section4.setVisibility(hideSection4 ? View.GONE : View.VISIBLE);
+
+        holder.tv1.setText(currentItem.getNoteTitle());
+        holder.tv2.setText(currentItem.getNoteSubtitle());
+        holder.tv3.setText(currentItem.getNoteDescription());
+
+        // Display "Category: MainCategory / Subcategory"
+        String catDisplay = (currentItem.getNoteCategory() != null && !currentItem.getNoteCategory().isEmpty())
+                ? currentItem.getNoteCategory() : "-";
+        if (currentItem.getNoteSubcategory() != null && !currentItem.getNoteSubcategory().trim().isEmpty()) {
+            catDisplay += " / " + currentItem.getNoteSubcategory();
+        }
+        holder.tvCategory.setText("Category: " + catDisplay);
+
+        holder.tvUrgently.setText("Urgently: " + (currentItem.getNoteUrgently() != null ? currentItem.getNoteUrgently() : "-"));
+
+        holder.cbIsLearning.setChecked(currentItem.isLearning());
+        holder.cbIsGeneralToDo.setChecked(currentItem.isGeneralToDo());
+        holder.cbIsTodayTask.setChecked(currentItem.isTodayTask());
+        holder.cbIsToBuy.setChecked(currentItem.isToBuyTask());
+
+        String createdDate = currentItem.getDateCreated() != null ? currentItem.getDateCreated() : "-";
+        String deadlineDate = (currentItem.getDateDeadline() != null && !currentItem.getDateDeadline().isEmpty())
+                ? currentItem.getDateDeadline() : "None";
+        holder.tvDates.setText("Created: " + createdDate + " | Deadline: " + deadlineDate);
+        holder.tvDaysSince.setText(currentItem.getDaysSinceCreation() + " days since create");
+
+        holder.itemView.setOnClickListener(v -> {
+            int pos = holder.getAdapterPosition();
+            if (listener != null && pos != RecyclerView.NO_POSITION) listener.onItemClick(pos, noteList.get(pos));
+        });
+    }
+
+    @Override
+    public int getItemCount() { return noteList.size(); }
+
+    public static class MyViewHolder extends RecyclerView.ViewHolder {
+        TextView tv1, tv2, tv3, tvCategory, tvUrgently, tvDates, tvDaysSince;
+        CheckBox cbIsLearning, cbIsGeneralToDo, cbIsTodayTask, cbIsToBuy;
+        View section1, section2, section3, section4;
+
+        public MyViewHolder(@NonNull View itemView) {
+            super(itemView);
+            tv1 = itemView.findViewById(R.id.textView1);
+            tv2 = itemView.findViewById(R.id.textView2);
+            tv3 = itemView.findViewById(R.id.textView3);
+            tvCategory = itemView.findViewById(R.id.tvCategory);
+            tvUrgently = itemView.findViewById(R.id.tvUrgently);
+            tvDates = itemView.findViewById(R.id.tvDates);
+            tvDaysSince = itemView.findViewById(R.id.tvDaysSince);
+            cbIsLearning = itemView.findViewById(R.id.cbIsLearning);
+            cbIsGeneralToDo = itemView.findViewById(R.id.cbIsGeneralToDo);
+            cbIsTodayTask = itemView.findViewById(R.id.cbIsTodayTask);
+            cbIsToBuy = itemView.findViewById(R.id.cbIsToBuy);
+
+            section1 = itemView.findViewById(R.id.section1);
+            section2 = itemView.findViewById(R.id.section2);
+            section3 = itemView.findViewById(R.id.section3);
+            section4 = itemView.findViewById(R.id.section4);
+        }
+    }
+
+    public void clearAll() {
+        this.noteList.clear();
+        this.originalList.clear();
+        notifyDataSetChanged();
+    }
+}
+
+Explanation:
+In filter(), we inspect both selectedMainCategory and selectedSubcategory:
+
+1.  If selectedMainCategory is set and selectedSubcategory is "All
+    Subcategories", it retains all notes under that main category.
+2.  If a specific subcategory is chosen, it filters notes matching both category
+    and subcategory.
+3.  In onBindViewHolder(), holder.tvCategory renders "Category: Java ecosystem /
+    Spring" for clear visualization.
+
+Step 8: Update Notes.java
+
+Update Notes.java to tie together:
+
+1.  Pulling category and subcategory from Azure.
+2.  Setting up filterCategorySpinner and dynamically updating
+    filterUrgentlySpinner.
+3.  Adding and Editing notes with dynamic Main and Subcategory Spinners in the
+    dialog.
+
+package com.lukaszjag.diet_tracker_android.gui.notes;
+
+import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
+import android.widget.EditText;
+import android.widget.Spinner;
+import android.widget.Toast;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.lukaszjag.diet_tracker_android.R;
+import com.lukaszjag.diet_tracker_android.tools.cloud_data_tools.AzureDataCallback;
+import com.lukaszjag.diet_tracker_android.tools.cloud_data_tools.GetFromSQLDatabase;
+import com.lukaszjag.diet_tracker_android.tools.notes_tool.MyAdapter;
+import com.lukaszjag.diet_tracker_android.tools.notes_tool.Note;
+import com.lukaszjag.diet_tracker_android.tools.notes_tool.categories.NoteCategoryData;
+import com.lukaszjag.diet_tracker_android.tools.sql_tools.QueryMaker;
+import com.lukaszjag.diet_tracker_android.tools.sql_tools.RowInTable;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
+
+public class Notes extends AppCompatActivity {
+    private EditText filterSubtitle;
+    private Spinner filterCategorySpinner;
+    private Spinner filterUrgentlySpinner; // Reused as Subcategory selector for filtering
+    private CheckBox filterCbLearning, filterCbGeneral, filterCbToday, filterCbToBuy;
+    private RecyclerView recyclerView;
+    private MyAdapter adapter;
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.notes_view_layout);
+
+        filterSubtitle = findViewById(R.id.filterSubtitle);
+        filterCategorySpinner = findViewById(R.id.filterCategorySpinner);
+        filterUrgentlySpinner = findViewById(R.id.filterUrgentlySpinner);
+        filterCbLearning = findViewById(R.id.filterCbLearning);
+        filterCbGeneral = findViewById(R.id.filterCbGeneral);
+        filterCbToday = findViewById(R.id.filterCbToday);
+        filterCbToBuy = findViewById(R.id.filterCbToBuy);
+
+        recyclerView = findViewById(R.id.recyclerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        adapter = new MyAdapter();
+        recyclerView.setAdapter(adapter);
+
+        // Unified button listener: Create note
+        findViewById(R.id.button).setOnClickListener(v -> showNoteDialog(null));
+
+        // Item click listener: Edit note
+        adapter.setOnItemClickListener((position, note) -> showNoteDialog(note));
+
+        setupVisibilityListeners();
+        setupFilterSpinners();
+        setupFilterListeners();
+        fetchNotesFromAzure();
+    }
+
+    /**
+     * Initializes filterCategorySpinner with Main Categories and sets initial state for filterUrgentlySpinner.
+     */
+    private void setupFilterSpinners() {
+        List<String> mainCategoriesFilter = new ArrayList<>();
+        mainCategoriesFilter.add("All Categories");
+        mainCategoriesFilter.addAll(NoteCategoryData.getMainCategories());
+
+        ArrayAdapter<String> mainCatAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, mainCategoriesFilter);
+        mainCatAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        filterCategorySpinner.setAdapter(mainCatAdapter);
+
+        updateSubcategoryFilterSpinner("All Categories");
+    }
+
+    /**
+     * Dynamically populates filterUrgentlySpinner depending on the chosen Main Category.
+     */
+    private void updateSubcategoryFilterSpinner(String mainCategory) {
+        List<String> subcategoriesFilter = new ArrayList<>();
+        subcategoriesFilter.add("All Subcategories");
+
+        if (mainCategory != null && !mainCategory.equals("All Categories")) {
+            List<String> subs = NoteCategoryData.getSubcategories(mainCategory);
+            if (subs != null && !subs.isEmpty()) {
+                subcategoriesFilter.addAll(subs);
+            }
+        }
+
+        ArrayAdapter<String> subcatAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, subcategoriesFilter);
+        subcatAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        filterUrgentlySpinner.setAdapter(subcatAdapter);
+    }
+
+    /**
+     * Pulls notes from Azure SQL, parsing both category and subcategory.
+     */
+    private void fetchNotesFromAzure() {
+        String query = QueryMaker.getAllNotesQuery();
+        GetFromSQLDatabase.runAzureQueryAIChat(query, new AzureDataCallback() {
+            @Override
+            public void onSuccess(ArrayList<RowInTable> resultTable) {
+                runOnUiThread(() -> {
+                    adapter.clearAll();
+                    for (RowInTable row : resultTable) {
+                        String subcat = row.getValue("subcategory");
+                        if (subcat == null) subcat = "";
+
+                        Note note = new Note(
+                                Long.parseLong(row.getValue("id")),
+                                row.getValue("title"),
+                                row.getValue("subtitle"),
+                                row.getValue("description"),
+                                row.getValue("category"),
+                                subcat,
+                                row.getValue("is_urgently"),
+                                "true".equals(row.getValue("is_learning")) || "1".equals(row.getValue("is_learning")),
+                                "true".equals(row.getValue("is_general_to_do")) || "1".equals(row.getValue("is_general_to_do")),
+                                "true".equals(row.getValue("is_today_task")) || "1".equals(row.getValue("is_today_task")),
+                                "true".equals(row.getValue("is_to_buy_task")) || "1".equals(row.getValue("is_to_buy_task")),
+                                null,
+                                row.getValue("date_created"),
+                                row.getValue("date_deadline")
+                        );
+                        adapter.addItem(note);
+                    }
+                    applyFilters();
+                });
+            }
+
+            @Override
+            public void onFailure(String errorMessage) {
+                runOnUiThread(() -> Toast.makeText(Notes.this, "Failed: " + errorMessage, Toast.LENGTH_SHORT).show());
+            }
+        });
+    }
+
+    /**
+     * Unified Dialog for both Creating and Editing Notes with hierarchical categories.
+     */
+    private void showNoteDialog(Note note) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        View dialogView = getLayoutInflater().inflate(R.layout.dialog_note, null);
+        builder.setView(dialogView);
+
+        final EditText title = dialogView.findViewById(R.id.dialogTitle);
+        final EditText subtitle = dialogView.findViewById(R.id.dialogSubtitle);
+        final EditText desc = dialogView.findViewById(R.id.dialogDescription);
+        final Spinner spinnerCategory = dialogView.findViewById(R.id.dialogSpinnerCategory);
+        final Spinner spinnerSubcategory = dialogView.findViewById(R.id.dialogSpinnerSubcategory);
+        final CheckBox cbLearn = dialogView.findViewById(R.id.dialogCbLearning);
+        final CheckBox cbGen = dialogView.findViewById(R.id.dialogCbGeneral);
+        final CheckBox cbToday = dialogView.findViewById(R.id.dialogCbToday);
+        final CheckBox cbBuy = dialogView.findViewById(R.id.dialogCbToBuy);
+
+        boolean isEditMode = (note != null);
+
+        // Populate Main Categories Spinner
+        List<String> mainCategories = NoteCategoryData.getMainCategories();
+        ArrayAdapter<String> catAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, mainCategories);
+        catAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerCategory.setAdapter(catAdapter);
+
+        // When Main Category changes in Dialog, update Subcategory Spinner
+        spinnerCategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String chosenMain = mainCategories.get(position);
+                List<String> subcategories = NoteCategoryData.getSubcategories(chosenMain);
+                List<String> displaySubs = new ArrayList<>();
+                if (subcategories.isEmpty()) {
+                    displaySubs.add("None");
+                } else {
+                    displaySubs.addAll(subcategories);
+                }
+
+                ArrayAdapter<String> subAdapter = new ArrayAdapter<>(Notes.this, android.R.layout.simple_spinner_item, displaySubs);
+                subAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spinnerSubcategory.setAdapter(subAdapter);
+
+                // If in Edit mode and subcategory belongs to this main category, pre-select it
+                if (isEditMode && note.getNoteSubcategory() != null) {
+                    int subIndex = displaySubs.indexOf(note.getNoteSubcategory());
+                    if (subIndex != -1) {
+                        spinnerSubcategory.setSelection(subIndex);
+                    }
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {}
+        });
+
+        // Pre-fill fields if editing
+        if (isEditMode) {
+            title.setText(note.getNoteTitle());
+            subtitle.setText(note.getNoteSubtitle());
+            desc.setText(note.getNoteDescription());
+
+            if (note.getNoteCategory() != null) {
+                int catIndex = mainCategories.indexOf(note.getNoteCategory());
+                if (catIndex != -1) {
+                    spinnerCategory.setSelection(catIndex);
+                }
+            }
+
+            cbLearn.setChecked(note.isLearning());
+            cbGen.setChecked(note.isGeneralToDo());
+            cbToday.setChecked(note.isTodayTask());
+            cbBuy.setChecked(note.isToBuyTask());
+        }
+
+        builder.setPositiveButton(isEditMode ? "Update" : "Create", (dialog, which) -> {
+            String selectedMain = spinnerCategory.getSelectedItem() != null ?
+                    spinnerCategory.getSelectedItem().toString() : "";
+            String selectedSub = spinnerSubcategory.getSelectedItem() != null ?
+                    spinnerSubcategory.getSelectedItem().toString() : "";
+            if ("None".equals(selectedSub)) {
+                selectedSub = "";
+            }
+
+            String q;
+            if (isEditMode) {
+                q = QueryMaker.updateNoteQuery(
+                        note.getId(),
+                        title.getText().toString(),
+                        subtitle.getText().toString(),
+                        desc.getText().toString(),
+                        selectedMain,
+                        selectedSub,
+                        false,
+                        cbLearn.isChecked(),
+                        cbGen.isChecked(),
+                        cbToday.isChecked(),
+                        cbBuy.isChecked(),
+                        null
+                );
+            } else {
+                String currentDate = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
+                q = QueryMaker.insertNoteQuery(
+                        title.getText().toString(),
+                        subtitle.getText().toString(),
+                        desc.getText().toString(),
+                        selectedMain,
+                        selectedSub,
+                        false,
+                        cbLearn.isChecked(),
+                        cbGen.isChecked(),
+                        cbToday.isChecked(),
+                        cbBuy.isChecked(),
+                        currentDate,
+                        null
+                );
+            }
+
+            GetFromSQLDatabase.runAzureQueryAIChat(q, new AzureDataCallback() {
+                @Override public void onSuccess(ArrayList<RowInTable> res) {
+                    runOnUiThread(() -> {
+                        Toast.makeText(Notes.this, isEditMode ? "Updated!" : "Saved!", Toast.LENGTH_SHORT).show();
+                        fetchNotesFromAzure(); // Refresh list from Azure SQL
+                    });
+                }
+                @Override public void onFailure(String err) {
+                    runOnUiThread(() -> Toast.makeText(Notes.this, "Error: " + err, Toast.LENGTH_SHORT).show());
+                }
+            });
+        });
+
+        builder.setNegativeButton("Cancel", null);
+        builder.create().show();
+    }
+
+    private void setupVisibilityListeners() {
+        CheckBox cb1 = findViewById(R.id.hideCbSection1);
+        CheckBox cb2 = findViewById(R.id.hideCbSection2);
+        CheckBox cb3 = findViewById(R.id.hideCbSection3);
+        CheckBox cb4 = findViewById(R.id.hideCbSection4);
+
+        android.widget.CompoundButton.OnCheckedChangeListener listener = (buttonView, isChecked) -> {
+            adapter.setSectionVisibilities(
+                    cb1.isChecked(),
+                    cb2.isChecked(),
+                    cb3.isChecked(),
+                    cb4.isChecked()
+            );
+        };
+
+        cb1.setOnCheckedChangeListener(listener);
+        cb2.setOnCheckedChangeListener(listener);
+        cb3.setOnCheckedChangeListener(listener);
+        cb4.setOnCheckedChangeListener(listener);
+    }
+
+    private void setupFilterListeners() {
+        // Text search
+        filterSubtitle.addTextChangedListener(new android.text.TextWatcher() {
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            public void onTextChanged(CharSequence s, int start, int before, int count) { applyFilters(); }
+            public void afterTextChanged(android.text.Editable s) {}
+        });
+
+        // Main category selector
+        filterCategorySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String selectedMainCat = parent.getItemAtPosition(position).toString();
+                updateSubcategoryFilterSpinner(selectedMainCat);
+                applyFilters();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {}
+        });
+
+        // Subcategory selector
+        filterUrgentlySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                applyFilters();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {}
+        });
+
+        // Checkboxes
+        android.widget.CompoundButton.OnCheckedChangeListener cbListener = (buttonView, isChecked) -> applyFilters();
+        filterCbLearning.setOnCheckedChangeListener(cbListener);
+        filterCbGeneral.setOnCheckedChangeListener(cbListener);
+        filterCbToday.setOnCheckedChangeListener(cbListener);
+        filterCbToBuy.setOnCheckedChangeListener(cbListener);
+    }
+
+    private void applyFilters() {
+        String subtitle = filterSubtitle.getText().toString();
+
+        String selectedCat = filterCategorySpinner.getSelectedItem() != null ?
+                filterCategorySpinner.getSelectedItem().toString() : "All Categories";
+
+        String selectedSubcat = filterUrgentlySpinner.getSelectedItem() != null ?
+                filterUrgentlySpinner.getSelectedItem().toString() : "All Subcategories";
+
+        adapter.filter(
+                subtitle,
+                selectedCat,
+                selectedSubcat,
+                filterCbLearning.isChecked(),
+                filterCbGeneral.isChecked(),
+                filterCbToday.isChecked(),
+                filterCbToBuy.isChecked()
+        );
+    }
+}
+
+Explanation of Notes.java changes:
+
+1.  Filter Spinners Setup (setupFilterSpinners &
+    updateSubcategoryFilterSpinner):
+    filterCategorySpinner contains "All Categories" plus the 15 main categories.
+    When an item is selected, it dynamically updates filterUrgentlySpinner with
+    "All Subcategories" followed by that category's specific subcategories. If
+    "All Categories" is selected, only "All Subcategories" is displayed.
+2.  Filter Trigger (applyFilters()):
+    Reads the values from filterCategorySpinner and filterUrgentlySpinner and
+    delegates to adapter.filter().
+3.  Dialog Creation & Editing (showNoteDialog()):
+    Dynamically initializes dialogSpinnerCategory and dialogSpinnerSubcategory.
+    Changing the main category dynamically switches the subcategories. In edit
+    mode, both spinners pre-select the saved values.
+4.  Azure SQL Sync:
+    insertNoteQuery and updateNoteQuery now send both the main category and
+    subcategory to your Node.js Azure Function endpoint, and
+    fetchNotesFromAzure() retrieves and reconstructs each note with its
+    subcategory.
