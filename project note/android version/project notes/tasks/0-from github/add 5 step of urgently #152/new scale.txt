@@ -1,0 +1,7 @@
+Scale:
+
+1 Minimal
+2 Low
+3 Normal
+4 High
+5 Extreme
