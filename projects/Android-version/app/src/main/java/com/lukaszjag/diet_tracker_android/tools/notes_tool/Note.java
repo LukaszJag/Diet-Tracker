@@ -18,13 +18,14 @@ public class Note {
     private String noteSubtitle;
     private String noteDescription;
     private String noteCategory;
+    private String noteSubcategory; // Added field for Subcategory
     private String noteUrgently;
 
     private LearningCategories noteLearningCategories;
     private boolean isLearning;
     private boolean isGeneralToDo;
     private boolean isTodayTask;
-    private boolean isToBuyTask; // New field
+    private boolean isToBuyTask;
 
     private String dateCreated;
     private String dateDeadline;
@@ -41,10 +42,10 @@ public class Note {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
         this.dateCreated = sdf.format(new Date());
         this.dateDeadline = "";
-        this.noteCategory = "General";
+        this.noteCategory = "Java ecosystem";
+        this.noteSubcategory = "Java";
         this.noteUrgently = "no urgent scale";
     }
-
 
     public Note(String noteTitle, String noteSubtitle, String noteDescription) {
         this();
@@ -53,7 +54,9 @@ public class Note {
         this.noteDescription = noteDescription;
     }
 
-    public Note(long id, String noteTitle, String noteSubtitle, String noteDescription, String noteCategory, String noteUrgently,
+    // Constructor with Subcategory support
+    public Note(long id, String noteTitle, String noteSubtitle, String noteDescription,
+                String noteCategory, String noteSubcategory, String noteUrgently,
                 boolean isLearning, boolean isGeneralToDo, boolean isTodayTask, boolean isToBuyTask,
                 LearningCategories noteLearningCategories, String dateCreated, String dateDeadline) {
         this.id = id;
@@ -61,6 +64,7 @@ public class Note {
         this.noteSubtitle = noteSubtitle;
         this.noteDescription = noteDescription;
         this.noteCategory = noteCategory;
+        this.noteSubcategory = (noteSubcategory != null) ? noteSubcategory : "";
         this.noteUrgently = noteUrgently;
         this.isLearning = isLearning;
         this.isGeneralToDo = isGeneralToDo;
@@ -78,11 +82,12 @@ public class Note {
             json.put("noteSubtitle", noteSubtitle);
             json.put("noteDescription", noteDescription);
             json.put("noteCategory", noteCategory);
+            json.put("noteSubcategory", noteSubcategory != null ? noteSubcategory : ""); // Serialize subcategory
             json.put("noteUrgently", noteUglyUrgent(noteUrgently));
             json.put("isLearning", isLearning);
             json.put("isGeneralToDo", isGeneralToDo);
             json.put("isTodayTask", isTodayTask);
-            json.put("isToBuyTask", isToBuyTask); // Save new field
+            json.put("isToBuyTask", isToBuyTask);
             json.put("dateCreated", dateCreated);
             json.put("dateDeadline", dateDeadline);
 
@@ -102,16 +107,17 @@ public class Note {
 
     public static Note fromJsonObject(JSONObject json) {
         try {
-            long id = json.getLong("id");
+            long id = json.optLong("id", 0);
             String title = json.optString("noteTitle", "");
             String subtitle = json.optString("noteSubtitle", "");
             String description = json.optString("noteDescription", "");
-            String category = json.optString("noteCategory", "General");
+            String category = json.optString("noteCategory", "Java ecosystem");
+            String subcategory = json.optString("noteSubcategory", "");
             String urgently = json.optString("noteUrgently", "no urgent scale");
             boolean isLearning = json.optBoolean("isLearning", false);
             boolean isGeneralToDo = json.optBoolean("isGeneralToDo", false);
             boolean isTodayTask = json.optBoolean("isTodayTask", false);
-            boolean isToBuyTask = json.optBoolean("isToBuyTask", false); // Load new field
+            boolean isToBuyTask = json.optBoolean("isToBuyTask", false);
             String dateCreated = json.optString("dateCreated", "");
             String dateDeadline = json.optString("dateDeadline", "");
 
@@ -124,7 +130,7 @@ public class Note {
                 lc = new LearningCategories(lcName, lcMain, lcSub);
             }
 
-            return new Note(id, title, subtitle, description, category, urgently,
+            return new Note(id, title, subtitle, description, category, subcategory, urgently,
                     isLearning, isGeneralToDo, isTodayTask, isToBuyTask, lc, dateCreated, dateDeadline);
         } catch (Exception e) {
             e.printStackTrace();
@@ -136,7 +142,6 @@ public class Note {
         return value != null ? value : "no urgent scale";
     }
 
-    // Getters and Setters
     public long getId() { return id; }
     public void setId(long id) { this.id = id; }
     public long getDaysSinceCreation() {
@@ -161,6 +166,10 @@ public class Note {
     public void setNoteDescription(String noteDescription) { this.noteDescription = noteDescription; }
     public String getNoteCategory() { return noteCategory; }
     public void setNoteCategory(String noteCategory) { this.noteCategory = noteCategory; }
+
+    public String getNoteSubcategory() { return noteSubcategory; }
+    public void setNoteSubcategory(String noteSubcategory) { this.noteSubcategory = noteSubcategory; }
+
     public String getNoteUrgently() { return noteUrgently; }
     public void setNoteUrgently(String noteUrgently) { this.noteUrgently = noteUrgently; }
     public boolean isLearning() { return isLearning; }
@@ -169,11 +178,8 @@ public class Note {
     public void setGeneralToDo(boolean generalToDo) { isGeneralToDo = generalToDo; }
     public boolean isTodayTask() { return isTodayTask; }
     public void setTodayTask(boolean todayTask) { isTodayTask = todayTask; }
-
-    // New Getter/Setter for To Buy
     public boolean isToBuyTask() { return isToBuyTask; }
     public void setToBuyTask(boolean toBuyTask) { isToBuyTask = toBuyTask; }
-
     public LearningCategories getNoteLearningCategories() { return noteLearningCategories; }
     public void setNoteLearningCategories(LearningCategories noteLearningCategories) { this.noteLearningCategories = noteLearningCategories; }
     public String getDateCreated() { return dateCreated; }

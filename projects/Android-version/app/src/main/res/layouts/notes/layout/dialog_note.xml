@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="16dp">
@@ -13,7 +12,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="New Note Details"
+            android:text="Note Details"
             android:textSize="18sp"
             android:textStyle="bold"
             android:layout_marginBottom="12dp"/>
@@ -40,23 +39,32 @@
             android:inputType="textMultiLine"
             android:minLines="2" />
 
-        <EditText
-            android:id="@+id/dialogCategory"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Category"
-            android:inputType="textCapSentences" />
-
+        <!-- Main Category Label & Spinner -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Urgency Scale:"
+            android:text="Main Category:"
             android:layout_marginTop="8dp"
             android:textSize="12sp"
             android:textColor="#555555"/>
 
         <Spinner
-            android:id="@+id/dialogSpinnerUrgent"
+            android:id="@+id/dialogSpinnerCategory"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp" />
+
+        <!-- Subcategory Label & Spinner -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Subcategory:"
+            android:layout_marginTop="8dp"
+            android:textSize="12sp"
+            android:textColor="#555555"/>
+
+        <Spinner
+            android:id="@+id/dialogSpinnerSubcategory"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp" />
@@ -85,29 +93,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Is To Buy Task" />
-
-        <TextView
-            android:id="@+id/tvLearningCatLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Learning Category Option:"
-            android:layout_marginTop="8dp"
-            android:textSize="12sp"
-            android:textColor="#555555"
-            android:visibility="gone"/>
-
-        <Spinner
-            android:id="@+id/dialogSpinnerLearningCat"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:visibility="gone" />
-
-        <Spinner
-            android:id="@+id/secondLearningCategory"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:visibility="gone" />
 
         <EditText
             android:id="@+id/dialogDeadline"

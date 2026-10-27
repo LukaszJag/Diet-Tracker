@@ -12,7 +12,6 @@ import com.lukaszjag.diet_tracker_android.R;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
@@ -93,11 +92,18 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         if (sortCriteria == SORT_NONE) return;
         Collections.sort(noteList, (n1, n2) -> {
             switch (sortCriteria) {
-                case SORT_DATE_NEWEST: return (n2.getDateCreated() != null ? n2.getDateCreated() : "").compareTo(n1.getDateCreated() != null ? n1.getDateCreated() : "");
-                case SORT_DATE_OLDEST: return (n1.getDateCreated() != null ? n1.getDateCreated() : "").compareTo(n2.getDateCreated() != null ? n2.getDateCreated() : "");
-                case SORT_URGENCY_HIGH: return Integer.compare(getUrgencyWeight(n2), getUrgencyWeight(n1));
-                case SORT_URGENCY_LOW: return Integer.compare(getUrgencyWeight(n1), getUrgencyWeight(n2));
-                default: return 0;
+                case SORT_DATE_NEWEST:
+                    return (n2.getDateCreated() != null ? n2.getDateCreated() : "")
+                            .compareTo(n1.getDateCreated() != null ? n1.getDateCreated() : "");
+                case SORT_DATE_OLDEST:
+                    return (n1.getDateCreated() != null ? n1.getDateCreated() : "")
+                            .compareTo(n2.getDateCreated() != null ? n2.getDateCreated() : "");
+                case SORT_URGENCY_HIGH:
+                    return Integer.compare(getUrgencyWeight(n2), getUrgencyWeight(n1));
+                case SORT_URGENCY_LOW:
+                    return Integer.compare(getUrgencyWeight(n1), getUrgencyWeight(n2));
+                default:
+                    return 0;
             }
         });
     }
@@ -108,28 +114,38 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         return (idx != -1) ? idx : 0;
     }
 
-    public void filter(String subtitle, List<String> selectedCategories, String selectedUrgency,
+    /**
+     * Filters notes by subtitle, main category, subcategory, and status flags.
+     * - If main category is "All Categories", all categories match.
+     * - If a main category is selected and subcategory is "All Subcategories", all notes
+     *   with that main category match.
+     * - If both are selected, both must match.
+     */
+    public void filter(String subtitle, String selectedMainCategory, String selectedSubcategory,
                        boolean showLearningOnly, boolean showGeneralOnly, boolean showTodayOnly, boolean showToBuyOnly) {
         noteList.clear();
         String qSub = (subtitle != null) ? subtitle.toLowerCase().trim() : "";
-        String qUrg = (selectedUrgency == null || selectedUrgency.equals("All Urgencies")) ? "" : selectedUrgency.toLowerCase().trim();
+        boolean isAllCategories = (selectedMainCategory == null || selectedMainCategory.equals("All Categories"));
+        boolean isAllSubcategories = (selectedSubcategory == null || selectedSubcategory.equals("All Subcategories"));
 
         for (Note note : originalList) {
             boolean matchSub = qSub.isEmpty() || (note.getNoteSubtitle() != null && note.getNoteSubtitle().toLowerCase().contains(qSub));
+
+            // Category and Subcategory matching
             boolean matchCat = true;
-            if (selectedCategories != null && !selectedCategories.isEmpty()) {
-                matchCat = false;
-                if (note.getNoteCategory() != null && selectedCategories.contains(note.getNoteCategory().trim())) {
-                    matchCat = true;
+            if (!isAllCategories) {
+                matchCat = note.getNoteCategory() != null && note.getNoteCategory().equalsIgnoreCase(selectedMainCategory.trim());
+                if (matchCat && !isAllSubcategories) {
+                    matchCat = note.getNoteSubcategory() != null && note.getNoteSubcategory().equalsIgnoreCase(selectedSubcategory.trim());
                 }
             }
-            boolean matchUrg = qUrg.isEmpty() || (note.getNoteUrgently() != null && note.getNoteUrgently().toLowerCase().contains(qUrg));
+
             boolean matchLearning = !showLearningOnly || note.isLearning();
             boolean matchGeneral = !showGeneralOnly || note.isGeneralToDo();
             boolean matchToday = !showTodayOnly || note.isTodayTask();
             boolean matchToBuy = !showToBuyOnly || note.isToBuyTask();
 
-            if (matchSub && matchCat && matchUrg && matchLearning && matchGeneral && matchToday && matchToBuy) {
+            if (matchSub && matchCat && matchLearning && matchGeneral && matchToday && matchToBuy) {
                 noteList.add(note);
             }
         }
@@ -157,7 +173,14 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         holder.tv2.setText(currentItem.getNoteSubtitle());
         holder.tv3.setText(currentItem.getNoteDescription());
 
-        holder.tvCategory.setText("Category: " + (currentItem.getNoteCategory() != null ? currentItem.getNoteCategory() : "-"));
+        // Display "Category: MainCategory / Subcategory"
+        String catDisplay = (currentItem.getNoteCategory() != null && !currentItem.getNoteCategory().isEmpty())
+                ? currentItem.getNoteCategory() : "-";
+        if (currentItem.getNoteSubcategory() != null && !currentItem.getNoteSubcategory().trim().isEmpty()) {
+            catDisplay += " / " + currentItem.getNoteSubcategory();
+        }
+        holder.tvCategory.setText("Category: " + catDisplay);
+
         holder.tvUrgently.setText("Urgently: " + (currentItem.getNoteUrgently() != null ? currentItem.getNoteUrgently() : "-"));
 
         holder.cbIsLearning.setChecked(currentItem.isLearning());
@@ -166,7 +189,8 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         holder.cbIsToBuy.setChecked(currentItem.isToBuyTask());
 
         String createdDate = currentItem.getDateCreated() != null ? currentItem.getDateCreated() : "-";
-        String deadlineDate = (currentItem.getDateDeadline() != null && !currentItem.getDateDeadline().isEmpty()) ? currentItem.getDateDeadline() : "None";
+        String deadlineDate = (currentItem.getDateDeadline() != null && !currentItem.getDateDeadline().isEmpty())
+                ? currentItem.getDateDeadline() : "None";
         holder.tvDates.setText("Created: " + createdDate + " | Deadline: " + deadlineDate);
         holder.tvDaysSince.setText(currentItem.getDaysSinceCreation() + " days since create");
 
@@ -210,5 +234,4 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         this.originalList.clear();
         notifyDataSetChanged();
     }
-
 }
