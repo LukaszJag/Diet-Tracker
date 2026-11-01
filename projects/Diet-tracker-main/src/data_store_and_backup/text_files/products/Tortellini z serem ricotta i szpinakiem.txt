@@ -1,0 +1,9 @@
+Name: Tortellini z serem ricotta i szpinakiem
+Brand: Rana
+Package has: 250.0
+Macro for: 100.0
+KCal: 246.0
+Protein: 9.6
+Fat: 7.5
+Carbs: 34.0
+Comment optional: Dane z opakowania
