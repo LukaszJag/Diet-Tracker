@@ -147,7 +147,7 @@ public class CalendarMonthStatsView {
     //<editor-fold desc="Combo Boxes">
     JComboBox monthSelectComboBox = new JComboBox<>(new String[]{"April", "May", "June", "July", "August", "September", "October",
             "November", "December", "January2025", "February2025", "March2025", "April2025", "May2025", "June2025", "July2025",
-            "August2025", "September2025", "October2025", "November2025", "December2025", "January2026", "February2026", "March2026", "April2026", "May2026", "June2026", "July2026", "August2026", "September2026", "October2026"});
+            "August2025", "September2025", "October2025", "November2025", "December2025", "January2026", "February2026", "March2026", "April2026", "May2026", "June2026", "July2026", "August2026", "September2026", "October2026", "November2026"});
     JComboBox selectedDayProductsListComboBox = new JComboBox<String>();
     //</editor-fold>
     //<editor-fold desc="TextFields">
@@ -261,7 +261,7 @@ public class CalendarMonthStatsView {
     }
 
     private void prepareAndAddContentToMainPanel() {
-        setDaysButtonsMainPanel("October2026");
+        setDaysButtonsMainPanel("November2026");
     }
 
     private void prepareAndAddContentToNorthPanel() {
@@ -275,7 +275,7 @@ public class CalendarMonthStatsView {
         calendarMonthStatsViewPanelNorth.setLayout(northPanelGridLayout);
 
 
-        monthSelectComboBox.setSelectedItem("October2026");
+        monthSelectComboBox.setSelectedItem("November2026");
 
         selectedDaysCounterGoodDaysPanel = new JPanel();
         selectedDaysCounterBadDaysPanel = new JPanel();
@@ -454,11 +454,29 @@ public class CalendarMonthStatsView {
         } else if (month.equals("August2026")) {
             daysButtons = new JButton[42];
             mainPanelGridLayout = new GridLayout(6, 7, 10, 10);
+        }else if (month.equals("November2026")) {
+            daysButtons = new JButton[42];
+            mainPanelGridLayout = new GridLayout(6, 7, 10, 10);
         } else {
             daysButtons = new JButton[35];
             mainPanelGridLayout = new GridLayout(5, 7, 10, 10);
         }
         int counter = 1;
+
+        if (month.equals("November2026")) {
+            for (int i = 0; i < daysButtons.length; i++) {
+                if (i < 6) {
+                    daysButtons[i] = new JButton("null");
+                } else if (i >= 36) {
+                    daysButtons[i] = new JButton("null");
+                } else {
+                    daysButtons[i] = new JButton(String.valueOf(counter));
+                    daysButtons[i].setPreferredSize(Config.CALENDAR_MONTH_STATS_VIEW_BUTTONS_SIZE_DIMENSION);
+                    daysButtons[i].addActionListener(new DaysButtonsActionListener(daysButtons[i]));
+                    counter++;
+                }
+            }
+        }
 
         if (month.equals("October2026")) {
             for (int i = 0; i < daysButtons.length; i++) {
