@@ -1,4 +1,4 @@
-package runners.run_data_generator;
+package runners.run_data_generator.year_2024;
 
 import tools.sql_tools.days_statistics.GenerateSLQTableForDaysStatistics;
 
