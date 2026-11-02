@@ -47,32 +47,6 @@ public class QueryMaker {
                 ");";
     }
 
-    public static String updateNoteQuery(long id, String title, String subtitle, String description,
-                                         String category, String subcategory,
-                                         boolean isUrgently, boolean isLearning, boolean isGeneral,
-                                         boolean isToday, boolean isToBuy, String deadline) {
-
-        String safeTitle = title != null ? title.replace("'", "''") : "";
-        String safeSub = subtitle != null ? subtitle.replace("'", "''") : "";
-        String safeDesc = description != null ? description.replace("'", "''") : "";
-        String safeCat = category != null ? category.replace("'", "''") : "";
-        String safeSubcat = subcategory != null ? subcategory.replace("'", "''") : "";
-
-        return "UPDATE [diet_tracker_schema].[notes] SET " +
-                "[title] = N'" + safeTitle + "', " +
-                "[subtitle] = N'" + safeSub + "', " +
-                "[description] = N'" + safeDesc + "', " +
-                "[category] = N'" + safeCat + "', " +
-                "[subcategory] = N'" + safeSubcat + "', " +
-                "[is_urgently] = " + (isUrgently ? 1 : 0) + ", " +
-                "[is_learning] = " + (isLearning ? 1 : 0) + ", " +
-                "[is_general_to_do] = " + (isGeneral ? 1 : 0) + ", " +
-                "[is_today_task] = " + (isToday ? 1 : 0) + ", " +
-                "[is_to_buy_task] = " + (isToBuy ? 1 : 0) + ", " +
-                "[date_deadline] = " + (deadline == null || deadline.isEmpty() ? "NULL" : "'" + deadline + "'") + " " +
-                "WHERE [id] = " + id + ";";
-    }
-
     public static String insertMealToCalendarTable(
             String dayDate, String dayName, String mealName, double amountOfProduct,
             String productName, double kcal, double protein, double fat, double carbs,
@@ -142,4 +116,33 @@ public class QueryMaker {
                 ");\n" +
                 "SELECT 1 AS success;";
     }
+
+
+    public static String updateNoteQuery(long id, String title, String subtitle, String description,
+                                         String category, String subcategory,
+                                         boolean isUrgently, boolean isLearning, boolean isGeneral,
+                                         boolean isToday, boolean isToBuy, String deadline) {
+
+        String safeTitle = title != null ? title.replace("'", "''") : "";
+        String safeSub = subtitle != null ? subtitle.replace("'", "''") : "";
+        String safeDesc = description != null ? description.replace("'", "''") : "";
+        String safeCat = category != null ? category.replace("'", "''") : "";
+        String safeSubcat = subcategory != null ? subcategory.replace("'", "''") : "";
+
+        return "SET NOCOUNT ON; " +
+                "UPDATE [diet_tracker_schema].[notes] SET " +
+                "[title] = N'" + safeTitle + "', " +
+                "[subtitle] = N'" + safeSub + "', " +
+                "[description] = N'" + safeDesc + "', " +
+                "[category] = N'" + safeCat + "', " +
+                "[subcategory] = N'" + safeSubcat + "', " +
+                "[is_urgently] = " + (isUrgently ? 1 : 0) + ", " +
+                "[is_learning] = " + (isLearning ? 1 : 0) + ", " +
+                "[is_general_to_do] = " + (isGeneral ? 1 : 0) + ", " +
+                "[is_today_task] = " + (isToday ? 1 : 0) + ", " +
+                "[is_to_buy_task] = " + (isToBuy ? 1 : 0) + ", " +
+                "[date_deadline] = " + (deadline == null || deadline.isEmpty() ? "NULL" : "'" + deadline + "'") + " " +
+                "WHERE [id] = " + id + "; SELECT 1 AS success;";
+    }
+
 }
