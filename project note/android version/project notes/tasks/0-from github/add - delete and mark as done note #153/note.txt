@@ -1,0 +1,2 @@
+- when deleting or marking as done happens, move to the recycle bin or history
+- handle it in android app and in Azure
