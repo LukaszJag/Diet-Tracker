@@ -1,0 +1,11 @@
+in my android app and in SQL Azure database I want to implement
+
+delete note and mark as done
+
+when delete or mark as done it should be handle in android app and
+be able to see in history new feature 
+
+in main view add button which leads to GUI where view where be all deleted and mark as done I can filtr the same like in present note feature
+
+
+
