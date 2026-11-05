@@ -37,6 +37,50 @@
             android:exported="true">
 
         </activity>
+        <activity
+            android:name=".tools.widget.WidgetColorSettingsActivity"
+            android:exported="false"
+            android:label="Widget Color Settings" />
+
+        <receiver
+            android:name="com.lukaszjag.diet_tracker_android.tools.widget.DietWidgetProvider"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="com.lukaszjag.diet_tracker_android.ACTION_WIDGET_REFRESH" />
+                <action android:name="com.lukaszjag.diet_tracker_android.ACTION_WIDGET_PREV_DAY" />
+                <action android:name="com.lukaszjag.diet_tracker_android.ACTION_WIDGET_NEXT_DAY" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/diet_widget_info" />
+        </receiver>
+
+        <service
+            android:name="com.lukaszjag.diet_tracker_android.tools.widget.DietWidgetService"
+            android:exported="false"
+            android:permission="android.permission.BIND_REMOTEVIEWS" />
+
+        <receiver
+            android:name="com.lukaszjag.diet_tracker_android.tools.widget.DietWidgetProvider"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="com.lukaszjag.diet_tracker_android.ACTION_WIDGET_REFRESH" />
+                <action android:name="com.lukaszjag.diet_tracker_android.ACTION_WIDGET_PREV_DAY" />
+                <action android:name="com.lukaszjag.diet_tracker_android.ACTION_WIDGET_NEXT_DAY" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/diet_widget_info" />
+        </receiver>
+
+        <service
+            android:name="com.lukaszjag.diet_tracker_android.tools.widget.DietWidgetService"
+            android:exported="false"
+            android:permission="android.permission.BIND_REMOTEVIEWS" />
     </application>
 
 </manifest>

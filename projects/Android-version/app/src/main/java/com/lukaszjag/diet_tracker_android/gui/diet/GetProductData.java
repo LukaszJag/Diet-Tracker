@@ -23,6 +23,7 @@ import com.lukaszjag.diet_tracker_android.tools.cloud_data_tools.GetFromSQLDatab
 import com.lukaszjag.diet_tracker_android.tools.date_tools.MyDate;
 import com.lukaszjag.diet_tracker_android.tools.sql_tools.QueryMaker;
 import com.lukaszjag.diet_tracker_android.tools.sql_tools.RowInTable;
+import com.lukaszjag.diet_tracker_android.tools.widget.DietWidgetProvider;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -422,6 +423,7 @@ public class GetProductData extends AppCompatActivity {
                     runOnUiThread(() -> {
                         Toast.makeText(GetProductData.this, "Meal added successfully!", Toast.LENGTH_SHORT).show();
                         weightEditText.setText("");
+                        DietWidgetProvider.forceWidgetUpdate(GetProductData.this);
                     });
                 }
 

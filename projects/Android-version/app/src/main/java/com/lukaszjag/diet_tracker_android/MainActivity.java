@@ -13,6 +13,7 @@ import com.lukaszjag.diet_tracker_android.databinding.ActivityMainBinding;
 import com.lukaszjag.diet_tracker_android.gui.diet.GetProductData;
 import com.lukaszjag.diet_tracker_android.gui.diet.day_data_view.DayData;
 import com.lukaszjag.diet_tracker_android.gui.notes.Notes;
+import com.lukaszjag.diet_tracker_android.tools.widget.WidgetColorSettingsActivity;
 
 import android.view.Menu;
 import android.view.MenuItem;
@@ -37,6 +38,13 @@ public class MainActivity extends AppCompatActivity {
         setupUIComponents();
         addListeners();
 
+        Button widgetSettingsButton = findViewById(R.id.widgetSettingsButton);
+        if (widgetSettingsButton != null) {
+            widgetSettingsButton.setOnClickListener(v -> {
+                Intent intent = new Intent(MainActivity.this, WidgetColorSettingsActivity.class);
+                startActivity(intent);
+            });
+        }
     }
 
     private void addListeners() {

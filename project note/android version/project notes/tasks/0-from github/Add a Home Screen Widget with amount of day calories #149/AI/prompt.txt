@@ -1,0 +1,8 @@
+I want to add ability to add widget to home screen with data like amount of calories how to add this
+
+app is write in android studio in java
+
+here is part of my code:
+
+
+
