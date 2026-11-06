@@ -37,6 +37,12 @@
             android:exported="true">
 
         </activity>
+
+        <activity
+            android:name=".gui.notes.NotesHistory"
+            android:exported="false"
+            android:label="Notes History" />
+
         <activity
             android:name=".tools.widget.WidgetColorSettingsActivity"
             android:exported="false"

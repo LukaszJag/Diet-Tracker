@@ -2,8 +2,8 @@ package com.lukaszjag.diet_tracker_android.tools.notes_tool;
 
 import com.lukaszjag.diet_tracker_android.tools.notes_tool.categories.learning_categories.LearningCategories;
 
-import org.json.JSONObject;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -18,7 +18,7 @@ public class Note {
     private String noteSubtitle;
     private String noteDescription;
     private String noteCategory;
-    private String noteSubcategory; // Added field for Subcategory
+    private String noteSubcategory;
     private String noteUrgently;
 
     private LearningCategories noteLearningCategories;
@@ -26,6 +26,10 @@ public class Note {
     private boolean isGeneralToDo;
     private boolean isTodayTask;
     private boolean isToBuyTask;
+
+    // Status flags
+    private boolean isDone;
+    private boolean isDeleted;
 
     private String dateCreated;
     private String dateDeadline;
@@ -45,6 +49,8 @@ public class Note {
         this.noteCategory = "Java ecosystem";
         this.noteSubcategory = "Java";
         this.noteUrgently = "no urgent scale";
+        this.isDone = false;
+        this.isDeleted = false;
     }
 
     public Note(String noteTitle, String noteSubtitle, String noteDescription) {
@@ -54,10 +60,10 @@ public class Note {
         this.noteDescription = noteDescription;
     }
 
-    // Constructor with Subcategory support
     public Note(long id, String noteTitle, String noteSubtitle, String noteDescription,
                 String noteCategory, String noteSubcategory, String noteUrgently,
                 boolean isLearning, boolean isGeneralToDo, boolean isTodayTask, boolean isToBuyTask,
+                boolean isDone, boolean isDeleted,
                 LearningCategories noteLearningCategories, String dateCreated, String dateDeadline) {
         this.id = id;
         this.noteTitle = noteTitle;
@@ -70,6 +76,8 @@ public class Note {
         this.isGeneralToDo = isGeneralToDo;
         this.isTodayTask = isTodayTask;
         this.isToBuyTask = isToBuyTask;
+        this.isDone = isDone;
+        this.isDeleted = isDeleted;
         this.noteLearningCategories = noteLearningCategories;
         this.dateCreated = dateCreated;
         this.dateDeadline = dateDeadline;
@@ -78,16 +86,19 @@ public class Note {
     public JSONObject toJsonObject() {
         try {
             JSONObject json = new JSONObject();
+            json.put("id", id);
             json.put("noteTitle", noteTitle);
             json.put("noteSubtitle", noteSubtitle);
             json.put("noteDescription", noteDescription);
             json.put("noteCategory", noteCategory);
-            json.put("noteSubcategory", noteSubcategory != null ? noteSubcategory : ""); // Serialize subcategory
+            json.put("noteSubcategory", noteSubcategory != null ? noteSubcategory : "");
             json.put("noteUrgently", noteUglyUrgent(noteUrgently));
             json.put("isLearning", isLearning);
             json.put("isGeneralToDo", isGeneralToDo);
             json.put("isTodayTask", isTodayTask);
             json.put("isToBuyTask", isToBuyTask);
+            json.put("isDone", isDone);
+            json.put("isDeleted", isDeleted);
             json.put("dateCreated", dateCreated);
             json.put("dateDeadline", dateDeadline);
 
@@ -118,6 +129,8 @@ public class Note {
             boolean isGeneralToDo = json.optBoolean("isGeneralToDo", false);
             boolean isTodayTask = json.optBoolean("isTodayTask", false);
             boolean isToBuyTask = json.optBoolean("isToBuyTask", false);
+            boolean isDone = json.optBoolean("isDone", false);
+            boolean isDeleted = json.optBoolean("isDeleted", false);
             String dateCreated = json.optString("dateCreated", "");
             String dateDeadline = json.optString("dateDeadline", "");
 
@@ -131,7 +144,8 @@ public class Note {
             }
 
             return new Note(id, title, subtitle, description, category, subcategory, urgently,
-                    isLearning, isGeneralToDo, isTodayTask, isToBuyTask, lc, dateCreated, dateDeadline);
+                    isLearning, isGeneralToDo, isTodayTask, isToBuyTask, isDone, isDeleted,
+                    lc, dateCreated, dateDeadline);
         } catch (Exception e) {
             e.printStackTrace();
             return null;
@@ -180,6 +194,10 @@ public class Note {
     public void setTodayTask(boolean todayTask) { isTodayTask = todayTask; }
     public boolean isToBuyTask() { return isToBuyTask; }
     public void setToBuyTask(boolean toBuyTask) { isToBuyTask = toBuyTask; }
+    public boolean isDone() { return isDone; }
+    public void setDone(boolean done) { isDone = done; }
+    public boolean isDeleted() { return isDeleted; }
+    public void setDeleted(boolean deleted) { isDeleted = deleted; }
     public LearningCategories getNoteLearningCategories() { return noteLearningCategories; }
     public void setNoteLearningCategories(LearningCategories noteLearningCategories) { this.noteLearningCategories = noteLearningCategories; }
     public String getDateCreated() { return dateCreated; }

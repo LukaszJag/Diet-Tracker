@@ -1,5 +1,7 @@
 package com.lukaszjag.diet_tracker_android.tools.notes_tool;
 
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -114,15 +116,14 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         return (idx != -1) ? idx : 0;
     }
 
-    /**
-     * Filters notes by subtitle, main category, subcategory, and status flags.
-     * - If main category is "All Categories", all categories match.
-     * - If a main category is selected and subcategory is "All Subcategories", all notes
-     *   with that main category match.
-     * - If both are selected, both must match.
-     */
     public void filter(String subtitle, String selectedMainCategory, String selectedSubcategory,
                        boolean showLearningOnly, boolean showGeneralOnly, boolean showTodayOnly, boolean showToBuyOnly) {
+        filter(subtitle, selectedMainCategory, selectedSubcategory, showLearningOnly, showGeneralOnly, showTodayOnly, showToBuyOnly, "ALL");
+    }
+
+    public void filter(String subtitle, String selectedMainCategory, String selectedSubcategory,
+                       boolean showLearningOnly, boolean showGeneralOnly, boolean showTodayOnly, boolean showToBuyOnly,
+                       String statusFilter) {
         noteList.clear();
         String qSub = (subtitle != null) ? subtitle.toLowerCase().trim() : "";
         boolean isAllCategories = (selectedMainCategory == null || selectedMainCategory.equals("All Categories"));
@@ -131,7 +132,6 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         for (Note note : originalList) {
             boolean matchSub = qSub.isEmpty() || (note.getNoteSubtitle() != null && note.getNoteSubtitle().toLowerCase().contains(qSub));
 
-            // Category and Subcategory matching
             boolean matchCat = true;
             if (!isAllCategories) {
                 matchCat = note.getNoteCategory() != null && note.getNoteCategory().equalsIgnoreCase(selectedMainCategory.trim());
@@ -145,7 +145,15 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
             boolean matchToday = !showTodayOnly || note.isTodayTask();
             boolean matchToBuy = !showToBuyOnly || note.isToBuyTask();
 
-            if (matchSub && matchCat && matchLearning && matchGeneral && matchToday && matchToBuy) {
+            // Status filter for history
+            boolean matchStatus = true;
+            if ("DONE".equalsIgnoreCase(statusFilter)) {
+                matchStatus = note.isDone();
+            } else if ("DELETED".equalsIgnoreCase(statusFilter)) {
+                matchStatus = note.isDeleted();
+            }
+
+            if (matchSub && matchCat && matchLearning && matchGeneral && matchToday && matchToBuy && matchStatus) {
                 noteList.add(note);
             }
         }
@@ -169,11 +177,24 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         holder.section3.setVisibility(hideSection3 ? View.GONE : View.VISIBLE);
         holder.section4.setVisibility(hideSection4 ? View.GONE : View.VISIBLE);
 
-        holder.tv1.setText(currentItem.getNoteTitle());
+        // Visual distinction for Deleted and Done items
+        String titlePrefix = "";
+        holder.tv1.setPaintFlags(holder.tv1.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
+        holder.tv1.setTextColor(Color.BLACK);
+
+        if (currentItem.isDeleted()) {
+            titlePrefix = "[DELETED] ";
+            holder.tv1.setTextColor(Color.RED);
+            holder.tv1.setPaintFlags(holder.tv1.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+        } else if (currentItem.isDone()) {
+            titlePrefix = "[DONE ✓] ";
+            holder.tv1.setTextColor(Color.parseColor("#2E7D32"));
+        }
+
+        holder.tv1.setText(titlePrefix + currentItem.getNoteTitle());
         holder.tv2.setText(currentItem.getNoteSubtitle());
         holder.tv3.setText(currentItem.getNoteDescription());
 
-        // Display "Category: MainCategory / Subcategory"
         String catDisplay = (currentItem.getNoteCategory() != null && !currentItem.getNoteCategory().isEmpty())
                 ? currentItem.getNoteCategory() : "-";
         if (currentItem.getNoteSubcategory() != null && !currentItem.getNoteSubcategory().trim().isEmpty()) {

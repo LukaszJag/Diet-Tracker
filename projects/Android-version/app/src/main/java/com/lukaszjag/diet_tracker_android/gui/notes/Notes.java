@@ -4,8 +4,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -33,7 +35,7 @@ import java.util.Locale;
 public class Notes extends AppCompatActivity {
     private EditText filterSubtitle;
     private Spinner filterCategorySpinner;
-    private Spinner filterUrgentlySpinner; // Reused as Subcategory selector for filtering
+    private Spinner filterUrgentlySpinner;
     private CheckBox filterCbLearning, filterCbGeneral, filterCbToday, filterCbToBuy;
     private RecyclerView recyclerView;
     private MyAdapter adapter;
@@ -56,10 +58,8 @@ public class Notes extends AppCompatActivity {
         adapter = new MyAdapter();
         recyclerView.setAdapter(adapter);
 
-        // Unified button listener: Create note
         findViewById(R.id.button).setOnClickListener(v -> showNoteDialog(null));
 
-        // Item click listener: Edit note
         adapter.setOnItemClickListener((position, note) -> showNoteDialog(note));
 
         setupVisibilityListeners();
@@ -68,9 +68,6 @@ public class Notes extends AppCompatActivity {
         fetchNotesFromAzure();
     }
 
-    /**
-     * Initializes filterCategorySpinner with Main Categories and sets initial state for filterUrgentlySpinner.
-     */
     private void setupFilterSpinners() {
         List<String> mainCategoriesFilter = new ArrayList<>();
         mainCategoriesFilter.add("All Categories");
@@ -83,9 +80,6 @@ public class Notes extends AppCompatActivity {
         updateSubcategoryFilterSpinner("All Categories");
     }
 
-    /**
-     * Dynamically populates filterUrgentlySpinner depending on the chosen Main Category.
-     */
     private void updateSubcategoryFilterSpinner(String mainCategory) {
         List<String> subcategoriesFilter = new ArrayList<>();
         subcategoriesFilter.add("All Subcategories");
@@ -102,10 +96,8 @@ public class Notes extends AppCompatActivity {
         filterUrgentlySpinner.setAdapter(subcatAdapter);
     }
 
-    /**
-     * Pulls notes from Azure SQL, parsing both category and subcategory.
-     */
     private void fetchNotesFromAzure() {
+        // QueryMaker.getAllNotesQuery() selects only active items
         String query = QueryMaker.getAllNotesQuery();
         GetFromSQLDatabase.runAzureQueryAIChat(query, new AzureDataCallback() {
             @Override
@@ -115,6 +107,9 @@ public class Notes extends AppCompatActivity {
                     for (RowInTable row : resultTable) {
                         String subcat = row.getValue("subcategory");
                         if (subcat == null) subcat = "";
+
+                        boolean isDone = "true".equalsIgnoreCase(row.getValue("is_done")) || "1".equals(row.getValue("is_done"));
+                        boolean isDeleted = "true".equalsIgnoreCase(row.getValue("is_deleted")) || "1".equals(row.getValue("is_deleted"));
 
                         Note note = new Note(
                                 Long.parseLong(row.getValue("id")),
@@ -128,6 +123,8 @@ public class Notes extends AppCompatActivity {
                                 "true".equals(row.getValue("is_general_to_do")) || "1".equals(row.getValue("is_general_to_do")),
                                 "true".equals(row.getValue("is_today_task")) || "1".equals(row.getValue("is_today_task")),
                                 "true".equals(row.getValue("is_to_buy_task")) || "1".equals(row.getValue("is_to_buy_task")),
+                                isDone,
+                                isDeleted,
                                 null,
                                 row.getValue("date_created"),
                                 row.getValue("date_deadline")
@@ -145,9 +142,6 @@ public class Notes extends AppCompatActivity {
         });
     }
 
-    /**
-     * Unified Dialog for both Creating and Editing Notes with hierarchical categories.
-     */
     private void showNoteDialog(Note note) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         View dialogView = getLayoutInflater().inflate(R.layout.dialog_note, null);
@@ -163,15 +157,17 @@ public class Notes extends AppCompatActivity {
         final CheckBox cbToday = dialogView.findViewById(R.id.dialogCbToday);
         final CheckBox cbBuy = dialogView.findViewById(R.id.dialogCbToBuy);
 
+        final LinearLayout actionButtonsLayout = dialogView.findViewById(R.id.dialogActionButtonsLayout);
+        final Button btnMarkAsDone = dialogView.findViewById(R.id.dialogBtnMarkAsDone);
+        final Button btnDelete = dialogView.findViewById(R.id.dialogBtnDelete);
+
         boolean isEditMode = (note != null);
 
-        // Populate Main Categories Spinner
         List<String> mainCategories = NoteCategoryData.getMainCategories();
         ArrayAdapter<String> catAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, mainCategories);
         catAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerCategory.setAdapter(catAdapter);
 
-        // When Main Category changes in Dialog, update Subcategory Spinner
         spinnerCategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -188,7 +184,6 @@ public class Notes extends AppCompatActivity {
                 subAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinnerSubcategory.setAdapter(subAdapter);
 
-                // If in Edit mode and subcategory belongs to this main category, pre-select it
                 if (isEditMode && note.getNoteSubcategory() != null) {
                     int subIndex = displaySubs.indexOf(note.getNoteSubcategory());
                     if (subIndex != -1) {
@@ -201,8 +196,9 @@ public class Notes extends AppCompatActivity {
             public void onNothingSelected(AdapterView<?> parent) {}
         });
 
-        // Pre-fill fields if editing
         if (isEditMode) {
+            actionButtonsLayout.setVisibility(View.VISIBLE);
+
             title.setText(note.getNoteTitle());
             subtitle.setText(note.getNoteSubtitle());
             desc.setText(note.getNoteDescription());
@@ -220,7 +216,56 @@ public class Notes extends AppCompatActivity {
             cbBuy.setChecked(note.isToBuyTask());
         }
 
-        builder.setPositiveButton(isEditMode ? "Update" : "Create", (dialog, which) -> {
+        AlertDialog dialog = builder.create();
+
+        if (isEditMode) {
+            btnMarkAsDone.setOnClickListener(v -> {
+                String markDoneQuery = QueryMaker.markNoteAsDoneQuery(note.getId());
+                GetFromSQLDatabase.runAzureQueryAIChat(markDoneQuery, new AzureDataCallback() {
+                    @Override
+                    public void onSuccess(ArrayList<RowInTable> resultTable) {
+                        runOnUiThread(() -> {
+                            Toast.makeText(Notes.this, "Marked as done!", Toast.LENGTH_SHORT).show();
+                            dialog.dismiss();
+                            fetchNotesFromAzure();
+                        });
+                    }
+
+                    @Override
+                    public void onFailure(String errorMessage) {
+                        runOnUiThread(() -> Toast.makeText(Notes.this, "Error: " + errorMessage, Toast.LENGTH_SHORT).show());
+                    }
+                });
+            });
+
+            btnDelete.setOnClickListener(v -> {
+                new AlertDialog.Builder(Notes.this)
+                        .setTitle("Delete Note")
+                        .setMessage("Move this note to deleted history?")
+                        .setPositiveButton("Yes, Delete", (d, w) -> {
+                            String deleteQuery = QueryMaker.markNoteAsDeletedQuery(note.getId());
+                            GetFromSQLDatabase.runAzureQueryAIChat(deleteQuery, new AzureDataCallback() {
+                                @Override
+                                public void onSuccess(ArrayList<RowInTable> resultTable) {
+                                    runOnUiThread(() -> {
+                                        Toast.makeText(Notes.this, "Note deleted!", Toast.LENGTH_SHORT).show();
+                                        dialog.dismiss();
+                                        fetchNotesFromAzure();
+                                    });
+                                }
+
+                                @Override
+                                public void onFailure(String errorMessage) {
+                                    runOnUiThread(() -> Toast.makeText(Notes.this, "Error: " + errorMessage, Toast.LENGTH_SHORT).show());
+                                }
+                            });
+                        })
+                        .setNegativeButton("Cancel", null)
+                        .show();
+            });
+        }
+
+        builder.setPositiveButton(isEditMode ? "Update" : "Create", (d, which) -> {
             String selectedMain = spinnerCategory.getSelectedItem() != null ?
                     spinnerCategory.getSelectedItem().toString() : "";
             String selectedSub = spinnerSubcategory.getSelectedItem() != null ?
@@ -267,7 +312,7 @@ public class Notes extends AppCompatActivity {
                 @Override public void onSuccess(ArrayList<RowInTable> res) {
                     runOnUiThread(() -> {
                         Toast.makeText(Notes.this, isEditMode ? "Updated!" : "Saved!", Toast.LENGTH_SHORT).show();
-                        fetchNotesFromAzure(); // Refresh list from Azure SQL
+                        fetchNotesFromAzure();
                     });
                 }
                 @Override public void onFailure(String err) {
@@ -277,7 +322,7 @@ public class Notes extends AppCompatActivity {
         });
 
         builder.setNegativeButton("Cancel", null);
-        builder.create().show();
+        builder.show();
     }
 
     private void setupVisibilityListeners() {
@@ -302,14 +347,12 @@ public class Notes extends AppCompatActivity {
     }
 
     private void setupFilterListeners() {
-        // Text search
         filterSubtitle.addTextChangedListener(new android.text.TextWatcher() {
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
             public void onTextChanged(CharSequence s, int start, int before, int count) { applyFilters(); }
             public void afterTextChanged(android.text.Editable s) {}
         });
 
-        // Main category selector
         filterCategorySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -322,7 +365,6 @@ public class Notes extends AppCompatActivity {
             public void onNothingSelected(AdapterView<?> parent) {}
         });
 
-        // Subcategory selector
         filterUrgentlySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -333,7 +375,6 @@ public class Notes extends AppCompatActivity {
             public void onNothingSelected(AdapterView<?> parent) {}
         });
 
-        // Checkboxes
         android.widget.CompoundButton.OnCheckedChangeListener cbListener = (buttonView, isChecked) -> applyFilters();
         filterCbLearning.setOnCheckedChangeListener(cbListener);
         filterCbGeneral.setOnCheckedChangeListener(cbListener);
