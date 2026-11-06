@@ -1,0 +1,9 @@
+Name: Kiełbasa Żywiecka
+Brand: Kraina Wędlin
+Package has: 600.0
+Macro for: 100.0
+KCal: 216.0
+Protein: 22.0
+Fat: 14.0
+Carbs: 0.5
+Comment optional: Link: https://www.fatsecret.pl/kalorie-warto%C5%9Bci%C2%A0od%C5%BCywcze/kraina-w%C4%99dlin/kie%C5%82basa-%C5%BBywiecka/100g
