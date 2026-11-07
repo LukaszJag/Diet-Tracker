@@ -1,0 +1,9 @@
+Name: Płatki Chocapic
+Brand: Nestle
+Package has: 375.0
+Macro for: 100.0
+KCal: 384.0
+Protein: 8.5
+Fat: 4.4
+Carbs: 73.8
+Comment optional: Dane z opakowania
