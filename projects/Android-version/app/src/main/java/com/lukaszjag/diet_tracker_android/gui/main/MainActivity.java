@@ -1,14 +1,14 @@
-package com.lukaszjag.diet_tracker_android;
+package com.lukaszjag.diet_tracker_android.gui.main;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.lukaszjag.diet_tracker_android.R;
 import com.lukaszjag.diet_tracker_android.gui.diet.GetProductData;
 import com.lukaszjag.diet_tracker_android.gui.diet.day_data_view.DayData;
 import com.lukaszjag.diet_tracker_android.gui.notes.Notes;
