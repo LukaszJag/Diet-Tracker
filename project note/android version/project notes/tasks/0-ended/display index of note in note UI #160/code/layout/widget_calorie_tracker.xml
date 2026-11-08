@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/widgetRoot"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:drawable/dialog_holo_light_frame"
+    android:orientation="vertical"
+    android:padding="10dp">
+
+    <!-- Pasek nawigacji po dniach: < [ Data ] > ⟳ -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+
+        <!-- Przycisk: Poprzedni dzień -->
+        <Button
+            android:id="@+id/widgetPrevDayButton"
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="34dp"
+            android:layout_height="32dp"
+            android:text="&lt;"
+            android:textSize="12sp" />
+
+        <!-- Wyświetlana data / dzień -->
+        <TextView
+            android:id="@+id/widgetDateTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="Today"
+            android:textColor="#333333"
+            android:textSize="12sp"
+            android:textStyle="bold" />
+
+        <!-- Przycisk: Następny dzień -->
+        <Button
+            android:id="@+id/widgetNextDayButton"
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="34dp"
+            android:layout_height="32dp"
+            android:text="&gt;"
+            android:textSize="12sp" />
+
+        <!-- Przycisk: Odśwież -->
+        <Button
+            android:id="@+id/widgetRefreshButton"
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="34dp"
+            android:layout_height="32dp"
+            android:layout_marginStart="4dp"
+            android:text="⟳"
+            android:textSize="13sp" />
+
+        <Button
+            android:id="@+id/widgetSettingsButton"
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="34dp"
+            android:layout_height="32dp"
+            android:layout_marginStart="4dp"
+            android:text="⚙"
+            android:textSize="12sp" />
+    </LinearLayout>
+
+    <!-- Liczba kalorii podsumowania -->
+    <TextView
+        android:id="@+id/widgetKcalTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="0 kcal"
+        android:textColor="#266278"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <!-- Podsumowanie makro -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:orientation="horizontal"
+        android:weightSum="3">
+
+        <TextView
+            android:id="@+id/widgetProteinTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="P: 0g"
+            android:textColor="#8B0000"
+            android:textSize="11sp" />
+
+        <TextView
+            android:id="@+id/widgetFatTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="F: 0g"
+            android:textColor="#FF8C00"
+            android:textSize="11sp" />
+
+        <TextView
+            android:id="@+id/widgetCarbsTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="C: 0g"
+            android:textColor="#2E8B57"
+            android:textSize="11sp" />
+    </LinearLayout>
+
+    <!-- Dozwolony separator -->
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#D0D0D0"
+        android:layout_marginTop="6dp"
+        android:layout_marginBottom="6dp" />
+
+    <!-- Lista produktów na wybrany dzień -->
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <ListView
+            android:id="@+id/widgetListView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:divider="#EAEAEA"
+            android:dividerHeight="1dp" />
+
+        <TextView
+            android:id="@+id/widgetEmptyView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="Brak posiłków w tym dniu"
+            android:textColor="#888888"
+            android:textSize="12sp"
+            android:visibility="gone" />
+    </FrameLayout>
+</LinearLayout>

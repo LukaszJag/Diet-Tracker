@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/calDayRoot"
+    android:layout_width="match_parent"
+    android:layout_height="44dp"
+    android:layout_margin="1dp"
+    android:clickable="true"
+    android:focusable="true">
+
+    <TextView
+        android:id="@+id/calDayNumberTextView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="1"
+        android:textSize="13sp"
+        android:textColor="#222222" />
+
+    <!-- Selected Checkmark Indicator -->
+    <TextView
+        android:id="@+id/calDayCheckIndicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|end"
+        android:padding="1dp"
+        android:text="✓"
+        android:textSize="9sp"
+        android:textStyle="bold"
+        android:textColor="#1565C0"
+        android:visibility="gone" />
+
+</FrameLayout>

@@ -8,6 +8,16 @@
     android:orientation="vertical"
     android:padding="12dp">
 
+    <!-- Note Index at the Top-Left Corner -->
+    <TextView
+        android:id="@+id/tvNoteIndex"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#1565C0"
+        android:textSize="11sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="2dp" />
+
     <!-- Section 1: Title, Subtitle, Description -->
     <LinearLayout
         android:id="@+id/section1"
@@ -108,7 +118,6 @@
             android:scaleX="0.85"
             android:scaleY="0.85"/>
 
-        <!-- ADD THIS HERE IF IT IS MISSING -->
         <CheckBox
             android:id="@+id/cbIsToBuy"
             android:layout_width="wrap_content"

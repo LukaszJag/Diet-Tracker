@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -29,6 +30,35 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         void onItemClick(int position, Note note);
     }
 
+    // --- VIEWHOLDER ---
+    public static class MyViewHolder extends RecyclerView.ViewHolder {
+        public TextView tvNoteIndex;
+        public TextView tv1, tv2, tv3, tvCategory, tvUrgently, tvDates, tvDaysSince;
+        public CheckBox cbIsLearning, cbIsGeneralToDo, cbIsTodayTask, cbIsToBuy;
+        public View section1, section2, section3, section4;
+
+        public MyViewHolder(@NonNull View itemView) {
+            super(itemView);
+            tvNoteIndex = itemView.findViewById(R.id.tvNoteIndex);
+            tv1 = itemView.findViewById(R.id.textView1);
+            tv2 = itemView.findViewById(R.id.textView2);
+            tv3 = itemView.findViewById(R.id.textView3);
+            tvCategory = itemView.findViewById(R.id.tvCategory);
+            tvUrgently = itemView.findViewById(R.id.tvUrgently);
+            tvDates = itemView.findViewById(R.id.tvDates);
+            tvDaysSince = itemView.findViewById(R.id.tvDaysSince);
+            cbIsLearning = itemView.findViewById(R.id.cbIsLearning);
+            cbIsGeneralToDo = itemView.findViewById(R.id.cbIsGeneralToDo);
+            cbIsTodayTask = itemView.findViewById(R.id.cbIsTodayTask);
+            cbIsToBuy = itemView.findViewById(R.id.cbIsToBuy);
+
+            section1 = itemView.findViewById(R.id.section1);
+            section2 = itemView.findViewById(R.id.section2);
+            section3 = itemView.findViewById(R.id.section3);
+            section4 = itemView.findViewById(R.id.section4);
+        }
+    }
+
     private List<Note> noteList;
     private List<Note> originalList;
     private OnItemClickListener listener;
@@ -45,9 +75,13 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         this.originalList = new ArrayList<>();
     }
 
-    public List<Note> getOriginalList() { return originalList; }
+    public List<Note> getOriginalList() {
+        return originalList;
+    }
 
-    public void setOnItemClickListener(OnItemClickListener listener) { this.listener = listener; }
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.listener = listener;
+    }
 
     public void setSectionVisibilities(boolean hideS1, boolean hideS2, boolean hideS3, boolean hideS4) {
         this.hideSection1 = hideS1;
@@ -160,7 +194,6 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
             boolean matchToday = !showTodayOnly || note.isTodayTask();
             boolean matchToBuy = !showToBuyOnly || note.isToBuyTask();
 
-            // Status filter for history
             boolean matchStatus = true;
             if ("DONE".equalsIgnoreCase(statusFilter)) {
                 matchStatus = note.isDone();
@@ -168,7 +201,6 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
                 matchStatus = note.isDeleted();
             }
 
-            // Filter by creation date
             boolean matchDate = true;
             if (hasDateFilter) {
                 String created = note.getDateCreated();
@@ -196,6 +228,11 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         Note currentItem = noteList.get(position);
+
+        // Display the database ID from Azure SQL (id column)
+        if (holder.tvNoteIndex != null) {
+            holder.tvNoteIndex.setText("#" + currentItem.getId());
+        }
 
         holder.section1.setVisibility(hideSection1 ? View.GONE : View.VISIBLE);
         holder.section2.setVisibility(hideSection2 ? View.GONE : View.VISIBLE);
@@ -246,32 +283,8 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     }
 
     @Override
-    public int getItemCount() { return noteList.size(); }
-
-    public static class MyViewHolder extends RecyclerView.ViewHolder {
-        TextView tv1, tv2, tv3, tvCategory, tvUrgently, tvDates, tvDaysSince;
-        CheckBox cbIsLearning, cbIsGeneralToDo, cbIsTodayTask, cbIsToBuy;
-        View section1, section2, section3, section4;
-
-        public MyViewHolder(@NonNull View itemView) {
-            super(itemView);
-            tv1 = itemView.findViewById(R.id.textView1);
-            tv2 = itemView.findViewById(R.id.textView2);
-            tv3 = itemView.findViewById(R.id.textView3);
-            tvCategory = itemView.findViewById(R.id.tvCategory);
-            tvUrgently = itemView.findViewById(R.id.tvUrgently);
-            tvDates = itemView.findViewById(R.id.tvDates);
-            tvDaysSince = itemView.findViewById(R.id.tvDaysSince);
-            cbIsLearning = itemView.findViewById(R.id.cbIsLearning);
-            cbIsGeneralToDo = itemView.findViewById(R.id.cbIsGeneralToDo);
-            cbIsTodayTask = itemView.findViewById(R.id.cbIsTodayTask);
-            cbIsToBuy = itemView.findViewById(R.id.cbIsToBuy);
-
-            section1 = itemView.findViewById(R.id.section1);
-            section2 = itemView.findViewById(R.id.section2);
-            section3 = itemView.findViewById(R.id.section3);
-            section4 = itemView.findViewById(R.id.section4);
-        }
+    public int getItemCount() {
+        return noteList.size();
     }
 
     public void clearAll() {

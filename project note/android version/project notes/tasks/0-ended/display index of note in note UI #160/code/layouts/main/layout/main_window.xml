@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/headerTitle"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:background="#4253a6"
+        android:text="Welcome to Diet tracker"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:gravity="center_vertical"
+        android:paddingStart="16dp"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/addMealButton"
+        android:layout_width="160dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="36dp"
+        android:background="@drawable/add_meal_button"
+        android:text="Add meal"
+        app:backgroundTint="@null"
+        app:layout_constraintTop_toBottomOf="@id/headerTitle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <Button
+        android:id="@+id/getDayDataButton"
+        android:layout_width="160dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/get_day_data"
+        android:text="Get day data"
+        app:backgroundTint="@null"
+        app:layout_constraintTop_toBottomOf="@+id/addMealButton"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <Button
+        android:id="@+id/noteTaskButtonButton"
+        android:layout_width="160dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/note_task_button"
+        android:text="Note - tasks"
+        app:backgroundTint="@null"
+        app:layout_constraintTop_toBottomOf="@+id/getDayDataButton"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <Button
+        android:id="@+id/notesHistoryButton"
+        android:layout_width="160dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/buttons_main"
+        android:text="Notes History"
+        app:backgroundTint="@null"
+        app:layout_constraintTop_toBottomOf="@+id/noteTaskButtonButton"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <Button
+        android:id="@+id/monthlyStatsButton"
+        android:layout_width="160dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/buttons_main"
+        android:text="Monthly stats"
+        app:backgroundTint="@null"
+        app:layout_constraintTop_toBottomOf="@+id/notesHistoryButton"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- 1. BUTTON TO CHANGE HOME WIDGET COLOR -->
+    <Button
+        android:id="@+id/widgetSettingsButton"
+        android:layout_width="160dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/buttons_main"
+        android:text="Widget Color"
+        app:backgroundTint="@null"
+        app:layout_constraintTop_toBottomOf="@+id/monthlyStatsButton"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- 2. BUTTON FOR APP & CALENDAR SETTINGS -->
+    <Button
+        android:id="@+id/appSettingsButton"
+        android:layout_width="160dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/buttons_main"
+        android:text="App Settings"
+        app:backgroundTint="@null"
+        app:layout_constraintTop_toBottomOf="@+id/widgetSettingsButton"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,1 @@
+I want to display the index of note in notes view at the top left corner in note
