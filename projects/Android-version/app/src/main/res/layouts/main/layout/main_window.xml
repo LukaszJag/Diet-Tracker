@@ -22,7 +22,7 @@
         android:id="@+id/addMealButton"
         android:layout_width="160dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="36dp"
         android:background="@drawable/add_meal_button"
         android:text="Add meal"
         app:backgroundTint="@null"
@@ -34,7 +34,7 @@
         android:id="@+id/getDayDataButton"
         android:layout_width="160dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="12dp"
         android:background="@drawable/get_day_data"
         android:text="Get day data"
         app:backgroundTint="@null"
@@ -46,7 +46,7 @@
         android:id="@+id/noteTaskButtonButton"
         android:layout_width="160dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="12dp"
         android:background="@drawable/note_task_button"
         android:text="Note - tasks"
         app:backgroundTint="@null"
@@ -58,7 +58,7 @@
         android:id="@+id/notesHistoryButton"
         android:layout_width="160dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="12dp"
         android:background="@drawable/buttons_main"
         android:text="Notes History"
         app:backgroundTint="@null"
@@ -70,11 +70,37 @@
         android:id="@+id/monthlyStatsButton"
         android:layout_width="160dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="12dp"
         android:background="@drawable/buttons_main"
         android:text="Monthly stats"
         app:backgroundTint="@null"
         app:layout_constraintTop_toBottomOf="@+id/notesHistoryButton"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- 1. BUTTON TO CHANGE HOME WIDGET COLOR -->
+    <Button
+        android:id="@+id/widgetSettingsButton"
+        android:layout_width="160dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/buttons_main"
+        android:text="Widget Color"
+        app:backgroundTint="@null"
+        app:layout_constraintTop_toBottomOf="@+id/monthlyStatsButton"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- 2. BUTTON FOR APP & CALENDAR SETTINGS -->
+    <Button
+        android:id="@+id/appSettingsButton"
+        android:layout_width="160dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/buttons_main"
+        android:text="App Settings"
+        app:backgroundTint="@null"
+        app:layout_constraintTop_toBottomOf="@+id/widgetSettingsButton"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 

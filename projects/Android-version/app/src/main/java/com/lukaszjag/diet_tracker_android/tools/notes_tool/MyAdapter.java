@@ -15,6 +15,7 @@ import com.lukaszjag.diet_tracker_android.R;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
@@ -118,16 +119,30 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
     public void filter(String subtitle, String selectedMainCategory, String selectedSubcategory,
                        boolean showLearningOnly, boolean showGeneralOnly, boolean showTodayOnly, boolean showToBuyOnly) {
-        filter(subtitle, selectedMainCategory, selectedSubcategory, showLearningOnly, showGeneralOnly, showTodayOnly, showToBuyOnly, "ALL");
+        filter(subtitle, selectedMainCategory, selectedSubcategory, showLearningOnly, showGeneralOnly, showTodayOnly, showToBuyOnly, "ALL", null);
+    }
+
+    public void filter(String subtitle, String selectedMainCategory, String selectedSubcategory,
+                       boolean showLearningOnly, boolean showGeneralOnly, boolean showTodayOnly, boolean showToBuyOnly,
+                       Set<String> selectedDates) {
+        filter(subtitle, selectedMainCategory, selectedSubcategory, showLearningOnly, showGeneralOnly, showTodayOnly, showToBuyOnly, "ALL", selectedDates);
     }
 
     public void filter(String subtitle, String selectedMainCategory, String selectedSubcategory,
                        boolean showLearningOnly, boolean showGeneralOnly, boolean showTodayOnly, boolean showToBuyOnly,
                        String statusFilter) {
+        filter(subtitle, selectedMainCategory, selectedSubcategory, showLearningOnly, showGeneralOnly, showTodayOnly, showToBuyOnly, statusFilter, null);
+    }
+
+    public void filter(String subtitle, String selectedMainCategory, String selectedSubcategory,
+                       boolean showLearningOnly, boolean showGeneralOnly, boolean showTodayOnly, boolean showToBuyOnly,
+                       String statusFilter, Set<String> selectedDates) {
         noteList.clear();
         String qSub = (subtitle != null) ? subtitle.toLowerCase().trim() : "";
         boolean isAllCategories = (selectedMainCategory == null || selectedMainCategory.equals("All Categories"));
         boolean isAllSubcategories = (selectedSubcategory == null || selectedSubcategory.equals("All Subcategories"));
+
+        boolean hasDateFilter = (selectedDates != null && !selectedDates.isEmpty());
 
         for (Note note : originalList) {
             boolean matchSub = qSub.isEmpty() || (note.getNoteSubtitle() != null && note.getNoteSubtitle().toLowerCase().contains(qSub));
@@ -153,7 +168,17 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
                 matchStatus = note.isDeleted();
             }
 
-            if (matchSub && matchCat && matchLearning && matchGeneral && matchToday && matchToBuy && matchStatus) {
+            // Filter by creation date
+            boolean matchDate = true;
+            if (hasDateFilter) {
+                String created = note.getDateCreated();
+                if (created != null && created.length() >= 10) {
+                    created = created.substring(0, 10);
+                }
+                matchDate = (created != null && selectedDates.contains(created));
+            }
+
+            if (matchSub && matchCat && matchLearning && matchGeneral && matchToday && matchToBuy && matchStatus && matchDate) {
                 noteList.add(note);
             }
         }
@@ -177,7 +202,6 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         holder.section3.setVisibility(hideSection3 ? View.GONE : View.VISIBLE);
         holder.section4.setVisibility(hideSection4 ? View.GONE : View.VISIBLE);
 
-        // Visual distinction for Deleted and Done items
         String titlePrefix = "";
         holder.tv1.setPaintFlags(holder.tv1.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
         holder.tv1.setTextColor(Color.BLACK);

@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F5F5F5"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="App &amp; Calendar Settings"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="#222222"
+            android:layout_marginBottom="16dp"/>
+
+        <!-- 1. Buttons Background Color -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="App Buttons Background Color"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:textColor="#333333"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginTop="8dp">
+
+            <View
+                android:id="@+id/previewButtonColor"
+                android:layout_width="45dp"
+                android:layout_height="40dp"
+                android:background="#4253A6"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=" #"
+                android:textStyle="bold"
+                android:layout_marginStart="12dp"/>
+
+            <EditText
+                android:id="@+id/etButtonColorHex"
+                android:layout_width="100dp"
+                android:layout_height="40dp"
+                android:textSize="13sp"
+                android:text="4253A6"
+                android:maxLength="6"
+                android:textAllCaps="true"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="36dp"
+            android:orientation="horizontal"
+            android:layout_marginTop="8dp">
+
+            <Button android:id="@+id/btnPresetNavy" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:backgroundTint="#4253A6" android:text="Navy" android:textSize="10sp" android:textColor="#FFF"/>
+            <Button android:id="@+id/btnPresetGreen" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:backgroundTint="#2E7D32" android:text="Green" android:textSize="10sp" android:textColor="#FFF"/>
+            <Button android:id="@+id/btnPresetBlue" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:backgroundTint="#1565C0" android:text="Blue" android:textSize="10sp" android:textColor="#FFF"/>
+            <Button android:id="@+id/btnPresetPurple" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:backgroundTint="#6A1B9A" android:text="Purple" android:textSize="10sp" android:textColor="#FFF"/>
+            <Button android:id="@+id/btnPresetRed" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:backgroundTint="#B71C1C" android:text="Red" android:textSize="10sp" android:textColor="#FFF"/>
+            <Button android:id="@+id/btnPresetDark" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:backgroundTint="#37474F" android:text="Dark" android:textSize="10sp" android:textColor="#FFF"/>
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#D0D0D0"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="16dp"/>
+
+        <!-- 2. Calendar Days Background Heatmap Color -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Calendar Days Background (Heatmap Color)"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:textColor="#333333"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Days with 0 notes are white. More notes yield a more intensive color."
+            android:textSize="12sp"
+            android:textColor="#666666"
+            android:layout_marginTop="2dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginTop="8dp">
+
+            <View
+                android:id="@+id/previewHeatmapColor"
+                android:layout_width="45dp"
+                android:layout_height="40dp"
+                android:background="#4CAF50"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=" #"
+                android:textStyle="bold"
+                android:layout_marginStart="12dp"/>
+
+            <EditText
+                android:id="@+id/etHeatmapColorHex"
+                android:layout_width="100dp"
+                android:layout_height="40dp"
+                android:textSize="13sp"
+                android:text="4CAF50"
+                android:maxLength="6"
+                android:textAllCaps="true"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="36dp"
+            android:orientation="horizontal"
+            android:layout_marginTop="8dp">
+
+            <Button android:id="@+id/hmPresetGreen" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:backgroundTint="#4CAF50" android:text="Green" android:textSize="10sp" android:textColor="#FFF"/>
+            <Button android:id="@+id/hmPresetBlue" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:backgroundTint="#2196F3" android:text="Blue" android:textSize="10sp" android:textColor="#FFF"/>
+            <Button android:id="@+id/hmPresetOrange" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:backgroundTint="#FF9800" android:text="Orange" android:textSize="10sp" android:textColor="#FFF"/>
+            <Button android:id="@+id/hmPresetPurple" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:backgroundTint="#9C27B0" android:text="Purple" android:textSize="10sp" android:textColor="#FFF"/>
+            <Button android:id="@+id/hmPresetRed" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:backgroundTint="#F44336" android:text="Red" android:textSize="10sp" android:textColor="#FFF"/>
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#D0D0D0"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="16dp"/>
+
+        <!-- 3. Calendar UI Elements Size -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Size of Calendar UI Elements"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:textColor="#333333"/>
+
+        <RadioGroup
+            android:id="@+id/rgCalendarSize"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="6dp">
+
+            <RadioButton
+                android:id="@+id/rbSizeSmall"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Small"
+                android:textSize="12sp"/>
+
+            <RadioButton
+                android:id="@+id/rbSizeMedium"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Medium"
+                android:textSize="12sp"/>
+
+            <RadioButton
+                android:id="@+id/rbSizeLarge"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Large"
+                android:textSize="12sp"/>
+
+            <RadioButton
+                android:id="@+id/rbSizeExtraLarge"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="XL"
+                android:textSize="12sp"/>
+        </RadioGroup>
+
+        <!-- Save Button -->
+        <Button
+            android:id="@+id/btnSaveSettings"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Save &amp; Apply Settings"
+            android:layout_marginTop="28dp"
+            android:textSize="15sp"/>
+
+    </LinearLayout>
+</ScrollView>

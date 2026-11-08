@@ -12,6 +12,7 @@
         android:theme="?attr/actionBarTheme">
 
         <TextView
+            android:id="@+id/tvToolbarTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Notes"
@@ -38,18 +39,38 @@
         android:padding="8dp"
         android:background="#F5F5F5">
 
-        <TextView
-            android:layout_width="wrap_content"
+        <!-- Header Row with "Filter list by:" and Notes Count -->
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Filter list by:"
-            android:textStyle="bold"
-            android:textSize="12sp"
-            android:textColor="#555555"/>
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Filter list by:"
+                android:textStyle="bold"
+                android:textSize="12sp"
+                android:textColor="#555555"/>
+
+            <!-- Displays the number of notes matching current filters -->
+            <TextView
+                android:id="@+id/tvNotesCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Displayed: 0 (Total: 0)"
+                android:textStyle="bold"
+                android:textSize="12sp"
+                android:textColor="#1565C0"/>
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
+            android:layout_marginTop="4dp"
             android:weightSum="3">
 
             <EditText
@@ -61,7 +82,6 @@
                 android:textSize="12sp"
                 android:inputType="text" />
 
-            <!-- Multichoice Category Spinner Dropdown -->
             <Spinner
                 android:id="@+id/filterCategorySpinner"
                 android:layout_width="0dp"
@@ -74,7 +94,6 @@
                 android:singleLine="true"
                 android:layout_gravity="center_vertical" />
 
-            <!-- Urgency ComboBox -->
             <Spinner
                 android:id="@+id/filterUrgentlySpinner"
                 android:layout_width="0dp"
@@ -117,6 +136,43 @@
                 android:text="To Buy"
                 android:textSize="12sp" />
 
+        </LinearLayout>
+
+        <!-- Date Creation Filter Row -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginTop="4dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Date Filter:"
+                android:textStyle="bold"
+                android:textSize="12sp"
+                android:textColor="#555555"/>
+
+            <Button
+                android:id="@+id/btnCalendarFilter"
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="0dp"
+                android:layout_height="36dp"
+                android:layout_weight="1"
+                android:layout_marginStart="8dp"
+                android:text="📅 Choose Dates (All)"
+                android:textSize="11sp"/>
+
+            <Button
+                android:id="@+id/btnClearDateFilter"
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="36dp"
+                android:layout_marginStart="4dp"
+                android:text="✕ Clear"
+                android:textSize="11sp"
+                android:visibility="gone"/>
         </LinearLayout>
 
         <!-- Toggle Section Visibilities -->

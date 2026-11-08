@@ -9,6 +9,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -18,6 +19,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.lukaszjag.diet_tracker_android.R;
+import com.lukaszjag.diet_tracker_android.gui.notes.calendar.NotesCalendarDialog;
 import com.lukaszjag.diet_tracker_android.tools.cloud_data_tools.AzureDataCallback;
 import com.lukaszjag.diet_tracker_android.tools.cloud_data_tools.GetFromSQLDatabase;
 import com.lukaszjag.diet_tracker_android.tools.notes_tool.MyAdapter;
@@ -25,20 +27,31 @@ import com.lukaszjag.diet_tracker_android.tools.notes_tool.Note;
 import com.lukaszjag.diet_tracker_android.tools.notes_tool.categories.NoteCategoryData;
 import com.lukaszjag.diet_tracker_android.tools.sql_tools.QueryMaker;
 import com.lukaszjag.diet_tracker_android.tools.sql_tools.RowInTable;
+import com.lukaszjag.diet_tracker_android.tools.theme.ThemeHelper;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
+import java.util.Set;
 
 public class Notes extends AppCompatActivity {
     private EditText filterSubtitle;
     private Spinner filterCategorySpinner;
     private Spinner filterUrgentlySpinner;
     private CheckBox filterCbLearning, filterCbGeneral, filterCbToday, filterCbToBuy;
+    private Button btnCalendarFilter;
+    private Button btnClearDateFilter;
+    private TextView tvNotesCount; // Displayed notes count
     private RecyclerView recyclerView;
     private MyAdapter adapter;
+
+    // Set of selected creation dates (yyyy-MM-dd)
+    private final Set<String> selectedDates = new HashSet<>();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -53,19 +66,68 @@ public class Notes extends AppCompatActivity {
         filterCbToday = findViewById(R.id.filterCbToday);
         filterCbToBuy = findViewById(R.id.filterCbToBuy);
 
+        btnCalendarFilter = findViewById(R.id.btnCalendarFilter);
+        btnClearDateFilter = findViewById(R.id.btnClearDateFilter);
+        tvNotesCount = findViewById(R.id.tvNotesCount);
+
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter = new MyAdapter();
         recyclerView.setAdapter(adapter);
 
         findViewById(R.id.button).setOnClickListener(v -> showNoteDialog(null));
-
         adapter.setOnItemClickListener((position, note) -> showNoteDialog(note));
 
+        setupCalendarFilterButton();
         setupVisibilityListeners();
         setupFilterSpinners();
         setupFilterListeners();
         fetchNotesFromAzure();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        ThemeHelper.applyButtonTheme(this);
+    }
+
+    private void setupCalendarFilterButton() {
+        btnCalendarFilter.setOnClickListener(v -> showCalendarDialog());
+
+        btnClearDateFilter.setOnClickListener(v -> {
+            selectedDates.clear();
+            updateDateFilterButtonUI();
+            applyFilters();
+        });
+    }
+
+    private void showCalendarDialog() {
+        Map<String, Integer> countMap = new HashMap<>();
+        for (Note note : adapter.getOriginalList()) {
+            String created = note.getDateCreated();
+            if (created != null && created.length() >= 10) {
+                created = created.substring(0, 10);
+                countMap.put(created, countMap.getOrDefault(created, 0) + 1);
+            }
+        }
+
+        NotesCalendarDialog dialog = new NotesCalendarDialog(this, countMap, selectedDates, newSelectedDates -> {
+            selectedDates.clear();
+            selectedDates.addAll(newSelectedDates);
+            updateDateFilterButtonUI();
+            applyFilters();
+        });
+        dialog.show();
+    }
+
+    private void updateDateFilterButtonUI() {
+        if (selectedDates.isEmpty()) {
+            btnCalendarFilter.setText("📅 Choose Dates (All)");
+            btnClearDateFilter.setVisibility(View.GONE);
+        } else {
+            btnCalendarFilter.setText("📅 Dates: " + selectedDates.size() + " selected");
+            btnClearDateFilter.setVisibility(View.VISIBLE);
+        }
     }
 
     private void setupFilterSpinners() {
@@ -97,7 +159,6 @@ public class Notes extends AppCompatActivity {
     }
 
     private void fetchNotesFromAzure() {
-        // QueryMaker.getAllNotesQuery() selects only active items
         String query = QueryMaker.getAllNotesQuery();
         GetFromSQLDatabase.runAzureQueryAIChat(query, new AzureDataCallback() {
             @Override
@@ -322,7 +383,7 @@ public class Notes extends AppCompatActivity {
         });
 
         builder.setNegativeButton("Cancel", null);
-        builder.show();
+        dialog.show();
     }
 
     private void setupVisibilityListeners() {
@@ -391,6 +452,7 @@ public class Notes extends AppCompatActivity {
         String selectedSubcat = filterUrgentlySpinner.getSelectedItem() != null ?
                 filterUrgentlySpinner.getSelectedItem().toString() : "All Subcategories";
 
+        // Filter through adapter
         adapter.filter(
                 subtitle,
                 selectedCat,
@@ -398,7 +460,19 @@ public class Notes extends AppCompatActivity {
                 filterCbLearning.isChecked(),
                 filterCbGeneral.isChecked(),
                 filterCbToday.isChecked(),
-                filterCbToBuy.isChecked()
+                filterCbToBuy.isChecked(),
+                selectedDates
         );
+
+        // Update the displayed notes counter
+        updateNotesCountDisplay();
+    }
+
+    private void updateNotesCountDisplay() {
+        if (tvNotesCount != null && adapter != null) {
+            int displayedCount = adapter.getItemCount();
+            int totalCount = adapter.getOriginalList().size();
+            tvNotesCount.setText("Displayed: " + displayedCount + " (Total: " + totalCount + ")");
+        }
     }
 }

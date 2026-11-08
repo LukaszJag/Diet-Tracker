@@ -14,34 +14,38 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Diettrackerandroid">
+
         <activity
             android:name=".gui.diet.day_data_view.DayData"
             android:exported="false" />
-        <!-- 1. Set GetProductData as the LAUNCHER activity -->
+
         <activity
-            android:name=".MainActivity"
+            android:name=".gui.main.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".gui.diet.GetProductData"
-            android:exported="true">
+            android:exported="true" />
 
-        </activity>
         <activity
             android:name=".gui.notes.Notes"
-            android:exported="true">
-
-        </activity>
+            android:exported="true" />
 
         <activity
             android:name=".gui.notes.NotesHistory"
             android:exported="false"
             android:label="Notes History" />
+
+        <!-- App Settings Activity -->
+        <activity
+            android:name=".gui.settings.AppSettingsActivity"
+            android:exported="false"
+            android:label="Settings" />
 
         <activity
             android:name=".tools.widget.WidgetColorSettingsActivity"
@@ -68,25 +72,6 @@
             android:exported="false"
             android:permission="android.permission.BIND_REMOTEVIEWS" />
 
-        <receiver
-            android:name="com.lukaszjag.diet_tracker_android.tools.widget.DietWidgetProvider"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
-                <action android:name="com.lukaszjag.diet_tracker_android.ACTION_WIDGET_REFRESH" />
-                <action android:name="com.lukaszjag.diet_tracker_android.ACTION_WIDGET_PREV_DAY" />
-                <action android:name="com.lukaszjag.diet_tracker_android.ACTION_WIDGET_NEXT_DAY" />
-            </intent-filter>
-
-            <meta-data
-                android:name="android.appwidget.provider"
-                android:resource="@xml/diet_widget_info" />
-        </receiver>
-
-        <service
-            android:name="com.lukaszjag.diet_tracker_android.tools.widget.DietWidgetService"
-            android:exported="false"
-            android:permission="android.permission.BIND_REMOTEVIEWS" />
     </application>
 
 </manifest>
