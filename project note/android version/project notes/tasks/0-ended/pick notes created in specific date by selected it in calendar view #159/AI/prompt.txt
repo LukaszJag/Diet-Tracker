@@ -1,0 +1,23 @@
+I want to filtr notes by date of creation
+
+add button in notes view that display calendar view and it allow to choose witch day we want to include
+
+this calendar should starup at current month but should allow to change month to next or previous
+
+every sunday should have number with dark red color
+
+there also should be button at the bottom of calendar to uncheck all days
+
+if no day is selected all notes will display
+
+this filter must combine with the rest of filters
+
+at calendar view every day should have background depens how many notes is created in this day if none background will be white if more notes it color should be more intensive 
+
+color of days background, size of calndar UI elements should be able to adjust in setting which be access throug button on main window
+
+in this setting it should be able to change background color of all UI element like buttons in main windows and other in app
+
+
+
+

@@ -1,0 +1,2255 @@
+Here is the complete solution implementing all your requirements.
+
+Summary of Changes & Architecture
+
+1.  App Preferences & Theme Helper:
+      - AppSettings.java: Stores preferences for button background color,
+        calendar heatmap base color, and calendar UI scale factor (Small,
+        Medium, Large, Extra Large).
+      - ThemeHelper.java: Traverses the UI hierarchy and dynamically applies the
+        chosen button background color and high-contrast text color across
+        MainActivity, Notes, DayData, etc.
+2.  Settings Activity:
+      - AppSettingsActivity.java & activity_app_settings.xml: Allows customizing
+        the background color of buttons in the app, the base color for calendar
+        note heatmaps (with presets and custom HEX input), and the size of
+        calendar elements. Accessible via the Settings button in MainActivity
+        and the toolbar options menu.
+3.  Calendar View & Dialog:
+      - NotesCalendarDialog.java, dialog_notes_calendar.xml, &
+        item_calendar_day.xml:
+          - Opens via the 📅 Date Filter button in Notes.
+          - Starts at the current month with < (previous) and > (next) month
+            navigation.
+          - Every Sunday number is colored Dark Red (#8B0000).
+          - Each day's background intensity depends on the number of notes
+            created on that day: white (#FFFFFF) if 0 notes, and progressively
+            more intensive (using the chosen heatmap color) as note count
+            increases.
+          - Days can be tapped to select/unselect. Selected days display an
+            outline and checkmark.
+          - "Uncheck all days" button at the bottom clears all day selections.
+          - "Apply Filter" button applies the selected dates.
+4.  Combined Filtering in Notes:
+      - If no day is selected (or when cleared), all notes are displayed.
+      - If days are selected, only notes created on those dates are shown,
+        smoothly combined with Subtitle, Category, Subcategory, Learning,
+        General, Today, and To Buy filters.
+      - Updated Notes.java, MyAdapter.java, and notes_view_layout.xml.
+
+1. New File: AppSettings.java
+
+Location:
+app/src/main/java/com/lukaszjag/diet_tracker_android/tools/settings/AppSettings.java
+
+package com.lukaszjag.diet_tracker_android.tools.settings;
+
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.graphics.Color;
+
+public class AppSettings {
+    private static final String PREF_NAME = "DietTrackerAppSettings";
+    private static final String KEY_BUTTON_BG_COLOR = "app_button_bg_color";
+    private static final String KEY_CALENDAR_HEATMAP_COLOR = "calendar_heatmap_color";
+    private static final String KEY_CALENDAR_SCALE = "calendar_ui_scale";
+
+    // Defaults
+    public static final int DEFAULT_BUTTON_COLOR = Color.parseColor("#4253A6");
+    public static final int DEFAULT_HEATMAP_COLOR = Color.parseColor("#4CAF50"); // Green
+    public static final float DEFAULT_CALENDAR_SCALE = 1.0f; // 100%
+
+    public static int getButtonColor(Context context) {
+        SharedPreferences prefs = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
+        return prefs.getInt(KEY_BUTTON_BG_COLOR, DEFAULT_BUTTON_COLOR);
+    }
+
+    public static void setButtonColor(Context context, int color) {
+        SharedPreferences prefs = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
+        prefs.edit().putInt(KEY_BUTTON_BG_COLOR, color).apply();
+    }
+
+    public static int getCalendarHeatmapColor(Context context) {
+        SharedPreferences prefs = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
+        return prefs.getInt(KEY_CALENDAR_HEATMAP_COLOR, DEFAULT_HEATMAP_COLOR);
+    }
+
+    public static void setCalendarHeatmapColor(Context context, int color) {
+        SharedPreferences prefs = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
+        prefs.edit().putInt(KEY_CALENDAR_HEATMAP_COLOR, color).apply();
+    }
+
+    public static float getCalendarScale(Context context) {
+        SharedPreferences prefs = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
+        return prefs.getFloat(KEY_CALENDAR_SCALE, DEFAULT_CALENDAR_SCALE);
+    }
+
+    public static void setCalendarScale(Context context, float scale) {
+        SharedPreferences prefs = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
+        prefs.edit().putFloat(KEY_CALENDAR_SCALE, scale).apply();
+    }
+}
+
+2. New File: ThemeHelper.java
+
+Location:
+app/src/main/java/com/lukaszjag/diet_tracker_android/tools/theme/ThemeHelper.java
+
+package com.lukaszjag.diet_tracker_android.tools.theme;
+
+import android.app.Activity;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
+
+import com.lukaszjag.diet_tracker_android.tools.settings.AppSettings;
+
+public class ThemeHelper {
+
+    /**
+     * Traverses the current Activity's view hierarchy and updates all Button backgrounds.
+     */
+    public static void applyButtonTheme(Activity activity) {
+        if (activity == null) return;
+        int buttonColor = AppSettings.getButtonColor(activity);
+        View root = activity.findViewById(android.R.id.content);
+        if (root != null) {
+            applyThemeToViewHierarchy(root, buttonColor);
+        }
+    }
+
+    public static void applyThemeToViewHierarchy(View view, int color) {
+        if (view == null) return;
+        if (view instanceof Button) {
+            applyColorToButton((Button) view, color);
+        } else if (view instanceof ViewGroup) {
+            ViewGroup vg = (ViewGroup) view;
+            for (int i = 0; i < vg.getChildCount(); i++) {
+                applyThemeToViewHierarchy(vg.getChildAt(i), color);
+            }
+        }
+    }
+
+    public static void applyColorToButton(Button button, int color) {
+        if (button == null) return;
+        Drawable bg = button.getBackground();
+        if (bg != null) {
+            bg.mutate().setColorFilter(color, PorterDuff.Mode.SRC_IN);
+        } else {
+            button.setBackgroundColor(color);
+        }
+
+        // Maintain high contrast text (white or black depending on color darkness)
+        double darkness = 1 - (0.299 * Color.red(color) + 0.587 * Color.green(color) + 0.114 * Color.blue(color)) / 255;
+        button.setTextColor(darkness > 0.4 ? Color.WHITE : Color.BLACK);
+    }
+}
+
+3. New File: AppSettingsActivity.java
+
+Location:
+app/src/main/java/com/lukaszjag/diet_tracker_android/gui/settings/AppSettingsActivity.java
+
+package com.lukaszjag.diet_tracker_android.gui.settings;
+
+import android.graphics.Color;
+import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.RadioGroup;
+import android.widget.Toast;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.lukaszjag.diet_tracker_android.R;
+import com.lukaszjag.diet_tracker_android.tools.settings.AppSettings;
+import com.lukaszjag.diet_tracker_android.tools.theme.ThemeHelper;
+
+public class AppSettingsActivity extends AppCompatActivity {
+
+    private View previewButtonColor;
+    private EditText etButtonColorHex;
+    private View previewHeatmapColor;
+    private EditText etHeatmapColorHex;
+    private RadioGroup rgCalendarSize;
+    private Button btnSaveSettings;
+
+    private int currentButtonColor;
+    private int currentHeatmapColor;
+    private float currentScale;
+    private boolean isUpdatingFromCode = false;
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_app_settings);
+
+        previewButtonColor = findViewById(R.id.previewButtonColor);
+        etButtonColorHex = findViewById(R.id.etButtonColorHex);
+        previewHeatmapColor = findViewById(R.id.previewHeatmapColor);
+        etHeatmapColorHex = findViewById(R.id.etHeatmapColorHex);
+        rgCalendarSize = findViewById(R.id.rgCalendarSize);
+        btnSaveSettings = findViewById(R.id.btnSaveSettings);
+
+        // Load existing settings
+        currentButtonColor = AppSettings.getButtonColor(this);
+        currentHeatmapColor = AppSettings.getCalendarHeatmapColor(this);
+        currentScale = AppSettings.getCalendarScale(this);
+
+        updateButtonColorUI(currentButtonColor);
+        updateHeatmapColorUI(currentHeatmapColor);
+        setupScaleRadio();
+        setupListeners();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        ThemeHelper.applyButtonTheme(this);
+    }
+
+    private void updateButtonColorUI(int color) {
+        currentButtonColor = color;
+        previewButtonColor.setBackgroundColor(color);
+        isUpdatingFromCode = true;
+        etButtonColorHex.setText(String.format("%06X", (0xFFFFFF & color)));
+        isUpdatingFromCode = false;
+    }
+
+    private void updateHeatmapColorUI(int color) {
+        currentHeatmapColor = color;
+        previewHeatmapColor.setBackgroundColor(color);
+        isUpdatingFromCode = true;
+        etHeatmapColorHex.setText(String.format("%06X", (0xFFFFFF & color)));
+        isUpdatingFromCode = false;
+    }
+
+    private void setupScaleRadio() {
+        if (currentScale <= 0.85f) {
+            rgCalendarSize.check(R.id.rbSizeSmall);
+        } else if (currentScale <= 1.05f) {
+            rgCalendarSize.check(R.id.rbSizeMedium);
+        } else if (currentScale <= 1.3f) {
+            rgCalendarSize.check(R.id.rbSizeLarge);
+        } else {
+            rgCalendarSize.check(R.id.rbSizeExtraLarge);
+        }
+    }
+
+    private void setupListeners() {
+        // Button color presets
+        findViewById(R.id.btnPresetNavy).setOnClickListener(v -> updateButtonColorUI(Color.parseColor("#4253A6")));
+        findViewById(R.id.btnPresetGreen).setOnClickListener(v -> updateButtonColorUI(Color.parseColor("#2E7D32")));
+        findViewById(R.id.btnPresetBlue).setOnClickListener(v -> updateButtonColorUI(Color.parseColor("#1565C0")));
+        findViewById(R.id.btnPresetPurple).setOnClickListener(v -> updateButtonColorUI(Color.parseColor("#6A1B9A")));
+        findViewById(R.id.btnPresetRed).setOnClickListener(v -> updateButtonColorUI(Color.parseColor("#B71C1C")));
+        findViewById(R.id.btnPresetDark).setOnClickListener(v -> updateButtonColorUI(Color.parseColor("#37474F")));
+
+        // Heatmap color presets
+        findViewById(R.id.hmPresetGreen).setOnClickListener(v -> updateHeatmapColorUI(Color.parseColor("#4CAF50")));
+        findViewById(R.id.hmPresetBlue).setOnClickListener(v -> updateHeatmapColorUI(Color.parseColor("#2196F3")));
+        findViewById(R.id.hmPresetOrange).setOnClickListener(v -> updateHeatmapColorUI(Color.parseColor("#FF9800")));
+        findViewById(R.id.hmPresetPurple).setOnClickListener(v -> updateHeatmapColorUI(Color.parseColor("#9C27B0")));
+        findViewById(R.id.hmPresetRed).setOnClickListener(v -> updateHeatmapColorUI(Color.parseColor("#F44336")));
+
+        // Text inputs
+        etButtonColorHex.addTextChangedListener(new TextWatcher() {
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (isUpdatingFromCode) return;
+                try {
+                    String hex = s.toString().trim();
+                    if (hex.length() == 6) {
+                        currentButtonColor = Color.parseColor("#" + hex);
+                        previewButtonColor.setBackgroundColor(currentButtonColor);
+                    }
+                } catch (Exception ignored) {}
+            }
+            public void afterTextChanged(Editable s) {}
+        });
+
+        etHeatmapColorHex.addTextChangedListener(new TextWatcher() {
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (isUpdatingFromCode) return;
+                try {
+                    String hex = s.toString().trim();
+                    if (hex.length() == 6) {
+                        currentHeatmapColor = Color.parseColor("#" + hex);
+                        previewHeatmapColor.setBackgroundColor(currentHeatmapColor);
+                    }
+                } catch (Exception ignored) {}
+            }
+            public void afterTextChanged(Editable s) {}
+        });
+
+        // Save
+        btnSaveSettings.setOnClickListener(v -> {
+            int checkedId = rgCalendarSize.getCheckedRadioButtonId();
+            if (checkedId == R.id.rbSizeSmall) currentScale = 0.8f;
+            else if (checkedId == R.id.rbSizeMedium) currentScale = 1.0f;
+            else if (checkedId == R.id.rbSizeLarge) currentScale = 1.25f;
+            else if (checkedId == R.id.rbSizeExtraLarge) currentScale = 1.5f;
+
+            AppSettings.setButtonColor(this, currentButtonColor);
+            AppSettings.setCalendarHeatmapColor(this, currentHeatmapColor);
+            AppSettings.setCalendarScale(this, currentScale);
+
+            ThemeHelper.applyButtonTheme(this);
+            Toast.makeText(this, "Settings saved successfully!", Toast.LENGTH_SHORT).show();
+            finish();
+        });
+    }
+}
+
+4. New Layout: activity_app_settings.xml
+
+Location: app/src/main/res/layout/activity_app_settings.xml
+
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F5F5F5"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="App &amp; Calendar Settings"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="#222222"
+            android:layout_marginBottom="16dp"/>
+
+        <!-- 1. Buttons Background Color -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="App Buttons Background Color"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:textColor="#333333"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginTop="8dp">
+
+            <View
+                android:id="@+id/previewButtonColor"
+                android:layout_width="45dp"
+                android:layout_height="40dp"
+                android:background="#4253A6"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=" #"
+                android:textStyle="bold"
+                android:layout_marginStart="12dp"/>
+
+            <EditText
+                android:id="@+id/etButtonColorHex"
+                android:layout_width="100dp"
+                android:layout_height="40dp"
+                android:textSize="13sp"
+                android:text="4253A6"
+                android:maxLength="6"
+                android:textAllCaps="true"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="36dp"
+            android:orientation="horizontal"
+            android:layout_marginTop="8dp">
+
+            <Button android:id="@+id/btnPresetNavy" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:backgroundTint="#4253A6" android:text="Navy" android:textSize="10sp" android:textColor="#FFF"/>
+            <Button android:id="@+id/btnPresetGreen" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:backgroundTint="#2E7D32" android:text="Green" android:textSize="10sp" android:textColor="#FFF"/>
+            <Button android:id="@+id/btnPresetBlue" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:backgroundTint="#1565C0" android:text="Blue" android:textSize="10sp" android:textColor="#FFF"/>
+            <Button android:id="@+id/btnPresetPurple" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:backgroundTint="#6A1B9A" android:text="Purple" android:textSize="10sp" android:textColor="#FFF"/>
+            <Button android:id="@+id/btnPresetRed" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:backgroundTint="#B71C1C" android:text="Red" android:textSize="10sp" android:textColor="#FFF"/>
+            <Button android:id="@+id/btnPresetDark" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:backgroundTint="#37474F" android:text="Dark" android:textSize="10sp" android:textColor="#FFF"/>
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#D0D0D0"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="16dp"/>
+
+        <!-- 2. Calendar Days Background Heatmap Color -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Calendar Days Background (Heatmap Color)"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:textColor="#333333"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Days with 0 notes are white. More notes yield a more intensive color."
+            android:textSize="12sp"
+            android:textColor="#666666"
+            android:layout_marginTop="2dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginTop="8dp">
+
+            <View
+                android:id="@+id/previewHeatmapColor"
+                android:layout_width="45dp"
+                android:layout_height="40dp"
+                android:background="#4CAF50"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=" #"
+                android:textStyle="bold"
+                android:layout_marginStart="12dp"/>
+
+            <EditText
+                android:id="@+id/etHeatmapColorHex"
+                android:layout_width="100dp"
+                android:layout_height="40dp"
+                android:textSize="13sp"
+                android:text="4CAF50"
+                android:maxLength="6"
+                android:textAllCaps="true"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="36dp"
+            android:orientation="horizontal"
+            android:layout_marginTop="8dp">
+
+            <Button android:id="@+id/hmPresetGreen" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:backgroundTint="#4CAF50" android:text="Green" android:textSize="10sp" android:textColor="#FFF"/>
+            <Button android:id="@+id/hmPresetBlue" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:backgroundTint="#2196F3" android:text="Blue" android:textSize="10sp" android:textColor="#FFF"/>
+            <Button android:id="@+id/hmPresetOrange" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:backgroundTint="#FF9800" android:text="Orange" android:textSize="10sp" android:textColor="#FFF"/>
+            <Button android:id="@+id/hmPresetPurple" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:backgroundTint="#9C27B0" android:text="Purple" android:textSize="10sp" android:textColor="#FFF"/>
+            <Button android:id="@+id/hmPresetRed" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:backgroundTint="#F44336" android:text="Red" android:textSize="10sp" android:textColor="#FFF"/>
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#D0D0D0"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="16dp"/>
+
+        <!-- 3. Calendar UI Elements Size -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Size of Calendar UI Elements"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:textColor="#333333"/>
+
+        <RadioGroup
+            android:id="@+id/rgCalendarSize"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="6dp">
+
+            <RadioButton
+                android:id="@+id/rbSizeSmall"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Small"
+                android:textSize="12sp"/>
+
+            <RadioButton
+                android:id="@+id/rbSizeMedium"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Medium"
+                android:textSize="12sp"/>
+
+            <RadioButton
+                android:id="@+id/rbSizeLarge"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Large"
+                android:textSize="12sp"/>
+
+            <RadioButton
+                android:id="@+id/rbSizeExtraLarge"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="XL"
+                android:textSize="12sp"/>
+        </RadioGroup>
+
+        <!-- Save Button -->
+        <Button
+            android:id="@+id/btnSaveSettings"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Save &amp; Apply Settings"
+            android:layout_marginTop="28dp"
+            android:textSize="15sp"/>
+
+    </LinearLayout>
+</ScrollView>
+
+5. New Layout: dialog_notes_calendar.xml
+
+Location: app/src/main/res/layout/dialog_notes_calendar.xml
+
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="12dp"
+    android:background="#FFFFFF">
+
+    <!-- Month Navigation Bar -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+
+        <Button
+            android:id="@+id/calPrevMonthButton"
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="40dp"
+            android:layout_height="36dp"
+            android:text="&lt;"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/calMonthYearTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="November 2026"
+            android:textColor="#222222"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/calNextMonthButton"
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="40dp"
+            android:layout_height="36dp"
+            android:text="&gt;"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <!-- Weekday Headers (Mon to Sun, with Sunday in Dark Red) -->
+    <LinearLayout
+        android:id="@+id/calWeekdayHeaderLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="8dp"
+        android:weightSum="7">
+
+        <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:gravity="center" android:text="Mon" android:textSize="11sp" android:textStyle="bold" android:textColor="#555555"/>
+        <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:gravity="center" android:text="Tue" android:textSize="11sp" android:textStyle="bold" android:textColor="#555555"/>
+        <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:gravity="center" android:text="Wed" android:textSize="11sp" android:textStyle="bold" android:textColor="#555555"/>
+        <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:gravity="center" android:text="Thu" android:textSize="11sp" android:textStyle="bold" android:textColor="#555555"/>
+        <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:gravity="center" android:text="Fri" android:textSize="11sp" android:textStyle="bold" android:textColor="#555555"/>
+        <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:gravity="center" android:text="Sat" android:textSize="11sp" android:textStyle="bold" android:textColor="#555555"/>
+        <!-- Sunday with Dark Red Color (#8B0000) -->
+        <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:gravity="center" android:text="Sun" android:textSize="11sp" android:textStyle="bold" android:textColor="#8B0000"/>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#E0E0E0"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="4dp"/>
+
+    <!-- Days Grid -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/calDaysRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:overScrollMode="never" />
+
+    <!-- Status summary -->
+    <TextView
+        android:id="@+id/calSelectedCountTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="No days selected (Showing all notes)"
+        android:textSize="11sp"
+        android:textColor="#666666"
+        android:layout_marginTop="6dp"/>
+
+    <!-- Bottom Buttons: Uncheck all days & Apply -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="8dp">
+
+        <Button
+            android:id="@+id/calBtnUncheckAll"
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:text="Uncheck all days"
+            android:textSize="11sp"
+            android:layout_marginEnd="4dp" />
+
+        <Button
+            android:id="@+id/calBtnApply"
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:text="Apply Filter"
+            android:textSize="11sp"
+            android:layout_marginStart="4dp" />
+    </LinearLayout>
+
+</LinearLayout>
+
+6. New Layout: item_calendar_day.xml
+
+Location: app/src/main/res/layout/item_calendar_day.xml
+
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/calDayRoot"
+    android:layout_width="match_parent"
+    android:layout_height="44dp"
+    android:layout_margin="1dp"
+    android:clickable="true"
+    android:focusable="true">
+
+    <TextView
+        android:id="@+id/calDayNumberTextView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="1"
+        android:textSize="13sp"
+        android:textColor="#222222" />
+
+    <!-- Selected Checkmark Indicator -->
+    <TextView
+        android:id="@+id/calDayCheckIndicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|end"
+        android:padding="1dp"
+        android:text="✓"
+        android:textSize="9sp"
+        android:textStyle="bold"
+        android:textColor="#1565C0"
+        android:visibility="gone" />
+
+</FrameLayout>
+
+7. New Component: NotesCalendarDialog.java
+
+Location:
+app/src/main/java/com/lukaszjag.diet_tracker_android/gui/notes/calendar/NotesCalendarDialog.java
+
+package com.lukaszjag.diet_tracker_android.gui.notes.calendar;
+
+import android.app.Dialog;
+import android.content.Context;
+import android.graphics.Color;
+import android.graphics.Typeface;
+import android.graphics.drawable.GradientDrawable;
+import android.util.TypedValue;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
+import android.widget.Button;
+import android.widget.FrameLayout;
+import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.core.graphics.ColorUtils;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.lukaszjag.diet_tracker_android.R;
+import com.lukaszjag.diet_tracker_android.tools.settings.AppSettings;
+import com.lukaszjag.diet_tracker_android.tools.theme.ThemeHelper;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import java.util.Set;
+
+public class NotesCalendarDialog extends Dialog {
+
+    public interface OnCalendarFilterAppliedListener {
+        void onFilterApplied(Set<String> selectedDates);
+    }
+
+    private final Map<String, Integer> notesCountPerDay;
+    private final Set<String> selectedDates;
+    private final OnCalendarFilterAppliedListener listener;
+
+    private Calendar currentDisplayCalendar;
+    private TextView monthYearTextView;
+    private TextView selectedCountTextView;
+    private RecyclerView daysRecyclerView;
+    private CalendarDayAdapter dayAdapter;
+
+    private final int heatmapBaseColor;
+    private final float uiScale;
+    private int maxNotesCountInMonth = 1;
+
+    public NotesCalendarDialog(@NonNull Context context,
+                               Map<String, Integer> notesCountPerDay,
+                               Set<String> currentlySelectedDates,
+                               OnCalendarFilterAppliedListener listener) {
+        super(context);
+        this.notesCountPerDay = notesCountPerDay;
+        this.selectedDates = new HashSet<>(currentlySelectedDates);
+        this.listener = listener;
+
+        this.heatmapBaseColor = AppSettings.getCalendarHeatmapColor(context);
+        this.uiScale = AppSettings.getCalendarScale(context);
+
+        init();
+    }
+
+    private void init() {
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        setContentView(R.layout.dialog_notes_calendar);
+
+        if (getWindow() != null) {
+            getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        }
+
+        // Starts at CURRENT month
+        currentDisplayCalendar = Calendar.getInstance();
+        currentDisplayCalendar.set(Calendar.DAY_OF_MONTH, 1);
+
+        monthYearTextView = findViewById(R.id.calMonthYearTextView);
+        selectedCountTextView = findViewById(R.id.calSelectedCountTextView);
+        daysRecyclerView = findViewById(R.id.calDaysRecyclerView);
+
+        Button prevBtn = findViewById(R.id.calPrevMonthButton);
+        Button nextBtn = findViewById(R.id.calNextMonthButton);
+        Button uncheckAllBtn = findViewById(R.id.calBtnUncheckAll);
+        Button applyBtn = findViewById(R.id.calBtnApply);
+
+        // Apply UI Scale to dialog elements
+        monthYearTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16 * uiScale);
+        uncheckAllBtn.setTextSize(TypedValue.COMPLEX_UNIT_SP, 11 * uiScale);
+        applyBtn.setTextSize(TypedValue.COMPLEX_UNIT_SP, 11 * uiScale);
+
+        // Apply theme to dialog buttons
+        ThemeHelper.applyColorToButton(applyBtn, AppSettings.getButtonColor(getContext()));
+
+        // Month Navigation
+        prevBtn.setOnClickListener(v -> {
+            currentDisplayCalendar.add(Calendar.MONTH, -1);
+            updateCalendar();
+        });
+
+        nextBtn.setOnClickListener(v -> {
+            currentDisplayCalendar.add(Calendar.MONTH, 1);
+            updateCalendar();
+        });
+
+        // Uncheck all days button
+        uncheckAllBtn.setOnClickListener(v -> {
+            selectedDates.clear();
+            dayAdapter.notifyDataSetChanged();
+            updateSelectedCountLabel();
+        });
+
+        // Apply filter button
+        applyBtn.setOnClickListener(v -> {
+            if (listener != null) {
+                listener.onFilterApplied(new HashSet<>(selectedDates));
+            }
+            dismiss();
+        });
+
+        daysRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 7));
+        updateCalendar();
+    }
+
+    private void updateCalendar() {
+        SimpleDateFormat sdf = new SimpleDateFormat("MMMM yyyy", Locale.getDefault());
+        monthYearTextView.setText(sdf.format(currentDisplayCalendar.getTime()));
+
+        // Calculate leading blanks (Monday-first: Mon=0 ... Sun=6)
+        Calendar temp = (Calendar) currentDisplayCalendar.clone();
+        temp.set(Calendar.DAY_OF_MONTH, 1);
+        int firstDayOfWeek = temp.get(Calendar.DAY_OF_WEEK); // Sun=1, Mon=2
+        int offset = (firstDayOfWeek == Calendar.SUNDAY) ? 6 : (firstDayOfWeek - Calendar.MONDAY);
+
+        int daysInMonth = currentDisplayCalendar.getActualMaximum(Calendar.DAY_OF_MONTH);
+
+        // Find max notes count in displayed month for proper gradient scaling
+        int maxNotes = 1;
+        int year = currentDisplayCalendar.get(Calendar.YEAR);
+        int month = currentDisplayCalendar.get(Calendar.MONTH) + 1;
+        for (int day = 1; day <= daysInMonth; day++) {
+            String dateKey = String.format(Locale.getDefault(), "%04d-%02d-%02d", year, month, day);
+            Integer count = notesCountPerDay.get(dateKey);
+            if (count != null && count > maxNotes) {
+                maxNotes = count;
+            }
+        }
+        this.maxNotesCountInMonth = maxNotes;
+
+        List<Integer> dayNumbers = new ArrayList<>();
+        for (int i = 0; i < offset; i++) {
+            dayNumbers.add(0); // empty cell placeholder
+        }
+        for (int day = 1; day <= daysInMonth; day++) {
+            dayNumbers.add(day);
+        }
+
+        dayAdapter = new CalendarDayAdapter(dayNumbers);
+        daysRecyclerView.setAdapter(dayAdapter);
+        updateSelectedCountLabel();
+    }
+
+    private void updateSelectedCountLabel() {
+        if (selectedDates.isEmpty()) {
+            selectedCountTextView.setText("No days selected (Showing all notes)");
+        } else {
+            selectedCountTextView.setText("Selected: " + selectedDates.size() + " day(s)");
+        }
+    }
+
+    // --- Grid Adapter for Days ---
+    private class CalendarDayAdapter extends RecyclerView.Adapter<CalendarDayAdapter.DayViewHolder> {
+        private final List<Integer> days;
+
+        public CalendarDayAdapter(List<Integer> days) {
+            this.days = days;
+        }
+
+        @NonNull
+        @Override
+        public DayViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_calendar_day, parent, false);
+            // Apply scale to cell height
+            ViewGroup.LayoutParams lp = view.getLayoutParams();
+            if (lp != null) {
+                float density = getContext().getResources().getDisplayMetrics().density;
+                lp.height = (int) (44 * density * uiScale);
+                view.setLayoutParams(lp);
+            }
+            return new DayViewHolder(view);
+        }
+
+        @Override
+        public void onBindViewHolder(@NonNull DayViewHolder holder, int position) {
+            int dayNumber = days.get(position);
+            if (dayNumber == 0) {
+                holder.root.setVisibility(View.INVISIBLE);
+                holder.root.setOnClickListener(null);
+                return;
+            }
+
+            holder.root.setVisibility(View.VISIBLE);
+            holder.tvDayNumber.setText(String.valueOf(dayNumber));
+            holder.tvDayNumber.setTextSize(TypedValue.COMPLEX_UNIT_SP, 13 * uiScale);
+
+            Calendar dayCal = (Calendar) currentDisplayCalendar.clone();
+            dayCal.set(Calendar.DAY_OF_MONTH, dayNumber);
+            boolean isSunday = (dayCal.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY);
+
+            // Sunday number MUST be dark red (#8B0000)
+            if (isSunday) {
+                holder.tvDayNumber.setTextColor(Color.parseColor("#8B0000"));
+                holder.tvDayNumber.setTypeface(null, Typeface.BOLD);
+            } else {
+                holder.tvDayNumber.setTextColor(Color.parseColor("#222222"));
+                holder.tvDayNumber.setTypeface(null, Typeface.NORMAL);
+            }
+
+            // Date string yyyy-MM-dd
+            int year = currentDisplayCalendar.get(Calendar.YEAR);
+            int month = currentDisplayCalendar.get(Calendar.MONTH) + 1;
+            String dateKey = String.format(Locale.getDefault(), "%04d-%02d-%02d", year, month, dayNumber);
+
+            // Note count heatmap calculation
+            int noteCount = 0;
+            if (notesCountPerDay.containsKey(dateKey)) {
+                noteCount = notesCountPerDay.get(dateKey);
+            }
+
+            int backgroundColor;
+            if (noteCount == 0) {
+                // White if none
+                backgroundColor = Color.WHITE;
+            } else {
+                // More intensive color as notes increase
+                float intensity = 0.25f + 0.75f * ((float) noteCount / Math.max(1, maxNotesCountInMonth));
+                backgroundColor = ColorUtils.blendARGB(Color.WHITE, heatmapBaseColor, Math.min(1.0f, intensity));
+            }
+
+            // Selection state
+            boolean isSelected = selectedDates.contains(dateKey);
+            GradientDrawable borderDrawable = new GradientDrawable();
+            borderDrawable.setColor(backgroundColor);
+
+            float density = getContext().getResources().getDisplayMetrics().density;
+            if (isSelected) {
+                borderDrawable.setStroke((int) (2.5f * density), Color.parseColor("#1565C0"));
+                holder.ivCheck.setVisibility(View.VISIBLE);
+            } else {
+                borderDrawable.setStroke((int) (0.5f * density), Color.parseColor("#E0E0E0"));
+                holder.ivCheck.setVisibility(View.GONE);
+            }
+            holder.root.setBackground(borderDrawable);
+
+            // Toggle date selection on click
+            holder.root.setOnClickListener(v -> {
+                if (selectedDates.contains(dateKey)) {
+                    selectedDates.remove(dateKey);
+                } else {
+                    selectedDates.add(dateKey);
+                }
+                notifyItemChanged(position);
+                updateSelectedCountLabel();
+            });
+        }
+
+        @Override
+        public int getItemCount() {
+            return days.size();
+        }
+
+        class DayViewHolder extends RecyclerView.ViewHolder {
+            FrameLayout root;
+            TextView tvDayNumber;
+            TextView ivCheck;
+
+            public DayViewHolder(@NonNull View itemView) {
+                super(itemView);
+                root = itemView.findViewById(R.id.calDayRoot);
+                tvDayNumber = itemView.findViewById(R.id.calDayNumberTextView);
+                ivCheck = itemView.findViewById(R.id.calDayCheckIndicator);
+            }
+        }
+    }
+}
+
+8. Updated: notes_view_layout.xml
+
+Add the Date Filter row in notes_view_layout.xml.
+
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Notes"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginEnd="16dp"
+            android:text="Add" />
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <LinearLayout
+        android:id="@+id/filterLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/toolbar2"
+        android:orientation="vertical"
+        android:padding="8dp"
+        android:background="#F5F5F5">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Filter list by:"
+            android:textStyle="bold"
+            android:textSize="12sp"
+            android:textColor="#555555"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="3">
+
+            <EditText
+                android:id="@+id/filterSubtitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="Subtitle"
+                android:textSize="12sp"
+                android:inputType="text" />
+
+            <!-- Multichoice Category Spinner Dropdown -->
+            <Spinner
+                android:id="@+id/filterCategorySpinner"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                style="?android:attr/spinnerStyle"
+                android:text="All Categories"
+                android:textSize="11sp"
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:layout_gravity="center_vertical" />
+
+            <!-- Urgency ComboBox -->
+            <Spinner
+                android:id="@+id/filterUrgentlySpinner"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_gravity="center_vertical" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="4dp">
+
+            <CheckBox
+                android:id="@+id/filterCbLearning"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Learning"
+                android:textSize="12sp" />
+
+            <CheckBox
+                android:id="@+id/filterCbGeneral"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="General"
+                android:textSize="12sp" />
+
+            <CheckBox
+                android:id="@+id/filterCbToday"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Today"
+                android:textSize="12sp" />
+
+            <CheckBox
+                android:id="@+id/filterCbToBuy"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="To Buy"
+                android:textSize="12sp" />
+
+        </LinearLayout>
+
+        <!-- Date Creation Filter Row -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginTop="4dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Date Filter:"
+                android:textStyle="bold"
+                android:textSize="12sp"
+                android:textColor="#555555"/>
+
+            <Button
+                android:id="@+id/btnCalendarFilter"
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="0dp"
+                android:layout_height="36dp"
+                android:layout_weight="1"
+                android:layout_marginStart="8dp"
+                android:text="📅 Choose Dates (All)"
+                android:textSize="11sp"/>
+
+            <Button
+                android:id="@+id/btnClearDateFilter"
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="36dp"
+                android:layout_marginStart="4dp"
+                android:text="✕ Clear"
+                android:textSize="11sp"
+                android:visibility="gone"/>
+        </LinearLayout>
+
+        <!-- Toggle Section Visibilities -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="4dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Hide Section:"
+                android:textStyle="bold"
+                android:textSize="12sp"
+                android:textColor="#555555"
+                android:layout_gravity="center_vertical"/>
+
+            <CheckBox
+                android:id="@+id/hideCbSection1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="1"
+                android:textSize="12sp" />
+
+            <CheckBox
+                android:id="@+id/hideCbSection2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2"
+                android:textSize="12sp" />
+
+            <CheckBox
+                android:id="@+id/hideCbSection3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="3"
+                android:textSize="12sp" />
+
+            <CheckBox
+                android:id="@+id/hideCbSection4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="4"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <!-- Sorting Section -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="4dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Sort by:"
+                android:textStyle="bold"
+                android:textSize="12sp"
+                android:textColor="#555555"
+                android:layout_gravity="center_vertical"/>
+
+            <Spinner
+                android:id="@+id/sortSpinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="vertical"
+        android:layout_below="@id/filterLayout"/>
+</RelativeLayout>
+
+9. Updated: MyAdapter.java
+
+Support date filtering in MyAdapter.filter():
+
+package com.lukaszjag.diet_tracker_android.tools.notes_tool;
+
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.TextView;
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.lukaszjag.diet_tracker_android.R;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Set;
+
+public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
+
+    public static final int SORT_NONE = 0;
+    public static final int SORT_DATE_NEWEST = 1;
+    public static final int SORT_DATE_OLDEST = 2;
+    public static final int SORT_URGENCY_HIGH = 3;
+    public static final int SORT_URGENCY_LOW = 4;
+
+    public interface OnItemClickListener {
+        void onItemClick(int position, Note note);
+    }
+
+    private List<Note> noteList;
+    private List<Note> originalList;
+    private OnItemClickListener listener;
+
+    private boolean hideSection1 = false;
+    private boolean hideSection2 = false;
+    private boolean hideSection3 = false;
+    private boolean hideSection4 = false;
+
+    private int sortCriteria = SORT_NONE;
+
+    public MyAdapter() {
+        this.noteList = new ArrayList<>();
+        this.originalList = new ArrayList<>();
+    }
+
+    public List<Note> getOriginalList() { return originalList; }
+
+    public void setOnItemClickListener(OnItemClickListener listener) { this.listener = listener; }
+
+    public void setSectionVisibilities(boolean hideS1, boolean hideS2, boolean hideS3, boolean hideS4) {
+        this.hideSection1 = hideS1;
+        this.hideSection2 = hideS2;
+        this.hideSection3 = hideS3;
+        this.hideSection4 = hideS4;
+        notifyDataSetChanged();
+    }
+
+    public void setSortCriteria(int criteria) {
+        this.sortCriteria = criteria;
+        applySort();
+        notifyDataSetChanged();
+    }
+
+    public void addItem(Note note) {
+        noteList.add(note);
+        originalList.add(note);
+        applySort();
+        notifyItemInserted(noteList.indexOf(note));
+    }
+
+    public void setItem(int position, Note note) {
+        if (position >= 0 && position < noteList.size()) {
+            Note oldNote = noteList.get(position);
+            int origIdx = originalList.indexOf(oldNote);
+            if (origIdx != -1) originalList.set(origIdx, note);
+            noteList.set(position, note);
+            applySort();
+            notifyDataSetChanged();
+        }
+    }
+
+    public void deleteItem(int position) {
+        if (position >= 0 && position < noteList.size()) {
+            Note note = noteList.get(position);
+            originalList.remove(note);
+            noteList.remove(position);
+            notifyItemRemoved(position);
+            notifyItemRangeChanged(position, noteList.size());
+        }
+    }
+
+    private void applySort() {
+        if (sortCriteria == SORT_NONE) return;
+        Collections.sort(noteList, (n1, n2) -> {
+            switch (sortCriteria) {
+                case SORT_DATE_NEWEST:
+                    return (n2.getDateCreated() != null ? n2.getDateCreated() : "")
+                            .compareTo(n1.getDateCreated() != null ? n1.getDateCreated() : "");
+                case SORT_DATE_OLDEST:
+                    return (n1.getDateCreated() != null ? n1.getDateCreated() : "")
+                            .compareTo(n2.getDateCreated() != null ? n2.getDateCreated() : "");
+                case SORT_URGENCY_HIGH:
+                    return Integer.compare(getUrgencyWeight(n2), getUrgencyWeight(n1));
+                case SORT_URGENCY_LOW:
+                    return Integer.compare(getUrgencyWeight(n1), getUrgencyWeight(n2));
+                default:
+                    return 0;
+            }
+        });
+    }
+
+    private int getUrgencyWeight(Note note) {
+        if (note == null) return 0;
+        int idx = note.getUrgentScaleEnglish().indexOf(note.getNoteUrgently());
+        return (idx != -1) ? idx : 0;
+    }
+
+    public void filter(String subtitle, String selectedMainCategory, String selectedSubcategory,
+                       boolean showLearningOnly, boolean showGeneralOnly, boolean showTodayOnly, boolean showToBuyOnly) {
+        filter(subtitle, selectedMainCategory, selectedSubcategory, showLearningOnly, showGeneralOnly, showTodayOnly, showToBuyOnly, "ALL", null);
+    }
+
+    public void filter(String subtitle, String selectedMainCategory, String selectedSubcategory,
+                       boolean showLearningOnly, boolean showGeneralOnly, boolean showTodayOnly, boolean showToBuyOnly,
+                       Set<String> selectedDates) {
+        filter(subtitle, selectedMainCategory, selectedSubcategory, showLearningOnly, showGeneralOnly, showTodayOnly, showToBuyOnly, "ALL", selectedDates);
+    }
+
+    public void filter(String subtitle, String selectedMainCategory, String selectedSubcategory,
+                       boolean showLearningOnly, boolean showGeneralOnly, boolean showTodayOnly, boolean showToBuyOnly,
+                       String statusFilter) {
+        filter(subtitle, selectedMainCategory, selectedSubcategory, showLearningOnly, showGeneralOnly, showTodayOnly, showToBuyOnly, statusFilter, null);
+    }
+
+    public void filter(String subtitle, String selectedMainCategory, String selectedSubcategory,
+                       boolean showLearningOnly, boolean showGeneralOnly, boolean showTodayOnly, boolean showToBuyOnly,
+                       String statusFilter, Set<String> selectedDates) {
+        noteList.clear();
+        String qSub = (subtitle != null) ? subtitle.toLowerCase().trim() : "";
+        boolean isAllCategories = (selectedMainCategory == null || selectedMainCategory.equals("All Categories"));
+        boolean isAllSubcategories = (selectedSubcategory == null || selectedSubcategory.equals("All Subcategories"));
+
+        boolean hasDateFilter = (selectedDates != null && !selectedDates.isEmpty());
+
+        for (Note note : originalList) {
+            boolean matchSub = qSub.isEmpty() || (note.getNoteSubtitle() != null && note.getNoteSubtitle().toLowerCase().contains(qSub));
+
+            boolean matchCat = true;
+            if (!isAllCategories) {
+                matchCat = note.getNoteCategory() != null && note.getNoteCategory().equalsIgnoreCase(selectedMainCategory.trim());
+                if (matchCat && !isAllSubcategories) {
+                    matchCat = note.getNoteSubcategory() != null && note.getNoteSubcategory().equalsIgnoreCase(selectedSubcategory.trim());
+                }
+            }
+
+            boolean matchLearning = !showLearningOnly || note.isLearning();
+            boolean matchGeneral = !showGeneralOnly || note.isGeneralToDo();
+            boolean matchToday = !showTodayOnly || note.isTodayTask();
+            boolean matchToBuy = !showToBuyOnly || note.isToBuyTask();
+
+            // Status filter for history
+            boolean matchStatus = true;
+            if ("DONE".equalsIgnoreCase(statusFilter)) {
+                matchStatus = note.isDone();
+            } else if ("DELETED".equalsIgnoreCase(statusFilter)) {
+                matchStatus = note.isDeleted();
+            }
+
+            // Filter by creation date
+            boolean matchDate = true;
+            if (hasDateFilter) {
+                String created = note.getDateCreated();
+                if (created != null && created.length() >= 10) {
+                    created = created.substring(0, 10);
+                }
+                matchDate = (created != null && selectedDates.contains(created));
+            }
+
+            if (matchSub && matchCat && matchLearning && matchGeneral && matchToday && matchToBuy && matchStatus && matchDate) {
+                noteList.add(note);
+            }
+        }
+        applySort();
+        notifyDataSetChanged();
+    }
+
+    @NonNull
+    @Override
+    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_layout, parent, false);
+        return new MyViewHolder(view);
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
+        Note currentItem = noteList.get(position);
+
+        holder.section1.setVisibility(hideSection1 ? View.GONE : View.VISIBLE);
+        holder.section2.setVisibility(hideSection2 ? View.GONE : View.VISIBLE);
+        holder.section3.setVisibility(hideSection3 ? View.GONE : View.VISIBLE);
+        holder.section4.setVisibility(hideSection4 ? View.GONE : View.VISIBLE);
+
+        String titlePrefix = "";
+        holder.tv1.setPaintFlags(holder.tv1.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
+        holder.tv1.setTextColor(Color.BLACK);
+
+        if (currentItem.isDeleted()) {
+            titlePrefix = "[DELETED] ";
+            holder.tv1.setTextColor(Color.RED);
+            holder.tv1.setPaintFlags(holder.tv1.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+        } else if (currentItem.isDone()) {
+            titlePrefix = "[DONE ✓] ";
+            holder.tv1.setTextColor(Color.parseColor("#2E7D32"));
+        }
+
+        holder.tv1.setText(titlePrefix + currentItem.getNoteTitle());
+        holder.tv2.setText(currentItem.getNoteSubtitle());
+        holder.tv3.setText(currentItem.getNoteDescription());
+
+        String catDisplay = (currentItem.getNoteCategory() != null && !currentItem.getNoteCategory().isEmpty())
+                ? currentItem.getNoteCategory() : "-";
+        if (currentItem.getNoteSubcategory() != null && !currentItem.getNoteSubcategory().trim().isEmpty()) {
+            catDisplay += " / " + currentItem.getNoteSubcategory();
+        }
+        holder.tvCategory.setText("Category: " + catDisplay);
+
+        holder.tvUrgently.setText("Urgently: " + (currentItem.getNoteUrgently() != null ? currentItem.getNoteUrgently() : "-"));
+
+        holder.cbIsLearning.setChecked(currentItem.isLearning());
+        holder.cbIsGeneralToDo.setChecked(currentItem.isGeneralToDo());
+        holder.cbIsTodayTask.setChecked(currentItem.isTodayTask());
+        holder.cbIsToBuy.setChecked(currentItem.isToBuyTask());
+
+        String createdDate = currentItem.getDateCreated() != null ? currentItem.getDateCreated() : "-";
+        String deadlineDate = (currentItem.getDateDeadline() != null && !currentItem.getDateDeadline().isEmpty())
+                ? currentItem.getDateDeadline() : "None";
+        holder.tvDates.setText("Created: " + createdDate + " | Deadline: " + deadlineDate);
+        holder.tvDaysSince.setText(currentItem.getDaysSinceCreation() + " days since create");
+
+        holder.itemView.setOnClickListener(v -> {
+            int pos = holder.getAdapterPosition();
+            if (listener != null && pos != RecyclerView.NO_POSITION) listener.onItemClick(pos, noteList.get(pos));
+        });
+    }
+
+    @Override
+    public int getItemCount() { return noteList.size(); }
+
+    public static class MyViewHolder extends RecyclerView.ViewHolder {
+        TextView tv1, tv2, tv3, tvCategory, tvUrgently, tvDates, tvDaysSince;
+        CheckBox cbIsLearning, cbIsGeneralToDo, cbIsTodayTask, cbIsToBuy;
+        View section1, section2, section3, section4;
+
+        public MyViewHolder(@NonNull View itemView) {
+            super(itemView);
+            tv1 = itemView.findViewById(R.id.textView1);
+            tv2 = itemView.findViewById(R.id.textView2);
+            tv3 = itemView.findViewById(R.id.textView3);
+            tvCategory = itemView.findViewById(R.id.tvCategory);
+            tvUrgently = itemView.findViewById(R.id.tvUrgently);
+            tvDates = itemView.findViewById(R.id.tvDates);
+            tvDaysSince = itemView.findViewById(R.id.tvDaysSince);
+            cbIsLearning = itemView.findViewById(R.id.cbIsLearning);
+            cbIsGeneralToDo = itemView.findViewById(R.id.cbIsGeneralToDo);
+            cbIsTodayTask = itemView.findViewById(R.id.cbIsTodayTask);
+            cbIsToBuy = itemView.findViewById(R.id.cbIsToBuy);
+
+            section1 = itemView.findViewById(R.id.section1);
+            section2 = itemView.findViewById(R.id.section2);
+            section3 = itemView.findViewById(R.id.section3);
+            section4 = itemView.findViewById(R.id.section4);
+        }
+    }
+
+    public void clearAll() {
+        this.noteList.clear();
+        this.originalList.clear();
+        notifyDataSetChanged();
+    }
+}
+
+10. Updated: Notes.java
+
+Wire the calendar dialog, update UI filter indicators, and apply button theme.
+
+package com.lukaszjag.diet_tracker_android.gui.notes;
+
+import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.Spinner;
+import android.widget.Toast;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.lukaszjag.diet_tracker_android.R;
+import com.lukaszjag.diet_tracker_android.gui.notes.calendar.NotesCalendarDialog;
+import com.lukaszjag.diet_tracker_android.tools.cloud_data_tools.AzureDataCallback;
+import com.lukaszjag.diet_tracker_android.tools.cloud_data_tools.GetFromSQLDatabase;
+import com.lukaszjag.diet_tracker_android.tools.notes_tool.MyAdapter;
+import com.lukaszjag.diet_tracker_android.tools.notes_tool.Note;
+import com.lukaszjag.diet_tracker_android.tools.notes_tool.categories.NoteCategoryData;
+import com.lukaszjag.diet_tracker_android.tools.sql_tools.QueryMaker;
+import com.lukaszjag.diet_tracker_android.tools.sql_tools.RowInTable;
+import com.lukaszjag.diet_tracker_android.tools.theme.ThemeHelper;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import java.util.Set;
+
+public class Notes extends AppCompatActivity {
+    private EditText filterSubtitle;
+    private Spinner filterCategorySpinner;
+    private Spinner filterUrgentlySpinner;
+    private CheckBox filterCbLearning, filterCbGeneral, filterCbToday, filterCbToBuy;
+    private Button btnCalendarFilter;
+    private Button btnClearDateFilter;
+    private RecyclerView recyclerView;
+    private MyAdapter adapter;
+
+    // Set of selected creation dates (yyyy-MM-dd)
+    private final Set<String> selectedDates = new HashSet<>();
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.notes_view_layout);
+
+        filterSubtitle = findViewById(R.id.filterSubtitle);
+        filterCategorySpinner = findViewById(R.id.filterCategorySpinner);
+        filterUrgentlySpinner = findViewById(R.id.filterUrgentlySpinner);
+        filterCbLearning = findViewById(R.id.filterCbLearning);
+        filterCbGeneral = findViewById(R.id.filterCbGeneral);
+        filterCbToday = findViewById(R.id.filterCbToday);
+        filterCbToBuy = findViewById(R.id.filterCbToBuy);
+
+        btnCalendarFilter = findViewById(R.id.btnCalendarFilter);
+        btnClearDateFilter = findViewById(R.id.btnClearDateFilter);
+
+        recyclerView = findViewById(R.id.recyclerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        adapter = new MyAdapter();
+        recyclerView.setAdapter(adapter);
+
+        findViewById(R.id.button).setOnClickListener(v -> showNoteDialog(null));
+        adapter.setOnItemClickListener((position, note) -> showNoteDialog(note));
+
+        setupCalendarFilterButton();
+        setupVisibilityListeners();
+        setupFilterSpinners();
+        setupFilterListeners();
+        fetchNotesFromAzure();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        ThemeHelper.applyButtonTheme(this);
+    }
+
+    private void setupCalendarFilterButton() {
+        btnCalendarFilter.setOnClickListener(v -> showCalendarDialog());
+
+        btnClearDateFilter.setOnClickListener(v -> {
+            selectedDates.clear();
+            updateDateFilterButtonUI();
+            applyFilters();
+        });
+    }
+
+    private void showCalendarDialog() {
+        // Build note count map per creation date from loaded notes
+        Map<String, Integer> countMap = new HashMap<>();
+        for (Note note : adapter.getOriginalList()) {
+            String created = note.getDateCreated();
+            if (created != null && created.length() >= 10) {
+                created = created.substring(0, 10);
+                countMap.put(created, countMap.getOrDefault(created, 0) + 1);
+            }
+        }
+
+        NotesCalendarDialog dialog = new NotesCalendarDialog(this, countMap, selectedDates, newSelectedDates -> {
+            selectedDates.clear();
+            selectedDates.addAll(newSelectedDates);
+            updateDateFilterButtonUI();
+            applyFilters();
+        });
+        dialog.show();
+    }
+
+    private void updateDateFilterButtonUI() {
+        if (selectedDates.isEmpty()) {
+            btnCalendarFilter.setText("📅 Choose Dates (All)");
+            btnClearDateFilter.setVisibility(View.GONE);
+        } else {
+            btnCalendarFilter.setText("📅 Dates: " + selectedDates.size() + " selected");
+            btnClearDateFilter.setVisibility(View.VISIBLE);
+        }
+    }
+
+    private void setupFilterSpinners() {
+        List<String> mainCategoriesFilter = new ArrayList<>();
+        mainCategoriesFilter.add("All Categories");
+        mainCategoriesFilter.addAll(NoteCategoryData.getMainCategories());
+
+        ArrayAdapter<String> mainCatAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, mainCategoriesFilter);
+        mainCatAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        filterCategorySpinner.setAdapter(mainCatAdapter);
+
+        updateSubcategoryFilterSpinner("All Categories");
+    }
+
+    private void updateSubcategoryFilterSpinner(String mainCategory) {
+        List<String> subcategoriesFilter = new ArrayList<>();
+        subcategoriesFilter.add("All Subcategories");
+
+        if (mainCategory != null && !mainCategory.equals("All Categories")) {
+            List<String> subs = NoteCategoryData.getSubcategories(mainCategory);
+            if (subs != null && !subs.isEmpty()) {
+                subcategoriesFilter.addAll(subs);
+            }
+        }
+
+        ArrayAdapter<String> subcatAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, subcategoriesFilter);
+        subcatAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        filterUrgentlySpinner.setAdapter(subcatAdapter);
+    }
+
+    private void fetchNotesFromAzure() {
+        String query = QueryMaker.getAllNotesQuery();
+        GetFromSQLDatabase.runAzureQueryAIChat(query, new AzureDataCallback() {
+            @Override
+            public void onSuccess(ArrayList<RowInTable> resultTable) {
+                runOnUiThread(() -> {
+                    adapter.clearAll();
+                    for (RowInTable row : resultTable) {
+                        String subcat = row.getValue("subcategory");
+                        if (subcat == null) subcat = "";
+
+                        boolean isDone = "true".equalsIgnoreCase(row.getValue("is_done")) || "1".equals(row.getValue("is_done"));
+                        boolean isDeleted = "true".equalsIgnoreCase(row.getValue("is_deleted")) || "1".equals(row.getValue("is_deleted"));
+
+                        Note note = new Note(
+                                Long.parseLong(row.getValue("id")),
+                                row.getValue("title"),
+                                row.getValue("subtitle"),
+                                row.getValue("description"),
+                                row.getValue("category"),
+                                subcat,
+                                row.getValue("is_urgently"),
+                                "true".equals(row.getValue("is_learning")) || "1".equals(row.getValue("is_learning")),
+                                "true".equals(row.getValue("is_general_to_do")) || "1".equals(row.getValue("is_general_to_do")),
+                                "true".equals(row.getValue("is_today_task")) || "1".equals(row.getValue("is_today_task")),
+                                "true".equals(row.getValue("is_to_buy_task")) || "1".equals(row.getValue("is_to_buy_task")),
+                                isDone,
+                                isDeleted,
+                                null,
+                                row.getValue("date_created"),
+                                row.getValue("date_deadline")
+                        );
+                        adapter.addItem(note);
+                    }
+                    applyFilters();
+                });
+            }
+
+            @Override
+            public void onFailure(String errorMessage) {
+                runOnUiThread(() -> Toast.makeText(Notes.this, "Failed: " + errorMessage, Toast.LENGTH_SHORT).show());
+            }
+        });
+    }
+
+    private void showNoteDialog(Note note) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        View dialogView = getLayoutInflater().inflate(R.layout.dialog_note, null);
+        builder.setView(dialogView);
+
+        final EditText title = dialogView.findViewById(R.id.dialogTitle);
+        final EditText subtitle = dialogView.findViewById(R.id.dialogSubtitle);
+        final EditText desc = dialogView.findViewById(R.id.dialogDescription);
+        final Spinner spinnerCategory = dialogView.findViewById(R.id.dialogSpinnerCategory);
+        final Spinner spinnerSubcategory = dialogView.findViewById(R.id.dialogSpinnerSubcategory);
+        final CheckBox cbLearn = dialogView.findViewById(R.id.dialogCbLearning);
+        final CheckBox cbGen = dialogView.findViewById(R.id.dialogCbGeneral);
+        final CheckBox cbToday = dialogView.findViewById(R.id.dialogCbToday);
+        final CheckBox cbBuy = dialogView.findViewById(R.id.dialogCbToBuy);
+
+        final LinearLayout actionButtonsLayout = dialogView.findViewById(R.id.dialogActionButtonsLayout);
+        final Button btnMarkAsDone = dialogView.findViewById(R.id.dialogBtnMarkAsDone);
+        final Button btnDelete = dialogView.findViewById(R.id.dialogBtnDelete);
+
+        boolean isEditMode = (note != null);
+
+        List<String> mainCategories = NoteCategoryData.getMainCategories();
+        ArrayAdapter<String> catAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, mainCategories);
+        catAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerCategory.setAdapter(catAdapter);
+
+        spinnerCategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String chosenMain = mainCategories.get(position);
+                List<String> subcategories = NoteCategoryData.getSubcategories(chosenMain);
+                List<String> displaySubs = new ArrayList<>();
+                if (subcategories.isEmpty()) {
+                    displaySubs.add("None");
+                } else {
+                    displaySubs.addAll(subcategories);
+                }
+
+                ArrayAdapter<String> subAdapter = new ArrayAdapter<>(Notes.this, android.R.layout.simple_spinner_item, displaySubs);
+                subAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spinnerSubcategory.setAdapter(subAdapter);
+
+                if (isEditMode && note.getNoteSubcategory() != null) {
+                    int subIndex = displaySubs.indexOf(note.getNoteSubcategory());
+                    if (subIndex != -1) {
+                        spinnerSubcategory.setSelection(subIndex);
+                    }
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {}
+        });
+
+        if (isEditMode) {
+            actionButtonsLayout.setVisibility(View.VISIBLE);
+
+            title.setText(note.getNoteTitle());
+            subtitle.setText(note.getNoteSubtitle());
+            desc.setText(note.getNoteDescription());
+
+            if (note.getNoteCategory() != null) {
+                int catIndex = mainCategories.indexOf(note.getNoteCategory());
+                if (catIndex != -1) {
+                    spinnerCategory.setSelection(catIndex);
+                }
+            }
+
+            cbLearn.setChecked(note.isLearning());
+            cbGen.setChecked(note.isGeneralToDo());
+            cbToday.setChecked(note.isTodayTask());
+            cbBuy.setChecked(note.isToBuyTask());
+        }
+
+        AlertDialog dialog = builder.create();
+
+        if (isEditMode) {
+            btnMarkAsDone.setOnClickListener(v -> {
+                String markDoneQuery = QueryMaker.markNoteAsDoneQuery(note.getId());
+                GetFromSQLDatabase.runAzureQueryAIChat(markDoneQuery, new AzureDataCallback() {
+                    @Override
+                    public void onSuccess(ArrayList<RowInTable> resultTable) {
+                        runOnUiThread(() -> {
+                            Toast.makeText(Notes.this, "Marked as done!", Toast.LENGTH_SHORT).show();
+                            dialog.dismiss();
+                            fetchNotesFromAzure();
+                        });
+                    }
+
+                    @Override
+                    public void onFailure(String errorMessage) {
+                        runOnUiThread(() -> Toast.makeText(Notes.this, "Error: " + errorMessage, Toast.LENGTH_SHORT).show());
+                    }
+                });
+            });
+
+            btnDelete.setOnClickListener(v -> {
+                new AlertDialog.Builder(Notes.this)
+                        .setTitle("Delete Note")
+                        .setMessage("Move this note to deleted history?")
+                        .setPositiveButton("Yes, Delete", (d, w) -> {
+                            String deleteQuery = QueryMaker.markNoteAsDeletedQuery(note.getId());
+                            GetFromSQLDatabase.runAzureQueryAIChat(deleteQuery, new AzureDataCallback() {
+                                @Override
+                                public void onSuccess(ArrayList<RowInTable> resultTable) {
+                                    runOnUiThread(() -> {
+                                        Toast.makeText(Notes.this, "Note deleted!", Toast.LENGTH_SHORT).show();
+                                        dialog.dismiss();
+                                        fetchNotesFromAzure();
+                                    });
+                                }
+
+                                @Override
+                                public void onFailure(String errorMessage) {
+                                    runOnUiThread(() -> Toast.makeText(Notes.this, "Error: " + errorMessage, Toast.LENGTH_SHORT).show());
+                                }
+                            });
+                        })
+                        .setNegativeButton("Cancel", null)
+                        .show();
+            });
+        }
+
+        builder.setPositiveButton(isEditMode ? "Update" : "Create", (d, which) -> {
+            String selectedMain = spinnerCategory.getSelectedItem() != null ?
+                    spinnerCategory.getSelectedItem().toString() : "";
+            String selectedSub = spinnerSubcategory.getSelectedItem() != null ?
+                    spinnerSubcategory.getSelectedItem().toString() : "";
+            if ("None".equals(selectedSub)) {
+                selectedSub = "";
+            }
+
+            String q;
+            if (isEditMode) {
+                q = QueryMaker.updateNoteQuery(
+                        note.getId(),
+                        title.getText().toString(),
+                        subtitle.getText().toString(),
+                        desc.getText().toString(),
+                        selectedMain,
+                        selectedSub,
+                        false,
+                        cbLearn.isChecked(),
+                        cbGen.isChecked(),
+                        cbToday.isChecked(),
+                        cbBuy.isChecked(),
+                        null
+                );
+            } else {
+                String currentDate = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
+                q = QueryMaker.insertNoteQuery(
+                        title.getText().toString(),
+                        subtitle.getText().toString(),
+                        desc.getText().toString(),
+                        selectedMain,
+                        selectedSub,
+                        false,
+                        cbLearn.isChecked(),
+                        cbGen.isChecked(),
+                        cbToday.isChecked(),
+                        cbBuy.isChecked(),
+                        currentDate,
+                        null
+                );
+            }
+
+            GetFromSQLDatabase.runAzureQueryAIChat(q, new AzureDataCallback() {
+                @Override public void onSuccess(ArrayList<RowInTable> res) {
+                    runOnUiThread(() -> {
+                        Toast.makeText(Notes.this, isEditMode ? "Updated!" : "Saved!", Toast.LENGTH_SHORT).show();
+                        fetchNotesFromAzure();
+                    });
+                }
+                @Override public void onFailure(String err) {
+                    runOnUiThread(() -> Toast.makeText(Notes.this, "Error: " + err, Toast.LENGTH_SHORT).show());
+                }
+            });
+        });
+
+        builder.setNegativeButton("Cancel", null);
+        builder.show();
+    }
+
+    private void setupVisibilityListeners() {
+        CheckBox cb1 = findViewById(R.id.hideCbSection1);
+        CheckBox cb2 = findViewById(R.id.hideCbSection2);
+        CheckBox cb3 = findViewById(R.id.hideCbSection3);
+        CheckBox cb4 = findViewById(R.id.hideCbSection4);
+
+        android.widget.CompoundButton.OnCheckedChangeListener listener = (buttonView, isChecked) -> {
+            adapter.setSectionVisibilities(
+                    cb1.isChecked(),
+                    cb2.isChecked(),
+                    cb3.isChecked(),
+                    cb4.isChecked()
+            );
+        };
+
+        cb1.setOnCheckedChangeListener(listener);
+        cb2.setOnCheckedChangeListener(listener);
+        cb3.setOnCheckedChangeListener(listener);
+        cb4.setOnCheckedChangeListener(listener);
+    }
+
+    private void setupFilterListeners() {
+        filterSubtitle.addTextChangedListener(new android.text.TextWatcher() {
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            public void onTextChanged(CharSequence s, int start, int before, int count) { applyFilters(); }
+            public void afterTextChanged(android.text.Editable s) {}
+        });
+
+        filterCategorySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String selectedMainCat = parent.getItemAtPosition(position).toString();
+                updateSubcategoryFilterSpinner(selectedMainCat);
+                applyFilters();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {}
+        });
+
+        filterUrgentlySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                applyFilters();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {}
+        });
+
+        android.widget.CompoundButton.OnCheckedChangeListener cbListener = (buttonView, isChecked) -> applyFilters();
+        filterCbLearning.setOnCheckedChangeListener(cbListener);
+        filterCbGeneral.setOnCheckedChangeListener(cbListener);
+        filterCbToday.setOnCheckedChangeListener(cbListener);
+        filterCbToBuy.setOnCheckedChangeListener(cbListener);
+    }
+
+    private void applyFilters() {
+        String subtitle = filterSubtitle.getText().toString();
+
+        String selectedCat = filterCategorySpinner.getSelectedItem() != null ?
+                filterCategorySpinner.getSelectedItem().toString() : "All Categories";
+
+        String selectedSubcat = filterUrgentlySpinner.getSelectedItem() != null ?
+                filterUrgentlySpinner.getSelectedItem().toString() : "All Subcategories";
+
+        // Combined filter including date selection
+        adapter.filter(
+                subtitle,
+                selectedCat,
+                selectedSubcat,
+                filterCbLearning.isChecked(),
+                filterCbGeneral.isChecked(),
+                filterCbToday.isChecked(),
+                filterCbToBuy.isChecked(),
+                selectedDates
+        );
+    }
+}
+
+11. Updated: main_window.xml
+
+Add the Settings button to the main window.
+
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/headerTitle"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:background="#4253a6"
+        android:text="Welcome to Diet tracker"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:gravity="center_vertical"
+        android:paddingStart="16dp"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/addMealButton"
+        android:layout_width="160dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:background="@drawable/add_meal_button"
+        android:text="Add meal"
+        app:backgroundTint="@null"
+        app:layout_constraintTop_toBottomOf="@id/headerTitle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <Button
+        android:id="@+id/getDayDataButton"
+        android:layout_width="160dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/get_day_data"
+        android:text="Get day data"
+        app:backgroundTint="@null"
+        app:layout_constraintTop_toBottomOf="@+id/addMealButton"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <Button
+        android:id="@+id/noteTaskButtonButton"
+        android:layout_width="160dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/note_task_button"
+        android:text="Note - tasks"
+        app:backgroundTint="@null"
+        app:layout_constraintTop_toBottomOf="@+id/getDayDataButton"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <Button
+        android:id="@+id/notesHistoryButton"
+        android:layout_width="160dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/buttons_main"
+        android:text="Notes History"
+        app:backgroundTint="@null"
+        app:layout_constraintTop_toBottomOf="@+id/noteTaskButtonButton"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <Button
+        android:id="@+id/monthlyStatsButton"
+        android:layout_width="160dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/buttons_main"
+        android:text="Monthly stats"
+        app:backgroundTint="@null"
+        app:layout_constraintTop_toBottomOf="@+id/notesHistoryButton"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Button to access app settings -->
+    <Button
+        android:id="@+id/appSettingsButton"
+        android:layout_width="160dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/buttons_main"
+        android:text="Settings ⚙"
+        app:backgroundTint="@null"
+        app:layout_constraintTop_toBottomOf="@+id/monthlyStatsButton"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+12. Updated: MainActivity.java
+
+Wire the Settings button, apply button color on resume, and wire options menu.
+
+package com.lukaszjag.diet_tracker_android;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.widget.Button;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.lukaszjag.diet_tracker_android.gui.diet.GetProductData;
+import com.lukaszjag.diet_tracker_android.gui.diet.day_data_view.DayData;
+import com.lukaszjag.diet_tracker_android.gui.notes.Notes;
+import com.lukaszjag.diet_tracker_android.gui.notes.NotesHistory;
+import com.lukaszjag.diet_tracker_android.gui.settings.AppSettingsActivity;
+import com.lukaszjag.diet_tracker_android.tools.theme.ThemeHelper;
+
+public class MainActivity extends AppCompatActivity {
+
+    private Button addMealButton;
+    private Button getDayDataButton;
+    private Button noteTasksButton;
+    private Button notesHistoryButton;
+    private Button appSettingsButton;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.main_window);
+
+        setupUIComponents();
+        addListeners();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // Dynamically apply background color of all UI buttons
+        ThemeHelper.applyButtonTheme(this);
+    }
+
+    private void setupUIComponents() {
+        addMealButton = findViewById(R.id.addMealButton);
+        getDayDataButton = findViewById(R.id.getDayDataButton);
+        noteTasksButton = findViewById(R.id.noteTaskButtonButton);
+        notesHistoryButton = findViewById(R.id.notesHistoryButton);
+        appSettingsButton = findViewById(R.id.appSettingsButton);
+    }
+
+    private void addListeners() {
+        noteTasksButton.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, Notes.class);
+            startActivity(intent);
+        });
+
+        notesHistoryButton.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, NotesHistory.class);
+            startActivity(intent);
+        });
+
+        addMealButton.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, GetProductData.class);
+            startActivity(intent);
+        });
+
+        getDayDataButton.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, DayData.class);
+            startActivity(intent);
+        });
+
+        if (appSettingsButton != null) {
+            appSettingsButton.setOnClickListener(v -> {
+                Intent intent = new Intent(MainActivity.this, AppSettingsActivity.class);
+                startActivity(intent);
+            });
+        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.action_settings) {
+            Intent intent = new Intent(MainActivity.this, AppSettingsActivity.class);
+            startActivity(intent);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+}
+
+13. Updated: AndroidManifest.xml
+
+Register AppSettingsActivity in the manifest:
+
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.Diettrackerandroid">
+        
+        <activity
+            android:name=".gui.diet.day_data_view.DayData"
+            android:exported="false" />
+
+        <activity
+            android:name=".MainActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".gui.diet.GetProductData"
+            android:exported="true" />
+
+        <activity
+            android:name=".gui.notes.Notes"
+            android:exported="true" />
+
+        <activity
+            android:name=".gui.notes.NotesHistory"
+            android:exported="false"
+            android:label="Notes History" />
+
+        <!-- App Settings Activity -->
+        <activity
+            android:name=".gui.settings.AppSettingsActivity"
+            android:exported="false"
+            android:label="Settings" />
+
+        <activity
+            android:name=".tools.widget.WidgetColorSettingsActivity"
+            android:exported="false"
+            android:label="Widget Color Settings" />
+
+        <receiver
+            android:name="com.lukaszjag.diet_tracker_android.tools.widget.DietWidgetProvider"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="com.lukaszjag.diet_tracker_android.ACTION_WIDGET_REFRESH" />
+                <action android:name="com.lukaszjag.diet_tracker_android.ACTION_WIDGET_PREV_DAY" />
+                <action android:name="com.lukaszjag.diet_tracker_android.ACTION_WIDGET_NEXT_DAY" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/diet_widget_info" />
+        </receiver>
+
+        <service
+            android:name="com.lukaszjag.diet_tracker_android.tools.widget.DietWidgetService"
+            android:exported="false"
+            android:permission="android.permission.BIND_REMOTEVIEWS" />
+
+    </application>
+
+</manifest>
