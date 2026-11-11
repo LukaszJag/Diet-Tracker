@@ -1,6 +1,7 @@
 package com.lukaszjag.diet_tracker_android.gui.notes;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -18,6 +19,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.datepicker.MaterialDatePicker;
 import com.lukaszjag.diet_tracker_android.R;
 import com.lukaszjag.diet_tracker_android.gui.notes.calendar.NotesCalendarDialog;
 import com.lukaszjag.diet_tracker_android.tools.cloud_data_tools.AzureDataCallback;
@@ -38,6 +40,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
+import java.util.TimeZone;
 
 public class Notes extends AppCompatActivity {
     private EditText filterSubtitle;
@@ -48,6 +51,11 @@ public class Notes extends AppCompatActivity {
     private Button btnClearDateFilter;
     private TextView tvNotesCount; // Displayed notes count
     private RecyclerView recyclerView;
+
+    private Button pickDateDeadlineButton;
+
+    private EditText dialogDeadlineEditTextLocal;
+
     private MyAdapter adapter;
 
     // Set of selected creation dates (yyyy-MM-dd)
@@ -218,6 +226,9 @@ public class Notes extends AppCompatActivity {
         final CheckBox cbToday = dialogView.findViewById(R.id.dialogCbToday);
         final CheckBox cbBuy = dialogView.findViewById(R.id.dialogCbToBuy);
 
+        dialogDeadlineEditTextLocal = dialogView.findViewById(R.id.dialogDeadline);
+        pickDateDeadlineButton = dialogView.findViewById(R.id.pickDaedlineButton);
+
         final LinearLayout actionButtonsLayout = dialogView.findViewById(R.id.dialogActionButtonsLayout);
         final Button btnMarkAsDone = dialogView.findViewById(R.id.dialogBtnMarkAsDone);
         final Button btnDelete = dialogView.findViewById(R.id.dialogBtnDelete);
@@ -277,55 +288,7 @@ public class Notes extends AppCompatActivity {
             cbBuy.setChecked(note.isToBuyTask());
         }
 
-        AlertDialog dialog = builder.create();
-
-        if (isEditMode) {
-            btnMarkAsDone.setOnClickListener(v -> {
-                String markDoneQuery = QueryMaker.markNoteAsDoneQuery(note.getId());
-                GetFromSQLDatabase.runAzureQueryAIChat(markDoneQuery, new AzureDataCallback() {
-                    @Override
-                    public void onSuccess(ArrayList<RowInTable> resultTable) {
-                        runOnUiThread(() -> {
-                            Toast.makeText(Notes.this, "Marked as done!", Toast.LENGTH_SHORT).show();
-                            dialog.dismiss();
-                            fetchNotesFromAzure();
-                        });
-                    }
-
-                    @Override
-                    public void onFailure(String errorMessage) {
-                        runOnUiThread(() -> Toast.makeText(Notes.this, "Error: " + errorMessage, Toast.LENGTH_SHORT).show());
-                    }
-                });
-            });
-
-            btnDelete.setOnClickListener(v -> {
-                new AlertDialog.Builder(Notes.this)
-                        .setTitle("Delete Note")
-                        .setMessage("Move this note to deleted history?")
-                        .setPositiveButton("Yes, Delete", (d, w) -> {
-                            String deleteQuery = QueryMaker.markNoteAsDeletedQuery(note.getId());
-                            GetFromSQLDatabase.runAzureQueryAIChat(deleteQuery, new AzureDataCallback() {
-                                @Override
-                                public void onSuccess(ArrayList<RowInTable> resultTable) {
-                                    runOnUiThread(() -> {
-                                        Toast.makeText(Notes.this, "Note deleted!", Toast.LENGTH_SHORT).show();
-                                        dialog.dismiss();
-                                        fetchNotesFromAzure();
-                                    });
-                                }
-
-                                @Override
-                                public void onFailure(String errorMessage) {
-                                    runOnUiThread(() -> Toast.makeText(Notes.this, "Error: " + errorMessage, Toast.LENGTH_SHORT).show());
-                                }
-                            });
-                        })
-                        .setNegativeButton("Cancel", null)
-                        .show();
-            });
-        }
-
+        // 1. Configure the dialog positive and negative buttons on builder FIRST
         builder.setPositiveButton(isEditMode ? "Update" : "Create", (d, which) -> {
             String selectedMain = spinnerCategory.getSelectedItem() != null ?
                     spinnerCategory.getSelectedItem().toString() : "";
@@ -383,7 +346,62 @@ public class Notes extends AppCompatActivity {
         });
 
         builder.setNegativeButton("Cancel", null);
+
+        // 2. CREATE the dialog instance HERE (now it is initialized before being used in listeners)
+        AlertDialog dialog = builder.create();
+
+        // 3. Attach listeners to the custom view buttons (dialog.dismiss() works with no error)
+        if (isEditMode) {
+            btnMarkAsDone.setOnClickListener(v -> {
+                String markDoneQuery = QueryMaker.markNoteAsDoneQuery(note.getId());
+                GetFromSQLDatabase.runAzureQueryAIChat(markDoneQuery, new AzureDataCallback() {
+                    @Override
+                    public void onSuccess(ArrayList<RowInTable> resultTable) {
+                        runOnUiThread(() -> {
+                            Toast.makeText(Notes.this, "Marked as done!", Toast.LENGTH_SHORT).show();
+                            dialog.dismiss();
+                            fetchNotesFromAzure();
+                        });
+                    }
+
+                    @Override
+                    public void onFailure(String errorMessage) {
+                        runOnUiThread(() -> Toast.makeText(Notes.this, "Error: " + errorMessage, Toast.LENGTH_SHORT).show());
+                    }
+                });
+            });
+
+            btnDelete.setOnClickListener(v -> {
+                new AlertDialog.Builder(Notes.this)
+                        .setTitle("Delete Note")
+                        .setMessage("Move this note to deleted history?")
+                        .setPositiveButton("Yes, Delete", (d, w) -> {
+                            String deleteQuery = QueryMaker.markNoteAsDeletedQuery(note.getId());
+                            GetFromSQLDatabase.runAzureQueryAIChat(deleteQuery, new AzureDataCallback() {
+                                @Override
+                                public void onSuccess(ArrayList<RowInTable> resultTable) {
+                                    runOnUiThread(() -> {
+                                        Toast.makeText(Notes.this, "Note deleted!", Toast.LENGTH_SHORT).show();
+                                        dialog.dismiss();
+                                        fetchNotesFromAzure();
+                                    });
+                                }
+
+                                @Override
+                                public void onFailure(String errorMessage) {
+                                    runOnUiThread(() -> Toast.makeText(Notes.this, "Error: " + errorMessage, Toast.LENGTH_SHORT).show());
+                                }
+                            });
+                        })
+                        .setNegativeButton("Cancel", null)
+                        .show();
+            });
+        }
+
+        // 4. Finally show the dialog
         dialog.show();
+
+        addListeners();
     }
 
     private void setupVisibilityListeners() {
@@ -474,5 +492,26 @@ public class Notes extends AppCompatActivity {
             int totalCount = adapter.getOriginalList().size();
             tvNotesCount.setText("Displayed: " + displayedCount + " (Total: " + totalCount + ")");
         }
+    }
+
+    private void addListeners(){
+        pickDateDeadlineButton.setOnClickListener(v -> {
+            MaterialDatePicker<Long> datePicker = MaterialDatePicker.Builder.datePicker()
+                    .setTitleText("Select a Date")
+                    .setSelection(MaterialDatePicker.todayInUtcMilliseconds())
+                    .build();
+
+
+            datePicker.addOnPositiveButtonClickListener(selection -> {
+                // Ensure date formatting uses UTC to prevent 1-day timezone shifting
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+                sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
+                String formattedDate = sdf.format(new Date(selection));
+
+                dialogDeadlineEditTextLocal.setText(formattedDate);
+            });
+
+            datePicker.show(getSupportFragmentManager(), "MATERIAL_DATE_PICKER");
+        });
     }
 }

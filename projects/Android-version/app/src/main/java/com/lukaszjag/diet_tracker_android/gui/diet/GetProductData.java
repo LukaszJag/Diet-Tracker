@@ -49,6 +49,7 @@ public class GetProductData extends AppCompatActivity {
     private Button previousButton;
     private Button nextButton;
     private Button dateDataButton;
+
     private Button productCommentButton;
     private Button acceptButton;
     //</editor-fold>
@@ -144,6 +145,7 @@ public class GetProductData extends AppCompatActivity {
         previousButton = findViewById(R.id.previousButton);
         nextButton = findViewById(R.id.nextButton);
         dateDataButton = findViewById(R.id.datePickButton);
+
         productCommentButton = findViewById(R.id.productCommentButton);
         acceptButton = findViewById(R.id.acceptButton);
 

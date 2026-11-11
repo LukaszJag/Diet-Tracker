@@ -143,33 +143,11 @@
             android:focusable="false"
             android:hint="Deadline Date (Tap to select)" />
 
-        <GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
-            android:id="@+id/gridview3"
+        <Button
+            android:id="@+id/pickDaedlineButton"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:columnCount="2"
-            android:rowCount="1">
-        <!-- Action buttons visible in Edit Mode -->
-        <Button
-            android:id="@+id/button3"
-            android:layout_width="0dp"
-            android:layout_height="40dp"
-            android:layout_rowWeight="1"
-            android:layout_columnWeight="1"
-            android:layout_gravity="fill"
-            android:backgroundTint="#24bf3e"
-            android:text="Accept" />
-
-        <Button
-            android:id="@+id/button2"
-            android:layout_width="0dp"
-            android:layout_height="40dp"
-            android:layout_rowWeight="1"
-            android:layout_columnWeight="1"
-            android:layout_gravity="fill"
-            android:backgroundTint="#d90000"
-            android:text="Cencel" />
-        </GridLayout>
+            android:layout_height="wrap_content"
+            android:text="Add deadline" />
 
         <LinearLayout
             android:id="@+id/dialogActionButtonsLayout"
