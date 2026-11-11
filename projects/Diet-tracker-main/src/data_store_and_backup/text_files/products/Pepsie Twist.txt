@@ -1,0 +1,9 @@
+Name: Pepsie Twist
+Brand: Pepsi Cola General Bottlers Poland Sp. z o.o.
+Package has: 1500.0
+Macro for: 100.0
+KCal: 44.0
+Protein: 0.0
+Fat: 0.0
+Carbs: 11.0
+Comment optional: Link: https://www.carrefour.pl/napoje/napoje-gazowane-i-niegazowane/cola/pepsi-cola-twist-napoj-gazowany-typu-cola-o-smaku-cytryny-15-l

@@ -1,0 +1,9 @@
+Name: Toffifee
+Brand: Storck
+Package has: 125.0
+Macro for: 100.0
+KCal: 521.0
+Protein: 6.0
+Fat: 29.0
+Carbs: 58.9
+Comment optional: Link: https://www.storck.pl/pl/marki/toffifee/informacje-o-wartosci-odzywczej

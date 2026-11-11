@@ -1,0 +1,9 @@
+Name: Sushi z wędzonym łososiem
+Brand: domowe
+Package has: 0.0
+Macro for: 100.0
+KCal: 142.0
+Protein: 6.7
+Fat: 6.2
+Carbs: 15.9
+Comment optional: Link: http://www.ilewazy.pl/sushi-z-wedzonym-lososiem

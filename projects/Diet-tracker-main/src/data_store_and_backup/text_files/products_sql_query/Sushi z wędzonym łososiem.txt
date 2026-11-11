@@ -1,0 +1,20 @@
+INSERT INTO `diet_tracker_schema`.product_table
+(`product_name`,
+`product_brand`,
+`product_package_has`,
+`product_macro_for`,
+`product_kcal`,
+`product_protein`,
+`product_fat`,
+`product_carbs`,
+`comment_optional`)
+Values
+('Sushi z wędzonym łososiem',
+'domowe',
+0.0,
+100.0,
+142.0,
+6.7,
+6.2,
+15.9,
+'Link: http://www.ilewazy.pl/sushi-z-wedzonym-lososiem');

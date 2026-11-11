@@ -1,0 +1,20 @@
+INSERT INTO `diet_tracker_schema`.product_table
+(`product_name`,
+`product_brand`,
+`product_package_has`,
+`product_macro_for`,
+`product_kcal`,
+`product_protein`,
+`product_fat`,
+`product_carbs`,
+`comment_optional`)
+Values
+('Ciasto jogurtowe z truskawkami',
+'Domowe',
+0.0,
+100.0,
+222.51,
+3.95,
+11.01,
+26.36,
+'Link: https://www.tabele-kalorii.pl/kalorie,Ciasto-jogurtowe-z-truskawkami-Przepis-od-barakuda1976.html');

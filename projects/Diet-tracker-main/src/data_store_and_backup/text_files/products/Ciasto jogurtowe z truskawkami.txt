@@ -1,0 +1,9 @@
+Name: Ciasto jogurtowe z truskawkami
+Brand: Domowe
+Package has: 0.0
+Macro for: 100.0
+KCal: 222.51
+Protein: 3.95
+Fat: 11.01
+Carbs: 26.36
+Comment optional: Link: https://www.tabele-kalorii.pl/kalorie,Ciasto-jogurtowe-z-truskawkami-Przepis-od-barakuda1976.html
