@@ -12,125 +12,192 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Note Details"
+            android:layout_marginBottom="12dp"
+            android:text="Create note details"
             android:textSize="18sp"
-            android:textStyle="bold"
-            android:layout_marginBottom="12dp"/>
+            android:textStyle="bold" />
 
         <EditText
             android:id="@+id/dialogTitle"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:hint="Title"
             android:inputType="textCapSentences" />
 
         <EditText
             android:id="@+id/dialogSubtitle"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:hint="Subtitle"
             android:inputType="textCapSentences" />
 
         <EditText
             android:id="@+id/dialogDescription"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:hint="Description"
             android:inputType="textMultiLine"
             android:minLines="2" />
 
-        <!-- Main Category Label & Spinner -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Main Category:"
-            android:layout_marginTop="8dp"
-            android:textSize="12sp"
-            android:textColor="#555555"/>
-
-        <Spinner
-            android:id="@+id/dialogSpinnerCategory"
+        <GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/gridview"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp" />
+            android:layout_height="match_parent"
+            android:columnCount="2"
+            android:rowCount="2">
 
-        <!-- Subcategory Label & Spinner -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Subcategory:"
-            android:layout_marginTop="8dp"
-            android:textSize="12sp"
-            android:textColor="#555555"/>
+            <!-- Row 0, Column 0 -->
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="30dp"
+                android:layout_rowWeight="1"
+                android:layout_columnWeight="1"
+                android:layout_gravity="fill"
+                android:gravity="center_vertical"
+                android:text="Main Category:"
+                android:textColor="#555555"
+                android:textSize="14sp" />
 
-        <Spinner
-            android:id="@+id/dialogSpinnerSubcategory"
+            <!-- Row 0, Column 1 -->
+            <Spinner
+                android:id="@+id/dialogSpinnerCategory"
+                android:layout_width="0dp"
+                android:layout_height="30dp"
+                android:layout_rowWeight="1"
+                android:layout_columnWeight="1"
+                android:layout_gravity="fill" />
+
+            <!-- Row 1, Column 0 -->
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="30dp"
+                android:layout_rowWeight="1"
+                android:layout_columnWeight="1"
+                android:layout_gravity="fill"
+                android:gravity="center_vertical"
+                android:text="Subcategory:"
+                android:textColor="#555555"
+                android:textSize="14sp" />
+
+            <!-- Row 1, Column 1 -->
+            <Spinner
+                android:id="@+id/dialogSpinnerSubcategory"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_rowWeight="1"
+                android:layout_columnWeight="1"
+                android:layout_gravity="fill" />
+
+        </GridLayout>
+
+        <GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/gridview2"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp" />
+            android:layout_height="match_parent"
+            android:columnCount="2"
+            android:rowCount="2">
 
-        <CheckBox
-            android:id="@+id/dialogCbLearning"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Is Learning Task"
-            android:layout_marginTop="8dp"/>
+            <CheckBox
+                android:id="@+id/dialogCbLearning"
+                android:layout_width="0dp"
+                android:layout_height="30dp"
+                android:layout_rowWeight="1"
+                android:layout_columnWeight="1"
+                android:layout_gravity="fill"
+                android:text="Is Learning Task" />
 
-        <CheckBox
-            android:id="@+id/dialogCbGeneral"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Is General To-Do" />
+            <CheckBox
+                android:id="@+id/dialogCbGeneral"
+                android:layout_width="0dp"
+                android:layout_height="30dp"
+                android:layout_rowWeight="1"
+                android:layout_columnWeight="1"
+                android:layout_gravity="fill"
+                android:text="Is General To-Do" />
 
-        <CheckBox
-            android:id="@+id/dialogCbToday"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Is Today Task" />
+            <CheckBox
+                android:id="@+id/dialogCbToday"
+                android:layout_width="0dp"
+                android:layout_height="30dp"
+                android:layout_rowWeight="1"
+                android:layout_columnWeight="1"
+                android:layout_gravity="fill"
+                android:text="Is Today Task" />
 
-        <CheckBox
-            android:id="@+id/dialogCbToBuy"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Is To Buy Task" />
+            <CheckBox
+                android:id="@+id/dialogCbToBuy"
+                android:layout_width="0dp"
+                android:layout_height="30dp"
+                android:layout_rowWeight="1"
+                android:layout_columnWeight="1"
+                android:layout_gravity="fill"
+                android:text="Is To Buy Task" />
+        </GridLayout>
 
         <EditText
             android:id="@+id/dialogDeadline"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Deadline Date (Tap to select)"
-            android:focusable="false"
+            android:layout_marginTop="8dp"
             android:clickable="true"
-            android:layout_marginTop="8dp" />
+            android:focusable="false"
+            android:hint="Deadline Date (Tap to select)" />
 
+        <GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/gridview3"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:columnCount="2"
+            android:rowCount="1">
         <!-- Action buttons visible in Edit Mode -->
+        <Button
+            android:id="@+id/button3"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+            android:layout_gravity="fill"
+            android:backgroundTint="#24bf3e"
+            android:text="Accept" />
+
+        <Button
+            android:id="@+id/button2"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+            android:layout_gravity="fill"
+            android:backgroundTint="#d90000"
+            android:text="Cencel" />
+        </GridLayout>
+
         <LinearLayout
             android:id="@+id/dialogActionButtonsLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             android:layout_marginTop="16dp"
+            android:orientation="horizontal"
             android:visibility="gone">
 
             <Button
                 android:id="@+id/dialogBtnMarkAsDone"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="4dp"
                 android:layout_weight="1"
-                android:text="Done ✓"
                 android:backgroundTint="#2E7D32"
-                android:textColor="#FFFFFF"
-                android:layout_marginEnd="4dp"/>
+                android:text="Done ✓"
+                android:textColor="#FFFFFF" />
 
             <Button
                 android:id="@+id/dialogBtnDelete"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
                 android:layout_weight="1"
-                android:text="Delete 🗑"
                 android:backgroundTint="#C62828"
-                android:textColor="#FFFFFF"
-                android:layout_marginStart="4dp"/>
+                android:text="Delete 🗑"
+                android:textColor="#FFFFFF" />
         </LinearLayout>
 
     </LinearLayout>
