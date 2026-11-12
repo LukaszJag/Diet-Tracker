@@ -1,0 +1,9 @@
+Name: Lunchbox kurczak z pesto
+Brand: Vital Fresh
+Package has: 252.0
+Macro for: 100.0
+KCal: 162.0
+Protein: 7.9
+Fat: 9.6
+Carbs: 10.0
+Comment optional: Dane z opakowania
