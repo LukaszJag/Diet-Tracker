@@ -3,7 +3,8 @@ package com.lukaszjag.diet_tracker_android.tools.sql_tools;
 public class QueryMaker {
     public static String getAllProductTableLikeProductNameCaseInsensitive(String productData) {
         String escapedData = productData != null ? productData.replace("'", "''") : "";
-        return "SELECT * FROM [diet_tracker_schema].[product_table] WHERE LOWER(product_name) LIKE '%" + escapedData + "%'";
+        // Added N before string literal and applied LOWER to both sides:
+        return "SELECT * FROM [diet_tracker_schema].[product_table] WHERE LOWER(product_name) LIKE LOWER(N'%" + escapedData + "%')";
     }
 
     public static String getAllProductsFromCalendarTableLikeDate(String date) {
@@ -99,16 +100,18 @@ public class QueryMaker {
 
         String sqlDayDate = (dayDate == null || dayDate.trim().isEmpty())
                 ? "NULL" : "'" + dayDate.replace("'", "''") + "'";
+
+        // ADDED N'...' TO PRESERVE POLISH LETTERS
         String sqlDayName = (dayName == null || dayName.trim().isEmpty())
-                ? "NULL" : "'" + dayName.replace("'", "''") + "'";
+                ? "NULL" : "N'" + dayName.replace("'", "''") + "'";
         String sqlMealName = (mealName == null || mealName.trim().isEmpty())
-                ? "NULL" : "'" + mealName.replace("'", "''") + "'";
+                ? "NULL" : "N'" + mealName.replace("'", "''") + "'";
         String sqlProductName = (productName == null || productName.trim().isEmpty())
-                ? "NULL" : "'" + productName.replace("'", "''") + "'";
+                ? "NULL" : "N'" + productName.replace("'", "''") + "'";
         String sqlTime = (timeOptional == null || timeOptional.equalsIgnoreCase("none") || timeOptional.trim().isEmpty())
                 ? "NULL" : "'" + timeOptional.replace("'", "''") + "'";
         String sqlComment = (commentOptional == null || commentOptional.equalsIgnoreCase("none") || commentOptional.trim().isEmpty())
-                ? "NULL" : "'" + commentOptional.replace("'", "''") + "'";
+                ? "NULL" : "N'" + commentOptional.replace("'", "''") + "'";
         String sqlRowId = (rowId == null || rowId.trim().isEmpty())
                 ? "NULL" : "'" + rowId.replace("'", "''") + "'";
 
@@ -136,7 +139,6 @@ public class QueryMaker {
                 ");\n" +
                 "SELECT 1 AS success;";
     }
-
     public static String updateNoteQuery(long id, String title, String subtitle, String description,
                                          String category, String subcategory,
                                          boolean isUrgently, boolean isLearning, boolean isGeneral,
