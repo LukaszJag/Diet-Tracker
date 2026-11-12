@@ -1,0 +1,2757 @@
+hide empty text fileld in note view 
+
+
+================================================================================
+FILE: Notes.java
+================================================================================
+package com.lukaszjag.diet_tracker_android.gui.notes;
+
+import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.material.datepicker.MaterialDatePicker;
+import com.lukaszjag.diet_tracker_android.R;
+import com.lukaszjag.diet_tracker_android.gui.notes.calendar.NotesCalendarDialog;
+import com.lukaszjag.diet_tracker_android.tools.cloud_data_tools.AzureDataCallback;
+import com.lukaszjag.diet_tracker_android.tools.cloud_data_tools.GetFromSQLDatabase;
+import com.lukaszjag.diet_tracker_android.tools.notes_tool.MyAdapter;
+import com.lukaszjag.diet_tracker_android.tools.notes_tool.Note;
+import com.lukaszjag.diet_tracker_android.tools.notes_tool.categories.NoteCategoryData;
+import com.lukaszjag.diet_tracker_android.tools.sql_tools.QueryMaker;
+import com.lukaszjag.diet_tracker_android.tools.sql_tools.RowInTable;
+import com.lukaszjag.diet_tracker_android.tools.theme.ThemeHelper;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import java.util.Set;
+import java.util.TimeZone;
+
+public class Notes extends AppCompatActivity {
+    private EditText filterSubtitle;
+    private Spinner filterCategorySpinner;
+    private Spinner filterUrgentlySpinner;
+    private CheckBox filterCbLearning, filterCbGeneral, filterCbToday, filterCbToBuy;
+    private Button btnCalendarFilter;
+    private Button btnClearDateFilter;
+    private TextView tvNotesCount; // Displayed notes count
+    private RecyclerView recyclerView;
+
+    private Button pickDateDeadlineButton;
+
+    private EditText dialogDeadlineEditTextLocal;
+
+    private MyAdapter adapter;
+
+    // Set of selected creation dates (yyyy-MM-dd)
+    private final Set<String> selectedDates = new HashSet<>();
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.notes_view_layout);
+
+        filterSubtitle = findViewById(R.id.filterSubtitle);
+        filterCategorySpinner = findViewById(R.id.filterCategorySpinner);
+        filterUrgentlySpinner = findViewById(R.id.filterUrgentlySpinner);
+        filterCbLearning = findViewById(R.id.filterCbLearning);
+        filterCbGeneral = findViewById(R.id.filterCbGeneral);
+        filterCbToday = findViewById(R.id.filterCbToday);
+        filterCbToBuy = findViewById(R.id.filterCbToBuy);
+
+        btnCalendarFilter = findViewById(R.id.btnCalendarFilter);
+        btnClearDateFilter = findViewById(R.id.btnClearDateFilter);
+        tvNotesCount = findViewById(R.id.tvNotesCount);
+
+        recyclerView = findViewById(R.id.recyclerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        adapter = new MyAdapter();
+        recyclerView.setAdapter(adapter);
+
+        findViewById(R.id.button).setOnClickListener(v -> showNoteDialog(null));
+        adapter.setOnItemClickListener((position, note) -> showNoteDialog(note));
+
+        setupCalendarFilterButton();
+        setupVisibilityListeners();
+        setupFilterSpinners();
+        setupFilterListeners();
+        fetchNotesFromAzure();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        ThemeHelper.applyButtonTheme(this);
+    }
+
+    private void setupCalendarFilterButton() {
+        btnCalendarFilter.setOnClickListener(v -> showCalendarDialog());
+
+        btnClearDateFilter.setOnClickListener(v -> {
+            selectedDates.clear();
+            updateDateFilterButtonUI();
+            applyFilters();
+        });
+    }
+
+    private void showCalendarDialog() {
+        Map<String, Integer> countMap = new HashMap<>();
+        for (Note note : adapter.getOriginalList()) {
+            String created = note.getDateCreated();
+            if (created != null && created.length() >= 10) {
+                created = created.substring(0, 10);
+                countMap.put(created, countMap.getOrDefault(created, 0) + 1);
+            }
+        }
+
+        NotesCalendarDialog dialog = new NotesCalendarDialog(this, countMap, selectedDates, newSelectedDates -> {
+            selectedDates.clear();
+            selectedDates.addAll(newSelectedDates);
+            updateDateFilterButtonUI();
+            applyFilters();
+        });
+        dialog.show();
+    }
+
+    private void updateDateFilterButtonUI() {
+        if (selectedDates.isEmpty()) {
+            btnCalendarFilter.setText("📅 Choose Dates (All)");
+            btnClearDateFilter.setVisibility(View.GONE);
+        } else {
+            btnCalendarFilter.setText("📅 Dates: " + selectedDates.size() + " selected");
+            btnClearDateFilter.setVisibility(View.VISIBLE);
+        }
+    }
+
+    private void setupFilterSpinners() {
+        List<String> mainCategoriesFilter = new ArrayList<>();
+        mainCategoriesFilter.add("All Categories");
+        mainCategoriesFilter.addAll(NoteCategoryData.getMainCategories());
+
+        ArrayAdapter<String> mainCatAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, mainCategoriesFilter);
+        mainCatAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        filterCategorySpinner.setAdapter(mainCatAdapter);
+
+        updateSubcategoryFilterSpinner("All Categories");
+    }
+
+    private void updateSubcategoryFilterSpinner(String mainCategory) {
+        List<String> subcategoriesFilter = new ArrayList<>();
+        subcategoriesFilter.add("All Subcategories");
+
+        if (mainCategory != null && !mainCategory.equals("All Categories")) {
+            List<String> subs = NoteCategoryData.getSubcategories(mainCategory);
+            if (subs != null && !subs.isEmpty()) {
+                subcategoriesFilter.addAll(subs);
+            }
+        }
+
+        ArrayAdapter<String> subcatAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, subcategoriesFilter);
+        subcatAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        filterUrgentlySpinner.setAdapter(subcatAdapter);
+    }
+
+    private void fetchNotesFromAzure() {
+        String query = QueryMaker.getAllNotesQuery();
+        GetFromSQLDatabase.runAzureQueryAIChat(query, new AzureDataCallback() {
+            @Override
+            public void onSuccess(ArrayList<RowInTable> resultTable) {
+                runOnUiThread(() -> {
+                    adapter.clearAll();
+                    for (RowInTable row : resultTable) {
+                        String subcat = row.getValue("subcategory");
+                        if (subcat == null) subcat = "";
+
+                        boolean isDone = "true".equalsIgnoreCase(row.getValue("is_done")) || "1".equals(row.getValue("is_done"));
+                        boolean isDeleted = "true".equalsIgnoreCase(row.getValue("is_deleted")) || "1".equals(row.getValue("is_deleted"));
+
+                        Note note = new Note(
+                                Long.parseLong(row.getValue("id")),
+                                row.getValue("title"),
+                                row.getValue("subtitle"),
+                                row.getValue("description"),
+                                row.getValue("category"),
+                                subcat,
+                                row.getValue("is_urgently"),
+                                "true".equals(row.getValue("is_learning")) || "1".equals(row.getValue("is_learning")),
+                                "true".equals(row.getValue("is_general_to_do")) || "1".equals(row.getValue("is_general_to_do")),
+                                "true".equals(row.getValue("is_today_task")) || "1".equals(row.getValue("is_today_task")),
+                                "true".equals(row.getValue("is_to_buy_task")) || "1".equals(row.getValue("is_to_buy_task")),
+                                isDone,
+                                isDeleted,
+                                null,
+                                row.getValue("date_created"),
+                                row.getValue("date_deadline")
+                        );
+                        adapter.addItem(note);
+                    }
+                    applyFilters();
+                });
+            }
+
+            @Override
+            public void onFailure(String errorMessage) {
+                runOnUiThread(() -> Toast.makeText(Notes.this, "Failed: " + errorMessage, Toast.LENGTH_SHORT).show());
+            }
+        });
+    }
+
+    private void showNoteDialog(Note note) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        View dialogView = getLayoutInflater().inflate(R.layout.dialog_note, null);
+        builder.setView(dialogView);
+
+        final EditText title = dialogView.findViewById(R.id.dialogTitle);
+        final EditText subtitle = dialogView.findViewById(R.id.dialogSubtitle);
+        final EditText desc = dialogView.findViewById(R.id.dialogDescription);
+        final Spinner spinnerCategory = dialogView.findViewById(R.id.dialogSpinnerCategory);
+        final Spinner spinnerSubcategory = dialogView.findViewById(R.id.dialogSpinnerSubcategory);
+        final CheckBox cbLearn = dialogView.findViewById(R.id.dialogCbLearning);
+        final CheckBox cbGen = dialogView.findViewById(R.id.dialogCbGeneral);
+        final CheckBox cbToday = dialogView.findViewById(R.id.dialogCbToday);
+        final CheckBox cbBuy = dialogView.findViewById(R.id.dialogCbToBuy);
+
+        dialogDeadlineEditTextLocal = dialogView.findViewById(R.id.dialogDeadline);
+        pickDateDeadlineButton = dialogView.findViewById(R.id.pickDaedlineButton);
+
+        final LinearLayout actionButtonsLayout = dialogView.findViewById(R.id.dialogActionButtonsLayout);
+        final Button btnMarkAsDone = dialogView.findViewById(R.id.dialogBtnMarkAsDone);
+        final Button btnDelete = dialogView.findViewById(R.id.dialogBtnDelete);
+
+        boolean isEditMode = (note != null);
+
+        List<String> mainCategories = NoteCategoryData.getMainCategories();
+        ArrayAdapter<String> catAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, mainCategories);
+        catAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerCategory.setAdapter(catAdapter);
+
+        spinnerCategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String chosenMain = mainCategories.get(position);
+                List<String> subcategories = NoteCategoryData.getSubcategories(chosenMain);
+                List<String> displaySubs = new ArrayList<>();
+                if (subcategories.isEmpty()) {
+                    displaySubs.add("None");
+                } else {
+                    displaySubs.addAll(subcategories);
+                }
+
+                ArrayAdapter<String> subAdapter = new ArrayAdapter<>(Notes.this, android.R.layout.simple_spinner_item, displaySubs);
+                subAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spinnerSubcategory.setAdapter(subAdapter);
+
+                if (isEditMode && note.getNoteSubcategory() != null) {
+                    int subIndex = displaySubs.indexOf(note.getNoteSubcategory());
+                    if (subIndex != -1) {
+                        spinnerSubcategory.setSelection(subIndex);
+                    }
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {}
+        });
+
+        if (isEditMode) {
+            actionButtonsLayout.setVisibility(View.VISIBLE);
+
+            title.setText(note.getNoteTitle());
+            subtitle.setText(note.getNoteSubtitle());
+            desc.setText(note.getNoteDescription());
+
+            if (note.getNoteCategory() != null) {
+                int catIndex = mainCategories.indexOf(note.getNoteCategory());
+                if (catIndex != -1) {
+                    spinnerCategory.setSelection(catIndex);
+                }
+            }
+
+            cbLearn.setChecked(note.isLearning());
+            cbGen.setChecked(note.isGeneralToDo());
+            cbToday.setChecked(note.isTodayTask());
+            cbBuy.setChecked(note.isToBuyTask());
+        }
+
+        // 1. Configure the dialog positive and negative buttons on builder FIRST
+        builder.setPositiveButton(isEditMode ? "Update" : "Create", (d, which) -> {
+            String selectedMain = spinnerCategory.getSelectedItem() != null ?
+                    spinnerCategory.getSelectedItem().toString() : "";
+            String selectedSub = spinnerSubcategory.getSelectedItem() != null ?
+                    spinnerSubcategory.getSelectedItem().toString() : "";
+            if ("None".equals(selectedSub)) {
+                selectedSub = "";
+            }
+
+            String q;
+            if (isEditMode) {
+                q = QueryMaker.updateNoteQuery(
+                        note.getId(),
+                        title.getText().toString(),
+                        subtitle.getText().toString(),
+                        desc.getText().toString(),
+                        selectedMain,
+                        selectedSub,
+                        false,
+                        cbLearn.isChecked(),
+                        cbGen.isChecked(),
+                        cbToday.isChecked(),
+                        cbBuy.isChecked(),
+                        null
+                );
+            } else {
+                String currentDate = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
+                q = QueryMaker.insertNoteQuery(
+                        title.getText().toString(),
+                        subtitle.getText().toString(),
+                        desc.getText().toString(),
+                        selectedMain,
+                        selectedSub,
+                        false,
+                        cbLearn.isChecked(),
+                        cbGen.isChecked(),
+                        cbToday.isChecked(),
+                        cbBuy.isChecked(),
+                        currentDate,
+                        null
+                );
+            }
+
+            GetFromSQLDatabase.runAzureQueryAIChat(q, new AzureDataCallback() {
+                @Override public void onSuccess(ArrayList<RowInTable> res) {
+                    runOnUiThread(() -> {
+                        Toast.makeText(Notes.this, isEditMode ? "Updated!" : "Saved!", Toast.LENGTH_SHORT).show();
+                        fetchNotesFromAzure();
+                    });
+                }
+                @Override public void onFailure(String err) {
+                    runOnUiThread(() -> Toast.makeText(Notes.this, "Error: " + err, Toast.LENGTH_SHORT).show());
+                }
+            });
+        });
+
+        builder.setNegativeButton("Cancel", null);
+
+        // 2. CREATE the dialog instance HERE (now it is initialized before being used in listeners)
+        AlertDialog dialog = builder.create();
+
+        // 3. Attach listeners to the custom view buttons (dialog.dismiss() works with no error)
+        if (isEditMode) {
+            btnMarkAsDone.setOnClickListener(v -> {
+                String markDoneQuery = QueryMaker.markNoteAsDoneQuery(note.getId());
+                GetFromSQLDatabase.runAzureQueryAIChat(markDoneQuery, new AzureDataCallback() {
+                    @Override
+                    public void onSuccess(ArrayList<RowInTable> resultTable) {
+                        runOnUiThread(() -> {
+                            Toast.makeText(Notes.this, "Marked as done!", Toast.LENGTH_SHORT).show();
+                            dialog.dismiss();
+                            fetchNotesFromAzure();
+                        });
+                    }
+
+                    @Override
+                    public void onFailure(String errorMessage) {
+                        runOnUiThread(() -> Toast.makeText(Notes.this, "Error: " + errorMessage, Toast.LENGTH_SHORT).show());
+                    }
+                });
+            });
+
+            btnDelete.setOnClickListener(v -> {
+                new AlertDialog.Builder(Notes.this)
+                        .setTitle("Delete Note")
+                        .setMessage("Move this note to deleted history?")
+                        .setPositiveButton("Yes, Delete", (d, w) -> {
+                            String deleteQuery = QueryMaker.markNoteAsDeletedQuery(note.getId());
+                            GetFromSQLDatabase.runAzureQueryAIChat(deleteQuery, new AzureDataCallback() {
+                                @Override
+                                public void onSuccess(ArrayList<RowInTable> resultTable) {
+                                    runOnUiThread(() -> {
+                                        Toast.makeText(Notes.this, "Note deleted!", Toast.LENGTH_SHORT).show();
+                                        dialog.dismiss();
+                                        fetchNotesFromAzure();
+                                    });
+                                }
+
+                                @Override
+                                public void onFailure(String errorMessage) {
+                                    runOnUiThread(() -> Toast.makeText(Notes.this, "Error: " + errorMessage, Toast.LENGTH_SHORT).show());
+                                }
+                            });
+                        })
+                        .setNegativeButton("Cancel", null)
+                        .show();
+            });
+        }
+
+        // 4. Finally show the dialog
+        dialog.show();
+
+        addListeners();
+    }
+
+    private void setupVisibilityListeners() {
+        CheckBox cb1 = findViewById(R.id.hideCbSection1);
+        CheckBox cb2 = findViewById(R.id.hideCbSection2);
+        CheckBox cb3 = findViewById(R.id.hideCbSection3);
+        CheckBox cb4 = findViewById(R.id.hideCbSection4);
+
+        android.widget.CompoundButton.OnCheckedChangeListener listener = (buttonView, isChecked) -> {
+            adapter.setSectionVisibilities(
+                    cb1.isChecked(),
+                    cb2.isChecked(),
+                    cb3.isChecked(),
+                    cb4.isChecked()
+            );
+        };
+
+        cb1.setOnCheckedChangeListener(listener);
+        cb2.setOnCheckedChangeListener(listener);
+        cb3.setOnCheckedChangeListener(listener);
+        cb4.setOnCheckedChangeListener(listener);
+    }
+
+    private void setupFilterListeners() {
+        filterSubtitle.addTextChangedListener(new android.text.TextWatcher() {
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            public void onTextChanged(CharSequence s, int start, int before, int count) { applyFilters(); }
+            public void afterTextChanged(android.text.Editable s) {}
+        });
+
+        filterCategorySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String selectedMainCat = parent.getItemAtPosition(position).toString();
+                updateSubcategoryFilterSpinner(selectedMainCat);
+                applyFilters();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {}
+        });
+
+        filterUrgentlySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                applyFilters();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {}
+        });
+
+        android.widget.CompoundButton.OnCheckedChangeListener cbListener = (buttonView, isChecked) -> applyFilters();
+        filterCbLearning.setOnCheckedChangeListener(cbListener);
+        filterCbGeneral.setOnCheckedChangeListener(cbListener);
+        filterCbToday.setOnCheckedChangeListener(cbListener);
+        filterCbToBuy.setOnCheckedChangeListener(cbListener);
+    }
+
+    private void applyFilters() {
+        String subtitle = filterSubtitle.getText().toString();
+
+        String selectedCat = filterCategorySpinner.getSelectedItem() != null ?
+                filterCategorySpinner.getSelectedItem().toString() : "All Categories";
+
+        String selectedSubcat = filterUrgentlySpinner.getSelectedItem() != null ?
+                filterUrgentlySpinner.getSelectedItem().toString() : "All Subcategories";
+
+        // Filter through adapter
+        adapter.filter(
+                subtitle,
+                selectedCat,
+                selectedSubcat,
+                filterCbLearning.isChecked(),
+                filterCbGeneral.isChecked(),
+                filterCbToday.isChecked(),
+                filterCbToBuy.isChecked(),
+                selectedDates
+        );
+
+        // Update the displayed notes counter
+        updateNotesCountDisplay();
+    }
+
+    private void updateNotesCountDisplay() {
+        if (tvNotesCount != null && adapter != null) {
+            int displayedCount = adapter.getItemCount();
+            int totalCount = adapter.getOriginalList().size();
+            tvNotesCount.setText("Displayed: " + displayedCount + " (Total: " + totalCount + ")");
+        }
+    }
+
+    private void addListeners(){
+        pickDateDeadlineButton.setOnClickListener(v -> {
+            MaterialDatePicker<Long> datePicker = MaterialDatePicker.Builder.datePicker()
+                    .setTitleText("Select a Date")
+                    .setSelection(MaterialDatePicker.todayInUtcMilliseconds())
+                    .build();
+
+
+            datePicker.addOnPositiveButtonClickListener(selection -> {
+                // Ensure date formatting uses UTC to prevent 1-day timezone shifting
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+                sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
+                String formattedDate = sdf.format(new Date(selection));
+
+                dialogDeadlineEditTextLocal.setText(formattedDate);
+            });
+
+            datePicker.show(getSupportFragmentManager(), "MATERIAL_DATE_PICKER");
+        });
+    }
+}
+
+
+================================================================================
+FILE: NotesHistory.java
+================================================================================
+package com.lukaszjag.diet_tracker_android.gui.notes;
+
+import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
+import android.widget.EditText;
+import android.widget.Spinner;
+import android.widget.Toast;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.lukaszjag.diet_tracker_android.R;
+import com.lukaszjag.diet_tracker_android.tools.cloud_data_tools.AzureDataCallback;
+import com.lukaszjag.diet_tracker_android.tools.cloud_data_tools.GetFromSQLDatabase;
+import com.lukaszjag.diet_tracker_android.tools.notes_tool.MyAdapter;
+import com.lukaszjag.diet_tracker_android.tools.notes_tool.Note;
+import com.lukaszjag.diet_tracker_android.tools.notes_tool.categories.NoteCategoryData;
+import com.lukaszjag.diet_tracker_android.tools.sql_tools.QueryMaker;
+import com.lukaszjag.diet_tracker_android.tools.sql_tools.RowInTable;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+public class NotesHistory extends AppCompatActivity {
+
+    private EditText filterSubtitle;
+    private Spinner filterCategorySpinner;
+    private Spinner filterSubcategorySpinner;
+    private Spinner filterStatusSpinner;
+    private CheckBox filterCbLearning, filterCbGeneral, filterCbToday, filterCbToBuy;
+    private RecyclerView recyclerView;
+    private MyAdapter adapter;
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.notes_history_layout);
+
+        filterSubtitle = findViewById(R.id.historyFilterSubtitle);
+        filterCategorySpinner = findViewById(R.id.historyFilterCategorySpinner);
+        filterSubcategorySpinner = findViewById(R.id.historyFilterSubcategorySpinner);
+        filterStatusSpinner = findViewById(R.id.historyStatusFilterSpinner);
+        filterCbLearning = findViewById(R.id.historyFilterCbLearning);
+        filterCbGeneral = findViewById(R.id.historyFilterCbGeneral);
+        filterCbToday = findViewById(R.id.historyFilterCbToday);
+        filterCbToBuy = findViewById(R.id.historyFilterCbToBuy);
+
+        recyclerView = findViewById(R.id.recyclerViewHistory);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        adapter = new MyAdapter();
+        recyclerView.setAdapter(adapter);
+
+        adapter.setOnItemClickListener((position, note) -> showHistoryActionDialog(note));
+
+        setupVisibilityListeners();
+        setupFilterSpinners();
+        setupFilterListeners();
+        fetchHistoryFromAzure();
+    }
+
+    private void setupFilterSpinners() {
+        List<String> mainCategoriesFilter = new ArrayList<>();
+        mainCategoriesFilter.add("All Categories");
+        mainCategoriesFilter.addAll(NoteCategoryData.getMainCategories());
+
+        ArrayAdapter<String> mainCatAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, mainCategoriesFilter);
+        mainCatAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        filterCategorySpinner.setAdapter(mainCatAdapter);
+
+        updateSubcategoryFilterSpinner("All Categories");
+
+        // Status Filter: All, Done, Deleted
+        List<String> statusList = Arrays.asList("All History", "Done Tasks", "Deleted Tasks");
+        ArrayAdapter<String> statusAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, statusList);
+        statusAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        filterStatusSpinner.setAdapter(statusAdapter);
+    }
+
+    private void updateSubcategoryFilterSpinner(String mainCategory) {
+        List<String> subcategoriesFilter = new ArrayList<>();
+        subcategoriesFilter.add("All Subcategories");
+
+        if (mainCategory != null && !mainCategory.equals("All Categories")) {
+            List<String> subs = NoteCategoryData.getSubcategories(mainCategory);
+            if (subs != null && !subs.isEmpty()) {
+                subcategoriesFilter.addAll(subs);
+            }
+        }
+
+        ArrayAdapter<String> subcatAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, subcategoriesFilter);
+        subcatAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        filterSubcategorySpinner.setAdapter(subcatAdapter);
+    }
+
+    private void fetchHistoryFromAzure() {
+        String query = QueryMaker.getAllHistoryNotesQuery();
+        GetFromSQLDatabase.runAzureQueryAIChat(query, new AzureDataCallback() {
+            @Override
+            public void onSuccess(ArrayList<RowInTable> resultTable) {
+                runOnUiThread(() -> {
+                    adapter.clearAll();
+                    for (RowInTable row : resultTable) {
+                        String subcat = row.getValue("subcategory");
+                        if (subcat == null) subcat = "";
+
+                        boolean isDone = "true".equalsIgnoreCase(row.getValue("is_done")) || "1".equals(row.getValue("is_done"));
+                        boolean isDeleted = "true".equalsIgnoreCase(row.getValue("is_deleted")) || "1".equals(row.getValue("is_deleted"));
+
+                        Note note = new Note(
+                                Long.parseLong(row.getValue("id")),
+                                row.getValue("title"),
+                                row.getValue("subtitle"),
+                                row.getValue("description"),
+                                row.getValue("category"),
+                                subcat,
+                                row.getValue("is_urgently"),
+                                "true".equals(row.getValue("is_learning")) || "1".equals(row.getValue("is_learning")),
+                                "true".equals(row.getValue("is_general_to_do")) || "1".equals(row.getValue("is_general_to_do")),
+                                "true".equals(row.getValue("is_today_task")) || "1".equals(row.getValue("is_today_task")),
+                                "true".equals(row.getValue("is_to_buy_task")) || "1".equals(row.getValue("is_to_buy_task")),
+                                isDone,
+                                isDeleted,
+                                null,
+                                row.getValue("date_created"),
+                                row.getValue("date_deadline")
+                        );
+                        adapter.addItem(note);
+                    }
+                    applyFilters();
+                });
+            }
+
+            @Override
+            public void onFailure(String errorMessage) {
+                runOnUiThread(() -> Toast.makeText(NotesHistory.this, "Failed: " + errorMessage, Toast.LENGTH_SHORT).show());
+            }
+        });
+    }
+
+    private void showHistoryActionDialog(Note note) {
+        String statusLabel = note.isDeleted() ? "Status: DELETED" : "Status: DONE";
+
+        new AlertDialog.Builder(this)
+                .setTitle(note.getNoteTitle())
+                .setMessage(statusLabel + "\n\nSubtitle: " + note.getNoteSubtitle() +
+                        "\nDescription: " + note.getNoteDescription() +
+                        "\nCategory: " + note.getNoteCategory() + " / " + note.getNoteSubcategory())
+                .setPositiveButton("Restore to Active", (dialog, which) -> {
+                    String restoreQuery = QueryMaker.restoreNoteQuery(note.getId());
+                    GetFromSQLDatabase.runAzureQueryAIChat(restoreQuery, new AzureDataCallback() {
+                        @Override
+                        public void onSuccess(ArrayList<RowInTable> resultTable) {
+                            runOnUiThread(() -> {
+                                Toast.makeText(NotesHistory.this, "Restored to active notes!", Toast.LENGTH_SHORT).show();
+                                fetchHistoryFromAzure();
+                            });
+                        }
+
+                        @Override
+                        public void onFailure(String errorMessage) {
+                            runOnUiThread(() -> Toast.makeText(NotesHistory.this, "Error: " + errorMessage, Toast.LENGTH_SHORT).show());
+                        }
+                    });
+                })
+                .setNeutralButton("Delete Permanently", (dialog, which) -> {
+                    new AlertDialog.Builder(NotesHistory.this)
+                            .setTitle("Permanent Delete")
+                            .setMessage("Are you sure? This cannot be undone.")
+                            .setPositiveButton("Yes, Delete", (d, w) -> {
+                                String permanentDeleteQuery = QueryMaker.deleteNotePermanentlyQuery(note.getId());
+                                GetFromSQLDatabase.runAzureQueryAIChat(permanentDeleteQuery, new AzureDataCallback() {
+                                    @Override
+                                    public void onSuccess(ArrayList<RowInTable> resultTable) {
+                                        runOnUiThread(() -> {
+                                            Toast.makeText(NotesHistory.this, "Permanently deleted", Toast.LENGTH_SHORT).show();
+                                            fetchHistoryFromAzure();
+                                        });
+                                    }
+
+                                    @Override
+                                    public void onFailure(String errorMessage) {
+                                        runOnUiThread(() -> Toast.makeText(NotesHistory.this, "Error: " + errorMessage, Toast.LENGTH_SHORT).show());
+                                    }
+                                });
+                            })
+                            .setNegativeButton("Cancel", null)
+                            .show();
+                })
+                .setNegativeButton("Close", null)
+                .show();
+    }
+
+    private void setupVisibilityListeners() {
+        CheckBox cb1 = findViewById(R.id.historyHideCbSection1);
+        CheckBox cb2 = findViewById(R.id.historyHideCbSection2);
+        CheckBox cb3 = findViewById(R.id.historyHideCbSection3);
+        CheckBox cb4 = findViewById(R.id.historyHideCbSection4);
+
+        android.widget.CompoundButton.OnCheckedChangeListener listener = (buttonView, isChecked) -> {
+            adapter.setSectionVisibilities(
+                    cb1.isChecked(),
+                    cb2.isChecked(),
+                    cb3.isChecked(),
+                    cb4.isChecked()
+            );
+        };
+
+        cb1.setOnCheckedChangeListener(listener);
+        cb2.setOnCheckedChangeListener(listener);
+        cb3.setOnCheckedChangeListener(listener);
+        cb4.setOnCheckedChangeListener(listener);
+    }
+
+    private void setupFilterListeners() {
+        filterSubtitle.addTextChangedListener(new android.text.TextWatcher() {
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            public void onTextChanged(CharSequence s, int start, int before, int count) { applyFilters(); }
+            public void afterTextChanged(android.text.Editable s) {}
+        });
+
+        filterCategorySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String selectedMainCat = parent.getItemAtPosition(position).toString();
+                updateSubcategoryFilterSpinner(selectedMainCat);
+                applyFilters();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {}
+        });
+
+        filterSubcategorySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                applyFilters();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {}
+        });
+
+        filterStatusSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                applyFilters();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {}
+        });
+
+        android.widget.CompoundButton.OnCheckedChangeListener cbListener = (buttonView, isChecked) -> applyFilters();
+        filterCbLearning.setOnCheckedChangeListener(cbListener);
+        filterCbGeneral.setOnCheckedChangeListener(cbListener);
+        filterCbToday.setOnCheckedChangeListener(cbListener);
+        filterCbToBuy.setOnCheckedChangeListener(cbListener);
+    }
+
+    private void applyFilters() {
+        String subtitle = filterSubtitle.getText().toString();
+
+        String selectedCat = filterCategorySpinner.getSelectedItem() != null ?
+                filterCategorySpinner.getSelectedItem().toString() : "All Categories";
+
+        String selectedSubcat = filterSubcategorySpinner.getSelectedItem() != null ?
+                filterSubcategorySpinner.getSelectedItem().toString() : "All Subcategories";
+
+        String selectedStatus = "ALL";
+        if (filterStatusSpinner.getSelectedItem() != null) {
+            String choice = filterStatusSpinner.getSelectedItem().toString();
+            if ("Done Tasks".equalsIgnoreCase(choice)) {
+                selectedStatus = "DONE";
+            } else if ("Deleted Tasks".equalsIgnoreCase(choice)) {
+                selectedStatus = "DELETED";
+            }
+        }
+
+        adapter.filter(
+                subtitle,
+                selectedCat,
+                selectedSubcat,
+                filterCbLearning.isChecked(),
+                filterCbGeneral.isChecked(),
+                filterCbToday.isChecked(),
+                filterCbToBuy.isChecked(),
+                selectedStatus
+        );
+    }
+}
+
+
+================================================================================
+FILE: NotesCalendarDialog.java
+================================================================================
+package com.lukaszjag.diet_tracker_android.gui.notes.calendar;
+
+import android.app.Dialog;
+import android.content.Context;
+import android.graphics.Color;
+import android.graphics.Typeface;
+import android.graphics.drawable.GradientDrawable;
+import android.util.TypedValue;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
+import android.widget.Button;
+import android.widget.FrameLayout;
+import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.core.graphics.ColorUtils;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.lukaszjag.diet_tracker_android.R;
+import com.lukaszjag.diet_tracker_android.tools.settings.AppSettings;
+import com.lukaszjag.diet_tracker_android.tools.theme.ThemeHelper;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import java.util.Set;
+
+public class NotesCalendarDialog extends Dialog {
+
+    public interface OnCalendarFilterAppliedListener {
+        void onFilterApplied(Set<String> selectedDates);
+    }
+
+    private final Map<String, Integer> notesCountPerDay;
+    private final Set<String> selectedDates;
+    private final OnCalendarFilterAppliedListener listener;
+
+    private Calendar currentDisplayCalendar;
+    private TextView monthYearTextView;
+    private TextView selectedCountTextView;
+    private RecyclerView daysRecyclerView;
+    private CalendarDayAdapter dayAdapter;
+
+    private final int heatmapBaseColor;
+    private final float uiScale;
+    private int maxNotesCountInMonth = 1;
+
+    public NotesCalendarDialog(@NonNull Context context,
+                               Map<String, Integer> notesCountPerDay,
+                               Set<String> currentlySelectedDates,
+                               OnCalendarFilterAppliedListener listener) {
+        super(context);
+        this.notesCountPerDay = notesCountPerDay;
+        this.selectedDates = new HashSet<>(currentlySelectedDates);
+        this.listener = listener;
+
+        this.heatmapBaseColor = AppSettings.getCalendarHeatmapColor(context);
+        this.uiScale = AppSettings.getCalendarScale(context);
+
+        init();
+    }
+
+    private void init() {
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        setContentView(R.layout.dialog_notes_calendar);
+
+        if (getWindow() != null) {
+            getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        }
+
+        // Starts at CURRENT month
+        currentDisplayCalendar = Calendar.getInstance();
+        currentDisplayCalendar.set(Calendar.DAY_OF_MONTH, 1);
+
+        monthYearTextView = findViewById(R.id.calMonthYearTextView);
+        selectedCountTextView = findViewById(R.id.calSelectedCountTextView);
+        daysRecyclerView = findViewById(R.id.calDaysRecyclerView);
+
+        Button prevBtn = findViewById(R.id.calPrevMonthButton);
+        Button nextBtn = findViewById(R.id.calNextMonthButton);
+        Button uncheckAllBtn = findViewById(R.id.calBtnUncheckAll);
+        Button applyBtn = findViewById(R.id.calBtnApply);
+
+        // Apply UI Scale to dialog elements
+        monthYearTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16 * uiScale);
+        uncheckAllBtn.setTextSize(TypedValue.COMPLEX_UNIT_SP, 11 * uiScale);
+        applyBtn.setTextSize(TypedValue.COMPLEX_UNIT_SP, 11 * uiScale);
+
+        // Apply theme to dialog buttons
+        ThemeHelper.applyColorToButton(applyBtn, AppSettings.getButtonColor(getContext()));
+
+        // Month Navigation
+        prevBtn.setOnClickListener(v -> {
+            currentDisplayCalendar.add(Calendar.MONTH, -1);
+            updateCalendar();
+        });
+
+        nextBtn.setOnClickListener(v -> {
+            currentDisplayCalendar.add(Calendar.MONTH, 1);
+            updateCalendar();
+        });
+
+        // Uncheck all days button
+        uncheckAllBtn.setOnClickListener(v -> {
+            selectedDates.clear();
+            dayAdapter.notifyDataSetChanged();
+            updateSelectedCountLabel();
+        });
+
+        // Apply filter button
+        applyBtn.setOnClickListener(v -> {
+            if (listener != null) {
+                listener.onFilterApplied(new HashSet<>(selectedDates));
+            }
+            dismiss();
+        });
+
+        daysRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 7));
+        updateCalendar();
+    }
+
+    private void updateCalendar() {
+        SimpleDateFormat sdf = new SimpleDateFormat("MMMM yyyy", Locale.getDefault());
+        monthYearTextView.setText(sdf.format(currentDisplayCalendar.getTime()));
+
+        // Calculate leading blanks (Monday-first: Mon=0 ... Sun=6)
+        Calendar temp = (Calendar) currentDisplayCalendar.clone();
+        temp.set(Calendar.DAY_OF_MONTH, 1);
+        int firstDayOfWeek = temp.get(Calendar.DAY_OF_WEEK); // Sun=1, Mon=2
+        int offset = (firstDayOfWeek == Calendar.SUNDAY) ? 6 : (firstDayOfWeek - Calendar.MONDAY);
+
+        int daysInMonth = currentDisplayCalendar.getActualMaximum(Calendar.DAY_OF_MONTH);
+
+        // Find max notes count in displayed month for proper gradient scaling
+        int maxNotes = 1;
+        int year = currentDisplayCalendar.get(Calendar.YEAR);
+        int month = currentDisplayCalendar.get(Calendar.MONTH) + 1;
+        for (int day = 1; day <= daysInMonth; day++) {
+            String dateKey = String.format(Locale.getDefault(), "%04d-%02d-%02d", year, month, day);
+            Integer count = notesCountPerDay.get(dateKey);
+            if (count != null && count > maxNotes) {
+                maxNotes = count;
+            }
+        }
+        this.maxNotesCountInMonth = maxNotes;
+
+        List<Integer> dayNumbers = new ArrayList<>();
+        for (int i = 0; i < offset; i++) {
+            dayNumbers.add(0); // empty cell placeholder
+        }
+        for (int day = 1; day <= daysInMonth; day++) {
+            dayNumbers.add(day);
+        }
+
+        dayAdapter = new CalendarDayAdapter(dayNumbers);
+        daysRecyclerView.setAdapter(dayAdapter);
+        updateSelectedCountLabel();
+    }
+
+    private void updateSelectedCountLabel() {
+        if (selectedDates.isEmpty()) {
+            selectedCountTextView.setText("No days selected (Showing all notes)");
+        } else {
+            selectedCountTextView.setText("Selected: " + selectedDates.size() + " day(s)");
+        }
+    }
+
+    // --- Grid Adapter for Days ---
+    private class CalendarDayAdapter extends RecyclerView.Adapter<CalendarDayAdapter.DayViewHolder> {
+        private final List<Integer> days;
+
+        public CalendarDayAdapter(List<Integer> days) {
+            this.days = days;
+        }
+
+        @NonNull
+        @Override
+        public DayViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_calendar_day, parent, false);
+            // Apply scale to cell height
+            ViewGroup.LayoutParams lp = view.getLayoutParams();
+            if (lp != null) {
+                float density = getContext().getResources().getDisplayMetrics().density;
+                lp.height = (int) (44 * density * uiScale);
+                view.setLayoutParams(lp);
+            }
+            return new DayViewHolder(view);
+        }
+
+        @Override
+        public void onBindViewHolder(@NonNull DayViewHolder holder, int position) {
+            int dayNumber = days.get(position);
+            if (dayNumber == 0) {
+                holder.root.setVisibility(View.INVISIBLE);
+                holder.root.setOnClickListener(null);
+                return;
+            }
+
+            holder.root.setVisibility(View.VISIBLE);
+            holder.tvDayNumber.setText(String.valueOf(dayNumber));
+            holder.tvDayNumber.setTextSize(TypedValue.COMPLEX_UNIT_SP, 13 * uiScale);
+
+            Calendar dayCal = (Calendar) currentDisplayCalendar.clone();
+            dayCal.set(Calendar.DAY_OF_MONTH, dayNumber);
+            boolean isSunday = (dayCal.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY);
+
+            // Sunday number MUST be dark red (#8B0000)
+            if (isSunday) {
+                holder.tvDayNumber.setTextColor(Color.parseColor("#8B0000"));
+                holder.tvDayNumber.setTypeface(null, Typeface.BOLD);
+            } else {
+                holder.tvDayNumber.setTextColor(Color.parseColor("#222222"));
+                holder.tvDayNumber.setTypeface(null, Typeface.NORMAL);
+            }
+
+            // Date string yyyy-MM-dd
+            int year = currentDisplayCalendar.get(Calendar.YEAR);
+            int month = currentDisplayCalendar.get(Calendar.MONTH) + 1;
+            String dateKey = String.format(Locale.getDefault(), "%04d-%02d-%02d", year, month, dayNumber);
+
+            // Note count heatmap calculation
+            int noteCount = 0;
+            if (notesCountPerDay.containsKey(dateKey)) {
+                noteCount = notesCountPerDay.get(dateKey);
+            }
+
+            int backgroundColor;
+            if (noteCount == 0) {
+                // White if none
+                backgroundColor = Color.WHITE;
+            } else {
+                // More intensive color as notes increase
+                float intensity = 0.25f + 0.75f * ((float) noteCount / Math.max(1, maxNotesCountInMonth));
+                backgroundColor = ColorUtils.blendARGB(Color.WHITE, heatmapBaseColor, Math.min(1.0f, intensity));
+            }
+
+            // Selection state
+            boolean isSelected = selectedDates.contains(dateKey);
+            GradientDrawable borderDrawable = new GradientDrawable();
+            borderDrawable.setColor(backgroundColor);
+
+            float density = getContext().getResources().getDisplayMetrics().density;
+            if (isSelected) {
+                borderDrawable.setStroke((int) (2.5f * density), Color.parseColor("#1565C0"));
+                holder.ivCheck.setVisibility(View.VISIBLE);
+            } else {
+                borderDrawable.setStroke((int) (0.5f * density), Color.parseColor("#E0E0E0"));
+                holder.ivCheck.setVisibility(View.GONE);
+            }
+            holder.root.setBackground(borderDrawable);
+
+            // Toggle date selection on click
+            holder.root.setOnClickListener(v -> {
+                if (selectedDates.contains(dateKey)) {
+                    selectedDates.remove(dateKey);
+                } else {
+                    selectedDates.add(dateKey);
+                }
+                notifyItemChanged(position);
+                updateSelectedCountLabel();
+            });
+        }
+
+        @Override
+        public int getItemCount() {
+            return days.size();
+        }
+
+        class DayViewHolder extends RecyclerView.ViewHolder {
+            FrameLayout root;
+            TextView tvDayNumber;
+            TextView ivCheck;
+
+            public DayViewHolder(@NonNull View itemView) {
+                super(itemView);
+                root = itemView.findViewById(R.id.calDayRoot);
+                tvDayNumber = itemView.findViewById(R.id.calDayNumberTextView);
+                ivCheck = itemView.findViewById(R.id.calDayCheckIndicator);
+            }
+        }
+    }
+}
+
+
+
+
+================================================================================
+FILE: dialog_note.xml
+================================================================================
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            android:text="Create note details"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/dialogTitle"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:hint="Title"
+            android:inputType="textCapSentences" />
+
+        <EditText
+            android:id="@+id/dialogSubtitle"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:hint="Subtitle"
+            android:inputType="textCapSentences" />
+
+        <EditText
+            android:id="@+id/dialogDescription"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:hint="Description"
+            android:inputType="textMultiLine"
+            android:minLines="2" />
+
+        <GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/gridview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:columnCount="2"
+            android:rowCount="2">
+
+            <!-- Row 0, Column 0 -->
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="30dp"
+                android:layout_rowWeight="1"
+                android:layout_columnWeight="1"
+                android:layout_gravity="fill"
+                android:gravity="center_vertical"
+                android:text="Main Category:"
+                android:textColor="#555555"
+                android:textSize="14sp" />
+
+            <!-- Row 0, Column 1 -->
+            <Spinner
+                android:id="@+id/dialogSpinnerCategory"
+                android:layout_width="0dp"
+                android:layout_height="30dp"
+                android:layout_rowWeight="1"
+                android:layout_columnWeight="1"
+                android:layout_gravity="fill" />
+
+            <!-- Row 1, Column 0 -->
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="30dp"
+                android:layout_rowWeight="1"
+                android:layout_columnWeight="1"
+                android:layout_gravity="fill"
+                android:gravity="center_vertical"
+                android:text="Subcategory:"
+                android:textColor="#555555"
+                android:textSize="14sp" />
+
+            <!-- Row 1, Column 1 -->
+            <Spinner
+                android:id="@+id/dialogSpinnerSubcategory"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_rowWeight="1"
+                android:layout_columnWeight="1"
+                android:layout_gravity="fill" />
+
+        </GridLayout>
+
+        <GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/gridview2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:columnCount="2"
+            android:rowCount="2">
+
+            <CheckBox
+                android:id="@+id/dialogCbLearning"
+                android:layout_width="0dp"
+                android:layout_height="30dp"
+                android:layout_rowWeight="1"
+                android:layout_columnWeight="1"
+                android:layout_gravity="fill"
+                android:text="Is Learning Task" />
+
+            <CheckBox
+                android:id="@+id/dialogCbGeneral"
+                android:layout_width="0dp"
+                android:layout_height="30dp"
+                android:layout_rowWeight="1"
+                android:layout_columnWeight="1"
+                android:layout_gravity="fill"
+                android:text="Is General To-Do" />
+
+            <CheckBox
+                android:id="@+id/dialogCbToday"
+                android:layout_width="0dp"
+                android:layout_height="30dp"
+                android:layout_rowWeight="1"
+                android:layout_columnWeight="1"
+                android:layout_gravity="fill"
+                android:text="Is Today Task" />
+
+            <CheckBox
+                android:id="@+id/dialogCbToBuy"
+                android:layout_width="0dp"
+                android:layout_height="30dp"
+                android:layout_rowWeight="1"
+                android:layout_columnWeight="1"
+                android:layout_gravity="fill"
+                android:text="Is To Buy Task" />
+        </GridLayout>
+
+        <EditText
+            android:id="@+id/dialogDeadline"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:clickable="true"
+            android:focusable="false"
+            android:hint="Deadline Date (Tap to select)" />
+
+        <Button
+            android:id="@+id/pickDaedlineButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Add deadline" />
+
+        <LinearLayout
+            android:id="@+id/dialogActionButtonsLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+            <Button
+                android:id="@+id/dialogBtnMarkAsDone"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="4dp"
+                android:layout_weight="1"
+                android:backgroundTint="#2E7D32"
+                android:text="Done ✓"
+                android:textColor="#FFFFFF" />
+
+            <Button
+                android:id="@+id/dialogBtnDelete"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:layout_weight="1"
+                android:backgroundTint="#C62828"
+                android:text="Delete 🗑"
+                android:textColor="#FFFFFF" />
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>
+
+
+================================================================================
+FILE: item_layout.xml
+================================================================================
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    android:background="#EEEEEE"
+    android:elevation="2dp"
+    android:orientation="vertical"
+    android:padding="12dp">
+
+    <!-- Note Index at the Top-Left Corner -->
+    <TextView
+        android:id="@+id/tvNoteIndex"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#1565C0"
+        android:textSize="11sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="2dp" />
+
+    <!-- Section 1: Title, Subtitle, Description -->
+    <LinearLayout
+        android:id="@+id/section1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#000000"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#555555"
+            android:textSize="11sp"
+            android:layout_marginTop="2dp" />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#888888"
+            android:textSize="9sp"
+            android:layout_marginTop="4dp" />
+    </LinearLayout>
+
+    <!-- Section 2: Category and Urgently fields -->
+    <LinearLayout
+        android:id="@+id/section2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="1dp">
+
+        <TextView
+            android:id="@+id/tvCategory"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:textColor="#2E7D32"
+            android:textSize="9sp"
+            android:text="Category: -" />
+
+        <TextView
+            android:id="@+id/tvUrgently"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:textColor="#C62828"
+            android:textSize="9sp"
+            android:text="Urgently: -" />
+    </LinearLayout>
+
+    <!-- Section 3: Status Checkboxes -->
+    <LinearLayout
+        android:id="@+id/section3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="1dp">
+
+        <CheckBox
+            android:id="@+id/cbIsLearning"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Learning"
+            android:textSize="8sp"
+            android:clickable="false"
+            android:focusable="false"
+            android:scaleX="0.85"
+            android:scaleY="0.85"/>
+
+        <CheckBox
+            android:id="@+id/cbIsGeneralToDo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="General"
+            android:textSize="8sp"
+            android:clickable="false"
+            android:focusable="false"
+            android:scaleX="0.85"
+            android:scaleY="0.85"/>
+
+        <CheckBox
+            android:id="@+id/cbIsTodayTask"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Today"
+            android:textSize="8sp"
+            android:clickable="false"
+            android:focusable="false"
+            android:scaleX="0.85"
+            android:scaleY="0.85"/>
+
+        <CheckBox
+            android:id="@+id/cbIsToBuy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="To Buy"
+            android:textSize="8sp"
+            android:clickable="false"
+            android:focusable="false"
+            android:scaleX="0.85"
+            android:scaleY="0.85"/>
+    </LinearLayout>
+
+    <!-- Section 4: Creation Dates and Calculations -->
+    <LinearLayout
+        android:id="@+id/section4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="1dp">
+
+        <TextView
+            android:id="@+id/tvDates"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#666666"
+            android:textSize="10sp"
+            android:text="Created: - | Deadline: -" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1"/>
+
+        <TextView
+            android:id="@+id/tvDaysSince"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#D32F2F"
+            android:textSize="10sp"
+            android:textStyle="italic"
+            android:text="0 days since create" />
+    </LinearLayout>
+</LinearLayout>
+
+
+================================================================================
+FILE: notes_history_layout.xml
+================================================================================
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbarHistory"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Notes History (Done &amp; Deleted)"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <LinearLayout
+        android:id="@+id/filterLayoutHistory"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/toolbarHistory"
+        android:orientation="vertical"
+        android:padding="8dp"
+        android:background="#F5F5F5">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Filter list by:"
+            android:textStyle="bold"
+            android:textSize="12sp"
+            android:textColor="#555555"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="3">
+
+            <EditText
+                android:id="@+id/historyFilterSubtitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="Subtitle"
+                android:textSize="12sp"
+                android:inputType="text" />
+
+            <Spinner
+                android:id="@+id/historyFilterCategorySpinner"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                style="?android:attr/spinnerStyle"
+                android:layout_gravity="center_vertical" />
+
+            <Spinner
+                android:id="@+id/historyFilterSubcategorySpinner"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_gravity="center_vertical" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="4dp">
+
+            <CheckBox
+                android:id="@+id/historyFilterCbLearning"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Learning"
+                android:textSize="12sp" />
+
+            <CheckBox
+                android:id="@+id/historyFilterCbGeneral"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="General"
+                android:textSize="12sp" />
+
+            <CheckBox
+                android:id="@+id/historyFilterCbToday"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Today"
+                android:textSize="12sp" />
+
+            <CheckBox
+                android:id="@+id/historyFilterCbToBuy"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="To Buy"
+                android:textSize="12sp" />
+
+        </LinearLayout>
+
+        <!-- Status Filter: All History, Done, Deleted -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="4dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Status:"
+                android:textStyle="bold"
+                android:textSize="12sp"
+                android:textColor="#555555"
+                android:layout_gravity="center_vertical"/>
+
+            <Spinner
+                android:id="@+id/historyStatusFilterSpinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp" />
+        </LinearLayout>
+
+        <!-- Toggle Section Visibilities -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="4dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Hide Section:"
+                android:textStyle="bold"
+                android:textSize="12sp"
+                android:textColor="#555555"
+                android:layout_gravity="center_vertical"/>
+
+            <CheckBox
+                android:id="@+id/historyHideCbSection1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="1"
+                android:textSize="12sp" />
+
+            <CheckBox
+                android:id="@+id/historyHideCbSection2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2"
+                android:textSize="12sp" />
+
+            <CheckBox
+                android:id="@+id/historyHideCbSection3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="3"
+                android:textSize="12sp" />
+
+            <CheckBox
+                android:id="@+id/historyHideCbSection4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="4"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewHistory"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="vertical"
+        android:layout_below="@id/filterLayoutHistory"/>
+
+</RelativeLayout>
+
+
+================================================================================
+FILE: notes_view_layout.xml
+================================================================================
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme">
+
+        <TextView
+            android:id="@+id/tvToolbarTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Notes"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginEnd="16dp"
+            android:text="Add" />
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <LinearLayout
+        android:id="@+id/filterLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/toolbar2"
+        android:orientation="vertical"
+        android:padding="8dp"
+        android:background="#F5F5F5">
+
+        <!-- Header Row with "Filter list by:" and Notes Count -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Filter list by:"
+                android:textStyle="bold"
+                android:textSize="12sp"
+                android:textColor="#555555"/>
+
+            <!-- Displays the number of notes matching current filters -->
+            <TextView
+                android:id="@+id/tvNotesCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Displayed: 0 (Total: 0)"
+                android:textStyle="bold"
+                android:textSize="12sp"
+                android:textColor="#1565C0"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="4dp"
+            android:weightSum="3">
+
+            <EditText
+                android:id="@+id/filterSubtitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="Subtitle"
+                android:textSize="12sp"
+                android:inputType="text" />
+
+            <Spinner
+                android:id="@+id/filterCategorySpinner"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                style="?android:attr/spinnerStyle"
+                android:text="All Categories"
+                android:textSize="11sp"
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:layout_gravity="center_vertical" />
+
+            <Spinner
+                android:id="@+id/filterUrgentlySpinner"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_gravity="center_vertical" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="4dp">
+
+            <CheckBox
+                android:id="@+id/filterCbLearning"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Learning"
+                android:textSize="12sp" />
+
+            <CheckBox
+                android:id="@+id/filterCbGeneral"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="General"
+                android:textSize="12sp" />
+
+            <CheckBox
+                android:id="@+id/filterCbToday"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Today"
+                android:textSize="12sp" />
+
+            <CheckBox
+                android:id="@+id/filterCbToBuy"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="To Buy"
+                android:textSize="12sp" />
+
+        </LinearLayout>
+
+        <!-- Date Creation Filter Row -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginTop="4dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Date Filter:"
+                android:textStyle="bold"
+                android:textSize="12sp"
+                android:textColor="#555555"/>
+
+            <Button
+                android:id="@+id/btnCalendarFilter"
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="0dp"
+                android:layout_height="36dp"
+                android:layout_weight="1"
+                android:layout_marginStart="8dp"
+                android:text="📅 Choose Dates (All)"
+                android:textSize="11sp"/>
+
+            <Button
+                android:id="@+id/btnClearDateFilter"
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="36dp"
+                android:layout_marginStart="4dp"
+                android:text="✕ Clear"
+                android:textSize="11sp"
+                android:visibility="gone"/>
+        </LinearLayout>
+
+        <!-- Toggle Section Visibilities -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="4dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Hide Section:"
+                android:textStyle="bold"
+                android:textSize="12sp"
+                android:textColor="#555555"
+                android:layout_gravity="center_vertical"/>
+
+            <CheckBox
+                android:id="@+id/hideCbSection1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="1"
+                android:textSize="12sp" />
+
+            <CheckBox
+                android:id="@+id/hideCbSection2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2"
+                android:textSize="12sp" />
+
+            <CheckBox
+                android:id="@+id/hideCbSection3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="3"
+                android:textSize="12sp" />
+
+            <CheckBox
+                android:id="@+id/hideCbSection4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="4"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <!-- Sorting Section -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="4dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Sort by:"
+                android:textStyle="bold"
+                android:textSize="12sp"
+                android:textColor="#555555"
+                android:layout_gravity="center_vertical"/>
+
+            <Spinner
+                android:id="@+id/sortSpinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="vertical"
+        android:layout_below="@id/filterLayout"/>
+</RelativeLayout>
+
+
+================================================================================
+FILE: MyAdapter.java
+================================================================================
+package com.lukaszjag.diet_tracker_android.tools.notes_tool;
+
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.lukaszjag.diet_tracker_android.R;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Set;
+
+public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
+
+    public static final int SORT_NONE = 0;
+    public static final int SORT_DATE_NEWEST = 1;
+    public static final int SORT_DATE_OLDEST = 2;
+    public static final int SORT_URGENCY_HIGH = 3;
+    public static final int SORT_URGENCY_LOW = 4;
+
+    public interface OnItemClickListener {
+        void onItemClick(int position, Note note);
+    }
+
+    // --- VIEWHOLDER ---
+    public static class MyViewHolder extends RecyclerView.ViewHolder {
+        public TextView tvNoteIndex;
+        public TextView tv1, tv2, tv3, tvCategory, tvUrgently, tvDates, tvDaysSince;
+        public CheckBox cbIsLearning, cbIsGeneralToDo, cbIsTodayTask, cbIsToBuy;
+        public View section1, section2, section3, section4;
+
+        public MyViewHolder(@NonNull View itemView) {
+            super(itemView);
+            tvNoteIndex = itemView.findViewById(R.id.tvNoteIndex);
+            tv1 = itemView.findViewById(R.id.textView1);
+            tv2 = itemView.findViewById(R.id.textView2);
+            tv3 = itemView.findViewById(R.id.textView3);
+            tvCategory = itemView.findViewById(R.id.tvCategory);
+            tvUrgently = itemView.findViewById(R.id.tvUrgently);
+            tvDates = itemView.findViewById(R.id.tvDates);
+            tvDaysSince = itemView.findViewById(R.id.tvDaysSince);
+            cbIsLearning = itemView.findViewById(R.id.cbIsLearning);
+            cbIsGeneralToDo = itemView.findViewById(R.id.cbIsGeneralToDo);
+            cbIsTodayTask = itemView.findViewById(R.id.cbIsTodayTask);
+            cbIsToBuy = itemView.findViewById(R.id.cbIsToBuy);
+
+            section1 = itemView.findViewById(R.id.section1);
+            section2 = itemView.findViewById(R.id.section2);
+            section3 = itemView.findViewById(R.id.section3);
+            section4 = itemView.findViewById(R.id.section4);
+        }
+    }
+
+    private List<Note> noteList;
+    private List<Note> originalList;
+    private OnItemClickListener listener;
+
+    private boolean hideSection1 = false;
+    private boolean hideSection2 = false;
+    private boolean hideSection3 = false;
+    private boolean hideSection4 = false;
+
+    private int sortCriteria = SORT_NONE;
+
+    public MyAdapter() {
+        this.noteList = new ArrayList<>();
+        this.originalList = new ArrayList<>();
+    }
+
+    public List<Note> getOriginalList() {
+        return originalList;
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.listener = listener;
+    }
+
+    public void setSectionVisibilities(boolean hideS1, boolean hideS2, boolean hideS3, boolean hideS4) {
+        this.hideSection1 = hideS1;
+        this.hideSection2 = hideS2;
+        this.hideSection3 = hideS3;
+        this.hideSection4 = hideS4;
+        notifyDataSetChanged();
+    }
+
+    public void setSortCriteria(int criteria) {
+        this.sortCriteria = criteria;
+        applySort();
+        notifyDataSetChanged();
+    }
+
+    public void addItem(Note note) {
+        noteList.add(note);
+        originalList.add(note);
+        applySort();
+        notifyItemInserted(noteList.indexOf(note));
+    }
+
+    public void setItem(int position, Note note) {
+        if (position >= 0 && position < noteList.size()) {
+            Note oldNote = noteList.get(position);
+            int origIdx = originalList.indexOf(oldNote);
+            if (origIdx != -1) originalList.set(origIdx, note);
+            noteList.set(position, note);
+            applySort();
+            notifyDataSetChanged();
+        }
+    }
+
+    public void deleteItem(int position) {
+        if (position >= 0 && position < noteList.size()) {
+            Note note = noteList.get(position);
+            originalList.remove(note);
+            noteList.remove(position);
+            notifyItemRemoved(position);
+            notifyItemRangeChanged(position, noteList.size());
+        }
+    }
+
+    private void applySort() {
+        if (sortCriteria == SORT_NONE) return;
+        Collections.sort(noteList, (n1, n2) -> {
+            switch (sortCriteria) {
+                case SORT_DATE_NEWEST:
+                    return (n2.getDateCreated() != null ? n2.getDateCreated() : "")
+                            .compareTo(n1.getDateCreated() != null ? n1.getDateCreated() : "");
+                case SORT_DATE_OLDEST:
+                    return (n1.getDateCreated() != null ? n1.getDateCreated() : "")
+                            .compareTo(n2.getDateCreated() != null ? n2.getDateCreated() : "");
+                case SORT_URGENCY_HIGH:
+                    return Integer.compare(getUrgencyWeight(n2), getUrgencyWeight(n1));
+                case SORT_URGENCY_LOW:
+                    return Integer.compare(getUrgencyWeight(n1), getUrgencyWeight(n2));
+                default:
+                    return 0;
+            }
+        });
+    }
+
+    private int getUrgencyWeight(Note note) {
+        if (note == null) return 0;
+        int idx = note.getUrgentScaleEnglish().indexOf(note.getNoteUrgently());
+        return (idx != -1) ? idx : 0;
+    }
+
+    public void filter(String subtitle, String selectedMainCategory, String selectedSubcategory,
+                       boolean showLearningOnly, boolean showGeneralOnly, boolean showTodayOnly, boolean showToBuyOnly) {
+        filter(subtitle, selectedMainCategory, selectedSubcategory, showLearningOnly, showGeneralOnly, showTodayOnly, showToBuyOnly, "ALL", null);
+    }
+
+    public void filter(String subtitle, String selectedMainCategory, String selectedSubcategory,
+                       boolean showLearningOnly, boolean showGeneralOnly, boolean showTodayOnly, boolean showToBuyOnly,
+                       Set<String> selectedDates) {
+        filter(subtitle, selectedMainCategory, selectedSubcategory, showLearningOnly, showGeneralOnly, showTodayOnly, showToBuyOnly, "ALL", selectedDates);
+    }
+
+    public void filter(String subtitle, String selectedMainCategory, String selectedSubcategory,
+                       boolean showLearningOnly, boolean showGeneralOnly, boolean showTodayOnly, boolean showToBuyOnly,
+                       String statusFilter) {
+        filter(subtitle, selectedMainCategory, selectedSubcategory, showLearningOnly, showGeneralOnly, showTodayOnly, showToBuyOnly, statusFilter, null);
+    }
+
+    public void filter(String subtitle, String selectedMainCategory, String selectedSubcategory,
+                       boolean showLearningOnly, boolean showGeneralOnly, boolean showTodayOnly, boolean showToBuyOnly,
+                       String statusFilter, Set<String> selectedDates) {
+        noteList.clear();
+        String qSub = (subtitle != null) ? subtitle.toLowerCase().trim() : "";
+        boolean isAllCategories = (selectedMainCategory == null || selectedMainCategory.equals("All Categories"));
+        boolean isAllSubcategories = (selectedSubcategory == null || selectedSubcategory.equals("All Subcategories"));
+
+        boolean hasDateFilter = (selectedDates != null && !selectedDates.isEmpty());
+
+        for (Note note : originalList) {
+            boolean matchSub = qSub.isEmpty() || (note.getNoteSubtitle() != null && note.getNoteSubtitle().toLowerCase().contains(qSub));
+
+            boolean matchCat = true;
+            if (!isAllCategories) {
+                matchCat = note.getNoteCategory() != null && note.getNoteCategory().equalsIgnoreCase(selectedMainCategory.trim());
+                if (matchCat && !isAllSubcategories) {
+                    matchCat = note.getNoteSubcategory() != null && note.getNoteSubcategory().equalsIgnoreCase(selectedSubcategory.trim());
+                }
+            }
+
+            boolean matchLearning = !showLearningOnly || note.isLearning();
+            boolean matchGeneral = !showGeneralOnly || note.isGeneralToDo();
+            boolean matchToday = !showTodayOnly || note.isTodayTask();
+            boolean matchToBuy = !showToBuyOnly || note.isToBuyTask();
+
+            boolean matchStatus = true;
+            if ("DONE".equalsIgnoreCase(statusFilter)) {
+                matchStatus = note.isDone();
+            } else if ("DELETED".equalsIgnoreCase(statusFilter)) {
+                matchStatus = note.isDeleted();
+            }
+
+            boolean matchDate = true;
+            if (hasDateFilter) {
+                String created = note.getDateCreated();
+                if (created != null && created.length() >= 10) {
+                    created = created.substring(0, 10);
+                }
+                matchDate = (created != null && selectedDates.contains(created));
+            }
+
+            if (matchSub && matchCat && matchLearning && matchGeneral && matchToday && matchToBuy && matchStatus && matchDate) {
+                noteList.add(note);
+            }
+        }
+        applySort();
+        notifyDataSetChanged();
+    }
+
+    @NonNull
+    @Override
+    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_layout, parent, false);
+        return new MyViewHolder(view);
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
+        Note currentItem = noteList.get(position);
+
+        // Display the database ID from Azure SQL (id column)
+        if (holder.tvNoteIndex != null) {
+            holder.tvNoteIndex.setText("#" + currentItem.getId());
+        }
+
+        holder.section1.setVisibility(hideSection1 ? View.GONE : View.VISIBLE);
+        holder.section2.setVisibility(hideSection2 ? View.GONE : View.VISIBLE);
+        holder.section3.setVisibility(hideSection3 ? View.GONE : View.VISIBLE);
+        holder.section4.setVisibility(hideSection4 ? View.GONE : View.VISIBLE);
+
+        String titlePrefix = "";
+        holder.tv1.setPaintFlags(holder.tv1.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
+        holder.tv1.setTextColor(Color.BLACK);
+
+        if (currentItem.isDeleted()) {
+            titlePrefix = "[DELETED] ";
+            holder.tv1.setTextColor(Color.RED);
+            holder.tv1.setPaintFlags(holder.tv1.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+        } else if (currentItem.isDone()) {
+            titlePrefix = "[DONE ✓] ";
+            holder.tv1.setTextColor(Color.parseColor("#2E7D32"));
+        }
+
+        holder.tv1.setText(titlePrefix + currentItem.getNoteTitle());
+        holder.tv2.setText(currentItem.getNoteSubtitle());
+        holder.tv3.setText(currentItem.getNoteDescription());
+
+        String catDisplay = (currentItem.getNoteCategory() != null && !currentItem.getNoteCategory().isEmpty())
+                ? currentItem.getNoteCategory() : "-";
+        if (currentItem.getNoteSubcategory() != null && !currentItem.getNoteSubcategory().trim().isEmpty()) {
+            catDisplay += " / " + currentItem.getNoteSubcategory();
+        }
+        holder.tvCategory.setText("Category: " + catDisplay);
+
+        holder.tvUrgently.setText("Urgently: " + (currentItem.getNoteUrgently() != null ? currentItem.getNoteUrgently() : "-"));
+
+        holder.cbIsLearning.setChecked(currentItem.isLearning());
+        holder.cbIsGeneralToDo.setChecked(currentItem.isGeneralToDo());
+        holder.cbIsTodayTask.setChecked(currentItem.isTodayTask());
+        holder.cbIsToBuy.setChecked(currentItem.isToBuyTask());
+
+        String createdDate = currentItem.getDateCreated() != null ? currentItem.getDateCreated() : "-";
+        String deadlineDate = (currentItem.getDateDeadline() != null && !currentItem.getDateDeadline().isEmpty())
+                ? currentItem.getDateDeadline() : "None";
+        holder.tvDates.setText("Created: " + createdDate + " | Deadline: " + deadlineDate);
+        holder.tvDaysSince.setText(currentItem.getDaysSinceCreation() + " days since create");
+
+        holder.itemView.setOnClickListener(v -> {
+            int pos = holder.getAdapterPosition();
+            if (listener != null && pos != RecyclerView.NO_POSITION) listener.onItemClick(pos, noteList.get(pos));
+        });
+    }
+
+    @Override
+    public int getItemCount() {
+        return noteList.size();
+    }
+
+    public void clearAll() {
+        this.noteList.clear();
+        this.originalList.clear();
+        notifyDataSetChanged();
+    }
+}
+
+
+================================================================================
+FILE: Note.java
+================================================================================
+package com.lukaszjag.diet_tracker_android.tools.notes_tool;
+
+import com.lukaszjag.diet_tracker_android.tools.notes_tool.categories.learning_categories.LearningCategories;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.Locale;
+import java.util.concurrent.TimeUnit;
+
+public class Note {
+    private String noteTitle;
+    private String noteSubtitle;
+    private String noteDescription;
+    private String noteCategory;
+    private String noteSubcategory;
+    private String noteUrgently;
+
+    private LearningCategories noteLearningCategories;
+    private boolean isLearning;
+    private boolean isGeneralToDo;
+    private boolean isTodayTask;
+    private boolean isToBuyTask;
+
+    // Status flags
+    private boolean isDone;
+    private boolean isDeleted;
+
+    private String dateCreated;
+    private String dateDeadline;
+    private long id;
+    private ArrayList<String> urgentScaleEnglish = new ArrayList<>(Arrays.asList(
+            "no urgent scale",
+            "Day task",
+            "ASAP",
+            "To end of month",
+            "Week to done",
+            "Optional"));
+
+    public Note() {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+        this.dateCreated = sdf.format(new Date());
+        this.dateDeadline = "";
+        this.noteCategory = "Java ecosystem";
+        this.noteSubcategory = "Java";
+        this.noteUrgently = "no urgent scale";
+        this.isDone = false;
+        this.isDeleted = false;
+    }
+
+    public Note(String noteTitle, String noteSubtitle, String noteDescription) {
+        this();
+        this.noteTitle = noteTitle;
+        this.noteSubtitle = noteSubtitle;
+        this.noteDescription = noteDescription;
+    }
+
+    public Note(long id, String noteTitle, String noteSubtitle, String noteDescription,
+                String noteCategory, String noteSubcategory, String noteUrgently,
+                boolean isLearning, boolean isGeneralToDo, boolean isTodayTask, boolean isToBuyTask,
+                boolean isDone, boolean isDeleted,
+                LearningCategories noteLearningCategories, String dateCreated, String dateDeadline) {
+        this.id = id;
+        this.noteTitle = noteTitle;
+        this.noteSubtitle = noteSubtitle;
+        this.noteDescription = noteDescription;
+        this.noteCategory = noteCategory;
+        this.noteSubcategory = (noteSubcategory != null) ? noteSubcategory : "";
+        this.noteUrgently = noteUrgently;
+        this.isLearning = isLearning;
+        this.isGeneralToDo = isGeneralToDo;
+        this.isTodayTask = isTodayTask;
+        this.isToBuyTask = isToBuyTask;
+        this.isDone = isDone;
+        this.isDeleted = isDeleted;
+        this.noteLearningCategories = noteLearningCategories;
+        this.dateCreated = dateCreated;
+        this.dateDeadline = dateDeadline;
+    }
+
+    public JSONObject toJsonObject() {
+        try {
+            JSONObject json = new JSONObject();
+            json.put("id", id);
+            json.put("noteTitle", noteTitle);
+            json.put("noteSubtitle", noteSubtitle);
+            json.put("noteDescription", noteDescription);
+            json.put("noteCategory", noteCategory);
+            json.put("noteSubcategory", noteSubcategory != null ? noteSubcategory : "");
+            json.put("noteUrgently", noteUglyUrgent(noteUrgently));
+            json.put("isLearning", isLearning);
+            json.put("isGeneralToDo", isGeneralToDo);
+            json.put("isTodayTask", isTodayTask);
+            json.put("isToBuyTask", isToBuyTask);
+            json.put("isDone", isDone);
+            json.put("isDeleted", isDeleted);
+            json.put("dateCreated", dateCreated);
+            json.put("dateDeadline", dateDeadline);
+
+            if (noteLearningCategories != null) {
+                JSONObject lcJson = new JSONObject();
+                lcJson.put("categoryName", noteLearningCategories.getCategoryName());
+                lcJson.put("isMainCategory", noteLearningCategories.isMainCategory());
+                lcJson.put("iSubCategory", noteLearningCategories.isiSubCategory());
+                json.put("noteLearningCategories", lcJson);
+            }
+            return json;
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public static Note fromJsonObject(JSONObject json) {
+        try {
+            long id = json.optLong("id", 0);
+            String title = json.optString("noteTitle", "");
+            String subtitle = json.optString("noteSubtitle", "");
+            String description = json.optString("noteDescription", "");
+            String category = json.optString("noteCategory", "Java ecosystem");
+            String subcategory = json.optString("noteSubcategory", "");
+            String urgently = json.optString("noteUrgently", "no urgent scale");
+            boolean isLearning = json.optBoolean("isLearning", false);
+            boolean isGeneralToDo = json.optBoolean("isGeneralToDo", false);
+            boolean isTodayTask = json.optBoolean("isTodayTask", false);
+            boolean isToBuyTask = json.optBoolean("isToBuyTask", false);
+            boolean isDone = json.optBoolean("isDone", false);
+            boolean isDeleted = json.optBoolean("isDeleted", false);
+            String dateCreated = json.optString("dateCreated", "");
+            String dateDeadline = json.optString("dateDeadline", "");
+
+            LearningCategories lc = null;
+            if (json.has("noteLearningCategories")) {
+                JSONObject lcJson = json.getJSONObject("noteLearningCategories");
+                String lcName = lcJson.optString("categoryName", "");
+                boolean lcMain = lcJson.optBoolean("isMainCategory", false);
+                boolean lcSub = lcJson.optBoolean("iSubCategory", false);
+                lc = new LearningCategories(lcName, lcMain, lcSub);
+            }
+
+            return new Note(id, title, subtitle, description, category, subcategory, urgently,
+                    isLearning, isGeneralToDo, isTodayTask, isToBuyTask, isDone, isDeleted,
+                    lc, dateCreated, dateDeadline);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    private String noteUglyUrgent(String value) {
+        return value != null ? value : "no urgent scale";
+    }
+
+    public long getId() { return id; }
+    public void setId(long id) { this.id = id; }
+    public long getDaysSinceCreation() {
+        if (dateCreated == null || dateCreated.isEmpty()) return 0;
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+        try {
+            Date createdDate = sdf.parse(dateCreated);
+            Date systemToday = new Date();
+            Date systemTodayClean = sdf.parse(sdf.format(systemToday));
+            long diffInMs = systemTodayClean.getTime() - createdDate.getTime();
+            return TimeUnit.DAYS.convert(diffInMs, TimeUnit.MILLISECONDS);
+        } catch (ParseException e) {
+            return 0;
+        }
+    }
+
+    public String getNoteSubtitle() { return noteSubtitle; }
+    public void setNoteSubtitle(String noteSubtitle) { this.noteSubtitle = noteSubtitle; }
+    public String getNoteTitle() { return noteTitle; }
+    public void setNoteTitle(String noteTitle) { this.noteTitle = noteTitle; }
+    public String getNoteDescription() { return noteDescription; }
+    public void setNoteDescription(String noteDescription) { this.noteDescription = noteDescription; }
+    public String getNoteCategory() { return noteCategory; }
+    public void setNoteCategory(String noteCategory) { this.noteCategory = noteCategory; }
+
+    public String getNoteSubcategory() { return noteSubcategory; }
+    public void setNoteSubcategory(String noteSubcategory) { this.noteSubcategory = noteSubcategory; }
+
+    public String getNoteUrgently() { return noteUrgently; }
+    public void setNoteUrgently(String noteUrgently) { this.noteUrgently = noteUrgently; }
+    public boolean isLearning() { return isLearning; }
+    public void setLearning(boolean learning) { isLearning = learning; }
+    public boolean isGeneralToDo() { return isGeneralToDo; }
+    public void setGeneralToDo(boolean generalToDo) { isGeneralToDo = generalToDo; }
+    public boolean isTodayTask() { return isTodayTask; }
+    public void setTodayTask(boolean todayTask) { isTodayTask = todayTask; }
+    public boolean isToBuyTask() { return isToBuyTask; }
+    public void setToBuyTask(boolean toBuyTask) { isToBuyTask = toBuyTask; }
+    public boolean isDone() { return isDone; }
+    public void setDone(boolean done) { isDone = done; }
+    public boolean isDeleted() { return isDeleted; }
+    public void setDeleted(boolean deleted) { isDeleted = deleted; }
+    public LearningCategories getNoteLearningCategories() { return noteLearningCategories; }
+    public void setNoteLearningCategories(LearningCategories noteLearningCategories) { this.noteLearningCategories = noteLearningCategories; }
+    public String getDateCreated() { return dateCreated; }
+    public void setDateCreated(String dateCreated) { this.dateCreated = dateCreated; }
+    public String getDateDeadline() { return dateDeadline; }
+    public void setDateDeadline(String dateDeadline) { this.dateDeadline = dateDeadline; }
+    public ArrayList<String> getUrgentScaleEnglish() { return urgentScaleEnglish; }
+}
+
+
+================================================================================
+FILE: NoteStorage.java
+================================================================================
+package com.lukaszjag.diet_tracker_android.tools.notes_tool;
+
+import android.content.Context;
+import android.net.Uri;
+import android.os.Environment;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.List;
+
+public class NoteStorage {
+    private static final String FILE_NAME = "notes_data.json";
+
+    // Resolves dynamically to the standard Download/diet-tracker-data directory on any Android device
+    private static final File TARGET_DIRECTORY = new File(
+            Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS),
+            "diet-tracker-data"
+    );
+
+    /**
+     * Resolves the target directory and ensures the folder structure is created.
+     */
+    private static File getTargetFile() {
+        if (!TARGET_DIRECTORY.exists()) {
+            TARGET_DIRECTORY.mkdirs(); // Automatically creates "diet-tracker-data" if missing
+        }
+        return new File(TARGET_DIRECTORY, FILE_NAME);
+    }
+
+    /**
+     * Saves the list of notes to the specified external storage path.
+     */
+    public static void saveNotes(Context context, List<Note> notes) {
+        try {
+            JSONArray jsonArray = new JSONArray();
+            for (Note note : notes) {
+                JSONObject noteJson = note.toJsonObject();
+                if (noteJson != null) {
+                    jsonArray.put(noteJson);
+                }
+            }
+            String jsonContent = jsonArray.toString(4);
+
+            File file = getTargetFile();
+            try (FileOutputStream fos = new FileOutputStream(file);
+                 OutputStreamWriter osw = new OutputStreamWriter(fos, StandardCharsets.UTF_8)) {
+                osw.write(jsonContent);
+            }
+        } catch (Exception e) {
+            android.util.Log.e("NoteStorage", "Error saving notes", e);
+        }
+    }
+
+    /**
+     * Loads the list of notes from the specified external storage path.
+     */
+    public static List<Note> loadNotes(Context context) {
+        List<Note> notes = new ArrayList<>();
+        File file = getTargetFile();
+
+        if (!file.exists()) {
+            return notes;
+        }
+
+        try (FileInputStream fis = new FileInputStream(file);
+             InputStreamReader isr = new InputStreamReader(fis, StandardCharsets.UTF_8);
+             BufferedReader reader = new BufferedReader(isr)) {
+
+            StringBuilder sb = new StringBuilder();
+            char[] buffer = new char[1024];
+            int numRead;
+            while ((numRead = reader.read(buffer)) != -1) {
+                sb.append(buffer, 0, numRead);
+            }
+
+            String jsonContent = sb.toString();
+
+            // Strip hidden UTF-8 BOM if present (often added by Windows/external text editors)
+            if (jsonContent.startsWith("\uFEFF")) {
+                jsonContent = jsonContent.substring(1);
+            }
+            jsonContent = jsonContent.trim();
+
+            if (!jsonContent.isEmpty()) {
+                JSONArray jsonArray = new JSONArray(jsonContent);
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    JSONObject noteJson = jsonArray.getJSONObject(i);
+                    Note note = Note.fromJsonObject(noteJson);
+                    if (note != null) {
+                        notes.add(note);
+                    }
+                }
+            }
+        } catch (Exception e) {
+            android.util.Log.e("NoteStorage", "Error reading or parsing notes JSON file", e);
+        }
+
+        return notes;
+    }
+
+    /**
+     * Imports external JSON files via Uri, validates structure, and overwrites local notes storage.
+     */
+    public static boolean importNotes(Context context, Uri sourceUri) {
+        try (InputStream in = context.getContentResolver().openInputStream(sourceUri)) {
+            if (in == null) return false;
+
+            BufferedReader reader = new BufferedReader(new InputStreamReader(in, StandardCharsets.UTF_8));
+            StringBuilder sb = new StringBuilder();
+            char[] buffer = new char[1024];
+            int numRead;
+            while ((numRead = reader.read(buffer)) != -1) {
+                sb.append(buffer, 0, numRead);
+            }
+
+            String jsonContent = sb.toString();
+
+            // Strip hidden UTF-8 BOM if present
+            if (jsonContent.startsWith("\uFEFF")) {
+                jsonContent = jsonContent.substring(1);
+            }
+            jsonContent = jsonContent.trim();
+
+            JSONArray jsonArray = new JSONArray(jsonContent);
+            List<Note> importedNotes = new ArrayList<>();
+            for (int i = 0; i < jsonArray.length(); i++) {
+                Note note = Note.fromJsonObject(jsonArray.getJSONObject(i));
+                if (note != null) {
+                    importedNotes.add(note);
+                }
+            }
+
+            // Write validated imported notes directly to the target external storage
+            saveNotes(context, importedNotes);
+            return true;
+        } catch (Exception e) {
+            android.util.Log.e("NoteStorage", "Error importing notes", e);
+            return false;
+        }
+    }
+}
+
+
+================================================================================
+FILE: Category.java
+================================================================================
+package com.lukaszjag.diet_tracker_android.tools.notes_tool.categories;
+
+public abstract class Category {
+}
+
+
+
+================================================================================
+FILE: iCategory.java
+================================================================================
+package com.lukaszjag.diet_tracker_android.tools.notes_tool.categories;
+
+public interface iCategory {
+}
+
+
+
+================================================================================
+FILE: NoteCategoryData.java
+================================================================================
+package com.lukaszjag.diet_tracker_android.tools.notes_tool.categories;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+
+public class NoteCategoryData {
+    public static final Map<String, List<String>> CATEGORY_MAP = new LinkedHashMap<>();
+
+    static {
+        CATEGORY_MAP.put("Java ecosystem", Arrays.asList(
+                "Java", "Spring", "JUNIT", "Android", "Java – Web Scraping", "Java Diet Tracker"
+        ));
+        CATEGORY_MAP.put("Frontend", Arrays.asList(
+                "HTML, CSS", "JavaScript"
+        ));
+        CATEGORY_MAP.put("Cloud and Infrastructure", Arrays.asList(
+                "Linux", "PowerShell", "Network", "Cloud", "Windows Server",
+                "Windows", "Containers", "SCCM - System Center Configuration Manager (MECM - Microsoft Endpoint Configuration Manager)"
+        ));
+        CATEGORY_MAP.put("GameDev", Arrays.asList(
+                "UE5"
+        ));
+        CATEGORY_MAP.put("Computer Science", Arrays.asList(
+                "Algorytmy", "General IT Knowledge"
+        ));
+        CATEGORY_MAP.put("Soft Skills", Arrays.asList(
+                "Szukanie pracy", "Japoński", "Angielski"
+        ));
+        CATEGORY_MAP.put("Versatile Frameworks", Arrays.asList(
+                "Python", ".NET (C#)"
+        ));
+        CATEGORY_MAP.put("WSB", Arrays.asList(
+                "WSB"
+        ));
+        CATEGORY_MAP.put("Certs", Arrays.asList(
+                "CompTIA A+", "CompTIA Network+", "CompTIA Linux+"
+        ));
+        CATEGORY_MAP.put("Backend", Arrays.asList(
+                "x"
+        ));
+        CATEGORY_MAP.put("Microsoft Office", Arrays.asList(
+                "Microsoft Office"
+        ));
+        CATEGORY_MAP.put("Low-Level Languages", Arrays.asList(
+                "C", "C++"
+        ));
+        CATEGORY_MAP.put("Dev Tools", Arrays.asList(
+                "Git", "Jira", "Postman", "IDE"
+        ));
+        CATEGORY_MAP.put("AI & Machine Learning", Arrays.asList(
+                "AI Assistants", "Machine Learning Basics"
+        ));
+        CATEGORY_MAP.put("UWR", Collections.emptyList());
+    }
+
+    public static List<String> getMainCategories() {
+        return new ArrayList<>(CATEGORY_MAP.keySet());
+    }
+
+    public static List<String> getSubcategories(String mainCategory) {
+        if (mainCategory == null || !CATEGORY_MAP.containsKey(mainCategory)) {
+            return Collections.emptyList();
+        }
+        return CATEGORY_MAP.get(mainCategory);
+    }
+}
+
+
+================================================================================
+FILE: GeneralCategories.java
+================================================================================
+package com.lukaszjag.diet_tracker_android.tools.notes_tool.categories.general_categories;
+
+public class GeneralCategories {
+    String categoryName;
+}
+
+
+
+================================================================================
+FILE: LearningCategories.java
+================================================================================
+package com.lukaszjag.diet_tracker_android.tools.notes_tool.categories.learning_categories;
+
+import java.util.ArrayList;
+
+public class LearningCategories {
+    private String categoryName;
+    private boolean isMainCategory;
+    private boolean iSubCategory;
+
+    private ArrayList<String> primaryLearningCategory;
+    private ArrayList<String> subcategoryLearningCategory;
+    public LearningCategories(String categoryName, boolean isMainCategory, boolean iSubCategory) {
+        this.categoryName = categoryName;
+        this.isMainCategory = isMainCategory;
+        this.iSubCategory = iSubCategory;
+    }
+
+    @Override
+    public String toString() {
+        return categoryName != null ? categoryName : "Uncategorized";
+    }
+
+    public String getCategoryName() {
+        return categoryName;
+    }
+
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
+    }
+
+    public boolean isMainCategory() {
+        return isMainCategory;
+    }
+
+    public void setMainCategory(boolean mainCategory) {
+        isMainCategory = mainCategory;
+    }
+
+    public boolean isiSubCategory() {
+        return iSubCategory;
+    }
+
+    public void setiSubCategory(boolean iSubCategory) {
+        this.iSubCategory = iSubCategory;
+    }
+}
+
+
+
+
+
+
+

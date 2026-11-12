@@ -1,0 +1,1118 @@
+================================================================================
+FILE: Notes.java
+================================================================================
+package com.lukaszjag.diet_tracker_android.gui.notes;
+
+import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.material.datepicker.MaterialDatePicker;
+import com.lukaszjag.diet_tracker_android.R;
+import com.lukaszjag.diet_tracker_android.gui.notes.calendar.NotesCalendarDialog;
+import com.lukaszjag.diet_tracker_android.tools.cloud_data_tools.AzureDataCallback;
+import com.lukaszjag.diet_tracker_android.tools.cloud_data_tools.GetFromSQLDatabase;
+import com.lukaszjag.diet_tracker_android.tools.notes_tool.MyAdapter;
+import com.lukaszjag.diet_tracker_android.tools.notes_tool.Note;
+import com.lukaszjag.diet_tracker_android.tools.notes_tool.categories.NoteCategoryData;
+import com.lukaszjag.diet_tracker_android.tools.sql_tools.QueryMaker;
+import com.lukaszjag.diet_tracker_android.tools.sql_tools.RowInTable;
+import com.lukaszjag.diet_tracker_android.tools.theme.ThemeHelper;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import java.util.Set;
+import java.util.TimeZone;
+
+public class Notes extends AppCompatActivity {
+    private EditText filterSubtitle;
+    private Spinner filterCategorySpinner;
+    private Spinner filterUrgentlySpinner;
+    private CheckBox filterCbLearning, filterCbGeneral, filterCbToday, filterCbToBuy;
+    private Button btnCalendarFilter;
+    private Button btnClearDateFilter;
+    private TextView tvNotesCount; // Displayed notes count
+    private RecyclerView recyclerView;
+
+    private Button pickDateDeadlineButton;
+
+    private EditText dialogDeadlineEditTextLocal;
+
+    private MyAdapter adapter;
+
+    // Set of selected creation dates (yyyy-MM-dd)
+    private final Set<String> selectedDates = new HashSet<>();
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.notes_view_layout);
+
+        filterSubtitle = findViewById(R.id.filterSubtitle);
+        filterCategorySpinner = findViewById(R.id.filterCategorySpinner);
+        filterUrgentlySpinner = findViewById(R.id.filterUrgentlySpinner);
+        filterCbLearning = findViewById(R.id.filterCbLearning);
+        filterCbGeneral = findViewById(R.id.filterCbGeneral);
+        filterCbToday = findViewById(R.id.filterCbToday);
+        filterCbToBuy = findViewById(R.id.filterCbToBuy);
+
+        btnCalendarFilter = findViewById(R.id.btnCalendarFilter);
+        btnClearDateFilter = findViewById(R.id.btnClearDateFilter);
+        tvNotesCount = findViewById(R.id.tvNotesCount);
+
+        recyclerView = findViewById(R.id.recyclerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        adapter = new MyAdapter();
+        recyclerView.setAdapter(adapter);
+
+        findViewById(R.id.button).setOnClickListener(v -> showNoteDialog(null));
+        adapter.setOnItemClickListener((position, note) -> showNoteDialog(note));
+
+        setupCalendarFilterButton();
+        setupVisibilityListeners();
+        setupFilterSpinners();
+        setupFilterListeners();
+        fetchNotesFromAzure();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        ThemeHelper.applyButtonTheme(this);
+    }
+
+    private void setupCalendarFilterButton() {
+        btnCalendarFilter.setOnClickListener(v -> showCalendarDialog());
+
+        btnClearDateFilter.setOnClickListener(v -> {
+            selectedDates.clear();
+            updateDateFilterButtonUI();
+            applyFilters();
+        });
+    }
+
+    private void showCalendarDialog() {
+        Map<String, Integer> countMap = new HashMap<>();
+        for (Note note : adapter.getOriginalList()) {
+            String created = note.getDateCreated();
+            if (created != null && created.length() >= 10) {
+                created = created.substring(0, 10);
+                countMap.put(created, countMap.getOrDefault(created, 0) + 1);
+            }
+        }
+
+        NotesCalendarDialog dialog = new NotesCalendarDialog(this, countMap, selectedDates, newSelectedDates -> {
+            selectedDates.clear();
+            selectedDates.addAll(newSelectedDates);
+            updateDateFilterButtonUI();
+            applyFilters();
+        });
+        dialog.show();
+    }
+
+    private void updateDateFilterButtonUI() {
+        if (selectedDates.isEmpty()) {
+            btnCalendarFilter.setText("📅 Choose Dates (All)");
+            btnClearDateFilter.setVisibility(View.GONE);
+        } else {
+            btnCalendarFilter.setText("📅 Dates: " + selectedDates.size() + " selected");
+            btnClearDateFilter.setVisibility(View.VISIBLE);
+        }
+    }
+
+    private void setupFilterSpinners() {
+        List<String> mainCategoriesFilter = new ArrayList<>();
+        mainCategoriesFilter.add("All Categories");
+        mainCategoriesFilter.addAll(NoteCategoryData.getMainCategories());
+
+        ArrayAdapter<String> mainCatAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, mainCategoriesFilter);
+        mainCatAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        filterCategorySpinner.setAdapter(mainCatAdapter);
+
+        updateSubcategoryFilterSpinner("All Categories");
+    }
+
+    private void updateSubcategoryFilterSpinner(String mainCategory) {
+        List<String> subcategoriesFilter = new ArrayList<>();
+        subcategoriesFilter.add("All Subcategories");
+
+        if (mainCategory != null && !mainCategory.equals("All Categories")) {
+            List<String> subs = NoteCategoryData.getSubcategories(mainCategory);
+            if (subs != null && !subs.isEmpty()) {
+                subcategoriesFilter.addAll(subs);
+            }
+        }
+
+        ArrayAdapter<String> subcatAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, subcategoriesFilter);
+        subcatAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        filterUrgentlySpinner.setAdapter(subcatAdapter);
+    }
+
+    private void fetchNotesFromAzure() {
+        String query = QueryMaker.getAllNotesQuery();
+        GetFromSQLDatabase.runAzureQueryAIChat(query, new AzureDataCallback() {
+            @Override
+            public void onSuccess(ArrayList<RowInTable> resultTable) {
+                runOnUiThread(() -> {
+                    adapter.clearAll();
+                    for (RowInTable row : resultTable) {
+                        String subcat = row.getValue("subcategory");
+                        if (subcat == null) subcat = "";
+
+                        boolean isDone = "true".equalsIgnoreCase(row.getValue("is_done")) || "1".equals(row.getValue("is_done"));
+                        boolean isDeleted = "true".equalsIgnoreCase(row.getValue("is_deleted")) || "1".equals(row.getValue("is_deleted"));
+
+                        Note note = new Note(
+                                Long.parseLong(row.getValue("id")),
+                                row.getValue("title"),
+                                row.getValue("subtitle"),
+                                row.getValue("description"),
+                                row.getValue("category"),
+                                subcat,
+                                row.getValue("is_urgently"),
+                                "true".equals(row.getValue("is_learning")) || "1".equals(row.getValue("is_learning")),
+                                "true".equals(row.getValue("is_general_to_do")) || "1".equals(row.getValue("is_general_to_do")),
+                                "true".equals(row.getValue("is_today_task")) || "1".equals(row.getValue("is_today_task")),
+                                "true".equals(row.getValue("is_to_buy_task")) || "1".equals(row.getValue("is_to_buy_task")),
+                                isDone,
+                                isDeleted,
+                                null,
+                                row.getValue("date_created"),
+                                row.getValue("date_deadline")
+                        );
+                        adapter.addItem(note);
+                    }
+                    applyFilters();
+                });
+            }
+
+            @Override
+            public void onFailure(String errorMessage) {
+                runOnUiThread(() -> Toast.makeText(Notes.this, "Failed: " + errorMessage, Toast.LENGTH_SHORT).show());
+            }
+        });
+    }
+
+    private void showNoteDialog(Note note) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        View dialogView = getLayoutInflater().inflate(R.layout.dialog_note, null);
+        builder.setView(dialogView);
+
+        final EditText title = dialogView.findViewById(R.id.dialogTitle);
+        final EditText subtitle = dialogView.findViewById(R.id.dialogSubtitle);
+        final EditText desc = dialogView.findViewById(R.id.dialogDescription);
+        final Spinner spinnerCategory = dialogView.findViewById(R.id.dialogSpinnerCategory);
+        final Spinner spinnerSubcategory = dialogView.findViewById(R.id.dialogSpinnerSubcategory);
+        final CheckBox cbLearn = dialogView.findViewById(R.id.dialogCbLearning);
+        final CheckBox cbGen = dialogView.findViewById(R.id.dialogCbGeneral);
+        final CheckBox cbToday = dialogView.findViewById(R.id.dialogCbToday);
+        final CheckBox cbBuy = dialogView.findViewById(R.id.dialogCbToBuy);
+
+        dialogDeadlineEditTextLocal = dialogView.findViewById(R.id.dialogDeadline);
+        pickDateDeadlineButton = dialogView.findViewById(R.id.pickDaedlineButton);
+
+        final LinearLayout actionButtonsLayout = dialogView.findViewById(R.id.dialogActionButtonsLayout);
+        final Button btnMarkAsDone = dialogView.findViewById(R.id.dialogBtnMarkAsDone);
+        final Button btnDelete = dialogView.findViewById(R.id.dialogBtnDelete);
+
+        boolean isEditMode = (note != null);
+
+        List<String> mainCategories = NoteCategoryData.getMainCategories();
+        ArrayAdapter<String> catAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, mainCategories);
+        catAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerCategory.setAdapter(catAdapter);
+
+        spinnerCategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String chosenMain = mainCategories.get(position);
+                List<String> subcategories = NoteCategoryData.getSubcategories(chosenMain);
+                List<String> displaySubs = new ArrayList<>();
+                if (subcategories.isEmpty()) {
+                    displaySubs.add("None");
+                } else {
+                    displaySubs.addAll(subcategories);
+                }
+
+                ArrayAdapter<String> subAdapter = new ArrayAdapter<>(Notes.this, android.R.layout.simple_spinner_item, displaySubs);
+                subAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spinnerSubcategory.setAdapter(subAdapter);
+
+                if (isEditMode && note.getNoteSubcategory() != null) {
+                    int subIndex = displaySubs.indexOf(note.getNoteSubcategory());
+                    if (subIndex != -1) {
+                        spinnerSubcategory.setSelection(subIndex);
+                    }
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {}
+        });
+
+        if (isEditMode) {
+            actionButtonsLayout.setVisibility(View.VISIBLE);
+
+            title.setText(note.getNoteTitle());
+            subtitle.setText(note.getNoteSubtitle());
+            desc.setText(note.getNoteDescription());
+
+            if (note.getNoteCategory() != null) {
+                int catIndex = mainCategories.indexOf(note.getNoteCategory());
+                if (catIndex != -1) {
+                    spinnerCategory.setSelection(catIndex);
+                }
+            }
+
+            cbLearn.setChecked(note.isLearning());
+            cbGen.setChecked(note.isGeneralToDo());
+            cbToday.setChecked(note.isTodayTask());
+            cbBuy.setChecked(note.isToBuyTask());
+        }
+
+        // 1. Configure the dialog positive and negative buttons on builder FIRST
+        builder.setPositiveButton(isEditMode ? "Update" : "Create", (d, which) -> {
+            String selectedMain = spinnerCategory.getSelectedItem() != null ?
+                    spinnerCategory.getSelectedItem().toString() : "";
+            String selectedSub = spinnerSubcategory.getSelectedItem() != null ?
+                    spinnerSubcategory.getSelectedItem().toString() : "";
+            if ("None".equals(selectedSub)) {
+                selectedSub = "";
+            }
+
+            String q;
+            if (isEditMode) {
+                q = QueryMaker.updateNoteQuery(
+                        note.getId(),
+                        title.getText().toString(),
+                        subtitle.getText().toString(),
+                        desc.getText().toString(),
+                        selectedMain,
+                        selectedSub,
+                        false,
+                        cbLearn.isChecked(),
+                        cbGen.isChecked(),
+                        cbToday.isChecked(),
+                        cbBuy.isChecked(),
+                        null
+                );
+            } else {
+                String currentDate = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
+                q = QueryMaker.insertNoteQuery(
+                        title.getText().toString(),
+                        subtitle.getText().toString(),
+                        desc.getText().toString(),
+                        selectedMain,
+                        selectedSub,
+                        false,
+                        cbLearn.isChecked(),
+                        cbGen.isChecked(),
+                        cbToday.isChecked(),
+                        cbBuy.isChecked(),
+                        currentDate,
+                        null
+                );
+            }
+
+            GetFromSQLDatabase.runAzureQueryAIChat(q, new AzureDataCallback() {
+                @Override public void onSuccess(ArrayList<RowInTable> res) {
+                    runOnUiThread(() -> {
+                        Toast.makeText(Notes.this, isEditMode ? "Updated!" : "Saved!", Toast.LENGTH_SHORT).show();
+                        fetchNotesFromAzure();
+                    });
+                }
+                @Override public void onFailure(String err) {
+                    runOnUiThread(() -> Toast.makeText(Notes.this, "Error: " + err, Toast.LENGTH_SHORT).show());
+                }
+            });
+        });
+
+        builder.setNegativeButton("Cancel", null);
+
+        // 2. CREATE the dialog instance HERE (now it is initialized before being used in listeners)
+        AlertDialog dialog = builder.create();
+
+        // 3. Attach listeners to the custom view buttons (dialog.dismiss() works with no error)
+        if (isEditMode) {
+            btnMarkAsDone.setOnClickListener(v -> {
+                String markDoneQuery = QueryMaker.markNoteAsDoneQuery(note.getId());
+                GetFromSQLDatabase.runAzureQueryAIChat(markDoneQuery, new AzureDataCallback() {
+                    @Override
+                    public void onSuccess(ArrayList<RowInTable> resultTable) {
+                        runOnUiThread(() -> {
+                            Toast.makeText(Notes.this, "Marked as done!", Toast.LENGTH_SHORT).show();
+                            dialog.dismiss();
+                            fetchNotesFromAzure();
+                        });
+                    }
+
+                    @Override
+                    public void onFailure(String errorMessage) {
+                        runOnUiThread(() -> Toast.makeText(Notes.this, "Error: " + errorMessage, Toast.LENGTH_SHORT).show());
+                    }
+                });
+            });
+
+            btnDelete.setOnClickListener(v -> {
+                new AlertDialog.Builder(Notes.this)
+                        .setTitle("Delete Note")
+                        .setMessage("Move this note to deleted history?")
+                        .setPositiveButton("Yes, Delete", (d, w) -> {
+                            String deleteQuery = QueryMaker.markNoteAsDeletedQuery(note.getId());
+                            GetFromSQLDatabase.runAzureQueryAIChat(deleteQuery, new AzureDataCallback() {
+                                @Override
+                                public void onSuccess(ArrayList<RowInTable> resultTable) {
+                                    runOnUiThread(() -> {
+                                        Toast.makeText(Notes.this, "Note deleted!", Toast.LENGTH_SHORT).show();
+                                        dialog.dismiss();
+                                        fetchNotesFromAzure();
+                                    });
+                                }
+
+                                @Override
+                                public void onFailure(String errorMessage) {
+                                    runOnUiThread(() -> Toast.makeText(Notes.this, "Error: " + errorMessage, Toast.LENGTH_SHORT).show());
+                                }
+                            });
+                        })
+                        .setNegativeButton("Cancel", null)
+                        .show();
+            });
+        }
+
+        // 4. Finally show the dialog
+        dialog.show();
+
+        addListeners();
+    }
+
+    private void setupVisibilityListeners() {
+        CheckBox cb1 = findViewById(R.id.hideCbSection1);
+        CheckBox cb2 = findViewById(R.id.hideCbSection2);
+        CheckBox cb3 = findViewById(R.id.hideCbSection3);
+        CheckBox cb4 = findViewById(R.id.hideCbSection4);
+
+        android.widget.CompoundButton.OnCheckedChangeListener listener = (buttonView, isChecked) -> {
+            adapter.setSectionVisibilities(
+                    cb1.isChecked(),
+                    cb2.isChecked(),
+                    cb3.isChecked(),
+                    cb4.isChecked()
+            );
+        };
+
+        cb1.setOnCheckedChangeListener(listener);
+        cb2.setOnCheckedChangeListener(listener);
+        cb3.setOnCheckedChangeListener(listener);
+        cb4.setOnCheckedChangeListener(listener);
+    }
+
+    private void setupFilterListeners() {
+        filterSubtitle.addTextChangedListener(new android.text.TextWatcher() {
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            public void onTextChanged(CharSequence s, int start, int before, int count) { applyFilters(); }
+            public void afterTextChanged(android.text.Editable s) {}
+        });
+
+        filterCategorySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String selectedMainCat = parent.getItemAtPosition(position).toString();
+                updateSubcategoryFilterSpinner(selectedMainCat);
+                applyFilters();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {}
+        });
+
+        filterUrgentlySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                applyFilters();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {}
+        });
+
+        android.widget.CompoundButton.OnCheckedChangeListener cbListener = (buttonView, isChecked) -> applyFilters();
+        filterCbLearning.setOnCheckedChangeListener(cbListener);
+        filterCbGeneral.setOnCheckedChangeListener(cbListener);
+        filterCbToday.setOnCheckedChangeListener(cbListener);
+        filterCbToBuy.setOnCheckedChangeListener(cbListener);
+    }
+
+    private void applyFilters() {
+        String subtitle = filterSubtitle.getText().toString();
+
+        String selectedCat = filterCategorySpinner.getSelectedItem() != null ?
+                filterCategorySpinner.getSelectedItem().toString() : "All Categories";
+
+        String selectedSubcat = filterUrgentlySpinner.getSelectedItem() != null ?
+                filterUrgentlySpinner.getSelectedItem().toString() : "All Subcategories";
+
+        // Filter through adapter
+        adapter.filter(
+                subtitle,
+                selectedCat,
+                selectedSubcat,
+                filterCbLearning.isChecked(),
+                filterCbGeneral.isChecked(),
+                filterCbToday.isChecked(),
+                filterCbToBuy.isChecked(),
+                selectedDates
+        );
+
+        // Update the displayed notes counter
+        updateNotesCountDisplay();
+    }
+
+    private void updateNotesCountDisplay() {
+        if (tvNotesCount != null && adapter != null) {
+            int displayedCount = adapter.getItemCount();
+            int totalCount = adapter.getOriginalList().size();
+            tvNotesCount.setText("Displayed: " + displayedCount + " (Total: " + totalCount + ")");
+        }
+    }
+
+    private void addListeners(){
+        pickDateDeadlineButton.setOnClickListener(v -> {
+            MaterialDatePicker<Long> datePicker = MaterialDatePicker.Builder.datePicker()
+                    .setTitleText("Select a Date")
+                    .setSelection(MaterialDatePicker.todayInUtcMilliseconds())
+                    .build();
+
+
+            datePicker.addOnPositiveButtonClickListener(selection -> {
+                // Ensure date formatting uses UTC to prevent 1-day timezone shifting
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+                sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
+                String formattedDate = sdf.format(new Date(selection));
+
+                dialogDeadlineEditTextLocal.setText(formattedDate);
+            });
+
+            datePicker.show(getSupportFragmentManager(), "MATERIAL_DATE_PICKER");
+        });
+    }
+}
+
+
+================================================================================
+FILE: NotesHistory.java
+================================================================================
+package com.lukaszjag.diet_tracker_android.gui.notes;
+
+import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
+import android.widget.EditText;
+import android.widget.Spinner;
+import android.widget.Toast;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.lukaszjag.diet_tracker_android.R;
+import com.lukaszjag.diet_tracker_android.tools.cloud_data_tools.AzureDataCallback;
+import com.lukaszjag.diet_tracker_android.tools.cloud_data_tools.GetFromSQLDatabase;
+import com.lukaszjag.diet_tracker_android.tools.notes_tool.MyAdapter;
+import com.lukaszjag.diet_tracker_android.tools.notes_tool.Note;
+import com.lukaszjag.diet_tracker_android.tools.notes_tool.categories.NoteCategoryData;
+import com.lukaszjag.diet_tracker_android.tools.sql_tools.QueryMaker;
+import com.lukaszjag.diet_tracker_android.tools.sql_tools.RowInTable;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+public class NotesHistory extends AppCompatActivity {
+
+    private EditText filterSubtitle;
+    private Spinner filterCategorySpinner;
+    private Spinner filterSubcategorySpinner;
+    private Spinner filterStatusSpinner;
+    private CheckBox filterCbLearning, filterCbGeneral, filterCbToday, filterCbToBuy;
+    private RecyclerView recyclerView;
+    private MyAdapter adapter;
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.notes_history_layout);
+
+        filterSubtitle = findViewById(R.id.historyFilterSubtitle);
+        filterCategorySpinner = findViewById(R.id.historyFilterCategorySpinner);
+        filterSubcategorySpinner = findViewById(R.id.historyFilterSubcategorySpinner);
+        filterStatusSpinner = findViewById(R.id.historyStatusFilterSpinner);
+        filterCbLearning = findViewById(R.id.historyFilterCbLearning);
+        filterCbGeneral = findViewById(R.id.historyFilterCbGeneral);
+        filterCbToday = findViewById(R.id.historyFilterCbToday);
+        filterCbToBuy = findViewById(R.id.historyFilterCbToBuy);
+
+        recyclerView = findViewById(R.id.recyclerViewHistory);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        adapter = new MyAdapter();
+        recyclerView.setAdapter(adapter);
+
+        adapter.setOnItemClickListener((position, note) -> showHistoryActionDialog(note));
+
+        setupVisibilityListeners();
+        setupFilterSpinners();
+        setupFilterListeners();
+        fetchHistoryFromAzure();
+    }
+
+    private void setupFilterSpinners() {
+        List<String> mainCategoriesFilter = new ArrayList<>();
+        mainCategoriesFilter.add("All Categories");
+        mainCategoriesFilter.addAll(NoteCategoryData.getMainCategories());
+
+        ArrayAdapter<String> mainCatAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, mainCategoriesFilter);
+        mainCatAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        filterCategorySpinner.setAdapter(mainCatAdapter);
+
+        updateSubcategoryFilterSpinner("All Categories");
+
+        // Status Filter: All, Done, Deleted
+        List<String> statusList = Arrays.asList("All History", "Done Tasks", "Deleted Tasks");
+        ArrayAdapter<String> statusAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, statusList);
+        statusAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        filterStatusSpinner.setAdapter(statusAdapter);
+    }
+
+    private void updateSubcategoryFilterSpinner(String mainCategory) {
+        List<String> subcategoriesFilter = new ArrayList<>();
+        subcategoriesFilter.add("All Subcategories");
+
+        if (mainCategory != null && !mainCategory.equals("All Categories")) {
+            List<String> subs = NoteCategoryData.getSubcategories(mainCategory);
+            if (subs != null && !subs.isEmpty()) {
+                subcategoriesFilter.addAll(subs);
+            }
+        }
+
+        ArrayAdapter<String> subcatAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, subcategoriesFilter);
+        subcatAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        filterSubcategorySpinner.setAdapter(subcatAdapter);
+    }
+
+    private void fetchHistoryFromAzure() {
+        String query = QueryMaker.getAllHistoryNotesQuery();
+        GetFromSQLDatabase.runAzureQueryAIChat(query, new AzureDataCallback() {
+            @Override
+            public void onSuccess(ArrayList<RowInTable> resultTable) {
+                runOnUiThread(() -> {
+                    adapter.clearAll();
+                    for (RowInTable row : resultTable) {
+                        String subcat = row.getValue("subcategory");
+                        if (subcat == null) subcat = "";
+
+                        boolean isDone = "true".equalsIgnoreCase(row.getValue("is_done")) || "1".equals(row.getValue("is_done"));
+                        boolean isDeleted = "true".equalsIgnoreCase(row.getValue("is_deleted")) || "1".equals(row.getValue("is_deleted"));
+
+                        Note note = new Note(
+                                Long.parseLong(row.getValue("id")),
+                                row.getValue("title"),
+                                row.getValue("subtitle"),
+                                row.getValue("description"),
+                                row.getValue("category"),
+                                subcat,
+                                row.getValue("is_urgently"),
+                                "true".equals(row.getValue("is_learning")) || "1".equals(row.getValue("is_learning")),
+                                "true".equals(row.getValue("is_general_to_do")) || "1".equals(row.getValue("is_general_to_do")),
+                                "true".equals(row.getValue("is_today_task")) || "1".equals(row.getValue("is_today_task")),
+                                "true".equals(row.getValue("is_to_buy_task")) || "1".equals(row.getValue("is_to_buy_task")),
+                                isDone,
+                                isDeleted,
+                                null,
+                                row.getValue("date_created"),
+                                row.getValue("date_deadline")
+                        );
+                        adapter.addItem(note);
+                    }
+                    applyFilters();
+                });
+            }
+
+            @Override
+            public void onFailure(String errorMessage) {
+                runOnUiThread(() -> Toast.makeText(NotesHistory.this, "Failed: " + errorMessage, Toast.LENGTH_SHORT).show());
+            }
+        });
+    }
+
+    private void showHistoryActionDialog(Note note) {
+        String statusLabel = note.isDeleted() ? "Status: DELETED" : "Status: DONE";
+
+        new AlertDialog.Builder(this)
+                .setTitle(note.getNoteTitle())
+                .setMessage(statusLabel + "\n\nSubtitle: " + note.getNoteSubtitle() +
+                        "\nDescription: " + note.getNoteDescription() +
+                        "\nCategory: " + note.getNoteCategory() + " / " + note.getNoteSubcategory())
+                .setPositiveButton("Restore to Active", (dialog, which) -> {
+                    String restoreQuery = QueryMaker.restoreNoteQuery(note.getId());
+                    GetFromSQLDatabase.runAzureQueryAIChat(restoreQuery, new AzureDataCallback() {
+                        @Override
+                        public void onSuccess(ArrayList<RowInTable> resultTable) {
+                            runOnUiThread(() -> {
+                                Toast.makeText(NotesHistory.this, "Restored to active notes!", Toast.LENGTH_SHORT).show();
+                                fetchHistoryFromAzure();
+                            });
+                        }
+
+                        @Override
+                        public void onFailure(String errorMessage) {
+                            runOnUiThread(() -> Toast.makeText(NotesHistory.this, "Error: " + errorMessage, Toast.LENGTH_SHORT).show());
+                        }
+                    });
+                })
+                .setNeutralButton("Delete Permanently", (dialog, which) -> {
+                    new AlertDialog.Builder(NotesHistory.this)
+                            .setTitle("Permanent Delete")
+                            .setMessage("Are you sure? This cannot be undone.")
+                            .setPositiveButton("Yes, Delete", (d, w) -> {
+                                String permanentDeleteQuery = QueryMaker.deleteNotePermanentlyQuery(note.getId());
+                                GetFromSQLDatabase.runAzureQueryAIChat(permanentDeleteQuery, new AzureDataCallback() {
+                                    @Override
+                                    public void onSuccess(ArrayList<RowInTable> resultTable) {
+                                        runOnUiThread(() -> {
+                                            Toast.makeText(NotesHistory.this, "Permanently deleted", Toast.LENGTH_SHORT).show();
+                                            fetchHistoryFromAzure();
+                                        });
+                                    }
+
+                                    @Override
+                                    public void onFailure(String errorMessage) {
+                                        runOnUiThread(() -> Toast.makeText(NotesHistory.this, "Error: " + errorMessage, Toast.LENGTH_SHORT).show());
+                                    }
+                                });
+                            })
+                            .setNegativeButton("Cancel", null)
+                            .show();
+                })
+                .setNegativeButton("Close", null)
+                .show();
+    }
+
+    private void setupVisibilityListeners() {
+        CheckBox cb1 = findViewById(R.id.historyHideCbSection1);
+        CheckBox cb2 = findViewById(R.id.historyHideCbSection2);
+        CheckBox cb3 = findViewById(R.id.historyHideCbSection3);
+        CheckBox cb4 = findViewById(R.id.historyHideCbSection4);
+
+        android.widget.CompoundButton.OnCheckedChangeListener listener = (buttonView, isChecked) -> {
+            adapter.setSectionVisibilities(
+                    cb1.isChecked(),
+                    cb2.isChecked(),
+                    cb3.isChecked(),
+                    cb4.isChecked()
+            );
+        };
+
+        cb1.setOnCheckedChangeListener(listener);
+        cb2.setOnCheckedChangeListener(listener);
+        cb3.setOnCheckedChangeListener(listener);
+        cb4.setOnCheckedChangeListener(listener);
+    }
+
+    private void setupFilterListeners() {
+        filterSubtitle.addTextChangedListener(new android.text.TextWatcher() {
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            public void onTextChanged(CharSequence s, int start, int before, int count) { applyFilters(); }
+            public void afterTextChanged(android.text.Editable s) {}
+        });
+
+        filterCategorySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String selectedMainCat = parent.getItemAtPosition(position).toString();
+                updateSubcategoryFilterSpinner(selectedMainCat);
+                applyFilters();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {}
+        });
+
+        filterSubcategorySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                applyFilters();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {}
+        });
+
+        filterStatusSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                applyFilters();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {}
+        });
+
+        android.widget.CompoundButton.OnCheckedChangeListener cbListener = (buttonView, isChecked) -> applyFilters();
+        filterCbLearning.setOnCheckedChangeListener(cbListener);
+        filterCbGeneral.setOnCheckedChangeListener(cbListener);
+        filterCbToday.setOnCheckedChangeListener(cbListener);
+        filterCbToBuy.setOnCheckedChangeListener(cbListener);
+    }
+
+    private void applyFilters() {
+        String subtitle = filterSubtitle.getText().toString();
+
+        String selectedCat = filterCategorySpinner.getSelectedItem() != null ?
+                filterCategorySpinner.getSelectedItem().toString() : "All Categories";
+
+        String selectedSubcat = filterSubcategorySpinner.getSelectedItem() != null ?
+                filterSubcategorySpinner.getSelectedItem().toString() : "All Subcategories";
+
+        String selectedStatus = "ALL";
+        if (filterStatusSpinner.getSelectedItem() != null) {
+            String choice = filterStatusSpinner.getSelectedItem().toString();
+            if ("Done Tasks".equalsIgnoreCase(choice)) {
+                selectedStatus = "DONE";
+            } else if ("Deleted Tasks".equalsIgnoreCase(choice)) {
+                selectedStatus = "DELETED";
+            }
+        }
+
+        adapter.filter(
+                subtitle,
+                selectedCat,
+                selectedSubcat,
+                filterCbLearning.isChecked(),
+                filterCbGeneral.isChecked(),
+                filterCbToday.isChecked(),
+                filterCbToBuy.isChecked(),
+                selectedStatus
+        );
+    }
+}
+
+
+================================================================================
+FILE: NotesCalendarDialog.java
+================================================================================
+package com.lukaszjag.diet_tracker_android.gui.notes.calendar;
+
+import android.app.Dialog;
+import android.content.Context;
+import android.graphics.Color;
+import android.graphics.Typeface;
+import android.graphics.drawable.GradientDrawable;
+import android.util.TypedValue;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
+import android.widget.Button;
+import android.widget.FrameLayout;
+import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.core.graphics.ColorUtils;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.lukaszjag.diet_tracker_android.R;
+import com.lukaszjag.diet_tracker_android.tools.settings.AppSettings;
+import com.lukaszjag.diet_tracker_android.tools.theme.ThemeHelper;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import java.util.Set;
+
+public class NotesCalendarDialog extends Dialog {
+
+    public interface OnCalendarFilterAppliedListener {
+        void onFilterApplied(Set<String> selectedDates);
+    }
+
+    private final Map<String, Integer> notesCountPerDay;
+    private final Set<String> selectedDates;
+    private final OnCalendarFilterAppliedListener listener;
+
+    private Calendar currentDisplayCalendar;
+    private TextView monthYearTextView;
+    private TextView selectedCountTextView;
+    private RecyclerView daysRecyclerView;
+    private CalendarDayAdapter dayAdapter;
+
+    private final int heatmapBaseColor;
+    private final float uiScale;
+    private int maxNotesCountInMonth = 1;
+
+    public NotesCalendarDialog(@NonNull Context context,
+                               Map<String, Integer> notesCountPerDay,
+                               Set<String> currentlySelectedDates,
+                               OnCalendarFilterAppliedListener listener) {
+        super(context);
+        this.notesCountPerDay = notesCountPerDay;
+        this.selectedDates = new HashSet<>(currentlySelectedDates);
+        this.listener = listener;
+
+        this.heatmapBaseColor = AppSettings.getCalendarHeatmapColor(context);
+        this.uiScale = AppSettings.getCalendarScale(context);
+
+        init();
+    }
+
+    private void init() {
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        setContentView(R.layout.dialog_notes_calendar);
+
+        if (getWindow() != null) {
+            getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        }
+
+        // Starts at CURRENT month
+        currentDisplayCalendar = Calendar.getInstance();
+        currentDisplayCalendar.set(Calendar.DAY_OF_MONTH, 1);
+
+        monthYearTextView = findViewById(R.id.calMonthYearTextView);
+        selectedCountTextView = findViewById(R.id.calSelectedCountTextView);
+        daysRecyclerView = findViewById(R.id.calDaysRecyclerView);
+
+        Button prevBtn = findViewById(R.id.calPrevMonthButton);
+        Button nextBtn = findViewById(R.id.calNextMonthButton);
+        Button uncheckAllBtn = findViewById(R.id.calBtnUncheckAll);
+        Button applyBtn = findViewById(R.id.calBtnApply);
+
+        // Apply UI Scale to dialog elements
+        monthYearTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16 * uiScale);
+        uncheckAllBtn.setTextSize(TypedValue.COMPLEX_UNIT_SP, 11 * uiScale);
+        applyBtn.setTextSize(TypedValue.COMPLEX_UNIT_SP, 11 * uiScale);
+
+        // Apply theme to dialog buttons
+        ThemeHelper.applyColorToButton(applyBtn, AppSettings.getButtonColor(getContext()));
+
+        // Month Navigation
+        prevBtn.setOnClickListener(v -> {
+            currentDisplayCalendar.add(Calendar.MONTH, -1);
+            updateCalendar();
+        });
+
+        nextBtn.setOnClickListener(v -> {
+            currentDisplayCalendar.add(Calendar.MONTH, 1);
+            updateCalendar();
+        });
+
+        // Uncheck all days button
+        uncheckAllBtn.setOnClickListener(v -> {
+            selectedDates.clear();
+            dayAdapter.notifyDataSetChanged();
+            updateSelectedCountLabel();
+        });
+
+        // Apply filter button
+        applyBtn.setOnClickListener(v -> {
+            if (listener != null) {
+                listener.onFilterApplied(new HashSet<>(selectedDates));
+            }
+            dismiss();
+        });
+
+        daysRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 7));
+        updateCalendar();
+    }
+
+    private void updateCalendar() {
+        SimpleDateFormat sdf = new SimpleDateFormat("MMMM yyyy", Locale.getDefault());
+        monthYearTextView.setText(sdf.format(currentDisplayCalendar.getTime()));
+
+        // Calculate leading blanks (Monday-first: Mon=0 ... Sun=6)
+        Calendar temp = (Calendar) currentDisplayCalendar.clone();
+        temp.set(Calendar.DAY_OF_MONTH, 1);
+        int firstDayOfWeek = temp.get(Calendar.DAY_OF_WEEK); // Sun=1, Mon=2
+        int offset = (firstDayOfWeek == Calendar.SUNDAY) ? 6 : (firstDayOfWeek - Calendar.MONDAY);
+
+        int daysInMonth = currentDisplayCalendar.getActualMaximum(Calendar.DAY_OF_MONTH);
+
+        // Find max notes count in displayed month for proper gradient scaling
+        int maxNotes = 1;
+        int year = currentDisplayCalendar.get(Calendar.YEAR);
+        int month = currentDisplayCalendar.get(Calendar.MONTH) + 1;
+        for (int day = 1; day <= daysInMonth; day++) {
+            String dateKey = String.format(Locale.getDefault(), "%04d-%02d-%02d", year, month, day);
+            Integer count = notesCountPerDay.get(dateKey);
+            if (count != null && count > maxNotes) {
+                maxNotes = count;
+            }
+        }
+        this.maxNotesCountInMonth = maxNotes;
+
+        List<Integer> dayNumbers = new ArrayList<>();
+        for (int i = 0; i < offset; i++) {
+            dayNumbers.add(0); // empty cell placeholder
+        }
+        for (int day = 1; day <= daysInMonth; day++) {
+            dayNumbers.add(day);
+        }
+
+        dayAdapter = new CalendarDayAdapter(dayNumbers);
+        daysRecyclerView.setAdapter(dayAdapter);
+        updateSelectedCountLabel();
+    }
+
+    private void updateSelectedCountLabel() {
+        if (selectedDates.isEmpty()) {
+            selectedCountTextView.setText("No days selected (Showing all notes)");
+        } else {
+            selectedCountTextView.setText("Selected: " + selectedDates.size() + " day(s)");
+        }
+    }
+
+    // --- Grid Adapter for Days ---
+    private class CalendarDayAdapter extends RecyclerView.Adapter<CalendarDayAdapter.DayViewHolder> {
+        private final List<Integer> days;
+
+        public CalendarDayAdapter(List<Integer> days) {
+            this.days = days;
+        }
+
+        @NonNull
+        @Override
+        public DayViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_calendar_day, parent, false);
+            // Apply scale to cell height
+            ViewGroup.LayoutParams lp = view.getLayoutParams();
+            if (lp != null) {
+                float density = getContext().getResources().getDisplayMetrics().density;
+                lp.height = (int) (44 * density * uiScale);
+                view.setLayoutParams(lp);
+            }
+            return new DayViewHolder(view);
+        }
+
+        @Override
+        public void onBindViewHolder(@NonNull DayViewHolder holder, int position) {
+            int dayNumber = days.get(position);
+            if (dayNumber == 0) {
+                holder.root.setVisibility(View.INVISIBLE);
+                holder.root.setOnClickListener(null);
+                return;
+            }
+
+            holder.root.setVisibility(View.VISIBLE);
+            holder.tvDayNumber.setText(String.valueOf(dayNumber));
+            holder.tvDayNumber.setTextSize(TypedValue.COMPLEX_UNIT_SP, 13 * uiScale);
+
+            Calendar dayCal = (Calendar) currentDisplayCalendar.clone();
+            dayCal.set(Calendar.DAY_OF_MONTH, dayNumber);
+            boolean isSunday = (dayCal.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY);
+
+            // Sunday number MUST be dark red (#8B0000)
+            if (isSunday) {
+                holder.tvDayNumber.setTextColor(Color.parseColor("#8B0000"));
+                holder.tvDayNumber.setTypeface(null, Typeface.BOLD);
+            } else {
+                holder.tvDayNumber.setTextColor(Color.parseColor("#222222"));
+                holder.tvDayNumber.setTypeface(null, Typeface.NORMAL);
+            }
+
+            // Date string yyyy-MM-dd
+            int year = currentDisplayCalendar.get(Calendar.YEAR);
+            int month = currentDisplayCalendar.get(Calendar.MONTH) + 1;
+            String dateKey = String.format(Locale.getDefault(), "%04d-%02d-%02d", year, month, dayNumber);
+
+            // Note count heatmap calculation
+            int noteCount = 0;
+            if (notesCountPerDay.containsKey(dateKey)) {
+                noteCount = notesCountPerDay.get(dateKey);
+            }
+
+            int backgroundColor;
+            if (noteCount == 0) {
+                // White if none
+                backgroundColor = Color.WHITE;
+            } else {
+                // More intensive color as notes increase
+                float intensity = 0.25f + 0.75f * ((float) noteCount / Math.max(1, maxNotesCountInMonth));
+                backgroundColor = ColorUtils.blendARGB(Color.WHITE, heatmapBaseColor, Math.min(1.0f, intensity));
+            }
+
+            // Selection state
+            boolean isSelected = selectedDates.contains(dateKey);
+            GradientDrawable borderDrawable = new GradientDrawable();
+            borderDrawable.setColor(backgroundColor);
+
+            float density = getContext().getResources().getDisplayMetrics().density;
+            if (isSelected) {
+                borderDrawable.setStroke((int) (2.5f * density), Color.parseColor("#1565C0"));
+                holder.ivCheck.setVisibility(View.VISIBLE);
+            } else {
+                borderDrawable.setStroke((int) (0.5f * density), Color.parseColor("#E0E0E0"));
+                holder.ivCheck.setVisibility(View.GONE);
+            }
+            holder.root.setBackground(borderDrawable);
+
+            // Toggle date selection on click
+            holder.root.setOnClickListener(v -> {
+                if (selectedDates.contains(dateKey)) {
+                    selectedDates.remove(dateKey);
+                } else {
+                    selectedDates.add(dateKey);
+                }
+                notifyItemChanged(position);
+                updateSelectedCountLabel();
+            });
+        }
+
+        @Override
+        public int getItemCount() {
+            return days.size();
+        }
+
+        class DayViewHolder extends RecyclerView.ViewHolder {
+            FrameLayout root;
+            TextView tvDayNumber;
+            TextView ivCheck;
+
+            public DayViewHolder(@NonNull View itemView) {
+                super(itemView);
+                root = itemView.findViewById(R.id.calDayRoot);
+                tvDayNumber = itemView.findViewById(R.id.calDayNumberTextView);
+                ivCheck = itemView.findViewById(R.id.calDayCheckIndicator);
+            }
+        }
+    }
+}
+
+

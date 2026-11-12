@@ -252,9 +252,29 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
             holder.tv1.setTextColor(Color.parseColor("#2E7D32"));
         }
 
-        holder.tv1.setText(titlePrefix + currentItem.getNoteTitle());
-        holder.tv2.setText(currentItem.getNoteSubtitle());
-        holder.tv3.setText(currentItem.getNoteDescription());
+        String title = currentItem.getNoteTitle() != null ? currentItem.getNoteTitle().trim() : "";
+        if (titlePrefix.isEmpty() && title.isEmpty()) {
+            holder.tv1.setVisibility(View.GONE);
+        } else {
+            holder.tv1.setVisibility(View.VISIBLE);
+            holder.tv1.setText(titlePrefix + title);
+        }
+
+        String subtitle = currentItem.getNoteSubtitle() != null ? currentItem.getNoteSubtitle().trim() : "";
+        if (subtitle.isEmpty()) {
+            holder.tv2.setVisibility(View.GONE);
+        } else {
+            holder.tv2.setVisibility(View.VISIBLE);
+            holder.tv2.setText(subtitle);
+        }
+
+        String description = currentItem.getNoteDescription() != null ? currentItem.getNoteDescription().trim() : "";
+        if (description.isEmpty()) {
+            holder.tv3.setVisibility(View.GONE);
+        } else {
+            holder.tv3.setVisibility(View.VISIBLE);
+            holder.tv3.setText(description);
+        }
 
         String catDisplay = (currentItem.getNoteCategory() != null && !currentItem.getNoteCategory().isEmpty())
                 ? currentItem.getNoteCategory() : "-";
