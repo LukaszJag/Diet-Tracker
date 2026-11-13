@@ -143,12 +143,16 @@ public class AppSettingsActivity extends AppCompatActivity {
             else if (checkedId == R.id.rbSizeLarge) currentScale = 1.25f;
             else if (checkedId == R.id.rbSizeExtraLarge) currentScale = 1.5f;
 
-            AppSettings.setButtonColor(this, currentButtonColor);
-            AppSettings.setCalendarHeatmapColor(this, currentHeatmapColor);
-            AppSettings.setCalendarScale(this, currentScale);
+            AppSettings.saveAppAndCalendarSettingsWithSync(
+                    this,
+                    currentButtonColor,
+                    currentHeatmapColor,
+                    currentScale,
+                    null
+            );
 
             ThemeHelper.applyButtonTheme(this);
-            Toast.makeText(this, "Settings saved successfully!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Settings saved & syncing to cloud!", Toast.LENGTH_SHORT).show();
             finish();
         });
     }

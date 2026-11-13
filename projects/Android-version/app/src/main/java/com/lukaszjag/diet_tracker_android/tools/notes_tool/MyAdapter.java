@@ -12,11 +12,15 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.lukaszjag.diet_tracker_android.R;
+import com.lukaszjag.diet_tracker_android.tools.settings.AppSettings;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
+
+import android.content.Context;
+
 
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
@@ -228,10 +232,20 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         Note currentItem = noteList.get(position);
+        Context context = holder.itemView.getContext();
+
+        // 1. Apply category background color
+        int bgColor = AppSettings.getNoteCategoryColor(context, currentItem.getNoteCategory());
+        holder.itemView.setBackgroundColor(bgColor);
+
+        // 2. Check if background is dark to keep text readable
+        double darkness = 1 - (0.299 * Color.red(bgColor) + 0.587 * Color.green(bgColor) + 0.114 * Color.blue(bgColor)) / 255.0;
+        boolean isDarkBg = darkness > 0.5;
 
         // Display the database ID from Azure SQL (id column)
         if (holder.tvNoteIndex != null) {
             holder.tvNoteIndex.setText("#" + currentItem.getId());
+            holder.tvNoteIndex.setTextColor(isDarkBg ? Color.parseColor("#90CAF9") : Color.parseColor("#1565C0"));
         }
 
         holder.section1.setVisibility(hideSection1 ? View.GONE : View.VISIBLE);
@@ -241,15 +255,15 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
         String titlePrefix = "";
         holder.tv1.setPaintFlags(holder.tv1.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
-        holder.tv1.setTextColor(Color.BLACK);
+        holder.tv1.setTextColor(isDarkBg ? Color.WHITE : Color.BLACK);
 
         if (currentItem.isDeleted()) {
             titlePrefix = "[DELETED] ";
-            holder.tv1.setTextColor(Color.RED);
+            holder.tv1.setTextColor(isDarkBg ? Color.parseColor("#FF8A80") : Color.RED);
             holder.tv1.setPaintFlags(holder.tv1.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
         } else if (currentItem.isDone()) {
             titlePrefix = "[DONE ✓] ";
-            holder.tv1.setTextColor(Color.parseColor("#2E7D32"));
+            holder.tv1.setTextColor(isDarkBg ? Color.parseColor("#A5D6A7") : Color.parseColor("#2E7D32"));
         }
 
         String title = currentItem.getNoteTitle() != null ? currentItem.getNoteTitle().trim() : "";
@@ -266,6 +280,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         } else {
             holder.tv2.setVisibility(View.VISIBLE);
             holder.tv2.setText(subtitle);
+            holder.tv2.setTextColor(isDarkBg ? Color.parseColor("#E0E0E0") : Color.parseColor("#555555"));
         }
 
         String description = currentItem.getNoteDescription() != null ? currentItem.getNoteDescription().trim() : "";
@@ -274,6 +289,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         } else {
             holder.tv3.setVisibility(View.VISIBLE);
             holder.tv3.setText(description);
+            holder.tv3.setTextColor(isDarkBg ? Color.parseColor("#CCCCCC") : Color.parseColor("#888888"));
         }
 
         String catDisplay = (currentItem.getNoteCategory() != null && !currentItem.getNoteCategory().isEmpty())
@@ -282,19 +298,29 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
             catDisplay += " / " + currentItem.getNoteSubcategory();
         }
         holder.tvCategory.setText("Category: " + catDisplay);
+        holder.tvCategory.setTextColor(isDarkBg ? Color.parseColor("#A5D6A7") : Color.parseColor("#2E7D32"));
 
         holder.tvUrgently.setText("Urgently: " + (currentItem.getNoteUrgently() != null ? currentItem.getNoteUrgently() : "-"));
+        holder.tvUrgently.setTextColor(isDarkBg ? Color.parseColor("#FF8A80") : Color.parseColor("#C62828"));
 
+        int cbTextColor = isDarkBg ? Color.WHITE : Color.BLACK;
         holder.cbIsLearning.setChecked(currentItem.isLearning());
         holder.cbIsGeneralToDo.setChecked(currentItem.isGeneralToDo());
         holder.cbIsTodayTask.setChecked(currentItem.isTodayTask());
         holder.cbIsToBuy.setChecked(currentItem.isToBuyTask());
+        holder.cbIsLearning.setTextColor(cbTextColor);
+        holder.cbIsGeneralToDo.setTextColor(cbTextColor);
+        holder.cbIsTodayTask.setTextColor(cbTextColor);
+        holder.cbIsToBuy.setTextColor(cbTextColor);
 
         String createdDate = currentItem.getDateCreated() != null ? currentItem.getDateCreated() : "-";
         String deadlineDate = (currentItem.getDateDeadline() != null && !currentItem.getDateDeadline().isEmpty())
                 ? currentItem.getDateDeadline() : "None";
         holder.tvDates.setText("Created: " + createdDate + " | Deadline: " + deadlineDate);
+        holder.tvDates.setTextColor(isDarkBg ? Color.parseColor("#E0E0E0") : Color.parseColor("#666666"));
+
         holder.tvDaysSince.setText(currentItem.getDaysSinceCreation() + " days since create");
+        holder.tvDaysSince.setTextColor(isDarkBg ? Color.parseColor("#FF8A80") : Color.parseColor("#D32F2F"));
 
         holder.itemView.setOnClickListener(v -> {
             int pos = holder.getAdapterPosition();

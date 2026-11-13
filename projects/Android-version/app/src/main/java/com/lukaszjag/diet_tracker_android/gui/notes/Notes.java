@@ -27,6 +27,7 @@ import com.lukaszjag.diet_tracker_android.tools.cloud_data_tools.GetFromSQLDatab
 import com.lukaszjag.diet_tracker_android.tools.notes_tool.MyAdapter;
 import com.lukaszjag.diet_tracker_android.tools.notes_tool.Note;
 import com.lukaszjag.diet_tracker_android.tools.notes_tool.categories.NoteCategoryData;
+import com.lukaszjag.diet_tracker_android.tools.settings.AppSettings;
 import com.lukaszjag.diet_tracker_android.tools.sql_tools.QueryMaker;
 import com.lukaszjag.diet_tracker_android.tools.sql_tools.RowInTable;
 import com.lukaszjag.diet_tracker_android.tools.theme.ThemeHelper;
@@ -91,12 +92,23 @@ public class Notes extends AppCompatActivity {
         setupFilterSpinners();
         setupFilterListeners();
         fetchNotesFromAzure();
+
+        AppSettings.syncFromAzure(this, success -> runOnUiThread(() -> {
+            if (success) {
+                ThemeHelper.applyButtonTheme(Notes.this);
+                if (adapter != null) adapter.notifyDataSetChanged();
+            }
+        }));
+
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         ThemeHelper.applyButtonTheme(this);
+        if (adapter != null) {
+            adapter.notifyDataSetChanged();
+        }
     }
 
     private void setupCalendarFilterButton() {

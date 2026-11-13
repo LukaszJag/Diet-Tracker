@@ -1,0 +1,6 @@
+I want to add settings that will set color to note background depend of which maincategories it is for every main category I should be able to choose color
+
+add to main windows button named "Settings" and inside make button "Notes settings" and inside should be color picker for notes categories
+
+split and explain to me every change in code
+

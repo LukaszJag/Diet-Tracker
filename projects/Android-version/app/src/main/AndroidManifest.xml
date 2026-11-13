@@ -29,6 +29,16 @@
         </activity>
 
         <activity
+            android:name=".gui.settings.SettingsActivity"
+            android:exported="false"
+            android:label="Settings" />
+
+        <activity
+            android:name=".gui.settings.NotesSettingsActivity"
+            android:exported="false"
+            android:label="Notes Settings" />
+
+        <activity
             android:name=".gui.diet.GetProductData"
             android:exported="true" />
 

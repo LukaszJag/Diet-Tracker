@@ -14,8 +14,10 @@ import com.lukaszjag.diet_tracker_android.gui.diet.day_data_view.DayData;
 import com.lukaszjag.diet_tracker_android.gui.notes.Notes;
 import com.lukaszjag.diet_tracker_android.gui.notes.NotesHistory;
 import com.lukaszjag.diet_tracker_android.gui.settings.AppSettingsActivity;
+import com.lukaszjag.diet_tracker_android.tools.settings.AppSettings;
 import com.lukaszjag.diet_tracker_android.tools.theme.ThemeHelper;
 import com.lukaszjag.diet_tracker_android.tools.widget.WidgetColorSettingsActivity;
+import com.lukaszjag.diet_tracker_android.gui.settings.SettingsActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -26,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
     private Button monthlyStatsButton;
     private Button widgetSettingsButton;
     private Button appSettingsButton;
+    private Button settingsButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +37,12 @@ public class MainActivity extends AppCompatActivity {
 
         setupUIComponents();
         addListeners();
+
+        AppSettings.syncFromAzure(this, success -> runOnUiThread(() -> {
+            if (success) {
+                ThemeHelper.applyButtonTheme(MainActivity.this);
+            }
+        }));
     }
 
     @Override
@@ -51,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
         monthlyStatsButton = findViewById(R.id.monthlyStatsButton);
         widgetSettingsButton = findViewById(R.id.widgetSettingsButton);
         appSettingsButton = findViewById(R.id.appSettingsButton);
+        settingsButton = findViewById(R.id.settingsButton);
     }
 
     private void addListeners() {
@@ -86,6 +96,13 @@ public class MainActivity extends AppCompatActivity {
         if (appSettingsButton != null) {
             appSettingsButton.setOnClickListener(v -> {
                 Intent intent = new Intent(MainActivity.this, AppSettingsActivity.class);
+                startActivity(intent);
+            });
+        }
+
+        if (settingsButton != null) {
+            settingsButton.setOnClickListener(v -> {
+                Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
                 startActivity(intent);
             });
         }

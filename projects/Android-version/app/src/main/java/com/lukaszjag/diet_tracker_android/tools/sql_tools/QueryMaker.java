@@ -1,5 +1,7 @@
 package com.lukaszjag.diet_tracker_android.tools.sql_tools;
 
+import java.util.Map;
+
 public class QueryMaker {
     public static String getAllProductTableLikeProductNameCaseInsensitive(String productData) {
         String escapedData = productData != null ? productData.replace("'", "''") : "";
@@ -164,5 +166,52 @@ public class QueryMaker {
                 "[is_to_buy_task] = " + (isToBuy ? 1 : 0) + ", " +
                 "[date_deadline] = " + (deadline == null || deadline.isEmpty() ? "NULL" : "'" + deadline + "'") + " " +
                 "WHERE [id] = " + id + "; SELECT 1 AS success;";
+    }
+
+    public static String getAllAppSettingsQuery() {
+        return "SELECT [setting_key], [setting_value] FROM [diet_tracker_schema].[app_settings]";
+    }
+
+    public static String upsertAppSettingQuery(String key, String value) {
+        String safeKey = key != null ? key.replace("'", "''") : "";
+        String safeVal = value != null ? value.replace("'", "''") : "";
+
+        return "SET NOCOUNT ON; " +
+                "MERGE [diet_tracker_schema].[app_settings] AS target " +
+                "USING (SELECT N'" + safeKey + "' AS [setting_key], N'" + safeVal + "' AS [setting_value]) AS src " +
+                "ON target.[setting_key] = src.[setting_key] " +
+                "WHEN MATCHED THEN UPDATE SET [setting_value] = src.[setting_value], [updated_at] = GETDATE() " +
+                "WHEN NOT MATCHED THEN INSERT ([setting_key], [setting_value]) VALUES (src.[setting_key], src.[setting_value]); " +
+                "SELECT 1 AS success;";
+    }
+
+    public static String upsertMultipleAppSettingsQuery(Map<String, String> settings) {
+        if (settings == null || settings.isEmpty()) {
+            return "SELECT 1 AS success;";
+        }
+
+        StringBuilder sb = new StringBuilder("SET NOCOUNT ON; ");
+        for (Map.Entry<String, String> entry : settings.entrySet()) {
+            String safeKey = entry.getKey() != null ? entry.getKey().replace("'", "''") : "";
+            String safeVal = entry.getValue() != null ? entry.getValue().replace("'", "''") : "";
+
+            sb.append("MERGE [diet_tracker_schema].[app_settings] AS target ")
+                    .append("USING (SELECT N'").append(safeKey).append("' AS [setting_key], N'").append(safeVal).append("' AS [setting_value]) AS src ")
+                    .append("ON target.[setting_key] = src.[setting_key] ")
+                    .append("WHEN MATCHED THEN UPDATE SET [setting_value] = src.[setting_value], [updated_at] = GETDATE() ")
+                    .append("WHEN NOT MATCHED THEN INSERT ([setting_key], [setting_value]) VALUES (src.[setting_key], src.[setting_value]); ");
+        }
+        sb.append("SELECT 1 AS success;");
+        return sb.toString();
+    }
+
+    public static String deleteAppSettingQuery(String key) {
+        String safeKey = key != null ? key.replace("'", "''") : "";
+        return "SET NOCOUNT ON; DELETE FROM [diet_tracker_schema].[app_settings] WHERE [setting_key] = N'" + safeKey + "'; SELECT 1 AS success;";
+    }
+
+    public static String deleteAppSettingsByPrefixQuery(String prefix) {
+        String safePrefix = prefix != null ? prefix.replace("'", "''") : "";
+        return "SET NOCOUNT ON; DELETE FROM [diet_tracker_schema].[app_settings] WHERE CHARINDEX(N'" + safePrefix + "', [setting_key]) = 1; SELECT 1 AS success;";
     }
 }
