@@ -1,0 +1,9 @@
+Name: Sorbet cytryna
+Brand: Carrefour
+Package has: 290.0
+Macro for: 100.0
+KCal: 107.0
+Protein: 0.1
+Fat: 0.3
+Carbs: 26.0
+Comment optional: Link: https://www.carrefour.pl/mrozonki/lody/lody-familijne/carrefour-extra-sorbet-cytryna-500-ml
