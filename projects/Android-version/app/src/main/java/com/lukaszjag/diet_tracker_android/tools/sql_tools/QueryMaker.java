@@ -54,8 +54,10 @@ public class QueryMaker {
         String safeTitle = title != null ? title.replace("'", "''") : "";
         String safeSub = subtitle != null ? subtitle.replace("'", "''") : "";
         String safeDesc = description != null ? description.replace("'", "''") : "";
-        String safeCat = category != null ? category.replace("'", "''") : "";
-        String safeSubcat = subcategory != null ? subcategory.replace("'", "''") : "";
+        String sqlCat = (category == null || category.trim().isEmpty())
+                ? "NULL" : "N'" + category.replace("'", "''") + "'";
+        String sqlSubcat = (subcategory == null || subcategory.trim().isEmpty())
+                ? "NULL" : "N'" + subcategory.replace("'", "''") + "'";
 
         return "INSERT INTO [diet_tracker_schema].[notes] " +
                 "([title], [subtitle], [description], [category], [subcategory], [is_urgently], [is_learning], " +
@@ -64,8 +66,8 @@ public class QueryMaker {
                 "N'" + safeTitle + "', " +
                 "N'" + safeSub + "', " +
                 "N'" + safeDesc + "', " +
-                "N'" + safeCat + "', " +
-                "N'" + safeSubcat + "', " +
+                sqlCat + ", " +
+                sqlSubcat + ", " +
                 (isUrgently ? 1 : 0) + ", " +
                 (isLearning ? 1 : 0) + ", " +
                 (isGeneral ? 1 : 0) + ", " +
@@ -149,16 +151,18 @@ public class QueryMaker {
         String safeTitle = title != null ? title.replace("'", "''") : "";
         String safeSub = subtitle != null ? subtitle.replace("'", "''") : "";
         String safeDesc = description != null ? description.replace("'", "''") : "";
-        String safeCat = category != null ? category.replace("'", "''") : "";
-        String safeSubcat = subcategory != null ? subcategory.replace("'", "''") : "";
+        String sqlCat = (category == null || category.trim().isEmpty())
+                ? "NULL" : "N'" + category.replace("'", "''") + "'";
+        String sqlSubcat = (subcategory == null || subcategory.trim().isEmpty())
+                ? "NULL" : "N'" + subcategory.replace("'", "''") + "'";
 
         return "SET NOCOUNT ON; " +
                 "UPDATE [diet_tracker_schema].[notes] SET " +
                 "[title] = N'" + safeTitle + "', " +
                 "[subtitle] = N'" + safeSub + "', " +
                 "[description] = N'" + safeDesc + "', " +
-                "[category] = N'" + safeCat + "', " +
-                "[subcategory] = N'" + safeSubcat + "', " +
+                "[category] = " + sqlCat + ", " +
+                "[subcategory] = " + sqlSubcat + ", " +
                 "[is_urgently] = " + (isUrgently ? 1 : 0) + ", " +
                 "[is_learning] = " + (isLearning ? 1 : 0) + ", " +
                 "[is_general_to_do] = " + (isGeneral ? 1 : 0) + ", " +

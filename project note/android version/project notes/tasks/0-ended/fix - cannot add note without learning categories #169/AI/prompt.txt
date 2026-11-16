@@ -1,0 +1,11 @@
+I want to my app at start to add note main category and subcategory must be hidden and if we add note like this in sql database on azure category and subcategory will be null
+
+when is learning task check box is check main category and subcategory will appear
+
+when note will be edit it should behave the same way
+
+every change of code you must full explain why you to this
+
+
+
+

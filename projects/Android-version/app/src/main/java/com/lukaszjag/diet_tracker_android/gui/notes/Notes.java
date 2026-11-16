@@ -186,8 +186,15 @@ public class Notes extends AppCompatActivity {
                 runOnUiThread(() -> {
                     adapter.clearAll();
                     for (RowInTable row : resultTable) {
+                        String cat = row.getValue("category");
+                        if (cat == null || "null".equalsIgnoreCase(cat.trim())) {
+                            cat = null;
+                        }
+
                         String subcat = row.getValue("subcategory");
-                        if (subcat == null) subcat = "";
+                        if (subcat == null || "null".equalsIgnoreCase(subcat.trim())) {
+                            subcat = "";
+                        }
 
                         boolean isDone = "true".equalsIgnoreCase(row.getValue("is_done")) || "1".equals(row.getValue("is_done"));
                         boolean isDeleted = "true".equalsIgnoreCase(row.getValue("is_deleted")) || "1".equals(row.getValue("is_deleted"));
@@ -197,7 +204,7 @@ public class Notes extends AppCompatActivity {
                                 row.getValue("title"),
                                 row.getValue("subtitle"),
                                 row.getValue("description"),
-                                row.getValue("category"),
+                                cat,
                                 subcat,
                                 row.getValue("is_urgently"),
                                 "true".equals(row.getValue("is_learning")) || "1".equals(row.getValue("is_learning")),
@@ -231,6 +238,7 @@ public class Notes extends AppCompatActivity {
         final EditText title = dialogView.findViewById(R.id.dialogTitle);
         final EditText subtitle = dialogView.findViewById(R.id.dialogSubtitle);
         final EditText desc = dialogView.findViewById(R.id.dialogDescription);
+        final View categoryGrid = dialogView.findViewById(R.id.gridview);
         final Spinner spinnerCategory = dialogView.findViewById(R.id.dialogSpinnerCategory);
         final Spinner spinnerSubcategory = dialogView.findViewById(R.id.dialogSpinnerSubcategory);
         final CheckBox cbLearn = dialogView.findViewById(R.id.dialogCbLearning);
@@ -300,14 +308,26 @@ public class Notes extends AppCompatActivity {
             cbBuy.setChecked(note.isToBuyTask());
         }
 
+        // Show Main Category & Subcategory only when "Is Learning Task" is checked
+        categoryGrid.setVisibility(cbLearn.isChecked() ? View.VISIBLE : View.GONE);
+
+        cbLearn.setOnCheckedChangeListener((buttonView, isChecked) ->
+                categoryGrid.setVisibility(isChecked ? View.VISIBLE : View.GONE)
+        );
+
         // 1. Configure the dialog positive and negative buttons on builder FIRST
         builder.setPositiveButton(isEditMode ? "Update" : "Create", (d, which) -> {
-            String selectedMain = spinnerCategory.getSelectedItem() != null ?
-                    spinnerCategory.getSelectedItem().toString() : "";
-            String selectedSub = spinnerSubcategory.getSelectedItem() != null ?
-                    spinnerSubcategory.getSelectedItem().toString() : "";
-            if ("None".equals(selectedSub)) {
-                selectedSub = "";
+            String selectedMain = null;
+            String selectedSub = null;
+
+            if (cbLearn.isChecked()) {
+                selectedMain = spinnerCategory.getSelectedItem() != null ?
+                        spinnerCategory.getSelectedItem().toString() : null;
+                selectedSub = spinnerSubcategory.getSelectedItem() != null ?
+                        spinnerSubcategory.getSelectedItem().toString() : null;
+                if ("None".equals(selectedSub) || (selectedSub != null && selectedSub.trim().isEmpty())) {
+                    selectedSub = null;
+                }
             }
 
             String q;

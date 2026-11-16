@@ -125,8 +125,15 @@ public class NotesHistory extends AppCompatActivity {
                 runOnUiThread(() -> {
                     adapter.clearAll();
                     for (RowInTable row : resultTable) {
+                        String cat = row.getValue("category");
+                        if (cat == null || "null".equalsIgnoreCase(cat.trim())) {
+                            cat = null;
+                        }
+
                         String subcat = row.getValue("subcategory");
-                        if (subcat == null) subcat = "";
+                        if (subcat == null || "null".equalsIgnoreCase(subcat.trim())) {
+                            subcat = "";
+                        }
 
                         boolean isDone = "true".equalsIgnoreCase(row.getValue("is_done")) || "1".equals(row.getValue("is_done"));
                         boolean isDeleted = "true".equalsIgnoreCase(row.getValue("is_deleted")) || "1".equals(row.getValue("is_deleted"));
@@ -136,7 +143,7 @@ public class NotesHistory extends AppCompatActivity {
                                 row.getValue("title"),
                                 row.getValue("subtitle"),
                                 row.getValue("description"),
-                                row.getValue("category"),
+                                cat,
                                 subcat,
                                 row.getValue("is_urgently"),
                                 "true".equals(row.getValue("is_learning")) || "1".equals(row.getValue("is_learning")),
