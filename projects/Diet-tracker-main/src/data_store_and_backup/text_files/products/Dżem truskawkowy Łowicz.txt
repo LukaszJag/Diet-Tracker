@@ -1,0 +1,9 @@
+Name: Dżem truskawkowy Łowicz
+Brand: Łowicz
+Package has: 280.0
+Macro for: 100.0
+KCal: 142.0
+Protein: 0.5
+Fat: 0.5
+Carbs: 35.0
+Comment optional: Link: https://www.frisco.pl/pid,26/n,lowicz-dzem-truskawkowy-(100-polskich-truskawek)-o-obnizonej-zawartosci-cukrow/stn,product

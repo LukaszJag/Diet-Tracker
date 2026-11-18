@@ -1,0 +1,9 @@
+Name: Bon Appétit! Lunchbox meksykański z makaronem
+Brand: Carrefour
+Package has: 250.0
+Macro for: 100.0
+KCal: 238.0
+Protein: 9.8
+Fat: 8.7
+Carbs: 29.0
+Comment optional: Link: https://www.carrefour.pl/dania-gotowe-i-przystawki/dania-gotowe-i-przystawki-7v/inne-dania-gotowe-ss/carrefour-bon-appetit-lunchbox-meksykanski-z-makaronem-250-g
