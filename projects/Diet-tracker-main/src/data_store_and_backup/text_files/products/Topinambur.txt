@@ -1,0 +1,9 @@
+Name: Topinambur
+Brand: warzywo
+Package has: 0.0
+Macro for: 100.0
+KCal: 73.0
+Protein: 2.0
+Fat: 0.01
+Carbs: 17.44
+Comment optional: Link: https://www.przepisy.pl/blog/topinambur-czyli-slonecznik-bulwiasty-wlasciwosci

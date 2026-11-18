@@ -1,0 +1,9 @@
+Name: Dżem brzoskwiniowy niskosłodzony
+Brand: Rapsodia
+Package has: 400.0
+Macro for: 100.0
+KCal: 142.0
+Protein: 0.5
+Fat: 0.5
+Carbs: 34.0
+Comment optional: Dane z opakowania

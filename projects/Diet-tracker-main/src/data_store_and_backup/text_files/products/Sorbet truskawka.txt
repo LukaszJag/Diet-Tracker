@@ -1,0 +1,9 @@
+Name: Sorbet truskawka
+Brand: Carrefour
+Package has: 290.0
+Macro for: 100.0
+KCal: 119.0
+Protein: 0.4
+Fat: 0.5
+Carbs: 28.0
+Comment optional: Dane z opakowania

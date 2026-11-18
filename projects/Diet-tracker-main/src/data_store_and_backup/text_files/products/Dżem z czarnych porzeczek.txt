@@ -1,0 +1,9 @@
+Name: Dżem z czarnych porzeczek
+Brand: Rapsodia
+Package has: 0.0
+Macro for: 100.0
+KCal: 143.0
+Protein: 0.6
+Fat: 0.4
+Carbs: 32.0
+Comment optional: Dane z opakowania
