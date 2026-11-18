@@ -1,0 +1,453 @@
+wygeneruj obraz na którym będą ułożone w mozajke taski z screeshotów mojej aplikacji 1.png to przykład możesz się zasugerować ale zrób włane podejście do tego zadania
+
+
+
+
+Nie mam w tym czacie narzędzia do generowania plików rastrowych (PNG/JPG), więc
+nie mogę bezpośrednio wygenerować i załączyć gotowego pliku .png.
+
+Mogę natomiast wygenerować gotowy obraz wektorowy SVG — zawiera on wszystkie 13
+zadań z Twoich 7 zrzutów ekranu, ułożonych w autorską mozaikę typu Bento Grid
+(zróżnicowane szerokości kart w układzie 4-kolumnowym na ciemnym tle
+inspirowanym oknem desktopowym z 1.png, z zachowaniem oryginalnej kolorystyki
+kategorii, statusów checkboxów, dat i etykiet).
+
+Zapisz poniższy kod jako np. mozaika_taskow.svg i otwórz go w dowolnej
+przeglądarce (Chrome, Edge, Firefox) lub programie graficznym (Figma, Inkscape),
+skąd jednym kliknięciem wyeksportujesz go do PNG:
+
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 965" width="1440" height="965" font-family="Segoe UI, Roboto, Arial, sans-serif">
+  <defs>
+    <filter id="cardShadow" x="-4%" y="-4%" width="108%" height="112%">
+      <feDropShadow dx="0" dy="6" stdDeviation="8" flood-color="#000000" flood-opacity="0.32"/>
+    </filter>
+  </defs>
+
+  <!-- Tło canvasu -->
+  <rect width="1440" height="965" fill="#25272c"/>
+
+  <!-- ================= ROW 1 ================= -->
+
+  <!-- #46 (Wide: Col 1-2, Orange) -->
+  <g transform="translate(40, 40)" filter="url(#cardShadow)">
+    <rect width="670" height="220" rx="12" fill="#ff951c"/>
+    <text x="20" y="30" font-size="13" font-weight="700" fill="#1d4ed8">#46</text>
+    <text x="20" y="56" font-size="18" font-weight="700" fill="#141414">Uporzadkowanie notatek</text>
+    <text x="20" y="77" font-size="13" font-weight="600" fill="#3b270a">Nauka</text>
+    <text x="20" y="96" font-size="11.5" fill="#523710">Uporzadkowac - 2.1.3 TO DO - Tasks - Nauka</text>
+    <text x="20" y="117" font-size="11.5" font-weight="600" fill="#2d6a1e">Category: Computer Science / Algorytmy</text>
+    <text x="650" y="117" font-size="11.5" font-weight="600" fill="#b92b15" text-anchor="end">Urgently: false</text>
+
+    <!-- Checkboxes: General + Today checked -->
+    <g transform="translate(20, 140)">
+      <rect x="0" y="0" width="14" height="14" rx="3" fill="none" stroke="#222222" stroke-width="1.5"/>
+      <text x="20" y="11" font-size="11" fill="#141414">Learning</text>
+
+      <rect x="85" y="0" width="14" height="14" rx="3" fill="#6347d1"/>
+      <path d="M88 7 L91 10 L96 4" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      <text x="105" y="11" font-size="11" fill="#141414">General</text>
+
+      <rect x="165" y="0" width="14" height="14" rx="3" fill="#6347d1"/>
+      <path d="M168 7 L171 10 L176 4" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      <text x="185" y="11" font-size="11" fill="#141414">Today</text>
+
+      <rect x="235" y="0" width="14" height="14" rx="3" fill="none" stroke="#222222" stroke-width="1.5"/>
+      <text x="255" y="11" font-size="11" fill="#141414">To Buy</text>
+    </g>
+
+    <text x="20" y="196" font-size="11" fill="#3a2a12">Created: 2026-10-04T00:00:00.000Z | Deadline: null</text>
+    <text x="650" y="196" font-size="11" font-weight="600" fill="#b92b15" text-anchor="end">45 days since create</text>
+  </g>
+
+  <!-- #82 (Col 3, Green) -->
+  <g transform="translate(730, 40)" filter="url(#cardShadow)">
+    <rect width="325" height="220" rx="12" fill="#4b8b19"/>
+    <text x="18" y="28" font-size="12" font-weight="700" fill="#a8d8ff">#82</text>
+    <text x="18" y="52" font-size="15" font-weight="700" fill="#ffffff">
+      <tspan x="18" dy="0">co to jest Spring i do czego się</tspan>
+      <tspan x="18" dy="20">go używa</tspan>
+    </text>
+    <text x="18" y="98" font-size="11" fill="#c7f2ba">Category: Java ecosystem / Spring</text>
+    <text x="307" y="98" font-size="11" fill="#ffd166" text-anchor="end">Urgently: false</text>
+
+    <g transform="translate(18, 128)">
+      <rect x="0" y="0" width="14" height="14" rx="3" fill="#6347d1"/>
+      <path d="M3 7 L6 10 L11 4" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      <text x="19" y="11" font-size="10.5" fill="#ffffff">Learning</text>
+
+      <rect x="74" y="0" width="14" height="14" rx="3" fill="none" stroke="#d5e8cc" stroke-width="1.3"/>
+      <text x="93" y="11" font-size="10.5" fill="#ffffff">General</text>
+
+      <rect x="144" y="0" width="14" height="14" rx="3" fill="none" stroke="#d5e8cc" stroke-width="1.3"/>
+      <text x="163" y="11" font-size="10.5" fill="#ffffff">Today</text>
+
+      <rect x="206" y="0" width="14" height="14" rx="3" fill="none" stroke="#d5e8cc" stroke-width="1.3"/>
+      <text x="225" y="11" font-size="10.5" fill="#ffffff">To Buy</text>
+    </g>
+
+    <text x="18" y="182" font-size="10" fill="#e6f5de">Created: 2026-11-12T00:00:00.000Z</text>
+    <text x="18" y="198" font-size="10" fill="#e6f5de">Deadline: null</text>
+    <text x="307" y="198" font-size="10" fill="#ffd166" text-anchor="end">6 days since create</text>
+  </g>
+
+  <!-- #83 (Col 4, Green) -->
+  <g transform="translate(1075, 40)" filter="url(#cardShadow)">
+    <rect width="325" height="220" rx="12" fill="#4b8b19"/>
+    <text x="18" y="28" font-size="12" font-weight="700" fill="#a8d8ff">#83</text>
+    <text x="18" y="52" font-size="15" font-weight="700" fill="#ffffff">
+      <tspan x="18" dy="0">Spring boot - zaimplementować do</tspan>
+      <tspan x="18" dy="20">diet tracker Android version</tspan>
+    </text>
+    <text x="18" y="98" font-size="11" fill="#c7f2ba">Category: Java ecosystem / Spring</text>
+    <text x="307" y="98" font-size="11" fill="#ffd166" text-anchor="end">Urgently: false</text>
+
+    <g transform="translate(18, 128)">
+      <rect x="0" y="0" width="14" height="14" rx="3" fill="#6347d1"/>
+      <path d="M3 7 L6 10 L11 4" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      <text x="19" y="11" font-size="10.5" fill="#ffffff">Learning</text>
+
+      <rect x="74" y="0" width="14" height="14" rx="3" fill="none" stroke="#d5e8cc" stroke-width="1.3"/>
+      <text x="93" y="11" font-size="10.5" fill="#ffffff">General</text>
+
+      <rect x="144" y="0" width="14" height="14" rx="3" fill="none" stroke="#d5e8cc" stroke-width="1.3"/>
+      <text x="163" y="11" font-size="10.5" fill="#ffffff">Today</text>
+
+      <rect x="206" y="0" width="14" height="14" rx="3" fill="none" stroke="#d5e8cc" stroke-width="1.3"/>
+      <text x="225" y="11" font-size="10.5" fill="#ffffff">To Buy</text>
+    </g>
+
+    <text x="18" y="182" font-size="10" fill="#e6f5de">Created: 2026-11-12T00:00:00.000Z</text>
+    <text x="18" y="198" font-size="10" fill="#e6f5de">Deadline: null</text>
+    <text x="307" y="198" font-size="10" fill="#ffd166" text-anchor="end">6 days since create</text>
+  </g>
+
+  <!-- ================= ROW 2 ================= -->
+
+  <!-- #84 (Col 1, Green) -->
+  <g transform="translate(40, 280)" filter="url(#cardShadow)">
+    <rect width="325" height="210" rx="12" fill="#4b8b19"/>
+    <text x="18" y="28" font-size="12" font-weight="700" fill="#a8d8ff">#84</text>
+    <text x="18" y="52" font-size="15" font-weight="700" fill="#ffffff">
+      <tspan x="18" dy="0">jak używać wyrażenia lambda</tspan>
+      <tspan x="18" dy="20">w Javie</tspan>
+    </text>
+    <text x="18" y="96" font-size="11" fill="#c7f2ba">Category: Java ecosystem / Java</text>
+    <text x="307" y="96" font-size="11" fill="#ffd166" text-anchor="end">Urgently: false</text>
+
+    <g transform="translate(18, 124)">
+      <rect x="0" y="0" width="14" height="14" rx="3" fill="#6347d1"/>
+      <path d="M3 7 L6 10 L11 4" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      <text x="19" y="11" font-size="10.5" fill="#ffffff">Learning</text>
+
+      <rect x="74" y="0" width="14" height="14" rx="3" fill="none" stroke="#d5e8cc" stroke-width="1.3"/>
+      <text x="93" y="11" font-size="10.5" fill="#ffffff">General</text>
+
+      <rect x="144" y="0" width="14" height="14" rx="3" fill="none" stroke="#d5e8cc" stroke-width="1.3"/>
+      <text x="163" y="11" font-size="10.5" fill="#ffffff">Today</text>
+
+      <rect x="206" y="0" width="14" height="14" rx="3" fill="none" stroke="#d5e8cc" stroke-width="1.3"/>
+      <text x="225" y="11" font-size="10.5" fill="#ffffff">To Buy</text>
+    </g>
+
+    <text x="18" y="174" font-size="10" fill="#e6f5de">Created: 2026-11-12T00:00:00.000Z</text>
+    <text x="18" y="190" font-size="10" fill="#e6f5de">Deadline: null</text>
+    <text x="307" y="190" font-size="10" fill="#ffd166" text-anchor="end">6 days since create</text>
+  </g>
+
+  <!-- #89 (Col 2, Blue) -->
+  <g transform="translate(385, 280)" filter="url(#cardShadow)">
+    <rect width="325" height="210" rx="12" fill="#2b63a3"/>
+    <text x="18" y="28" font-size="12" font-weight="700" fill="#a8d8ff">#89</text>
+    <text x="18" y="52" font-size="15" font-weight="700" fill="#ffffff">
+      <tspan x="18" dy="0">Wprowadzić książke do C++ - Prata:</tspan>
+      <tspan x="18" dy="20">-&gt; pobrać e-booka przez VM</tspan>
+    </text>
+    <text x="18" y="96" font-size="11" fill="#a9e39b">Category: Low-Level Languages / C++</text>
+    <text x="307" y="96" font-size="11" fill="#ff8f85" text-anchor="end">Urgently: false</text>
+
+    <g transform="translate(18, 124)">
+      <rect x="0" y="0" width="14" height="14" rx="3" fill="#6347d1"/>
+      <path d="M3 7 L6 10 L11 4" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      <text x="19" y="11" font-size="10.5" fill="#ffffff">Learning</text>
+
+      <rect x="74" y="0" width="14" height="14" rx="3" fill="none" stroke="#c3d9f0" stroke-width="1.3"/>
+      <text x="93" y="11" font-size="10.5" fill="#ffffff">General</text>
+
+      <rect x="144" y="0" width="14" height="14" rx="3" fill="none" stroke="#c3d9f0" stroke-width="1.3"/>
+      <text x="163" y="11" font-size="10.5" fill="#ffffff">Today</text>
+
+      <rect x="206" y="0" width="14" height="14" rx="3" fill="none" stroke="#c3d9f0" stroke-width="1.3"/>
+      <text x="225" y="11" font-size="10.5" fill="#ffffff">To Buy</text>
+    </g>
+
+    <text x="18" y="174" font-size="10" fill="#e1ecfa">Created: 2026-11-12T00:00:00.000Z</text>
+    <text x="18" y="190" font-size="10" fill="#e1ecfa">Deadline: null</text>
+    <text x="307" y="190" font-size="10" fill="#ff8f85" text-anchor="end">6 days since create</text>
+  </g>
+
+  <!-- #102 (Wide: Col 3-4, Warm Dark Grey) -->
+  <g transform="translate(730, 280)" filter="url(#cardShadow)">
+    <rect width="670" height="210" rx="12" fill="#5c5755"/>
+    <text x="20" y="28" font-size="12" font-weight="700" fill="#a8d8ff">#102</text>
+    <text x="20" y="54" font-size="16" font-weight="700" fill="#ffffff">Napisać skrypt w powershell</text>
+    <text x="20" y="75" font-size="12" fill="#e0dcda">
+      <tspan x="20" dy="0">do przełączania urządzenia bluetooth w zależności czy jest podpięty zewnętrzny</tspan>
+      <tspan x="20" dy="16">USB moduł bluetooth</tspan>
+    </text>
+    <text x="20" y="114" font-size="11.5" fill="#a9e39b">Category: Cloud and Infrastructure / PowerShell</text>
+    <text x="650" y="114" font-size="11.5" fill="#ff8f85" text-anchor="end">Urgently: false</text>
+
+    <g transform="translate(20, 136)">
+      <rect x="0" y="0" width="14" height="14" rx="3" fill="#6347d1"/>
+      <path d="M3 7 L6 10 L11 4" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      <text x="20" y="11" font-size="11" fill="#ffffff">Learning</text>
+
+      <rect x="85" y="0" width="14" height="14" rx="3" fill="none" stroke="#b8b2af" stroke-width="1.3"/>
+      <text x="105" y="11" font-size="11" fill="#ffffff">General</text>
+
+      <rect x="165" y="0" width="14" height="14" rx="3" fill="none" stroke="#b8b2af" stroke-width="1.3"/>
+      <text x="185" y="11" font-size="11" fill="#ffffff">Today</text>
+
+      <rect x="235" y="0" width="14" height="14" rx="3" fill="none" stroke="#b8b2af" stroke-width="1.3"/>
+      <text x="255" y="11" font-size="11" fill="#ffffff">To Buy</text>
+    </g>
+
+    <text x="20" y="188" font-size="11" fill="#d8d4d2">Created: 2026-11-12T00:00:00.000Z | Deadline: null</text>
+    <text x="650" y="188" font-size="11" fill="#ff8f85" text-anchor="end">6 days since create</text>
+  </g>
+
+  <!-- ================= ROW 3 ================= -->
+
+  <!-- #86 (Col 1, Warm Dark Grey) -->
+  <g transform="translate(40, 510)" filter="url(#cardShadow)">
+    <rect width="325" height="205" rx="12" fill="#5c5755"/>
+    <text x="18" y="26" font-size="12" font-weight="700" fill="#a8d8ff">#86</text>
+    <text x="18" y="48" font-size="14.5" font-weight="700" fill="#ffffff">
+      <tspan x="18" dy="0">napisać skrypt w powershellu:</tspan>
+      <tspan x="18" dy="18">get all content form files in path</tspan>
+      <tspan x="18" dy="18">recursive</tspan>
+    </text>
+    <text x="18" y="104" font-size="10.5" fill="#a9e39b">
+      <tspan x="18" dy="0">Category: Cloud and Infrastructure /</tspan>
+      <tspan x="18" dy="13">PowerShell</tspan>
+    </text>
+    <text x="307" y="104" font-size="10.5" fill="#ff8f85" text-anchor="end">Urgently: false</text>
+
+    <g transform="translate(18, 134)">
+      <rect x="0" y="0" width="14" height="14" rx="3" fill="#6347d1"/>
+      <path d="M3 7 L6 10 L11 4" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      <text x="19" y="11" font-size="10.5" fill="#ffffff">Learning</text>
+
+      <rect x="74" y="0" width="14" height="14" rx="3" fill="none" stroke="#b8b2af" stroke-width="1.3"/>
+      <text x="93" y="11" font-size="10.5" fill="#ffffff">General</text>
+
+      <rect x="144" y="0" width="14" height="14" rx="3" fill="none" stroke="#b8b2af" stroke-width="1.3"/>
+      <text x="163" y="11" font-size="10.5" fill="#ffffff">Today</text>
+
+      <rect x="206" y="0" width="14" height="14" rx="3" fill="none" stroke="#b8b2af" stroke-width="1.3"/>
+      <text x="225" y="11" font-size="10.5" fill="#ffffff">To Buy</text>
+    </g>
+
+    <text x="18" y="172" font-size="10" fill="#d8d4d2">Created: 2026-11-12T00:00:00.000Z</text>
+    <text x="18" y="188" font-size="10" fill="#d8d4d2">Deadline: null</text>
+    <text x="307" y="188" font-size="10" fill="#ff8f85" text-anchor="end">6 days since create</text>
+  </g>
+
+  <!-- #87 (Col 2, Warm Dark Grey) -->
+  <g transform="translate(385, 510)" filter="url(#cardShadow)">
+    <rect width="325" height="205" rx="12" fill="#5c5755"/>
+    <text x="18" y="26" font-size="12" font-weight="700" fill="#a8d8ff">#87</text>
+    <text x="18" y="54" font-size="15.5" font-weight="700" fill="#ffffff">co to jest subnet mask</text>
+    <text x="18" y="88" font-size="10.5" fill="#a9e39b">
+      <tspan x="18" dy="0">Category: Cloud and Infrastructure /</tspan>
+      <tspan x="18" dy="13">Network</tspan>
+    </text>
+    <text x="307" y="88" font-size="10.5" fill="#ff8f85" text-anchor="end">Urgently: false</text>
+
+    <g transform="translate(18, 128)">
+      <rect x="0" y="0" width="14" height="14" rx="3" fill="#6347d1"/>
+      <path d="M3 7 L6 10 L11 4" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      <text x="19" y="11" font-size="10.5" fill="#ffffff">Learning</text>
+
+      <rect x="74" y="0" width="14" height="14" rx="3" fill="none" stroke="#b8b2af" stroke-width="1.3"/>
+      <text x="93" y="11" font-size="10.5" fill="#ffffff">General</text>
+
+      <rect x="144" y="0" width="14" height="14" rx="3" fill="none" stroke="#b8b2af" stroke-width="1.3"/>
+      <text x="163" y="11" font-size="10.5" fill="#ffffff">Today</text>
+
+      <rect x="206" y="0" width="14" height="14" rx="3" fill="none" stroke="#b8b2af" stroke-width="1.3"/>
+      <text x="225" y="11" font-size="10.5" fill="#ffffff">To Buy</text>
+    </g>
+
+    <text x="18" y="172" font-size="10" fill="#d8d4d2">Created: 2026-11-12T00:00:00.000Z</text>
+    <text x="18" y="188" font-size="10" fill="#d8d4d2">Deadline: null</text>
+    <text x="307" y="188" font-size="10" fill="#ff8f85" text-anchor="end">6 days since create</text>
+  </g>
+
+  <!-- #80 (Col 3, Orange) -->
+  <g transform="translate(730, 510)" filter="url(#cardShadow)">
+    <rect width="325" height="205" rx="12" fill="#ff951c"/>
+    <text x="18" y="26" font-size="12" font-weight="700" fill="#1d4ed8">#80</text>
+    <text x="18" y="50" font-size="15" font-weight="700" fill="#141414">
+      <tspan x="18" dy="0">Kupić i zarezerwować termin na -</tspan>
+      <tspan x="18" dy="20">CompTIA A+ - core 1</tspan>
+    </text>
+    <text x="18" y="92" font-size="11" font-weight="600" fill="#2d6a1e">Category: Certs / CompTIA A+</text>
+    <text x="307" y="92" font-size="11" font-weight="600" fill="#b92b15" text-anchor="end">Urgently: false</text>
+
+    <g transform="translate(18, 124)">
+      <rect x="0" y="0" width="14" height="14" rx="3" fill="#6347d1"/>
+      <path d="M3 7 L6 10 L11 4" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      <text x="19" y="11" font-size="10.5" fill="#141414">Learning</text>
+
+      <rect x="74" y="0" width="14" height="14" rx="3" fill="none" stroke="#222222" stroke-width="1.3"/>
+      <text x="93" y="11" font-size="10.5" fill="#141414">General</text>
+
+      <rect x="144" y="0" width="14" height="14" rx="3" fill="none" stroke="#222222" stroke-width="1.3"/>
+      <text x="163" y="11" font-size="10.5" fill="#141414">Today</text>
+
+      <rect x="206" y="0" width="14" height="14" rx="3" fill="none" stroke="#222222" stroke-width="1.3"/>
+      <text x="225" y="11" font-size="10.5" fill="#141414">To Buy</text>
+    </g>
+
+    <text x="18" y="172" font-size="10" fill="#3a2a12">Created: 2026-11-12T00:00:00.000Z</text>
+    <text x="18" y="188" font-size="10" fill="#3a2a12">Deadline: null</text>
+    <text x="307" y="188" font-size="10" font-weight="600" fill="#b92b15" text-anchor="end">6 days since create</text>
+  </g>
+
+  <!-- #85 (Col 4, Purple) -->
+  <g transform="translate(1075, 510)" filter="url(#cardShadow)">
+    <rect width="325" height="205" rx="12" fill="#6d5e88"/>
+    <text x="18" y="26" font-size="12" font-weight="700" fill="#a8d8ff">#85</text>
+    <text x="18" y="50" font-size="15" font-weight="700" fill="#ffffff">
+      <tspan x="18" dy="0">ustaw przekierowanie na gmail</tspan>
+      <tspan x="18" dy="20">z gmaila oferty pracy</tspan>
+    </text>
+    <text x="18" y="92" font-size="10.5" fill="#a9e39b">Category: Soft Skills / Szukanie pracy</text>
+    <text x="307" y="92" font-size="10.5" fill="#ff8f85" text-anchor="end">Urgently: false</text>
+
+    <g transform="translate(18, 124)">
+      <rect x="0" y="0" width="14" height="14" rx="3" fill="#6347d1"/>
+      <path d="M3 7 L6 10 L11 4" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      <text x="19" y="11" font-size="10.5" fill="#ffffff">Learning</text>
+
+      <rect x="74" y="0" width="14" height="14" rx="3" fill="none" stroke="#d5cce6" stroke-width="1.3"/>
+      <text x="93" y="11" font-size="10.5" fill="#ffffff">General</text>
+
+      <rect x="144" y="0" width="14" height="14" rx="3" fill="none" stroke="#d5cce6" stroke-width="1.3"/>
+      <text x="163" y="11" font-size="10.5" fill="#ffffff">Today</text>
+
+      <rect x="206" y="0" width="14" height="14" rx="3" fill="none" stroke="#d5cce6" stroke-width="1.3"/>
+      <text x="225" y="11" font-size="10.5" fill="#ffffff">To Buy</text>
+    </g>
+
+    <text x="18" y="172" font-size="10" fill="#ece6f7">Created: 2026-11-12T00:00:00.000Z</text>
+    <text x="18" y="188" font-size="10" fill="#ece6f7">Deadline: null</text>
+    <text x="307" y="188" font-size="10" fill="#ff8f85" text-anchor="end">6 days since create</text>
+  </g>
+
+  <!-- ================= ROW 4 ================= -->
+
+  <!-- #76 (Col 1, Orange) -->
+  <g transform="translate(40, 735)" filter="url(#cardShadow)">
+    <rect width="325" height="190" rx="12" fill="#ff951c"/>
+    <text x="18" y="26" font-size="12" font-weight="700" fill="#1d4ed8">#76</text>
+    <text x="18" y="48" font-size="15" font-weight="700" fill="#141414">
+      <tspan x="18" dy="0">Sprawdzić czy RAM działa</tspan>
+      <tspan x="18" dy="18">poprawnie</tspan>
+    </text>
+    <text x="18" y="86" font-size="10.5" font-weight="600" fill="#2d6a1e">
+      <tspan x="18" dy="0">Category: Computer Science / General</tspan>
+      <tspan x="18" dy="13">IT Knowledge</tspan>
+    </text>
+    <text x="307" y="86" font-size="10.5" font-weight="600" fill="#b92b15" text-anchor="end">Urgently: false</text>
+
+    <g transform="translate(18, 118)">
+      <rect x="0" y="0" width="14" height="14" rx="3" fill="#6347d1"/>
+      <path d="M3 7 L6 10 L11 4" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      <text x="19" y="11" font-size="10.5" fill="#141414">Learning</text>
+
+      <rect x="74" y="0" width="14" height="14" rx="3" fill="none" stroke="#222222" stroke-width="1.3"/>
+      <text x="93" y="11" font-size="10.5" fill="#141414">General</text>
+
+      <rect x="144" y="0" width="14" height="14" rx="3" fill="none" stroke="#222222" stroke-width="1.3"/>
+      <text x="163" y="11" font-size="10.5" fill="#141414">Today</text>
+
+      <rect x="206" y="0" width="14" height="14" rx="3" fill="none" stroke="#222222" stroke-width="1.3"/>
+      <text x="225" y="11" font-size="10.5" fill="#141414">To Buy</text>
+    </g>
+
+    <text x="18" y="158" font-size="10" fill="#3a2a12">Created: 2026-11-12T00:00:00.000Z</text>
+    <text x="18" y="174" font-size="10" fill="#3a2a12">Deadline: null</text>
+    <text x="307" y="174" font-size="10" font-weight="600" fill="#b92b15" text-anchor="end">6 days since create</text>
+  </g>
+
+  <!-- #77 (Wide: Col 2-3, Orange) -->
+  <g transform="translate(385, 735)" filter="url(#cardShadow)">
+    <rect width="670" height="190" rx="12" fill="#ff951c"/>
+    <text x="20" y="26" font-size="12" font-weight="700" fill="#1d4ed8">#77</text>
+    <text x="20" y="52" font-size="16" font-weight="700" fill="#141414">
+      <tspan x="20" dy="0">Wyłączyć powiadomienia po wyłączeniu laptopa - dalej nie zrobione</tspan>
+    </text>
+    <text x="20" y="84" font-size="11.5" font-weight="600" fill="#2d6a1e">Category: Computer Science / General IT Knowledge</text>
+    <text x="650" y="84" font-size="11.5" font-weight="600" fill="#b92b15" text-anchor="end">Urgently: false</text>
+
+    <g transform="translate(20, 114)">
+      <rect x="0" y="0" width="14" height="14" rx="3" fill="#6347d1"/>
+      <path d="M3 7 L6 10 L11 4" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      <text x="20" y="11" font-size="11" fill="#141414">Learning</text>
+
+      <rect x="85" y="0" width="14" height="14" rx="3" fill="none" stroke="#222222" stroke-width="1.3"/>
+      <text x="105" y="11" font-size="11" fill="#141414">General</text>
+
+      <rect x="165" y="0" width="14" height="14" rx="3" fill="none" stroke="#222222" stroke-width="1.3"/>
+      <text x="185" y="11" font-size="11" fill="#141414">Today</text>
+
+      <rect x="235" y="0" width="14" height="14" rx="3" fill="none" stroke="#222222" stroke-width="1.3"/>
+      <text x="255" y="11" font-size="11" fill="#141414">To Buy</text>
+    </g>
+
+    <text x="20" y="168" font-size="11" fill="#3a2a12">Created: 2026-11-12T00:00:00.000Z | Deadline: null</text>
+    <text x="650" y="168" font-size="11" font-weight="600" fill="#b92b15" text-anchor="end">6 days since create</text>
+  </g>
+
+  <!-- #88 (Col 4, Charcoal) -->
+  <g transform="translate(1075, 735)" filter="url(#cardShadow)">
+    <rect width="325" height="190" rx="12" fill="#333538"/>
+    <text x="18" y="26" font-size="12" font-weight="700" fill="#a8d8ff">#88</text>
+    <text x="18" y="54" font-size="15.5" font-weight="700" fill="#ffffff">view all github issues account</text>
+    <text x="18" y="88" font-size="11" fill="#a9e39b">Category: Dev Tools / Git</text>
+    <text x="307" y="88" font-size="11" fill="#ff8f85" text-anchor="end">Urgently: false</text>
+
+    <g transform="translate(18, 118)">
+      <rect x="0" y="0" width="14" height="14" rx="3" fill="#6347d1"/>
+      <path d="M3 7 L6 10 L11 4" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      <text x="19" y="11" font-size="10.5" fill="#ffffff">Learning</text>
+
+      <rect x="74" y="0" width="14" height="14" rx="3" fill="none" stroke="#8b9099" stroke-width="1.3"/>
+      <text x="93" y="11" font-size="10.5" fill="#ffffff">General</text>
+
+      <rect x="144" y="0" width="14" height="14" rx="3" fill="none" stroke="#8b9099" stroke-width="1.3"/>
+      <text x="163" y="11" font-size="10.5" fill="#ffffff">Today</text>
+
+      <rect x="206" y="0" width="14" height="14" rx="3" fill="none" stroke="#8b9099" stroke-width="1.3"/>
+      <text x="225" y="11" font-size="10.5" fill="#ffffff">To Buy</text>
+    </g>
+
+    <text x="18" y="158" font-size="10" fill="#cfd3da">Created: 2026-11-12T00:00:00.000Z</text>
+    <text x="18" y="174" font-size="10" fill="#cfd3da">Deadline: null</text>
+    <text x="307" y="174" font-size="10" fill="#ff8f85" text-anchor="end">6 days since create</text>
+  </g>
+</svg>
+
+Co zostało zmienione względem przykładu z 1.png?
+
+1.  Układ Bento Grid (asymetryczna mozaika) zamiast zwykłej równej siatki –
+    zadania z dłuższym opisem (#46, #102) lub dłuższym tytułem (#77) dostały
+    podwójną szerokość, a całość zamyka się w równym prostokącie 1440×965.
+2.  Nowoczesne karty – zaokrąglone rogi, miękki cień (dropShadow) oraz ciemne
+    tło #25272c, na którym kolory kategorii (zielony, pomarańczowy, niebieski,
+    fioletowy, grafitowy) lepiej kontrastują niż na płaskiej szarości.
+3.  Brak nakładania się tekstów – w węższych kafelkach długie kategorie i stopka
+    zostały bezpiecznie rozbite na dwie linie, zachowując spójność danych z
+    Twoich zrzutów.
