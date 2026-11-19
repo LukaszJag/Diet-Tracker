@@ -5,3 +5,20 @@ Scale:
 3 Normal
 4 High
 5 Extreme
+
+1L Minimal - learning
+2L Low - learning
+3L Normal - learning
+4L High - learning
+5L Extreme - learning
+
+1G Minimal - generla
+2G Low - generla
+3G Normal - generla
+4G High - generla
+5G Extreme - generla
+
+D Day task
+DG General day task
+DL Learning day task
+DB Buy day task
