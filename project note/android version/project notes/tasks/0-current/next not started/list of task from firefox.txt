@@ -1,0 +1,31 @@
+NEXT:
+
+    make shortcut in windows to run android app from it · Issue #172 · LukaszJag/Diet-Tracker
+    https://github.com/LukaszJag/Diet-Tracker/issues/172
+
+    add fridge(catalog of products that user current has) · Issue #23 · LukaszJag/Diet-Tracker
+    https://github.com/LukaszJag/Diet-Tracker/issues/23
+
+    Create mosaic GUI layout for view and edit notes · Issue #171 · LukaszJag/Diet-Tracker
+    https://github.com/LukaszJag/Diet-Tracker/issues/171
+
+    Add dark mode to android app · Issue #141 · LukaszJag/Diet-Tracker
+    https://github.com/LukaszJag/Diet-Tracker/issues/141
+
+    move - learning notes from - color note to android app · Issue #161 · LukaszJag/Diet-Tracker
+    https://github.com/LukaszJag/Diet-Tracker/issues/161
+
+    hide empty text fileld in note view · Issue #167 · LukaszJag/Diet-Tracker
+    https://github.com/LukaszJag/Diet-Tracker/issues/167
+
+    add product to day without adding only display how many kcal it will sum with current kcal in day · Issue #155 · LukaszJag/Diet-Tracker
+    https://github.com/LukaszJag/Diet-Tracker/issues/155
+
+DONE ?:
+
+    cannot add notes without categories from learning · Issue #162 · LukaszJag/Diet-Tracker
+    https://github.com/LukaszJag/Diet-Tracker/issues/162
+
+    add background color for every main category · Issue #168 · LukaszJag/Diet-Tracker
+    https://github.com/LukaszJag/Diet-Tracker/issues/168
+
