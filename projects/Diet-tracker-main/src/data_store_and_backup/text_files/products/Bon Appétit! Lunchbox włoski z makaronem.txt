@@ -1,0 +1,9 @@
+Name: Bon Appétit! Lunchbox włoski z makaronem
+Brand: Carrefour
+Package has: 250.0
+Macro for: 100.0
+KCal: 263.0
+Protein: 9.6
+Fat: 11.0
+Carbs: 31.0
+Comment optional: Link: https://www.carrefour.pl/dania-gotowe-i-przystawki/dania-gotowe-i-przystawki-7v/inne-dania-gotowe-ss/carrefour-bon-appetit-lunchbox-wloski-z-makaronem-250-g

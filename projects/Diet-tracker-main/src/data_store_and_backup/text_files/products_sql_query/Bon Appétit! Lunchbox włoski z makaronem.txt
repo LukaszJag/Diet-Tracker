@@ -1,0 +1,20 @@
+INSERT INTO `diet_tracker_schema`.product_table
+(`product_name`,
+`product_brand`,
+`product_package_has`,
+`product_macro_for`,
+`product_kcal`,
+`product_protein`,
+`product_fat`,
+`product_carbs`,
+`comment_optional`)
+Values
+('Bon Appétit! Lunchbox włoski z makaronem',
+'Carrefour',
+250.0,
+100.0,
+263.0,
+9.6,
+11.0,
+31.0,
+'Link: https://www.carrefour.pl/dania-gotowe-i-przystawki/dania-gotowe-i-przystawki-7v/inne-dania-gotowe-ss/carrefour-bon-appetit-lunchbox-wloski-z-makaronem-250-g');
