@@ -1,5 +1,6 @@
 package com.lukaszjag.diet_tracker_android.tools.notes_tool;
 
+import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.view.LayoutInflater;
@@ -14,13 +15,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.lukaszjag.diet_tracker_android.R;
 import com.lukaszjag.diet_tracker_android.tools.settings.AppSettings;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Set;
-
-import android.content.Context;
-
+import java.util.TimeZone;
 
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
@@ -313,9 +316,8 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         holder.cbIsTodayTask.setTextColor(cbTextColor);
         holder.cbIsToBuy.setTextColor(cbTextColor);
 
-        String createdDate = currentItem.getDateCreated() != null ? currentItem.getDateCreated() : "-";
-        String deadlineDate = (currentItem.getDateDeadline() != null && !currentItem.getDateDeadline().isEmpty())
-                ? currentItem.getDateDeadline() : "None";
+        String createdDate = formatNoteDate(currentItem.getDateCreated(), "-");
+        String deadlineDate = formatNoteDate(currentItem.getDateDeadline(), "None");
         holder.tvDates.setText("Created: " + createdDate + " | Deadline: " + deadlineDate);
         holder.tvDates.setTextColor(isDarkBg ? Color.parseColor("#E0E0E0") : Color.parseColor("#666666"));
 
@@ -337,5 +339,44 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         this.noteList.clear();
         this.originalList.clear();
         notifyDataSetChanged();
+    }
+
+    private String formatNoteDate(String rawDate, String emptyFallback) {
+        if (rawDate == null || rawDate.trim().isEmpty() || "null".equalsIgnoreCase(rawDate.trim())) {
+            return emptyFallback;
+        }
+
+        String trimmed = rawDate.trim();
+        String[] inputPatterns = {
+                "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'",
+                "yyyy-MM-dd'T'HH:mm:ss'Z'",
+                "yyyy-MM-dd'T'HH:mm:ss.SSS",
+                "yyyy-MM-dd'T'HH:mm:ss",
+                "yyyy-MM-dd HH:mm:ss",
+                "yyyy-MM-dd HH:mm",
+                "yyyy-MM-dd"
+        };
+
+        // Outputs e.g.: 12-11-2026 (Thursday) 19:25
+        SimpleDateFormat outputFormat = new SimpleDateFormat("dd-MM-yyyy EEEE HH:mm", Locale.getDefault());
+        // Note: If your SQL database stores local time and the API only appends 'Z',
+        // uncomment the line below to avoid shifting 00:00 by your timezone offset:
+        // outputFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+
+        for (String pattern : inputPatterns) {
+            try {
+                SimpleDateFormat inputFormat = new SimpleDateFormat(pattern, Locale.US);
+                if (pattern.endsWith("'Z'")) {
+                    inputFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+                }
+                Date parsed = inputFormat.parse(trimmed);
+                if (parsed != null) {
+                    return outputFormat.format(parsed);
+                }
+            } catch (ParseException ignored) {
+            }
+        }
+
+        return trimmed.length() >= 16 ? trimmed.substring(0, 16).replace("T", " ") : trimmed;
     }
 }

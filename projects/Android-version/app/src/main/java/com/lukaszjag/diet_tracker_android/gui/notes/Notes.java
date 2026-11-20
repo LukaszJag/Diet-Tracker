@@ -347,7 +347,7 @@ public class Notes extends AppCompatActivity {
                         null
                 );
             } else {
-                String currentDate = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
+                String currentDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).format(new Date());
                 q = QueryMaker.insertNoteQuery(
                         title.getText().toString(),
                         subtitle.getText().toString(),
