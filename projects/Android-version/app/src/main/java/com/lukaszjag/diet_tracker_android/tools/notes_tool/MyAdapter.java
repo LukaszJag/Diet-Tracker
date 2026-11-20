@@ -318,7 +318,14 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
         String createdDate = formatNoteDate(currentItem.getDateCreated(), "-");
         String deadlineDate = formatNoteDate(currentItem.getDateDeadline(), "None");
-        holder.tvDates.setText("Created: " + createdDate + " | Deadline: " + deadlineDate);
+
+
+        if (deadlineDate == null || deadlineDate.trim().isEmpty() || "None".equalsIgnoreCase(deadlineDate.trim())) {
+            holder.tvDates.setText("Created: " + createdDate);
+        } else {
+            holder.tvDates.setText("Created: " + createdDate + " | Deadline: " + deadlineDate);
+        }
+
         holder.tvDates.setTextColor(isDarkBg ? Color.parseColor("#E0E0E0") : Color.parseColor("#666666"));
 
         holder.tvDaysSince.setText(currentItem.getDaysSinceCreation() + " days since create");
@@ -342,7 +349,9 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     }
 
     private String formatNoteDate(String rawDate, String emptyFallback) {
-        if (rawDate == null || rawDate.trim().isEmpty() || "null".equalsIgnoreCase(rawDate.trim())) {
+        if (rawDate == null || rawDate.trim().isEmpty()
+                || "null".equalsIgnoreCase(rawDate.trim())
+                || "none".equalsIgnoreCase(rawDate.trim())) {
             return emptyFallback;
         }
 
