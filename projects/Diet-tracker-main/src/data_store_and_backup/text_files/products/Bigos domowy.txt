@@ -1,0 +1,9 @@
+Name: Bigos domowy
+Brand: domowy
+Package has: 0.0
+Macro for: 100.0
+KCal: 112.0
+Protein: 10.4
+Fat: 7.2
+Carbs: 2.4
+Comment optional: Link: https://www.tabele-kalorii.pl/kalorie,Bigos-domowy.html
