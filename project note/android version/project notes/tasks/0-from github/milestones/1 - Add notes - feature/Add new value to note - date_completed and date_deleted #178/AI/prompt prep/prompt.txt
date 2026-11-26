@@ -1,0 +1,13 @@
+In my android app I have note feature that handle notes which is store in Azure SQL database I want to add new 2 value to note:
+
+date_completed 
+date_deleted
+
+when in app I choose done date_completed will be set at current date when done is select the same as remove/delete note
+
+Add in UI to note element GUI done or delete date only in Notes History part which is able by select it at main screen
+
+
+notes that is already set this new columns set as unknown
+
+give me everything step by step with full explanation and where code change
